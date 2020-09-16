@@ -1,5 +1,5 @@
 # SOEN490 - CAPSTONE 
-(project name is still pending)
+Wash Optimization system
 
 ## Objective 🎯
 ...
