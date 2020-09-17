@@ -18,4 +18,21 @@ Wash Optimization system
 | Zohal Mir | zohalmir |
 
 ## Technologies 💻
-...
+
+### Programming languages
+
+1. React(Framework)
+2. Python 3, C#,
+3. .NET Core 3.1,
+4. Node.js
+
+### Agile Project management
+
+1. ZenHub
+2. Trello
+
+### Communication
+
+1. Slack
+2. Discord
+3. Zoom
