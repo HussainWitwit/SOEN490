@@ -2,7 +2,7 @@
 Wash Optimization system
 
 ## Objective 🎯
-...
+Recommendation Engine
 
 ## Team 👥
 | Name          | Github        |
