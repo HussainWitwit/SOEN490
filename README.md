@@ -28,8 +28,9 @@ Recommendation Engine
 
 ### Agile Project management
 
-1. ZenHub
-2. Trello
+1. Jira
+2. Zenhub
+3. Trello
 
 ### Communication
 
