@@ -1,8 +1,8 @@
 # SOEN490 - CAPSTONE 
-Wash Optimization system
+Recommendation Engine
 
 ## Objective 🎯
-Recommendation Engine
+We are building a generic Recommendation Engine that can be applied to systems such as a wash optimizion.
 
 ## Team 👥
 | Name          | Github        |
@@ -29,11 +29,10 @@ Recommendation Engine
 ### Agile Project management
 
 1. Jira
-2. Zenhub
-3. Trello
+2. Trello
 
 ### Communication
 
-1. Slack
-2. Discord
+1. Discord
+2. Slack
 3. Zoom
