@@ -37,9 +37,3 @@ We are building a generic Recommendation Engine that can be applied to systems s
 2. Slack
 3. Zoom
 
-## Jira Access
-* Click on the following link: https://utf-9.atlassian.net/secure/RapidBoard.jspa?rapidView=1&projectKey=SOEN490
-* Press Continue with Google
-* Enter email: utf9.capstone@gmail.com
-* Enter password: Powerfactors9
-
