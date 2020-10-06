@@ -5,17 +5,17 @@ Recommendation Engine
 We are building a generic Recommendation Engine that can be applied to systems such as a wash optimizion.
 
 ## Team 👥
-| Name          | Github        |
-| ------------- |:-------------:|
-| Alain Job Uzamara Uwe | AlainJobs |
-| Badreddine Loulidi | bloulidi |
-| Christophe Shaka Bahenduzi | csbduzi |
-| Dariush Noorzada | DariushN |
-| Hussain Witwit | HussainWitwit |
-| Kenza Boulisfane | bkenza |
-| Loujain Al-Nakeeb | Loujain-Al-Nakeeb |
-| Mohanad Arafe | mohanadarafe |
-| Zohal Mir | zohalmir |
+| Name          | Github        |Email       |
+| ------------- |:-------------:|-------------|
+| Alain Job Uzamara Uwe | AlainJobs | alainjobu@hotmail.com |
+| Badreddine Loulidi | bloulidi | loulidi.bad@gmail.com |
+| Christophe Shaka Bahenduzi | csbduzi | cbahenduzi@gmail.com |
+| Dariush Noorzada | DariushN | dariush_noorzada@hotmail.com |
+| Hussain Witwit | HussainWitwit | witwith88@gmail.com |
+| Kenza Boulisfane | bkenza | kenza.boulisfane@gmail.com |
+| Loujain Al-Nakeeb | Loujain-Al-Nakeeb | loujain_alnakeeb@hotmail.com |
+| Mohanad Arafe | mohanadarafe | marafe@live.com |
+| Zohal Mir | zohalmir | zohalmir9@gmail.com |
 
 ## Technologies 💻
 
