@@ -2,7 +2,7 @@
 Recommendation Engine
 
 ## Objective 🎯
-We are building a generic Recommendation Engine that can be applied to systems such as a wash optimizion.
+We are building a generic Recommendation Engine that can be applied to systems such as a wash optimizion
 
 ## Team 👥
 | Name          | Github        |Email       |
@@ -33,7 +33,7 @@ We are building a generic Recommendation Engine that can be applied to systems s
 
 ### Communication
 
-1. Discord
+1. Discord 
 2. Slack
 3. Zoom
 
