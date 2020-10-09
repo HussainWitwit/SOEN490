@@ -26,7 +26,7 @@ namespace RecommendationEngine
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "FrontEnd/build";
             });
         }
 
@@ -59,7 +59,7 @@ namespace RecommendationEngine
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "FrontEnd";
 
                 if (env.IsDevelopment())
                 {
