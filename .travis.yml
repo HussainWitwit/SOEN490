@@ -1,10 +1,15 @@
 language: csharp
 mono: none 
-solution: ./RecommendationEngine/RecommendationEngine.sln
+solution: ../RecommendationEngine/RecommendationEngine.sln
 dotnet: 3.1
 
-install:
-  - dotnet restore ./RecommendationEngine/RecommendationEngine.sln
+# install:
+#   - dotnet restore .RecommendationEngine/RecommendationEngine.sln
+
+script:
+  - cd RecommendationEngine
+  - dotnet restore RecommendationEngine.sln
+
 
 # script:
 # #  - msbuild /p:Configuration=Release solution-name.sln
