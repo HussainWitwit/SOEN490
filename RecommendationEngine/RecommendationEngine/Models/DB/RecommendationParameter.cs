@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace RecommendationEngine.Models
 {
-    public class Class
+    public class RecommendationType
     {
+        
     }
 }
