@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
-    public class RecommendationType
+    public class AssetType
     {
-        private int assetTypeId { get; set; }
-        private string name { get; set; }
-        private string displayText { get; set; }
-        private string energyType { get; set; }
+        public int AssetTypeId { get; set; }
+        public string Name { get; set; }
+        public string DisplayText { get; set; }
+        public string EnergyType { get; set; }
+        public List<Asset> AssetsList { get; set; }
     }
 }

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
     public class RecommendationType
     {
-        private int recommendationTypeId { get; set; }
-        private string type { get; set; }
-        private string displayText { get; set; }
+        public int RecommendationTypeId { get; set; }
+        public string Type { get; set; }
+        public string DisplayText { get; set; }
+        public List<RecommendationSchedule> SchedulesOfTypeList { get; set; }
+        public List<RecommendationParameter> DefaultParametersList { get; set; }
     }
 }

@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
     public class Action
     {
-        private int actionId { get; set; }
-        private string title { get; set; }
-        private string displayText { get; set; }
-        private double costOfAction { get; set; }
-        private double costOfInaction { get; set; }
-        private double benefitOfAction { get; set; }
-        private double confidencePercetange { get; set; }
-        private DateTime date { get; set; }
+        public int ActionId { get; set; }
+        public string Title { get; set; }
+        public string DisplayText { get; set; }
+        public double CostOfAction { get; set; }
+        public double CostOfInaction { get; set; }
+        public double BenefitOfAction { get; set; }
+        public double ConfidencePercetange { get; set; }
+        public DateTime Date { get; set; }
+        public WorkOrder WorkOrderOpened { get; set; }
+        public RecommendationJobResult RecommendationJobResult { get; set; }
     }
 }
 

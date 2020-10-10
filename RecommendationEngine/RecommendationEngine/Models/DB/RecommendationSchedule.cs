@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
     public class RecommendationSchedule
     {
-        private int recommendationScheduleId { get; set; }
-        private string modifiedBy { get; set; }
-        private string name { get; set; }
-        private string granularity { get; set; } //Subject to change type
-        private string description { get; set; }
-        private DateTime occurenceDatetime { get; set; }
-        private DateTime createdOn { get; set; }
+        public int RecommendationScheduleId { get; set; }
+        public string ModifiedBy { get; set; }
+        public string Name { get; set; }
+        public string DisplayText { get; set; }
+        public string Granularity { get; set; }
+        public string Description { get; set; }
+        public DateTime OccurenceDatetime { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public RecommendationType RecommendationType { get; set; }
+        public List<Asset> AssetsList { get; set; }
+        public List<RecommendationJobResult> RunResults { get; set; }
+        public List<RecommendationScheduleParameter> ParametersList { get; set; }
     }
 }

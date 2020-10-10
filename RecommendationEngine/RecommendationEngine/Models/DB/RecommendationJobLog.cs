@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
     public class RecommendationJobLog
     {
-        private int recommendationJobLogId { get; set; }
-        private string description { get; set; }
-        private DateTime time { get; set; }
-        private string level { get; set; }
+        public int RecommendationJobLogId { get; set; }
+        public string Description { get; set; }
+        public DateTime Time { get; set; }
+        public string Level { get; set; }
+        public RecommendationJobResult RecommendationJobResult { get; set; }
     }
 }

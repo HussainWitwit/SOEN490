@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
     public class Asset
     {
-        private int assetId { get; set; }
-        private string name { get; set; }
-        private string displayText { get; set; }
-        private string energyType { get; set; } 
-        private string timeZone { get; set; } 
-        private string elementPath { get; set; } 
-        private double acPower { get; set; }
-        private Asset assetChild { get; set; }
+        public int AssetId { get; set; }
+        public string Name { get; set; }
+        public string DisplayText { get; set; }
+        public string EnergyType { get; set; }
+        public string TimeZone { get; set; }
+        public string ElementPath { get; set; }
+        public double AcPower { get; set; }
+        public Asset ParentAsset { get; set; }
+        public AssetType Type { get; set; }
+        public List<Action> ActionsGivenList { get; set; }
+        public List<RecommendationJobResult> RecommendationJobResultsGivenList { get; set; }
+        public List<RecommendationSchedule> RecommendationSchedulesList { get; set; }
     }
 }

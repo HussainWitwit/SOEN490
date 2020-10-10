@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
     public class RecommendationScheduleParameter
     {
-        private int recommendationScheduleParameterId { get; set; }
-        private string displayText { get; set; }
-        private string modifiedBy { get; set; }
-        private DateTime startDate { get; set; }
-        private DateTime endDate { get; set; }
-        private string paramValue { get; set; } //Subject to change type
+        public int RecommendationScheduleParameterId { get; set; }
+        public string DisplayText { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public double ParamValue { get; set; }
+        public RecommendationParameter RecommendationParameter { get; set; }
+        public RecommendationSchedule Schedule { get; set; }
     }
 }

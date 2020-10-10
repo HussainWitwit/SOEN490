@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RecommendationEngine.Models
+namespace RecommendationEngine.Models.DB
 {
     public class WorkOrder
     {
-        private int workOrderId { get; set; }
-        private string displayText { get; set; }
-        private double costOfWork { get; set; }
-        private DateTime time { get; set; }
-        private string protocol { get; set; }
+        public int WorkOrderId { get; set; }
+        public string DisplayText { get; set; }
+        public double CostOfWork { get; set; }
+        public DateTime Time { get; set; }
+        public string Protocol { get; set; }
+        public Action Action { get; set; }
     }
 }
