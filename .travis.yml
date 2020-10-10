@@ -4,7 +4,7 @@ solution: ./RecommendationEngine.sln
 dotnet: 3.1
 
 install:
-  - nuget restore ./RecommendationEngine.sln
+  - dotnet restore ./RecommendationEngine.sln
 
 script:
 #  - msbuild /p:Configuration=Release solution-name.sln
