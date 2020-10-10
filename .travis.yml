@@ -1,23 +1,23 @@
 language: csharp
-sudo: required
 mono: none 
-solution: ./RecommendationEngine.sln
+solution: ../RecommendationEngine/RecommendationEngine.sln
 dotnet: 3.1
 
 install:
-- dotnet restore ./RecommendationEngine.sln
+- dotnet restore ../RecommendationEngine/RecommendationEngine.sln
 
 script:
- - dotnet build ./RecommendationEngine.sln
+#  - msbuild /p:Configuration=Release solution-name.sln
+ - dotnet build ../RecommendationEngine/RecommendationEngine.sln
  - dotnet test 
 
 before_deploy:
 - dotnet pack -c Release
 
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: dotnet nuget push ./RecommendationEngine/bin/Release/RecommendationEngine.*.nupkg  -k $NUGET_API -s https://api.nuget.org/v3/index.json --skip-duplicate
-  on:
-    branch: master
-    branch: develop
+# deploy:
+#   skip_cleanup: true
+#   provider: script
+#   script: dotnet nuget push ./RecommendationEngine/bin/Release/RecommendationEngine.*.nupkg  -k $NUGET_API -s https://api.nuget.org/v3/index.json --skip-duplicate
+#   on:
+#     branch: master
+#     branch: develop
