@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RecommendationEngine.Services
 {
-    public class Class
+    public class PortfolioService
     {
     }
 }
