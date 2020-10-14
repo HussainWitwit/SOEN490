@@ -12,6 +12,7 @@ namespace RecommendationEngine.Models.DB
         public double BenefitOfAction { get; set; }
         public double ConfidencePercetange { get; set; }
         public DateTime Date { get; set; }
+        public Asset Asset { get; set; }
         public WorkOrder WorkOrderOpened { get; set; }
         public RecommendationJobResult RecommendationJobResult { get; set; }
     }
