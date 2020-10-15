@@ -2,7 +2,7 @@
 
 namespace RecommendationEngine.Models.DB
 {
-    public class Action
+    public class DBAction
     {
         public int ActionId { get; set; }
         public string Title { get; set; }
@@ -12,8 +12,9 @@ namespace RecommendationEngine.Models.DB
         public double BenefitOfAction { get; set; }
         public double ConfidencePercetange { get; set; }
         public DateTime Date { get; set; }
-        public WorkOrder WorkOrderOpened { get; set; }
-        public RecommendationJobResult RecommendationJobResult { get; set; }
+        public DBAsset Asset { get; set; }
+        public DBWorkOrder WorkOrderOpened { get; set; }
+        public DBRecommendationJobResult RecommendationJobResult { get; set; }
     }
 }
 
