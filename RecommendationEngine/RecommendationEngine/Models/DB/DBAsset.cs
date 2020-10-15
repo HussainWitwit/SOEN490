@@ -2,7 +2,7 @@
 
 namespace RecommendationEngine.Models.DB
 {
-    public class Asset
+    public class DBAsset
     {
         public int AssetId { get; set; }
         public string Name { get; set; }
@@ -11,10 +11,10 @@ namespace RecommendationEngine.Models.DB
         public string TimeZone { get; set; }
         public string ElementPath { get; set; }
         public double AcPower { get; set; }
-        public Asset ParentAsset { get; set; }
-        public AssetType Type { get; set; }
-        public List<Action> ActionsGivenList { get; set; }
-        public List<RecommendationJobResult> RecommendationJobResultsGivenList { get; set; }
-        public List<RecommendationSchedule> RecommendationSchedulesList { get; set; }
+        public DBAsset ParentAsset { get; set; }
+        public DBAssetType Type { get; set; }
+        public List<DBAction> ActionsGivenList { get; set; }
+        public List<DBRecommendationJobResult> RecommendationJobResultsGivenList { get; set; }
+        public List<DBRecommendationSchedule> RecommendationSchedulesList { get; set; }
     }
 }
