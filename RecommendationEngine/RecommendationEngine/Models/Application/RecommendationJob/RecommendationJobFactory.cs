@@ -1,11 +1,11 @@
-﻿using RecommendationEngine.Models.Application.Recommendation;
+﻿using RecommendationEngine.Models.Application;
 
 namespace RecommendationEngine.Models.Application.RecommendationJob
 {
     public class RecommendationJobFactory
     {
 
-        public IRecommendationJob createRecommendationJob(RecommendationSchedule schedule)
+        public IRecommendationJob CreateRecommendationJob(RecommendationSchedule schedule)
         {
             switch (schedule.Type)
             {

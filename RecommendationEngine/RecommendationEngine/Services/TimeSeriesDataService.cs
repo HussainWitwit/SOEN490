@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Services
 {
     public class TimeSeriesDataService
     {
-        public void read() // to change to TimeSeriesData model
-        {
+        private IDriveService _driveService;
 
+        public TimeSeriesDataService(IDriveService driveService)
+        {
+            _driveService = driveService;
         }
     }
 }

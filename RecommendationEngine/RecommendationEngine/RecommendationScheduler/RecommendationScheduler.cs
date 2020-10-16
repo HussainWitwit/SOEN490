@@ -1,7 +1,15 @@
 ﻿namespace RecommendationEngine.RecommendationScheduler
 {
-    public static class RecommendationScheduler
+    public class RecommendationScheduler
     {
-        
+        public RecommendationScheduler()
+        {
+
+        }
+
+        public void Schedule()
+        {
+
+        }
     }
 }

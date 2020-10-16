@@ -1,6 +1,6 @@
 ﻿namespace RecommendationEngine.Services.ExternalAPI
 {
-    public class FSMService
+    public class FSMService: IWorkOrderService
     {
         
     }

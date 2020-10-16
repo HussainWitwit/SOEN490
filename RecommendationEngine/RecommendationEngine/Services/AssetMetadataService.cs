@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Services
 {
     public class AssetMetadataService
     {
-        public void read()
-        {
+        private IDriveService _driveService;
 
+        public AssetMetadataService(IDriveService driveService)
+        {
+            _driveService = driveService;
         }
     }
 }
