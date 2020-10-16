@@ -4,15 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace RecommendationEngine.Services
+namespace RecommendationEngine.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class EventController : ControllerBase
     {
-        public void read()
-        {
-
-        }
     }
 }

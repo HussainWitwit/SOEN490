@@ -4,15 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace RecommendationEngine.Services
+namespace RecommendationEngine.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class TimeSeriesDataController : ControllerBase
     {
-        public void read() // to change to TimeSeriesData model
-        {
-
-        }
     }
 }
