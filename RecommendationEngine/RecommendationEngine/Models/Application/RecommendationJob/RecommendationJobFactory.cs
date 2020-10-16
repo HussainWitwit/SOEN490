@@ -11,8 +11,8 @@ namespace RecommendationEngine.Models.Application.RecommendationJob
             {
                 case "Yearly Wash Optimization": 
                     return new YearlyWashOptimizationRecommendationJob();
-                case "Wind Turbine Change":
-                    return new WindTurbineChangeRecommendationJob();
+                case "Fuse Replacement":
+                    return new FuseReplacementRecommendationJob();
                 default:
                     throw new System.NotImplementedException();
             }

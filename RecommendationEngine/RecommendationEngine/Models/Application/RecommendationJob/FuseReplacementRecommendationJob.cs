@@ -3,7 +3,7 @@ using Quartz;
 
 namespace RecommendationEngine.Models.Application.RecommendationJob
 {
-    public class WindTurbineChangeRecommendationJob: IRecommendationJob
+    public class FuseReplacementRecommendationJob: IRecommendationJob
     {
         public Task Execute(IJobExecutionContext context)
         {
