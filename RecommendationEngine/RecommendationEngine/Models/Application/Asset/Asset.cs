@@ -1,6 +1,6 @@
 ﻿namespace RecommendationEngine.Models.Application.Asset
 {
-    public interface ISolarAsset: IAsset
+    public abstract class Asset
     {
         public string Name { get; set; }
         public string DisplayText { get; set; }
