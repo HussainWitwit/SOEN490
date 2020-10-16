@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RecommendationEngine.Services;
 
 namespace RecommendationEngine.Controllers
 {
@@ -10,9 +11,11 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class WeatherController : ControllerBase
     {
-        public void read() // to change to TimeSeriesData model
-        {
+        private WeatherService _weatherService;
 
+        public WeatherController(WeatherService weatherService)
+        {
+            _weatherService = weatherService;
         }
     }
 }
