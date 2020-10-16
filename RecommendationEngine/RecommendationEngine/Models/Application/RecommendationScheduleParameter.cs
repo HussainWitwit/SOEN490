@@ -1,4 +1,4 @@
-﻿namespace RecommendationEngine.Models.Application.Recommendation
+﻿namespace RecommendationEngine.Models.Application
 {
     public class RecommendationScheduleParameter
     {

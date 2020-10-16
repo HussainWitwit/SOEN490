@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RecommendationEngine.Models.Application.Recommendation
+namespace RecommendationEngine.Models.Application
 {
     public class RecommendationSchedule
     {
