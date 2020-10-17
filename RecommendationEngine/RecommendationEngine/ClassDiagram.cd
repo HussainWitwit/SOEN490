@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RecommendationEngine.Program" Collapsed="true">
+    <Position X="28.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Startup" Collapsed="true">
+    <Position X="33.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAgAAACAAAAAA=</HashCode>
+      <FileName>Startup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.WeatherForecast" Collapsed="true">
+    <Position X="35.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAEAAA=</HashCode>
+      <FileName>WeatherForecast.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.ActionController">
+    <Position X="3.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ActionController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_actionService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.AssetMetadataController">
+    <Position X="12" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\AssetMetadataController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_assetMetadataService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.CaseController">
+    <Position X="25.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\CaseController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_caseService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.EnergyMarketController">
+    <Position X="14.75" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\EnergyMarketController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_energyMarketService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.EventController">
+    <Position X="27.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\EventController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_eventService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.PortfolioController">
+    <Position X="20.25" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\PortfolioController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_portfolioService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.RecommendationEngineController">
+    <Position X="29.75" Y="9.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\RecommendationEngineController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_recommendationEngineService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.RecommendationRunController">
+    <Position X="5.75" Y="9.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\RecommendationRunController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_recommendationRunService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.RecommendationSchedulerController">
+    <Position X="33" Y="9.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\RecommendationSchedulerController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_recommendationSchedulerService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.TimeSeriesDataController">
+    <Position X="17.5" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\TimeSeriesDataController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_timeSeriesDataService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.WeatherController">
+    <Position X="36.5" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Controllers\WeatherController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_weatherService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.WeatherForecastController">
+    <Position X="9" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEBAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\WeatherForecastController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Controllers.WorkOrderController">
+    <Position X="22.75" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\WorkOrderController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_workOrderService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.Asset.Asset">
+    <Position X="3.25" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAABAAAIAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\Asset\Asset.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.Asset.AssetComposite">
+    <Position X="2" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\Asset\AssetComposite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.Asset.AssetLeaf">
+    <Position X="4.25" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\Asset\AssetLeaf.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.RecommendationJob.FuseReplacementRecommendationJob" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\RecommendationJob\FuseReplacementRecommendationJob.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.RecommendationJob.RecommendationJobFactory" Collapsed="true">
+    <Position X="30" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\RecommendationJob\RecommendationJobFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.RecommendationJob.YearlyWashOptimizationRecommendationJob" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\RecommendationJob\YearlyWashOptimizationRecommendationJob.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.EnergyMarket" Collapsed="true">
+    <Position X="28.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Models\Application\EnergyMarket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.Event" Collapsed="true">
+    <Position X="30" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAACAAAAAAAAEAAAIAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\Event.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.RecommendationSchedule" Collapsed="true">
+    <Position X="31.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAACAAAARYAAAAIAAQE=</HashCode>
+      <FileName>Models\Application\RecommendationSchedule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.RecommendationScheduleParameter" Collapsed="true">
+    <Position X="33.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\RecommendationScheduleParameter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.TimeSeriesData" Collapsed="true">
+    <Position X="31.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAACAAAAAgAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Models\Application\TimeSeriesData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.Weather" Collapsed="true">
+    <Position X="33.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\Application\Weather.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Models.Application.WeatherForecast" Collapsed="true">
+    <Position X="35.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Models\Application\WeatherForecast.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.RecommendationScheduler.RecommendationTypes.TurbineChangeRecommendation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecommendationScheduler\RecommendationTypes\TurbineChangeRecommendation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RecommendationEngine.RecommendationScheduler.RecommendationTypes.YearlyWashOptimizationRecommendation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecommendationScheduler\RecommendationTypes\YearlyWashOptimizationRecommendation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RecommendationEngine.RecommendationScheduler.RecommendationScheduler" Collapsed="true">
+    <Position X="35.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecommendationScheduler\RecommendationScheduler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecommendationEngine.Services.ExternalAPI.FSMService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ExternalAPI\FSMService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RecommendationEngine.Services.ExternalAPI.PFDriveService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ExternalAPI\PFDriveService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RecommendationEngine.Services.ActionService">
+    <Position X="8" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ActionService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.AssetMetadataService">
+    <Position X="12" Y="7.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\AssetMetadataService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.CaseService">
+    <Position X="15.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CaseService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.EnergyMarketService">
+    <Position X="13.5" Y="11.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EnergyMarketService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.EventService">
+    <Position X="18" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EventService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.PortfolioService">
+    <Position X="18.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\PortfolioService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.RecommendationEngineService">
+    <Position X="20.75" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RecommendationEngineService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.RecommendationRunService">
+    <Position X="5" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RecommendationRunService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.RecommendationSchedulerService">
+    <Position X="22.5" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RecommendationSchedulerService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.TimeSeriesDataService">
+    <Position X="15" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\TimeSeriesDataService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.WeatherService">
+    <Position X="24.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\WeatherService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_driveService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RecommendationEngine.Services.WorkOrderService">
+    <Position X="22.75" Y="11.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\WorkOrderService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_workOrderService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Mvc.ControllerBase" Collapsed="true">
+    <Position X="20.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="RecommendationEngine.Models.Application.RecommendationJob.IRecommendationJob">
+    <Position X="10" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Application\RecommendationJob\IRecommendationJob.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="RecommendationEngine.RecommendationScheduler.RecommendationTypes.IRecommendationType" Collapsed="true">
+    <Position X="5.5" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RecommendationScheduler\RecommendationTypes\IRecommendationType.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="RecommendationEngine.Services.ExternalAPI.IDriveService" Collapsed="true">
+    <Position X="12.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ExternalAPI\IDriveService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="RecommendationEngine.Services.ExternalAPI.IWorkOrderService" Collapsed="true">
+    <Position X="22.75" Y="14" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\ExternalAPI\IWorkOrderService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
