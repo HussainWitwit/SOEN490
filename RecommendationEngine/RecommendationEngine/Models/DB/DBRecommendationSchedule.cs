@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
 {
+    [Table("RecommendationSchedule")]
     public class DBRecommendationSchedule
     {
         public int RecommendationScheduleId { get; set; }
@@ -15,7 +17,7 @@ namespace RecommendationEngine.Models.DB
         public DateTime CreatedOn { get; set; }
         public DBRecommendationType RecommendationType { get; set; }
         public List<DBAsset> AssetsList { get; set; }
-        public List<DBRecommendationJobResult> RunResults { get; set; }
+        public List<DBRecommendationJob> JobsList { get; set; }
         public List<DBRecommendationScheduleParameter> ParametersList { get; set; }
     }
 }

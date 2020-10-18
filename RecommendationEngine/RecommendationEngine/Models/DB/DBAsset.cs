@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
 {
+    [Table("Asset")]
     public class DBAsset
     {
         public int AssetId { get; set; }

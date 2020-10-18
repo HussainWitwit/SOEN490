@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
 {
+    [Table("RecommendationParameter")]
     public class DBRecommendationParameter
     {
         public int RecommendationParameterId { get; set; }

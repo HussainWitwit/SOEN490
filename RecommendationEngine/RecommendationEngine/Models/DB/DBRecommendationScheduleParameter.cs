@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
 {
+    [Table("RecommendationScheduleParameter")]
     public class DBRecommendationScheduleParameter
     {
         public int RecommendationScheduleParameterId { get; set; }
