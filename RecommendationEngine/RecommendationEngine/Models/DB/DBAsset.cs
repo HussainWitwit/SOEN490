@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
@@ -6,6 +7,7 @@ namespace RecommendationEngine.Models.DB
     [Table("Asset")]
     public class DBAsset
     {
+        [Key]
         public int AssetId { get; set; }
         public string Name { get; set; }
         public string DisplayText { get; set; }
@@ -15,8 +17,8 @@ namespace RecommendationEngine.Models.DB
         public double AcPower { get; set; }
         public virtual DBAsset ParentAsset { get; set; }
         public virtual DBAssetType Type { get; set; }
-        public virtual List<DBAction> ActionsGivenList { get; set; }
-        public virtual List<DBRecommendationJobResult> RecommendationJobResultsGivenList { get; set; }
-        public virtual List<DBRecommendationSchedule> RecommendationSchedulesList { get; set; }
+        public virtual ICollection<DBAction> ActionsGivenList { get; set; }
+        public virtual ICollection<DBRecommendationJobResult> RecommendationJobResultsGivenList { get; set; }
+        public virtual ICollection<DBAssetRecommendationSchedule> RecommendationSchedulesList { get; set; }
     }
 }

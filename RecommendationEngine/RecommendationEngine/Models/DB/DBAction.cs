@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
@@ -6,6 +7,7 @@ namespace RecommendationEngine.Models.DB
     [Table("Action")]
     public class DBAction
     {
+        [Key]
         public int ActionId { get; set; }
         public string Title { get; set; }
         public string DisplayText { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
@@ -6,6 +7,7 @@ namespace RecommendationEngine.Models.DB
     [Table("RecommendationJobLog")]
     public class DBRecommendationJobLog
     {
+        [Key]
         public int RecommendationJobLogId { get; set; }
         public string Description { get; set; }
         public DateTime Time { get; set; }

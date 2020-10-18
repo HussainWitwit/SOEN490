@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecommendationEngine.Models.DB
@@ -7,6 +8,7 @@ namespace RecommendationEngine.Models.DB
     [Table("RecommendationSchedule")]
     public class DBRecommendationSchedule
     {
+        [Key]
         public int RecommendationScheduleId { get; set; }
         public string ModifiedBy { get; set; }
         public string Name { get; set; }
@@ -16,8 +18,8 @@ namespace RecommendationEngine.Models.DB
         public DateTime OccurenceDatetime { get; set; }
         public DateTime CreatedOn { get; set; }
         public virtual DBRecommendationType RecommendationType { get; set; }
-        public virtual List<DBAsset> AssetsList { get; set; }
-        public virtual List<DBRecommendationJob> JobsList { get; set; }
-        public virtual List<DBRecommendationScheduleParameter> ParametersList { get; set; }
+        public virtual ICollection<DBAssetRecommendationSchedule> AssetsList { get; set; }
+        public virtual ICollection<DBRecommendationJob> JobsList { get; set; }
+        public virtual ICollection<DBRecommendationScheduleParameter> ParametersList { get; set; }
     }
 }
