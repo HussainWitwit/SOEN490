@@ -10,7 +10,7 @@ namespace RecommendationEngine.Models.DB
         public string Name { get; set; }
         public string DisplayText { get; set; }
         public double DefaultValue { get; set; }
-        public DBRecommendationType ForRecommendationType { get; set; }
-        public List<DBRecommendationScheduleParameter> RecommendationScheduleParametersList { get; set; }
+        public virtual DBRecommendationType ForRecommendationType { get; set; }
+        public virtual List<DBRecommendationScheduleParameter> RecommendationScheduleParametersList { get; set; }
     }
 }

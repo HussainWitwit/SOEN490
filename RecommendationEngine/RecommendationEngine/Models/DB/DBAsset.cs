@@ -13,10 +13,10 @@ namespace RecommendationEngine.Models.DB
         public string TimeZone { get; set; }
         public string ElementPath { get; set; }
         public double AcPower { get; set; }
-        public DBAsset ParentAsset { get; set; }
-        public DBAssetType Type { get; set; }
-        public List<DBAction> ActionsGivenList { get; set; }
-        public List<DBRecommendationJobResult> RecommendationJobResultsGivenList { get; set; }
-        public List<DBRecommendationSchedule> RecommendationSchedulesList { get; set; }
+        public virtual DBAsset ParentAsset { get; set; }
+        public virtual DBAssetType Type { get; set; }
+        public virtual List<DBAction> ActionsGivenList { get; set; }
+        public virtual List<DBRecommendationJobResult> RecommendationJobResultsGivenList { get; set; }
+        public virtual List<DBRecommendationSchedule> RecommendationSchedulesList { get; set; }
     }
 }

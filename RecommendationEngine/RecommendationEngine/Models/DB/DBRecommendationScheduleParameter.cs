@@ -12,7 +12,7 @@ namespace RecommendationEngine.Models.DB
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public double ParamValue { get; set; }
-        public DBRecommendationParameter RecommendationParameter { get; set; }
-        public DBRecommendationSchedule Schedule { get; set; }
+        public virtual DBRecommendationParameter RecommendationParameter { get; set; }
+        public virtual DBRecommendationSchedule Schedule { get; set; }
     }
 }

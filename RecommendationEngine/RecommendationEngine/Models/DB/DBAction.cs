@@ -10,9 +10,9 @@ namespace RecommendationEngine.Models.DB
         public string Title { get; set; }
         public string DisplayText { get; set; }
         public DateTime Date { get; set; }
-        public DBAsset Asset { get; set; }
-        public DBWorkOrder WorkOrderOpened { get; set; }
-        public DBRecommendationJobResult RecommendationJobResult { get; set; }
+        public virtual DBAsset Asset { get; set; }
+        public virtual DBWorkOrder WorkOrderOpened { get; set; }
+        public virtual DBRecommendationJobResult RecommendationJobResult { get; set; }
     }
 }
 

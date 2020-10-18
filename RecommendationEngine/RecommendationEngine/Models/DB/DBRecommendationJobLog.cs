@@ -10,6 +10,6 @@ namespace RecommendationEngine.Models.DB
         public string Description { get; set; }
         public DateTime Time { get; set; }
         public string Level { get; set; }
-        public DBRecommendationJob RecommendationJob { get; set; }
+        public virtual DBRecommendationJob RecommendationJob { get; set; }
     }
 }

@@ -12,6 +12,6 @@ namespace RecommendationEngine.Models.DB
         public double CostOfWork { get; set; }
         public DateTime Time { get; set; }
         public string Protocol { get; set; }
-        public List<DBAction> Actions { get; set; }
+        public virtual List<DBAction> Actions { get; set; }
     }
 }

@@ -14,8 +14,8 @@ namespace RecommendationEngine.Models.DB
         public double CostOfInaction { get; set; }
         public double BenefitOfResult { get; set; }
         public double ConfidencePercentage { get; set; }
-        public List<DBAction> ActionsSuggestedList { get; set; }
-        public DBAsset Asset { get; set; }
-        public DBRecommendationJob Job { get; set; }
+        public virtual List<DBAction> ActionsSuggestedList { get; set; }
+        public virtual DBAsset Asset { get; set; }
+        public virtual DBRecommendationJob Job { get; set; }
     }
 }

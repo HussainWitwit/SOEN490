@@ -15,9 +15,9 @@ namespace RecommendationEngine.Models.DB
         public string Description { get; set; }
         public DateTime OccurenceDatetime { get; set; }
         public DateTime CreatedOn { get; set; }
-        public DBRecommendationType RecommendationType { get; set; }
-        public List<DBAsset> AssetsList { get; set; }
-        public List<DBRecommendationJob> JobsList { get; set; }
-        public List<DBRecommendationScheduleParameter> ParametersList { get; set; }
+        public virtual DBRecommendationType RecommendationType { get; set; }
+        public virtual List<DBAsset> AssetsList { get; set; }
+        public virtual List<DBRecommendationJob> JobsList { get; set; }
+        public virtual List<DBRecommendationScheduleParameter> ParametersList { get; set; }
     }
 }
