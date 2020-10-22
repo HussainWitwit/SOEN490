@@ -29,11 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20201018093456_InitialCreate.cs" />
-    <Compile Remove="Migrations\20201018093456_InitialCreate.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="FrontEnd\package-lock.json" />
     <None Include="FrontEnd\package.json" />
     <None Include="FrontEnd\public\manifest.json" />
