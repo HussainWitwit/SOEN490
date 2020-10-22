@@ -1,4 +1,4 @@
-﻿namespace RecommendationEngine.Models.Application.Asset
+﻿namespace Models.Application.Asset
 {
     public abstract class Asset
     {

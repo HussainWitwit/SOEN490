@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RecommendationEngine.Migrations
+namespace Models.Migrations
 {
     public partial class InitialCreate : Migration
     {

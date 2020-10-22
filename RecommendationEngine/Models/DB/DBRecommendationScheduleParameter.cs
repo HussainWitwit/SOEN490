@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RecommendationEngine.Models.DB
+namespace Models.DB
 {
     [Table("RecommendationScheduleParameter")]
     public class DBRecommendationScheduleParameter

@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RecommendationEngine.Models.DB;
+using Models.DB;
 
 namespace RecommendationEngine.Migrations
 {
@@ -17,7 +17,7 @@ namespace RecommendationEngine.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBAction", b =>
+            modelBuilder.Entity("Models.DB.DBAction", b =>
                 {
                     b.Property<int>("ActionId")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("Action");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBAsset", b =>
+            modelBuilder.Entity("Models.DB.DBAsset", b =>
                 {
                     b.Property<int>("AssetId")
                         .ValueGeneratedOnAdd()
@@ -91,7 +91,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("Asset");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBAssetRecommendationSchedule", b =>
+            modelBuilder.Entity("Models.DB.DBAssetRecommendationSchedule", b =>
                 {
                     b.Property<int>("AssetId")
                         .HasColumnType("int");
@@ -106,7 +106,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("AssetRecommendationSchedule");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBAssetType", b =>
+            modelBuilder.Entity("Models.DB.DBAssetType", b =>
                 {
                     b.Property<int>("AssetTypeId")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("AssetType");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationJob", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationJob", b =>
                 {
                     b.Property<int>("RecommendationJobId")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("RecommendationJob");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationJobLog", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationJobLog", b =>
                 {
                     b.Property<int>("RecommendationJobLogId")
                         .ValueGeneratedOnAdd()
@@ -187,7 +187,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("RecommendationJobLog");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationJobResult", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationJobResult", b =>
                 {
                     b.Property<int>("RecommendationJobResultId")
                         .ValueGeneratedOnAdd()
@@ -226,7 +226,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("RecommendationJobResult");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationParameter", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationParameter", b =>
                 {
                     b.Property<int>("RecommendationParameterId")
                         .ValueGeneratedOnAdd()
@@ -251,7 +251,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("RecommendationParameter");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationSchedule", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationSchedule", b =>
                 {
                     b.Property<int>("RecommendationScheduleId")
                         .ValueGeneratedOnAdd()
@@ -288,7 +288,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("RecommendationSchedule");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationScheduleParameter", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationScheduleParameter", b =>
                 {
                     b.Property<int>("RecommendationScheduleParameterId")
                         .ValueGeneratedOnAdd()
@@ -324,7 +324,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("RecommendationScheduleParameter");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationType", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationType", b =>
                 {
                     b.Property<int>("RecommendationTypeId")
                         .ValueGeneratedOnAdd()
@@ -341,7 +341,7 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("RecommendationType");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBWorkOrder", b =>
+            modelBuilder.Entity("Models.DB.DBWorkOrder", b =>
                 {
                     b.Property<int>("WorkOrderId")
                         .ValueGeneratedOnAdd()
@@ -364,97 +364,97 @@ namespace RecommendationEngine.Migrations
                     b.ToTable("WorkOrder");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBAction", b =>
+            modelBuilder.Entity("Models.DB.DBAction", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBAsset", "Asset")
+                    b.HasOne("Models.DB.DBAsset", "Asset")
                         .WithMany("ActionsGivenList")
                         .HasForeignKey("AssetId");
 
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationJobResult", "RecommendationJobResult")
+                    b.HasOne("Models.DB.DBRecommendationJobResult", "RecommendationJobResult")
                         .WithMany("ActionsSuggestedList")
                         .HasForeignKey("RecommendationJobResultId");
 
-                    b.HasOne("RecommendationEngine.Models.DB.DBWorkOrder", "WorkOrderOpened")
+                    b.HasOne("Models.DB.DBWorkOrder", "WorkOrderOpened")
                         .WithMany("Actions")
                         .HasForeignKey("WorkOrderOpenedWorkOrderId");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBAsset", b =>
+            modelBuilder.Entity("Models.DB.DBAsset", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBAsset", "ParentAsset")
+                    b.HasOne("Models.DB.DBAsset", "ParentAsset")
                         .WithMany()
                         .HasForeignKey("ParentAssetAssetId");
 
-                    b.HasOne("RecommendationEngine.Models.DB.DBAssetType", "Type")
+                    b.HasOne("Models.DB.DBAssetType", "Type")
                         .WithMany("AssetsList")
                         .HasForeignKey("TypeAssetTypeId");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBAssetRecommendationSchedule", b =>
+            modelBuilder.Entity("Models.DB.DBAssetRecommendationSchedule", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBAsset", "Asset")
+                    b.HasOne("Models.DB.DBAsset", "Asset")
                         .WithMany("RecommendationSchedulesList")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationSchedule", "Schedule")
+                    b.HasOne("Models.DB.DBRecommendationSchedule", "Schedule")
                         .WithMany("AssetsList")
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationJob", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationJob", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBAsset", "Asset")
+                    b.HasOne("Models.DB.DBAsset", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId");
 
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationSchedule", "Schedule")
+                    b.HasOne("Models.DB.DBRecommendationSchedule", "Schedule")
                         .WithMany("JobsList")
                         .HasForeignKey("ScheduleRecommendationScheduleId");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationJobLog", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationJobLog", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationJob", "RecommendationJob")
+                    b.HasOne("Models.DB.DBRecommendationJob", "RecommendationJob")
                         .WithMany("LogsList")
                         .HasForeignKey("RecommendationJobId");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationJobResult", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationJobResult", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBAsset", "Asset")
+                    b.HasOne("Models.DB.DBAsset", "Asset")
                         .WithMany("RecommendationJobResultsGivenList")
                         .HasForeignKey("AssetId");
 
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationJob", "Job")
+                    b.HasOne("Models.DB.DBRecommendationJob", "Job")
                         .WithMany("ResultsList")
                         .HasForeignKey("JobRecommendationJobId");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationParameter", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationParameter", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationType", "ForRecommendationType")
+                    b.HasOne("Models.DB.DBRecommendationType", "ForRecommendationType")
                         .WithMany("DefaultParametersList")
                         .HasForeignKey("ForRecommendationTypeRecommendationTypeId");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationSchedule", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationSchedule", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationType", "RecommendationType")
+                    b.HasOne("Models.DB.DBRecommendationType", "RecommendationType")
                         .WithMany("SchedulesOfTypeList")
                         .HasForeignKey("RecommendationTypeId");
                 });
 
-            modelBuilder.Entity("RecommendationEngine.Models.DB.DBRecommendationScheduleParameter", b =>
+            modelBuilder.Entity("Models.DB.DBRecommendationScheduleParameter", b =>
                 {
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationParameter", "RecommendationParameter")
+                    b.HasOne("Models.DB.DBRecommendationParameter", "RecommendationParameter")
                         .WithMany("RecommendationScheduleParametersList")
                         .HasForeignKey("RecommendationParameterId");
 
-                    b.HasOne("RecommendationEngine.Models.DB.DBRecommendationSchedule", "Schedule")
+                    b.HasOne("Models.DB.DBRecommendationSchedule", "Schedule")
                         .WithMany("ParametersList")
                         .HasForeignKey("ScheduleRecommendationScheduleId");
                 });

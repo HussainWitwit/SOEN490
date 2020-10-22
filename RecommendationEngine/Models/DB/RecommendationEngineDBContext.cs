@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
-namespace RecommendationEngine.Models.DB
+namespace Models.DB
 {
     public class RecommendationEngineDBContext: DbContext
     {
@@ -33,7 +33,6 @@ namespace RecommendationEngine.Models.DB
                 .UseLoggerFactory(
                     LoggerFactory.Create(
                         logging => logging
-                            .AddConsole()
                             .AddFilter(level => level >= LogLevel.Information)))
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors();

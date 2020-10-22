@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RecommendationEngine.Models.Application
+namespace Models.Application
 {
     public class WeatherForecast
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Quartz;
 
-namespace RecommendationEngine.Models.Application.RecommendationJob
+namespace Models.Application.RecommendationJob
 {
     public class FuseReplacementRecommendationJob: IRecommendationJob
     {
