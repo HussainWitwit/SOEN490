@@ -5,6 +5,6 @@ namespace RecommendationEngine.Models.Application.RecommendationJob
 {
     public interface IRecommendationJob: IJob
     {
-        public Task Execute(IJobExecutionContext context);
+        //public Task Execute(IJobExecutionContext context);
     }
 }

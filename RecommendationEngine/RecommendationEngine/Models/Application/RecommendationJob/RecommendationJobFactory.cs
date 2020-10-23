@@ -5,7 +5,7 @@ namespace RecommendationEngine.Models.Application.RecommendationJob
     public class RecommendationJobFactory
     {
 
-        public IRecommendationJob CreateRecommendationJob(RecommendationSchedule schedule)
+        public IRecommendationJob CreateRecommendationJob(ConfiguredRecommendation schedule)
         {
             switch (schedule.Type)
             {

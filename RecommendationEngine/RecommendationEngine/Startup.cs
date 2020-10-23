@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RecommendationEngine.Models.Application;
+using RecommendationEngine.Services;
 
 namespace RecommendationEngine
 {
@@ -21,6 +23,8 @@ namespace RecommendationEngine
         {
 
             services.AddControllersWithViews();
+
+            services.AddSingleton<ConfiguredRecommendationService>(); //to be removed once Autofac merged
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
