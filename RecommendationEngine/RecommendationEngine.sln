@@ -4,12 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecommendationEngine", "RecommendationEngine\RecommendationEngine.csproj", "{8CB822EF-976C-470B-9324-F72000D79BCF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{90C5CF8B-DDE0-48FF-8CF0-8A5DBB1FA27F} = {90C5CF8B-DDE0-48FF-8CF0-8A5DBB1FA27F}
+		{018866F4-F9E2-41AA-8C0B-9D668C76B47C} = {018866F4-F9E2-41AA-8C0B-9D668C76B47C}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{97D4BF46-0ADB-429D-81C9-741D5D1B9BBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{97D4BF46-0ADB-429D-81C9-741D5D1B9BBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{90C5CF8B-DDE0-48FF-8CF0-8A5DBB1FA27F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\Interfaces.csproj", "{90C5CF8B-DDE0-48FF-8CF0-8A5DBB1FA27F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommendationScheduler", "RecommendationScheduler\RecommendationScheduler.csproj", "{018866F4-F9E2-41AA-8C0B-9D668C76B47C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecommendationScheduler", "RecommendationScheduler\RecommendationScheduler.csproj", "{018866F4-F9E2-41AA-8C0B-9D668C76B47C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
