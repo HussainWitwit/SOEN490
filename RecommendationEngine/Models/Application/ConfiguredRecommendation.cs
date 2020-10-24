@@ -21,5 +21,28 @@ namespace RecommendationEngine.Models.Application
         public DateTime CenterPoint { get; set; }
         public string Granularity { get; set; }
         public List<ConfiguredRecommendationParameter> Parameters { get; set; }
+
+        public ConfiguredRecommendation()
+        {
+        }
+
+        public ConfiguredRecommendation(string title, string type, int frequencyOfRepetiton, string periodicity, int dayOfWeek, DateTime hourRepeated, DateTime createdOn, DateTime startDate, DateTime endDate, string createdBy, DateTime occurrenceDatetime, int span, DateTime centerPoint, string granularity, List<ConfiguredRecommendationParameter> parameters)
+        {
+            Title = title;
+            Type = type;
+            FrequencyOfRepetiton = frequencyOfRepetiton;
+            Periodicity = periodicity;
+            DayOfWeek = dayOfWeek;
+            HourRepeated = hourRepeated;
+            CreatedOn = createdOn;
+            StartDate = startDate;
+            EndDate = endDate;
+            CreatedBy = createdBy;
+            OccurrenceDatetime = occurrenceDatetime;
+            Span = span;
+            CenterPoint = centerPoint;
+            Granularity = granularity;
+            Parameters = parameters;
+        }
     }
 }

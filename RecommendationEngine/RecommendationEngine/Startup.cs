@@ -26,8 +26,6 @@ namespace RecommendationEngine
 
             services.AddControllersWithViews();
 
-            services.AddSingleton<ConfiguredRecommendationService>(); //to be removed once Autofac merged
-
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

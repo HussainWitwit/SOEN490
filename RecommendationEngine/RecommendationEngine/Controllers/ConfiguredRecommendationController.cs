@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Models.Application;
@@ -13,9 +14,9 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private ConfiguredRecommendationService _recommendationSchedulerService;
+        private IConfiguredRecommendationService _recommendationSchedulerService;
 
-        public ConfiguredRecommendationController(ConfiguredRecommendationService recommendationSchedulerService)
+        public ConfiguredRecommendationController(IConfiguredRecommendationService recommendationSchedulerService)
         {
             _recommendationSchedulerService = recommendationSchedulerService;
         }
@@ -31,7 +32,7 @@ namespace RecommendationEngine.Controllers
                 _recommendationSchedulerService.addConfiguredRecommendation(configuredRecommendation);
             }
             catch (GlobalException e) {
-                return BadRequest(e);
+                return BadRequest(new {e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
             return Ok();
         }

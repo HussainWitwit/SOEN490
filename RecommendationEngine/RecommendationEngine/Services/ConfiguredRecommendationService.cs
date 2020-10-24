@@ -12,13 +12,12 @@ namespace RecommendationEngine.Services
     public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {
         private IDriveService _driveService;
+        public List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>();
 
         public ConfiguredRecommendationService(IDriveService driveService)
         {
             this._driveService = driveService;
         }
-
-        public List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>();
 
         public List<ConfiguredRecommendation> getConfiguredRecommendationList() {
             return list;
