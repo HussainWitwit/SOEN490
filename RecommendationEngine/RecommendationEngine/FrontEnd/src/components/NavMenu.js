@@ -7,7 +7,7 @@ function NavMenu (props) {
   const [collapsed, setCollapsed] = React.useState(true);
 
   const toggleNavbar = () => {
-    if (collapsed == true)
+    if (collapsed === true)
       setCollapsed(false);
     else {
       setCollapsed(true);
