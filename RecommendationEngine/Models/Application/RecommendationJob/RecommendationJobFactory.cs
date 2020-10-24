@@ -1,4 +1,6 @@
-﻿namespace Models.Application.RecommendationJob
+﻿using RecommendationEngine.Models.Application;
+
+namespace Models.Application.RecommendationJob
 {
     public class RecommendationJobFactory
     {

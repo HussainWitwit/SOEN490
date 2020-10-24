@@ -4,16 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Models.Application;
+using Interfaces.Services;
 using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Services
 {
-    public class ConfiguredRecommendationService
+    public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {
-        public List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>();
+        private IDriveService _driveService;
 
-        public ConfiguredRecommendationService() {
+        public ConfiguredRecommendationService(IDriveService driveService)
+        {
+            this._driveService = driveService;
         }
+
+        public List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>();
 
         public List<ConfiguredRecommendation> getConfiguredRecommendationList() {
             return list;

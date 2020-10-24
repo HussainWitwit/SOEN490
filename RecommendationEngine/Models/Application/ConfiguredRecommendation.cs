@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Application;
+using System;
 using System.Collections.Generic;
 
 namespace RecommendationEngine.Models.Application
