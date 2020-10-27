@@ -13,6 +13,13 @@ button {
   /* background-color: brown; */
   margin: -5%;
 }
+button.btn.btn-sm.shadow-none.disabled{
+  color: black;
+}
+.btn.disabled {
+  font-weight: bold;
+  opacity: inherit;
+}
 li {
   /* background-color: blueviolet; */
 }
