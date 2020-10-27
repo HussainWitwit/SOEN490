@@ -4,7 +4,7 @@ import NotifyMe from 'react-notification-timeline';
 import './NavMenu.css';
 
 const Navigation = styled.nav`
-    border-bottom: 1px solid black;
+    border-bottom: 1px;
     box-shadow: 0 3px 3px 0px rgba(0,0,0,.2);
     // background-color: yellow;
     height: 35px;

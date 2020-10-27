@@ -3,7 +3,7 @@ import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
 
 function Layout (props) {
-  const [crumbs, setCrumbs] = React.useState(['Home', 'Category', 'Sub Category']);
+  const [crumbs, setCrumbs] = React.useState(['All Portfolio', '23-kahuku', '001-kahuku']);
 
   const selected = (crumb) => {
     console.log(crumb);
