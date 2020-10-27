@@ -1,41 +1,43 @@
 import React from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import './NavMenu.css';
 
-function NavMenu (props) {
-  const [collapsed, setCollapsed] = React.useState(true);
+const Navigation = styled.nav`
+    border-bottom: 1px solid black;
+    box-shadow: 0 3px 3px 0px rgba(0,0,0,.2);
+`;
 
-  const toggleNavbar = () => {
-    if (collapsed === true)
-      setCollapsed(false);
-    else {
-      setCollapsed(true);
-    }
-  };
+const breadcrumb = {
+  backgroundColor: 'white',
+}
+
+function NavMenu(props) {
+
+  function isLast(index) {
+    return index === props.crumbs.length - 1;
+  }
 
   return (
-    <header>
-      <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-        <Container>
-          <NavbarBrand tag={Link} to="/">RecommendationEngine</NavbarBrand>
-          <NavbarToggler onClick={toggleNavbar} className="mr-2" />
-          <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
-            <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-              </NavItem>
-            </ul>
-          </Collapse>
-        </Container>
-      </Navbar>
-    </header>
+      <Navigation>
+        <ol className="breadcrumb" style={breadcrumb}>
+          {
+            props.crumbs.map((crumb, ci) => {
+              const disabled = isLast(ci) ? 'disabled' : '';
+
+              return (
+                <li
+                  key={ci}
+                  className="breadcrumb-item align-items-center"
+                >
+                  <button className={`btn btn-sm shadow-none ${disabled}`} onClick={() => props.selected(crumb)}>
+                    {crumb}
+                  </button>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </Navigation>
   );
 }
 
