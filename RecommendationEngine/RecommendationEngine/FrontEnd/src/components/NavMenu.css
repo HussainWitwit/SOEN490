@@ -1,8 +1,23 @@
 ﻿html {
   font-size: 14px;
 }
-
+.breadcrumb {
+  padding: 0%;
+  float: left;
+}
+button {
+  /* background-color: brown; */
+  margin: -5%;
+}
+li {
+  /* background-color: blueviolet; */
+}
 .notification_bell {
+  float: right;
+  /* background-color: aqua; */
+}
+.notification.notify {
+  padding: 0%;
 }
 
 @media (min-width: 768px) {
