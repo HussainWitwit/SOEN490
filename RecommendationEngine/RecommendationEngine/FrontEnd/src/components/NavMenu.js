@@ -10,10 +10,6 @@ const Navigation = styled.nav`
     height: 35px;
 `;
 
-const breadcrumb = {
-  backgroundColor: 'white',
-}
-
 function NavMenu(props) {
   const [data, setData] = React.useState(
     [
@@ -33,7 +29,7 @@ function NavMenu(props) {
 
   return (
     <Navigation>
-      <ol className="breadcrumb" style={breadcrumb}>
+      <ol className="breadcrumb">
         {
           props.crumbs.map((crumb, ci) => {
             const disabled = isLast(ci) ? 'disabled' : '';

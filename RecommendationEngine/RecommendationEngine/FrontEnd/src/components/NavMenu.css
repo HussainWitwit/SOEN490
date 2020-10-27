@@ -4,6 +4,10 @@
 .breadcrumb {
   padding: 0%;
   float: left;
+  background-color: white;
+}
+.breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
 }
 button {
   /* background-color: brown; */
@@ -19,6 +23,7 @@ li {
 .notification.notify {
   padding: 0%;
 }
+
 
 @media (min-width: 768px) {
   html {
