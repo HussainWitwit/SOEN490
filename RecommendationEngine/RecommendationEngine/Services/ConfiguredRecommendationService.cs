@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Models.Application;
 using Interfaces.Services;
 using RecommendationEngine.Services.ExternalAPI;
+using RecommendationEngine.configuredRecommendationHelper;
 
 namespace RecommendationEngine.Services
 {
     public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {
+        private IConfiguredRecommendationHelper _configRecommendationHelper;
         private IDriveService _driveService;
         public List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>();
 
@@ -24,10 +23,11 @@ namespace RecommendationEngine.Services
         }
 
         public void addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation) {
+            if(configuredRecommendation.validate())
             list.Add(configuredRecommendation);
         }
 
-        /* TODO
+        /* TODO 
          * 
          * 1- Error handling list
          *
@@ -38,8 +38,7 @@ namespace RecommendationEngine.Services
          * In case of exception, throw a custom exception!
          * Handle business logic in a seperate file.
          * 
-         * 2- Merge dev changes
-         * Dependency Injections
+         * 
          */
     }
 }
