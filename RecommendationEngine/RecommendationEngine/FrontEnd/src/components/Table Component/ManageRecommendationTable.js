@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,51 +17,13 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import { FilterList } from '@material-ui/icons';
 import './ManageRecommendationTable.css';
-import { Filter1Outlined, FilterList } from '@material-ui/icons';
+import { useStyles, StyledTableCell } from '../Table Component/TableTheme';
 
-
-const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: theme.palette.common.white,
-        color: theme.palette.grey,
-    },
-    body: {
-        fontSize: 10,
-
-    },
-}))(TableCell);
-
-const useStyles1 = makeStyles((theme) => ({
-    root: {
-        flexShrink: 0,
-        marginLeft: theme.spacing(2.5),
-    },
-    toolbar: {
-        fontSize: 12,
-    },
-
-
-    rootSearchBar: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        },
-    },
-
-
-}));
-
-const useStyles2 = makeStyles({
-    table: {
-        minWidth: 650,
-    },
-
-});
 
 function TablePaginationActions(props) {
-    const classes = useStyles1();
+    const style = useStyles()
     const theme = useTheme();
     const { count, page, rowsPerPage, onChangePage } = props;
 
@@ -82,7 +44,7 @@ function TablePaginationActions(props) {
     };
 
     return (
-        <div className={classes.root}>
+        <div className={style.root}>
             <IconButton
                 onClick={handleFirstPageButtonClick}
                 disabled={page === 0}
@@ -138,7 +100,7 @@ TablePaginationActions.propTypes = {
 };
 
 function ManageRecommendationTable() {
-    const classes = useStyles2();
+    const style = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -161,10 +123,9 @@ function ManageRecommendationTable() {
                 <br></br>
             </div>
             <div>
-                <form className={classes.rootSearchBar} noValidate autoComplete="off">
+                <form className={style.rootSearchBar} noValidate autoComplete="off">
                     <TextField id="filled-search" label="Search field" type="search" variant="filled" />
-                    <button id="filterBtn">Add Filter</button>
-                    <button ><FilterList/></button>
+                    <Button variant="contained" color="primary" className={style.filterBtn} endIcon={<FilterList />}>Add Filter</Button>
                 </form>
             </div>
             <div>
@@ -172,12 +133,12 @@ function ManageRecommendationTable() {
 
                 </div>
                 <div>
-                <Button id="recBtn" variant="contained" color="primary">+ Recommendation</Button>
+                    <Button className={style.recBtn}>+ Recommendation</Button>
                 </div>
             </div>
             <div id="table">
                 <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="custom pagination table">
+                    <Table className={style.table} aria-label="custom pagination table">
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell>Title</StyledTableCell>
@@ -236,7 +197,7 @@ function ManageRecommendationTable() {
                                     onChangeRowsPerPage={handleChangeRowsPerPage}
                                     ActionsComponent={TablePaginationActions}
                                     classes={{
-                                        toolbar: classes.toolbar,
+                                        toolbar: style.toolbar,
                                     }
 
                                     }
@@ -248,8 +209,6 @@ function ManageRecommendationTable() {
 
             </div>
         </div>
-
-
 
     );
 }
