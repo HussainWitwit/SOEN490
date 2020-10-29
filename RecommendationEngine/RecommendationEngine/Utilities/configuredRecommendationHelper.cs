@@ -5,15 +5,11 @@ using System.Linq;
 
 namespace RecommendationEngine.configuredRecommendationHelper
 {
-    public interface IConfiguredRecommendationHelper
-    {
-        public void validate(ConfiguredRecommendation configuredRecommendation);
-    }
 
     public static class ConfiguredRecommendationHelper
     { 
 
-        public static bool validate(this ConfiguredRecommendation configuredRecommendation)
+        public static void validate(this ConfiguredRecommendation configuredRecommendation)
         {
             string[] strs = new string[] { configuredRecommendation.Title, configuredRecommendation.CreatedBy, configuredRecommendation.Granularity, configuredRecommendation.Periodicity, configuredRecommendation.Type };
 
@@ -30,8 +26,6 @@ namespace RecommendationEngine.configuredRecommendationHelper
             {
                 throw new GlobalException(400, "Bad Request", "date must be later or equal to today", "Recommendation Engine");
             }
-
-            return true;
         }
     }
 }
