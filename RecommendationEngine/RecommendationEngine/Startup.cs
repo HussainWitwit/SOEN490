@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Models.DB;
 using RecommendationEngine.Models.Application;
 using RecommendationEngine.Services;
 
@@ -47,7 +48,10 @@ namespace RecommendationEngine
 
             builder.RegisterAssemblyTypes(dataAccess)
                 .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+            builder.RegisterType<RecommendationEngineDBContext>()
+                .InstancePerLifetimeScope();
         }
 
 
