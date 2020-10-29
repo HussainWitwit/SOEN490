@@ -8,3 +8,6 @@ script:
   - dotnet restore RecommendationEngine.sln
   - dotnet build RecommendationEngine.sln
   - dotnet test
+  - cd RecommendationEngine
+  - cd FrontEnd
+  - npm run test
