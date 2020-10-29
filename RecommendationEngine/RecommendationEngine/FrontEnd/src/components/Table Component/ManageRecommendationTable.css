@@ -11,9 +11,17 @@
         color: #252733;
     }
     
-    .recBtn{
+    #recBtn{
         float: right;
- 
+        /* background-color: #4DD3EF ;
+        color: white;
+        font-size: 14px;
+        /* padding: 10px 60px; */
+        border-radius: 0px;
+        border-color: #4DD3EF;
+        /* margin: 10px 0px; */
+        cursor: pointer;
+        text-transform: none;
     }
 
     #table{
