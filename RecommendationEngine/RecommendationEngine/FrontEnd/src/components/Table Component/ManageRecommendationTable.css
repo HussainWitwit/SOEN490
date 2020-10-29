@@ -1,0 +1,23 @@
+    #title{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #252733;
+    }
+    #subtitle{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        color: #868282;
+    }
+
+    #filterBtn{
+        color: #252733;
+    }
+    
+    .recBtn{
+        float: right;
+ 
+    }
+
+    #table{
+        margin-top: 50px;
+    }
+
+    

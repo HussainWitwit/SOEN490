@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import NavMenu from './NavMenu';
+import NavMenu from './NavMenu/NavMenu';
 
 function Layout (props) {
   const [crumbs, setCrumbs] = React.useState(['All Portfolio', '23-kahuku', '001-kahuku']);
