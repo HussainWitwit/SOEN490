@@ -5,20 +5,6 @@ export const DrawerStyled = makeStyles((theme) => ({
         background: '#424242', //
         width: 200
     },
-    pinIconButtonOn: {
-        fontSize: 13,
-        color: 'grey',
-        transform: 'rotate(90)',
-        transition: "all 0.5s"
-    },
-    pinIconButtonOff: {
-        color: 'yellow',
-        fontSize: 10, //gets overriden for some reason
-        // width: '1em',
-        // height: '1em',
-        // transform: 'rotate(0)',
-        // transition: 'all 0.5s'
-    },
 }));
 
 export const ButtonStyled = makeStyles((theme) => ({

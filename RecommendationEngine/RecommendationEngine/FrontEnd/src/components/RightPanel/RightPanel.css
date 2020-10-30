@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap');
+
 .Drawer-Button-Styled{
     background-color: red;
     position: absolute;
@@ -11,4 +13,43 @@
 }
 .Drawer-Button-Styled:hover {
     background-color: purple;
+}
+
+.Drawer-Pin{
+    width: 20px;
+    height: 20px
+}
+
+.Drawer-Close {
+    color: grey;
+    font-size: 21px!important;
+}
+
+.Drawer-Pinned-Icon {
+    color: yellow;
+    font-size: 14px!important;
+    transform: rotate(0deg);
+    transition: all 0.5s;
+}
+.Drawer-UnPinned-Icon {
+    color: grey;
+    font-size: 14px!important;
+    transform: rotate(90deg);
+    transition: all 0.5s;
+}
+
+.Drawer-Header-Container {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr 0.7fr; 
+    background-color: brown;
+    align-content: center;
+    height: 55px;
+    font-size: 15px;
+    font-family: 'Mulish', sans-serif;
+    padding-left: 5px;
+}
+
+.Drawer-Container{
+    flex-direction: column;
+    
 }
