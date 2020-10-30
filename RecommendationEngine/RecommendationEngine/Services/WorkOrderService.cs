@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RecommendationEngine.Services.ExternalAPI;
 
-namespace RecommendationEngine.Services
+namespace RecommendationEngine.WorkOrderService
 {
     public class WorkOrderService
     {

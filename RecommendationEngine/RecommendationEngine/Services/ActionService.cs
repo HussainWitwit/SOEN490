@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Interfaces.Services;
 using RecommendationEngine.Services.ExternalAPI;
 
-namespace RecommendationEngine.Services
+namespace RecommendationEngine.ActionService
 {
     public class ActionService: IActionService
     {

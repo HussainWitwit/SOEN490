@@ -9,7 +9,7 @@ namespace RecommendationEngine.configuredRecommendationHelper
     public static class ConfiguredRecommendationHelper
     { 
 
-        public static void validate(this ConfiguredRecommendation configuredRecommendation)
+        public static void Validate(this ConfiguredRecommendation configuredRecommendation)
         {
             string[] strs = new string[] { configuredRecommendation.Title, configuredRecommendation.CreatedBy, configuredRecommendation.Granularity, configuredRecommendation.Periodicity, configuredRecommendation.Type };
 

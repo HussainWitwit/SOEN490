@@ -5,7 +5,7 @@ using Interfaces.Services;
 using RecommendationEngine.Services.ExternalAPI;
 using RecommendationEngine.configuredRecommendationHelper;
 
-namespace RecommendationEngine.Services
+namespace RecommendationEngine.ConfiguredRecommendationService
 {
     public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {
@@ -22,7 +22,7 @@ namespace RecommendationEngine.Services
         }
 
         public void addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation) {
-            configuredRecommendation.validate();
+            configuredRecommendation.Validate();
             list.Add(configuredRecommendation);
         }
     }
