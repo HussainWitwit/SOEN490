@@ -10,7 +10,7 @@
 nav {
   border-bottom: 1px;
   box-shadow: 0 3px 3px 0px rgba(0,0,0,.2);
-  background-color:#EDEDED;
+  background-color:#C8C8C8;
   height: 35px;
 }
 .weather{
@@ -20,8 +20,7 @@ nav {
 .temperature_icon {
   float: right;
   height: 35px;
-  color: #FFCE31;
-  width: 25px;
+  width: 35px;
   margin-right: 5px;
   margin-left: 5px;
 }
@@ -35,7 +34,7 @@ div.weather p {
   float: left;
   position: relative;
   top: 15%;
-  background-color:#EDEDED;
+  background-color:#C8C8C8;
 }
 .breadcrumb-item+.breadcrumb-item::before {
     content: ">";
@@ -55,11 +54,11 @@ li {
   /* background-color: blueviolet; */
 }
 .notification {
-  background-color:#EDEDED;
+  background-color:#C8C8C8;
 }
 .notification_bell {
   float: right;
-  background-color:#EDEDED;
+  background-color:#C8C8C8;
 }
 .notification.notify {
   padding: 0%;

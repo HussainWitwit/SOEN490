@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import NotifyMe from 'react-notification-timeline';
 import './NavMenu.css';
-import { HiSun } from "react-icons/hi";
 
 
 function NavMenu(props) {
@@ -29,7 +28,7 @@ function NavMenu(props) {
   const getCurrentWeather = async () => {
     let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=montreal&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`);
     let data = await response.json();
-    setWeatherDetails({temp: data.main.temp, description: data.weather[0].main});
+    setWeatherDetails({temp: data.main.temp, description: data.weather[0].main, icon: data.weather[0].icon});
   }
 
   function isLast(index) {
@@ -66,7 +65,7 @@ function NavMenu(props) {
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
         </div>
-        <HiSun className="temperature_icon" />
+        <img className="temperature_icon" src={weatherDetails ? "http://openweathermap.org/img/wn/" + weatherDetails.icon + ".png" : "no icon"}/>
         <div className="notification_bell">
           <NotifyMe
             data={notification}
