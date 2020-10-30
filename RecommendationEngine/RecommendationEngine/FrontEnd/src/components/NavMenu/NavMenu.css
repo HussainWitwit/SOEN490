@@ -1,12 +1,70 @@
-﻿a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-
-html {
+﻿html {
   font-size: 14px;
 }
+.notification.notify svg{
+  fill: #212529;
+}
+.notification::after {
+  background-color: #4DD3EF;
+}
+nav {
+  border-bottom: 1px;
+  box-shadow: 0 3px 3px 0px rgba(0,0,0,.2);
+  background-color:#C8C8C8;
+  height: 35px;
+}
+.weather{
+  float: right;
+  position: relative;
+}
+.temperature_icon {
+  float: right;
+  height: 35px;
+  width: 35px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+div.weather p {
+  margin: 0px;
+  font-size: 12px;
+  margin-right: 20px;
+}
+.breadcrumb {
+  padding: 0%;
+  float: left;
+  position: relative;
+  top: 15%;
+  background-color:#C8C8C8;
+}
+.breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+}
+button {
+  /* background-color: brown; */
+  margin: -5%;
+}
+button.btn.btn-sm.shadow-none.disabled{
+  color: black;
+}
+.btn.disabled {
+  font-weight: bold;
+  opacity: inherit;
+}
+li {
+  /* background-color: blueviolet; */
+}
+.notification {
+  background-color:#C8C8C8;
+}
+.notification_bell {
+  float: right;
+  background-color:#C8C8C8;
+}
+.notification.notify {
+  padding: 0%;
+}
+
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
