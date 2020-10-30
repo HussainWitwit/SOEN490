@@ -1,0 +1,14 @@
+.Drawer-Button-Styled{
+    background-color: red;
+    position: absolute;
+    font-size: 15px;
+    border-radius: 4;
+    height: 30px;
+    width: 85px;
+    right: 700px;
+    top: 350px;
+    transition-duration: 2s;   
+}
+.Drawer-Button-Styled:hover {
+    background-color: purple;
+}
