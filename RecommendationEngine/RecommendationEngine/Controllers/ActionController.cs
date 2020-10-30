@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using RecommendationEngine.Services;
+using RecommendationEngine.ActionServices;
 
 namespace RecommendationEngine.Controllers
 {

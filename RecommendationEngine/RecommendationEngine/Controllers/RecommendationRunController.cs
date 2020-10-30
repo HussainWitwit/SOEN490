@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Cache;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RecommendationEngine.Services;
+using RecommendationEngine.RecommendationRunServices;
 
 namespace RecommendationEngine.Controllers
 {

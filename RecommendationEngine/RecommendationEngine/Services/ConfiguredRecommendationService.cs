@@ -7,7 +7,7 @@ using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 using RecommendationEngine.configuredRecommendationHelper;
 
-namespace RecommendationEngine.ConfiguredRecommendationService
+namespace RecommendationEngine.ConfiguredRecommendationServices
 {
     public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {

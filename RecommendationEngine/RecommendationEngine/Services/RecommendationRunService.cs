@@ -6,7 +6,7 @@ using Interfaces.Services.ExternalApi;
 using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 
-namespace RecommendationEngine.RecommendationRunService
+namespace RecommendationEngine.RecommendationRunServices
 {
     public class RecommendationRunService
     {

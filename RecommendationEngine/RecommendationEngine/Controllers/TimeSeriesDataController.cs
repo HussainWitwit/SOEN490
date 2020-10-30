@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.Services;
 
-namespace RecommendationEngine.Controllers
+namespace RecommendationEngine.WeatherServices
 {
     [ApiController]
     [Route("[controller]")]

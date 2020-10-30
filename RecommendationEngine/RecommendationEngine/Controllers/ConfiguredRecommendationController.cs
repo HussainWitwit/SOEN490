@@ -6,7 +6,7 @@ using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Models.Application;
-using RecommendationEngine.Services;
+using RecommendationEngine.ConfiguredRecommendationServices;
 
 namespace RecommendationEngine.Controllers
 {
@@ -14,9 +14,9 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private IConfiguredRecommendationService _recommendationSchedulerService;
+        private ConfiguredRecommendationService _recommendationSchedulerService;
 
-        public ConfiguredRecommendationController(IConfiguredRecommendationService recommendationSchedulerService)
+        public ConfiguredRecommendationController(ConfiguredRecommendationService recommendationSchedulerService)
         {
             _recommendationSchedulerService = recommendationSchedulerService;
         }

@@ -7,7 +7,7 @@ using Interfaces.Services.ExternalApi;
 using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 
-namespace RecommendationEngine.ActionService
+namespace RecommendationEngine.ActionServices
 {
     public class ActionService: IActionService
     {
