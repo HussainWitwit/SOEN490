@@ -18,12 +18,18 @@ function NavMenu(props) {
     ])
 
   const [locationDetails, setLocationDetails] = React.useState(null);
+  const [weatherDetails, setWeatherDetails] = React.useState(null);
 
   const getCurrentLocation = async () => {
-    let response = await fetch("https://geolocation-db.com/json/7733a990-ebd4-11ea-b9a6-2955706ddbf3");
+    let response = await fetch(`https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_KEY}`);
     let data = await response.json();
-    console.log(data);
     setLocationDetails({country_code: data.country_code, city: data.city});
+  }
+
+  const getCurrentWeather = async () => {
+    let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=montreal&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`);
+    let data = await response.json();
+    setWeatherDetails({temp: data.main.temp, description: data.weather[0].main});
   }
 
   function isLast(index) {
@@ -32,6 +38,7 @@ function NavMenu(props) {
 
   useEffect(() => {
     getCurrentLocation();
+    getCurrentWeather();
   },[]);
 
   return (
@@ -56,7 +63,7 @@ function NavMenu(props) {
           }
         </ol>
         <div className="weather">
-          <p>23°C Sunny</p>
+          <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
         </div>
         <HiSun className="temperature_icon" />
