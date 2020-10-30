@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import NotifyMe from 'react-notification-timeline';
 import './NavMenu.css';
 import { HiSun } from "react-icons/hi";
 
 
 function NavMenu(props) {
-  const [data, setData] = React.useState(
+  const [notification, setNotifications] = React.useState(
     [
       {
         "update": "70 new employees are shifted",
@@ -17,9 +17,22 @@ function NavMenu(props) {
       }
     ])
 
+  const [locationDetails, setLocationDetails] = React.useState(null);
+
+  const getCurrentLocation = async () => {
+    let response = await fetch("https://geolocation-db.com/json/7733a990-ebd4-11ea-b9a6-2955706ddbf3");
+    let data = await response.json();
+    console.log(data);
+    setLocationDetails({country_code: data.country_code, city: data.city});
+  }
+
   function isLast(index) {
     return index === props.crumbs.length - 1;
   }
+
+  useEffect(() => {
+    getCurrentLocation();
+  },[]);
 
   return (
     <div>
@@ -44,12 +57,12 @@ function NavMenu(props) {
         </ol>
         <div className="weather">
           <p>23°C Sunny</p>
-          <p>Montreal Qc</p>
+          <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
         </div>
-        <HiSun className="temperature_icon"/>
+        <HiSun className="temperature_icon" />
         <div className="notification_bell">
           <NotifyMe
-            data={data}
+            data={notification}
             storageKey='notific_key'
             notific_key='timestamp'
             notific_value='update'
