@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const drawerStyle = makeStyles((theme) => ({
+export const DrawerStyled = makeStyles((theme) => ({
     drawerBox : {
-        background: '#424242' //
-    }
+        background: '#424242', //
+        width: 200
+    },
 }));
 
 export const ButtonStyled = makeStyles((theme) => ({
