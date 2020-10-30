@@ -1,4 +1,4 @@
-﻿namespace RecommendationEngine.Services.ExternalAPI
+﻿namespace Interfaces.Services.ExternalApi
 {
     public interface IWorkOrderService
     {
