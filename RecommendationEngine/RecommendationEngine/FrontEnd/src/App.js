@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Home from './components/Home/Home';
 import {FetchData} from './components/FetchData';
 import Counter from './components/Counter';
+import { hot } from 'react-hot-loader/root';
 
 import './stylesheet.css'
 
@@ -17,4 +18,4 @@ function App (props) {
     );
 }
 
-export default App;
+export default hot(App);
