@@ -1,11 +1,12 @@
 ﻿using RecommendationEngine.Models.Application;
 using System.Collections.Generic;
+using Models.DB;
 
 namespace Interfaces.Services
 {
     public interface IConfiguredRecommendationService
     {
-        public List<ConfiguredRecommendation> getConfiguredRecommendationList();
+        public List<DBRecommendationSchedule> getConfiguredRecommendationList();
         public void addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation);
     }
 }

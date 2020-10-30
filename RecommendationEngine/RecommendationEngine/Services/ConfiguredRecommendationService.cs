@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using RecommendationEngine.Models.Application;
 using Interfaces.Services;
@@ -21,13 +22,29 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             _recommendationEngineRepository = recommendationEngineRepository;
         }
 
-        public List<ConfiguredRecommendation> getConfiguredRecommendationList() {
+        public List<DBRecommendationSchedule> getConfiguredRecommendationList()
+        {
+            List<DBRecommendationSchedule> list = _recommendationEngineRepository.RecommendationSchedules.ToList();
             return list;
         }
 
-        public void addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation) {
+        public void addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
             configuredRecommendation.Validate();
-            list.Add(configuredRecommendation);
+            addRecommendationToDB(configuredRecommendation);
+        }
+
+        private void addRecommendationToDB(ConfiguredRecommendation configuredRecommendation)
+        {
+            DBRecommendationSchedule context = new DBRecommendationSchedule();
+            context.Name = configuredRecommendation.Title;
+            context.DisplayText = configuredRecommendation.Type;
+            context.ModifiedBy = configuredRecommendation.CreatedBy;
+            context.Granularity = configuredRecommendation.Granularity;
+            context.OccurenceDatetime = configuredRecommendation.OccurrenceDatetime;
+            context.CreatedOn = configuredRecommendation.CreatedOn;
+            _recommendationEngineRepository.RecommendationSchedules.Add(context);
+            _recommendationEngineRepository.SaveChanges();
         }
     }
 }

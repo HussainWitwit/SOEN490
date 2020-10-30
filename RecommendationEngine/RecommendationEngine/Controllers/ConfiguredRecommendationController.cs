@@ -14,9 +14,9 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private ConfiguredRecommendationService _recommendationSchedulerService;
+        private IConfiguredRecommendationService _recommendationSchedulerService;
 
-        public ConfiguredRecommendationController(ConfiguredRecommendationService recommendationSchedulerService)
+        public ConfiguredRecommendationController(IConfiguredRecommendationService recommendationSchedulerService)
         {
             _recommendationSchedulerService = recommendationSchedulerService;
         }
