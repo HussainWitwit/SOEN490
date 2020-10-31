@@ -20,6 +20,15 @@ import MailIcon from '@material-ui/icons/Mail';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
+import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
+import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import BuildRoundedIcon from '@material-ui/icons/BuildRounded';
+import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
+import TuneRoundedIcon from '@material-ui/icons/TuneRounded';
+import EventRoundedIcon from '@material-ui/icons/EventRounded';
+import WorkOutlineRoundedIcon from '@material-ui/icons/WorkOutlineRounded';
+import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
+import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 
 
 const drawerWidth = 240;
@@ -159,14 +168,14 @@ export default function SideMenu () {
                     ))} */}
                     <ListItem button>
                         <ListItemIcon>
-                            <ChevronRightIcon />
+                            <DashboardRoundedIcon />
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
                     </ListItem>
 
                     <ListItem button>
                         <ListItemIcon>
-                            <ChevronRightIcon />
+                            <ListAltRoundedIcon />
                         </ListItemIcon>
                         <ListItemText primary="Recommendations" />
                         {openNested ? <ExpandLess /> : <ExpandMore />}
@@ -182,7 +191,7 @@ export default function SideMenu () {
 
                     <ListItem button>
                         <ListItemIcon>
-                            <ChevronRightIcon />
+                            <WorkOutlineRoundedIcon />
                         </ListItemIcon>
                         <ListItemText primary="Work Orders" />
                     </ListItem>
@@ -194,7 +203,7 @@ export default function SideMenu () {
                 <List>
                     {['Settings', 'Notifications'].map((text, index) => (
                         <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemIcon>{index % 2 === 0 ? <SettingsRoundedIcon /> : <NotificationsRoundedIcon />}</ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
                     ))}
