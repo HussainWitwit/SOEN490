@@ -1,10 +1,13 @@
     #title{
+        margin-top: 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #252733;
     }
     #subtitle{
+        margin-top: 10px;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         color: #868282;
+        font-size: 13px;
     }
 
     #filterBtn{
@@ -27,5 +30,4 @@
     #table{
         margin-top: 50px;
     }
-
     
