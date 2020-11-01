@@ -1,22 +1,13 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
@@ -29,58 +20,55 @@ import EventRoundedIcon from '@material-ui/icons/EventRounded';
 import WorkOutlineRoundedIcon from '@material-ui/icons/WorkOutlineRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 
-
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
+    outer: props => ({
+        backgroundColor: props.backgroundColor
+    }),
+    nested: props => ({
+        paddingLeft: theme.spacing(8),
+        color: 'white',
+        backgroundColor: props.backgroundColor
+    }),
+    mainTitles: {
+        color: 'white',
+        fontSize: '100%',
     },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
+    icon: {
+        color: 'white',
+        fontSize: 15,
     },
-    menuButton: {
-        marginRight: 36,
+    settings: {
+        color: '#9E9E9E',
+        marginLeft: '5%',
+        marginTop: '5%',
+    },
+    inline: {
+        display: 'inline',
+        color: 'white'
+    },
+    username: {
+        color: 'white'
     },
     hide: {
         display: 'none',
     },
-    drawer: {
-        width: drawerWidth,
+    drawer: props => ({
+        width: props.drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
-    },
-    drawerOpen: {
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerClose: {
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        overflowX: 'hidden',
-        width: theme.spacing(7) + 1,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9) + 1,
-        },
-    },
+        backgroundColor: props.backgroundColor
+    }),
+    drawerPaper: props => ({
+        width: props.drawerWidth,
+        backgroundColor: props.backgroundColor
+    }),
     toolbar: {
         display: 'flex',
         alignItems: 'center',
@@ -96,120 +84,196 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SideMenu () {
-    const classes = useStyles();
+
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
     const [openNested, setOpenNested] = React.useState(false);
+    const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
+    const [isSelected, setIsSelected] = React.useState(true);
+    const props = {
+        backgroundColor: '#212529',
+        drawerWidth: '18%'
+    }
+    const classes = useStyles(props);
 
+    const handleClick = (event, index) => {
+        setSelectedItemIndex(index);
+        setOpenNested(!openNested);
+    }
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
-    const handleClick = () => {
-        setOpenNested(true)
+    const handleClickedItem = (event, index) => {
+        setIsSelected(true);
+        setSelectedItemIndex(index);
     }
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Mini variant drawer
-          </Typography>
-                </Toolbar>
-            </AppBar>
             <Drawer
+
                 variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                </div>
+                className={classes.drawer}
+                classes={{ paper: classes.drawerPaper }}>
+
                 <Divider />
+                <List >
+                    <ListItem alignItems="flex-start">
+                        <ListItemAvatar>
+                            <Avatar alt="Kenzo" src="../assets/images/avatar1.jpeg" />
+                        </ListItemAvatar>
+                        <ListItemText
+                            className={classes.username}
+                            primary="Kenzo"
+                            secondary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        className={classes.inline}
+                                        color="textPrimary"
+                                    >
+                                        Site Manager
+                                    </Typography>
+                                </React.Fragment>
+                            }
+                        />
+                    </ListItem>
+                </List>
                 <List>
-                    {/* {['Dashboard', 'Recommendations', 'Work Orders'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))} */}
-                    <ListItem button>
-                        <ListItemIcon>
-                            <DashboardRoundedIcon />
+
+                    <ListItem
+                        style={{ backgroundColor: (isSelected && selectedItemIndex === 0) ? '#4DD3EF' : '#212529' }}
+                        button
+                        selected={isSelected === true}
+                        onClick={(event) => handleClickedItem(event, 0)}
+                        className={classes.outer}
+                    >
+                        <ListItemIcon className={classes.icon}>
+                            <DashboardRoundedIcon className={classes.icon} />
                         </ListItemIcon>
-                        <ListItemText primary="Dashboard" />
+                        <ListItemText primary="Dashboard" className={classes.mainTitles} />
+
                     </ListItem>
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <ListAltRoundedIcon />
+                    <ListItem button
+                        style={{ backgroundColor: (isSelected && selectedItemIndex === 1) ? '#4DD3EF' : '#212529' }}
+                        onClick={(event) => handleClick(event, 1)}
+                        selected={selectedItemIndex === 1}>
+
+                        <ListItemIcon className={classes.icon}>
+                            <ListAltRoundedIcon className={classes.icon} />
                         </ListItemIcon>
-                        <ListItemText primary="Recommendations" />
-                        {openNested ? <ExpandLess /> : <ExpandMore />}
+                        <ListItemText primary="Recommendations" className={classes.mainTitles} />
+                        {openNested ? <ExpandLess className={classes.icon} /> : <ExpandMore className={classes.icon} />}
                     </ListItem>
+
                     <Collapse in={openNested} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <ListItem button className={classes.nested}>
 
+                            <ListItem
+                                button
+                                className={classes.nested}
+                                onClick={(event) => handleClickedItem(event, 2)}
+                                selected={selectedItemIndex === 2}
+                                style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }}
+                            >
+                                <ListItemIcon className={classes.icon}>
+                                    <BuildRoundedIcon
+                                        className={classes.icon}
+                                        style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }} />
+                                </ListItemIcon>
                                 <ListItemText primary="Manage" />
                             </ListItem>
+
+                            <ListItem
+                                button
+                                className={classes.nested}
+                                onClick={(event) => handleClickedItem(event, 3)}
+                                selected={selectedItemIndex === 3}
+                                style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }}>
+                                <ListItemIcon className={classes.icon}>
+                                    <CheckCircleOutlineRoundedIcon
+                                        className={classes.icon}
+                                        style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }} />
+                                </ListItemIcon>
+                                <ListItemText primary="Results" />
+                            </ListItem>
+
+                            <ListItem
+                                button
+                                className={classes.nested}
+                                onClick={(event) => handleClickedItem(event, 4)}
+                                selected={selectedItemIndex === 4}
+                                style={{ color: (isSelected && selectedItemIndex === 4) ? '#4DD3EF' : 'white' }}>
+                                <ListItemIcon className={classes.icon}>
+                                    <TuneRoundedIcon
+                                        className={classes.icon}
+                                        style={{ color: (isSelected && selectedItemIndex === 4) ? '#4DD3EF' : 'white' }} />
+                                </ListItemIcon>
+                                <ListItemText primary="Jobs" />
+                            </ListItem>
+
+                            <ListItem
+                                button
+                                className={classes.nested}
+                                onClick={(event) => handleClickedItem(event, 5)}
+                                selected={selectedItemIndex === 5}
+                                style={{ color: (isSelected && selectedItemIndex === 5) ? '#4DD3EF' : 'white' }}>
+                                <ListItemIcon className={classes.icon}>
+                                    <EventRoundedIcon
+                                        style={{ color: (isSelected && selectedItemIndex === 5) ? '#4DD3EF' : 'white' }}
+                                        className={classes.icon} />
+                                </ListItemIcon>
+                                <ListItemText primary="Actions" />
+                            </ListItem>
+
                         </List>
                     </Collapse>
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <WorkOutlineRoundedIcon />
+                    <ListItem
+                        button
+                        className={classes.outer}
+                        selected={selectedItemIndex === 6}
+                        onClick={(event) => handleClickedItem(event, 6)}
+                        style={{ backgroundColor: (isSelected && selectedItemIndex === 6) ? '#4DD3EF' : '#212529' }}>
+                        <ListItemIcon className={classes.icon}>
+                            <WorkOutlineRoundedIcon className={classes.icon} />
                         </ListItemIcon>
-                        <ListItemText primary="Work Orders" />
+                        <ListItemText primary="Work Orders" className={classes.mainTitles} />
                     </ListItem>
+
                 </List>
 
+                <div className={classes.settings}>
+                    <p>Settings</p>
+                </div>
 
-                <Divider />
-                {/* <List subheader={<ListSubheader>Settings</ListSubheader>} className={classes.root}></List> */}
                 <List>
-                    {['Settings', 'Notifications'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <SettingsRoundedIcon /> : <NotificationsRoundedIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
 
-        </div>
+                    <ListItem button
+                        className={classes.outer}
+                        selected={selectedItemIndex === 7}
+                        onClick={(event) => handleClickedItem(event, 7)}
+                        style={{ backgroundColor: (isSelected && selectedItemIndex === 7) ? '#4DD3EF' : '#212529' }}>
+                        <ListItemIcon className={classes.icon}>
+                            <SettingsRoundedIcon className={classes.icon} />
+                        </ListItemIcon>
+                        <ListItemText primary="Main Settings" className={classes.mainTitles} />
+                    </ListItem>
+
+                    <ListItem button
+                        className={classes.outer}
+                        selected={selectedItemIndex === 8}
+                        onClick={(event) => handleClickedItem(event, 8)}
+                        style={{ backgroundColor: (isSelected && selectedItemIndex === 8) ? '#4DD3EF' : '#212529' }}>
+                        <ListItemIcon className={classes.icon}>
+                            <NotificationsRoundedIcon className={classes.icon} />
+                        </ListItemIcon>
+                        <ListItemText primary="Notifications" className={classes.mainTitles} />
+                    </ListItem>
+
+                </List>
+
+            </Drawer >
+        </div >
     );
 }

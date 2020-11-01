@@ -2,6 +2,7 @@ import React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import SideMenu from './SideMenu';
 
 function NavMenu (props) {
   const [collapsed, setCollapsed] = React.useState(true);
@@ -16,6 +17,7 @@ function NavMenu (props) {
 
   return (
     <header>
+      <SideMenu></SideMenu>
       <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
         <Container>
           <NavbarBrand tag={Link} to="/">RecommendationEngine</NavbarBrand>
