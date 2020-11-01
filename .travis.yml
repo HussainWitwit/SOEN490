@@ -17,6 +17,7 @@ script:
   - bash <(curl -s https://codecov.io/bash) -cF backend
   - cd RecommendationEngine
   - cd FrontEnd
-  # - npm run test
+  - npm ci
+  - npm run test
   - npm run test:ci
   - bash <(curl -s https://codecov.io/bash) -cF frontend
