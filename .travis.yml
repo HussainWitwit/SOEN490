@@ -7,10 +7,9 @@ script:
   - cd RecommendationEngine
   - dotnet restore RecommendationEngine.sln
   - dotnet build RecommendationEngine.sln
-  - choco install codecov
   - dotnet test --collect:"XPlat Code Coverage"
   - cd RecommendationEngine
   - cd FrontEnd
   - npm run test
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash) -c -F ui
