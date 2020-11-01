@@ -48,6 +48,8 @@
     "test": "jest",
     "test:cypress": "cypress open",
     "cypress": "cypress run",
+    "cypress:ci": "cypress run --config video=false",
+    "test:ci": "start-server-and-test start http://localhost:3000 cypress:ci",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/"
   },

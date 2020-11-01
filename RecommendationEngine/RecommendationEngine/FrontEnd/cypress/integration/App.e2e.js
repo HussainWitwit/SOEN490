@@ -1,5 +1,8 @@
 describe('App E2E', () => {
-    it('should assert that true is equal to true', () => {
-        expect(true).to.equal(true);
+    it('should have a header', () => {
+        cy.visit('http://localhost:3000');
+
+        cy.get('h1')
+            .should('have.text', 'Hello, world!');
     });
 });
