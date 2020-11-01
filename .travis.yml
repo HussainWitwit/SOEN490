@@ -10,4 +10,7 @@ script:
   - dotnet test --collect:"XPlat Code Coverage"
   - cd RecommendationEngine
   - cd FrontEnd
-  - npm run test -- --coverage
+  - npm install codecov -g
+  - npm run test
+after_success:
+  - codecov
