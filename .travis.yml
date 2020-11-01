@@ -8,8 +8,8 @@ script:
   - dotnet restore RecommendationEngine.sln
   - dotnet build RecommendationEngine.sln
   - dotnet test --collect:"XPlat Code Coverage"
+  - bash <(curl -s https://codecov.io/bash) -cF backend
   - cd RecommendationEngine
   - cd FrontEnd
   - npm run test
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -c -F ui
+  - bash <(curl -s https://codecov.io/bash) -cF frontend
