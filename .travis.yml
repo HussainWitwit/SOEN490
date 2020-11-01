@@ -1,6 +1,6 @@
 matrix:
   include:
-    - language: cshap
+    - language: csharp
       mono: none
       solution: ../RecommendationEngine/RecommendationEngine.sln
       dotnet: 3.1
