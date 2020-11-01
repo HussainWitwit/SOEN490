@@ -7,10 +7,10 @@ script:
   - cd RecommendationEngine
   - dotnet restore RecommendationEngine.sln
   - dotnet build RecommendationEngine.sln
+  - choco install codecov
   - dotnet test --collect:"XPlat Code Coverage"
   - cd RecommendationEngine
   - cd FrontEnd
-  - npm install codecov -g
   - npm run test
 after_success:
   - codecov
