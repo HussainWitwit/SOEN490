@@ -26,6 +26,7 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "ajv": "^6.9.1",
     "cross-env": "^5.2.0",
+    "cypress": "^5.5.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "eslint": "^6.8.0",
@@ -35,6 +36,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
     "nan": "^2.14.1",
+    "start-server-and-test": "^1.11.5",
     "typescript": "^3.7.5"
   },
   "eslintConfig": {
@@ -44,6 +46,8 @@
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
+    "test:cypress": "cypress open",
+    "cypress": "cypress run",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/"
   },
