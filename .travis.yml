@@ -9,9 +9,6 @@ cache:
   directories:
     - ~/.cache
 
-install:
-  - npm ci
-
 script:
   - cd RecommendationEngine
   - dotnet restore RecommendationEngine.sln
