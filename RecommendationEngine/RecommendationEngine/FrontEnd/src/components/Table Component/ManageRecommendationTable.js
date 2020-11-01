@@ -22,8 +22,6 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { grey } from '@material-ui/core/colors';
-import { } from '@material-ui/core/colors';
 
 
 export const CssTextField = withStyles({
@@ -121,7 +119,7 @@ const headCells = [
     { id: 'algorithm', numeric: true, disablePadding: false, label: 'Algorithm' },
 ];
 
-function EnhancedTableHead(props) {
+function enhancedTableHead(props) {
     const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -167,7 +165,7 @@ function EnhancedTableHead(props) {
     );
 }
 
-EnhancedTableHead.propTypes = {
+enhancedTableHead.propTypes = {
     classes: PropTypes.object.isRequired,
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
@@ -176,10 +174,6 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
 };
-
-
-
-
 
 function ManageRecommendationTable(props) {
 
@@ -242,11 +236,9 @@ function ManageRecommendationTable(props) {
         setPage(0);
     };
 
-
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
 
     return (
       
@@ -274,14 +266,14 @@ function ManageRecommendationTable(props) {
                             <CssTextField
                                 id="custom-css-standard-input"
                                 label="Search"
-                                inputProps={{ style: { fontSize: 17,  fontFamily: [
+                                inputProps={{ style: { fontSize: 15,  fontFamily: [
                                     'Segoe UI',
                                     ' Tahoma',
                                     '"Geneva"',
                                     'Verdana',
                                     '"sans-serif"',
                                 ].join(','), } }}
-                                InputLabelProps={{ style: { fontSize: 17,  fontFamily: [
+                                InputLabelProps={{ style: { fontSize: 15,  fontFamily: [
                                     'Segoe UI',
                                     ' Tahoma',
                                     '"Geneva"',
@@ -300,7 +292,6 @@ function ManageRecommendationTable(props) {
             <br></br>
             <div className={classes.root}>
                 <Paper className={classes.paper}>
-                    {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
                     <Toolbar
             className={clsx(classes.toolbarRoot, {
                 [classes.highlight]: numSelected > 0,
@@ -315,8 +306,6 @@ function ManageRecommendationTable(props) {
                         Configured Recommendations
                     </h6>
                 )}
-
-            {/* <Button size="small" className={classes.filterBtn} endIcon={<FilterList />}>Add Filter</Button> */}
 
             <FormControlLabel
                 control={
@@ -353,7 +342,7 @@ function ManageRecommendationTable(props) {
                             size={dense ? 'small' : 'medium'}
                             aria-label="enhanced table"
                         >
-                            <EnhancedTableHead
+                            <enhancedTableHead
                                 classes={classes}
                                 numSelected={selected.length}
                                 order={order}
