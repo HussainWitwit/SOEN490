@@ -5,7 +5,8 @@
     }
     #subtitle{
         margin-top: 10px;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #868282;
         font-size: 13px;
     }

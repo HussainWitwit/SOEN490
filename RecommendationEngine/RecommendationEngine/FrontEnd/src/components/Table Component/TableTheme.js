@@ -3,13 +3,6 @@ import TableCell from '@material-ui/core/TableCell';
 
 export const useStyles = makeStyles((theme) => ({
     filterBtn: {
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        // border: 0,
-        // borderRadius: 3,
-        // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        // color: 'white',
-        // height: 48,
-        // padding: '0 30px',
         color: '#212529',
         fontFamily: [
             'Segoe UI',
@@ -19,9 +12,9 @@ export const useStyles = makeStyles((theme) => ({
             '"sans-serif"',
         ].join(','),
         textTransform: 'none',
-        marginLeft: '20px',
-        marginRight: '100px',
-        marginTop: '19px',
+        marginLeft: '0px',
+        marginRight: '0px',
+        width: '120px',
     },
 
     recBtn: {
@@ -29,10 +22,10 @@ export const useStyles = makeStyles((theme) => ({
         float: 'right',
         color: 'white',
         textTransform: 'none',
-        marginLeft: '480px',
+        marginBottom: "15px",
         boxShadow: 'none',
+        height: '47px',
         fontSize: 12,
-     
         padding: '6px 12px',
         border: '6px solid',
         lineHeight: 1.5,
@@ -55,7 +48,7 @@ export const useStyles = makeStyles((theme) => ({
             borderColor: '#3DB1C9',
         },
         // '&:focus': {
-        //     boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+        //     boxShadow: '1px 2px 5px 0 #000000',
         // },
     },
     table: {
@@ -124,6 +117,7 @@ export const useStyles = makeStyles((theme) => ({
     
     toolbarTitle: {
         flex: '1 1 100%',
+        marginLeft: '33px'
     },
     visuallyHidden: {
         border: 0,
@@ -154,24 +148,6 @@ export const useStyles = makeStyles((theme) => ({
         textTransform: 'none',
          marginTop: '5px',
         fontSize: 12,
+        width: '20px',
       },
-    
 }));
-
-export const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: theme.palette.common.white,
-        color:  '#687480',
-        fontFamily: [
-            'Segoe UI',
-            ' Tahoma',
-            '"Geneva"',
-            'Verdana',
-            '"sans-serif"',
-        ].join(','),
-    },
-    body: {
-        fontSize: 10,
-
-    },
-}))(TableCell);

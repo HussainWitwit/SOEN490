@@ -9,10 +9,13 @@ import './stylesheet.css'
 
 function App (props) {
     return (
-      <Layout>
+      <div id="background">
+           <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/fetch-data' component={FetchData} />
       </Layout>
+      </div>
+   
     );
 }
 

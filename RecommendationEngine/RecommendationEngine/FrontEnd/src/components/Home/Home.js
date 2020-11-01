@@ -4,7 +4,7 @@ import TemporaryDrawer from "../RightPanel/RightPanel";
 
 function Home (props){
   return (
-    <div id="background">
+    <div>
     <ManageRecommendationTable/>
     {/* <TemporaryDrawer /> */}
     </div>

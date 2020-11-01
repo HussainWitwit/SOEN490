@@ -10,7 +10,7 @@
 nav {
   border-bottom: 1px;
   box-shadow: 0 3px 3px 0px rgba(0,0,0,.2);
-  background-color:#C8C8C8;
+  background-color:#EDEDED;
   height: 35px;
 }
 .weather{
@@ -34,7 +34,7 @@ div.weather p {
   float: left;
   position: relative;
   top: 15%;
-  background-color:#C8C8C8;
+  background-color:#EDEDED;
 }
 .breadcrumb-item+.breadcrumb-item::before {
     content: ">";
