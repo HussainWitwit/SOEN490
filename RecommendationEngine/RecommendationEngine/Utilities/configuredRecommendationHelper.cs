@@ -17,7 +17,7 @@ namespace RecommendationEngine.configuredRecommendationHelper
             {
                 throw new GlobalException(400, "Bad Request", "string empty or null", "Recommendation Engine");
             }
-            if (!Enumerable.Range(1, 7).Contains(configuredRecommendation.DayOfWeek) || configuredRecommendation.FrequencyOfRepetiton <= 0 || configuredRecommendation.Span <= 0)
+            if (!Enumerable.Range(1, 7).Contains(configuredRecommendation.DayOfWeek) || configuredRecommendation.FrequencyOfRepetiton <= 0)
             {
                 throw new GlobalException(400, "Bad Request", "int out of range", "Recommendation Engine");
             }

@@ -3,6 +3,6 @@
     public class ConfiguredRecommendationParameter
     {
         public string ParameterName { get; set; }
-        public double ParameterValue { get; set; }
+        public string ParameterValue { get; set; }
     }
 }

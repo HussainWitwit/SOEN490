@@ -7,6 +7,7 @@ using Interfaces.Services.ExternalApi;
 using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 using RecommendationEngine.configuredRecommendationHelper;
+using Interfaces.Repositories;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
 {
@@ -14,12 +15,16 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
     {
         private IDriveService _driveService;
         private RecommendationEngineDBContext _recommendationEngineRepository;
-        public List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>();
+        private IRecommendationSchedulerRepository _recommendationSchedulerRepository;
 
-        public ConfiguredRecommendationService(IDriveService driveService, RecommendationEngineDBContext recommendationEngineRepository)
-        {
+        public ConfiguredRecommendationService(
+                IDriveService driveService,
+                RecommendationEngineDBContext recommendationEngineRepository,
+                IRecommendationSchedulerRepository recommendationSchedulerRepository
+        ){
             _driveService = driveService;
             _recommendationEngineRepository = recommendationEngineRepository;
+            _recommendationSchedulerRepository = recommendationSchedulerRepository;
         }
 
         public List<DBRecommendationSchedule> getConfiguredRecommendationList()
@@ -31,20 +36,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
         public void addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             configuredRecommendation.Validate();
-            addRecommendationToDB(configuredRecommendation);
-        }
-
-        private void addRecommendationToDB(ConfiguredRecommendation configuredRecommendation)
-        {
-            DBRecommendationSchedule context = new DBRecommendationSchedule();
-            context.Name = configuredRecommendation.Title;
-            context.DisplayText = configuredRecommendation.Type;
-            context.ModifiedBy = configuredRecommendation.CreatedBy;
-            context.Granularity = configuredRecommendation.Granularity;
-            context.OccurenceDatetime = configuredRecommendation.OccurrenceDatetime;
-            context.CreatedOn = configuredRecommendation.CreatedOn;
-            _recommendationEngineRepository.RecommendationSchedules.Add(context);
-            _recommendationEngineRepository.SaveChanges();
+            _recommendationSchedulerRepository.AddRecommendationToDB(configuredRecommendation);
         }
     }
 }
