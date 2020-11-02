@@ -1,9 +1,9 @@
-﻿using RecommendationEngine.Models.Application;
+﻿using Models.DB;
 
 namespace Interfaces.Repositories
 {
     public interface IRecommendationSchedulerRepository
     {
-        public void AddRecommendationToDB(ConfiguredRecommendation configuredRecommendation);
+        
     }
 }
