@@ -22,6 +22,11 @@
       "\\.(css|less)$": "<rootDir>/assetTransformer.js"
     }
   },
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "useTabs": false
+  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm run format"
@@ -59,7 +64,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src/",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
+    "format": "prettier --write \"**/*.+(js|jsx|css|md)\""
   },
   "browserslist": {
     "production": [
