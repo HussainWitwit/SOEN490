@@ -1,6 +1,6 @@
 import React from 'react';
-import App from './App';
-import { shallow } from './enzyme';
+import App from '../App';
+import { shallow } from '../enzyme';
 import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom';
 
