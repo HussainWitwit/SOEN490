@@ -7,44 +7,43 @@ using Interfaces.Services.ExternalApi;
 using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 using RecommendationEngine.configuredRecommendationHelper;
+using Interfaces.Repositories;
+using RecommendationEngine.Repositories;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
 {
     public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {
         private IDriveService _driveService;
-        private RecommendationEngineDBContext _recommendationEngineRepository;
-        public List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>();
+        private IConfiguredRecommendationRepository _repository;
 
-        public ConfiguredRecommendationService(IDriveService driveService, RecommendationEngineDBContext recommendationEngineRepository)
-        {
+        public ConfiguredRecommendationService(
+                IDriveService driveService,
+                IConfiguredRecommendationRepository repsitory
+        ) {
             _driveService = driveService;
-            _recommendationEngineRepository = recommendationEngineRepository;
+            _repository = repsitory;
         }
 
         public List<DBRecommendationSchedule> getConfiguredRecommendationList()
         {
-            List<DBRecommendationSchedule> list = _recommendationEngineRepository.RecommendationSchedules.ToList();
-            return list;
+            return _repository.Get();
         }
 
-        public void addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             configuredRecommendation.Validate();
-            addRecommendationToDB(configuredRecommendation);
-        }
-
-        private void addRecommendationToDB(ConfiguredRecommendation configuredRecommendation)
-        {
-            DBRecommendationSchedule context = new DBRecommendationSchedule();
-            context.Name = configuredRecommendation.Title;
-            context.DisplayText = configuredRecommendation.Type;
-            context.ModifiedBy = configuredRecommendation.CreatedBy;
-            context.Granularity = configuredRecommendation.Granularity;
-            context.OccurenceDatetime = configuredRecommendation.OccurrenceDatetime;
-            context.CreatedOn = configuredRecommendation.CreatedOn;
-            _recommendationEngineRepository.RecommendationSchedules.Add(context);
-            _recommendationEngineRepository.SaveChanges();
+            var recommendationType = _repository.GetRecommendationTypeByType(configuredRecommendation.Type);
+            DBRecommendationSchedule config = new DBRecommendationSchedule {
+                Name = configuredRecommendation.Title,
+                DisplayText = configuredRecommendation.Type,
+                ModifiedBy = configuredRecommendation.CreatedBy,
+                Granularity = configuredRecommendation.Granularity,
+                OccurenceDatetime = configuredRecommendation.OccurrenceDatetime,
+                CreatedOn = configuredRecommendation.CreatedOn,
+                RecommendationType = recommendationType
+            };
+            _repository.Add(config);
         }
     }
 }

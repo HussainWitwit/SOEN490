@@ -29,7 +29,7 @@ namespace RecommendationEngine.Controllers
         [HttpPost("add")]
         public IActionResult addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation) {
             try {
-                _recommendationSchedulerService.addConfiguredRecommendation(configuredRecommendation);
+                _recommendationSchedulerService.AddConfiguredRecommendation(configuredRecommendation);
             }
             catch (GlobalException e) {
                 return BadRequest(new {e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
