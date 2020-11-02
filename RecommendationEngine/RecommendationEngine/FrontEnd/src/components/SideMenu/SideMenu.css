@@ -1,0 +1,54 @@
+.drawer-container {
+    display: flex;
+}
+
+.drawer {
+    background-color: "red";
+    width: "18%";
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.username {
+    color: "white";
+}
+
+.outer {
+    background-color: "#212529";
+}
+
+.nested {
+    padding-left: 8; 
+    color: "#fff";
+    background-color: "#212529";
+}
+
+.mainTitles {
+    color: "#fff";
+    font-size: "100%";
+}
+
+.icon {
+    color: "#fff";
+    font-size: 15;
+}
+
+.settings {
+    color: "9E9E9E";
+    margin-top: "5%";
+    margin-left: "5%";
+}
+
+.inline {
+    display: inline;
+    color: "#fff"
+}
+
+.hide {
+    display: none;
+}
+
+.drawer-paper.MuiDrawer-paper {
+    width: "18%";
+    background-color: "#212529";
+}
