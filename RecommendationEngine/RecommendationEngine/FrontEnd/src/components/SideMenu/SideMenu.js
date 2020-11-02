@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import './SideMenu.css';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,11 +24,7 @@ import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
-
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
     outer: props => ({
         backgroundColor: props.backgroundColor
     }),
@@ -51,9 +48,6 @@ const useStyles = makeStyles((theme) => ({
     },
     inline: {
         display: 'inline',
-        color: 'white'
-    },
-    username: {
         color: 'white'
     },
     hide: {
@@ -85,7 +79,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SideMenu () {
 
-    const theme = useTheme();
     const [openNested, setOpenNested] = React.useState(false);
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
     const [isSelected, setIsSelected] = React.useState(true);
@@ -106,12 +99,12 @@ export default function SideMenu () {
     }
 
     return (
-        <div className={classes.root}>
+        <div className="drawer-container">
             <CssBaseline />
             <Drawer
 
                 variant="permanent"
-                className={classes.drawer}
+                className="drawer"
                 classes={{ paper: classes.drawerPaper }}>
 
                 <Divider />

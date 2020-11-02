@@ -43,6 +43,7 @@
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.12.1",
     "ajv": "^6.9.1",
+    "babel-plugin-transform-imports": "^2.0.0",
     "cross-env": "^5.2.0",
     "cypress": "^5.5.0",
     "enzyme": "^3.11.0",
