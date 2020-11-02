@@ -1,4 +1,5 @@
 using Interfaces.Repositories;
+using Interfaces.Services.ExternalApi;
 using Moq;
 using NUnit.Framework;
 using RecommendationEngine.Services;

@@ -1,5 +1,6 @@
 ﻿using Interfaces.Repositories;
 using Interfaces.Services;
+using Interfaces.Services.ExternalApi;
 using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Services
