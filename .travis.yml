@@ -3,8 +3,22 @@ mono: none
 solution: ../RecommendationEngine/RecommendationEngine.sln
 dotnet: 3.1
 
+cache:
+  npm: true
+  # cache both npm modules and Cypress binary
+  directories:
+    - ~/.cache
+before_script: 
+  - nvm install 13
 script:
   - cd RecommendationEngine
   - dotnet restore RecommendationEngine.sln
   - dotnet build RecommendationEngine.sln
-  - dotnet test
+  - dotnet test --collect:"XPlat Code Coverage"
+  - bash <(curl -s https://codecov.io/bash) -cF backend
+  - cd RecommendationEngine
+  - cd FrontEnd
+  - npm ci
+  - npm run test
+  - npm run test:ci
+  - bash <(curl -s https://codecov.io/bash) -cF frontend

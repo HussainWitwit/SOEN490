@@ -2,12 +2,12 @@
 Recommendation Engine
 
 ## Objective 🎯
-We are building a generic Recommendation Engine that can be applied to systems such as a wash optimizion
+We are building a generic Recommendation Engine that can be applied to systems such as a wash optimization
 
 ## Team 👥
 | Name          | Github        |Email       |
 | ------------- |:-------------:|-------------|
-| Alain Job Uzamara Uwe | AlainJobs | alainjobu@hotmail.com |
+| Alain Job Uzarama Uwe | AlainJobs | alainjobu@hotmail.com |
 | Badreddine Loulidi | bloulidi | loulidi.bad@gmail.com |
 | Christophe Shaka Bahenduzi | csbduzi | cbahenduzi@gmail.com |
 | Dariush Noorzada | DariushN | dariush_noorzada@hotmail.com |
@@ -29,7 +29,6 @@ We are building a generic Recommendation Engine that can be applied to systems s
 ### Agile Project management
 
 1. Jira
-2. Trello
 
 ### Communication
 
