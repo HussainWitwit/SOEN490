@@ -19,11 +19,21 @@ export default function SideMenu () {
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
     const [isSelected, setIsSelected] = React.useState(true);
 
+    /**
+     * This function handles clicks on nested page links
+     * @param {} event 
+     * @param {*} index 
+     */
     const handleClick = (event, index) => {
         setSelectedItemIndex(index);
         setOpenNested(!openNested);
     }
 
+    /**
+     * This function handles clicks on outer page links
+     * @param {*} event 
+     * @param {*} index 
+     */
     const handleClickedItem = (event, index) => {
         setIsSelected(true);
         setSelectedItemIndex(index);
@@ -60,7 +70,6 @@ export default function SideMenu () {
                     </ListItem>
                 </List>
                 <List>
-
                     <ListItem
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 0) ? '#4DD3EF' : '#212529' }}
                         button
@@ -71,10 +80,8 @@ export default function SideMenu () {
                         <ListItemIcon className="icon-container">
                             <DashboardRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText primary="Dashboard" className="mainTitles" />
-
+                        <ListItemText primary="Dashboard" className="main-titles" />
                     </ListItem>
-
                     <ListItem button
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 1) ? '#4DD3EF' : '#212529' }}
                         onClick={(event) => handleClick(event, 1)}
@@ -83,13 +90,11 @@ export default function SideMenu () {
                         <ListItemIcon className="icon-container">
                             <ListAltRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText primary="Recommendations" className="mainTitles" />
+                        <ListItemText primary="Recommendations" className="main-titles" />
                         {openNested ? <ExpandLess className="icon-container" /> : <ExpandMore className="icon-container" />}
                     </ListItem>
-
                     <Collapse in={openNested} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-
                             <ListItem
                                 button
                                 className="nested"
@@ -104,7 +109,6 @@ export default function SideMenu () {
                                 </ListItemIcon>
                                 <ListItemText primary="Manage" />
                             </ListItem>
-
                             <ListItem
                                 button
                                 className="nested"
@@ -118,7 +122,6 @@ export default function SideMenu () {
                                 </ListItemIcon>
                                 <ListItemText primary="Results" />
                             </ListItem>
-
                             <ListItem
                                 button
                                 className="nested"
@@ -132,7 +135,6 @@ export default function SideMenu () {
                                 </ListItemIcon>
                                 <ListItemText primary="Jobs" />
                             </ListItem>
-
                             <ListItem
                                 button
                                 className="nested"
@@ -146,10 +148,8 @@ export default function SideMenu () {
                                 </ListItemIcon>
                                 <ListItemText primary="Actions" />
                             </ListItem>
-
                         </List>
                     </Collapse>
-
                     <ListItem
                         button
                         className="outer"
@@ -159,17 +159,13 @@ export default function SideMenu () {
                         <ListItemIcon className="icon-container">
                             <WorkOutlineRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText primary="Work Orders" className="mainTitles" />
+                        <ListItemText primary="Work Orders" className="main-titles" />
                     </ListItem>
-
                 </List>
-
                 <div className="settings">
                     <p>Settings</p>
                 </div>
-
                 <List>
-
                     <ListItem button
                         className="outer"
                         selected={selectedItemIndex === 7}
@@ -178,9 +174,8 @@ export default function SideMenu () {
                         <ListItemIcon className="icon-container">
                             <SettingsRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText primary="Main Settings" className="mainTitles" />
+                        <ListItemText primary="Main Settings" className="main-titles" />
                     </ListItem>
-
                     <ListItem button
                         className="outer"
                         selected={selectedItemIndex === 8}
@@ -189,7 +184,7 @@ export default function SideMenu () {
                         <ListItemIcon className="icon-container">
                             <NotificationsRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText primary="Notifications" className="mainTitles" />
+                        <ListItemText primary="Notifications" className="main-titles" />
                     </ListItem>
 
                 </List>
