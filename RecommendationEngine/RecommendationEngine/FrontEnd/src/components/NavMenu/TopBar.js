@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import './NavMenu.css';
+import './TopBar.css';
 import NotificationBell from '../Notification/NotificationBell';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 
-function NavMenu(props) {
+function TopBar(props) {
         const [locationDetails, setLocationDetails] = React.useState(null);
         const [weatherDetails, setWeatherDetails] = React.useState(null);
 
@@ -76,4 +76,4 @@ function NavMenu(props) {
         );
 }
 
-export default NavMenu;
+export default TopBar;
