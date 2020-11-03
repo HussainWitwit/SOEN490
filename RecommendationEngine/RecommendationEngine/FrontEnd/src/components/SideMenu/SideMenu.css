@@ -52,3 +52,6 @@
     width: "18%";
     background-color: "#212529";
 }
+.toolbar {
+    display: flex,
+}
