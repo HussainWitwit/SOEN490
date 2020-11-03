@@ -33,7 +33,6 @@ export default function SideMenu () {
         <div className="root">
             <CssBaseline />
             <Drawer
-                // style={{ backgroundColor: "#212529" }}
                 variant="permanent"
                 className="drawer"
                 classes={{ paper: "drawer-paper" }}>
