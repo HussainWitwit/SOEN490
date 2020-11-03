@@ -1,5 +1,6 @@
 using System.Reflection;
 using Autofac;
+using Interfaces.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Models.DB;
+using RecommendationEngine.Utilities;
 
 namespace RecommendationEngine
 {
@@ -54,6 +56,9 @@ namespace RecommendationEngine
                 .InstancePerLifetimeScope();
             builder.RegisterType<RecommendationEngineDBContext>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<RecommendationJobLogger>()
+                .As<IRecommendationJobLogger>()
+                .SingleInstance();
         }
 
 
