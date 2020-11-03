@@ -25,7 +25,6 @@ function NotificationBell(props) {
                                 showDate={true}
                                 size={20}
                                 color="black"
-                                type="module"
                         />
                 </div>
         );
