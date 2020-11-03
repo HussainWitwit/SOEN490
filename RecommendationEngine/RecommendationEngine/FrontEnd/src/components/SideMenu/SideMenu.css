@@ -1,69 +1,69 @@
 .root.MuiDrawer-root {
-    display: flex;
-    background-color: "#212529";
+        display: flex;
+        background-color: '#212529';
 }
 
 .drawer {
-    background-color: #212529;
-    width: 18%;
-    white-space: nowrap;
-    flex-shrink: 0;
+        background-color: #212529;
+        width: 18%;
+        white-space: nowrap;
+        flex-shrink: 0;
 }
 
-.drawer-paper.MuiDrawer-paper{
-    width: 18%;
-    background-color: #212529;
+.drawer-paper.MuiDrawer-paper {
+        width: 18%;
+        background-color: #212529;
 }
 
-.top-header{
-    padding-bottom: 10% !important;
-    padding-top: 10% !important;
+.top-header {
+        padding-bottom: 10% !important;
+        padding-top: 10% !important;
 }
 
 .username {
-    color: #fff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        color: #fff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 .inline {
-    display: inline;
-    color: #fff !important;
+        display: inline;
+        color: #fff !important;
 }
 
 .outer {
-    background-color: #212529;
+        background-color: #212529;
 }
 
 .nested {
-    padding-left: 30% !important; 
-    color: #fff;
-    background-color: #212529;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding-left: 30% !important;
+        color: #fff;
+        background-color: #212529;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .main-titles {
-    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-    color: #fff;
-    font-size: 100%;
+        font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        font-size: 100%;
 }
-.icon-container{
-    padding-left: 3%;
-    color: #fff;
+.icon-container {
+        padding-left: 3%;
+        color: #fff;
 }
 
 .icon {
-    color: #fff;
-    font-size: 130% !important;
-    padding-left: 3%;
+        color: #fff;
+        font-size: 130% !important;
+        padding-left: 3%;
 }
 
 .settings {
-    color: #9E9E9E;
-    margin-top: 5%;
-    margin-left: 5%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #9e9e9e;
+        margin-top: 5%;
+        margin-left: 5%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .hide {
-    display: none;
+        display: none;
 }

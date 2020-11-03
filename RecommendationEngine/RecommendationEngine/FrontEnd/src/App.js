@@ -5,18 +5,16 @@ import Home from './components/Home';
 import { FetchData } from './components/FetchData';
 import Counter from './components/Counter';
 
+import './custom.css';
 
-
-import './custom.css'
-
-function App (props) {
-  return (
-    <Layout>
-      <Route exact path='/' component={Home} />
-      <Route path='/counter' component={Counter} />
-      <Route path='/fetch-data' component={FetchData} />
-    </Layout>
-  );
+function App(props) {
+        return (
+                <Layout>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/counter" component={Counter} />
+                        <Route path="/fetch-data" component={FetchData} />
+                </Layout>
+        );
 }
 
 export default App;
