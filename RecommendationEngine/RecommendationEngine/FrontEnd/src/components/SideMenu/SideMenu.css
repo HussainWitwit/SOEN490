@@ -22,6 +22,7 @@
 
 .username {
     color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 .inline {
@@ -37,9 +38,11 @@
     padding-left: 30% !important; 
     color: #fff;
     background-color: #212529;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .main-titles {
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
     color: #fff;
     font-size: 100%;
 }
@@ -58,6 +61,7 @@
     color: #9E9E9E;
     margin-top: 5%;
     margin-left: 5%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .hide {

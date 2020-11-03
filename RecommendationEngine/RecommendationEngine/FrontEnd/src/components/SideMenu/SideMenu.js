@@ -1,6 +1,6 @@
 import React from 'react';
 import './SideMenu.css';
-import { Drawer, List, CssBaseline, Typography, Divider, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar } from '@material-ui/core';
+import { Drawer, List, CssBaseline, Typography, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
