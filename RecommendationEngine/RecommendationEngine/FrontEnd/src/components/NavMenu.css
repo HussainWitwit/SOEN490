@@ -9,7 +9,6 @@
 }
 nav {
   border-bottom: 1px;
-  box-shadow: 0 3px 3px 0px rgba(0,0,0,.2);
   background-color:#C8C8C8;
   height: 35px;
 }
@@ -34,13 +33,19 @@ div.weather p {
   float: left;
   position: relative;
   top: 15%;
+  left: 20px;
   background-color:#C8C8C8;
 }
 .breadcrumb-item+.breadcrumb-item::before {
-    content: ">";
+  content: ">";
+}
+.change_anchor {
+  padding-left: 20px;
+  text-decoration: underline !important;
+  color: #888888 !important;
+  font-size: 13px;
 }
 button {
-  /* background-color: brown; */
   margin: -5%;
 }
 button.btn.btn-sm.shadow-none.disabled{
@@ -50,11 +55,9 @@ button.btn.btn-sm.shadow-none.disabled{
   font-weight: bold;
   opacity: inherit;
 }
-li {
-  /* background-color: blueviolet; */
-}
 .notification {
   background-color:#C8C8C8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
 }
 .notification_bell {
   float: right;

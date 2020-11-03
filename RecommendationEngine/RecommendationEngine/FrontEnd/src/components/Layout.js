@@ -2,16 +2,10 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
 
-function Layout (props) {
-  const [crumbs, setCrumbs] = React.useState(['All Portfolio', '23-kahuku', '001-kahuku']); //this should be in topbar
-
-  const selected = (crumb) => {
-    console.log(crumb);
-  }
-  
+function Layout (props) {  
   return (
     <div>
-      <NavMenu crumbs={ crumbs } selected={ selected }  />
+      <NavMenu/>
       <Container>
         {props.children}
       </Container>
