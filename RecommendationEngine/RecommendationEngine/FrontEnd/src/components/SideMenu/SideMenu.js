@@ -36,10 +36,8 @@ export default function SideMenu () {
                 variant="permanent"
                 className="drawer"
                 classes={{ paper: "drawer-paper" }}>
-
-                <Divider />
-                <List className="outer">
-                    <ListItem alignItems="flex-start" style={{ backgroundColor: "#212529" }}>
+                <List>
+                    <ListItem alignItems="flex-start" className="top-header">
                         <ListItemAvatar>
                             <Avatar alt="Kenzo" src="../assets/images/avatar1.jpeg" />
                         </ListItemAvatar>
@@ -70,7 +68,7 @@ export default function SideMenu () {
                         onClick={(event) => handleClickedItem(event, 0)}
                         className="outer"
                     >
-                        <ListItemIcon className="icon">
+                        <ListItemIcon className="icon-container">
                             <DashboardRoundedIcon className="icon" />
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" className="mainTitles" />
@@ -82,11 +80,11 @@ export default function SideMenu () {
                         onClick={(event) => handleClick(event, 1)}
                         selected={selectedItemIndex === 1}>
 
-                        <ListItemIcon className="icon">
+                        <ListItemIcon className="icon-container">
                             <ListAltRoundedIcon className="icon" />
                         </ListItemIcon>
                         <ListItemText primary="Recommendations" className="mainTitles" />
-                        {openNested ? <ExpandLess className="icon" /> : <ExpandMore className="icon" />}
+                        {openNested ? <ExpandLess className="icon-container" /> : <ExpandMore className="icon-container" />}
                     </ListItem>
 
                     <Collapse in={openNested} timeout="auto" unmountOnExit>
@@ -99,7 +97,7 @@ export default function SideMenu () {
                                 selected={selectedItemIndex === 2}
                                 style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }}
                             >
-                                <ListItemIcon className="icon">
+                                <ListItemIcon className="icon-container">
                                     <BuildRoundedIcon
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }} />
@@ -113,7 +111,7 @@ export default function SideMenu () {
                                 onClick={(event) => handleClickedItem(event, 3)}
                                 selected={selectedItemIndex === 3}
                                 style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }}>
-                                <ListItemIcon className="icon">
+                                <ListItemIcon className="icon-container">
                                     <CheckCircleOutlineRoundedIcon
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }} />
@@ -127,7 +125,7 @@ export default function SideMenu () {
                                 onClick={(event) => handleClickedItem(event, 4)}
                                 selected={selectedItemIndex === 4}
                                 style={{ color: (isSelected && selectedItemIndex === 4) ? '#4DD3EF' : 'white' }}>
-                                <ListItemIcon className="icon">
+                                <ListItemIcon className="icon-container">
                                     <TuneRoundedIcon
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 4) ? '#4DD3EF' : 'white' }} />
@@ -141,7 +139,7 @@ export default function SideMenu () {
                                 onClick={(event) => handleClickedItem(event, 5)}
                                 selected={selectedItemIndex === 5}
                                 style={{ color: (isSelected && selectedItemIndex === 5) ? '#4DD3EF' : 'white' }}>
-                                <ListItemIcon className="icon">
+                                <ListItemIcon className="icon-container">
                                     <EventRoundedIcon
                                         style={{ color: (isSelected && selectedItemIndex === 5) ? '#4DD3EF' : 'white' }}
                                         className="icon" />
@@ -158,7 +156,7 @@ export default function SideMenu () {
                         selected={selectedItemIndex === 6}
                         onClick={(event) => handleClickedItem(event, 6)}
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 6) ? '#4DD3EF' : '#212529' }}>
-                        <ListItemIcon className="icon">
+                        <ListItemIcon className="icon-container">
                             <WorkOutlineRoundedIcon className="icon" />
                         </ListItemIcon>
                         <ListItemText primary="Work Orders" className="mainTitles" />
@@ -177,7 +175,7 @@ export default function SideMenu () {
                         selected={selectedItemIndex === 7}
                         onClick={(event) => handleClickedItem(event, 7)}
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 7) ? '#4DD3EF' : '#212529' }}>
-                        <ListItemIcon className="icon">
+                        <ListItemIcon className="icon-container">
                             <SettingsRoundedIcon className="icon" />
                         </ListItemIcon>
                         <ListItemText primary="Main Settings" className="mainTitles" />
@@ -188,7 +186,7 @@ export default function SideMenu () {
                         selected={selectedItemIndex === 8}
                         onClick={(event) => handleClickedItem(event, 8)}
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 8) ? '#4DD3EF' : '#212529' }}>
-                        <ListItemIcon className="icon">
+                        <ListItemIcon className="icon-container">
                             <NotificationsRoundedIcon className="icon" />
                         </ListItemIcon>
                         <ListItemText primary="Notifications" className="mainTitles" />

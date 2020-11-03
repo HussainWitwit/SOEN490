@@ -19,7 +19,7 @@
 }
 
 .nested {
-    padding-left: 8; 
+    padding-left: 30% !important; 
     color: #fff;
     background-color: #212529;
 }
@@ -28,10 +28,14 @@
     color: #fff;
     font-size: 100%;
 }
-
+.icon-container{
+    padding-left: 3%;
+    color: #fff;
+}
 .icon {
     color: #fff;
-    font-size: 15;
+    font-size: 130% !important;
+    padding-left: 3%;
 }
 
 .settings {
@@ -42,7 +46,7 @@
 
 .inline {
     display: inline;
-    color: #fff
+    color: #fff !important;
 }
 
 .hide {
@@ -52,4 +56,9 @@
 .drawer-paper.MuiDrawer-paper{
     width: 18%;
     background-color: #212529;
+}
+
+.top-header{
+    padding-bottom: 10% !important;
+    padding-top: 10% !important;
 }
