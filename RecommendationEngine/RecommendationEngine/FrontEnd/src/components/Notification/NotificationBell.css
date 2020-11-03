@@ -1,0 +1,17 @@
+.notification {
+  background-color:#C8C8C8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+.notification_bell {
+  float: right;
+  background-color:#C8C8C8;
+}
+.notification.notify {
+  padding: 0%;
+}
+.notification.notify svg{
+  fill: #212529;
+}
+.notification::after {
+  background-color: #4DD3EF;
+}
