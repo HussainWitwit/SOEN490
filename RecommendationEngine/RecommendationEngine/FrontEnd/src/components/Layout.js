@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import NavMenu from './NavMenu/NavMenu';
+import SideMenu from './SideMenu/SideMenu';
 
 function Layout (props) {
   //FIXME: This hook shouldn't be here
@@ -13,7 +13,7 @@ function Layout (props) {
   
   return (
     <div>
-      <NavMenu crumbs={ crumbs } selected={ selected }  />
+      <SideMenu />
       <Container>
         {props.children}
       </Container>
