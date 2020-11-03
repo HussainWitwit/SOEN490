@@ -1,6 +1,6 @@
 import React from 'react';
 import './SideMenu.css';
-import { makeStyles, Drawer, List, CssBaseline, Typography, Divider, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar} from '@material-ui/core';
+import { Drawer, List, CssBaseline, Typography, Divider, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
@@ -18,11 +18,6 @@ export default function SideMenu () {
     const [openNested, setOpenNested] = React.useState(false);
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
     const [isSelected, setIsSelected] = React.useState(true);
-    const props = {
-        backgroundColor: '#212529',
-        drawerWidth: '18%'
-    }
-    const classes = useStyles(props);
 
     const handleClick = (event, index) => {
         setSelectedItemIndex(index);
@@ -35,17 +30,17 @@ export default function SideMenu () {
     }
 
     return (
-        <div className="drawer-container">
+        <div className="root">
             <CssBaseline />
             <Drawer
-
+                // style={{ backgroundColor: "#212529" }}
                 variant="permanent"
                 className="drawer"
-                classes={{ paper: classes.drawerPaper }}>
+                classes={{ paper: "drawer-paper" }}>
 
                 <Divider />
-                <List >
-                    <ListItem alignItems="flex-start">
+                <List className="outer">
+                    <ListItem alignItems="flex-start" style={{ backgroundColor: "#212529" }}>
                         <ListItemAvatar>
                             <Avatar alt="Kenzo" src="../assets/images/avatar1.jpeg" />
                         </ListItemAvatar>
