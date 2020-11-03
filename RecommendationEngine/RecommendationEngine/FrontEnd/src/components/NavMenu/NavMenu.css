@@ -1,6 +1,9 @@
 ﻿html {
         font-size: 14px;
 }
+.top_bar {
+        padding-left: 250px;
+}
 nav {
         border-bottom: 1px;
         background-color: #c8c8c8;

@@ -5,13 +5,13 @@
 
 .drawer {
         background-color: #212529;
-        width: 18%;
+        width: 250px;
         white-space: nowrap;
         flex-shrink: 0;
 }
 
 .drawer-paper.MuiDrawer-paper {
-        width: 18%;
+        width: 250px;
         background-color: #212529;
 }
 

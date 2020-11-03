@@ -6,8 +6,10 @@ import SideMenu from './SideMenu/SideMenu';
 function Layout(props) {
         return (
                 <div>
+                  <div>
                         <NavMenu />
                         <SideMenu />
+                  </div>
                         <Container>{props.children}</Container>
                 </div>
         );

@@ -37,7 +37,7 @@ function NavMenu(props) {
         }, []);
 
         return (
-                <div>
+                <div className="top_bar">
                         <nav>
                                 <Breadcrumb />
                                 <div className="weather">
