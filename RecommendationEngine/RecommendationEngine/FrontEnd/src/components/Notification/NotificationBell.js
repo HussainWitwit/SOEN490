@@ -23,6 +23,7 @@ function NotificationBell (props) {
     return (
         <div id="main-container" className="notification_bell">
             <Notifications
+                id="notifications"
                 data={notification}
                 height='260px'
                 width='300px'

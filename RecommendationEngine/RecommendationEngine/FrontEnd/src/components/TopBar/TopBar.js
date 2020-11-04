@@ -3,7 +3,7 @@ import './TopBar.css';
 import NotificationBell from '../Notification/NotificationBell';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
 
-function TopBar(props) {
+function TopBar (props) {
   const [locationDetails, setLocationDetails] = React.useState(null);
   const [weatherDetails, setWeatherDetails] = React.useState(null);
 
@@ -26,15 +26,15 @@ function TopBar(props) {
   }, []);
 
   return (
-    <div className="top_bar">
+    <div id="main-containter" className="top_bar">
       <nav>
-        <Breadcrumb/>
-        <div className="weather">
+        <Breadcrumb id="breadcrumb" />
+        <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
         </div>
-        <img className="temperature_icon" alt="icon" src={weatherDetails ? "http://openweathermap.org/img/wn/" + weatherDetails.icon + ".png" : "no icon"} />
-        <NotificationBell/>
+        <img id="img" className="temperature_icon" alt="icon" src={weatherDetails ? "http://openweathermap.org/img/wn/" + weatherDetails.icon + ".png" : "no icon"} />
+        <NotificationBell id="notification-bell" />
       </nav>
     </div>
   );
