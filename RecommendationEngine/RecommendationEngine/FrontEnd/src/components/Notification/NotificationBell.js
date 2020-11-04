@@ -1,31 +1,39 @@
 import React from 'react';
-import NotifyMe from 'react-notification-timeline';
 import './NotificationBell.css';
+import Notifications from "react-notifications-menu";
 
-function NotificationBell(props) {
+
+function NotificationBell (props) {
     const [notification, setNotifications] = React.useState(
         [
             {
-                "update": "70 new employees are shifted",
-                "timestamp": 1596119688264
+                message: '70 new employees are shifted',
+                detailPage: '/',
+                receivedTime: '12h ago'
             },
             {
-                "update": "Time to take a Break, TADA!!!",
-                "timestamp": 1596119686811
+                message: 'Time to take a Break, TADA!!!',
+                detailPage: '/',
+                receivedTime: '12h ago'
             }
         ])
+
     return (
-        <div className="notification_bell">
-            <NotifyMe
+        <div id="main-container" className="notification_bell">
+            <Notifications
                 data={notification}
-                storageKey='notific_key'
-                notific_key='timestamp'
-                notific_value='update'
-                heading='Notification Alerts'
-                sortedByKey={false}
-                showDate={true}
-                size={20}
-                color="black"
+                height='260px'
+                width='300px'
+                cardOption={notification => console.log(notification)}
+                viewAllbtn={{ text: 'see all' }}
+                markAsRead={notification => console.log(notification)}
+                headerBackgroundColor='white'
+                header={
+                    {
+                        title: 'Notifications',
+                        option: { text: 'View All', onClick: () => { } }
+                    }
+                }
             />
         </div>
     );
