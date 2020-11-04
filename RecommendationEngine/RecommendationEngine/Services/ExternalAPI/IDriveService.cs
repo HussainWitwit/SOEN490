@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngine.Services.ExternalAPI
 {
     public interface IDriveService
     {
-        public Task<string> GetPortfolios();
-        public Task<string> GetPlants();
-        public void GetPlantByPortfolioId(string portfolioId);
+        public Task<List<PFPortfolio>> GetPortfolios();
+        public Task<List<PFPortfolio>> GetPlants();
+        public Task<PFPlant> GetPlantByPortfolioId(string portfolioId);
     }
 }
