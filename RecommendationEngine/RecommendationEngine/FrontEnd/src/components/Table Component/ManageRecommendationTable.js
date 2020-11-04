@@ -22,7 +22,7 @@ import './ManageRecommendationTable.css';
 import { useStyles, StyledTableCell } from '../Table Component/TableTheme';
 
 
-function TablePaginationActions(props) {
+function TablePaginationActions (props) {
     const style = useStyles()
     const theme = useTheme();
     const { count, page, rowsPerPage, onChangePage } = props;
@@ -73,23 +73,23 @@ function TablePaginationActions(props) {
     );
 }
 
-function createData(name, frequency, startDate, endDate, template, algo) {
+function createData (name, frequency, startDate, endDate, template, algo) {
     return { name, frequency, startDate, endDate, template, algo };
 }
 
 const rows = [
+    createData('W33AD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
     createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33BD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33CD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33DD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ED', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33FD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33GD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33HD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33JD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33KD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33LD', 'Bi-Weekly', 'May 26, 2020', 'June 23, 2021', 'Wash Optimization', 'WO Algorithm'),
 ];
 
 TablePaginationActions.propTypes = {
@@ -99,7 +99,7 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function ManageRecommendationTable() {
+function ManageRecommendationTable () {
     const style = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
