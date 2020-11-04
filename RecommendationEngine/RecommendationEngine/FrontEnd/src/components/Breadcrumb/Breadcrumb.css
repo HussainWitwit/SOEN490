@@ -1,17 +1,17 @@
 .breadcrumb {
-        padding: 0%;
-        float: left;
-        position: relative;
-        top: 15%;
-        left: 20px;
-        background-color: #c8c8c8;
+  padding: 0%;
+  float: left;
+  position: relative;
+  top: 15%;
+  left: 20px;
+  background-color:#C8C8C8;
 }
-.breadcrumb-item + .breadcrumb-item::before {
-        content: '>';
+.breadcrumb-item+.breadcrumb-item::before {
+  content: ">";
 }
 .change_anchor {
-        padding-left: 20px;
-        text-decoration: underline !important;
-        color: #888888 !important;
-        font-size: 13px;
+  padding-left: 20px;
+  text-decoration: underline !important;
+  color: #888888 !important;
+  font-size: 13px;
 }
