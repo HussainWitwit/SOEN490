@@ -17,10 +17,10 @@ function Breadcrumb(props) {
                     const disabled = isLastCrumb(ci) ? 'disabled' : '';
                     return (
                         <li key={ci} className="breadcrumb-item align-items-center">
-                        {crumb == "All Portfolio" &&
+                        {crumb === "All Portfolio" &&
                         <BiCube />
                         }
-                        {ci == 1 &&
+                        {ci === 1 &&
                         <GiWindTurbine />
                         }
                         <button className={`btn btn-sm shadow-none ${disabled}`}>
