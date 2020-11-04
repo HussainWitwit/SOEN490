@@ -1,6 +1,7 @@
 ﻿namespace Models.Application.Asset
 {
-    public abstract class AssetComposite : Asset
+    public class AssetComposite : Asset
     {
+        //children
     }
 }

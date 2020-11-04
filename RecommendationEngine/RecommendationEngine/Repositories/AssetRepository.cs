@@ -15,8 +15,8 @@ namespace RecommendationEngine.Repositories {
                         return _recommendationEngineDb.Assets.ToList();
                 }
 
-                public DBAsset GetAssetById(int id) {
-                        return _recommendationEngineDb.Assets.FirstOrDefault(a => a.AssetId == id);
+                public DBAsset GetAssetByName(string assetName) {
+                        return _recommendationEngineDb.Assets.FirstOrDefault(a => a.Name == assetName);
                 }
         }
 }

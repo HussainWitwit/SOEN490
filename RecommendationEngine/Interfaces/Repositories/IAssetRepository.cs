@@ -6,6 +6,6 @@ namespace Interfaces.Repositories {
 
         public interface IAssetRepository {
                 public List<DBAsset> Get();
-                public DBAsset GetAssetById(int id);
+                public DBAsset GetAssetByName(string assetName);
         }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Models.DB;
+﻿using Models.Application.Asset;
 
 namespace Interfaces.Services {
 
         public interface IAssetService {
-                public List<DBAsset> GetAssets();
-                public DBAsset GetAssetById(int id);
+                public AssetComposite GetAssets();
+                public AssetLeaf GetAssetByName(string assetName);
         }
 }

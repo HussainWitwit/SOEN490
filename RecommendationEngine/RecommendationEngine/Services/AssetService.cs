@@ -3,6 +3,7 @@ using Interfaces.Services;
 using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 using Interfaces.Repositories;
+using Models.Application.Asset;
 
 namespace RecommendationEngine.Services {
 
@@ -20,12 +21,26 @@ namespace RecommendationEngine.Services {
                         _repository = repository;
                 }
 
-                public List<DBAsset> GetAssets() {
-                        return _repository.Get();
+                public AssetComposite GetAssets() {
+                        //assets = _repository.Get();
+                        //AssetMetadataService.children = ;
+                        return new AssetComposite();
                 }
 
-                public DBAsset GetAssetById(int id) {
-                        return _repository.GetAssetById(id);
+                public AssetLeaf GetAssetByName(string assetName) {
+                        var asset = _repository.GetAssetByName(assetName);
+                        var assetleaf = new AssetLeaf {
+                                Name = asset.Name,
+                                Id = asset.AssetId,
+                                AcPower = asset.AcPower,
+                                DisplayText = asset.DisplayText,
+                                ElementPath = asset.ElementPath,
+                                EnergyType = asset.EnergyType,
+                                TimeZone = asset.TimeZone
+                        };
+
+                        return assetleaf;
+                       
                 }
         }
 }
