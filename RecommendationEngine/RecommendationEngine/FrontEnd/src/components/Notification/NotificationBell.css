@@ -14,4 +14,7 @@
 }
 .notification::after {
   background-color: #4DD3EF;
+  top: -3px;
+  right: -11px;
+  padding: 3px 6px;
 }
