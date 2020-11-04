@@ -13,11 +13,9 @@ namespace RecommendationEngine.Controllers
     public class ActionController: ControllerBase
     {
         private IActionService _actionService;
-        private IActionRepository _actionRepository;
-        public ActionController(IActionService actionService, IActionRepository actionRepository)
+        public ActionController(IActionService actionService)
         {
             _actionService = actionService;
-            _actionRepository = actionRepository;
         }
 
 
