@@ -21,7 +21,8 @@ namespace RecommendationEngine.Repositories
             {
                 RecommendationJob =  job,
                 Description = message,
-                Level = level
+                Level = level,
+                Time = DateTime.Now
             };
             _recommendationEngineDb.Add(log);
             _recommendationEngineDb.SaveChanges();
