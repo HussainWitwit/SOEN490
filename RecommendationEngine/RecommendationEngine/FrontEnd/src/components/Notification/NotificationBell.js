@@ -7,11 +7,13 @@ function NotificationBell (props) {
     const [notification, setNotifications] = React.useState(
         [
             {
+                image: "https://cdn.iconscout.com/icon/free/png-256/avatar-367-456319.png",
                 message: '70 new employees are shifted',
                 detailPage: '/',
                 receivedTime: '12h ago'
             },
             {
+                image: "https://cdn.iconscout.com/icon/free/png-256/avatar-367-456319.png",
                 message: 'Time to take a Break, TADA!!!',
                 detailPage: '/',
                 receivedTime: '12h ago'

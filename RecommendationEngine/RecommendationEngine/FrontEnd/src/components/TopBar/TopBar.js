@@ -21,8 +21,8 @@ function TopBar(props) {
 
   useEffect(() => {
     //Uncomment these 2 lines to enable api calls
-    //getCurrentLocation(); 
-    //getCurrentWeather();
+    // getCurrentLocation(); 
+    // getCurrentWeather();
   }, []);
 
   return (
