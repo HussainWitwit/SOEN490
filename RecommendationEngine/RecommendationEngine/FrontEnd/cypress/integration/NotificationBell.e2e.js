@@ -6,25 +6,26 @@ describe("Notification Bell", () => {
     })
 
     it("Finds the notification bell", () => {
-        cy.get('[d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"]').should('exist')
+        cy.get('.icon > .image').should('exist')
     })
 
     it("Finds the notification data", () => {
         cy.wait(500)
-        cy.get('.notification').should('exist')
+        cy.get('.icon > .image').should('exist')
         cy.wait(500)
+        cy.get('.items > :nth-child(1)').should('exist')
     })
 
     it("Clicks on the notification bell", () => {
         cy.wait(500)
-        cy.get('.notification').click()
+        cy.get('.icon > .image').click()
     })
 
-    it("Clicks on the notification bell and marks all as read", () => {
-        cy.get('.notification').click()
+    it("Clicks on the notification bell and click on view all", () => {
+        cy.get('.icon > .image').click()
         cy.wait(1000)
-        cy.get('.popover-body > :nth-child(1) > .btn').click()
+        cy.get('.header-option')
         cy.wait(500)
-        cy.get('.notification').click()
+        cy.get('.icon > .image').click()
     })
 })

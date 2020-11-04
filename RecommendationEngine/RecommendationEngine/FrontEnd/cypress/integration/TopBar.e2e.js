@@ -20,7 +20,7 @@ describe('TopBar component', () => {
         cy.wait(500)
         cy.get('.change_anchor').should('exist')
         cy.wait(500)
-        cy.get('.notification').should('exist')
+        cy.get('.icon > .image').click()
         cy.wait(500)
         cy.get('.temperature_icon').should('exist')
         cy.wait(500)
@@ -30,11 +30,11 @@ describe('TopBar component', () => {
         cy.wait(500)
     })
 
-    it("Clicks on the notification bell and marks all as read", () => {
-        cy.get('.notification').click()
+    it("Clicks on the notification bell and click on view all", () => {
+        cy.get('.icon > .image').click()
         cy.wait(1000)
-        cy.get('.popover-body > :nth-child(1) > .btn').click()
+        cy.get('.header-option')
         cy.wait(500)
-        cy.get('.notification').click()
+        cy.get('.icon > .image').click()
     })
 })
