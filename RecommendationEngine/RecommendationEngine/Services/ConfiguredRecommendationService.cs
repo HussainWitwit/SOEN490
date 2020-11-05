@@ -20,7 +20,8 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
         public ConfiguredRecommendationService(
                 IDriveService driveService,
                 IConfiguredRecommendationRepository repsitory
-        ) {
+        )
+        {
             _driveService = driveService;
             _repository = repsitory;
         }
@@ -32,15 +33,18 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
 
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
-            configuredRecommendation.Validate();
             var recommendationType = _repository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            DBRecommendationSchedule config = new DBRecommendationSchedule {
+            configuredRecommendation.Validate(recommendationType);
+
+            DBRecommendationSchedule config = new DBRecommendationSchedule
+            {
                 Name = configuredRecommendation.Title,
-                DisplayText = configuredRecommendation.Type,
-                ModifiedBy = configuredRecommendation.CreatedBy,
+                DisplayText = recommendationType.DisplayText,
                 Granularity = configuredRecommendation.Granularity,
-                OccurenceDatetime = configuredRecommendation.OccurrenceDatetime,
+                Description = recommendationType.Description,
                 CreatedOn = configuredRecommendation.CreatedOn,
+                RecurrenceDatetime = configuredRecommendation.OccurrenceDatetime,
+                RecurrenceDayOfWeek = configuredRecommendation.DayOfWeek,
                 RecommendationType = recommendationType
             };
             _repository.Add(config);
