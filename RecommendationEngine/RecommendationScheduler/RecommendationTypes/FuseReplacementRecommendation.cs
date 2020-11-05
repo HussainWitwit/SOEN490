@@ -2,7 +2,7 @@
 
 namespace RecommendationScheduler.RecommendationTypes
 {
-    public class TurbineChangeRecommendation: IRecommendationType
+    public class FuseReplacementRecommendation: IRecommendationType
     {
         public void ExecuteAlgorithm(DBRecommendationJob job)
         {
