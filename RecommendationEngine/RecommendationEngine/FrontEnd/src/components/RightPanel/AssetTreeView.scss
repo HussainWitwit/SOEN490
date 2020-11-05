@@ -1,0 +1,49 @@
+
+.Asset-Tree-Container {
+    height: 264px;
+    flex-grow: 1;
+    width: 225px;
+    max-width: 400px; //Just for testing
+    
+}
+.Asset-Tree-Item-Root.MuiTreeItem-root {
+    color: white;
+    margin: 10px 0 5px 10px;
+}
+
+.Asset-Tree-Item-Group.MuiTreeItem-group {
+    margin-left: 7px;
+    padding-left: 15px;
+    // margin-top: 5px;
+    border-left: 1px dashed;//
+}
+
+.Asset-Tree-Item-Label.MuiTreeItem-content {
+    font-size: 10px!important;
+}
+
+.Label-Root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // padding: 0 5px 0 10px;
+}
+
+.Label-Icon {
+    margin-right: 5px;
+    height: 10px;
+}
+
+.Label-Text {
+    font-weight: inherit; //
+    flex-grow: 1;
+    font-size: 12px !important;
+}
+
+.Search-Box-Container {
+    height: 30px
+}
+
+
+   
+    
