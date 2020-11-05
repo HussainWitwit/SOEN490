@@ -26,7 +26,7 @@ describe("Breadcrumb component", () => {
     })
 
     it("Clicks  on all elements", () => {
-        cy.get('.breadcrumb > :nth-child(1) > svg').click()
+        // cy.get('.breadcrumb > :nth-child(1) > svg').click()
         cy.get(':nth-child(1) > .btn').click()
         cy.wait(500)
         cy.get('.breadcrumb > :nth-child(2)').click()
