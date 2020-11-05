@@ -50,20 +50,18 @@ export const CssTextField = withStyles({
 
 })(TextField);
 
-   /**
-     * creation of the Data Object
-     * @param {*} title
-     * @param {*} frequency
-     * @param {*} startDate
-     * @param {*} startTime
-     * @param {*} endDate
-     * @param {*} endTime
-     * @param {*} template
-     * @param {*} qlgorithm 
- 
-     */
-
-function createData(title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
+/**
+  * creation of the Data Object
+  * @param {*} title
+  * @param {*} frequency
+  * @param {*} startDate
+  * @param {*} startTime
+  * @param {*} endDate
+  * @param {*} endTime
+  * @param {*} template
+  * @param {*} qlgorithm 
+  */
+function createData (title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
     return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
 }
 
@@ -119,14 +117,14 @@ const rows = [
 
 ];
 
-  /**
-     * This function handles compares row items - future methods
-     * @param {*} a
-     * @param {*} b
-     * @param {*} orderBy
+/**
+   * This function handles compares row items - future methods
+   * @param {*} a
+   * @param {*} b
+   * @param {*} orderBy
  
-     */
-function descendingComparator(a, b, orderBy) {
+   */
+function descendingComparator (a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
@@ -138,13 +136,13 @@ function descendingComparator(a, b, orderBy) {
 
 // Same thing here
 
-        /**
-     * This function hanldles the comparison of items gets them - future methods
-     * @param {} order
-     * @param {*} orderBy 
-     */
+/**
+* This function hanldles the comparison of items gets them - future methods
+* @param {} order
+* @param {*} orderBy 
+*/
 
-function getComparator(order, orderBy) {
+function getComparator (order, orderBy) {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -153,12 +151,12 @@ function getComparator(order, orderBy) {
 // Same for this function it takes in an array and a comparator
 
 
-        /**
-     * This function can handle the sorting of the row items - future methods
-     * @param {} event 
-     * @param {*} index 
-     */
-function stableSort(array, comparator) {
+/**
+* This function can handle the sorting of the row items - future methods
+* @param {} event 
+* @param {*} index 
+*/
+function stableSort (array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
         const order = comparator(a[0], b[0]);
@@ -177,22 +175,22 @@ const headCells = [
     { id: 'algorithm', numeric: true, label: 'Algorithm' },
 ];
 
-  /**
-     * cMethod that will serve for the creation of the table header
-     * @param {*} props
+/**
+   * cMethod that will serve for the creation of the table header
+   * @param {*} props
  
-     */
+   */
 
-function EnhancedTableHead(props) {
+export function EnhancedTableHead (props) {
     const { order, orderBy, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
 
     return (
-        <TableHead align="left">
-            <TableRow>
-                <TableCell align="left"></TableCell>
+        <TableHead id="table-head" align="left">
+            <TableRow id="table-row">
+                <TableCell id="table-cell" align="left"></TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         align="left"
@@ -202,6 +200,7 @@ function EnhancedTableHead(props) {
                         id="tableHeader"
                     >
                         <TableSortLabel
+                            id="sort-label"
                             align="left"
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : 'asc'}
@@ -227,7 +226,7 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string.isRequired,
 };
 
-function ManageRecommendationTable() {
+function ManageRecommendationTable () {
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('');
@@ -237,11 +236,11 @@ function ManageRecommendationTable() {
     //TODO:Set hook array for the name of the columns of the table and the filter list 
 
 
-  /**
-     * set the items to be comprssed function
-     * @param {*} event
- 
-     */
+    /**
+       * set the items to be comprssed function
+       * @param {*} event
+   
+       */
 
     // this method is used for the compressed table rows button (lite)
     const handleChangeDense = (event) => {
@@ -249,32 +248,32 @@ function ManageRecommendationTable() {
     };
 
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-   
-        /**
-     * This function handles the sorting and sets them
-     * @param {} event 
-     * @param {*} index 
-     */
+
+    /**
+ * This function handles the sorting and sets them
+ * @param {} event 
+ * @param {*} index 
+ */
     const handleRequestSort = (property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
-        /**
-     * This function handles the changing of paginations (pages)
-     * @param {} event 
-     * @param {*} newPage
-     */
+    /**
+ * This function handles the changing of paginations (pages)
+ * @param {} event 
+ * @param {*} newPage
+ */
     // this method is used for the pagination
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
-        /**
-     * This function handles population of row on each ne
-     * @param {*} event  
-     */
+    /**
+ * This function handles population of row on each ne
+ * @param {*} event  
+ */
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
@@ -284,11 +283,11 @@ function ManageRecommendationTable() {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
-        <div>
+        <div id="main-container">
             <div>
                 <br></br>
-                <Grid container spacing={1} alignItems="flex-end">
-                    <Grid id="grid" item alignItems="flex-start">
+                <Grid id="grid-container1" container spacing={1} alignItems="flex-end">
+                    <Grid id="grid1" item alignItems="flex-start">
                         <h3 id="title">Manage Recommendations</h3>
                         <h6 id="subtitle">Add, edit, delete and browse the configured recommendation</h6>
                     </Grid>
@@ -300,12 +299,12 @@ function ManageRecommendationTable() {
             </div>
             <div>
                 <div>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <Search />
+                    <Grid id="grid-container2" container spacing={1} alignItems="flex-end">
+                        <Grid item id="grid2">
+                            <Search id="search" />
                         </Grid>
                         <Grid item>
-                            <CssTextField
+                            <CssTextField id="text-field"
                                 // className={CssTextField} // also declared in the .css file
                                 id="custom-css-standard-input"
                                 label="Search"
@@ -343,9 +342,9 @@ function ManageRecommendationTable() {
             <br></br>
             <div id="root">
                 <Paper id="paper">
-                    <Toolbar>
-                                <h6 className="toolBarTitle" variant="h6" id="tableTitle" component="div">
-                                    Configured Recommendations
+                    <Toolbar id="toolbar">
+                        <h6 className="toolBarTitle" variant="h6" id="tableTitle" component="div">
+                            Configured Recommendations
                                 </h6>
                         <FormControlLabel
                             control={
@@ -372,10 +371,10 @@ function ManageRecommendationTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={rows.length} might be uselfull for later 
+                                rowCount={rows.length} might be uselfull for later
                             />
 
-                            <TableBody>
+                            <TableBody id="table-body">
                                 {stableSort(rows, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
@@ -390,7 +389,7 @@ function ManageRecommendationTable() {
                                                     align="left"
                                                     component="th"
                                                     scope="row"
-                                                    padding="2%"
+                                                    padding="default"
                                                     className="primaryKey"
                                                     id="tableBody">
                                                     {row.title}
@@ -412,6 +411,7 @@ function ManageRecommendationTable() {
                         </Table>
                     </TableContainer>
                     <TablePagination
+                        id="pagination"
                         rowsPerPageOptions={[10, 25, 50, 100]}
                         component="div"
                         count={rows.length}

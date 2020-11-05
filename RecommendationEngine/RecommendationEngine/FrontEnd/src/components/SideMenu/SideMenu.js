@@ -13,7 +13,7 @@ import WorkOutlineRoundedIcon from '@material-ui/icons/WorkOutlineRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 
-export default function SideMenu(props) {
+export default function SideMenu (props) {
 
     const [openNested, setOpenNested] = React.useState(false);
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
@@ -52,13 +52,13 @@ export default function SideMenu(props) {
                             <Avatar alt="Kenzo" src="../assets/images/avatar1.jpeg" />
                         </ListItemAvatar>
                         <ListItemText>
-                            <Typography id="username" component="username" variant="username">Kenzo</Typography>
+                            <Typography id="username" component="username" >Kenzo</Typography>
                             <br></br>
-                            <Typography id="jobPosition" component="jobposition" variant="jobposition">Site Manager</Typography>
+                            <Typography id="jobPosition" component="jobposition" >Site Manager</Typography>
                         </ListItemText>
                     </ListItem>
                 </List>
-                <List style={{marginRight:'0%'}}>
+                <List style={{ marginRight: '0%' }}>
                     <ListItem
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 0) ? '#4DD3EF' : '#212529' }}
                         button
@@ -66,10 +66,10 @@ export default function SideMenu(props) {
                         onClick={(event) => handleClickedItem(event, 0)}
                         className="outer"
                     >
-                        <ListItemIcon classes={{paper: "icon-container-paper"}}className="icon-container">
+                        <ListItemIcon classes={{ paper: "icon-container-paper" }} className="icon-container">
                             <DashboardRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles" component="dashboard" variant="dashboard">Dashboard</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" component="dashboard">Dashboard</Typography></ListItemText>
                     </ListItem>
                     <ListItem button
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 1) ? '#4DD3EF' : '#212529' }}
@@ -79,7 +79,7 @@ export default function SideMenu(props) {
                         <ListItemIcon className="icon-container">
                             <ListAltRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles" component="recommendations" variant="recommendations">Recommendations</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" component="recommendations">Recommendations</Typography></ListItemText>
                         {openNested ? <ExpandLess className="icon-container" /> : <ExpandMore className="icon-container" />}
                     </ListItem>
                     <Collapse in={openNested} timeout="auto" unmountOnExit>
@@ -96,7 +96,7 @@ export default function SideMenu(props) {
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles" component="manage" variant="manage">Manage</Typography></ListItemText>
+                                <ListItemText><Typography className="main-titles" component="manage">Manage</Typography></ListItemText>
                             </ListItem>
                             <ListItem
                                 button
@@ -109,7 +109,7 @@ export default function SideMenu(props) {
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles" component="results" variant="results">Results</Typography></ListItemText>
+                                <ListItemText><Typography className="main-titles" component="results" >Results</Typography></ListItemText>
                             </ListItem>
                             <ListItem
                                 button
@@ -122,7 +122,7 @@ export default function SideMenu(props) {
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 4) ? '#4DD3EF' : 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles" component="jobs" variant="jobs">Jobs</Typography></ListItemText>
+                                <ListItemText><Typography className="main-titles" component="jobs" >Jobs</Typography></ListItemText>
                             </ListItem>
                             <ListItem
                                 button
@@ -135,7 +135,7 @@ export default function SideMenu(props) {
                                         style={{ color: (isSelected && selectedItemIndex === 5) ? '#4DD3EF' : 'white' }}
                                         className="icon" />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles" component="actions" variant="actions">Actions</Typography></ListItemText>
+                                <ListItemText><Typography className="main-titles" component="actions">Actions</Typography></ListItemText>
                             </ListItem>
                         </List>
                     </Collapse>
@@ -148,7 +148,7 @@ export default function SideMenu(props) {
                         <ListItemIcon className="icon-container">
                             <WorkOutlineRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles" component="workorders" variant="workorders">Work Orders</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" component="workorders">Work Orders</Typography></ListItemText>
                     </ListItem>
                 </List>
                 <div className="settings">
@@ -163,7 +163,7 @@ export default function SideMenu(props) {
                         <ListItemIcon className="icon-container">
                             <SettingsRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles" component="settings" variant="settings">Main Settings</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" component="settings" >Main Settings</Typography></ListItemText>
                     </ListItem>
                     <ListItem button
                         className="outer"
@@ -173,7 +173,7 @@ export default function SideMenu(props) {
                         <ListItemIcon className="icon-container">
                             <NotificationsRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles" component="notifications" variant="notifications">Notifications</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" component="notifications" >Notifications</Typography></ListItemText>
                     </ListItem>
 
                 </List>
