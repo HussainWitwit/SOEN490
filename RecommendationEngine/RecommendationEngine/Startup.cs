@@ -1,5 +1,6 @@
 using System.Reflection;
 using Autofac;
+using Interfaces.RecommendationScheduler;
 using Interfaces.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -59,11 +60,14 @@ namespace RecommendationEngine
             builder.RegisterType<RecommendationJobLogger>()
                 .As<IRecommendationJobLogger>()
                 .SingleInstance();
+            builder.RegisterType<RecommendationScheduler.RecommendationScheduler>()
+                .As<IRecommendationScheduler>()
+                .SingleInstance();
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecommendationScheduler scheduler)
         {
             if (env.IsDevelopment())
             {
