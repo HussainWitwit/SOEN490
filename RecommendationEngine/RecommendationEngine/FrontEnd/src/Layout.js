@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import TopBar from './TopBar/TopBar';
-import SideMenu from './SideMenu/SideMenu';
+import TopBar from './components/TopBar/TopBar';
+import SideMenu from './components/SideMenu/SideMenu';
 
 function Layout (props) {  
   return (
@@ -11,6 +11,7 @@ function Layout (props) {
       <Container>
         {props.children}
       </Container>
+      
     </div>
   );
 }

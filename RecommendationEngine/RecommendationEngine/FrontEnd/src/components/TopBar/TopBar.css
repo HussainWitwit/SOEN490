@@ -24,6 +24,7 @@ div.weather p {
   margin: 0px;
   font-size: 12px;
   margin-right: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 button {
   margin: -5%;
@@ -38,6 +39,7 @@ button.btn.btn-sm.shadow-none.disabled{
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 }
 .box-shadow {

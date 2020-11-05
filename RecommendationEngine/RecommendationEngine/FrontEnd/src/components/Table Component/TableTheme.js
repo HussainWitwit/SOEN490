@@ -117,7 +117,17 @@ export const useStyles = makeStyles((theme) => ({
     
     toolbarTitle: {
         flex: '1 1 100%',
-        marginLeft: '33px'
+        marginLeft: '18px',
+        color: 'grey',
+        fontFamily: [
+            'Segoe UI',
+            ' Tahoma',
+            '"Geneva"',
+            'Verdana',
+            '"sans-serif"',
+        ].join(','),
+        fontSize: 16,
+        
     },
     visuallyHidden: {
         border: 0,

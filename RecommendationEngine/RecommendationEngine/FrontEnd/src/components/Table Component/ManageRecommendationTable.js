@@ -119,7 +119,7 @@ const headCells = [
     { id: 'algorithm', numeric: true, disablePadding: false, label: 'Algorithm' },
 ];
 
-function enhancedTableHead(props) {
+function EnhancedTableHead(props) {
     const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -140,16 +140,18 @@ function enhancedTableHead(props) {
                     <TableCell
                         align="left"
                         key={headCell.id}
-                        // align={headCell.numeric ? 'right' : 'center'}
+                        align={headCell.numeric ? 'left' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === headCell.id ? order : false}
                         className={classes.tableHeader}
+                    
                     >
                         <TableSortLabel
                             align="left"
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
+                        
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
@@ -165,7 +167,7 @@ function enhancedTableHead(props) {
     );
 }
 
-enhancedTableHead.propTypes = {
+EnhancedTableHead.propTypes = {
     classes: PropTypes.object.isRequired,
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
@@ -246,7 +248,7 @@ function ManageRecommendationTable(props) {
             <div>
                 <br></br>
                 <Grid container spacing={1} alignItems="flex-end">
-                    <Grid item alignItems="flex-start" style={{width: '930px'}}>
+                    <Grid item alignItems="flex-start" style={{width: '79%'}}>
                         <h3 id="title">Manage Recommendations</h3>
                         <h6 id="subtitle">Add, edit, delete and browse the configured recommendation</h6>
                     </Grid>
@@ -315,10 +317,12 @@ function ManageRecommendationTable(props) {
                         defaultChecked
                         color="default"
                         inputProps={{ 'aria-label': 'checkbox with default color' }}
+                        
                     />}
                 label={
                     <h6 className={classes.controlLabel}>Lite</h6>
                 }
+                // style={{marginLeft:'85%'}}
             />
 
             {/* {numSelected > 0 ? (
@@ -342,7 +346,7 @@ function ManageRecommendationTable(props) {
                             size={dense ? 'small' : 'medium'}
                             aria-label="enhanced table"
                         >
-                            <enhancedTableHead
+                            <EnhancedTableHead
                                 classes={classes}
                                 numSelected={selected.length}
                                 order={order}
@@ -351,6 +355,7 @@ function ManageRecommendationTable(props) {
                                 onRequestSort={handleRequestSort}
                                 rowCount={rows.length}
                             />
+
                             <TableBody>
                                 {stableSort(rows, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -360,16 +365,16 @@ function ManageRecommendationTable(props) {
 
                                         return (
                                             <TableRow
-                                                // hover
-                                                // onClick={(event) => handleClick(event, row.name)}
-                                                // role="checkbox"
-                                                // aria-checked={isItemSelected}
-                                                // tabIndex={-1}
-                                                // key={row.name}
-                                                // selected={isItemSelected}
+                                                hover
+                                                onClick={(event) => handleClick(event, row.name)}
+                                                role="checkbox"
+                                                aria-checked={isItemSelected}
+                                                tabIndex={-1}
+                                                key={row.name}
+                                                selected={isItemSelected}
                                                 align="left"
                                             >
-                                                <TableCell padding="checkbox" align="center">
+                                                <TableCell padding="checkbox" align="left">
                                                     {/* <Checkbox
                                                         checked={isItemSelected}
                                                         inputProps={{ 'aria-labelledby': labelId }}
@@ -383,7 +388,6 @@ function ManageRecommendationTable(props) {
                                                     padding="none"
                                                     style={{ width: '200px' }}
                                                     className={classes.tableBody}>
-
                                                     {row.title}
                                                 </TableCell>
                                                 <TableCell align="left" className={classes.tableBody}>{row.frequency}</TableCell>

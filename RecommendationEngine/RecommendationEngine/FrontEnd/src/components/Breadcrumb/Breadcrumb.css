@@ -5,6 +5,7 @@
   top: 15%;
   left: 20px;
   background-color:#C8C8C8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .breadcrumb-item+.breadcrumb-item::before {
   content: ">";
@@ -14,4 +15,6 @@
   text-decoration: underline !important;
   color: #888888 !important;
   font-size: 13px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
 }
