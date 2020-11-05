@@ -1,13 +1,11 @@
 import React from 'react';
 import ManageRecommendationTable from "../Table Component/ManageRecommendationTable";
-// import Test from "../Table Component/Test"
-import TemporaryDrawer from "../RightPanel/RightPanel";
 
+//TODO: Should either renamed or we should refer directly to the child component.
 function Home (props){
   return (
     <div id="background">
     <ManageRecommendationTable/>
-    <TemporaryDrawer />
     </div>
   );
 }
