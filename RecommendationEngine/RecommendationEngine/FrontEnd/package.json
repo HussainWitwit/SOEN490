@@ -32,7 +32,8 @@
     "collectCoverageFrom": [
       "**/src/**",
       "!**/src/index.js",
-      "!**/src/registerServiceWorker.js"
+      "!**/src/registerServiceWorker.js",
+      "!**/src/tests/__snapshots__/**"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",
@@ -75,7 +76,7 @@
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest -u",
     "test:cypress": "cypress open",
     "cypress:ci": "cypress run --config video=false",
     "test:ci": "start-server-and-test start http://localhost:3000 cypress:ci",
