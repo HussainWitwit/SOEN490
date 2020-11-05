@@ -18,6 +18,7 @@ namespace RecommendationEngine.Services
         private IDriveService _driveService;
         private IAssetRepository _assetRepository;
         private IAssetTypeRepository _assetTypeRepository;
+        private List<DBAsset> _assets;
 
         public AssetService(
                 IDriveService driveService,
@@ -28,30 +29,67 @@ namespace RecommendationEngine.Services
             _driveService = driveService;
             _assetRepository = assetRepository;
             _assetTypeRepository = assetTypeRepository;
+            GetDBAssets();
         }
 
-        public AssetComposite GetAssets()
+        
+        private List<DBAsset> GetDBAssets()
         {
-            //assets = _repository.Get();
-            //AssetMetadataService.children = ;
-            return new AssetComposite();
-        }
-
-        public AssetLeaf GetAssetByName(string assetName)
-        {
-            var asset = _assetRepository.GetAssetByName(assetName);
-            var assetleaf = new AssetLeaf
+            if (_assets != null)
             {
-                Name = asset.Name,
-                Id = asset.AssetId,
-                AcPower = asset.AcPower,
-                DisplayText = asset.DisplayText,
-                ElementPath = asset.ElementPath,
-                EnergyType = asset.EnergyType,
-                TimeZone = asset.TimeZone
+                return _assets;
+            }
+            return _assets = _assetRepository.Get();
+        }
+
+        public Asset GetAssetsTreeview()
+        {
+            GetDBAssets();
+            DBAsset client = _assets.FirstOrDefault(a => a.ParentAsset == null);
+            AssetComposite clientComposite = GetAssetCompositeFromDBAsset(client);
+            return clientComposite;
+        }
+
+        public Asset GetAssetByName(string assetName)
+        {
+            _assets = _assetRepository.Get();
+            DBAsset asset = _assetRepository.GetAssetByName(assetName);
+            return GetAssetCompositeFromDBAsset(asset);
+        }
+
+        private List<AssetComposite> GetChildren(int assetId)
+        {
+            _assets = _assetRepository.Get();
+            List<DBAsset> children = _assets.FindAll(a =>
+                {
+                    if(a.ParentAsset != null)
+                    {
+                        return a.ParentAsset.AssetId == assetId;
+                    }
+                    return false;
+                });
+            List<AssetComposite> childrenComposite = children
+                    .Select(dbasset => GetAssetCompositeFromDBAsset(dbasset)).ToList();
+
+            return childrenComposite;
+        }
+
+        private AssetComposite GetAssetCompositeFromDBAsset(DBAsset dbasset)
+        {
+            var assetComposite = new AssetComposite()
+            {
+                Name = dbasset.Name,
+                Id = dbasset.AssetId,
+                AcPower = dbasset.AcPower,
+                DisplayText = dbasset.DisplayText,
+                ElementPath = dbasset.ElementPath,
+                EnergyType = dbasset.EnergyType,
+                TimeZone = dbasset.TimeZone,
             };
 
-            return assetleaf;
+            assetComposite.Children = GetChildren(assetComposite.Id);
+
+            return assetComposite;
         }
 
         public async void Convert()
