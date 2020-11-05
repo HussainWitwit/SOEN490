@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Controllers
 {
@@ -25,10 +26,17 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpGet("convert")]
-        public IActionResult Convert()
+        public async Task<IActionResult> ConvertAsync()
         {
-            _assetService.Convert();
-            return Ok();
+            try
+            {
+                await _assetService.Convert();
+                return Ok();
+            }
+            catch (GlobalException e){
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+            
         }
     }
 }

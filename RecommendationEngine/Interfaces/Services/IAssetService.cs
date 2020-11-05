@@ -10,6 +10,6 @@ namespace Interfaces.Services
     {
         public AssetComposite GetAssets();
         public AssetLeaf GetAssetByName(string assetName);
-        public void Convert();
+        public Task Convert();
     }
 }

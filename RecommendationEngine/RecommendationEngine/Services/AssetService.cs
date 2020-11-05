@@ -54,7 +54,7 @@ namespace RecommendationEngine.Services
             return assetleaf;
         }
 
-        public async void Convert()
+        public async Task Convert()
         {
             var portfolios = await _driveService.GetPortfolios();
             var plants = await _driveService.GetPlants();
