@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router';
 import Layout from './components/Layout';
-import Home from './components/Home';
+import Home from './components/Home/Home';
 import { hot } from 'react-hot-loader/root';
-
 import './custom.css'
 
 function App (props) {

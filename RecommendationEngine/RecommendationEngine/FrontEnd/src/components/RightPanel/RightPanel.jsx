@@ -4,10 +4,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
-// import TreeView from '@material-ui/lab/TreeView';
-// import TreeItem from '@material-ui/lab/TreeItem';
 import classNames from 'classnames';
-import { AssetTree } from '../RightPanel/AssetTreeView';
+import { AssetTree } from '../AssetTreeView/AssetTreeView';
 import '../RightPanel/RightPanel.css';
 
 
