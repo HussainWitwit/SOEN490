@@ -100,7 +100,7 @@ describe('ManageRecommendationTable component', () => {
 
     it('It finds the textfield', () => {
         const output = shallow(<ManageRecommendationTable />);
-        expect(output.find('#text-field')).toBeTruthy();
+        expect(output.find('#custom-css-standard-input')).toBeTruthy();
     });
 
     it('It finds the root', () => {

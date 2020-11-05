@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,7 +9,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { FilterList, Search } from '@material-ui/icons';
@@ -264,7 +262,6 @@ function ManageRecommendationTable () {
  * @param {} event 
  * @param {*} newPage
  */
-    // this method is used for the pagination
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -305,7 +302,7 @@ function ManageRecommendationTable () {
                             <Search id="search" />
                         </Grid>
                         <Grid item>
-                            <CssTextField id="text-field"
+                            <CssTextField
                                 // className={CssTextField} // also declared in the .css file
                                 id="custom-css-standard-input"
                                 label="Search"
