@@ -9,9 +9,12 @@
 .breadcrumb-item+.breadcrumb-item::before {
   content: ">";
 }
-.change_anchor {
-  padding-left: 20px;
-  text-decoration: underline !important;
-  color: #888888 !important;
-  font-size: 13px;
+
+.change-button-container.MuiButton-root {
+  height: 20px;
+  font-size: 11px;
+  margin-left: 12px;
+  text-decoration: underline;
+  color: #888888;
+  top: 2px; /*ayoye*/
 }

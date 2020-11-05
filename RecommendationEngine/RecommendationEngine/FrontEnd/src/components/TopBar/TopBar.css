@@ -1,13 +1,16 @@
-﻿html {
+﻿/* z-index for drawer is 1200, per DOC
+https://material-ui.com/customization/z-index/ */
+
+html {
   font-size: 14px;
 }
-.top_bar {
-  padding-left: 250px;
-}
+
 nav {
   border-bottom: 1px;
   background-color:#C8C8C8;
   height: 35px;
+  z-index: 1201;
+  position: relative;
 }
 .weather{
   float: right;

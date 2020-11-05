@@ -2,13 +2,21 @@ import React from 'react';
 import './Breadcrumb.css';
 import { BiCube } from "react-icons/bi";
 import { GiWindTurbine } from "react-icons/gi";
+import Button from '@material-ui/core/Button';
 
 function Breadcrumb(props) {
+    //CLEANUP: Useless to create a hook to assign variables that you never change afterwards...
     const [crumbs, setCrumbs] = React.useState(['All Portfolio', '23-kahuku', '001-kahuku']);
-    
+
+    const [isChangeClicked, setIsChangeClicked] = React.useState(false);
+
     function isLastCrumb(index) {
         return index === crumbs.length - 1;
       }
+    const changeAssetEvent = () => {
+        props.changeAsset(!props.sharedChangeAssetValue || !isChangeClicked);
+        setIsChangeClicked(!props.sharedChangeAssetValue || !isChangeClicked);
+    }
 
     return (
         <ol className="breadcrumb">
@@ -27,7 +35,7 @@ function Breadcrumb(props) {
                             {crumb}
                         </button>
                         {isLastCrumb(ci) &&
-                        <a className="change_anchor" href="">Change</a>
+                        <Button classes={{root:'change-button-container'}} color='primary' onClick = {changeAssetEvent}>Change</Button>
                         }
                         </li>
                     );
