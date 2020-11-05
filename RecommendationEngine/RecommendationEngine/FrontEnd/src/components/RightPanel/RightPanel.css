@@ -1,19 +1,5 @@
+/* Header font */
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap');
-
-.Drawer-Button-Styled.MuiButton-root{
-    background-color: red;
-    position: absolute;
-    font-size: 15px;
-    border-radius: 4;
-    height: 30px;
-    width: 85px;
-    right: 700px;
-    top: 350px;
-    transition-duration: 1s;   
-}
-.Drawer-Button-Styled.MuiButton-root:hover {
-    background-color: linear-gradient(45deg, #FE6B8B 70%, #FF8E53 100%);
-}
 
 .Drawer-Pin{
     width: 20px;
@@ -41,7 +27,6 @@
 .Drawer-Header-Container {
     display: grid;
     grid-template-columns: 2.2fr 1fr 0.7fr; 
-    /* background-color: brown; */
     align-content: center;
     height: 55px;
     font-size: 14px;
@@ -51,8 +36,13 @@
 }
 
 .Drawer-Container.MuiDrawer-paper{
-    /* flex-direction: column; */
     background-color: #424242;
     width: 200;
+    /* position: absolute; */
+}
+
+.header-space {
+    height: 35px;
+    width: 100%;
     
 }

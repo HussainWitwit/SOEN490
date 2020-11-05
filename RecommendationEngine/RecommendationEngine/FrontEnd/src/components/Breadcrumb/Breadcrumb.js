@@ -4,6 +4,8 @@ import { BiCube } from "react-icons/bi";
 import { GiWindTurbine } from "react-icons/gi";
 import Button from '@material-ui/core/Button';
 
+//TODO: Use a proper breadcrumb library, too hard coded.
+//TODO: Link breadcrumb path with asset tree path from right drawer.
 function Breadcrumb(props) {
     //CLEANUP: Useless to create a hook to assign variables that you never change afterwards...
     const [crumbs, setCrumbs] = React.useState(['All Portfolio', '23-kahuku', '001-kahuku']);
