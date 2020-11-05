@@ -1,21 +1,19 @@
 import React from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import {DrawerStyled, ButtonStyled} from '../RightPanel/RightPanelStyle';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
+// import TreeView from '@material-ui/lab/TreeView';
+// import TreeItem from '@material-ui/lab/TreeItem';
 import classNames from 'classnames';
-
+import { AssetTree } from '../RightPanel/AssetTreeView';
 import '../RightPanel/RightPanel.css';
+
 
 //This component should have its own context, independant from the page shown.
 export default function TemporaryDrawer() {
 
-    const drawerStyle = DrawerStyled();
-    const buttonStyle = ButtonStyled();
     const [isOpen, setIsOpen] = React.useState(false);
     const [isPinClicked, setIsPinClicked] = React.useState(false);
     
@@ -26,21 +24,13 @@ export default function TemporaryDrawer() {
         setIsOpen(open);
       };
 
-    const treeViewContainer = () => {
-        return(
-            <TreeView>
-                
-            </TreeView>
-        )
-    };
-
     return (
         <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             <Button 
             variant="contained" 
             color="primary" 
-            className = {buttonStyle.drawerButton}
+            classes = {{root: 'Drawer-Button-Styled'}}
             onClick = {toggleDrawer(!isOpen)}
             >
             PRESSSS
@@ -52,9 +42,9 @@ export default function TemporaryDrawer() {
             onOpen={toggleDrawer(true)}
             BackdropProps={{ invisible: true }}
             variant = {'persistent'}
-            classes = {{paper: drawerStyle.drawerBox}}
+            classes = {{paper: 'Drawer-Container'}}
             >
-            {<div className = 'Drawer-Container'>
+            {<div className = 'flex-direction-column'>
                 <div className= 'Drawer-Header-Container'>
                     <p>Asset Selection</p>
                     <IconButton className ='Drawer-Pin' onClick = {() =>{setIsPinClicked(!isPinClicked);}}>
@@ -65,7 +55,7 @@ export default function TemporaryDrawer() {
                     </IconButton>
                 </div>
                 <div>
-                    <treeViewContainer></treeViewContainer>
+                    <AssetTree />
                 </div>
         </div>}
         </SwipeableDrawer>

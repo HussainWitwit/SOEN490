@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap');
 
-.Drawer-Button-Styled{
+.Drawer-Button-Styled.MuiButton-root{
     background-color: red;
     position: absolute;
     font-size: 15px;
@@ -9,10 +9,10 @@
     width: 85px;
     right: 700px;
     top: 350px;
-    transition-duration: 2s;   
+    transition-duration: 1s;   
 }
-.Drawer-Button-Styled:hover {
-    background-color: purple;
+.Drawer-Button-Styled.MuiButton-root:hover {
+    background-color: linear-gradient(45deg, #FE6B8B 70%, #FF8E53 100%);
 }
 
 .Drawer-Pin{
@@ -21,7 +21,7 @@
 }
 
 .Drawer-Close {
-    color: grey;
+    color: white;
     font-size: 21px!important;
 }
 
@@ -32,7 +32,7 @@
     transition: all 0.5s;
 }
 .Drawer-UnPinned-Icon {
-    color: grey;
+    color: white;
     font-size: 14px!important;
     transform: rotate(90deg);
     transition: all 0.5s;
@@ -41,15 +41,18 @@
 .Drawer-Header-Container {
     display: grid;
     grid-template-columns: 2.2fr 1fr 0.7fr; 
-    background-color: brown;
+    /* background-color: brown; */
     align-content: center;
     height: 55px;
-    font-size: 15px;
+    font-size: 14px;
     font-family: 'Mulish', sans-serif;
     padding-left: 5px;
+    color: white
 }
 
-.Drawer-Container{
-    flex-direction: column;
+.Drawer-Container.MuiDrawer-paper{
+    /* flex-direction: column; */
+    background-color: #424242;
+    width: 200;
     
 }
