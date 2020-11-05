@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import SideMenu from '../components/SideMenu/SideMenu.js';
 import '../components/SideMenu/SideMenu.css';
 import Enzyme, { shallow } from '../enzyme';
-import { Drawer, ListItem } from '@material-ui/core';
+import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
-// import '@testing-library/jest-dom/extend-expect';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -41,13 +40,9 @@ describe('SideMenu component', () => {
 
     it('It finds the avatar container', () => {
         const output = shallow(<SideMenu />);
-        expect(output.find('#avatar-container')).toBeTruthy();
-    });
-
-    it('It finds the avatar', () => {
-        const output = shallow(<SideMenu />);
-        expect(output.find('#avatar')).toBeTruthy();
-        expect(output.find('#avatar')).toHaveLength(1);
+        let drawer = output.find(Avatar);
+        expect(drawer).toHaveLength(1);
+        expect(output.find('#drawer')).toBeTruthy();
     });
 
     it('It opens nested items', () => {

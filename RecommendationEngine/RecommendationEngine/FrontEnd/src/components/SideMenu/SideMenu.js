@@ -43,19 +43,18 @@ export default function SideMenu (props) {
         <div className="root">
             <CssBaseline />
             <Drawer
-                id="drawer"
                 variant="permanent"
                 className="drawer"
                 classes={{ paper: "drawer-paper" }}>
                 <List>
-                    <ListItem alignItems="flex-start" className="top-header" id="avatar-container">
+                    <ListItem alignItems="flex-start" className="top-header">
                         <ListItemAvatar>
-                            <Avatar id="avatar" alt="Kenzo" src="../assets/images/avatar1.jpeg" />
+                            <Avatar alt="Kenzo" src="../assets/images/avatar1.jpeg" />
                         </ListItemAvatar>
-                        <ListItemText>
-                            <Typography id="username" >Kenzo</Typography>
+                        <ListItemText >
+                            <Typography id="username" variant="inherit" >Kenzo</Typography>
                             <br></br>
-                            <Typography id="jobPosition" >Site Manager</Typography>
+                            <Typography id="jobPosition" variant="inherit" >Site Manager</Typography>
                         </ListItemText>
                     </ListItem>
                 </List>
@@ -71,9 +70,10 @@ export default function SideMenu (props) {
                         <ListItemIcon className="icon-container">
                             <DashboardRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles">Dashboard</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" variant="inherit">Dashboard</Typography></ListItemText>
                     </ListItem>
-                    <ListItem button id="recommendations"
+                    <ListItem button
+                        id="recommendations"
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 1) ? '#4DD3EF' : '#212529' }}
                         onClick={(event) => handleClick(event, 1)}
                         selected={selectedItemIndex === 1}>
@@ -81,7 +81,7 @@ export default function SideMenu (props) {
                         <ListItemIcon className="icon-container">
                             <ListAltRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles">Recommendations</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" variant="inherit">Recommendations</Typography></ListItemText>
                         {openNested ? <ExpandLess className="icon-container" /> : <ExpandMore className="icon-container" />}
                     </ListItem>
                     <Collapse in={openNested} timeout="auto" unmountOnExit>
@@ -92,14 +92,20 @@ export default function SideMenu (props) {
                                 className="nested"
                                 onClick={(event) => handleClickedItem(event, 2)}
                                 selected={selectedItemIndex === 2}
-                                style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }}
                             >
                                 <ListItemIcon className="icon-container">
                                     <BuildRoundedIcon
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles">Manage</Typography></ListItemText>
+                                <ListItemText>
+                                    <Typography
+                                        style={{ color: (isSelected && selectedItemIndex === 2) ? '#4DD3EF' : 'white' }}
+                                        className="main-titles"
+                                        variant="inherit">
+                                        Manage
+                                    </Typography>
+                                </ListItemText>
                             </ListItem>
                             <ListItem
                                 id="results"
@@ -107,13 +113,21 @@ export default function SideMenu (props) {
                                 className="nested"
                                 onClick={(event) => handleClickedItem(event, 3)}
                                 selected={selectedItemIndex === 3}
-                                style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }}>
+                            >
                                 <ListItemIcon className="icon-container">
                                     <CheckCircleOutlineRoundedIcon
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles">Results</Typography></ListItemText>
+                                <ListItemText>
+                                    <Typography
+                                        className="main-titles"
+                                        variant="inherit"
+                                        style={{ color: (isSelected && selectedItemIndex === 3) ? '#4DD3EF' : 'white' }}
+                                    >
+                                        Results
+                                    </Typography>
+                                </ListItemText>
                             </ListItem>
                             <ListItem
                                 id="jobs"
@@ -127,7 +141,14 @@ export default function SideMenu (props) {
                                         className="icon"
                                         style={{ color: (isSelected && selectedItemIndex === 4) ? '#4DD3EF' : 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles">Jobs</Typography></ListItemText>
+                                <ListItemText>
+                                    <Typography
+                                        className="main-titles"
+                                        variant="inherit"
+                                        style={{ color: (isSelected && selectedItemIndex === 4) ? '#4DD3EF' : 'white' }}>
+                                        Jobs
+                                    </Typography>
+                                </ListItemText>
                             </ListItem>
                             <ListItem
                                 id="actions"
@@ -141,7 +162,14 @@ export default function SideMenu (props) {
                                         style={{ color: (isSelected && selectedItemIndex === 5) ? '#4DD3EF' : 'white' }}
                                         className="icon" />
                                 </ListItemIcon>
-                                <ListItemText><Typography className="main-titles">Actions</Typography></ListItemText>
+                                <ListItemText>
+                                    <Typography
+                                        className="main-titles"
+                                        variant="inherit"
+                                        style={{ color: (isSelected && selectedItemIndex === 5) ? '#4DD3EF' : 'white' }}>
+                                        Actions
+                                        </Typography>
+                                </ListItemText>
                             </ListItem>
                         </List>
                     </Collapse>
@@ -155,14 +183,16 @@ export default function SideMenu (props) {
                         <ListItemIcon className="icon-container">
                             <WorkOutlineRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles">Work Orders</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" variant="inherit">Work Orders</Typography></ListItemText>
                     </ListItem>
                 </List>
                 <div className="settings">
                     <p>Settings</p>
                 </div>
                 <List>
-                    <ListItem button id="main-settings"
+                    <ListItem
+                        id="main-settings"
+                        button
                         className="outer"
                         selected={selectedItemIndex === 7}
                         onClick={(event) => handleClickedItem(event, 7)}
@@ -170,9 +200,11 @@ export default function SideMenu (props) {
                         <ListItemIcon className="icon-container">
                             <SettingsRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles">Main Settings</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" variant="inherit">Main Settings</Typography></ListItemText>
                     </ListItem>
-                    <ListItem button id="notifications"
+                    <ListItem
+                        id="notifications"
+                        button
                         className="outer"
                         selected={selectedItemIndex === 8}
                         onClick={(event) => handleClickedItem(event, 8)}
@@ -180,7 +212,7 @@ export default function SideMenu (props) {
                         <ListItemIcon className="icon-container">
                             <NotificationsRoundedIcon className="icon" />
                         </ListItemIcon>
-                        <ListItemText><Typography className="main-titles">Notifications</Typography></ListItemText>
+                        <ListItemText><Typography className="main-titles" variant="inherit">Notifications</Typography></ListItemText>
                     </ListItem>
 
                 </List>
