@@ -230,3 +230,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Test snapshots
+**/Frontend/src/tests/__snapshots__
+

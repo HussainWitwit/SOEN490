@@ -4,6 +4,7 @@ import Notifications from "react-notifications-menu";
 
 
 function NotificationBell (props) {
+    // eslint-disable-next-line
     const [notification, setNotifications] = React.useState(
         [
             {
