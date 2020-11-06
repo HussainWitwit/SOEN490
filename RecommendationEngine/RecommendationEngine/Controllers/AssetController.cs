@@ -22,7 +22,7 @@ namespace RecommendationEngine.Controllers
         [HttpGet("get")]
         public IActionResult GetAssets()
         {
-            return Ok(_assetService.GetAssets());
+            return Ok(_assetService.GetAssetsTreeview());
         }
 
         [HttpGet("convert")]

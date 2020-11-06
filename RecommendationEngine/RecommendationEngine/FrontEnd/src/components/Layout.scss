@@ -1,0 +1,9 @@
+.main-context {
+    display: flex;
+    flex-direction: row;
+}
+
+.sub-context {
+    flex-direction: column;
+    flex-grow: 1;
+}

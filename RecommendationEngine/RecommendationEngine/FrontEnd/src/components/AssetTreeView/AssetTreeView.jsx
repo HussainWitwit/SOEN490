@@ -8,9 +8,9 @@ import Collapse from '@material-ui/core/Collapse';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { faCube, faCubes, faSun,  faUsers, faWind   } from '@fortawesome/free-solid-svg-icons'
+import { faCube, faCubes, faSun,  faUsers, faWind, faQuestion  } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import '../RightPanel/AssetTreeView.scss';
+import './AssetTreeView.scss';
 
 function MinusSquare(props) {
   return (
@@ -58,6 +58,8 @@ function AssetIcon({ type }) {
             return <FontAwesomeIcon className='Label-Icon' icon={faCube} />;
         case 'asset': //TODO: Need extra logic for energy type
             return <FontAwesomeIcon className='Label-Icon' icon={faSun} />;
+        default:
+          return <FontAwesomeIcon className='Label-Icon' icon={faQuestion} />; 
     };
 }
 

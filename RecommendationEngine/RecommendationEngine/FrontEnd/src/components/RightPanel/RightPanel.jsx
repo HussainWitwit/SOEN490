@@ -1,43 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
-// import TreeView from '@material-ui/lab/TreeView';
-// import TreeItem from '@material-ui/lab/TreeItem';
 import classNames from 'classnames';
-import { AssetTree } from '../RightPanel/AssetTreeView';
+import { AssetTree } from '../AssetTreeView/AssetTreeView';
+import PropTypes from 'prop-types';
 import '../RightPanel/RightPanel.css';
 
+RightPanelDrawer.propType = {
+    isDrawerOpen: PropTypes.bool.isRequired,
+    isInternalClosed: PropTypes.bool.isRequired
+}
 
-//This component should have its own context, independant from the page shown.
-export default function TemporaryDrawer() {
 
-    const [isOpen, setIsOpen] = React.useState(false);
-    const [isPinClicked, setIsPinClicked] = React.useState(false);
+//Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
+export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed }) {
+
+    const [isOpen, setIsOpen] = useState(isDrawerOpen);
+    const [isPinClicked, setIsPinClicked] = useState(false);
     
     const toggleDrawer = (open) => (event) => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
           return;
         }
+        isInternalClosed(open);
         setIsOpen(open);
       };
 
+
+      useEffect(() => {
+        setIsOpen(isDrawerOpen);
+      }, [isDrawerOpen])
+    
     return (
         <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            <Button 
-            variant="contained" 
-            color="primary" 
-            classes = {{root: 'Drawer-Button-Styled'}}
-            onClick = {toggleDrawer(!isOpen)}
-            >
-            PRESSSS
-            </Button>
+            <div className = 'header-space'></div>
             <SwipeableDrawer
             anchor = 'right'
-            open={isOpen}
+            open={isPinClicked || isOpen}
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
             BackdropProps={{ invisible: true }}
@@ -45,6 +48,7 @@ export default function TemporaryDrawer() {
             classes = {{paper: 'Drawer-Container'}}
             >
             {<div className = 'flex-direction-column'>
+                <div className = 'header-space'></div>
                 <div className= 'Drawer-Header-Container'>
                     <p>Asset Selection</p>
                     <IconButton className ='Drawer-Pin' onClick = {() =>{setIsPinClicked(!isPinClicked);}}>

@@ -1,9 +1,11 @@
 ﻿using System;
 using Models.DB;
 
-namespace Interfaces.Repositories {
+namespace Interfaces.Repositories
+{
 
-        public interface IAssetTypeRepository {
-                public DBAssetType GetAssetTypeByName(string assetTypeName);
-        }
+    public interface IAssetTypeRepository
+    {
+        public DBAssetType GetAssetTypeByName(string assetTypeName);
+    }
 }
