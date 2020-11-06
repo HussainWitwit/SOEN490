@@ -1,9 +1,15 @@
-.main-context {
+.app-context {
     display: flex;
     flex-direction: row;
 }
 
-.sub-context {
+.right-main-context {
     flex-direction: column;
     flex-grow: 1;
+}
+
+.route-context {
+    margin-right: auto;
+    margin-left: 20px;
+    margin-top: 20px;
 }

@@ -14,14 +14,16 @@ function Layout (props) {
   } 
   return (
     <div>
-      <div className = 'main-context'>
+      <div className = 'app-context'>
         <SideMenu />
-        <div className = 'sub-context'>
+        <div className = 'right-main-context'>
           <TopBar changeAsset = {getChangedAssetTopBarEvent} sharedChangeAssetValue = {isChangeAssetClicked}/>
-          <RightPanelDrawer isDrawerOpen = {isChangeAssetClicked} isInternalClosed = {getChangedAssetTopBarEvent}/>
-          <Container>
-            {props.children}
-          </Container>
+          <div className = 'route-context'>
+            <Container fluid = {true}>
+              {props.children} 
+            </Container>         
+            <RightPanelDrawer isDrawerOpen = {isChangeAssetClicked} isInternalClosed = {getChangedAssetTopBarEvent}/>
+          </div>
         </div>
       </div>
     </div>
