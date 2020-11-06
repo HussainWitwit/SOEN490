@@ -52,7 +52,9 @@ namespace RecommendationScheduler
                         schedule.RecurrenceDatetime.Hour, schedule.RecurrenceDatetime.Minute);
                 case "Yearly":
                     return CronScheduleBuilder.CronSchedule(
-                        $"{schedule.RecurrenceDatetime.Minute} {schedule.RecurrenceDatetime.Hour} {schedule.RecurrenceDatetime.Day} {schedule.RecurrenceDatetime.Month} *");
+                        $"{schedule.RecurrenceDatetime.Second} {schedule.RecurrenceDatetime.Minute} {schedule.RecurrenceDatetime.Hour} {schedule.RecurrenceDatetime.Day} {schedule.RecurrenceDatetime.Month} ? *");
+                /*case "Yearly":
+                    return CronScheduleBuilder.CronSchedule("* * * ? * *");*/
                 default:
                     throw new NotImplementedException();
             }
