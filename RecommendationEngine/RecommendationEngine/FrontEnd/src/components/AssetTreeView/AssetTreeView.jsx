@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { faCube, faCubes, faSun,  faUsers, faWind, faQuestion  } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import { getAsset } from "../../api/get/getAsset";
 import './AssetTreeView.scss';
 
 function MinusSquare(props) {
@@ -98,7 +99,7 @@ AssetTreeItem.propTypes = {
     nodeId: PropTypes.string.isRequired,
     labelText: PropTypes.string.isRequired,
     assetType: PropTypes.string.isRequired,
-    labelInfo: PropTypes.string,
+    labelInfo: PropTypes.string, //TODO: Could be useful to display the number of Asset children
 };
 
 //TODO: Need to be done 50% from scratch.
@@ -130,6 +131,27 @@ const mockList = [
 
 export function AssetTree() {
 
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    let response = await getAsset();
+    setData(response);
+  }
+
+  // Make sure the api call is done only at first render or [upon request -> TODO ]
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const DisplayAssetNodeTree= (data) => (
+    <AssetTreeItem nodeId = {data.id} labelText = {data.name} assetType = 'plant'>
+      {data.children != 0 && data.children.map( (child) => (
+            DisplayAssetNodeTree(child)
+            ))
+            }
+    </AssetTreeItem>
+  );
+
     return (
         <div className = 'flex-direction-column'>
         <SearchComboBox />       
@@ -139,20 +161,9 @@ export function AssetTree() {
           defaultCollapseIcon={<MinusSquare />}
           defaultExpandIcon={<PlusSquare />}
         >
-          <AssetTreeItem nodeId ="1" labelText="Client SolarWorld" assetType = 'client'>
-            <AssetTreeItem nodeId="2" labelText="08 - DG 2015 Portfolio 2" assetType = 'asset' />
-            <AssetTreeItem nodeId="3" labelText="Porfotlio Night Eve" assetType = 'asset' >
-              <AssetTreeItem nodeId="6" labelText="Asset" assetType = 'asset' />
-              <AssetTreeItem nodeId="7" labelText="Solar Asset with children" assetType = 'asset' >
-                <AssetTreeItem nodeId="9" labelText="Child 1" assetType = 'asset' />
-                <AssetTreeItem nodeId="10" labelText="Child 2" assetType = 'asset' />
-                <AssetTreeItem nodeId="11" labelText="Child 3" assetType = 'asset' />
-              </AssetTreeItem>
-              <AssetTreeItem nodeId="8" labelText="Hello" assetType = 'plant' />
-            </AssetTreeItem>
-            <AssetTreeItem nodeId="4" labelText="World" assetType = 'asset' />
-            <AssetTreeItem nodeId="5" labelText="Something something" assetType = 'asset' />
-          </AssetTreeItem>
+          {data.length != 0 &&
+          DisplayAssetNodeTree(data)  
+          }
         </TreeView>
         </div>
       );
