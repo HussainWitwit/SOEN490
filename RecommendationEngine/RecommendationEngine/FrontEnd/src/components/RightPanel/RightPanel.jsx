@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
@@ -11,12 +10,13 @@ import '../RightPanel/RightPanel.css';
 
 RightPanelDrawer.propType = {
     isDrawerOpen: PropTypes.bool.isRequired,
-    isInternalClosed: PropTypes.bool.isRequired
+    isInternalClosed: PropTypes.bool.isRequired,
+    isDrawerPinned: PropTypes.bool.isRequired
 }
 
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
-export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed }) {
+export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDrawerPinned }) {
 
     const [isOpen, setIsOpen] = useState(isDrawerOpen === undefined ? false : isDrawerOpen);
     const [isPinClicked, setIsPinClicked] = useState(false);
@@ -28,6 +28,11 @@ export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed }) {
         isInternalClosed(open);
         setIsOpen(open);
       };
+
+      const pinDrawerEvent = () => {
+        setIsPinClicked(!isPinClicked);
+        isDrawerPinned(!isPinClicked)
+      }
 
 
       useEffect(() => {
@@ -51,12 +56,14 @@ export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed }) {
                 <div className = 'header-space'></div>
                 <div className= 'Drawer-Header-Container'>
                     <p>Asset Selection</p>
-                    <IconButton className ='Drawer-Pin' onClick = {() =>{setIsPinClicked(!isPinClicked);}}>
+                    <IconButton className ='Drawer-Pin' onClick = {pinDrawerEvent}>
                         <Icon className = {classNames({'Drawer-Pinned-Icon': isPinClicked, 'Drawer-UnPinned-Icon': !isPinClicked})}>push_pin</Icon>
                     </IconButton>
+                    {!isPinClicked && 
                     <IconButton className ='Drawer-Pin' onClick = {toggleDrawer(!isOpen)}>
                         <Close className = 'Drawer-Close'></Close>
                     </IconButton>
+                    }
                 </div>
                 <div>
                     <AssetTree />

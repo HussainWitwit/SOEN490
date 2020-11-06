@@ -37,12 +37,9 @@
 
 .Drawer-Container.MuiDrawer-paper{
     background-color: #424242;
-    width: 200;
-    /* position: absolute; */
 }
 
 .header-space {
     height: 35px;
     width: 100%;
-    
 }
