@@ -59,7 +59,7 @@ export const CssTextField = withStyles({
   * @param {*} template
   * @param {*} qlgorithm 
   */
-function createData (title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
+function createData(title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
     return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
 }
 
@@ -121,7 +121,7 @@ const rows = [
    * @param {*} orderBy
  
    */
-function descendingComparator (a, b, orderBy) {
+function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
@@ -139,7 +139,7 @@ function descendingComparator (a, b, orderBy) {
 * @param {*} orderBy 
 */
 
-function getComparator (order, orderBy) {
+function getComparator(order, orderBy) {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -153,7 +153,7 @@ function getComparator (order, orderBy) {
 * @param {} event 
 * @param {*} index 
 */
-function stableSort (array, comparator) {
+function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
         const order = comparator(a[0], b[0]);
@@ -178,19 +178,19 @@ const headCells = [
  
    */
 
-export function EnhancedTableHead (props) {
+export function EnhancedTableHead(props) {
     const { order, orderBy, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
 
     return (
-        <TableHead id="table-head" align="left">
+        <TableHead id="table-head" className="custom">
             <TableRow id="table-row">
-                <TableCell id="table-cell" align="left"></TableCell>
+                <TableCell id="table-cell" className="custom"></TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
-                        align="left"
+                        className="custom"
                         key={headCell.id}
                         // align={headCell.numeric ? 'left' : 'center'}
                         sortDirection={orderBy === headCell.id ? order : false}
@@ -198,7 +198,7 @@ export function EnhancedTableHead (props) {
                     >
                         <TableSortLabel
                             id="sort-label"
-                            align="left"
+                            className="custom"
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
@@ -223,7 +223,7 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string,
 };
 
-function ManageRecommendationTable () {
+function ManageRecommendationTable() {
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('');
@@ -282,7 +282,7 @@ function ManageRecommendationTable () {
         <div id="main-container">
             <div>
                 <br></br>
-                <Grid id="grid-container1" container spacing={1} alignItems="flex-end">
+                <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
                     {/* <Grid id="grid1" item alignItems="flex-start"> */}
                     <Grid id="grid1" item>
 
@@ -297,7 +297,7 @@ function ManageRecommendationTable () {
             </div>
             <div>
                 <div>
-                    <Grid id="grid-container2" container spacing={1} alignItems="flex-end">
+                    <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
                         <Grid item id="grid2">
                             <Search id="search" />
                         </Grid>
@@ -378,12 +378,11 @@ function ManageRecommendationTable () {
                                         return (
                                             <TableRow
                                                 key={row.title}
-                                                align="left"
+                                                className="custom"
                                             >
-                                                <TableCell align="left">
+                                                <TableCell  className="custom">
                                                 </TableCell>
                                                 <TableCell
-                                                    align="left"
                                                     component="th"
                                                     scope="row"
                                                     padding="default"
@@ -391,17 +390,17 @@ function ManageRecommendationTable () {
                                                     id="tableBody">
                                                     {row.title}
                                                 </TableCell>
-                                                <TableCell align="left" id="tableBody">{row.frequency}</TableCell>
-                                                <TableCell align="left" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
-                                                <TableCell align="left" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell>
-                                                <TableCell align="left" id="tableBody">{row.template}</TableCell>
-                                                <TableCell align="left" id="tableBody">{row.algorithm}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.frequency}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.template}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.algorithm}</TableCell>
                                             </TableRow>
                                         );
                                     })}
                                 {emptyRows > 0 && (
-                                    <TableRow align="center" classes={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                        <TableCell align="center" colSpan={6} />
+                                    <TableRow className="center" classes={{ height: (dense ? 33 : 53) * emptyRows }}>
+                                        <TableCell className="center" />
                                     </TableRow>
                                 )}
                             </TableBody>

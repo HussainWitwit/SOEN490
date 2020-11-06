@@ -13,7 +13,27 @@
     .primaryKey{
         width: 200px;
         margin-right: 20%;
+        align-self: left;
+        align-content: left;
+        align-items: left;
 
+    }
+
+    .center{
+        align-self: center;
+        align-items: center;
+        align-content: center;
+        column-span: 6;
+    }
+
+    .custom{
+        align-self: left;
+        align-content: left;
+        align-items: left;
+    }
+
+    .gridContainerStyle.MuiGrid-container{
+        align-items: flex-end;
     }
 
     #searchFont{
