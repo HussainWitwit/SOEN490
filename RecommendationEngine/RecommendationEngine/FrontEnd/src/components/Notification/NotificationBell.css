@@ -1,0 +1,29 @@
+.notification {
+  background-color: #EDEDED;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+.notification_bell {
+  float: right;
+  background-color: #EDEDED;
+}
+.notification.notify {
+  padding: 0%;
+}
+.notification.notify svg{
+  fill: #212529;
+}
+.notifications .icon .count{
+  top: 2px !important; 
+  right: 2px !important;
+  height: 12px !important;
+  width: 12px !important;
+  background-color: #4DD3EF !important;
+  max-width: 12px !important;
+  min-height: 12px !important;
+}
+.notification::after {
+  background-color: #4DD3EF;
+  top: -3px;
+  right: -11px;
+  padding: 3px 6px;
+}

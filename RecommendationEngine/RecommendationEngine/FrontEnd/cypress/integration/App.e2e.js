@@ -1,7 +1,7 @@
 describe('App E2E', () => {
-  it('should have a header', () => {
-    cy.visit('http://localhost:3000');
+  it('should have a layout', () => {
+    cy.visit('/');
 
-    cy.get('h1').should('have.text', 'Hello, world!');
+    cy.get('#pageLayout > :nth-child(1) > #main-container').should('be.visible');
   });
 });

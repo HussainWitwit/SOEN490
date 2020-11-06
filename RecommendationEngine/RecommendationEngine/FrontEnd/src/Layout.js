@@ -1,14 +1,17 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import NavMenu from './NavMenu';
+import TopBar from './components/TopBar/TopBar';
+import SideMenu from './components/SideMenu/SideMenu';
 
-function Layout (props) {
+function Layout (props) {  
   return (
     <div>
-      <NavMenu />
+      <TopBar />
+      <SideMenu />
       <Container>
         {props.children}
       </Container>
+      
     </div>
   );
 }
