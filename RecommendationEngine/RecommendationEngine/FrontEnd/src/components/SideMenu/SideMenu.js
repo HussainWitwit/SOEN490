@@ -58,7 +58,7 @@ export default function SideMenu (props) {
                         </ListItemText>
                     </ListItem>
                 </List>
-                <List style={{ marginRight: '0%' }}>
+                <List>
                     <ListItem
                         id="dashboard"
                         style={{ backgroundColor: (isSelected && selectedItemIndex === 0) ? '#4DD3EF' : '#212529' }}
