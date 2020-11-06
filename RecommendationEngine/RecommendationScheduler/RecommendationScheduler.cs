@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Interfaces.RecommendationScheduler;
+using Interfaces.Repositories;
 using Interfaces.Utilities;
 using Models.DB;
 using Quartz;
@@ -14,10 +15,12 @@ namespace RecommendationScheduler
     public class RecommendationScheduler: IRecommendationScheduler, IDisposable
     {
         private IScheduler scheduler;
-        private IRecommendationJobLogger _jobLogger;
-        public RecommendationScheduler(IRecommendationJobLogger jobLogger)
+        public static IRecommendationJobLogger JobLogger;
+        public static IRecommendationSchedulerRepository RecommendationSchedulerRepository;
+        public RecommendationScheduler(IRecommendationJobLogger jobLogger, IRecommendationSchedulerRepository recommendationSchedulerRepository)
         {
-            _jobLogger = jobLogger;
+            JobLogger = jobLogger;
+            RecommendationSchedulerRepository = recommendationSchedulerRepository;
             Task.Run(this.Start).Wait();
         }
         public async Task Start()
@@ -26,26 +29,30 @@ namespace RecommendationScheduler
             NameValueCollection config = new NameValueCollection();
             config["quartz.scheduler.instanceName"] = "RecommendationJobScheduler";
             config["quartz.threadPool.threadCount"] = "2";
-            config["quartz.jobStore.type"] = "Quartz.Simpl.RAMJobStore";
+            config["quartz.jobStore.type"] = "Quartz.Simpl.RAMJobStore, Quartz";
             config["quartz.threadPool.type"] = "Quartz.Simpl.SimpleThreadPool";
             StdSchedulerFactory factory = new StdSchedulerFactory(config);
             scheduler = await factory.GetScheduler();
             // and start it off
             await scheduler.Start();
+            var schedule = RecommendationSchedulerRepository.GetDbRecommendationScheduleById(1);
+            await ScheduleJobAsync(schedule);
         }
 
-        public void ScheduleJob(DBRecommendationSchedule schedule)
+        public async Task ScheduleJobAsync(DBRecommendationSchedule schedule)
         {
-            RecommendationJobFactory factory = new RecommendationJobFactory();
-            RecommendationJob.RecommendationJob recommendationJob = factory.CreateRecommendationJob(schedule);
+            RecommendationJobFactory factory = new RecommendationJobFactory(schedule);
+            scheduler.JobFactory=factory;
             IJobDetail job = JobBuilder.Create<RecommendationJob.RecommendationJob>()
+                .WithIdentity(schedule.RecommendationScheduleId.ToString())
+                .UsingJobData("recommendationScheduleId", schedule.RecommendationScheduleId)
                 .WithDescription(schedule.Description)
                 .Build();
             ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity(schedule.Name)
                 .ForJob(job)
                 .WithSchedule(ScheduleBuilder(schedule))
                 .Build();
+            await scheduler.ScheduleJob(job, trigger);
         }
 
         private IScheduleBuilder ScheduleBuilder(DBRecommendationSchedule schedule)
