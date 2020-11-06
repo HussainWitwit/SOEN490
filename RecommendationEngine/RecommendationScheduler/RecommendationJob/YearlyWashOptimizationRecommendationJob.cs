@@ -7,8 +7,14 @@ namespace RecommendationScheduler.RecommendationJob
 {
     public class YearlyWashOptimizationRecommendationJob: RecommendationJob
     {
-        private IRecommendationJobLogger _jobLogger = RecommendationScheduler.JobLogger;
-        private IRecommendationSchedulerRepository _schedulerRepository = RecommendationScheduler.RecommendationSchedulerRepository;
+        private IRecommendationJobLogger _jobLogger;
+        private IRecommendationSchedulerRepository _schedulerRepository;
+        
+        public YearlyWashOptimizationRecommendationJob(IRecommendationJobLogger jobLogger, IRecommendationSchedulerRepository schedulerRepository)
+        {
+            _jobLogger = jobLogger;
+            _schedulerRepository = schedulerRepository;
+        }
         public override Task Execute(IJobExecutionContext context)
         {
             var recommendationJob = _schedulerRepository.GetDbRecommendationJobById(RecommendationScheduleId);
