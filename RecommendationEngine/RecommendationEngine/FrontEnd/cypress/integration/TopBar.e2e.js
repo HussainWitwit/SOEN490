@@ -18,7 +18,7 @@ describe('TopBar component', () => {
         cy.wait(500)
         cy.get('.breadcrumb > :nth-child(3)').should('exist')
         cy.wait(500)
-        cy.get('.change_anchor').should('exist')
+        cy.get(':nth-child(3) > .MuiButtonBase-root > .MuiButton-label').should('exist')
         cy.wait(500)
         cy.get('.icon > .image').click()
         cy.wait(500)
