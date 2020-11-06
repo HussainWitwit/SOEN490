@@ -372,7 +372,7 @@ function ManageRecommendationTable() {
                             />
 
                             <TableBody id="table-body">
-                                {stableSort(rows, getComparator(order, orderBy))
+                                {stableSort(mockRows, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
                                         return (
