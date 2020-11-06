@@ -33,7 +33,7 @@ describe("Breadcrumb component", () => {
         cy.wait(500)
         cy.get('.breadcrumb > :nth-child(3)').click()
         cy.wait(500)
-        cy.get(':nth-child(3) > .MuiButtonBase-root > .MuiButton-label').click()
+        cy.get('.breadcrumb > :nth-child(3) > .MuiButtonBase-root > .MuiButton-label').click()
         cy.wait(500)
         cy.get('.icon > .image').click()
         cy.wait(500)
