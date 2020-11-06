@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Services.ExternalAPI.APIModels;
 using System;
 using System.Collections.Generic;
@@ -42,11 +43,9 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception e)
             {
-                //Change this to global exception
-                Console.WriteLine("There was an error with the PF API!");
-            }
+                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 
-            return null;
+            }
         }
 
         public async Task<List<PFPortfolio>> GetPlants()
@@ -72,11 +71,9 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception e)
             {
-                //Change this to global exception
-                Console.WriteLine("There was an error with the PF API!");
-            }
+                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 
-            return null;
+            }
         }
 
         public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
@@ -102,10 +99,9 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception e)
             {
-                //Change this to global exception
-                Console.WriteLine("There was an error with the PF API!");
+                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
+
             }
-            return null;
         }
     }
 }

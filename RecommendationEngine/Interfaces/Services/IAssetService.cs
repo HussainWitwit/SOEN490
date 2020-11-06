@@ -8,8 +8,8 @@ namespace Interfaces.Services
 
     public interface IAssetService
     {
-        public Asset GetAssetsTreeview();
-        public Asset GetAssetByName(string assetName);
-        public void Convert();
+        public AssetComposite GetAssets();
+        public AssetLeaf GetAssetByName(string assetName);
+        public Task Convert();
     }
 }
