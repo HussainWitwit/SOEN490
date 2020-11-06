@@ -63,7 +63,7 @@ function createData(title, frequency, startDate, startTime, endDate, endTime, te
     return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
 }
 
-const rows = [
+const mockRows = [
     createData('W33ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
     createData('W34ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
     createData('W35ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
@@ -276,7 +276,7 @@ function ManageRecommendationTable() {
     };
 
     // handling the empty rows for the method that compresses the table rows
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, mockRows.length - page * rowsPerPage);
 
     return (
         <div id="main-container">
@@ -368,7 +368,7 @@ function ManageRecommendationTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={rows.length} might be uselfull for later
+                                rowCount={mockRows.length} might be uselfull for later
                             />
 
                             <TableBody id="table-body">
@@ -410,7 +410,7 @@ function ManageRecommendationTable() {
                         id="pagination"
                         rowsPerPageOptions={[10, 25, 50, 100]}
                         component="div"
-                        count={rows.length}
+                        count={mockRows.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onChangePage={handleChangePage}
