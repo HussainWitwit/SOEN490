@@ -24,7 +24,8 @@ namespace RecommendationEngineTests.APITests
             _server = new TestServer(new WebHostBuilder()
                 .UseStartup<Startup>()
                 .ConfigureServices(services => services.AddAutofac())
-                .ConfigureTestContainer<ContainerBuilder>(builder => {
+                .ConfigureTestContainer<ContainerBuilder>(builder =>
+                {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<TestService>().AsImplementedInterfaces();
                 }));
@@ -36,18 +37,18 @@ namespace RecommendationEngineTests.APITests
         {
             // Act
             var response = await _client.GetAsync("/weatherforecast");
-            Assert.AreEqual(response.StatusCode,HttpStatusCode.OK);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
             var forecast = JsonConvert.DeserializeObject<WeatherForecast[]>(await response.Content.ReadAsStringAsync());
-            Assert.GreaterOrEqual(forecast.Length,5);
+            Assert.GreaterOrEqual(forecast.Length, 5);
         }
     }
 
-    public class TestRepositoryMock: ITestRepository
+    public class TestRepositoryMock : ITestRepository
     {
         public string[] GetSummaries()
         {
-            return new[] {"test", "test", "test", "test", "test" };
+            return new[] { "test", "test", "test", "test", "test" };
         }
     }
 }

@@ -3,12 +3,10 @@ using System.Linq;
 using System.Collections.Generic;
 using RecommendationEngine.Models.Application;
 using Interfaces.Services;
-using Interfaces.Services.ExternalApi;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI;
+using Interfaces.Services.ExternalApi;
 using RecommendationEngine.configuredRecommendationHelper;
 using Interfaces.Repositories;
-using RecommendationEngine.Repositories;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
 {
@@ -26,7 +24,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             _repository = repsitory;
         }
 
-        public List<DBRecommendationSchedule> getConfiguredRecommendationList()
+        public List<ConfiguredRecommendation> getConfiguredRecommendationList()
         {
             return _repository.Get();
         }
@@ -38,13 +36,13 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {
-                Name = configuredRecommendation.Title,
+                Name = configuredRecommendation.Name,
                 DisplayText = recommendationType.DisplayText,
                 Granularity = configuredRecommendation.Granularity,
                 Description = recommendationType.Description,
                 CreatedOn = configuredRecommendation.CreatedOn,
-                RecurrenceDatetime = configuredRecommendation.OccurrenceDatetime,
-                RecurrenceDayOfWeek = configuredRecommendation.DayOfWeek,
+                RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
+                RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
                 RecommendationType = recommendationType
             };
             _repository.Add(config);

@@ -3,6 +3,8 @@ using System.Linq;
 using Models.DB;
 using Interfaces.Repositories;
 using System.Collections.Generic;
+using RecommendationEngine.Models.Application;
+using Microsoft.EntityFrameworkCore;
 
 namespace RecommendationEngine.Repositories
 {
@@ -19,8 +21,26 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb.SaveChanges();
         }
 
-        public List<DBRecommendationSchedule> Get() {
-            return _recommendationEngineDb.RecommendationSchedules.ToList();
+        public List<ConfiguredRecommendation> Get() {
+            List<DBRecommendationSchedule> dbRecommendations = _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
+            List<ConfiguredRecommendation> recommendations = new List<ConfiguredRecommendation>();
+            foreach (DBRecommendationSchedule dbRecommendation in dbRecommendations)
+            {
+                recommendations.Add(
+                    new ConfiguredRecommendation
+                    {
+                        Name = dbRecommendation.Name,
+                        Type = dbRecommendation.RecommendationType.Type,
+                        Granularity = dbRecommendation.Granularity,
+                        CreatedBy = dbRecommendation.ModifiedBy,
+                        RecurrenceDayOfWeek = dbRecommendation.RecurrenceDayOfWeek,
+                        RecurrenceDatetime = dbRecommendation.RecurrenceDatetime,
+                        CreatedOn = dbRecommendation.CreatedOn,
+                        Parameters = null
+                    }
+                    ); ;
+            }
+            return recommendations;
         }
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType) {
