@@ -1,5 +1,7 @@
+using System.Collections.Specialized;
 using System.Reflection;
 using Autofac;
+using Autofac.Extras.Quartz;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -9,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Models.DB;
+using Quartz;
 using RecommendationEngine.Utilities;
+using RecommendationScheduler.RecommendationJob;
 
 namespace RecommendationEngine
 {
@@ -60,9 +64,31 @@ namespace RecommendationEngine
             builder.RegisterType<RecommendationJobLogger>()
                 .As<IRecommendationJobLogger>()
                 .SingleInstance();
+
+            // Recommendation Scheduler
+            RegisterScheduler(builder);
             builder.RegisterType<RecommendationScheduler.RecommendationScheduler>()
                 .As<IRecommendationScheduler>()
                 .SingleInstance();
+        }
+
+        private static void RegisterScheduler(ContainerBuilder builder)
+        {
+            // configure and register Quartz
+            NameValueCollection config = new NameValueCollection();
+            config["quartz.scheduler.instanceName"] = "RecommendationJobScheduler";
+            config["quartz.threadPool.threadCount"] = "2";
+            config["quartz.jobStore.type"] = "Quartz.Simpl.RAMJobStore, Quartz";
+            config["quartz.threadPool.type"] = "Quartz.Simpl.SimpleThreadPool";
+
+            builder.RegisterModule(new QuartzAutofacFactoryModule
+            {
+                ConfigurationProvider = c => config
+            });
+
+            // Add new incoming recommendation jobs
+            builder.RegisterModule(new QuartzAutofacJobsModule(typeof(YearlyWashOptimizationRecommendationJob).Assembly));
+            //builder.RegisterModule(new QuartzAutofacJobsModule(typeof(FuseReplacementRecommendationJob).Assembly));
         }
 
 
