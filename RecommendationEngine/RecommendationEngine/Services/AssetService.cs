@@ -14,7 +14,6 @@ namespace RecommendationEngine.Services
 
     public class AssetService : IAssetService
     {
-
         private IDriveService _driveService;
         private IAssetRepository _assetRepository;
         private IAssetTypeRepository _assetTypeRepository;
@@ -32,16 +31,6 @@ namespace RecommendationEngine.Services
             GetDBAssets();
         }
 
-        
-        private List<DBAsset> GetDBAssets()
-        {
-            if (_assets != null)
-            {
-                return _assets;
-            }
-            return _assets = _assetRepository.Get();
-        }
-
         public Asset GetAssetsTreeview()
         {
             GetDBAssets();
@@ -57,12 +46,42 @@ namespace RecommendationEngine.Services
             return GetAssetCompositeFromDBAsset(asset);
         }
 
+        public async Task Convert()
+        {
+            var portfolios = await _driveService.GetPortfolios();
+            var plants = await _driveService.GetPlants();
+
+            List<DBAsset> result = new List<DBAsset>();
+            List<PFPortfolio> listOfPortfolios = portfolios.ToList();
+            List<PFPortfolio> listOfPlants = plants.ToList();
+
+            DBAsset client = GetClient(listOfPortfolios);
+
+            result.Add(client);
+            _assetRepository.AddSingleDBAsset(client);
+
+            List<DBAsset> parentDBAssets = BuildAssets(listOfPortfolios, true, client);
+            _assetRepository.AddDBAssetList(parentDBAssets);
+
+            List<DBAsset> childDBAssets = BuildAssets(listOfPlants, false, client);
+            _assetRepository.AddDBAssetList(childDBAssets);
+        }
+
+        private List<DBAsset> GetDBAssets()
+        {
+            if (_assets != null)
+            {
+                return _assets;
+            }
+            return _assets = _assetRepository.Get();
+        }
+
         private List<AssetComposite> GetChildren(int assetId)
         {
             _assets = _assetRepository.Get();
             List<DBAsset> children = _assets.FindAll(a =>
                 {
-                    if(a.ParentAsset != null)
+                    if (a.ParentAsset != null)
                     {
                         return a.ParentAsset.AssetId == assetId;
                     }
@@ -90,27 +109,6 @@ namespace RecommendationEngine.Services
             assetComposite.Children = GetChildren(assetComposite.Id);
 
             return assetComposite;
-        }
-
-        public async Task Convert()
-        {
-            var portfolios = await _driveService.GetPortfolios();
-            var plants = await _driveService.GetPlants();
-
-            List<DBAsset> result = new List<DBAsset>();
-            List<PFPortfolio> listOfPortfolios = portfolios.ToList();
-            List<PFPortfolio> listOfPlants = plants.ToList();
-
-            DBAsset client = GetClient(listOfPortfolios);
-
-            result.Add(client);
-            _assetRepository.AddSingleDBAsset(client);
-
-            List<DBAsset> parentDBAssets = BuildAssets(listOfPortfolios, true, client);
-            _assetRepository.AddDBAssetList(parentDBAssets);
-
-            List<DBAsset> childDBAssets = BuildAssets(listOfPlants, false, client);
-            _assetRepository.AddDBAssetList(childDBAssets);
         }
 
         private DBAsset GetClient(List<PFPortfolio> listOfPortfolios)
