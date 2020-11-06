@@ -1,44 +1,37 @@
-﻿using System;
-using System.ComponentModel;
-using Interfaces.Repositories;
-using Interfaces.Utilities;
-using Models.DB;
+﻿using Models.DB;
 using Quartz;
-using Quartz.Spi;
+using RecommendationScheduler.RecommendationTypes;
 
 namespace RecommendationScheduler.RecommendationJob
 {
-    public class RecommendationJobFactory: IJobFactory
+    public class RecommendationJobFactory
     {
-        public DBRecommendationSchedule _schedule { get; set; }
+        public DBRecommendationSchedule Schedule { get; set; }
 
         public RecommendationJobFactory(DBRecommendationSchedule schedule)
         {
-            _schedule = schedule;
+            Schedule = schedule;
         }
 
-        public RecommendationJob CreateRecommendationJob()
+        public IJobDetail CreateRecommendationJob()
         {
-            switch (_schedule.RecommendationType.Type)
+            switch (Schedule.RecommendationType.Type)
             {
                 case "Yearly Wash Optimization": 
-                    return new YearlyWashOptimizationRecommendationJob();
+                    return JobBuilder.Create<YearlyWashOptimizationRecommendationJob>()
+                        .WithIdentity(Schedule.RecommendationScheduleId.ToString())
+                        .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
+                        .WithDescription(Schedule.Description)
+                        .Build();
                 case "Fuse Replacement":
-                    return new FuseReplacementRecommendationJob();
+                    return JobBuilder.Create<FuseReplacementRecommendationJob>()
+                        .WithIdentity(Schedule.RecommendationScheduleId.ToString())
+                        .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
+                        .WithDescription(Schedule.Description)
+                        .Build();
                 default:
                     throw new System.NotImplementedException();
             }
-        }
-
-        public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
-        {
-            return CreateRecommendationJob();
-        }
-
-        public void ReturnJob(IJob job)
-        {
-            var disposable = job as IDisposable;
-            disposable?.Dispose();
         }
     }
 }
