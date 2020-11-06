@@ -12,12 +12,14 @@ function TopBar (props) {
     props.changeAsset(value);
   }
 
+  // eslint-disable-next-line
   const getCurrentLocation = async () => {
     let response = await fetch(`https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_KEY}`);
     let data = await response.json();
     setLocationDetails({ country_code: data.country_code, city: data.city });
   }
 
+  // eslint-disable-next-line
   const getCurrentWeather = async () => {
     let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=montreal&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`);
     let data = await response.json();

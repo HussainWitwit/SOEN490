@@ -1,10 +1,10 @@
 .notification {
-  background-color:#C8C8C8;
+  background-color: #EDEDED;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0);
 }
 .notification_bell {
   float: right;
-  background-color:#C8C8C8;
+  background-color: #EDEDED;
 }
 .notification.notify {
   padding: 0%;
