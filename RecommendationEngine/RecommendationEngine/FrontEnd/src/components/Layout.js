@@ -3,7 +3,7 @@ import { Container } from 'reactstrap';
 import TopBar from './TopBar/TopBar';
 import SideMenu from './SideMenu/SideMenu';
 import RightPanelDrawer from '../components/RightPanel/RightPanel';
-import '../components/Layout.scss';
+import '../components/Layout.css';
 
 function Layout (props) {
   

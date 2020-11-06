@@ -11,7 +11,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { faCube, faCubes, faSun,  faUsers, faWind, faQuestion  } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { getAsset } from "../../api/get/getAsset";
-import './AssetTreeView.scss';
+import './AssetTreeView.css';
 
 function MinusSquare(props) {
   return (

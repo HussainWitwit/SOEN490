@@ -18,7 +18,7 @@ RightPanelDrawer.propType = {
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
 export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed }) {
 
-    const [isOpen, setIsOpen] = useState(isDrawerOpen);
+    const [isOpen, setIsOpen] = useState(isDrawerOpen === undefined ? false : isDrawerOpen);
     const [isPinClicked, setIsPinClicked] = useState(false);
     
     const toggleDrawer = (open) => (event) => {
