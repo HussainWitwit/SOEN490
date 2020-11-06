@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 
@@ -21,7 +22,7 @@ namespace RecommendationEngine.Repositories
 
         public DBRecommendationSchedule GetDbRecommendationScheduleById(int id)
         {
-            return _recommendationEngineDb.RecommendationSchedules.FirstOrDefault(x =>
+            return _recommendationEngineDb.RecommendationSchedules.Include(x=>x.RecommendationType).FirstOrDefault(x =>
                 x.RecommendationScheduleId == id);
         }
     }
