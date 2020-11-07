@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Typography from "@material-ui/core/Typography";
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
-import Collapse from '@material-ui/core/Collapse';
+import { SvgIcon, Typography, TextField, Collapse} from '@material-ui/core';
+import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { getAsset } from "../../api/get/getAsset";
@@ -52,20 +47,20 @@ function AssetIcon ({ type }) {
 
   switch (type) {
     case 'client':
-      return <FontAwesomeIcon className='Label-Icon' icon={faUsers} />;
+      return <FontAwesomeIcon className='label-icon' icon={faUsers} />;
     case 'portfolio':
-      return <FontAwesomeIcon className='Label-Icon' icon={faCubes} />;
+      return <FontAwesomeIcon className='label-icon' icon={faCubes} />;
     case 'plant':
-      return <FontAwesomeIcon className='Label-Icon' icon={faCube} />;
+      return <FontAwesomeIcon className='label-icon' icon={faCube} />;
     case 'asset': //TODO: Need extra logic for energy type
-      return <FontAwesomeIcon className='Label-Icon' icon={faSun} />;
+      return <FontAwesomeIcon className='label-icon' icon={faSun} />;
     default:
-      return <FontAwesomeIcon className='Label-Icon' icon={faQuestion} />;
+      return <FontAwesomeIcon className='label-icon' icon={faQuestion} />;
   };
 }
 
 AssetIcon.propTypes = {
-  type: PropTypes.string.isRequired
+  type: PropTypes.string
 }
 
 
@@ -76,9 +71,9 @@ export function AssetTreeItem (props) {
     <TreeItem
       TransitionComponent={TransitionComponent}
       label={
-        <div className='Label-Root'>
+        <div className='label-root'>
           <AssetIcon type={assetType} />
-          <Typography variant="body2" className='Label-Text'>
+          <Typography variant="body2" className='label-text'>
             {labelText}
           </Typography>
           <Typography variant="caption" color="inherit">
@@ -87,8 +82,8 @@ export function AssetTreeItem (props) {
         </div>
       }
       classes={{
-        root: 'Asset-Tree-Item-Root',
-        group: 'Asset-Tree-Item-Group',
+        root: 'asset-tree-item-root',
+        group: 'asset-tree-item-group',
       }}
       {...other}
     />
@@ -108,12 +103,12 @@ export const SearchComboBox = () => {
     <Autocomplete
       options={mockList}
       getOptionLabel={(option) => option.title}
-      style={{ width: 200, height: 40, marginLeft: 10, marginRight: 10, marginBottom: 25 }}
+      className = 'autocomplete-style'
       renderInput={(params) => <TextField
         {...params}
         label="Combo box"
         variant="outlined"
-        className='Search-Box-Container '
+        className='search-box-container '
         color='secondary'
       />}
     />
@@ -156,7 +151,7 @@ export function AssetTree () {
     <div className='flex-direction-column'>
       <SearchComboBox />
       <TreeView
-        className='Asset-Tree-Container '
+        className='asset-tree-container '
         defaultExpanded={['1']}
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}

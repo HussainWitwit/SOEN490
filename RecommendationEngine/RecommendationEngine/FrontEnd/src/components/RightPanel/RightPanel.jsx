@@ -50,18 +50,18 @@ export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDra
             onOpen={toggleDrawer(true)}
             BackdropProps={{ invisible: true }}
             variant = {'persistent'}
-            classes = {{paper: 'Drawer-Container'}}
+            classes = {{paper: 'drawer-container'}}
             >
             {<div className = 'flex-direction-column'>
                 <div className = 'header-space'></div>
-                <div className= 'Drawer-Header-Container'>
+                <div className= 'drawer-header-container'>
                     <p>Asset Selection</p>
-                    <IconButton className ='Drawer-Pin' onClick = {pinDrawerEvent}>
-                        <Icon className = {classNames({'Drawer-Pinned-Icon': isPinClicked, 'Drawer-UnPinned-Icon': !isPinClicked})}>push_pin</Icon>
+                    <IconButton className ='drawer-pin' onClick = {pinDrawerEvent}>
+                        <Icon className = {classNames({'drawer-pinned-icon': isPinClicked, 'drawer-unpinned-icon': !isPinClicked})}>push_pin</Icon>
                     </IconButton>
                     {!isPinClicked && 
-                    <IconButton className ='Drawer-Pin' onClick = {toggleDrawer(!isOpen)}>
-                        <Close className = 'Drawer-Close'></Close>
+                    <IconButton className ='drawer-pin' onClick = {toggleDrawer(!isOpen)}>
+                        <Close className = 'drawer-close'></Close>
                     </IconButton>
                     }
                 </div>
