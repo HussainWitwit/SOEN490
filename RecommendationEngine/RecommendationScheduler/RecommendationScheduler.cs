@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
 using Interfaces.Utilities;
+using Microsoft.Extensions.Configuration;
 using Models.DB;
 using Quartz;
 using Quartz.Impl;
@@ -17,16 +18,21 @@ namespace RecommendationScheduler
     {
         private IScheduler _scheduler;
         private IRecommendationSchedulerRepository _recommendationSchedulerRepository;
-        public RecommendationScheduler(IScheduler scheduler, IRecommendationSchedulerRepository recommendationSchedulerRepository)
+        private IConfiguration _configuration;
+
+        public RecommendationScheduler(IScheduler scheduler, IRecommendationSchedulerRepository recommendationSchedulerRepository, IConfiguration configuration)
         {
             _recommendationSchedulerRepository = recommendationSchedulerRepository;
             _scheduler = scheduler;
+            _configuration = configuration;
             Task.Run(this.Start).Wait();
         }
         public async Task Start()
         {
+            bool scheduleOnStartup = Convert.ToBoolean(_configuration["Scheduler:ScheduleOnStartup"]);
             await _scheduler.Start();
-            await ScheduleJobsOnStartupAsync();
+            if(scheduleOnStartup)
+                await ScheduleJobsOnStartupAsync();
         }
 
         public async Task ScheduleJobsOnStartupAsync()
@@ -63,7 +69,7 @@ namespace RecommendationScheduler
                     return CronScheduleBuilder.CronSchedule(
                         $"{schedule.RecurrenceDatetime.Second} {schedule.RecurrenceDatetime.Minute} {schedule.RecurrenceDatetime.Hour} {schedule.RecurrenceDatetime.Day} {schedule.RecurrenceDatetime.Month} ? *");
                 /*case "Yearly":
-                    return CronScheduleBuilder.CronSchedule("* * * ? * *");*/
+                    return CronScheduleBuilder.CronSchedule("1 * * * * ? *");*/
                 default:
                     throw new NotImplementedException();
             }
