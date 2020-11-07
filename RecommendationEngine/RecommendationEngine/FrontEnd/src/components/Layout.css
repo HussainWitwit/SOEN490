@@ -1,5 +1,6 @@
+/* FIXME: Need to pass the real value of drawer width. */
 html {
-    --drawer-width: 230px;
+    --drawer-width: 300px;
   }
 
 .app-context {
@@ -19,7 +20,9 @@ html {
 }
 
 .route-context-drawer {
-    width: calc(100% - var(--drawer-width));
+    width: calc(100% - var(--drawer-width)); 
     transition: all 2s; 
 }
-/* FIXME: Transitions not working  */
+/* FIXME: Transitions not working
+    Pin has a bug when the zoom is high
+*/
