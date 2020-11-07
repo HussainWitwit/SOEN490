@@ -63,7 +63,7 @@ namespace RecommendationEngine
                 .InstancePerLifetimeScope();
             builder.RegisterType<RecommendationJobLogger>()
                 .As<IRecommendationJobLogger>()
-                .SingleInstance();
+                .InstancePerLifetimeScope();
 
             // Recommendation Scheduler
             RegisterScheduler(builder);
