@@ -10,5 +10,10 @@ namespace RecommendationScheduler.RecommendationJob
         {
             throw new System.NotImplementedException();
         }
+
+        protected override void CreateRecommendationJob()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
