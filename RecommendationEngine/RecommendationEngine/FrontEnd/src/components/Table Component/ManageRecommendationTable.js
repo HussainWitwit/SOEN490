@@ -27,11 +27,19 @@ import IconButton from '@material-ui/core/IconButton'
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import './ManageRecommendationTable.css';
 import { Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 export const CssTextField = withStyles({
 
@@ -251,6 +259,9 @@ function ManageRecommendationTable() {
         age: '',
         name: 'hai',
     });
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+
 
     //TODO:Set the hooks for the Title, Subtitle, Button Boolean, 
     //TODO:Set hook array for the name of the columns of the table and the filter list 
@@ -345,10 +356,14 @@ function ManageRecommendationTable() {
         });
     };
 
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
     function FormRow() {
         return (
             <React.Fragment>
-                <Grid item xs={4}>
+                <Grid item xs={4} id="gridItem">
                     <button className="gridTransparent">
                         <Paper id="paperTheme">
                             <Typography id="gridBoxTitle">
@@ -406,52 +421,112 @@ function ManageRecommendationTable() {
                     </Grid >
                     <Grid item>
                         <Button id='recBtn' onClick={handleClickOpenFirst}>Create Recommendation</Button>
-                        {/*                         
+
                         <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
                             <DialogTitle id="form-dialog-title" className="dialogTitle">Template Configuration</DialogTitle>
-                            <DialogContent className="dialogPaper">
-                                <div id="gridRoot">
-                                    <Grid container spacing={3}>
-                                        <Grid item sm container item xs={10} spacing={3}>
-                                            <FormRow />
-                                        </Grid>
-                                    </Grid>
+
+
+                            <div className="templateConfig">
+
+                                <div className="templateConfigBox">
+
+                                    <DialogContent className="dialogPaper">
+                                        <div id="gridRoot">
+                                            <Grid container spacing={4}>
+                                                <Grid item sm container item xs={6} spacing={3}>
+                                                    <FormRow />
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    </DialogContent>
+
                                 </div>
 
-                            </DialogContent>
+                                <DialogContent className="templateConfigBox">
+
+                                    <DialogContentText id="templateLabel">Description </DialogContentText>
+                                    <DialogContentText id="templateLabelOutput">This recommendation is used to suggest the optimal time to wash you solar panels.</DialogContentText>
+
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="templateLabel">Inputs </DialogContentText>
+                                        <DialogContentText id="templateLabel">Assets</DialogContentText>
+                                    </div>
+
+                                    <div className="onelinerAlign2">
+                                        <DialogContentText id="templateLabel2">
+                                            <ul className="listAlign">
+                                                <li>Input 1</li>
+                                                <li>Input 2</li>
+                                                <li>Input 3</li>
+                                            </ul>
+                                        </DialogContentText>
+                                        <DialogContentText id="templateLabel2">
+                                            <ul className="listAlign">
+                                                <li style={{ alignSelf: 'left' }}>Solar Panels</li>
+
+                                            </ul>
+                                        </DialogContentText>
+                                    </div>
+
+                                    <DialogContentText id="templateLabel">Algorithm Used </DialogContentText>
+                                    <DialogContentText id="templateLabelOutput">WO Algorithm</DialogContentText>
+
+                                </DialogContent>
+                            </div>
                             <DialogActions>
                                 <Button id="cancelBtn" onClick={handleCloseFirst}>Cancel</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenSecond}>Next</Button>
                             </DialogActions>
                         </Dialog>
 
-                        <Dialog open={openSecond} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
-                            <DialogTitle id="form-dialog-title">Wash Optmization Configuration</DialogTitle>
+                            <DialogTitle id="form-dialog-title" className="dialogTitle">Wash Optmization Configuration</DialogTitle>
                             <DialogContent className="dialogPaper">
-                                <DialogContentText>Hello My Friend!</DialogContentText>
-                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="Wash Optmization P20" ></CssTextField>
+
+                                <DialogContentText id="recLabel">Title of Recommendation *</DialogContentText>
+                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="" ></CssTextField>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <Grid container justify="space-around">
+                                        <KeyboardDatePicker
+                                            disableToolbar
+                                            variant="inline"
+                                            format="MM/dd/yyyy"
+                                            margin="normal"
+                                            id="date-picker-inline"
+                                            label="Date picker inline"
+                                            value={selectedDate}
+                                            onChange={handleDateChange}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </Grid>
+                                </MuiPickersUtilsProvider>
+
+
+
                             </DialogContent>
                             <DialogActions>
                                 <Button id="cancelBtn" onClick={handleClickOpenFirst}>Back</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenThird}>Next</Button>
                             </DialogActions>
                         </Dialog> */}
-
+{/* 
                         <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
                             <DialogTitle id="form-dialog-title" className="dialogTitle">Recommendation Configuration</DialogTitle>
-                            <DialogContent className="dialogPaper">
+                            <DialogContent className="recConfigPaper">
 
-                                <DialogContentText id="recLabel">Title of Recommendation *</DialogContentText>
-                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="" ></CssTextField>
+                                <DialogContentText id="recLabel">Title of Configured Recommendation: </DialogContentText>
+                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="Wash Optimization P20" style={{fontSize: '10px'}}></CssTextField>
 
                                 <DialogContent>
                                     <br></br>
@@ -469,6 +544,7 @@ function ManageRecommendationTable() {
                                                 }}
 
                                                 variant="outlined"
+                                                size="small"
                                             ></TextField>
                                     </div>
                                 </DialogContent>
@@ -487,6 +563,7 @@ function ManageRecommendationTable() {
                                                 native: true,
                                             }}
                                             variant="outlined"
+                                            size="small"
                                         ></TextField>
                                     </div>
                                 </DialogContent>
@@ -494,7 +571,7 @@ function ManageRecommendationTable() {
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
-                                        <DialogContentText id="recLabel2">Center Point Increment: </DialogContentText>
+                                        <DialogContentText id="recLabel3">Center Point Increment: </DialogContentText>
                                         <TextField
                                             id="outlined-number"
                                             className="recBox"
@@ -503,13 +580,14 @@ function ManageRecommendationTable() {
                                                 shrink: true,
                                             }}
                                             variant="outlined"
+                                            size="small"
                                         />
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
-                                        <DialogContentText id="recLabel2">Span Increment: </DialogContentText>
+                                        <DialogContentText id="recLabel3">Span Increment: </DialogContentText>
                                         <TextField
                                             id="outlined-number"
                                             className="recBox"
@@ -518,6 +596,7 @@ function ManageRecommendationTable() {
                                                 shrink: true,
                                             }}
                                             variant="outlined"
+                                            size="small"
                                         />
                                     </div>
                                 </DialogContent>
@@ -531,7 +610,7 @@ function ManageRecommendationTable() {
                                 <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenFourth}>Next</Button>
                             </DialogActions>
-                        </Dialog>
+                        </Dialog> */}
 
                         {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
 
@@ -674,6 +753,8 @@ function ManageRecommendationTable() {
                                 <Button id="nextBtn" onClick={handleDone}>Finish</Button>
                             </DialogActions>
                         </Dialog> */}
+
+
                     </Grid>
                 </Grid>
                 <br></br>
