@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { FilterList, Search } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -406,7 +406,7 @@ function ManageRecommendationTable() {
                     </Grid >
                     <Grid item>
                         <Button id='recBtn' onClick={handleClickOpenFirst}>Create Recommendation</Button>
-                        {/* 
+                        {/*                         
                         <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
@@ -441,85 +441,99 @@ function ManageRecommendationTable() {
                                 <Button id="cancelBtn" onClick={handleClickOpenFirst}>Back</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenThird}>Next</Button>
                             </DialogActions>
-                        </Dialog>
+                        </Dialog> */}
 
-                        <Dialog open={openThird} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
-                            <DialogTitle id="form-dialog-title">Addtional Configuration</DialogTitle>
+                            <DialogTitle id="form-dialog-title" className="dialogTitle">Recommendation Configuration</DialogTitle>
                             <DialogContent className="dialogPaper">
 
-                                <DialogContentText>Name </DialogContentText>
-                                <FormControl id="formControl">
-                                    <NativeSelect
-                                        value={state.age}
-                                        onChange={handleChange}
-                                        name="age"
-                                        inputProps={{ 'aria-label': 'age' }}
-                                    >
-                                        <option value="">None</option>
-                                        <option value={10}>Ten</option>
-                                        <option value={20}>Twenty</option>
-                                        <option value={30}>Thirty</option>
-                                    </NativeSelect>
-                                </FormControl>
-                                <DialogContentText>Asset </DialogContentText>
-                                <FormControl id="formControl">
-                                    <NativeSelect
-                                        value={state.age}
-                                        onChange={handleChange}
-                                        name="age"
-                                        inputProps={{ 'aria-label': 'age' }}
-                                    >
-                                        <option value="">None</option>
-                                        <option value={10}>Ten</option>
-                                        <option value={20}>Twenty</option>
-                                        <option value={30}>Thirty</option>
-                                    </NativeSelect>
-                                </FormControl>
+                                <DialogContentText id="recLabel">Title of Recommendation *</DialogContentText>
+                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="" ></CssTextField>
+
+                                <DialogContent>
+                                    <br></br>
+                                    <br></br>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="recLabel2">Asset: </DialogContentText>
+                                            <TextField
+                                                id="outlined-select-currency-native"
+                                                className="recBox"
+                                                select
+                                                label=""
+                                                onChange={handleChange}
+                                                SelectProps={{
+                                                    native: true,
+                                                }}
+
+                                                variant="outlined"
+                                            ></TextField>
+                                    </div>
+                                </DialogContent>
 
 
-                                <DialogContentText>Granularity </DialogContentText>
-                                <FormControl id="formControl">
-                                    <NativeSelect
-                                        value={state.age}
-                                        onChange={handleChange}
-                                        name="age"
-                                        inputProps={{ 'aria-label': 'age' }}
-                                    >
-                                        <option value="">None</option>
-                                        <option value={10}>Ten</option>
-                                        <option value={20}>Twenty</option>
-                                        <option value={30}>Thirty</option>
-                                    </NativeSelect>
-                                </FormControl>
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="recLabel2">Parameter: </DialogContentText>
+                                        <TextField
+                                            id="outlined-select-currency-native"
+                                            className="recBox"
+                                            select
+                                            label=""
+                                            onChange={handleChange}
+                                            SelectProps={{
+                                                native: true,
+                                            }}
+                                            variant="outlined"
+                                        ></TextField>
+                                    </div>
+                                </DialogContent>
 
 
-                                <DialogContentText>Parameter </DialogContentText>
-                                <FormControl id="formControl">
-                                    <NativeSelect
-                                        value={state.age}
-                                        onChange={handleChange}
-                                        name="age"
-                                        inputProps={{ 'aria-label': 'age' }}
-                                    >
-                                        <option value="">None</option>
-                                        <option value={10}>Ten</option>
-                                        <option value={20}>Twenty</option>
-                                        <option value={30}>Thirty</option>
-                                    </NativeSelect>
-                                </FormControl>
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="recLabel2">Center Point Increment: </DialogContentText>
+                                        <TextField
+                                            id="outlined-number"
+                                            className="recBox"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                        />
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="recLabel2">Span Increment: </DialogContentText>
+                                        <TextField
+                                            id="outlined-number"
+                                            className="recBox"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            variant="outlined"
+                                        />
+                                    </div>
+                                </DialogContent>
 
 
                             </DialogContent>
+
+
+
                             <DialogActions>
                                 <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenFourth}>Next</Button>
                             </DialogActions>
-                        </Dialog> */}
+                        </Dialog>
 
-                        <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
 
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
@@ -659,7 +673,7 @@ function ManageRecommendationTable() {
                                 <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
                                 <Button id="nextBtn" onClick={handleDone}>Finish</Button>
                             </DialogActions>
-                        </Dialog>
+                        </Dialog> */}
                     </Grid>
                 </Grid>
                 <br></br>
