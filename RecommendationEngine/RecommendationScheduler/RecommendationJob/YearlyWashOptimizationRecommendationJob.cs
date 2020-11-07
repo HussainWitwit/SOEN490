@@ -27,8 +27,8 @@ namespace RecommendationScheduler.RecommendationJob
         {
             try
             {
-                JobDataMap dataMap = context.JobDetail.JobDataMap;
-                RecommendationScheduleId= dataMap.GetIntValue("recommendationScheduleId");
+                JobDataMap dataMap = context?.JobDetail.JobDataMap;
+                if (dataMap != null) RecommendationScheduleId = dataMap.GetIntValue("recommendationScheduleId");
                 CreateRecommendationJob();
                 watch.Start();
 
