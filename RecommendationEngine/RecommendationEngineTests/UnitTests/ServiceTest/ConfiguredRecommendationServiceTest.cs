@@ -11,7 +11,7 @@ using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests.UnitTests.ServiceTest
 {
-    public class ConfiguredRecommendationTest
+    public class ConfiguredRecommendationServiceTest
     {
         private ConfiguredRecommendationService _configuredRecommendationService;
         private Mock<IConfiguredRecommendationRepository> _repository;
