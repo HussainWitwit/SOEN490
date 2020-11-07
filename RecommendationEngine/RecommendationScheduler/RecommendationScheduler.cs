@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Interfaces.RecommendationScheduler;
@@ -25,8 +26,16 @@ namespace RecommendationScheduler
         public async Task Start()
         {
             await _scheduler.Start();
-            DBRecommendationSchedule schedule = _recommendationSchedulerRepository.GetDbRecommendationScheduleById(1);
-            await ScheduleJobAsync(schedule);
+            await ScheduleJobsOnStartupAsync();
+        }
+
+        public async Task ScheduleJobsOnStartupAsync()
+        {
+            List<DBRecommendationSchedule> schedules = _recommendationSchedulerRepository.GetDbRecommendationSchedules();
+            foreach (var dbRecommendationSchedule in schedules)
+            {
+                await ScheduleJobAsync(dbRecommendationSchedule);
+            }
         }
 
         public async Task ScheduleJobAsync(DBRecommendationSchedule schedule)
