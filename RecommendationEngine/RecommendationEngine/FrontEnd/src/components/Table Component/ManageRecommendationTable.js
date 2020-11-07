@@ -31,6 +31,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import './ManageRecommendationTable.css';
 import { Typography } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 
 export const CssTextField = withStyles({
 
@@ -348,19 +349,19 @@ function ManageRecommendationTable() {
         return (
             <React.Fragment>
                 <Grid item xs={4}>
-                    <button className="gridBtn">
+                    <button className="gridTransparent">
                         <Paper id="paperTheme">
                             <Typography id="gridBoxTitle">
                                 Wash Optmization
                         </Typography></Paper>
                     </button>
-                    <button className="gridBtn">
+                    <button className="gridTransparent">
                         <Paper id="paperTheme">
                             <Typography id="gridBoxTitle">
                                 Fuse Replacement
                         </Typography></Paper>
                     </button>
-                    <button className="gridBtn">
+                    <button className="gridTransparent">
                         <Paper id="paperTheme">
                             <Typography id="gridBoxTitle">
                                 ETC
@@ -369,19 +370,19 @@ function ManageRecommendationTable() {
                     </button>
                 </Grid>
                 <Grid item xs={4}>
-                    <button className="gridBtn">
+                    <button className="gridTransparent">
                         <Paper id="paperTheme">
                             <Typography id="gridBoxTitle">
                                 Gearbox Replacement
                         </Typography></Paper>
                     </button>
-                    <button className="gridBtn">
+                    <button className="gridTransparent">
                         <Paper id="paperTheme">
                             <Typography id="gridBoxTitle">
                                 Panel Angle
                         </Typography></Paper>
                     </button>
-                    <button className="gridBtn">
+                    <button className="gridTransparent">
                         <Paper id="paperTheme">
                             <Typography id="gridBoxTitle">
                                 Other
@@ -405,7 +406,7 @@ function ManageRecommendationTable() {
                     </Grid >
                     <Grid item>
                         <Button id='recBtn' onClick={handleClickOpenFirst}>Create Recommendation</Button>
-
+                        {/* 
                         <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
@@ -516,33 +517,147 @@ function ManageRecommendationTable() {
                                 <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenFourth}>Next</Button>
                             </DialogActions>
-                        </Dialog>
+                        </Dialog> */}
 
-                        <Dialog open={openFourth} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
-                            <DialogTitle id="form-dialog-title">Configuration Confirmation</DialogTitle>
+                            <DialogTitle id="form-dialog-title" className="dialogTitle">Confirmation</DialogTitle>
                             <DialogContent id="confirmationDialog">
-                                <DialogContentText>Name:</DialogContentText>
-                                <DialogContentText>Asset:</DialogContentText>
-                                <DialogContentText>Asset Type:</DialogContentText>
-                                <DialogContentText>Granularity:</DialogContentText>
-                                <DialogContentText>Frequency of Repition:</DialogContentText>
-                                <DialogContentText>Periodicity:</DialogContentText>
-                                <DialogContentText>Day of The Week:</DialogContentText>
-                                <DialogContentText>Start Date:</DialogContentText>
-                                <DialogContentText>End Date:</DialogContentText>
-                                <DialogContentText>Hour Repeated:</DialogContentText>
-                                <DialogContentText>Created On:</DialogContentText>
-                                <DialogContentText>Created By:</DialogContentText>
-                                <DialogContentText>Occurencies Data Time:</DialogContentText>
-                                <DialogContentText>Span:</DialogContentText>
-                                <DialogContentText>Parameter Value:</DialogContentText>
+                                <DialogContent>
+
+                                <DialogContentText id="confirmationTitle">Configuration Details </DialogContentText>
+                                <br></br>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Template: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Yearly Wash Optmization</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Title: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Wash Optimization P20</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Asset: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">001-kahuku</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Asset Type: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Solar</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Granularity: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Yearly</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Periodicity: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Monthly</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Frequency of Repition: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">1</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Day of the Week: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Wednesday</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Start Date: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">End Date: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Hours Repeated: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Occurence Data Time: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <br></br>
+                                <Divider className="confirmationDivider"/>
+                                <br></br>
+
+                             
+                                <DialogContent>
+                                <DialogContentText id="confirmationTitle">Parameters Details</DialogContentText>
+                                <br></br>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Center Point: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">20250101</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Span: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">4</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <br></br>
+                                <Divider className="confirmationDivider"/>
+                                <br></br>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Created By: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Kenzo L. Witwit</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Created On: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">October 27, 2020, 3:17 PM</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+
                             </DialogContent>
                             <DialogActions>
                                 <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
-                                <Button id="nextBtn" onClick={handleDone}>Done</Button>
+                                <Button id="nextBtn" onClick={handleDone}>Finish</Button>
                             </DialogActions>
                         </Dialog>
                     </Grid>
