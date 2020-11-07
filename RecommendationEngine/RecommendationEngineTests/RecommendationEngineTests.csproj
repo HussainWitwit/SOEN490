@@ -22,4 +22,9 @@
   <ItemGroup>
     <ProjectReference Include="..\RecommendationEngine\RecommendationEngine.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UnitTests\ControllerTest\" />
+    <Folder Include="UnitTests\ServiceTest\" />
+    <Folder Include="UnitTests\MockData\" />
+  </ItemGroup>
 </Project>
