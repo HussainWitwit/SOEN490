@@ -12,31 +12,31 @@ namespace RecommendationEngineTests
 {
     public class AssetUnitTests
     {
-        private Mock<IAssetRepository> _assetRepo;
-        private Mock<IAssetTypeRepository> _assetTypeRepo;
-        private Mock<IDriveService> _drive;
-        private AssetService _assetService;
+        private Mock<IAssetRepository> _assetRepoMock;
+        private Mock<IAssetTypeRepository> _assetTypeRepoMock;
+        private Mock<IDriveService> _driveMock;
+        private AssetService _assetServiceMock;
 
         [SetUp]
         public void Setup()
         {
-            _assetRepo = new Mock<IAssetRepository>();
-            _assetTypeRepo = new Mock<IAssetTypeRepository>();
-            _drive = new Mock<IDriveService>();
-            _assetService = new AssetService(_drive.Object, _assetRepo.Object, _assetTypeRepo.Object);
+            _assetRepoMock = new Mock<IAssetRepository>();
+            _assetTypeRepoMock = new Mock<IAssetTypeRepository>();
+            _driveMock = new Mock<IDriveService>();
+            _assetServiceMock = new AssetService(_driveMock.Object, _assetRepoMock.Object, _assetTypeRepoMock.Object);
             List<DBAsset> dbAssets = MockAssets.BasicDBAssetList;
-            _assetRepo.Setup(x => x.Get()).Returns(dbAssets);
+            _assetRepoMock.Setup(x => x.Get()).Returns(dbAssets);
         }
 
         [Test]
         public void GetAssetsTreeviewTest()
         {
-            var assetComposite = _assetService.GetAssetsTreeview();
+            var assetComposite = _assetServiceMock.GetAssetsTreeview();
 
             //Assert
             Assert.IsInstanceOf(typeof(AssetComposite), assetComposite);
             Assert.NotNull(assetComposite);
-            _assetRepo.Verify(x => x.Get(), Times.AtLeastOnce());
+            _assetRepoMock.Verify(x => x.Get(), Times.AtLeastOnce());
         }
 
         [Test]
@@ -44,9 +44,10 @@ namespace RecommendationEngineTests
         {
             string assetName = "asset1";
             DBAsset dbAsset = MockAssets.BasicDBAsset;
-            _assetRepo.Setup(x => x.GetAssetByName(assetName)).Returns(dbAsset);
-            Asset asset = _assetService.GetAssetByName(assetName);
-            _assetRepo.Verify(x => x.GetAssetByName(assetName), Times.AtLeastOnce());
+            _assetRepoMock.Setup(x => x.GetAssetByName(assetName)).Returns(dbAsset);
+            _assetTypeRepoMock.Setup(x => x.GetAssetTypeByName("Portfolio")).Returns(MockAssets.PortfolioAssetType);
+            Asset asset = _assetServiceMock.GetAssetByName(assetName);
+            _assetRepoMock.Verify(x => x.GetAssetByName(assetName), Times.AtLeastOnce());
             Assert.NotNull(asset);
             Assert.AreEqual(asset.Id, 1);
             Assert.IsInstanceOf(typeof(Asset), asset);

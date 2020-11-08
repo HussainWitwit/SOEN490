@@ -35,6 +35,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<AssetService>().AsImplementedInterfaces();
                     builder.RegisterType<TestDrive>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
         }
@@ -72,6 +73,14 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         public DBAsset GetAssetByName(string assetName)
         {
             return MockData.MockAssets.BasicDBAsset;
+        }
+    }
+
+    public class TestAssetTypeRepositoryMock : IAssetTypeRepository
+    {
+        public DBAssetType GetAssetTypeByName(string assetTypeName)
+        {
+            return MockData.MockAssets.PortfolioAssetType;
         }
     }
 

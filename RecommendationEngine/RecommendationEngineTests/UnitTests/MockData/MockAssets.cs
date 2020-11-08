@@ -9,6 +9,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
     {
 
         public static DBAssetType BasicAssetType = AssetList.BasicDBAssetType();
+        public static DBAssetType PortfolioAssetType = AssetList.PortfolioAssetType();
         public static List<DBAsset> BasicDBAssetList = AssetList.BasicDBAssetList();
         public static DBAsset BasicDBAsset = AssetList.BasicDBAssetList()[0];
         public static List<PFPortfolio> BasicPortfolios = AssetList.BasicPortfolios();
@@ -28,6 +29,20 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 };
 
                 return asset;
+            }
+
+            public static DBAssetType PortfolioAssetType()
+            {
+                DBAssetType type = new DBAssetType()
+                {
+                    AssetTypeId = 1,
+                    Name = "Portfolio",
+                    EnergyType = "energytype",
+                    DisplayText = "Portfolio",
+                    AssetsList = null
+                };
+
+                return type;
             }
 
             public static List<DBAsset> BasicDBAssetList()
