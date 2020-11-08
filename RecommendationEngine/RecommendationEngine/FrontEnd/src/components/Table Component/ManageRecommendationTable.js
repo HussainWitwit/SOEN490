@@ -35,6 +35,9 @@ import './ManageRecommendationTable.css';
 import { Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
+import Datetime from 'react-datetime';
+import Slider from '@material-ui/core/Slider';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 
 export const CssTextField = withStyles({
@@ -90,6 +93,37 @@ const BootstrapInput = withStyles((theme) => ({
         },
     },
 }))(InputBase);
+
+const dayWeekMark = [
+    {
+        value: 0,
+        label: "M"
+    },
+    {
+        value: 1,
+        label: "T"
+    },
+    {
+        value: 2,
+        label: "M"
+    },
+    {
+        value: 3,
+        label: "T"
+    },
+    {
+        value: 4,
+        label: "F"
+    },
+    {
+        value: 5,
+        label: "S"
+    },
+    {
+        value: 6,
+        label: "S"
+    }
+]
 
 /**
   * creation of the Data Object
@@ -281,19 +315,123 @@ function ManageRecommendationTable() {
         age: '',
         name: 'hai',
     });
-    // const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-    // const [date, changeDate] = React.useState(new Date())
-
     const [selectedBtn, setSelectedBtn] = React.useState("");
-    const [granularity, setGranularity] = React.useState();
 
+
+
+    //Add Recommendation Object Attributes (will be refactored later, its just for now  - C.S.B.)
+
+    const [templateName, setTemplate] = React.useState("");
+
+    // Setting the Title attribute
+    const [title, setTitle] = React.useState("");
+    const handleTitle = (event) => {
+        setTitle(event.target.value);
+    };
+
+    // Setting the Asset attribute
+    const [asset, setAsset] = React.useState("");
+    const handleAsset = (event) => {
+        setAsset(event.target.value);
+    }
+
+    // Setting the Asset Type attribute
+    const [assetType, setAssetType] = React.useState("");
+    const handleAssetType = (event) => {
+        setAssetType(event.target.value);
+    };
+
+    // Setting the Parameters attribute
+    const [parameters, setParameters] = React.useState("");
+    const handleParameters = (event) => {
+        setParameters(event.target.value);
+    };
+
+
+    // Setting the Granularity attribute
+    const [granularity, setGranularity] = React.useState("");
     const handleGranularity = (event) => {
         setGranularity(event.target.value);
     };
 
+    // Setting the perio attribute
+    const [periodicity, setPeriodicity] = React.useState();
+    const handlePeriodicity = (event) => {
+        setPeriodicity(event.target.value);
+    };
 
-    //TODO:Set the hooks for the Title, Subtitle, Button Boolean, 
-    //TODO:Set hook array for the name of the columns of the table and the filter list 
+    // Setting Repetition attribute
+    const [Repetition, setRepetition] = React.useState(null);
+    const handleRepetition = (event) => {
+        setRepetition(event.target.value);
+    };
+
+    // Setting the dayWeek attribute
+    const [dayWeek, setDayWeek] = React.useState("");
+    const handleDayWeek = (event) => {
+        setDayWeek(event.target.value);
+    };
+
+    // Setting the occurence Date attribute
+    const [dayMonth, setDayMonth] = React.useState("");
+    const handleDayMonth = (event) => {
+        setDayMonth(event.target.value);
+    };
+
+    // Setting the startDate attribute
+    const [startDate, setStartDate] = React.useState("");
+    const handleStartDate = (event) => {
+        setStartDate(event.target.value);
+    };
+
+    // Setting the endDate attribute
+    const [endDate, setEndDate] = React.useState("");
+    const handleEndDate = (event) => {
+        setStartDate(event.target.value);
+    };
+
+    // Setting the hourRepeated attribute  
+    const [hourRepeated, setHourRepeated] = React.useState();
+    const handleHourRepeated = (event) => {
+        setHourRepeated(event.target.value);
+    };
+
+    // Setting the occurence Date attribute
+    const [occurenceDate, setOccurenceDate] = React.useState("");
+    const handleOccurenceDate = (event) => {
+        setOccurenceDate(event.target.value);
+    };
+
+
+    // Seeting the Center Point attribute 
+    const [centerPoint, setCenterPoint] = React.useState(null)
+    const handleCenterPoint = (event) => {
+        setCenterPoint(event.target.value);
+    };
+
+    // Seeing the Span attribute
+    const [span, setSpan] = React.useState(null);
+    const handleSpan = (event) => {
+        setSpan(event.target.value);
+    };
+
+
+    // Setting the CreatedBy attribute
+    const [createdBy, setCreatedBy] = React.useState("");
+    const handleCreatedBy = (event) => {
+        setCreatedBy(event.target.value);
+    };
+
+    // Setting the CreatedOn attribute
+    const [createdOn, setCreatedOn] = React.useState("");
+    const handleCreatedOn = (event) => {
+        setCreatedOn(event);
+    };
+
+
+
+    //TODO:Set the hooks for the Title, Subtitle, Button Boolean, (Making of Table Generic) - C.S.B
+    //TODO:Set hook array for the name of the columns of the table and the filter list (Making of Table Geeric) - C.S.B
 
 
     /**
@@ -377,6 +515,13 @@ function ManageRecommendationTable() {
         setOpenFourth(false);
     }
 
+    const cancelConfirmation = () => {
+        setOpenThird(true);
+        setOpenFourth(false);
+        setOpenFirst(false);
+        setOpenSecond(false);
+    }
+
     const handleChange = (event) => {
         const name = event.target.name;
         setState({
@@ -385,9 +530,13 @@ function ManageRecommendationTable() {
         });
     };
 
-    // const handleDateChange = (date) => {
-    //     setSelectedDate(date);
-    // };
+    function valueLabelFormat(value) {
+        return dayWeekMark.findIndex((mark) => mark.value === value) + 1;
+    }
+
+    function valuetext(value) {
+        return `${value}`;
+    }
 
     function FormRow() {
         return (
@@ -437,8 +586,6 @@ function ManageRecommendationTable() {
         );
     }
 
-    const yo = "yo";
-
     return (
         <div id="main-container">
             <div>
@@ -453,15 +600,12 @@ function ManageRecommendationTable() {
                     <Grid item>
                         <Button id='recBtn' onClick={handleClickOpenFirst}>Create Recommendation</Button>
 
-                        {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
                             <DialogTitle id="form-dialog-title" className="dialogTitle">Template Configuration</DialogTitle>
-
-
-                            <div className="templateConfig">
-
+                            <div id="tempDialog">
                                 <div className="templateConfigBox">
 
                                     <DialogContent className="dialogPaper">
@@ -511,39 +655,14 @@ function ManageRecommendationTable() {
                                 <Button id="cancelBtn" onClick={handleCloseFirst}>Cancel</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenSecond}>Next</Button>
                             </DialogActions>
-                        </Dialog> */}
+                        </Dialog>
 
-                        <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <Dialog open={openSecond} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
                             <DialogTitle id="form-dialog-title" className="dialogTitle">Date Configuration</DialogTitle>
                             <DialogContent className="recConfigPaper">
-
-
-
-                                {/* <DialogContentText id="recLabel">Title of Recommendation *</DialogContentText>
-                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="" ></CssTextField> */}
-
-
-
-                                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <Grid container justify="space-around">
-                                        <KeyboardDatePicker
-                                            disableToolbar
-                                            variant="inline"
-                                            format="MM/dd/yyyy"
-                                            margin="normal"
-                                            id="date-picker-inline"
-                                            label="Date picker inline"
-                                            value={selectedDate}
-                                            onChange={handleDateChange}
-                                            KeyboardButtonProps={{
-                                                'aria-label': 'change date',
-                                            }}
-                                        />
-                                    </Grid>
-                                </MuiPickersUtilsProvider> */}
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
@@ -552,53 +671,55 @@ function ManageRecommendationTable() {
                                             <NativeSelect
                                                 id="demo-customized-select-native"
                                                 className="recBoxDate"
-                                                value={granularity}
-                                                onChange={handleGranularity}
+                                                value={periodicity}
+                                                onChange={handlePeriodicity}
                                                 input={<BootstrapInput />}
                                             >
-                                                <option aria-label="None" value="" />
-                                                <option value={"weekly"}>Weekly</option>
-                                                <option value={"bi-weekly"}>Bi-Weekly</option>
-                                                <option value={"monthly"}>Monthly</option>
-                                                <option value={"yearly"}>Yearly</option>
+                                                <option aria-label="None" value={""} >None</option>
+                                                <option value={"Weekly"}>Weekly</option>
+                                                <option value={"Bi-Weekly"}>Bi-Weekly</option>
+                                                <option value={"Monthly"}>Monthly</option>
+                                                <option value={"Yearly"}>Yearly</option>
                                             </NativeSelect>
                                         </FormControl>
                                     </div>
                                 </DialogContent>
 
-                                <DialogContent>
-                                    <div className="onelinerAlign">
-                                        <DialogContentText id="recLabel3">Repetition Time: </DialogContentText>
-                                        <TextField
-                                            id="outlined-number"
-                                            className="recBoxNumber"
-                                            type="number"
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            variant="outlined"
-                                            size="small"
-                                        />
-                                    </div>
-                                </DialogContent>
+                                {periodicity !== "" &&
 
-                                {granularity != "yearly" && granularity != "monthly" ? <DialogContent>
-                                    <div className="onelinerAlign">
+                                    <DialogContent>
+                                        <div className="onelinerAlign">
+                                            <DialogContentText id="recLabel3">Repetition Time: </DialogContentText>
+                                            <TextField
+                                                id="outlined-number"
+                                                className="recBoxNumber"
+                                                type="number"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                onChange={handleRepetition}
+                                                variant="outlined"
+                                                size="small"
+                                            />
+                                        </div>
+                                    </DialogContent>
+                                }
 
-                                        <div>
-                                            <DialogContentText id="recLabel3">Day of the Week: </DialogContentText>
+                                {periodicity != "" && periodicity !== "Yearly" && periodicity !== "Monthly" ?
+                                    <DialogContent>
+                                        <div className="onelinerAlign">
+                                            <DialogContentText id="recLabel2">Day of the Week: </DialogContentText>
+                                            <ButtonGroup aria-label="small outlined button group">
+                                                <Button value="Monday" onClick={handleDayWeek}>M</Button>
+                                                <Button value="Monday" onClick={handleDayWeek}>T</Button>
+                                                <Button value="Monday" onClick={handleDayWeek}>W</Button>
+                                                <Button value="Monday" onClick={handleDayWeek}>T</Button>
+                                                <Button value="Monday" onClick={handleDayWeek}>F</Button>
+                                                <Button value="Monday" onClick={handleDayWeek}>S</Button>
+                                                <Button value="Monday" onClick={handleDayWeek}>S</Button>
+                                            </ButtonGroup>
                                         </div>
-                                        <div>
-                                            <Button id="weekBtnList">M</Button>
-                                            <Button id="weekBtnList">T</Button>
-                                            <Button id="weekBtnList">W</Button>
-                                            <Button id="weekBtnList">T</Button>
-                                            <Button id="weekBtnList">F</Button>
-                                            <Button id="weekBtnList">S</Button>
-                                            <Button id="weekBtnList">S</Button>
-                                        </div>
-                                    </div>
-                                </DialogContent> : <DialogContent>
+                                    </DialogContent> : (periodicity != "" ? <DialogContent>
                                         <div className="onelinerAlign">
                                             <DialogContentText id="recLabel2">Day of the Month: </DialogContentText>
                                             <form className="timePickerContainer" noValidate>
@@ -608,38 +729,39 @@ function ManageRecommendationTable() {
                                                     size="small"
                                                     defaultValue="2017-05-24"
                                                     className="timePickerTextfield"
+                                                    onChange={handleDayMonth}
                                                     InputLabelProps={{
                                                         shrink: true,
                                                     }}
                                                 />
                                             </form>
                                         </div>
-                                    </DialogContent>}
+                                    </DialogContent> : "")}
 
-
-                                <DialogContent>
-                                    <br></br>
-                                    <div className="onelinerAlign">
-                                        <DialogContentText id="timeLabel">Time: </DialogContentText>
-                                        <form className="timePickerContainer" noValidate>
-                                            <TextField
-                                                id="time"
-                                                size="small"
-                                                type="time"
-                                                defaultValue="07:30"
-                                                className="timePickerTextfield"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                inputProps={{
-                                                    step: 300,
-                                                }}
-                                            />
-                                        </form>
-                                    </div>
-                                </DialogContent>
-
-
+                                {periodicity !== "" &&
+                                    <DialogContent>
+                                        <br></br>
+                                        <div className="onelinerAlign">
+                                            <DialogContentText id="timeLabel">Time: </DialogContentText>
+                                            <form className="timePickerContainer" noValidate>
+                                                <TextField
+                                                    id="time"
+                                                    size="small"
+                                                    type="time"
+                                                    defaultValue="07:30"
+                                                    className="timePickerTextfield"
+                                                    onChange={handleHourRepeated}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    inputProps={{
+                                                        step: 300,
+                                                    }}
+                                                />
+                                            </form>
+                                        </div>
+                                    </DialogContent>
+                                }
 
                             </DialogContent>
                             <DialogActions>
@@ -648,7 +770,8 @@ function ManageRecommendationTable() {
                             </DialogActions>
                         </Dialog>
 
-                        {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+
+                        <Dialog open={openThird} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
@@ -656,102 +779,102 @@ function ManageRecommendationTable() {
                             <DialogContent className="recConfigPaper">
 
                                 <DialogContentText id="recLabel">Title of Recommendation</DialogContentText>
-                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="Wash Optimization P20" style={{fontSize: '10px'}}></CssTextField>
+                                <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="Wash Optimization P20" onChange={handleTitle}></CssTextField>
 
                                 <DialogContent>
                                     <br></br>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="recLabel2">Asset: </DialogContentText>
-                                            <TextField
-                                                id="outlined-select-currency-native"
-                                                className="recBox"
-                                                select
-                                                label=""
-                                                onChange={handleChange}
-                                                SelectProps={{
-                                                    native: true,
-                                                }}
+                                        <FormControl>
+                                            <NativeSelect
+                                                id="demo-customized-select-native"
+                                                className="recBoxDate"
+                                                value={asset}
+                                                onChange={handleAsset}
+                                                input={<BootstrapInput />}
+                                            >
+                                                <option aria-label="None" value="" >None</option>
+                                            </NativeSelect>
+                                        </FormControl>
+                                    </div>
+                                </DialogContent>
 
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="recLabel2">Parameters: </DialogContentText>
+                                        <FormControl>
+                                            <NativeSelect
+                                                id="demo-customized-select-native"
+                                                className="recBoxDate"
+                                                value={parameters}
+                                                onChange={handleParameters}
+                                                input={<BootstrapInput />}
+                                            >
+                                                <option aria-label="None" value="" >None</option>
+                                                <option value={"centerPointSpan"}>Center Point and Span</option>
+                                            </NativeSelect>
+                                        </FormControl>
+                                    </div>
+                                </DialogContent>
+
+                                {parameters == "centerPointSpan" &&
+                                    <DialogContent>
+                                        <div className="onelinerAlign">
+                                            <DialogContentText id="recLabel3">Center Point Increment: </DialogContentText>
+                                            <TextField
+                                                id="outlined-number"
+                                                className="recBoxNumber"
+                                                type="number"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                onChange={handleCenterPoint}
                                                 variant="outlined"
                                                 size="small"
-                                            ></TextField>
-                                    </div>
-                                </DialogContent>
-
-
-                                <DialogContent>
-                                    <div className="onelinerAlign">
-                                        <DialogContentText id="recLabel2">Parameter: </DialogContentText>
-                                        <TextField
-                                            id="outlined-select-currency-native"
-                                            className="recBox"
-                                            select
-                                            label=""
-                                            onChange={handleChange}
-                                            SelectProps={{
-                                                native: true,
-                                            }}
-                                            variant="outlined"
-                                            size="small"
-                                        ></TextField>
-                                    </div>
-                                </DialogContent>
-
-
-                                <DialogContent>
-                                    <div className="onelinerAlign">
-                                        <DialogContentText id="recLabel3">Center Point Increment: </DialogContentText>
-                                        <TextField
-                                            id="outlined-number"
-                                            className="recBoxNumber"
-                                            type="number"
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            variant="outlined"
-                                            size="small"
-                                        />
-                                    </div>
-                                </DialogContent>
-
-                                <DialogContent>
-                                    <div className="onelinerAlign">
-                                        <DialogContentText id="recLabel3">Span Increment: </DialogContentText>
-                                        <TextField
-                                            id="outlined-number"
-                                            className="recBoxNumber"
-                                            type="number"
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            variant="outlined"
-                                            size="small"
-                                        />
-                                    </div>
-                                </DialogContent>
-
+                                            />
+                                        </div>
+                                    </DialogContent>
+                                }
+                                {parameters == "centerPointSpan" &&
+                                    <DialogContent>
+                                        <div className="onelinerAlign">
+                                            <DialogContentText id="recLabel3">Span Increment: </DialogContentText>
+                                            <TextField
+                                                id="outlined-number"
+                                                className="recBoxNumber"
+                                                type="number"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                onChange={handleSpan}
+                                                variant="outlined"
+                                                size="small"
+                                            />
+                                        </div>
+                                    </DialogContent>
+                                }
 
                             </DialogContent>
 
 
-
                             <DialogActions>
                                 <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
-                                <Button id="nextBtn" onClick={handleClickOpenFourth}>Next</Button>
+                                <Button id="nextBtn" onClick={handleClickOpenFourth}>Create</Button>
                             </DialogActions>
-                        </Dialog> */}
+                        </Dialog>
 
-                        {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <Dialog open={openFourth} onClose={cancelConfirmation} aria-labelledby="form-dialog-title">
 
-                            <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
+                            <IconButton aria-label="close" id="closeButton" onClick={cancelConfirmation}>
                                 <CloseIcon />
                             </IconButton>
                             <DialogTitle id="form-dialog-title" className="dialogTitle">Confirmation</DialogTitle>
                             <DialogContent id="confirmationDialog">
                                 <DialogContent>
 
-                                <DialogContentText id="confirmationTitle">Configuration Details </DialogContentText>
-                                <br></br>
+                                    <DialogContentText id="confirmationTitle">Configuration Details </DialogContentText>
+                                    <br></br>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Template: </DialogContentText>
                                         <DialogContentText id="confirmationLabelOutput">Yearly Wash Optmization</DialogContentText>
@@ -761,104 +884,104 @@ function ManageRecommendationTable() {
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Title: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">Wash Optimization P20</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(title === "" ? "Undefined" : title)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Asset: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">001-kahuku</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(asset === "" ? "Feature Coming soon!" : asset)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Asset Type: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">Solar</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(assetType === "" ? "Solar" : assetType)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Granularity: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">Yearly</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(granularity === "" ? "Yearly" : granularity)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Periodicity: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">Monthly</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(periodicity === "" ? "Undefined" : periodicity)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
-                                        <DialogContentText id="confirmationLabel">Frequency of Repition: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">1</DialogContentText>
+                                        <DialogContentText id="confirmationLabel">Frequency of Repetition: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(Repetition === "" ? "Undefined" : Repetition +" time(s)")}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
-                                        <DialogContentText id="confirmationLabel">Day of the Week: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">Wednesday</DialogContentText>
+                                        <DialogContentText id="confirmationLabel">Day of the Week/Month: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(dayWeek === "" ? "Underfine" : (dayWeek != "" ? dayWeek : dayMonth))}</DialogContentText>
+                                    </div>
+                                </DialogContent>
+
+
+                                <DialogContent>
+                                    <div className="onelinerAlign">
+                                        <DialogContentText id="confirmationLabel">Hours Repeated: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(hourRepeated === null ? "Undefined" : hourRepeated)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Start Date: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Feature Coming soon!</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">End Date: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Feature Coming soon!</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
-                                        <DialogContentText id="confirmationLabel">Hours Repeated: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
-                                    </div>
-                                </DialogContent>
-
-
-                                <DialogContent>
-                                    <div className="onelinerAlign">
-                                        <DialogContentText id="confirmationLabel">Occurence Data Time: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">October 27, 2025, 3:17 PM</DialogContentText>
+                                        <DialogContentText id="confirmationLabel">Occurence Date: </DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">Feature Coming soon!</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <br></br>
-                                <Divider className="confirmationDivider"/>
+                                <Divider className="confirmationDivider" />
                                 <br></br>
 
-                             
+
                                 <DialogContent>
-                                <DialogContentText id="confirmationTitle">Parameters Details</DialogContentText>
-                                <br></br>
+                                    <DialogContentText id="confirmationTitle">Parameters Details</DialogContentText>
+                                    <br></br>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Center Point: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">20250101</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(centerPoint === null ? "Undefined" : centerPoint)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Span: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">4</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(span === null ? "Undefined" : span)}</DialogContentText>
                                     </div>
                                 </DialogContent>
 
                                 <br></br>
-                                <Divider className="confirmationDivider"/>
+                                <Divider className="confirmationDivider" />
                                 <br></br>
 
                                 <DialogContent>
@@ -878,10 +1001,10 @@ function ManageRecommendationTable() {
 
                             </DialogContent>
                             <DialogActions>
-                                <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
-                                <Button id="nextBtn" onClick={handleDone}>Finish</Button>
+                                <Button id="cancelBtn" onClick={cancelConfirmation}>Cancel</Button>
+                                <Button id="nextBtn" onClick={handleDone}>Confirm</Button>
                             </DialogActions>
-                        </Dialog> */}
+                        </Dialog>
 
 
                     </Grid>

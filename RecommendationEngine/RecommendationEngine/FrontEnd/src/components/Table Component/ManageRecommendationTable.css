@@ -334,8 +334,8 @@
      /* min-height: 50vh;
      max-height: 50vh;
      min-width: 80vh; */
-     min-height: 60vh;
-     max-height: 60vh;
+     min-height: 65vh;
+     max-height: 65vh;
      min-width: 100vh;
      min-width: 100vh;
     }
@@ -347,8 +347,8 @@
         max-height: 50vh;
         min-width: 80vh;
         min-width: 100vh; */
-        min-height: 60vh;
-        max-height: 60vh;
+        min-height: 65vh;
+        max-height: 65vh;
         min-width: 100vh;
         min-width: 100vh;
 
@@ -359,9 +359,18 @@
     }
 
     #confirmationDialog{
-        min-height: 60vh;
-        max-height: 60vh;
+        min-height: 65vh;
+        max-height: 65vh;
         min-width: 100vh;
+        min-width: 100vh;
+    }
+
+    #tempDialog{
+        display: flex;
+        align-items: center;
+        min-height: 50vh;
+        max-height: 50vh;
+        min-width: 80vh;
         min-width: 100vh;
     }
 
@@ -503,8 +512,12 @@
         max-width: 90px;
     }
 
-
-
+    .sliderStyle{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 4px;
+    }
 
 
 
