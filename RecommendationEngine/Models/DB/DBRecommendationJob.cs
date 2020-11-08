@@ -13,7 +13,7 @@ namespace Models.DB
         public string Status { get; set; }
         public string Result { get; set; }
         public string TriggeredBy { get; set; }
-        public DateTime JobDuration { get; set; }
+        public int JobDuration { get; set; }
         public DateTime Timestamp { get; set; }
         public virtual ICollection<DBRecommendationJobResult> ResultsList { get; set; }
         public virtual DBAsset Asset { get; set; }
