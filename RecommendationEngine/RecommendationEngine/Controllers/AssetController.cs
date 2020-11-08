@@ -22,7 +22,14 @@ namespace RecommendationEngine.Controllers
         [HttpGet("get")]
         public IActionResult GetAssets()
         {
-            return Ok(_assetService.GetAssetsTreeview());
+            try
+            {
+                return Ok(_assetService.GetAssetsTreeview());
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
         }
 
         [HttpGet("convert")]
@@ -36,7 +43,6 @@ namespace RecommendationEngine.Controllers
             catch (GlobalException e){
                 return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
-            
         }
     }
 }
