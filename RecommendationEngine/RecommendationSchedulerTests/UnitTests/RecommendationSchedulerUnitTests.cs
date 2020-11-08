@@ -86,7 +86,7 @@ namespace RecommendationSchedulerTests.UnitTests
                         {
                             Type = "Yearly Wash Optimization"
                         },
-                        Granularity = "Monthly",
+                        Granularity = "Weekly",
                         RecurrenceDayOfWeek = 3,
                     },
                     new DBRecommendationSchedule
@@ -96,7 +96,7 @@ namespace RecommendationSchedulerTests.UnitTests
                         {
                             Type = "Yearly Wash Optimization"
                         },
-                        Granularity = "Monthly",
+                        Granularity = "Weekly",
                         RecurrenceDayOfWeek = 4,
                     },
                     new DBRecommendationSchedule
@@ -106,7 +106,7 @@ namespace RecommendationSchedulerTests.UnitTests
                         {
                             Type = "Yearly Wash Optimization"
                         },
-                        Granularity = "Monthly",
+                        Granularity = "Weekly",
                         RecurrenceDayOfWeek = 5,
                     },
                     new DBRecommendationSchedule
@@ -116,8 +116,28 @@ namespace RecommendationSchedulerTests.UnitTests
                         {
                             Type = "Yearly Wash Optimization"
                         },
-                        Granularity = "Monthly",
+                        Granularity = "Weekly",
                         RecurrenceDayOfWeek = 6,
+                    },
+                    new DBRecommendationSchedule
+                    {
+                        RecommendationScheduleId = 8,
+                        RecommendationType = new DBRecommendationType
+                        {
+                            Type = "Yearly Wash Optimization"
+                        },
+                        Granularity = "Weekly",
+                        RecurrenceDayOfWeek = 0,
+                    },
+                    new DBRecommendationSchedule
+                    {
+                        RecommendationScheduleId = 9,
+                        RecommendationType = new DBRecommendationType
+                        {
+                            Type = "Yearly Wash Optimization"
+                        },
+                        Granularity = "Weekly",
+                        RecurrenceDayOfWeek = 1,
                     }
                 }
             );
@@ -128,7 +148,7 @@ namespace RecommendationSchedulerTests.UnitTests
             //Assert
             _schedulerMock.Verify(x => x.Start(CancellationToken.None), Times.AtLeastOnce);
             _recommendationSchedulerRepoMock.Verify(x=>x.GetDbRecommendationSchedules(), Times.Once);
-            _schedulerMock.Verify(x => x.ScheduleJob(It.IsAny<IJobDetail>(), It.IsAny<ITrigger>(), CancellationToken.None), Times.Exactly(7));
+            _schedulerMock.Verify(x => x.ScheduleJob(It.IsAny<IJobDetail>(), It.IsAny<ITrigger>(), CancellationToken.None), Times.Exactly(9));
         }
 
         [Test]
