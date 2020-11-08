@@ -370,7 +370,6 @@
         font-size: 12px;
         min-width: 90px;
         max-width: 90px;
-        margin-bottom: 8%;
     }
 
     #recLabel3{
@@ -379,12 +378,11 @@
         font-size: 11px;
         min-width: 90px;
         max-width: 90px;
-        margin-bottom: 8%;
     }
 
     .recBox{
         width: 500px !important;  
-        height: 80px !important;
+        height: 50px !important;
     }
 
     .dialogTitle > * {

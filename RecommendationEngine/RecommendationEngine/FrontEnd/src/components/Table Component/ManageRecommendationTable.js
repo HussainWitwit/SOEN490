@@ -422,7 +422,7 @@ function ManageRecommendationTable() {
                     <Grid item>
                         <Button id='recBtn' onClick={handleClickOpenFirst}>Create Recommendation</Button>
 
-                        <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
@@ -480,7 +480,7 @@ function ManageRecommendationTable() {
                                 <Button id="cancelBtn" onClick={handleCloseFirst}>Cancel</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenSecond}>Next</Button>
                             </DialogActions>
-                        </Dialog>
+                        </Dialog> */}
 
                         {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
@@ -517,7 +517,7 @@ function ManageRecommendationTable() {
                                 <Button id="nextBtn" onClick={handleClickOpenThird}>Next</Button>
                             </DialogActions>
                         </Dialog> */}
-{/* 
+
                         <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
@@ -525,11 +525,10 @@ function ManageRecommendationTable() {
                             <DialogTitle id="form-dialog-title" className="dialogTitle">Recommendation Configuration</DialogTitle>
                             <DialogContent className="recConfigPaper">
 
-                                <DialogContentText id="recLabel">Title of Configured Recommendation: </DialogContentText>
+                                <DialogContentText id="recLabel">Title of Recommendation</DialogContentText>
                                 <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="Wash Optimization P20" style={{fontSize: '10px'}}></CssTextField>
 
                                 <DialogContent>
-                                    <br></br>
                                     <br></br>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="recLabel2">Asset: </DialogContentText>
@@ -610,7 +609,7 @@ function ManageRecommendationTable() {
                                 <Button id="cancelBtn" onClick={handleClickOpenSecond}>Back</Button>
                                 <Button id="nextBtn" onClick={handleClickOpenFourth}>Next</Button>
                             </DialogActions>
-                        </Dialog> */}
+                        </Dialog>
 
                         {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
 
