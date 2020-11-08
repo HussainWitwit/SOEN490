@@ -46,8 +46,11 @@ namespace RecommendationEngineTests
             DBAsset dbAsset = MockAssets.BasicDBAsset;
             _assetRepo.Setup(x => x.GetAssetByName(assetName)).Returns(dbAsset);
             Asset asset = _assetService.GetAssetByName(assetName);
+            _assetRepo.Verify(x => x.GetAssetByName(assetName), Times.AtLeastOnce());
             Assert.NotNull(asset);
             Assert.AreEqual(asset.Id, 1);
+            Assert.IsInstanceOf(typeof(Asset), asset);
+
         }
     }
 }

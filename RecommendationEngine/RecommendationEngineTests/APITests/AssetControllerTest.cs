@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Models.Application.Asset;
 using Models.DB;
+using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
@@ -45,6 +46,8 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             var asset = JsonConvert.DeserializeObject<AssetComposite>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(asset);
+            Assert.AreEqual(asset.Id, MockData.MockAssets.BasicDBAssetList[0].AssetId);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
