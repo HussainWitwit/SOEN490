@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Interfaces.RecommendationScheduler
 {
