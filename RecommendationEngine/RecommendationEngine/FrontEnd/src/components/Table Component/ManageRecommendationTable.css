@@ -331,18 +331,27 @@
     }
 
     .recConfigPaper{
-     min-height: 50vh;
+     /* min-height: 50vh;
      max-height: 50vh;
-     min-width: 80vh;
+     min-width: 80vh; */
+     min-height: 60vh;
+     max-height: 60vh;
+     min-width: 100vh;
+     min-width: 100vh;
     }
 
     .templateConfig{
         display: flex;
         align-items: center;
-        min-height: 50vh;
+        /* min-height: 50vh;
         max-height: 50vh;
         min-width: 80vh;
+        min-width: 100vh; */
+        min-height: 60vh;
+        max-height: 60vh;
         min-width: 100vh;
+        min-width: 100vh;
+
     }
 
     .templateConfigBox{
@@ -384,6 +393,12 @@
         width: 500px !important;  
         height: 50px !important;
     }
+
+    .recBoxDate{
+        width: 400px !important;  
+        height: 50px !important;
+    }
+    
 
     .dialogTitle > * {
         color: #252733 !important;
@@ -447,6 +462,45 @@
 
     .confirmationDivider{
         width: 90%;
+    }
+
+    .recBoxNumber{
+        width: 80px !important;  
+        height: 50px !important;
+    }
+
+    .selected{
+        background-color: #4DD3EF;
+
+    }
+
+    #weekBtnList{
+        width: 100px;
+        height: 30px;
+        font-size: 10px;
+        /* background-color: red; */
+    }
+
+    .timePickerContainer{
+        display: flex;
+        flex-wrap: "wrap";
+
+    }
+
+    .timePickerTextfield{
+        margin-left: 4px;
+        margin-right: 4px;
+        width: 200px;
+        font-size: 12px;
+    }
+
+    #timeLabel{
+        margin-top: 12px;
+        color:#868282;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 12px;
+        min-width: 90px;
+        max-width: 90px;
     }
 
 
