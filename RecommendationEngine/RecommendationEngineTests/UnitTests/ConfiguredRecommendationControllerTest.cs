@@ -52,7 +52,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         {
             var payload = MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
             var response = await _client.PutAsync("/configuredrecommendation/add", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
-            Assert.Equals(response.ReasonPhrase, "Method Not Allowed");
+            Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
         }
     }
 
