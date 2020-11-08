@@ -15,7 +15,8 @@ namespace Models.DB
         public string DisplayText { get; set; }
         public string Granularity { get; set; }
         public string Description { get; set; }
-        public DateTime OccurenceDatetime { get; set; }
+        public int RecurrenceDayOfWeek { get; set; }
+        public DateTime RecurrenceDatetime { get; set; }
         public DateTime CreatedOn { get; set; }
         public virtual DBRecommendationType RecommendationType { get; set; }
         public virtual ICollection<DBAssetRecommendationSchedule> AssetsList { get; set; }
