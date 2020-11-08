@@ -14,13 +14,13 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb = recommendationEngineDb;
         }
 
-        public void AddSingleDBAsset(DBAsset asset)
+        public void AddAsset(DBAsset asset)
         {
             _recommendationEngineDb.Assets.Add(asset);
             _recommendationEngineDb.SaveChanges();
         }
 
-        public void AddDBAssetList(List<DBAsset> asset)
+        public void AddAssetList(List<DBAsset> asset)
         {
             _recommendationEngineDb.Assets.AddRange(asset);
             _recommendationEngineDb.SaveChanges();

@@ -18,6 +18,8 @@ namespace RecommendationEngine.Services
         private IAssetRepository _assetRepository;
         private IAssetTypeRepository _assetTypeRepository;
         private List<DBAsset> _assets;
+        private DBAssetType _portfolioAssetType;
+        private DBAssetType _plantAssetType;
 
         public AssetService(
                 IDriveService driveService,
@@ -29,7 +31,8 @@ namespace RecommendationEngine.Services
             _assetRepository = assetRepository;
             _assetTypeRepository = assetTypeRepository;
             GetDBAssets();
-        }
+            _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
+    }
 
         public Asset GetAssetsTreeview()
         {
@@ -58,13 +61,13 @@ namespace RecommendationEngine.Services
             DBAsset client = GetClient(listOfPortfolios);
 
             result.Add(client);
-            _assetRepository.AddSingleDBAsset(client);
+            _assetRepository.AddAsset(client);
 
             List<DBAsset> parentDBAssets = BuildAssets(listOfPortfolios, true, client);
-            _assetRepository.AddDBAssetList(parentDBAssets);
+            _assetRepository.AddAssetList(parentDBAssets);
 
             List<DBAsset> childDBAssets = BuildAssets(listOfPlants, false, client);
-            _assetRepository.AddDBAssetList(childDBAssets);
+            _assetRepository.AddAssetList(childDBAssets);
         }
 
         private List<DBAsset> GetDBAssets()
@@ -130,20 +133,34 @@ namespace RecommendationEngine.Services
 
         private List<DBAsset> BuildAssets(List<PFPortfolio> plants, bool isPortfolio, DBAsset client)
         {
+            PFPlant plant;
             List<DBAsset> assetList = plants
-                .Select(x => new DBAsset()
+                .Select(x =>
                 {
-                    Name = x.Id,
-                    ElementPath = x.Id,
-                    DisplayText = isPortfolio ? _assetTypeRepository.GetAssetTypeByName("Portfolio").DisplayText : _assetTypeRepository.GetAssetTypeByName("Plant").DisplayText,
-                    EnergyType = isPortfolio ? _assetTypeRepository.GetAssetTypeByName("Portfolio").EnergyType : _assetTypeRepository.GetAssetTypeByName("Plant").EnergyType,
-                    Type = isPortfolio ? _assetTypeRepository.GetAssetTypeByName("Portfolio") : _assetTypeRepository.GetAssetTypeByName("Plant"),
-                    TimeZone = isPortfolio ? null : Task.Run(() => { return GetField(x.Id); }).Result,
-                    AcPower = isPortfolio ? double.NaN : Task.Run(() => { return GetAcCapacity(x.Id); }).Result,
-                    ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
-                }).ToList();
+                    plant = Task.Run(() => { return GetPlantByPortfolioId(x.Id); }).Result;
+
+                    return new DBAsset()
+                    {
+                        Name = x.Id,
+                        ElementPath = x.Id,
+                        DisplayText = x.Name,
+                        EnergyType = null, //we need the assetmetada API to populate this (null for now)
+                        Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
+                        TimeZone = isPortfolio ? null : plant.TimeZone,
+                        AcPower = isPortfolio ? double.NaN : plant.AcCapacity,
+                        ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
+                    };
+                }
+                ).ToList();
 
             return assetList;
+        }
+
+        private async Task<PFPlant> GetPlantByPortfolioId(string id)
+        {
+
+            PFPlant plant = await _driveService.GetPlantByPortfolioId(id);
+            return plant;
         }
 
         private DBAsset GetParentAsset(string id)
@@ -152,22 +169,10 @@ namespace RecommendationEngine.Services
             return _assetRepository.GetAssetByName(parentId);
         }
 
-        private async Task<string> GetField(string id)
+        private string GetParentId(string id)
         {
-            PFPlant energy = await _driveService.GetPlantByPortfolioId(id);
-            return energy.TimeZone;
-        }
-
-        private async Task<double> GetAcCapacity(string id)
-        {
-            PFPlant energy = await _driveService.GetPlantByPortfolioId(id);
-            return energy.AcCapacity;
-        }
-
-        private async Task<string> GetParentId(string id)
-        {
-            var plants = await _driveService.GetPlantByPortfolioId(id);
-            return plants.PortfolioId;
+            String parentId = Task.Run(() => { return GetPlantByPortfolioId(id); }).Result.PortfolioId;
+            return parentId;
         }
     }
 }

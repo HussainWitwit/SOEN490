@@ -14,12 +14,6 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb = recommendationEngineDb;
         }
 
-        public void Add(DBRecommendationSchedule schedule)
-        {
-            _recommendationEngineDb.RecommendationSchedules.Add(schedule);
-            _recommendationEngineDb.SaveChanges();
-        }
-
         public DBAssetType GetAssetTypeByName(string assetTypeName)
         {
             return _recommendationEngineDb.AssetTypes.FirstOrDefault(a => a.Name == assetTypeName);

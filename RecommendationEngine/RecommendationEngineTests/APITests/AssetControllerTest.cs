@@ -58,9 +58,9 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
 
     public class TestRepositoryMock : IAssetRepository
     {
-        public void AddSingleDBAsset(DBAsset asset) { }
+        public void AddAsset(DBAsset asset) { }
 
-        public void AddDBAssetList(List<DBAsset> asset) { }
+        public void AddAssetList(List<DBAsset> asset) { }
 
         public List<DBAsset> Get()
         {
@@ -76,15 +76,18 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
     {
         public async Task<List<PFPortfolio>> GetPortfolios()
         {
+            await Task.Delay(1000);
             return MockData.MockAssets.BasicPortfolios;
         }
         public async Task<List<PFPortfolio>> GetPlants()
         {
+            await Task.Delay(1000);
             return MockData.MockAssets.BasicPlants;
         }
 
         public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
         {
+            await Task.Delay(1000);
             return MockData.MockAssets.BasicPlant;
         }
     }
