@@ -50,7 +50,6 @@ namespace RecommendationEngineTests
             Assert.NotNull(asset);
             Assert.AreEqual(asset.Id, 1);
             Assert.IsInstanceOf(typeof(Asset), asset);
-
         }
     }
 }
