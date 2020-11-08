@@ -41,7 +41,7 @@ namespace RecommendationScheduler.RecommendationJob
                     watch.Elapsed.Seconds);
                 return Task.CompletedTask;
             }
-            catch (FileNotFoundException e)
+            catch (Exception e)
             {
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
                     watch.Elapsed.Seconds);
