@@ -1,7 +1,9 @@
-﻿namespace RecommendationEngine.RecommendationScheduler.RecommendationTypes
+﻿using Models.DB;
+
+namespace RecommendationScheduler.RecommendationTypes
 {
     public interface IRecommendationType
     {
-        public void ExecuteAlgorithm();
+        public void ExecuteAlgorithm(DBRecommendationJob job);
     }
 }
