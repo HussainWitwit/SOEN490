@@ -18,7 +18,7 @@
  * A.J.U.U
  */
 
-export const getAsset = async () => {
+export const getAllAssets = async () => {
     try {
         let response = await fetch('http://localhost:5000/asset/get'); //Do not make a typing mistake in the api call
         const jsonResponse = await response.json();
@@ -40,7 +40,7 @@ export const getAsset = async () => {
 const AssignResponse = (response) => {
     //Make sure the returned value is exactly equal to entity attribute for the entity in question
     return {
-      id: response.id,
+      id: response.id.toString(),
       name: response.name,
       displayText: response.displayText,
       EnergyType: response.EnergyType,

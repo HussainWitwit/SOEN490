@@ -5,7 +5,7 @@ import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { getAsset } from "../../api/get/getAsset";
+import { getAllAssets } from "../../api/get/AssetEndpoints";
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -129,7 +129,7 @@ export function AssetTree () {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    let response = await getAsset();
+    let response = await getAllAssets();
     setData(response);
   }
 
@@ -139,7 +139,7 @@ export function AssetTree () {
   }, []);
 
   const DisplayAssetNodeTree = (data) => (
-    <AssetTreeItem nodeId={data.id} labelText={data.name} assetType='plant'>
+    <AssetTreeItem nodeId={data.id} labelText={data.name} assetType='asset' key = {data.id}>
       {data.children !== 0 && data.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))

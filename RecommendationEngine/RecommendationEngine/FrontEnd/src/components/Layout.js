@@ -6,6 +6,7 @@ import RightPanelDrawer from '../components/RightPanel/RightPanel';
 import classNames from 'classnames';
 import '../components/Layout.css';
 
+//TODO: At 100% zoom in the web page, you can see that most contexts are too big.
 function Layout (props) {
   
   const [isChangeAssetClicked, setIsChangeAssetClicked] = useState(false);
