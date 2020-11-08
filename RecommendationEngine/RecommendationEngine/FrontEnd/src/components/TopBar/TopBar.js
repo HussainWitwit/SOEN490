@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
-import './TopBar.css';
 import NotificationBell from '../Notification/NotificationBell';
 import Breadcrumb from '../Breadcrumb/Breadcrumb';
+import './TopBar.css';
 
 function TopBar (props) {
+
   const [locationDetails, setLocationDetails] = React.useState(null);
   const [weatherDetails, setWeatherDetails] = React.useState(null);
+
+  const getChangedAssetCrumbEvent = (value) => {
+    props.changeAsset(value);
+  }
 
   // eslint-disable-next-line
   const getCurrentLocation = async () => {
@@ -28,9 +33,9 @@ function TopBar (props) {
   }, []);
 
   return (
-    <div id="main-containter" className="top_bar">
+    <div id="main-containter">
       <nav>
-        <Breadcrumb id="breadcrumb" />
+        <Breadcrumb id="breadcrumb" changeAsset = {getChangedAssetCrumbEvent} sharedChangeAssetValue = {props.sharedChangeAssetValue}/>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>

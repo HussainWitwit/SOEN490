@@ -1,14 +1,14 @@
-﻿using Interfaces.Repositories;
+﻿using System;
+using Interfaces.Repositories;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Repositories
 {
-    public class PortfolioRepository: IPortfolioRepository
+    public class EventRepository : IEventRepository
     {
         private RecommendationEngineDBContext _recommendationEngineDb;
 
-        public PortfolioRepository(RecommendationEngineDBContext recommendationEngineDb)
+        public EventRepository(RecommendationEngineDBContext recommendationEngineDb)
         {
             _recommendationEngineDb = recommendationEngineDb;
         }
