@@ -52,66 +52,47 @@ export const CssTextField = withStyles({
   * creation of the Data Object
   * @param {*} title
   * @param {*} frequency
-  * @param {*} startDate
-  * @param {*} startTime
-  * @param {*} endDate
-  * @param {*} endTime
   * @param {*} template
   * @param {*} qlgorithm 
   */
-function createData(title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
-    return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
+function createData(title, frequency, template, algorithm) {
+    return { title, frequency, template, algorithm };
 }
 
 const mockRows = [
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W34ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W35ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W36ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W37ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W38ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W39ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W40ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W41ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W42ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W43ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W44ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W45ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W46ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W47ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W48ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W49ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W50ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W51ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W52ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W53ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W54ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W55ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W56ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W57ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W58ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W59ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W60ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W61ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W62ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W63ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W64ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W65ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W66ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W67ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W68ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W69ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W70ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W71ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W72ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W73ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W74ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W75ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W76ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W77ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W78ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W79ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W80ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+
+
+
 ];
 
 /**
@@ -166,8 +147,6 @@ function stableSort(array, comparator) {
 const headCells = [
     { id: 'title', numeric: false, label: 'Title' },
     { id: 'frequency', numeric: false, label: 'Frequency' },
-    { id: 'startDate', numeric: true, label: 'Start Date' },
-    { id: 'endDate', numeric: true, label: 'End Date' },
     { id: 'template', numeric: true, label: 'Template' },
     { id: 'algorithm', numeric: true, label: 'Algorithm' },
 ];
@@ -391,8 +370,6 @@ function ManageRecommendationTable() {
                                                     {row.title}
                                                 </TableCell>
                                                 <TableCell className="custom" id="tableBody">{row.frequency}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell>
                                                 <TableCell className="custom" id="tableBody">{row.template}</TableCell>
                                                 <TableCell className="custom" id="tableBody">{row.algorithm}</TableCell>
                                             </TableRow>
