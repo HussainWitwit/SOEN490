@@ -41,7 +41,7 @@ namespace RecommendationEngine.Services
 
         public Asset GetAssetByName(string assetName)
         {
-            _assets = _assetRepository.Get();
+            GetDBAssets();
             DBAsset asset = _assetRepository.GetAssetByName(assetName);
             return GetAssetCompositeFromDBAsset(asset);
         }
@@ -78,7 +78,7 @@ namespace RecommendationEngine.Services
 
         private List<AssetComposite> GetChildren(int assetId)
         {
-            _assets = _assetRepository.Get();
+            GetDBAssets();
             List<DBAsset> children = _assets.FindAll(a =>
                 {
                     if (a.ParentAsset != null)
