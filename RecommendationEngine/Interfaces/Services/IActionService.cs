@@ -2,6 +2,5 @@
 {
     public interface IActionService
     {
-        public string[] GetSummaries();
     }
 }
