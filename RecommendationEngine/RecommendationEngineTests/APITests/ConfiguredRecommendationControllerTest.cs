@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -18,7 +17,7 @@ using RecommendationEngine.ConfiguredRecommendationServices;
 using RecommendationEngine.Models.Application;
 using RecommendationEngine.Services.ExternalAPI.APIModels;
 
-namespace RecommendationEngineTests.UnitTests.ControllerTest
+namespace RecommendationEngineTests.APITests
 {
     public class ConfiguredRecommendationControllerTest
     {
@@ -51,7 +50,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         [Test]
         public async Task AddRecommendations()
         {
-            var payload = MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            var payload = UnitTests.MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
             var response = await _client.PutAsync("/configuredrecommendation/add", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
             Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
         }
@@ -59,16 +58,22 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
 
     public class MockTestRepository : IConfiguredRecommendationRepository
     {
-        public void Add(DBRecommendationSchedule configuredRecommendation) { }
+        public DBRecommendationSchedule Add(DBRecommendationSchedule configuredRecommendation)
+        {
+            return new DBRecommendationSchedule
+            {
+                RecommendationScheduleId = 1
+            };
+        }
 
         public List<ConfiguredRecommendation> Get()
         {
-            return MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            return UnitTests.MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
         }
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
-            return MockData.MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+            return UnitTests.MockData.MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
         }
     }
 
@@ -77,18 +82,18 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         public async Task<List<PFPortfolio>> GetPortfolios()
         {
             await Task.Delay(1000);
-            return MockData.MockAssets.BasicPortfolios;
+            return UnitTests.MockData.MockAssets.BasicPortfolios;
         }
         public async Task<List<PFPortfolio>> GetPlants()
         {
             await Task.Delay(1000);
-            return MockData.MockAssets.BasicPlants;
+            return UnitTests.MockData.MockAssets.BasicPlants;
         }
 
         public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
         {
             await Task.Delay(1000);
-            return MockData.MockAssets.BasicPlant;
+            return UnitTests.MockData.MockAssets.BasicPlant;
         }
     }
 }

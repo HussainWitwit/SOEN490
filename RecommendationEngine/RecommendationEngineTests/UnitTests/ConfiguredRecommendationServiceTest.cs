@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
 using Interfaces.Services.ExternalApi;
 using Models.DB;
@@ -9,20 +10,22 @@ using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Models.Application;
 using RecommendationEngineTests.UnitTests.MockData;
 
-namespace RecommendationEngineTests.UnitTests.ServiceTest
+namespace RecommendationEngineTests.UnitTests
 {
     public class ConfiguredRecommendationServiceTest
     {
         private ConfiguredRecommendationService _configuredRecommendationService;
         private Mock<IConfiguredRecommendationRepository> _repository;
         private Mock<IDriveService> _driveService;
+        private Mock<IRecommendationScheduler> _scheduler;
 
         [SetUp]
         public void Setup()
         {
             _repository = new Mock<IConfiguredRecommendationRepository>();
             _driveService = new Mock<IDriveService>();
-            _configuredRecommendationService = new ConfiguredRecommendationService(_driveService.Object, _repository.Object);
+            _scheduler = new Mock<IRecommendationScheduler>();
+            _configuredRecommendationService = new ConfiguredRecommendationService(_driveService.Object, _repository.Object, _scheduler.Object);
         }
 
         [Test]
@@ -43,6 +46,7 @@ namespace RecommendationEngineTests.UnitTests.ServiceTest
             DBRecommendationSchedule afterConversion = MockConfiguredRecommendations.CONVERTED_CONFIGURED_RECOMMENDATION;
 
             _repository.Setup(x => x.GetRecommendationTypeByType("Yearly Wash Optimization")).Returns(recommendationType);
+            _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
             _configuredRecommendationService.AddConfiguredRecommendation(beforeConversion);
             _repository.Setup(x => x.Add(afterConversion));
         }
