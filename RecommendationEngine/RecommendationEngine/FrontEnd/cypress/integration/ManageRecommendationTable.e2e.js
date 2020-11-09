@@ -28,7 +28,7 @@ describe("Manage Recommendation Table", () => {
     it('Finds the table', () => {
         cy.get('#toolbar').should('exist')
         cy.get('#tableTitle').should('be.visible')
-        cy.get('.PrivateSwitchBase-input-5').should('be.visible')
+        cy.get('#custom-css-standard-input').should('be.visible')
         cy.get('#table-row > :nth-child(2)').should('be.visible')
         cy.get('#table-row > :nth-child(3)').should('be.visible')
         cy.get('#table-row > :nth-child(4)').should('be.visible')

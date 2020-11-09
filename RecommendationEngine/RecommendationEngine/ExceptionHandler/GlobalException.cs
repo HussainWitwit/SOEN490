@@ -13,9 +13,10 @@ namespace RecommendationEngine.ExceptionHandler
         public string ErrorMessage { get; set; }
         public string ApplicationName { get; set; }
 
-        public GlobalException(){}
+        public GlobalException() { }
 
-        public GlobalException(int Code, string Type, string ErrorMessage, string ApplicationName) {
+        public GlobalException(int Code, string Type, string ErrorMessage, string ApplicationName)
+        {
             this.Code = Code;
             this.Type = Type;
             this.ErrorMessage = ErrorMessage;

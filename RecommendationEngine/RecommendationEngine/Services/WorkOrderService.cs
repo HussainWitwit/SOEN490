@@ -10,13 +10,11 @@ namespace RecommendationEngine.WorkOrderServices
 {
     public class WorkOrderService
     {
-        private IWorkOrderService _workOrderService;
-        private RecommendationEngineDBContext _recommendationEngineRepository;
+        private IDriveService _driveService;
 
-        public WorkOrderService(IWorkOrderService workOrderService, RecommendationEngineDBContext recommendationEngineRepository)
+        public WorkOrderService(IDriveService driveService)
         {
-            _workOrderService = workOrderService;
-            _recommendationEngineRepository = recommendationEngineRepository;
+            _driveService = driveService;
         }
     }
 }
