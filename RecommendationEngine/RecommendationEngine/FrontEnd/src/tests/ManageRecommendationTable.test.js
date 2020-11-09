@@ -4,11 +4,16 @@ import ManageRecommendationTable from '../components/Table Component/ManageRecom
 import Enzyme, { shallow } from '../enzyme';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
-import { EnhancedTableHead } from '../components/Table Component/ManageRecommendationTable';
+import { EnhancedTableHead, descendingComparator } from '../components/Table Component/ManageRecommendationTable';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
+import FormControl from '@material-ui/core/FormControl';
 
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -47,14 +52,14 @@ describe('ManageRecommendationTable component', () => {
     it('It finds all table cells', () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableCell);
-        expect(component).toHaveLength(7);
+        expect(component).toHaveLength(5);
         expect(output.find('#table-cell')).toBeTruthy();
     });
 
     it("Finds the table labels", () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableSortLabel);
-        expect(component).toHaveLength(6);
+        expect(component).toHaveLength(4);
         expect(output.find('#sort-label')).toBeTruthy();
     })
 
@@ -132,4 +137,40 @@ describe('ManageRecommendationTable component', () => {
         const output = shallow(<ManageRecommendationTable />);
         expect(output.find('#pagination')).toBeTruthy();
     });
+
+    it("Finds the Dialog", () => {
+        const output = shallow(<ManageRecommendationTable />);
+        let dialog = output.find(Dialog);
+        expect(dialog).toHaveLength(4);
+    })
+
+    it("Finds the Dialog", () => {
+        const output = shallow(<ManageRecommendationTable />);
+        let dialog = output.find(Dialog);
+        expect(dialog).toHaveLength(4);
+    })
+
+    it("Finds the DialogContent", () => {
+        const output = shallow(<ManageRecommendationTable />);
+        let dialogContent = output.find(DialogContent);
+        expect(dialogContent).toHaveLength(27);
+    })
+
+    it("Finds the DialogContentText", () => {
+        const output = shallow(<ManageRecommendationTable />);
+        let dialogContentText = output.find(DialogContentText);
+        expect(dialogContentText).toHaveLength(49);
+    })
+
+    it("Finds the DialogActions", () => {
+        const output = shallow(<ManageRecommendationTable />);
+        let dialogActions = output.find(DialogActions);
+        expect(dialogActions).toHaveLength(4);
+    })
+
+    it("Finds FormControl", () => {
+        const output = shallow(<ManageRecommendationTable />);
+        let formControl = output.find(FormControl);
+        expect(formControl).toHaveLength(3);
+    })
 });
