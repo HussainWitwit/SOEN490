@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Interfaces.RecommendationScheduler;
 using RecommendationEngine.Models.Application;
 using Interfaces.Services;
 using Models.DB;
@@ -14,14 +15,17 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
     {
         private IDriveService _driveService;
         private IConfiguredRecommendationRepository _repository;
+        private IRecommendationScheduler _scheduler;
 
         public ConfiguredRecommendationService(
                 IDriveService driveService,
-                IConfiguredRecommendationRepository repsitory
+                IConfiguredRecommendationRepository repsitory,
+                IRecommendationScheduler scheduler
         )
         {
             _driveService = driveService;
             _repository = repsitory;
+            _scheduler = scheduler;
         }
 
         public List<ConfiguredRecommendation> getConfiguredRecommendationList()
@@ -45,7 +49,8 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
                 RecommendationType = recommendationType
             };
-            _repository.Add(config);
+            var schedule = _repository.Add(config);
+            _scheduler.ScheduleJobAsync(schedule);
         }
     }
 }

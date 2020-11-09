@@ -16,9 +16,10 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb = recommendationEngineDb;
         }
 
-        public void Add(DBRecommendationSchedule schedule) {
+        public DBRecommendationSchedule Add(DBRecommendationSchedule schedule) {
             _recommendationEngineDb.RecommendationSchedules.Add(schedule);
             _recommendationEngineDb.SaveChanges();
+            return schedule;
         }
 
         public List<ConfiguredRecommendation> Get() {
