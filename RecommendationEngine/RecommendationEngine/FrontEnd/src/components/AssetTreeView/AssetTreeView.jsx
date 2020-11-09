@@ -5,7 +5,7 @@ import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { getAllAssets } from "../../api/GET/AssetEndpoints";
+import { getAllAssets } from "../../api/get/AssetEndpoints";
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {

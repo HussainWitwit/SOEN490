@@ -32,7 +32,7 @@ import { Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { getAllRecommendations } from "../../api/GET/TableEndpoints"
+import { getAllRecommendations } from "../../api/get/TableEndpoints";
 
 export const CssTextField = withStyles({
 
