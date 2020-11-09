@@ -326,20 +326,6 @@ function ManageRecommendationTable () {
     }, []);
 
 
-    // function createData(title, frequency, template, createdOn) {
-    //     return { title, frequency, template, createdOn };
-    // }
-
-    // const mockRowsMethod = (data) =>{
-
-    //     const mockRows = [
-    //         createData(data.title, data.frequency, data.template, data.createdOn)
-    //     ];
-
-    //     return mockRows
-
-    // }
-
 
     //TODO:Set the hooks for the Title, Subtitle, Button Boolean, (Making of Table Generic) - C.S.B
     //TODO:Set hook array for the name of the columns of the table and the filter list (Making of Table Geeric) - C.S.B
@@ -412,10 +398,37 @@ function ManageRecommendationTable () {
     }
 
     const handleDone = () => {
+        // console.log(title, asset, assetType, parameters, granularity, periodicity, Repetition, dayWeek, dayMonth, hourRepeated, centerPoint, span);
+        postAddRecommendation();
         setOpenFirst(false);
         setOpenSecond(false);
         setOpenThird(false);
         setOpenFourth(false);
+    }
+
+    /**
+     * Post Method
+     */
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json'},
+        body: JSON.stringify({
+            name : title,
+            type : 'Yearly Wash Optimization',
+            recurrenceDayOfWeek : 3,
+            createdOn : new Date().toJSON(),
+            createdBy : 'BOSSSS',
+            recurrenceDateTime : '2025-01-01T' +hourRepeated +':00',
+            granularity : periodicity,
+            parameters : null 
+        })
+    };
+    const [postResponse, setPostResponse] = React.useState(null);
+    //FIXME: Syntax ERrror here
+    const postAddRecommendation = () => {
+        fetch('http://localhost:5000/ConfiguredRecommendation/add/', requestOptions)
+        .then(response => response.json())
+        .then(data => setPostResponse({postResultId: data.id}));
     }
 
     const handleClose = () => {
