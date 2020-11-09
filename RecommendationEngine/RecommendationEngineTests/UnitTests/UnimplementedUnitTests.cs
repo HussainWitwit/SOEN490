@@ -1,18 +1,25 @@
-﻿using System.Collections.Generic;
-using Interfaces.Repositories;
-using Models.Application.Asset;
+﻿using Interfaces.Repositories;
+using Interfaces.Services.ExternalApi;
 using Models.DB;
 using Moq;
 using NUnit.Framework;
-using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI;
-using RecommendationEngineTests.UnitTests.MockData;
+using RecommendationEngine.ActionServices;
+using RecommendationEngine.AssetMetadataServices;
+using RecommendationEngine.CaseServices;
+using RecommendationEngine.Controllers;
+using RecommendationEngine.EnergyMarketServices;
+using RecommendationEngine.EventServices;
+using RecommendationEngine.RecommendationEngineServices;
+using RecommendationEngine.RecommendationRunServices;
+using RecommendationEngine.WeatherServices;
+using RecommendationEngine.WorkOrderServices;
 
 namespace RecommendationEngineTests
 {
     public class UnimplementedUnitTests
     {
         private Mock<IDriveService> _drive;
+        private Mock<RecommendationEngineDBContext> _engine;
 
         private Mock<IActionRepository> _actionRepo;
         private ActionService _actionService;
@@ -23,7 +30,7 @@ namespace RecommendationEngineTests
         private Mock<ICaseRepository> _caseRepo;
         private CaseService _caseService;
 
-        private Mock<IEnergyMarketRepository> _energyMarketRepo; 
+        private Mock<IEnergyMarketRepository> _energyMarketRepo;
         private EnergyMarketService _energyMarketService;
 
         private Mock<IEventRepository> _eventRepo;
@@ -45,30 +52,31 @@ namespace RecommendationEngineTests
         public void Setup()
         {
             _drive = new Mock<IDriveService>();
+            _engine = new Mock<RecommendationEngineDBContext>();
 
             _actionRepo = new Mock<IActionRepository>();
             _actionService = new ActionService(_drive.Object, _actionRepo.Object);
 
             _assetMetadataRepo = new Mock<IAssetMetadataRepository>();
-            _assetMetadataService = new AssetMetadataService(_drive.Object);
+            _assetMetadataService = new AssetMetadataService(_drive.Object, _engine.Object);
 
             _caseRepo = new Mock<ICaseRepository>();
-            _caseService = new CaseService(_drive.Object);
+            _caseService = new CaseService(_drive.Object, _engine.Object);
 
             _energyMarketRepo = new Mock<IEnergyMarketRepository>();
-            _energyMarketService = new EnergyMarketService(_drive.Object);
+            _energyMarketService = new EnergyMarketService(_drive.Object, _engine.Object);
 
             _eventRepo = new Mock<IEventRepository>();
-            _eventService = new EventService(_drive.Object);
+            _eventService = new EventService(_drive.Object, _engine.Object);
 
             _recommendationEngineRepo = new Mock<IRecommendationEngineRepository>();
-            _recommendationEngineService = new RecommendationEngineService(_drive.Object);
+            _recommendationEngineService = new RecommendationEngineService(_drive.Object, _engine.Object);
 
             _recommendationRunRepo = new Mock<IRecommendationRunRepository>();
-            _recommendationRunService = new RecommendationRunService(_drive.Object);
+            _recommendationRunService = new RecommendationRunService(_drive.Object, _engine.Object);
 
             _timeSeriesDataRepo = new Mock<ITimeSeriesDataRepository>();
-            _timeSeriesDataService = new TimeSeriesDataService(_drive.Object);
+            _timeSeriesDataService = new TimeSeriesDataService(_drive.Object, _engine.Object);
 
             _workOrderRepo = new Mock<IWorkOrderRepository>();
             _workOrderService = new WorkOrderService(_drive.Object);
@@ -103,6 +111,6 @@ namespace RecommendationEngineTests
 
             Assert.IsNotNull(_workOrderRepo.Object);
             Assert.IsNotNull(_workOrderService);
-        } 
+        }
     }
 }

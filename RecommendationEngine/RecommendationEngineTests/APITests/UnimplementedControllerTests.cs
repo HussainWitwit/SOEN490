@@ -1,10 +1,18 @@
 ﻿using System;
 using Interfaces.Repositories;
+using Interfaces.Services.ExternalApi;
 using Moq;
 using NUnit.Framework;
+using RecommendationEngine.ActionServices;
+using RecommendationEngine.AssetMetadataServices;
+using RecommendationEngine.CaseServices;
 using RecommendationEngine.Controllers;
-using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI;
+using RecommendationEngine.EnergyMarketServices;
+using RecommendationEngine.EventServices;
+using RecommendationEngine.RecommendationEngineServices;
+using RecommendationEngine.RecommendationRunServices;
+using RecommendationEngine.WeatherServices;
+using RecommendationEngine.WorkOrderServices;
 
 namespace RecommendationEngineTests.APITests
 {
@@ -74,5 +82,5 @@ namespace RecommendationEngineTests.APITests
         }
     }
 }
-    
+
 
