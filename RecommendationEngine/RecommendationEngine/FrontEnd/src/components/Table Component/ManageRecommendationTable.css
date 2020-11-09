@@ -119,11 +119,6 @@
         margin-bottom: 2%; 
         box-shadow: none;
         padding: 10px;
-        /* height: 47px;
-        font-size: 12px;
-        padding: 6px 12px;
-        border: 6px solid;
-        line-height: 1.5; */
         border-color: #4DD3EF;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 12px;
@@ -150,11 +145,6 @@
         margin-right: 4%;
         margin-bottom: 2%; 
         box-shadow: none;
-        /* height: 47px;
-        font-size: 12px;
-        padding: 6px 12px;
-        border: 6px solid;
-        line-height: 1.5; */
         font-size: 12px;
         border-color:#C4C4C4;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
@@ -238,7 +228,6 @@
         width: 100%;
         margin-bottom: 8px;
         min-width: 850px;
-
     }
 
     #controlLabel {
@@ -337,7 +326,7 @@
      min-height: 65vh;
      max-height: 65vh;
      min-width: 100vh;
-     min-width: 100vh;
+     max-width: 100vh;
     }
 
     .templateConfig{
@@ -350,7 +339,7 @@
         min-height: 65vh;
         max-height: 65vh;
         min-width: 100vh;
-        min-width: 100vh;
+        max-width: 100vh;
 
     }
 
@@ -362,7 +351,7 @@
         min-height: 65vh;
         max-height: 65vh;
         min-width: 100vh;
-        min-width: 100vh;
+        max-width: 100vh;
     }
 
     #tempDialog{
@@ -371,7 +360,7 @@
         min-height: 50vh;
         max-height: 50vh;
         min-width: 80vh;
-        min-width: 100vh;
+        max-width: 100vh;
     }
 
     #recLabel{
