@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { FilterList, Search } from '@material-ui/icons';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -25,20 +25,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton'
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import './ManageRecommendationTable.css';
 import { Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
 import Datetime from 'react-datetime';
-import Slider from '@material-ui/core/Slider';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-
+import { getAllRecommendations } from "../../api/GET/TableEndpoints"
 
 export const CssTextField = withStyles({
 
@@ -94,103 +89,6 @@ const BootstrapInput = withStyles((theme) => ({
     },
 }))(InputBase);
 
-const dayWeekMark = [
-    {
-        value: 0,
-        label: "M"
-    },
-    {
-        value: 1,
-        label: "T"
-    },
-    {
-        value: 2,
-        label: "M"
-    },
-    {
-        value: 3,
-        label: "T"
-    },
-    {
-        value: 4,
-        label: "F"
-    },
-    {
-        value: 5,
-        label: "S"
-    },
-    {
-        value: 6,
-        label: "S"
-    }
-]
-
-/**
-  * creation of the Data Object
-  * @param {*} title
-  * @param {*} frequency
-  * @param {*} startDate
-  * @param {*} startTime
-  * @param {*} endDate
-  * @param {*} endTime
-  * @param {*} template
-  * @param {*} qlgorithm 
-  */
-function createData(title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
-    return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
-}
-
-const mockRows = [
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W34ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W35ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W36ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W37ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W38ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W39ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W40ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W41ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W42ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W43ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W44ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W45ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W46ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W47ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W48ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W49ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W50ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W51ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W52ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W53ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W54ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W55ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W56ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W57ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W58ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W59ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W60ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W61ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W62ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W63ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W64ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W65ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W66ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W67ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W68ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W69ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W70ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W71ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W72ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W73ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W74ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W75ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W76ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W77ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W78ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W79ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W80ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-];
-
 /**
    * This function handles compares row items - future methods
    * @param {*} a
@@ -243,16 +141,15 @@ function stableSort(array, comparator) {
 const headCells = [
     { id: 'title', numeric: false, label: 'Title' },
     { id: 'frequency', numeric: false, label: 'Frequency' },
-    { id: 'startDate', numeric: true, label: 'Start Date' },
-    { id: 'endDate', numeric: true, label: 'End Date' },
+    // { id: 'startDate', numeric: true, label: 'Start Date' },
+    // { id: 'endDate', numeric: true, label: 'End Date' },
     { id: 'template', numeric: true, label: 'Template' },
-    { id: 'algorithm', numeric: true, label: 'Algorithm' },
+    { id: 'createdOn', numeric: true, label: 'created On' },
 ];
 
 /**
    * cMethod that will serve for the creation of the table header
    * @param {*} props
- 
    */
 
 export function EnhancedTableHead(props) {
@@ -311,17 +208,8 @@ function ManageRecommendationTable() {
     const [openThird, setOpenThird] = React.useState(false);
     const [openFourth, setOpenFourth] = React.useState(false)
     const [back, setBack] = React.useState(false);
-    const [state, setState] = React.useState({
-        age: '',
-        name: 'hai',
-    });
-    const [selectedBtn, setSelectedBtn] = React.useState("");
-
-
 
     //Add Recommendation Object Attributes (will be refactored later, its just for now  - C.S.B.)
-
-    const [templateName, setTemplate] = React.useState("");
 
     // Setting the Title attribute
     const [title, setTitle] = React.useState("");
@@ -428,6 +316,33 @@ function ManageRecommendationTable() {
         setCreatedOn(event);
     };
 
+    const [data, setData] = React.useState([]);
+
+    // fetchData
+
+    const fetchData = async () => {
+        let response = await getAllRecommendations()
+        setData(response);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
+// function createData(title, frequency, template, createdOn) {
+//     return { title, frequency, template, createdOn };
+// }
+
+// const mockRowsMethod = (data) =>{
+
+//     const mockRows = [
+//         createData(data.title, data.frequency, data.template, data.createdOn)
+//     ];
+
+//     return mockRows
+
+// }
 
 
     //TODO:Set the hooks for the Title, Subtitle, Button Boolean, (Making of Table Generic) - C.S.B
@@ -437,7 +352,6 @@ function ManageRecommendationTable() {
     /**
        * set the items to be comprssed function
        * @param {*} event
-   
        */
 
     // this method is used for the compressed table rows button (lite)
@@ -477,7 +391,7 @@ function ManageRecommendationTable() {
     };
 
     // handling the empty rows for the method that compresses the table rows
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, mockRows.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     const handleClickOpenFirst = () => {
         setOpenFirst(true);
@@ -520,22 +434,6 @@ function ManageRecommendationTable() {
         setOpenFourth(false);
         setOpenFirst(false);
         setOpenSecond(false);
-    }
-
-    const handleChange = (event) => {
-        const name = event.target.name;
-        setState({
-            ...state,
-            [name]: event.target.value,
-        });
-    };
-
-    function valueLabelFormat(value) {
-        return dayWeekMark.findIndex((mark) => mark.value === value) + 1;
-    }
-
-    function valuetext(value) {
-        return `${value}`;
     }
 
     function FormRow() {
@@ -591,7 +489,6 @@ function ManageRecommendationTable() {
             <div>
                 <br></br>
                 <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-                    {/* <Grid id="grid1" item alignItems="flex-start"> */}
                     <Grid id="grid1" item>
 
                         <h3 id="title">Manage Recommendations</h3>
@@ -1084,11 +981,11 @@ function ManageRecommendationTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={mockRows.length} might be uselfull for later
+                                rowCount={data.length} might be uselfull for later
                             />
 
                             <TableBody id="table-body">
-                                {stableSort(mockRows, getComparator(order, orderBy))
+                                {stableSort(data, getComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
                                         return (
@@ -1107,10 +1004,10 @@ function ManageRecommendationTable() {
                                                     {row.title}
                                                 </TableCell>
                                                 <TableCell className="custom" id="tableBody">{row.frequency}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell>
+                                                {/* <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell> */}
                                                 <TableCell className="custom" id="tableBody">{row.template}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.algorithm}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.createdOn}</TableCell>
                                             </TableRow>
                                         );
                                     })}
@@ -1126,7 +1023,7 @@ function ManageRecommendationTable() {
                         id="pagination"
                         rowsPerPageOptions={[10, 25, 50, 100]}
                         component="div"
-                        count={mockRows.length}
+                        count={data.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onChangePage={handleChangePage}
@@ -1135,7 +1032,6 @@ function ManageRecommendationTable() {
                 </Paper>
             </div>
         </div>
-
     );
 }
 
