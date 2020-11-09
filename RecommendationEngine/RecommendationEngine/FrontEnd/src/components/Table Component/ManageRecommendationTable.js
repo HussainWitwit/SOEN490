@@ -315,10 +315,9 @@ function ManageRecommendationTable () {
 
     const [data, setData] = React.useState([]);
 
-    // fetchData
 
     const fetchData = async () => {
-        let response = await getAllRecommendations()
+        let response = await getAllRecommendations();
         setData(response);
     }
 
@@ -998,12 +997,12 @@ function ManageRecommendationTable () {
                                                     padding="default"
                                                     className="primaryKey"
                                                     id="tableBody">
-                                                    {row.title}
+                                                    {row.name}
                                                 </TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.frequency}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.granularity}</TableCell>
                                                 {/* <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
                                                 <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell> */}
-                                                <TableCell className="custom" id="tableBody">{row.template}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.type}</TableCell>
                                                 <TableCell className="custom" id="tableBody">{row.createdOn}</TableCell>
                                             </TableRow>
                                         );
