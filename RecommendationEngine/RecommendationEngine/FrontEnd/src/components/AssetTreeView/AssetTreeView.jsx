@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { SvgIcon, Typography, TextField, Collapse} from '@material-ui/core';
+import { SvgIcon, Typography, TextField, Collapse } from '@material-ui/core';
 import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { getAllAssets } from "../../api/get/AssetEndpoints";
+import { getAllAssets } from "../../api/GET/AssetEndpoints";
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -103,7 +103,7 @@ export const SearchComboBox = () => {
     <Autocomplete
       options={mockList}
       getOptionLabel={(option) => option.title}
-      className = 'autocomplete-style'
+      className='autocomplete-style'
       renderInput={(params) => <TextField
         {...params}
         label="Combo box"
@@ -139,7 +139,7 @@ export function AssetTree () {
   }, []);
 
   const DisplayAssetNodeTree = (data) => (
-    <AssetTreeItem nodeId={data.id} labelText={data.name} assetType='asset' key = {data.id}>
+    <AssetTreeItem nodeId={data.id} labelText={data.name} assetType='asset' key={data.id}>
       {data.children !== 0 && data.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
