@@ -31,7 +31,6 @@ import './ManageRecommendationTable.css';
 import { Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
-import Datetime from 'react-datetime';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { getAllRecommendations } from "../../api/GET/TableEndpoints"
 
@@ -96,7 +95,7 @@ const BootstrapInput = withStyles((theme) => ({
    * @param {*} orderBy
  
    */
-function descendingComparator(a, b, orderBy) {
+export function descendingComparator (a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
@@ -114,7 +113,7 @@ function descendingComparator(a, b, orderBy) {
 * @param {*} orderBy 
 */
 
-function getComparator(order, orderBy) {
+export function getComparator (order, orderBy) {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -128,7 +127,7 @@ function getComparator(order, orderBy) {
 * @param {} event 
 * @param {*} index 
 */
-function stableSort(array, comparator) {
+export function stableSort (array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
         const order = comparator(a[0], b[0]);
@@ -141,8 +140,6 @@ function stableSort(array, comparator) {
 const headCells = [
     { id: 'title', numeric: false, label: 'Title' },
     { id: 'frequency', numeric: false, label: 'Frequency' },
-    // { id: 'startDate', numeric: true, label: 'Start Date' },
-    // { id: 'endDate', numeric: true, label: 'End Date' },
     { id: 'template', numeric: true, label: 'Template' },
     { id: 'createdOn', numeric: true, label: 'created On' },
 ];
@@ -152,7 +149,7 @@ const headCells = [
    * @param {*} props
    */
 
-export function EnhancedTableHead(props) {
+export function EnhancedTableHead (props) {
     const { order, orderBy, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -197,7 +194,7 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string,
 };
 
-function ManageRecommendationTable() {
+function ManageRecommendationTable () {
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('');
@@ -330,19 +327,19 @@ function ManageRecommendationTable() {
     }, []);
 
 
-// function createData(title, frequency, template, createdOn) {
-//     return { title, frequency, template, createdOn };
-// }
+    // function createData(title, frequency, template, createdOn) {
+    //     return { title, frequency, template, createdOn };
+    // }
 
-// const mockRowsMethod = (data) =>{
+    // const mockRowsMethod = (data) =>{
 
-//     const mockRows = [
-//         createData(data.title, data.frequency, data.template, data.createdOn)
-//     ];
+    //     const mockRows = [
+    //         createData(data.title, data.frequency, data.template, data.createdOn)
+    //     ];
 
-//     return mockRows
+    //     return mockRows
 
-// }
+    // }
 
 
     //TODO:Set the hooks for the Title, Subtitle, Button Boolean, (Making of Table Generic) - C.S.B
@@ -436,7 +433,7 @@ function ManageRecommendationTable() {
         setOpenSecond(false);
     }
 
-    function FormRow() {
+    function FormRow () {
         return (
             <React.Fragment>
                 <Grid item xs={4} id="gridItem">
@@ -816,7 +813,7 @@ function ManageRecommendationTable() {
                                 <DialogContent>
                                     <div className="onelinerAlign">
                                         <DialogContentText id="confirmationLabel">Frequency of Repetition: </DialogContentText>
-                                        <DialogContentText id="confirmationLabelOutput">{(Repetition === "" ? "Undefined" : Repetition +" time(s)")}</DialogContentText>
+                                        <DialogContentText id="confirmationLabelOutput">{(Repetition === "" ? "Undefined" : Repetition + " time(s)")}</DialogContentText>
                                     </div>
                                 </DialogContent>
 

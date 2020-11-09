@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
+using Interfaces.Services.ExternalApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Models.Application.Asset;
@@ -15,7 +16,6 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI;
 using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngineTests.UnitTests.ControllerTest

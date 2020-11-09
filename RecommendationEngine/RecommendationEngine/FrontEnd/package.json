@@ -44,7 +44,11 @@
       "**/src/**",
       "!**/src/index.js",
       "!**/src/registerServiceWorker.js",
-      "!**/src/tests/__snapshots__/**"
+      "!**/src/tests/__snapshots__/**",
+      "!**/src/tests/__snapshots__/**",
+      "!**/src/api/GET/TableEndpoints.js",
+      "!**/src/api/GET/AssetEndpoints.js",
+      "!**/src/entities/Asset.js"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",

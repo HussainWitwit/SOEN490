@@ -16,6 +16,7 @@ using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.ConfiguredRecommendationServices;
 using RecommendationEngine.Models.Application;
+using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngineTests.UnitTests.ControllerTest
 {
@@ -33,9 +34,9 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
                 .ConfigureServices(services => services.AddAutofac())
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
-                    builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<MockTestRepository>().AsImplementedInterfaces();
                     builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
-                    builder.RegisterType<TestDrive>().AsImplementedInterfaces();
+                    builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
         }
@@ -56,7 +57,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         }
     }
 
-    public class TestRepositoryMock : IConfiguredRecommendationRepository
+    public class MockTestRepository : IConfiguredRecommendationRepository
     {
         public void Add(DBRecommendationSchedule configuredRecommendation) { }
 
@@ -71,7 +72,23 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         }
     }
 
-    public class TestDrive : IDriveService
+    public class MockTestDrive : IDriveService
     {
+        public async Task<List<PFPortfolio>> GetPortfolios()
+        {
+            await Task.Delay(1000);
+            return MockData.MockAssets.BasicPortfolios;
+        }
+        public async Task<List<PFPortfolio>> GetPlants()
+        {
+            await Task.Delay(1000);
+            return MockData.MockAssets.BasicPlants;
+        }
+
+        public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
+        {
+            await Task.Delay(1000);
+            return MockData.MockAssets.BasicPlant;
+        }
     }
 }
