@@ -32,6 +32,7 @@ namespace RecommendationEngine.Services
             _assetTypeRepository = assetTypeRepository;
             GetDBAssets();
             _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
+            _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
         }
 
         public Asset GetAssetsTreeview()
@@ -143,11 +144,11 @@ namespace RecommendationEngine.Services
                     {
                         Name = x.Id,
                         ElementPath = x.Id,
-                        DisplayText = x.Name,
+                        DisplayText = string.IsNullOrEmpty(x.Name) ? x.Id : x.Name,
                         EnergyType = null, //we need the assetmetada API to populate this (null for now)
                         Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
-                        AcPower = isPortfolio ? double.NaN : plant.AcCapacity,
+                        AcPower = isPortfolio ? -1 : plant.AcCapacity,
                         ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
                     };
                 }
@@ -158,7 +159,6 @@ namespace RecommendationEngine.Services
 
         private async Task<PFPlant> GetPlantByPortfolioId(string id)
         {
-
             PFPlant plant = await _driveService.GetPlantByPortfolioId(id);
             return plant;
         }
@@ -171,7 +171,7 @@ namespace RecommendationEngine.Services
 
         private string GetParentId(string id)
         {
-            String parentId = Task.Run(() => { return GetPlantByPortfolioId(id); }).Result.PortfolioId;
+            string parentId = Task.Run(() => { return GetPlantByPortfolioId(id); }).Result.PortfolioId;
             return parentId;
         }
     }

@@ -48,6 +48,9 @@
 		<ProjectReference Include="..\Interfaces\Interfaces.csproj" />
 		<ProjectReference Include="..\Models\Models.csproj" />
 		<ProjectReference Include="..\RecommendationScheduler\RecommendationScheduler.csproj" />
+		<ProjectReference Include="..\RecommendationSchedulerTests\RecommendationSchedulerTests.csproj">
+		  <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+		</ProjectReference>
 	</ItemGroup>
 
 	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
