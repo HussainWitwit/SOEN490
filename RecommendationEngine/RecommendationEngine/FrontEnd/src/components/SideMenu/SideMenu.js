@@ -26,7 +26,7 @@ export default function SideMenu (props) {
         }
     }
 
-    const test = (listObject, index) => {
+    const menuOptions = (listObject, index) => {
         if (listObject.name === 'Settings') {
             return (
                 <div className="settings" >
@@ -105,7 +105,7 @@ export default function SideMenu (props) {
                     </ListItemText>
                 </ListItem>
                 <List>
-                    {SideMenuItems.map((item, index) => (test(item, index)))}
+                    {SideMenuItems.map((item, index) => (menuOptions(item, index)))}
                 </List>
             </Drawer>
         </div>
