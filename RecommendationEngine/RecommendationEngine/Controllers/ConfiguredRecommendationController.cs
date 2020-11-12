@@ -22,17 +22,35 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpGet("get")]
-        public IActionResult getConfiguredRecommendationList() {
+        public IActionResult getConfiguredRecommendationList()
+        {
             return Ok(_recommendationSchedulerService.getConfiguredRecommendationList());
         }
 
         [HttpPost("add")]
-        public IActionResult addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation) {
-            try {
+        public IActionResult addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
+            try
+            {
                 _recommendationSchedulerService.AddConfiguredRecommendation(configuredRecommendation);
             }
-            catch (GlobalException e) {
-                return BadRequest(new {e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+            return Ok();
+        }
+
+        [HttpDelete("delete/{id}")]
+        public IActionResult deleteConfiguredRecommendation(int id)
+        {
+            try
+            {
+                _recommendationSchedulerService.DeleteConfiguredRecommendation(id);
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
             return Ok();
         }

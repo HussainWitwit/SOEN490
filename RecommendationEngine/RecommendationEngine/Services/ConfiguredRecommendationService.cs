@@ -52,5 +52,10 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             var schedule = _repository.Add(config);
             _scheduler.ScheduleJobAsync(schedule);
         }
+
+        public void DeleteConfiguredRecommendation(int id)
+        {
+            _repository.Delete(id);
+        }
     }
 }

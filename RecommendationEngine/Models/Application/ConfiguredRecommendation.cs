@@ -6,6 +6,7 @@ namespace RecommendationEngine.Models.Application
 {
     public class ConfiguredRecommendation
     {
+        public int ConfiguredRecommendationId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Granularity { get; set; }
