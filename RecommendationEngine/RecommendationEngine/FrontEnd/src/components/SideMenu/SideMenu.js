@@ -19,9 +19,11 @@ export default function SideMenu (props) {
     const handleClick = (object, index) => {
         if (object.children.length !== 0) {
             setSelectedItemIndex(index);
+            setSelectedNestedItemIndex(index - 1);
             setOpenNested(!openNested);
         }
         else {
+            setSelectedNestedItemIndex();
             setSelectedItemIndex(index);
         }
     }
