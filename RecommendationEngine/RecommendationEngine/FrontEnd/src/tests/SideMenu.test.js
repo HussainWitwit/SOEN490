@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SideMenu from '../components/SideMenu/SideMenu.js';
 import '../components/SideMenu/SideMenu.css';
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow, mount } from '../enzyme';
 import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
+import { fireEvent, render, getByTestId, getAllByTestId } from '@testing-library/react'
+import { IsoTwoTone } from '@material-ui/icons';
+
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -28,6 +31,11 @@ describe('SideMenu component', () => {
     it('It finds the main div', () => {
         const output = shallow(<SideMenu />);
         expect(output.find('#main-container')).toBeTruthy();
+    });
+
+    it('It finds the nested items', () => {
+        const output = shallow(<SideMenu />);
+        expect(output.find('#nested')).toBeTruthy();
     });
 
     it('It finds the drawer element', () => {
@@ -55,4 +63,18 @@ describe('SideMenu component', () => {
             expect(listItems).toHaveLength(10);
         });
     });
+
+    describe('Test clicks', () => {
+        it("Simulates clicks on different options", () => {
+            const { container } = render(<SideMenu />);
+
+            const outerOption = getAllByTestId(container, 'listitem1');
+            fireEvent.click(outerOption[0]);
+            fireEvent.click(outerOption[1]);
+            fireEvent.click(outerOption[2]);
+            fireEvent.click(outerOption[3]);
+            fireEvent.click(outerOption[4]);
+
+        });
+    })
 });

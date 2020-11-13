@@ -19,14 +19,16 @@ export default function SideMenu (props) {
     const handleClick = (object, index) => {
         if (object.children.length !== 0) {
             setSelectedItemIndex(index);
+            setSelectedNestedItemIndex(index - 1);
             setOpenNested(!openNested);
         }
         else {
+            setSelectedNestedItemIndex();
             setSelectedItemIndex(index);
         }
     }
 
-    const test = (listObject, index) => {
+    const menuOptions = (listObject, index) => {
         if (listObject.name === 'Settings') {
             return (
                 <div className="settings" >
@@ -38,6 +40,7 @@ export default function SideMenu (props) {
             <List>
 
                 <ListItem
+                    data-testid="listitem1"
                     style={{ backgroundColor: (selectedItemIndex === index) ? '#4DD3EF' : '#212529' }}
                     button
                     onClick={() => handleClick(listObject, index)}
@@ -58,6 +61,7 @@ export default function SideMenu (props) {
                             {
                                 listObject.children.map((child, indexNested) => (
                                     <ListItem
+                                        data-testid="listitem2"
                                         style={{ color: (selectedNestedItemIndex === indexNested) ? '#4DD3EF' : 'white' }}
                                         button
                                         onClick={() => setSelectedNestedItemIndex(indexNested)}
@@ -105,7 +109,7 @@ export default function SideMenu (props) {
                     </ListItemText>
                 </ListItem>
                 <List>
-                    {SideMenuItems.map((item, index) => (test(item, index)))}
+                    {SideMenuItems.map((item, index) => (menuOptions(item, index)))}
                 </List>
             </Drawer>
         </div>
