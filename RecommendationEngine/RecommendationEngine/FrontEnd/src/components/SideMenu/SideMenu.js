@@ -28,6 +28,15 @@ export default function SideMenu (props) {
         }
     }
 
+    /**
+     * Function that handles clicking on nested menu options
+     * @param {*} nestedIndex 
+     */
+    const handleClickNested = (nestedIndex) => {
+        setSelectedItemIndex(1);
+        setSelectedNestedItemIndex(nestedIndex);
+    }
+
     const menuOptions = (listObject, index) => {
         if (listObject.name === 'Settings') {
             return (
@@ -62,9 +71,8 @@ export default function SideMenu (props) {
                                 listObject.children.map((child, indexNested) => (
                                     <ListItem
                                         data-testid="listitem2"
-                                        style={{ color: (selectedNestedItemIndex === indexNested) ? '#4DD3EF' : 'white' }}
                                         button
-                                        onClick={() => setSelectedNestedItemIndex(indexNested)}
+                                        onClick={() => handleClickNested(indexNested)}
                                         className="nested"
                                     >
                                         <ListItemIcon className="icon-container" >

@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SideMenu from '../components/SideMenu/SideMenu.js';
 import '../components/SideMenu/SideMenu.css';
-import Enzyme, { shallow, mount } from '../enzyme';
+import Enzyme, { shallow } from '../enzyme';
 import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
-import { fireEvent, render, getByTestId, getAllByTestId } from '@testing-library/react'
-import { IsoTwoTone } from '@material-ui/icons';
+import { fireEvent, render, getAllByTestId } from '@testing-library/react';
 
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -69,12 +68,12 @@ describe('SideMenu component', () => {
             const { container } = render(<SideMenu />);
 
             const outerOption = getAllByTestId(container, 'listitem1');
+
             fireEvent.click(outerOption[0]);
             fireEvent.click(outerOption[1]);
             fireEvent.click(outerOption[2]);
             fireEvent.click(outerOption[3]);
             fireEvent.click(outerOption[4]);
-
         });
     })
 });
