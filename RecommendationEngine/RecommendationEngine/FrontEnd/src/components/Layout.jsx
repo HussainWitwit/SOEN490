@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container } from 'reactstrap';
 import TopBar from './TopBar/TopBar';
 import SideMenu from './SideMenu/SideMenu';
-import RightPanelDrawer from '../components/RightPanel/RightPanel';
+import RightPanelDrawer from './RightPanel/RightPanel';
 import classNames from 'classnames';
 import '../components/Layout.css';
 
