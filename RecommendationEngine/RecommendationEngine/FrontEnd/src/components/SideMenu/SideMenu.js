@@ -40,6 +40,7 @@ export default function SideMenu (props) {
             <List>
 
                 <ListItem
+                    data-testid="listitem1"
                     style={{ backgroundColor: (selectedItemIndex === index) ? '#4DD3EF' : '#212529' }}
                     button
                     onClick={() => handleClick(listObject, index)}
@@ -60,6 +61,7 @@ export default function SideMenu (props) {
                             {
                                 listObject.children.map((child, indexNested) => (
                                     <ListItem
+                                        data-testid="listitem2"
                                         style={{ color: (selectedNestedItemIndex === indexNested) ? '#4DD3EF' : 'white' }}
                                         button
                                         onClick={() => setSelectedNestedItemIndex(indexNested)}
