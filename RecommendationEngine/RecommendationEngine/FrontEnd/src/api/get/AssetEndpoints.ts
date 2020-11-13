@@ -18,6 +18,8 @@
  * A.J.U.U
  */
 
+ import { Asset } from "../../entities/Asset";
+
 export const getAllAssets = async () => {
     try {
         let response = await fetch('http://localhost:5000/asset/get'); //Do not make a typing mistake in the api call
@@ -37,9 +39,8 @@ export const getAllAssets = async () => {
  * 
  * @param {*} response 
  */
-const AssignResponse = (response) => {
-    //Make sure the returned value is exactly equal to entity attribute for the entity in question
-    return {
+const AssignResponse = (response: any) => {
+    var assetFiltered:  Asset = {
       id: response.id.toString(),
       name: response.name,
       displayText: response.displayText,
@@ -47,8 +48,9 @@ const AssignResponse = (response) => {
       TimeZone: response.TimeZone,
       ElementPath: response.ElementPath,
       AcPower: response.AcPower,
-      children : response.children.map(child => {
+      children : response.children.map((child: any) => {
           return AssignResponse(child)  
       })  
     };
+    return assetFiltered;
 }
