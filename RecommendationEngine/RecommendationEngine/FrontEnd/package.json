@@ -38,7 +38,18 @@
       "**/src/**",
       "!**/src/index.js",
       "!**/src/registerServiceWorker.js",
-      "!**/src/tests/__snapshots__/**"
+      "!**/src/tests/__snapshots__/**",
+      "!**/src/components/SideMenu/ListItemObjects.ts",
+      "!**/src/entities/Asset.js",
+      "!**/src/api/get/**.js",
+      "!**/src/react-app-env.d.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node",
+      "jsx"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",
@@ -57,6 +68,8 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@testing-library/react": "^11.1.2",
     "ajv": "^6.9.1",
     "babel-plugin-transform-imports": "^2.0.0",
     "cross-env": "^5.2.0",
