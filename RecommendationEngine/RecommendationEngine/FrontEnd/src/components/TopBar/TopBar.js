@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import NotificationBell from '../Notification/NotificationBell';
-import Breadcrumb from '../Breadcrumb/Breadcrumb';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
@@ -42,7 +41,7 @@ function TopBar(props) {
   return (
     <div id="main-containter">
       <nav>
-        <Breadcrumbs aria-label="breadcrumb" separator="›">
+        <Breadcrumbs aria-label="breadcrumb" separator="›" id="breadcrumb">
           <Link color="inherit">
           <BiCube />
             All Portfolio
@@ -53,7 +52,7 @@ function TopBar(props) {
           </Link>
           <Typography color="textPrimary">001-kahuku</Typography>
         </Breadcrumbs>
-        <p className="change_button" onClick = {changeAssetEvent}>Change</p>
+        <p id="change_button"className="change_button" onClick = {changeAssetEvent}>Change</p>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
