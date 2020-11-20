@@ -8,8 +8,9 @@
  * A.J.U.U
  */
 
- import { Asset } from "../../entities/Asset";
-
+import { Asset } from "../../entities/Asset";
+//TODO: unit test the fetch method (jest)
+//TODO: Integration test as well
 export const getAllAssets = async () =>{
     let assetResult: Asset;
     try {

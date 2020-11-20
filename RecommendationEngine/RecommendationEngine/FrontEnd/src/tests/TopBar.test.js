@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopBar from '../components/TopBar/TopBar.jsx';
+import TopBar from '../containers/TopBar/TopBar.jsx';
 import NotificationBell from '../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import renderer from 'react-test-renderer';
