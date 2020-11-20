@@ -5,6 +5,31 @@ html {
   font-size: 14px;
 }
 
+.MuiTypography-body1 {
+  float: left;
+}
+
+.MuiBreadcrumbs-ol{
+  margin-top: 5px !important;
+  position: relative;
+  left: 20px;
+}
+
+/* Styling for change button */
+.change_button {
+  float: left;
+  font-size: 16px;
+  margin-left: 40px;
+  margin-top: 5px;
+  text-decoration: underline;
+  color: #888888;
+  cursor: pointer;
+}
+
+.change_button:active {
+  color: #000000;
+}
+
 nav {
   border-bottom: 1px;
   background-color:#EDEDED;
