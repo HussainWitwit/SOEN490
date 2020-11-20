@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RecommendationEngine.ExceptionHandler;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Interfaces.Services.ExternalAPI;
+using Models.Application.APIModels;
 
 namespace RecommendationEngine.Services.ExternalAPI
 {
@@ -103,5 +104,22 @@ namespace RecommendationEngine.Services.ExternalAPI
 
             }
         }
+
+
+        public double GetPredictedEnergy()
+        {
+            return 240;
+        }
+
+        public double GetEnergyPrice()
+        {
+            return 0.1;
+        }
+
+        public double GetDCCapacity()
+        {
+            return 25;
+        }
     }
 }
+ 

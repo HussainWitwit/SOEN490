@@ -1,4 +1,4 @@
-﻿namespace RecommendationEngine.Services.ExternalAPI.APIModels
+﻿namespace Models.Application.APIModels
 {
     public class PFPortfolio
     {
