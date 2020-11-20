@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopBar from '../components/TopBar/TopBar.js';
-import Breadcrumb from '../components/Breadcrumb/Breadcrumb.js';
-import NotificationBell from '../components/Notification/NotificationBell.js';
+import TopBar from '../components/TopBar/TopBar.jsx';
+import Breadcrumb from '../components/Breadcrumb/Breadcrumb.jsx';
+import NotificationBell from '../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
