@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SideMenu from '../components/SideMenu/SideMenu.js';
+import SideMenu from '../components/SideMenu/SideMenu.jsx';
 import '../components/SideMenu/SideMenu.css';
 import Enzyme, { shallow } from '../enzyme';
 import { Drawer, ListItem, Avatar } from '@material-ui/core';

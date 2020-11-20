@@ -8,9 +8,9 @@ describe("It can click on the menu items", () => {
         cy.get('.MuiAvatar-root').should('exist') // avatar
         cy.get(':nth-child(1) > .MuiListItem-root > .MuiListItemText-root > .MuiListItemText-primary').should('exist') // avatar and user container
         cy.get(':nth-child(1) > .MuiListItem-root > .MuiListItemText-root > .MuiListItemText-primary').should('exist') // user
-        cy.get('.MuiListItemText-secondary > .MuiTypography-root').should('exist') // role
+        cy.get('#jobPosition').should('exist') // role
 
-        cy.get('.Mui-selected').should('exist') // dashboard
+        cy.get(':nth-child(1) > [data-testid=listitem1] > .MuiListItemText-root > .MuiTypography-root').should('exist') // dashboard
         cy.get('.MuiPaper-root > :nth-child(2) > :nth-child(2)').should('exist') //  recommendations
         cy.get('.MuiPaper-root > :nth-child(2) > :nth-child(3)').should('exist') // Work orders
         cy.get('.settings > p').should('exist')
@@ -35,8 +35,8 @@ describe("It can click on the menu items", () => {
 
     it("Clicks on Work Orders, Main Settings and Notifications", () => {
         cy.get('.MuiPaper-root > :nth-child(2) > :nth-child(3)') // Work Orders
-        cy.get(':nth-child(4) > :nth-child(1)').click() // Main Settings
-        cy.get(':nth-child(4) > :nth-child(2)').click() // Notifications
+        cy.get(':nth-child(5) > [data-testid=listitem1]').click() // Main Settings
+        cy.get(':nth-child(6) > [data-testid=listitem1]').click() // Notifications
 
     })
 
