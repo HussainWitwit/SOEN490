@@ -21,6 +21,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>() {
                     new ConfiguredRecommendation
                     {
+                        ConfiguredRecommendationId = 1,
                         Name = "Wash Recommendation 1",
                         CreatedBy = "Mohanad",
                         CreatedOn = new DateTime().Date,
@@ -32,6 +33,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     },
                     new ConfiguredRecommendation
                     {
+                        ConfiguredRecommendationId = 2,
                         Name = "Wash Recommendation 1",
                         CreatedBy = "Mohanad",
                         CreatedOn = new DateTime().Date,

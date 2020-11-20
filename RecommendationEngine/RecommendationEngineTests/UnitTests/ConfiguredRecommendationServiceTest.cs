@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
 using Interfaces.Services.ExternalApi;
@@ -49,6 +50,21 @@ namespace RecommendationEngineTests.UnitTests
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
             _configuredRecommendationService.AddConfiguredRecommendation(beforeConversion);
             _repository.Setup(x => x.Add(afterConversion));
+        }
+
+        [Test]
+        public void DeleteRecommendationTest()
+        {
+            List<ConfiguredRecommendation> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            int recommentionId = 2;
+
+            _repository.Setup(x => x.Delete(recommentionId));
+            _repository.Setup(x => x.Get()).Returns(new List<ConfiguredRecommendation>() { recommendation[0] });
+            _configuredRecommendationService.DeleteConfiguredRecommendation(recommentionId);
+
+            List<ConfiguredRecommendation> actual = _configuredRecommendationService.getConfiguredRecommendationList();
+            Assert.AreEqual(1, actual.Count);
+            Assert.AreEqual(new List<ConfiguredRecommendation>() { recommendation[0] }, actual);
         }
 
         [Test]
