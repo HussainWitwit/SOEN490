@@ -51,15 +51,7 @@ namespace RecommendationEngine.Repositories
         public void Delete(int id)
         {
             DBRecommendationSchedule configToRemove = _recommendationEngineDb.RecommendationSchedules
-                .Where(x => x.RecommendationScheduleId == id)
-                .FirstOrDefault();
-
-            List<DBRecommendationJob> jobsToRemove = _recommendationEngineDb.RecommendationJobs
-                .Where(x => x.Schedule.RecommendationScheduleId == configToRemove.RecommendationScheduleId)
-                .ToList();
-
-            //List<DBRecommendationJobLog> jobLogsToRemove = _recommendationEngineDb.RecommendationJobLogs
-
+                .FirstOrDefault(x => x.RecommendationScheduleId == id);
             _recommendationEngineDb.RecommendationSchedules.Remove(configToRemove);
             _recommendationEngineDb.SaveChanges();
         }

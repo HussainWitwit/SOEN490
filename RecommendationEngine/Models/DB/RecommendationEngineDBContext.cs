@@ -44,6 +44,16 @@ namespace Models.DB
             modelBuilder.Entity<DBAssetRecommendationSchedule>()
                 .HasKey(c => new { c.AssetId, c.ScheduleId });
 
+            modelBuilder.Entity<DBRecommendationSchedule>()
+                .HasMany(x => x.JobsList)
+                .WithOne(x => x.Schedule)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<DBRecommendationJob>()
+                .HasMany(y => y.LogsList)
+                .WithOne(x => x.RecommendationJob)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<DBAssetRecommendationSchedule>()
                 .HasOne(x => x.Asset)
