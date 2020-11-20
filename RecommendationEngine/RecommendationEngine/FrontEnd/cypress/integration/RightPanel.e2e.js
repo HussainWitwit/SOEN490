@@ -5,7 +5,7 @@ describe("RightPanel component", () => {
     })
 
     it("Finds all elements", () => {
-        cy.get('.breadcrumb > :nth-child(3) > .MuiButtonBase-root').click()
+        cy.get('#change_button').click()
         cy.wait(500)
         cy.get('.drawer-header-container').should('exist')
         cy.wait(500)
@@ -26,7 +26,7 @@ describe("RightPanel component", () => {
     })
 
     it("Clicks  on all elements", () => {
-        cy.get('.breadcrumb > :nth-child(3) > .MuiButtonBase-root').click() // change button
+        cy.get('#change_button').click() // change button
         cy.wait(500)
         cy.get('.material-icons').click() // pin
         cy.wait(500)
