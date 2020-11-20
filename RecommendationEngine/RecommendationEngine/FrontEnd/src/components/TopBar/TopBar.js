@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import NotificationBell from '../Notification/NotificationBell';
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
-import { GiWindTurbine } from "react-icons/gi";
-import { BiCube } from "react-icons/bi";
+import BreadcrumbsComponent from '../BreadcrumbsComponent/BreadcrumbsComponent'
 import './TopBar.css';
 
 function TopBar(props) {
@@ -41,17 +37,7 @@ function TopBar(props) {
   return (
     <div id="main-containter">
       <nav>
-        <Breadcrumbs aria-label="breadcrumb" separator="›" id="breadcrumb">
-          <Link color="inherit">
-          <BiCube />
-            All Portfolio
-          </Link>
-          <Link color="inherit">
-          <GiWindTurbine />
-            23-kahuku
-          </Link>
-          <Typography color="textPrimary">001-kahuku</Typography>
-        </Breadcrumbs>
+        <BreadcrumbsComponent id="breadcrumb"/>
         <p id="change_button"className="change_button" onClick = {changeAssetEvent}>Change</p>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
