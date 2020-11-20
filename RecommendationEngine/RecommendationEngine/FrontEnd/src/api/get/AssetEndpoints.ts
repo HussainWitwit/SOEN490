@@ -3,30 +3,22 @@
  * All the controller logic in the backend shall be 
  * called and processed here. 
  * 
- * 
- * N.B MESSAGE
- * Unfortunately (for now anyways), this is not strongly typed, 
- * so if you make any typo for the object that you receive, 
- * it will yield a runtime error. So Make sure to double-check yourself.
- * If needed, put a bunch of console.log and run the endpoint passed here 
- * in postMan prior to running it in the project.
- * 
- * Ideally, having an object asset declared elsewhere (entities/Asset.js)
- * would have made this implementation more explicit and safe. However, javascript 
- * is weakly typed making this quite redundant and useless. Plus, I got run-time error while trying. 
- * Leaving the folder and file just f.y.i
+ * Note: Follow this structure for every controller from the 
+ * back-end. Also, it needs to be strongly typed, i.e typescript.
  * A.J.U.U
  */
 
  import { Asset } from "../../entities/Asset";
 
-export const getAllAssets = async () => {
+export const getAllAssets = async () =>{
+    let assetResult: Asset;
     try {
         let response = await fetch('http://localhost:5000/asset/get'); //Do not make a typing mistake in the api call
         const jsonResponse = await response.json();
         if(jsonResponse) {
             //Make sure the returned value is exactly equal to entity attribute
-            return AssignResponse(jsonResponse);
+            assetResult = jsonResponse;
+            return assetResult;
         }
         else{
             return [];
@@ -34,23 +26,4 @@ export const getAllAssets = async () => {
     }catch(error) {
         return [];
     }
-}
-/**
- * 
- * @param {*} response 
- */
-const AssignResponse = (response: any) => {
-    var assetFiltered:  Asset = {
-      id: response.id.toString(),
-      name: response.name,
-      displayText: response.displayText,
-      EnergyType: response.EnergyType,
-      TimeZone: response.TimeZone,
-      ElementPath: response.ElementPath,
-      AcPower: response.AcPower,
-      children : response.children.map((child: any) => {
-          return AssignResponse(child)  
-      })  
-    };
-    return assetFiltered;
 }
