@@ -84,7 +84,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 2
                                 }
                             }
                         }
@@ -104,7 +104,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 3
                                 }
                             }
                         }
@@ -124,7 +124,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 4
                                 }
                             }
                         }
@@ -144,7 +144,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 5
                                 }
                             }
                         }
@@ -164,7 +164,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 6
                                 }
                             }
                         }
@@ -184,7 +184,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 7
                                 }
                             }
                         }
@@ -204,7 +204,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 8
                                 }
                             }
                         }
@@ -224,7 +224,7 @@ namespace RecommendationSchedulerTests.UnitTests
                             {
                                 Asset = new DBAsset
                                 {
-                                    AssetId = 1
+                                    AssetId = 9
                                 }
                             }
                         }
