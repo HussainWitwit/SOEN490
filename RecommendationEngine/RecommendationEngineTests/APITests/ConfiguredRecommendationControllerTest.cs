@@ -76,7 +76,7 @@ namespace RecommendationEngineTests.APITests
             return UnitTests.MockData.MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
         }
 
-        public void Delete(int it) { }
+        public void Delete(int id) { }
     }
 
     public class MockTestDrive : IDriveService

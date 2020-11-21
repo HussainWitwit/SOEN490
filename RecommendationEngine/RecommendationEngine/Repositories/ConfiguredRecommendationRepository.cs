@@ -4,6 +4,7 @@ using Models.DB;
 using Interfaces.Repositories;
 using System.Collections.Generic;
 using RecommendationEngine.Models.Application;
+using RecommendationEngine.ExceptionHandler;
 using Microsoft.EntityFrameworkCore;
 
 namespace RecommendationEngine.Repositories
@@ -50,6 +51,10 @@ namespace RecommendationEngine.Repositories
 
         public void Delete(int id)
         {
+            if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id))
+            {
+                throw new GlobalException(400, "Bad Request", "Recommendation ID " + id + " does not exist!", "Recommendation Engine");
+            }
             DBRecommendationSchedule configToRemove = _recommendationEngineDb.RecommendationSchedules
                 .FirstOrDefault(x => x.RecommendationScheduleId == id);
             _recommendationEngineDb.RecommendationSchedules.Remove(configToRemove);
