@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace RecommendationScheduler.RecommendationTypes
 { 
-    //stretch goal user story --- add graphs 
     public class YearlyWashOptimizationRecommendation: IRecommendationType
     {
         private IRecommendationJobLogger _jobLogger;
@@ -46,6 +45,7 @@ namespace RecommendationScheduler.RecommendationTypes
 
             //scenario parameters
             DateTime centerPoint = startSoiling;
+            DateTime currentDate = startSoiling;
             double span = 1;
             double centerPointIncrement = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "centerpoint increment").FirstOrDefault().ParamValue;
             double spanIncrement = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "span increment").FirstOrDefault().ParamValue;
@@ -74,65 +74,73 @@ namespace RecommendationScheduler.RecommendationTypes
             double returnOfInvestement ;
             double netSaving;
             double sumOfPredictedRevenueLossWithAct ;
-            
 
-            for (DateTime currentDate = startSoiling; endSoiling.CompareTo(currentDate) > 0; currentDate = currentDate.AddDays(1)){
-                //reset values for new date
+
+            while (centerPoint < endSoiling){
+             
                 span = spanIncrement;
-                soilingDerateNoAct = 1;
-                soilingDerateWithAct = 1;
+
+
                 centerPoint = startSoiling;
-                costOfInaction = 0;
-                benefit = 0;
-                costOfAction = 0;
-                returnOfInvestement = 0;
-                netSaving = 0;
-                sumOfPredictedRevenueLossWithAct = 0;
+                
 
-                while (centerPoint.AddDays(span) < endSoiling || centerPoint.AddDays(-span) > startSoiling)
+                while (centerPoint.AddDays(span) < endSoiling || centerPoint.AddDays(-span) > startSoiling) //TODO : ask power factors why -span 
                 {
-                    //TODO: To remove, this is for testing purposes
-                    //print date values
-                    //TODO: change predictedEnergy and energyPrice to take a day parameter (currentDate) to get the specific day value
-                    centerPoint = centerPoint.AddDays(span);
-                    //NoAction
-                    soilingDerateNoAct = 1 + soilingRate * soilingDerateNoAct;
-                    predictedEnergyAfterSoilingNoAct = soilingDerateNoAct * predictedEnergy;
-                    predictedEnergyLossNoAct = predictedEnergy - predictedEnergyAfterSoilingNoAct;
-                    predictedRevenueLossNoAct = energyPrice * predictedEnergyLossNoAct;
-                    costOfInaction += predictedEnergyAfterSoilingNoAct;
+                    //reset values for new date
+                    soilingDerateNoAct = 1;
+                    soilingDerateWithAct = 1;
+                    costOfInaction = 0;
+                    benefit = 0;
+                    costOfAction = 0;
+                    returnOfInvestement = 0;
+                    netSaving = 0;
+                    sumOfPredictedRevenueLossWithAct = 0; // total sum of all the revenue loss for one centerpoint and span 
 
-                    if (centerPoint > startSoiling.AddDays(soilingBuffer) &&
-                        centerPoint < endSoiling.AddDays(-soilingBuffer))
+                    for (currentDate = startSoiling; endSoiling.CompareTo(currentDate) > 0; currentDate = currentDate.AddDays(1))
                     {
-                        
-                        //todo:  to remove , could also use Days instead of total days to get int, if necessary 
-                        if (((currentDate - centerPoint).TotalDays % span) == 0) //TODO: verify it includes the case where currentdate = centerpoint
+                        //TODO: To remove, this is for testing purposes
+                        //print date values
+                        //TODO: change predictedEnergy and energyPrice to take a day parameter (currentDate) to get the specific day value
+                        //NoAction
+                        soilingDerateNoAct = 1 + soilingRate * soilingDerateNoAct;
+                        predictedEnergyAfterSoilingNoAct = soilingDerateNoAct * predictedEnergy;
+                        predictedEnergyLossNoAct = predictedEnergy - predictedEnergyAfterSoilingNoAct;
+                        predictedRevenueLossNoAct = energyPrice * predictedEnergyLossNoAct;
+                        costOfInaction += predictedEnergyAfterSoilingNoAct;
+
+                        if (centerPoint > startSoiling.AddDays(soilingBuffer) &&
+                            centerPoint < endSoiling.AddDays(-soilingBuffer))
                         {
-                            //cleaningDate.Add(new DateTime() { DateTime.Date = currentDate});
-                            soilingDerateWithAct = 1.0;
-                            cumulativeCleaning += 1;
+
+                            //TODO:  to remove , could also use Days instead of total days to get int, if necessary 
+                            if (((currentDate - centerPoint).TotalDays % span) == 0) //TODO: verify it includes the case where currentdate = centerpoint
+                            {
+                                //cleaningDate.Add(new DateTime() { DateTime.Date = currentDate});
+                                soilingDerateWithAct = 1.0;
+                                cumulativeCleaning += 1;
+                            }
                         }
+
+                        //WithAction
+                        if (currentDate > startSoiling && currentDate < endSoiling && soilingDerateWithAct != 1.0) //TODO : review float issue with 1.0
+                        {
+                            //SoilingDerateWithAct holds the value of the previous day as it has not been calculated yet
+                            soilingDerateWithAct = Math.Max(soilingDerateNoAct, soilingDerateWithAct) * (1 + soilingRate) * (1 + cumulativeCleaning * accelerator);
+                        }
+                        predictedEnergyAfterSoilingWithAct = soilingDerateWithAct * predictedEnergy;
+                        predictedEnergyLossWithAct = predictedEnergy - predictedEnergyAfterSoilingWithAct;
+                        predictedRevenueLossWithAct = energyPrice * predictedEnergyLossWithAct;
+                        sumOfPredictedRevenueLossWithAct += predictedEnergyAfterSoilingWithAct;
+                        benefit = costOfInaction - sumOfPredictedRevenueLossWithAct;
+                        costOfAction = cumulativeCleaning * costCleaning * dcCapacity;
+
+                        // TODO: if statement to return roi or netsaving 
+                        returnOfInvestement = benefit / costOfAction * 100;
+                        netSaving = benefit - costOfAction;
                     }
-
-                    //WithAction
-                    if (currentDate > startSoiling && currentDate < endSoiling && soilingDerateWithAct != 1.0) //todo : review float issue with 1.0
-                    {
-                        //SoilingDerateWithAct holds the value of the previous day as it has not been calculated yet
-                        soilingDerateWithAct = Math.Max(soilingDerateNoAct, soilingDerateWithAct) * (1 + soilingRate) * (1 + cumulativeCleaning * accelerator);  
-                    }
-                    predictedEnergyAfterSoilingWithAct = soilingDerateWithAct * predictedEnergy;
-                    predictedEnergyLossWithAct = predictedEnergy - predictedEnergyAfterSoilingWithAct;
-                    predictedRevenueLossWithAct = energyPrice * predictedEnergyLossWithAct;
-                    sumOfPredictedRevenueLossWithAct += predictedEnergyAfterSoilingWithAct;
-                    benefit = costOfInaction - sumOfPredictedRevenueLossWithAct;
-                    costOfAction = cumulativeCleaning * costCleaning * dcCapacity;
-                    returnOfInvestement = benefit / costOfAction * 100;
-                    netSaving = benefit - costOfAction;
-
-
+                    span += spanIncrement;
                 }
-
+                centerPoint = centerPoint.AddDays(centerPointIncrement);
             }
 
         }
