@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Container } from 'reactstrap';
-import TopBar from './TopBar/TopBar';
-import SideMenu from './SideMenu/SideMenu';
-import RightPanelDrawer from '../components/RightPanel/RightPanel';
+import TopBar from '../TopBar/TopBar';
+import SideMenu from '../SideMenu/SideMenu';
+import RightPanelDrawer from '../RightPanel/RightPanel';
 import classNames from 'classnames';
-import '../components/Layout.css';
+import './Layout.css';
 
-//TODO: At 100% zoom in the web page, you can see that most contexts are too big.
+//FIXME: At 100% zoom in the web page, you can see that most contexts are too big.
 function Layout (props) {
   
   const [isChangeAssetClicked, setIsChangeAssetClicked] = useState(false);

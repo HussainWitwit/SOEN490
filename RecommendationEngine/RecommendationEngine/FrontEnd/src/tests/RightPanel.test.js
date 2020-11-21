@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RightPanel from '../components/RightPanel/RightPanel.jsx';
+import RightPanel from '../containers/RightPanel/RightPanel.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';

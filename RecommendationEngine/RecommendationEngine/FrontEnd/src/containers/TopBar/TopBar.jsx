@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import NotificationBell from '../Notification/NotificationBell';
-import BreadcrumbsComponent from '../BreadcrumbsComponent/BreadcrumbsComponent'
+import NotificationBell from '../../components/Notification/NotificationBell';
+import BreadcrumbsComponent from '../../components/BreadcrumbsComponent/BreadcrumbsComponent'
 import './TopBar.css';
 
 function TopBar(props) {
