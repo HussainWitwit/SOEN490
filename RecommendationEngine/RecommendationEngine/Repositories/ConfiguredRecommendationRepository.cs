@@ -3,6 +3,7 @@ using System.Linq;
 using Models.DB;
 using Interfaces.Repositories;
 using System.Collections.Generic;
+using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Models.Application;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,16 @@ namespace RecommendationEngine.Repositories
 
         public DBRecommendationSchedule Add(DBRecommendationSchedule schedule) {
             _recommendationEngineDb.RecommendationSchedules.Add(schedule);
+            _recommendationEngineDb.SaveChanges();
+            return schedule;
+        }
+
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule schedule, int id) {
+            if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id)) {
+                throw new GlobalException(400, "Bad Request", "Recommendation ID " + schedule.RecommendationScheduleId + " does not exist.", "Recommendation Engine");
+            }
+            DBRecommendationSchedule recToEdit = _recommendationEngineDb.RecommendationSchedules.Where(x => x.RecommendationScheduleId == id).FirstOrDefault();
+            _recommendationEngineDb.Entry(recToEdit).CurrentValues.SetValues(schedule);
             _recommendationEngineDb.SaveChanges();
             return schedule;
         }

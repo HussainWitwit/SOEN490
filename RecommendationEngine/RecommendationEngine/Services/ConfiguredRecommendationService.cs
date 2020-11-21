@@ -52,5 +52,26 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             var schedule = _repository.Add(config);
             _scheduler.ScheduleJobAsync(schedule);
         }
+
+        public void EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        {
+            var recommendationType = _repository.GetRecommendationTypeByType(configuredRecommendation.Type);
+            configuredRecommendation.Validate(recommendationType);
+
+            DBRecommendationSchedule config = new DBRecommendationSchedule
+            {
+                RecommendationScheduleId = id,
+                Name = configuredRecommendation.Name,
+                DisplayText = recommendationType.DisplayText,
+                Granularity = configuredRecommendation.Granularity,
+                Description = recommendationType.Description,
+                CreatedOn = configuredRecommendation.CreatedOn,
+                RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
+                RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
+                RecommendationType = recommendationType
+            };
+            var schedule = _repository.Edit(config, id);
+            _scheduler.ScheduleJobAsync(schedule);
+        }
     }
 }

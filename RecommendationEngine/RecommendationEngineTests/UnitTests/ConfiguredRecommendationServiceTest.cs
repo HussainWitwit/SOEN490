@@ -52,6 +52,27 @@ namespace RecommendationEngineTests.UnitTests
         }
 
         [Test]
+        public void EditRecommendationTest()
+        {
+            DBRecommendationType recommendationType = MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+            ConfiguredRecommendation uneditedRec = MockConfiguredRecommendations.UNEDITED_CONFIGURED_RECOMMENDATION;
+            ConfiguredRecommendation editedConfigureRec = MockConfiguredRecommendations.EDITED_CONFIGURED_RECOMMENDATION;
+            DBRecommendationSchedule uneditedDBRec = MockConfiguredRecommendations.UNEDITED_DB_RECOMMENDATION;
+            DBRecommendationSchedule editedDBRec = MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
+
+            _repository.Setup(x => x.Get()).Returns(new List<ConfiguredRecommendation> { uneditedRec });
+            List<ConfiguredRecommendation> beforeEditExpect = _configuredRecommendationService.getConfiguredRecommendationList();
+            Assert.AreEqual(beforeEditExpect, new List<ConfiguredRecommendation> { uneditedRec });
+
+            _repository.Setup(x => x.GetRecommendationTypeByType("Yearly Wash Optimization")).Returns(recommendationType);
+            _repository.Setup(x => x.Edit(uneditedDBRec, 1)).Returns(editedDBRec);
+            _configuredRecommendationService.EditConfiguredRecommendation(uneditedRec, 1);
+            _repository.Setup(x => x.Get()).Returns(new List<ConfiguredRecommendation> { editedConfigureRec });
+            List<ConfiguredRecommendation> afterEditExpect = _configuredRecommendationService.getConfiguredRecommendationList();
+            Assert.AreEqual(afterEditExpect, new List<ConfiguredRecommendation> { editedConfigureRec });
+        }
+
+        [Test]
         public void BadRecommendationTypeTest()
         {
             ConfiguredRecommendation badRecommendationType = MockConfiguredRecommendations.BAD_CONFIGURED_RECOMMENDATION;

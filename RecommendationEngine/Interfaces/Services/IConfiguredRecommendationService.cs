@@ -7,5 +7,6 @@ namespace Interfaces.Services
     {
         public List<ConfiguredRecommendation> getConfiguredRecommendationList();
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation);
+        public void EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id);
     }
 }

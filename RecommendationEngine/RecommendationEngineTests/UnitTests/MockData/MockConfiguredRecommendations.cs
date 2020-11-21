@@ -13,6 +13,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
         public static List<ConfiguredRecommendation> BASIC_CONFIGURED_RECOMMENDATION_LIST = RecommendationList.BasicConfiguredRecommendationList();
         public static DBRecommendationType YEARLY_RECOMMENDATION_TYPE = RecommendationList.YearlyRecType();
         public static DBRecommendationSchedule CONVERTED_CONFIGURED_RECOMMENDATION = RecommendationList.BasicDBRecommendationSchedule();
+        public static ConfiguredRecommendation UNEDITED_CONFIGURED_RECOMMENDATION = RecommendationList.UneditedConfiguredRecommendation();
+        public static ConfiguredRecommendation EDITED_CONFIGURED_RECOMMENDATION = RecommendationList.EditedConfiguredRecommendation();
+        public static DBRecommendationSchedule UNEDITED_DB_RECOMMENDATION = RecommendationList.UneditedDBRecommendationSchedule();
+        public static DBRecommendationSchedule EDITED_DB_RECOMMENDATION = RecommendationList.EditedDBRecommendationSchedule();
+
 
         public static class RecommendationList
         {
@@ -113,6 +118,65 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     RecommendationType = YEARLY_RECOMMENDATION_TYPE
+                };
+            }
+
+            public static DBRecommendationSchedule UneditedDBRecommendationSchedule()
+            {
+                return new DBRecommendationSchedule
+                {
+                    Name = "Wash Rec",
+                    DisplayText = YEARLY_RECOMMENDATION_TYPE.DisplayText,
+                    Granularity = "Yearly",
+                    Description = YEARLY_RECOMMENDATION_TYPE.Description,
+                    CreatedOn = new DateTime().Date,
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 2,
+                    RecommendationType = YEARLY_RECOMMENDATION_TYPE
+                };
+            }
+
+            public static DBRecommendationSchedule EditedDBRecommendationSchedule() {
+                return new DBRecommendationSchedule
+                {
+                    Name = "Wash Rec W20",
+                    DisplayText = YEARLY_RECOMMENDATION_TYPE.DisplayText,
+                    Granularity = "Monthly",
+                    Description = YEARLY_RECOMMENDATION_TYPE.Description,
+                    CreatedOn = new DateTime().Date,
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 5,
+                    RecommendationType = YEARLY_RECOMMENDATION_TYPE
+                };
+            }
+
+            public static ConfiguredRecommendation UneditedConfiguredRecommendation()
+            {
+                return new ConfiguredRecommendation
+                {
+                    Name = "Wash Rec",
+                    CreatedBy = "Zohal",
+                    CreatedOn = new DateTime(),
+                    Granularity = "Yearly",
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 2,
+                    Type = "Yearly Wash Optimization",
+                    Parameters = null
+                };
+            }
+
+            public static ConfiguredRecommendation EditedConfiguredRecommendation()
+            {
+                return new ConfiguredRecommendation
+                {
+                    Name = "Wash Rec W20",
+                    CreatedBy = "Zohal",
+                    CreatedOn = new DateTime(),
+                    Granularity = "Monthly",
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 5,
+                    Type = "Yearly Wash Optimization",
+                    Parameters = null
                 };
             }
         }

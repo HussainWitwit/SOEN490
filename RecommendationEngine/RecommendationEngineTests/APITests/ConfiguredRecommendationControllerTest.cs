@@ -54,6 +54,14 @@ namespace RecommendationEngineTests.APITests
             var response = await _client.PutAsync("/configuredrecommendation/add", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
             Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
         }
+
+        [Test]
+        public async Task EditRecommendations()
+        {
+            var payload = UnitTests.MockData.MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
+            var response = await _client.PutAsync("/configuredrecommendation/edit/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+            Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
+        }
     }
 
     public class MockTestRepository : IConfiguredRecommendationRepository
@@ -74,6 +82,10 @@ namespace RecommendationEngineTests.APITests
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
             return UnitTests.MockData.MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+        }
+
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id) {
+            return UnitTests.MockData.MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
         }
     }
 

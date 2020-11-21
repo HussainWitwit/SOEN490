@@ -10,5 +10,6 @@ namespace Interfaces.Repositories
         public DBRecommendationSchedule Add(DBRecommendationSchedule configuredRecommendation);
         public List<ConfiguredRecommendation> Get();
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType);
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id);
     }
 }

@@ -36,5 +36,19 @@ namespace RecommendationEngine.Controllers
             }
             return Ok();
         }
+
+        [HttpPost("edit/{id}")]
+        public IActionResult editConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        {
+            try
+            {
+                _recommendationSchedulerService.EditConfiguredRecommendation(configuredRecommendation, id);
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+            return Ok();
+        }
     }
 }
