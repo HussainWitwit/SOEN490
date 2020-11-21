@@ -6,8 +6,9 @@ using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
 using Interfaces.Repositories;
 using Models.Application.Asset;
+using Models.Application.APIModels;
 using System.Threading.Tasks;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
+
 
 namespace RecommendationEngine.Services
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
+using Models.Application.APIModels;
 
 namespace RecommendationEngine.Services.ExternalAPI
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RecommendationEngine.ExceptionHandler;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
+using Models.Application.APIModels;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
