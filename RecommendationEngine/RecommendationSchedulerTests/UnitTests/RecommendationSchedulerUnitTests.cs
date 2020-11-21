@@ -58,6 +58,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Yearly",
                         RecurrenceDayOfWeek = 0,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 1
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -68,6 +78,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Monthly",
                         RecurrenceDayOfWeek = 1,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 2
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -78,6 +98,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 2,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 3
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -88,6 +118,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 3,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 4
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -98,6 +138,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 4,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 5
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -108,6 +158,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 5,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 6
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -118,6 +178,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 6,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 7
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -128,6 +198,16 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 0,
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 8
+                                }
+                            }
+                        }
                     },
                     new DBRecommendationSchedule
                     {
@@ -138,7 +218,27 @@ namespace RecommendationSchedulerTests.UnitTests
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 1,
-                    }
+                        AssetsList = new List<DBAssetRecommendationSchedule>
+                        {
+                            new DBAssetRecommendationSchedule
+                            {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 9
+                                }
+                            }
+                        }
+                    },
+                    new DBRecommendationSchedule
+                    {
+                        RecommendationScheduleId = 10,
+                        RecommendationType = new DBRecommendationType
+                        {
+                            Type = "Yearly Wash Optimization"
+                        },
+                        Granularity = "Yearly",
+                        RecurrenceDayOfWeek = 0,
+                    },
                 }
             );
             _schedulerMock.Setup(x => x.ScheduleJob(It.IsAny<IJobDetail>(), It.IsAny<ITrigger>(), CancellationToken.None)).ReturnsAsync(DateTimeOffset.Now);
