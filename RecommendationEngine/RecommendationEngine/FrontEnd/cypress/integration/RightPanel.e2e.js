@@ -36,7 +36,7 @@ describe("RightPanel component", () => {
         cy.wait(500)
         cy.get('.material-icons').click() //pin
         cy.wait(500)
-        cy.get(':nth-child(3) > .MuiIconButton-label > .MuiSvgIcon-root > path').click() //close
+        cy.get('.drawer-header-container > :nth-child(3) > .MuiIconButton-label > .MuiSvgIcon-root').click() //close
         cy.wait(500)
     })
 })
