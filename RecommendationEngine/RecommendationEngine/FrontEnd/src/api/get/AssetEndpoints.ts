@@ -14,7 +14,7 @@ import { Asset } from "../../entities/Asset";
 export const getAllAssets = async () =>{
     let assetResult: Asset;
     try {
-        let response = await fetch('http://localhost:5000/asset/get'); //Do not make a typing mistake in the api call
+        let response = await fetch('asset/get'); //Do not make a typing mistake in the api call
         const jsonResponse = await response.json();
         if(jsonResponse) {
             //Make sure the returned value is exactly equal to entity attribute
