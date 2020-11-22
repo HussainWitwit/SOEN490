@@ -18,7 +18,7 @@ export const getAllAssets = async () =>{
         const jsonResponse = await response.json();
         if(jsonResponse) {
             //Make sure the returned value is exactly equal to entity attribute
-            assetResult = jsonResponse;
+            assetResult = AssignResponse(jsonResponse);
             return assetResult;
         }
         else{
@@ -27,4 +27,24 @@ export const getAllAssets = async () =>{
     }catch(error) {
         return [];
     }
+}
+
+/**
+ * 
+ * @param {*} response 
+ */
+const AssignResponse = function(response:any): Asset {
+    //Make sure the returned value is exactly equal to entity attribute for the entity in question
+    return {
+      Id: response.id.toString(),
+      Name: response.name,
+      DisplayText: response.displayText,
+      EnergyType: response.EnergyType,
+      TimeZone: response.TimeZone,
+      ElementPath: response.ElementPath,
+      AcPower: response.AcPower,
+      Children : response.children.map((child: any) => {
+          return AssignResponse(child);  
+      })  
+    };
 }
