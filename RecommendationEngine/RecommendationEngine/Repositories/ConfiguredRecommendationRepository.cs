@@ -27,24 +27,16 @@ namespace RecommendationEngine.Repositories
         public List<ConfiguredRecommendation> Get()
         {
             List<DBRecommendationSchedule> dbRecommendations = _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
-            List<ConfiguredRecommendation> recommendations = new List<ConfiguredRecommendation>();
-            foreach (DBRecommendationSchedule dbRecommendation in dbRecommendations)
-            {
-                recommendations.Add(
-                    new ConfiguredRecommendation
-                    {
-                        Name = dbRecommendation.Name,
-                        Type = dbRecommendation.RecommendationType.Type,
-                        Granularity = dbRecommendation.Granularity,
-                        CreatedBy = dbRecommendation.ModifiedBy,
-                        RecurrenceDayOfWeek = dbRecommendation.RecurrenceDayOfWeek,
-                        RecurrenceDatetime = dbRecommendation.RecurrenceDatetime,
-                        CreatedOn = dbRecommendation.CreatedOn,
-                        Parameters = null
-                    }
-                    ); ;
-            }
-            return recommendations;
+            return dbRecommendations.Select((element) => new ConfiguredRecommendation {
+                Name = element.Name,
+                Type = element.RecommendationType.Type,
+                Granularity = element.Granularity,
+                CreatedBy = element.ModifiedBy,
+                RecurrenceDayOfWeek = element.RecurrenceDayOfWeek,
+                RecurrenceDatetime = element.RecurrenceDatetime,
+                CreatedOn = element.CreatedOn,
+                Parameters = null
+            }).ToList(); 
         }
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
