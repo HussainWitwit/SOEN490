@@ -47,14 +47,14 @@ describe('ManageRecommendationTable component', () => {
     it('It finds all table cells', () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableCell);
-        expect(component).toHaveLength(7);
+        expect(component).toHaveLength(8);
         expect(output.find('#table-cell')).toBeTruthy();
     });
 
     it("Finds the table labels", () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableSortLabel);
-        expect(component).toHaveLength(6);
+        expect(component).toHaveLength(7);
         expect(output.find('#sort-label')).toBeTruthy();
     })
 
