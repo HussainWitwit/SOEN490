@@ -139,8 +139,8 @@ export function AssetTree () {
   }, []);
 
   const DisplayAssetNodeTree = (data) => (
-    <AssetTreeItem nodeId={data.id} labelText={data.name} assetType='asset' key = {data.id}>
-      {data.children !== 0 && data.children.map((child) => (
+    <AssetTreeItem nodeId={data.Id} labelText={data.Name} assetType='asset' key = {data.Id}>
+      {data.Children !== 0 && data.Children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
       }
@@ -156,7 +156,7 @@ export function AssetTree () {
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
       >
-        {data.length !== 0 &&
+        {data.length > 0 &&
           DisplayAssetNodeTree(data)
         }
       </TreeView>
