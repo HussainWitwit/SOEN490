@@ -38,12 +38,5 @@ namespace RecommendationEngine.Repositories
                 Parameters = null
             }).ToList(); 
         }
-
-        public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
-        {
-            return _recommendationEngineDb.RecommendationTypes
-                .Where(rec => rec.Type.Equals(recommendationType))
-                .FirstOrDefault();
-        }
     }
 }
