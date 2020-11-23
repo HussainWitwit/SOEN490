@@ -55,13 +55,11 @@ namespace RecommendationEngine.Services
             var portfolios = await _driveService.GetPortfolios();
             var plants = await _driveService.GetPlants();
 
-            List<DBAsset> result = new List<DBAsset>();
             List<PFPortfolio> listOfPortfolios = portfolios.ToList();
             List<PFPortfolio> listOfPlants = plants.ToList();
 
             DBAsset client = GetClient(listOfPortfolios);
 
-            result.Add(client);
             _assetRepository.AddAsset(client);
 
             List<DBAsset> parentDBAssets = BuildAssets(listOfPortfolios, true, client);
@@ -103,7 +101,7 @@ namespace RecommendationEngine.Services
             {
                 Name = dbasset.Name,
                 Id = dbasset.AssetId,
-                AcPower = dbasset.AcPower,
+                AcPower = !Double.IsNaN(dbasset.AcPower) ? dbasset.AcPower : 0,
                 DisplayText = dbasset.DisplayText,
                 ElementPath = dbasset.ElementPath,
                 EnergyType = dbasset.EnergyType,
@@ -125,30 +123,34 @@ namespace RecommendationEngine.Services
                 .Distinct()
                 .Select(x => new DBAsset()
                 {
-                    Name = x
+                    Name = x,
+                    DisplayText = x
                 })
                 .FirstOrDefault();
 
             return client;
         }
 
-        private List<DBAsset> BuildAssets(List<PFPortfolio> plants, bool isPortfolio, DBAsset client)
+        private List<DBAsset> BuildAssets(List<PFPortfolio> assets, bool isPortfolio, DBAsset client)
         {
-            PFPlant plant;
-            List<DBAsset> assetList = plants
+            PFPlant plant = new PFPlant();
+            List<DBAsset> assetList = assets
                 .Select(x =>
                 {
-                    plant = Task.Run(() => { return GetPlantByPortfolioId(x.Id); }).Result;
+                    if (!isPortfolio)
+                    {
+                        plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
+                    }
 
                     return new DBAsset()
                     {
                         Name = x.Id,
                         ElementPath = x.Id,
-                        DisplayText = x.Name,
+                        DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
                         EnergyType = null, //we need the assetmetada API to populate this (null for now)
                         Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
-                        AcPower = isPortfolio ? double.NaN : plant.AcCapacity,
+                        AcPower = isPortfolio ? 0 : plant.AcCapacity,
                         ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
                     };
                 }
@@ -157,10 +159,10 @@ namespace RecommendationEngine.Services
             return assetList;
         }
 
-        private async Task<PFPlant> GetPlantByPortfolioId(string id)
+        private async Task<PFPlant> GetPlantById(string id)
         {
 
-            PFPlant plant = await _driveService.GetPlantByPortfolioId(id);
+            PFPlant plant = await _driveService.GetPlantById(id);
             return plant;
         }
 
@@ -172,7 +174,7 @@ namespace RecommendationEngine.Services
 
         private string GetParentId(string id)
         {
-            String parentId = Task.Run(() => { return GetPlantByPortfolioId(id); }).Result.PortfolioId;
+            String parentId = Task.Run(() => { return GetPlantById(id); }).Result.PortfolioId;
             return parentId;
         }
     }

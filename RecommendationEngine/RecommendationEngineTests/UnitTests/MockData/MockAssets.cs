@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Models.Application.APIModels;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngineTests.UnitTests.MockData
 {

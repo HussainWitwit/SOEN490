@@ -8,15 +8,14 @@ using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Models.Application.APIModels;
 using Models.Application.Asset;
 using Models.DB;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
 using RecommendationEngine.Services.ExternalAPI;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngineTests.UnitTests.ControllerTest
 {
@@ -97,10 +96,27 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
             return MockData.MockAssets.BasicPlants;
         }
 
-        public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
+        public async Task<PFPlant> GetPlantById(string plantId)
         {
             await Task.Delay(1000);
             return MockData.MockAssets.BasicPlant;
         }
+
+        public async Task<List<PFPPAPrice>> GetPPAPriceByPlantId(string plantId)
+        {
+            await Task.Delay(1000);
+            return new List<PFPPAPrice>();
+        }
+        public async Task<List<PFMetadata>> GetAssetsMetadataByPlantIds(List<string> plantIds)
+        {
+            await Task.Delay(1000);
+            return new List<PFMetadata>();
+        }
+        public async Task<Dictionary<string, List<PFMetadata>>> GetDailyPredictedEnergyByPlantIds(DateTime startTime, DateTime endTime, List<string> plantIds)
+        {
+            await Task.Delay(1000);
+            return new Dictionary<string, List<PFMetadata>>();
+        }
+
     }
 }

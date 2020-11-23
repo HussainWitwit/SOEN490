@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Quartz.Impl.AdoJobStore;
 using RecommendationEngine.ExceptionHandler;
+using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Controllers
 {
@@ -13,14 +15,16 @@ namespace RecommendationEngine.Controllers
     public class AssetController : ControllerBase
     {
         private IAssetService _assetService;
+        private IDriveService _driveService;
 
-        public AssetController(IAssetService assetService)
+        public AssetController(IAssetService assetService, IDriveService driveService)
         {
             _assetService = assetService;
+            _driveService = driveService;
         }
 
         [HttpGet("get")]
-        public IActionResult GetAssets()
+        public async Task<IActionResult> GetAssets()
         {
             try
             {
