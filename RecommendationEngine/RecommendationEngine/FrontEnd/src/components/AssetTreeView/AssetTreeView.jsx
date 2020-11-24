@@ -139,7 +139,7 @@ export function AssetTree () {
   }, []);
 
   const DisplayAssetNodeTree = (data) => (
-    <AssetTreeItem nodeId={data.id} labelText={data.name} assetType='asset' key = {data.id}>
+    <AssetTreeItem nodeId={data.id} labelText={data.displayText} assetType='asset' key = {data.id}>
       {data.children !== 0 && data.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
