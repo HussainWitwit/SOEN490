@@ -62,10 +62,10 @@ namespace RecommendationEngine.Services
 
             _assetRepository.AddAsset(client);
 
-            List<DBAsset> parentDBAssets = BuildAssets(listOfPortfolios, true, client);
+            List<DBAsset> parentDBAssets = await BuildAssets(listOfPortfolios, true, client);
             _assetRepository.AddAssetList(parentDBAssets);
 
-            List<DBAsset> childDBAssets = BuildAssets(listOfPlants, false, client);
+            List<DBAsset> childDBAssets = await BuildAssets(listOfPlants, false, client);
             _assetRepository.AddAssetList(childDBAssets);
         }
 
@@ -131,8 +131,19 @@ namespace RecommendationEngine.Services
             return client;
         }
 
-        private List<DBAsset> BuildAssets(List<PFPortfolio> assets, bool isPortfolio, DBAsset client)
+        private async Task<List<DBAsset>> BuildAssets(List<PFPortfolio> assets, bool isPortfolio, DBAsset client)
         {
+            Dictionary<string, dynamic> assetsEnergyType = new Dictionary<string, dynamic>();
+
+            if (!isPortfolio)
+            {
+                List<string> assetIds = assets.Select(asset => asset.Id).ToList();
+                List<PFMetadata> assetEnergyTypes = await _driveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
+                assetsEnergyType = assetEnergyTypes.Select(assetMetadata =>
+                    new { elementPath = assetMetadata.ElementPath, energyType = assetMetadata.Metadata["ENERGY_SOURCE"] })
+                    .ToDictionary(asset => asset.elementPath, asset => asset.energyType);
+            }
+
             PFPlant plant = new PFPlant();
             List<DBAsset> assetList = assets
                 .Select(x =>
@@ -141,13 +152,13 @@ namespace RecommendationEngine.Services
                     {
                         plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
                     }
-
+                    
                     return new DBAsset()
                     {
                         Name = x.Id,
                         ElementPath = x.Id,
                         DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
-                        EnergyType = null, //we need the assetmetada API to populate this (null for now)
+                        EnergyType = isPortfolio ? null : assetsEnergyType.Where(asset => asset.Key == x.Id).FirstOrDefault().Value, //we need the assetmetada API to populate this (null for now)
                         Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
                         AcPower = isPortfolio ? 0 : plant.AcCapacity,

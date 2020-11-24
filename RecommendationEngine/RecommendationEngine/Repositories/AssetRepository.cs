@@ -28,7 +28,7 @@ namespace RecommendationEngine.Repositories
 
         public List<DBAsset> Get()
         {
-            return _recommendationEngineDb.Assets.ToList();
+             return _recommendationEngineDb.Assets.ToList();
         }
 
         public DBAsset GetAssetByName(string assetName)
