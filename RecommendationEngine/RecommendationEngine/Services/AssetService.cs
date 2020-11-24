@@ -98,7 +98,6 @@ namespace RecommendationEngine.Services
 
         private AssetComposite GetAssetCompositeFromDBAsset(DBAsset dbasset)
         {
-            //TODO: Error handling missing...
             var assetComposite = new AssetComposite()
             {
                 Name = dbasset.Name,

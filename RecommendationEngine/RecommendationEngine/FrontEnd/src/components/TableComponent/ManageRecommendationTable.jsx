@@ -48,52 +48,23 @@ export const CssTextField = withStyles({
 
 })(TextField);
 
-/**
-  * creation of the Data Object
-  * @param {*} title
-  * @param {*} frequency
-  * @param {*} template
-  * @param {*} qlgorithm 
-  */
-function createData (title, frequency, template, algorithm) {
-    return { title, frequency, template, algorithm };
-}
-
-const mockRows = [
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
-    createData('W33ID', 'Bi-Weekly', 'Wash Optimization', 'WO Algorithm'),
+// /**
+//   * creation of the Data Object
+//   * @param {*} title
+//   * @param {*} frequency
+//   * @param {*} startDate
+//   * @param {*} startTime
+//   * @param {*} endDate
+//   * @param {*} endTime
+//   * @param {*} template
+//   * @param {*} qlgorithm 
+//   */
+// function createData(title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
+//     return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
+// }
 
 
 
-];
 
 /**
    * This function handles compares row items - future methods
@@ -145,10 +116,13 @@ function stableSort (array, comparator) {
 }
 
 const headCells = [
-    { id: 'title', numeric: false, label: 'Title' },
-    { id: 'frequency', numeric: false, label: 'Frequency' },
-    { id: 'template', numeric: true, label: 'Template' },
-    { id: 'algorithm', numeric: true, label: 'Algorithm' },
+    { id: 'title', label: 'Title' },
+    { id: 'type', label: 'Type' },
+    { id: 'granularity', label: 'Granularity' },
+    // { id: 'RecDateTime', label: 'Recurrence Datetime' },
+    // { id: 'RecDayOfWeek', label: 'Day of week' },
+    { id: 'createdOn', label: 'Created On' },
+    // { id: 'createdBy', label: 'Created By' },
 ];
 
 /**
@@ -210,7 +184,9 @@ function ManageRecommendationTable () {
     const [dense, setDense] = React.useState(false);
     const [data, setData] = React.useState([]);
 
-
+    /**
+     * Asynchronous function that fetches all the configured recommendations
+     */
     const fetchData = async () => {
         let response = await getAllConfiguredRecommendations();
         setData(response);
@@ -377,9 +353,12 @@ function ManageRecommendationTable () {
                                                 id="tableBody">
                                                 {element.Name}
                                             </TableCell>
-                                            <TableCell className="custom" id="tableBody">{row.frequency}</TableCell>
-                                            <TableCell className="custom" id="tableBody">{row.template}</TableCell>
-                                            <TableCell className="custom" id="tableBody">{row.algorithm}</TableCell>
+                                            <TableCell className="custom" id="tableBody">{element.Type}</TableCell>
+                                            <TableCell className="custom" id="tableBody">{element.Granularity}</TableCell>
+                                            {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDatetime}</TableCell> */}
+                                            {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDayOfWeek}</TableCell> */}
+                                            <TableCell className="custom" id="tableBody">{element.CreatedOn}</TableCell>
+                                            {/* <TableCell className="custom" id="tableBody">{element.CreatedBy}</TableCell> */}
                                         </TableRow>
                                     );
                                 })}

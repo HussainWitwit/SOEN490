@@ -7,6 +7,6 @@ namespace Interfaces.Repositories
 {
     public interface IConfiguredRecommendationRepository
     {
-        public List<ConfiguredRecommendation> Get();
+        public List<DBRecommendationSchedule> GetRecommendationScheduleList();
     }
 }

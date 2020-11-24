@@ -17,26 +17,9 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb = recommendationEngineDb;
         }
 
-        public DBRecommendationSchedule Add(DBRecommendationSchedule schedule)
+        public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
-            _recommendationEngineDb.RecommendationSchedules.Add(schedule);
-            _recommendationEngineDb.SaveChanges();
-            return schedule;
-        }
-
-        public List<ConfiguredRecommendation> Get()
-        {
-            List<DBRecommendationSchedule> dbRecommendations = _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
-            return dbRecommendations.Select((element) => new ConfiguredRecommendation {
-                Name = element.Name,
-                Type = element.RecommendationType.Type,
-                Granularity = element.Granularity,
-                CreatedBy = element.ModifiedBy,
-                RecurrenceDayOfWeek = element.RecurrenceDayOfWeek,
-                RecurrenceDatetime = element.RecurrenceDatetime,
-                CreatedOn = element.CreatedOn,
-                Parameters = null
-            }).ToList(); 
+            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
         }
     }
 }

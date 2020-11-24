@@ -24,8 +24,7 @@ namespace RecommendationEngine.Controllers
         [HttpGet("get")]
         public IActionResult getConfiguredRecommendationList()
         {
-            //TODO: Error handlind
-            return Ok(_recommendationSchedulerService.getConfiguredRecommendationList());
+            return Ok(_recommendationSchedulerService.GetConfiguredRecommendationList());
         }
     }
 }
