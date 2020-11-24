@@ -24,7 +24,7 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpGet("get")]
-        public async Task<IActionResult> GetAssets()
+        public Task<IActionResult> GetAssets()
         {
             try
             {
