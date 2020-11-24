@@ -86,11 +86,9 @@ namespace RecommendationScheduler.RecommendationTypes
             _jobLogger.LogInformation(job, "Looking for best cleaning dates...");
 
             while (centerPoint < endSoiling){
-             
                 span = spanIncrement;
                 centerPoint = startSoiling;
                 
-
                 while (centerPoint.AddDays(span) < endSoiling || centerPoint.AddDays(-span) > startSoiling) //TODO : ask power factors why -span 
                 {
                     //reset values for new date
