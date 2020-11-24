@@ -112,10 +112,10 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
             await Task.Delay(1000);
             return new List<PFMetadata>();
         }
-        public async Task<Dictionary<string, List<PFMetadata>>> GetDailyPredictedEnergyByPlantIds(DateTime startTime, DateTime endTime, List<string> plantIds)
+        public async Task<Dictionary<string, List<PFPredictedEnergy>>> GetDailyPredictedEnergyByPlantIds(DateTime startTime, DateTime endTime, List<string> plantIds)
         {
             await Task.Delay(1000);
-            return new Dictionary<string, List<PFMetadata>>();
+            return new Dictionary<string, List<PFPredictedEnergy>>();
         }
 
     }
