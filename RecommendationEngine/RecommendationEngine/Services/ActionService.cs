@@ -18,15 +18,5 @@ namespace RecommendationEngine.Services
             _driveService = driveService;
             _actionRepository = actionRepository;
         }
-
-        private readonly string[] Summaries = new[]
-        {
-            "Sup", "Does", "This", "Work", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        public string[] GetSummaries()
-        {
-            return Summaries;
-        }
     }
 }

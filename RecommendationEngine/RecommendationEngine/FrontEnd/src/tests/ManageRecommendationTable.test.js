@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ManageRecommendationTable from '../components/Table Component/ManageRecommendationTable';
+import ManageRecommendationTable from '../components/TableComponent/ManageRecommendationTable';
 import Enzyme, { shallow } from '../enzyme';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
-import { EnhancedTableHead } from '../components/Table Component/ManageRecommendationTable';
+import { EnhancedTableHead } from '../components/TableComponent/ManageRecommendationTable';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
@@ -47,14 +47,14 @@ describe('ManageRecommendationTable component', () => {
     it('It finds all table cells', () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableCell);
-        expect(component).toHaveLength(7);
+        expect(component).toHaveLength(8);
         expect(output.find('#table-cell')).toBeTruthy();
     });
 
     it("Finds the table labels", () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableSortLabel);
-        expect(component).toHaveLength(6);
+        expect(component).toHaveLength(7);
         expect(output.find('#sort-label')).toBeTruthy();
     })
 

@@ -8,11 +8,11 @@ namespace RecommendationEngine.Services
 {
     public class WorkOrderService
     {
-        private IWorkOrderService _workOrderService;
+        private IDriveService _driveService;
 
-        public WorkOrderService(IWorkOrderService workOrderService)
+        public WorkOrderService(IDriveService driveService)
         {
-            _workOrderService = workOrderService;
+            _driveService = driveService;
         }
     }
 }

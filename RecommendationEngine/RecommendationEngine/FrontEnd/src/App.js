@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Layout from './Layout';
+import Layout from './containers/AppLayout/Layout';
 import Home from './components/Home/Home';
 import { hot } from 'react-hot-loader/root';
 import './stylesheet.css'

@@ -22,4 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RecommendationEngine\RecommendationEngine.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UnitTests\MockData\" />
+  </ItemGroup>
 </Project>

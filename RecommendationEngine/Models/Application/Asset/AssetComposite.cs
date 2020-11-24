@@ -1,6 +1,9 @@
-﻿namespace Models.Application.Asset
+﻿using System.Collections.Generic;
+
+namespace Models.Application.Asset
 {
-    public abstract class AssetComposite : Asset
+    public class AssetComposite : Asset
     {
+        public List<AssetComposite> Children { get; set; }
     }
 }

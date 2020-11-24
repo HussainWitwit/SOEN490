@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecommendationScheduler", "RecommendationScheduler\RecommendationScheduler.csproj", "{018866F4-F9E2-41AA-8C0B-9D668C76B47C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommendationEngineTests", "RecommendationEngineTests\RecommendationEngineTests.csproj", "{E2C59662-B8AA-4F98-81AB-AD5789042E2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecommendationEngineTests", "RecommendationEngineTests\RecommendationEngineTests.csproj", "{E2C59662-B8AA-4F98-81AB-AD5789042E2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecommendationSchedulerTests", "RecommendationSchedulerTests\RecommendationSchedulerTests.csproj", "{2440E0D5-3462-4EDA-9377-655E7588F74A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecommendationSchedulerTests", "RecommendationSchedulerTests\RecommendationSchedulerTests.csproj", "{2440E0D5-3462-4EDA-9377-655E7588F74A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

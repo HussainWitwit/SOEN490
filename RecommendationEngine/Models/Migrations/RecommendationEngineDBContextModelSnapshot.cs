@@ -135,8 +135,8 @@ namespace RecommendationEngine.Migrations
                     b.Property<int?>("AssetId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("JobDuration")
-                        .HasColumnType("datetime");
+                    b.Property<int>("JobDuration")
+                        .HasColumnType("int");
 
                     b.Property<string>("Result")
                         .HasColumnType("longtext");
@@ -275,10 +275,13 @@ namespace RecommendationEngine.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("OccurenceDatetime")
+                    b.Property<int?>("RecommendationTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RecurrenceDatetime")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("RecommendationTypeId")
+                    b.Property<int>("RecurrenceDayOfWeek")
                         .HasColumnType("int");
 
                     b.HasKey("RecommendationScheduleId");
