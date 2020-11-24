@@ -23,7 +23,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@material-ui/core/IconButton';
 import FormControl from '@material-ui/core/FormControl';
 import 'date-fns';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -32,66 +32,68 @@ import { Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { getAllRecommendations } from "../../api/get/TableEndpoints";
-import TemplateDialog from "../AddRecommendation/TemplateDialog";
+import { getAllRecommendations } from '../../api/get/TableEndpoints';
+import TemplateDialog from '../AddRecommendation/TemplateDialog';
 import Modal from '../AddRecommendation/Modal';
 import ModalParent from '../AddRecommendation/ModalParent';
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-
+import styled from 'styled-components';
+import CarouselDialog from '../AddRecommendation/CarouselDialog';
+import Carousel from '../AddRecommendation/Carousel';
+import TemplateConfiguration from '../AddRecommendation/TemplateConfiguration';
+import DateConfiguration from '../AddRecommendation/DateConfiguration';
+import RecommendationConfiguration from '../AddRecommendation/RecommendationConfiguration';
+import ConfirmationPage from '../AddRecommendation/ConfirmationPage';
 
 export const CssTextField = withStyles({
+  root: {
+    width: '360px',
+    color: '252733',
+    fontSize: 100,
 
-    root: {
-        width: '360px',
-        color: '252733',
-        fontSize: 100,
-
-        '& label.Mui-focused': {
-            color: '#868282',
-        },
-        '& .MuiInput-underline:after': {
-            borderBottomColor: '#252733',
-        },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: '#252733',
-            },
-            '&:hover fieldset': {
-                borderColor: '#252733',
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: '#252733',
-            },
-        },
+    '& label.Mui-focused': {
+      color: '#868282',
     },
-
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#252733',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#252733',
+      },
+      '&:hover fieldset': {
+        borderColor: '#252733',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#252733',
+      },
+    },
+  },
 })(TextField);
 
 const BootstrapInput = withStyles((theme) => ({
-    root: {
-        'label + &': {
-            marginTop: theme.spacing(3),
-        },
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
     },
-    input: {
-        borderRadius: 4,
-        position: 'relative',
-        backgroundColor: theme.palette.background.paper,
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        padding: '10px 26px 10px 12px',
-        transition: theme.transitions.create(['border-color', 'box-shadow']),
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            'Segoe UI', "Tahoma", "Geneva", "Verdana", "sans-serif"
-        ].join(','),
-        '&:focus': {
-            borderRadius: 4,
-            borderColor: '#80bdff',
-            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-        },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'].join(
+      ','
+    ),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
     },
+  },
 }))(InputBase);
 
 // export function descendingComparator (a, b, orderBy) {
@@ -110,7 +112,6 @@ const BootstrapInput = withStyles((theme) => ({
 //         : (a, b) => -descendingComparator(a, b, orderBy);
 // }
 
-
 // export function stableSort (array, comparator) {
 //     const stabilizedThis = array.map((el, index) => [el, index]);
 //     stabilizedThis.sort((a, b) => {
@@ -122,390 +123,459 @@ const BootstrapInput = withStyles((theme) => ({
 // }
 
 const headCells = [
-    { id: 'title', numeric: false, label: 'Title' },
-    { id: 'frequency', numeric: false, label: 'Frequency' },
-    { id: 'template', numeric: true, label: 'Template' },
-    { id: 'createdOn', numeric: true, label: 'created On' },
+  { id: 'title', numeric: false, label: 'Title' },
+  { id: 'frequency', numeric: false, label: 'Frequency' },
+  { id: 'template', numeric: true, label: 'Template' },
+  { id: 'createdOn', numeric: true, label: 'created On' },
 ];
 
 /**
-   * cMethod that will serve for the creation of the table header
-   * @param {*} props
-   */
+ * cMethod that will serve for the creation of the table header
+ * @param {*} props
+ */
 
 export function EnhancedTableHead(props) {
-    const { order, orderBy, onRequestSort } = props;
-    const createSortHandler = (property) => (event) => {
-        onRequestSort(event, property);
-    };
+  const { order, orderBy, onRequestSort } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
 
-    return (
-        <TableHead id="table-head" className="custom">
-            <TableRow id="table-row">
-                <TableCell id="table-cell" className="custom"></TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        className="custom"
-                        key={headCell.id}
-                        // align={headCell.numeric ? 'left' : 'center'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                        id="tableHeader"
-                    >
-                        <TableSortLabel
-                            id="sort-label"
-                            className="custom"
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <span id="visuallyHidden">
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </span>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    );
+  return (
+    <TableHead id="table-head" className="custom">
+      <TableRow id="table-row">
+        <TableCell id="table-cell" className="custom"></TableCell>
+        {headCells.map((headCell) => (
+          <TableCell
+            className="custom"
+            key={headCell.id}
+            // align={headCell.numeric ? 'left' : 'center'}
+            sortDirection={orderBy === headCell.id ? order : false}
+            id="tableHeader"
+          >
+            <TableSortLabel
+              id="sort-label"
+              className="custom"
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <span id="visuallyHidden">
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </span>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
 }
 
 EnhancedTableHead.propTypes = {
-    onRequestSort: PropTypes.func,
-    order: PropTypes.oneOf(['asc', 'desc']),
-    orderBy: PropTypes.string,
+  onRequestSort: PropTypes.func,
+  order: PropTypes.oneOf(['asc', 'desc']),
+  orderBy: PropTypes.string,
 };
+
+
+// const DateConfiguration = (props) => (
+//   <Slide>
+//     <h1>Date Configuration</h1>
+//     <p>
+//       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+//       ligula eget dolor. Aenean massa.
+//     </p>
+//     <button onClick={props.dismiss}>Cancel</button>
+//     <button onClick={() => props.select(0)}>Back</button>
+//     <button onClick={() => props.select(2)}>Next</button>
+//   </Slide>
+// );
+
+// const RecommendationConfiguration = (props) => (
+//   <Slide>
+//     <h1>RecommendationConfiguration</h1>
+//     <p>
+//       Lorem ipsum dolor sit amet, consectetuer adipiscing elit dolor sit amet.
+//       Ligula eget dolor. Aenean massa.
+//     </p>
+//     <button onClick={props.dismiss}>Cancel</button>
+//     <button onClick={() => props.select(1)}>Back</button>
+//     <button onClick={() => props.select(3)}>Next</button>
+//   </Slide>
+// );
+
+// const ConfirmationPage  = (props) => (
+//   <Slide>
+//     <h1>Confirmation Page</h1>
+//     <p>
+//       Lorem ipsum dolor sit amet, consectetuer adipiscing elit dolor sit amet.
+//       Ligula eget dolor. Aenean massa.
+//     </p>
+//     <button onClick={props.dismiss}>Dismiss</button>
+//     <button onClick={() => props.select(2)}>Back</button>
+//     <button onClick={props.dismiss}>Done</button>
+//   </Slide>
+// );
 
 function ManageRecommendationTable(props) {
 
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('');
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [openFirst, setOpenFirst] = React.useState(false);
-    const [openSecond, setOpenSecond] = React.useState(false);
-    const [openThird, setOpenThird] = React.useState(false);
-    const [openFourth, setOpenFourth] = React.useState(false)
-    const [back, setBack] = React.useState(false);
-    const [isOpen, setIsOpen] = React.useState(false);
+  const items = [TemplateConfiguration, DateConfiguration, RecommendationConfiguration, ConfirmationPage];
 
-    //Add Recommendation Object Attributes (will be refactored later, its just for now  - C.S.B.)
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('');
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [openFirst, setOpenFirst] = React.useState(false);
+  const [openSecond, setOpenSecond] = React.useState(false);
+  const [openThird, setOpenThird] = React.useState(false);
+  const [openFourth, setOpenFourth] = React.useState(false);
+  const [back, setBack] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
-    // Setting the Title attribute
-    const [title, setTitle] = React.useState("");
-    const handleTitle = (event) => {
-        setTitle(event.target.value);
-    };
+  const [showDialog, setShowDialog] = React.useState(false);
 
-    // Setting the Asset attribute
-    const [asset, setAsset] = React.useState("");
-    const handleAsset = (event) => {
-        setAsset(event.target.value);
-    }
+  //Add Recommendation Object Attributes (will be refactored later, its just for now  - C.S.B.)
 
-    // Setting the Asset Type attribute
-    const [assetType, setAssetType] = React.useState("");
-    const handleAssetType = (event) => {
-        setAssetType(event.target.value);
-    };
+  // Setting the Title attribute
+  const [title, setTitle] = React.useState('');
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
+  };
 
-    // Setting the Parameters attribute
-    const [parameters, setParameters] = React.useState("");
-    const handleParameters = (event) => {
-        setParameters(event.target.value);
-    };
+  // Setting the Asset attribute
+  const [asset, setAsset] = React.useState('');
+  const handleAsset = (event) => {
+    setAsset(event.target.value);
+  };
+
+  // Setting the Asset Type attribute
+  const [assetType, setAssetType] = React.useState('');
+  const handleAssetType = (event) => {
+    setAssetType(event.target.value);
+  };
+
+  // Setting the Parameters attribute
+  const [parameters, setParameters] = React.useState('');
+  const handleParameters = (event) => {
+    setParameters(event.target.value);
+  };
+
+  // Setting the Granularity attribute
+  const [granularity, setGranularity] = React.useState('');
+  const handleGranularity = (event) => {
+    setGranularity(event.target.value);
+  };
+
+  // Setting the perio attribute
+  const [periodicity, setPeriodicity] = React.useState();
+  const handlePeriodicity = (event) => {
+    setPeriodicity(event.target.value);
+  };
+
+  // Setting Repetition attribute
+  const [Repetition, setRepetition] = React.useState(null);
+  const handleRepetition = (event) => {
+    setRepetition(event.target.value);
+  };
+
+  // Setting the dayWeek attribute
+  const [dayWeek, setDayWeek] = React.useState('');
+  const handleDayWeek = (event) => {
+    setDayWeek(event.target.value);
+  };
+
+  // Setting the occurence Date attribute
+  const [dayMonth, setDayMonth] = React.useState('');
+  const handleDayMonth = (event) => {
+    setDayMonth(event.target.value);
+  };
+
+  // Setting the startDate attribute
+  const [startDate, setStartDate] = React.useState('');
+  const handleStartDate = (event) => {
+    setStartDate(event.target.value);
+  };
+
+  // Setting the endDate attribute
+  const [endDate, setEndDate] = React.useState('');
+  const handleEndDate = (event) => {
+    setStartDate(event.target.value);
+  };
+
+  // Setting the hourRepeated attribute
+  const [hourRepeated, setHourRepeated] = React.useState();
+  const handleHourRepeated = (event) => {
+    setHourRepeated(event.target.value);
+  };
+
+  // Setting the occurence Date attribute
+  const [occurenceDate, setOccurenceDate] = React.useState('');
+  const handleOccurenceDate = (event) => {
+    setOccurenceDate(event.target.value);
+  };
+
+  // Seeting the Center Point attribute
+  const [centerPoint, setCenterPoint] = React.useState(null);
+  const handleCenterPoint = (event) => {
+    setCenterPoint(event.target.value);
+  };
+
+  // Seeing the Span attribute
+  const [span, setSpan] = React.useState(null);
+  const handleSpan = (event) => {
+    setSpan(event.target.value);
+  };
+
+  // Setting the CreatedBy attribute
+  const [createdBy, setCreatedBy] = React.useState('');
+  const handleCreatedBy = (event) => {
+    setCreatedBy(event.target.value);
+  };
+
+  // Setting the CreatedOn attribute
+  const [createdOn, setCreatedOn] = React.useState('');
+  const handleCreatedOn = (event) => {
+    setCreatedOn(event);
+  };
+
+  const [data, setData] = React.useState([]);
+
+  const fetchData = async () => {
+    let response = await getAllRecommendations();
+    setData(response);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  //TODO:Set the hooks for the Title, Subtitle, Button Boolean, (Making of Table Generic) - C.S.B
+  //TODO:Set hook array for the name of the columns of the table and the filter list (Making of Table Generic) - C.S.B
+
+  /**
+   * set the items to be comprssed function
+   * @param {*} event
+   */
+
+  // this method is used for the compressed table rows button (lite)
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  /**
+   * This function handles the sorting and sets them
+   * @param {} event
+   * @param {*} index
+   */
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  /**
+   * This function handles the changing of paginations (pages)
+   * @param {} event
+   * @param {*} newPage
+   */
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  /**
+   * This function handles population of row on each ne
+   * @param {*} event
+   */
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  // handling the empty rows for the method that compresses the table rows
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+
+  const handleClickOpenFirst = () => {
+    setOpenFirst(true);
+  };
+
+  const handleCloseFirst = () => {
+    setOpenFirst(false);
+  };
+
+  const handleClickOpenSecond = () => {
+    setOpenSecond(true);
+    setOpenFirst(false);
+  };
+  const handleClickOpenThird = () => {
+    setOpenThird(true);
+    setOpenSecond(false);
+  };
+
+  const handleClickOpenFourth = () => {
+    setOpenFourth(true);
+    setOpenThird(false);
+  };
+
+  const handleDone = () => {
+    // console.log(title, asset, assetType, parameters, granularity, periodicity, Repetition, dayWeek, dayMonth, hourRepeated, centerPoint, span);
+    postAddRecommendation();
+    setOpenFirst(false);
+    setOpenSecond(false);
+    setOpenThird(false);
+    setOpenFourth(false);
+  };
+
+  /**
+   * Post Method
+   */
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: title,
+      type: 'Yearly Wash Optimization',
+      recurrenceDayOfWeek: 3,
+      createdOn: new Date().toJSON(),
+      createdBy: 'BOSSSS',
+      recurrenceDateTime: '2025-01-01T' + hourRepeated + ':00',
+      granularity: periodicity,
+      parameters: null,
+    }),
+  };
+  const [postResponse, setPostResponse] = React.useState(null);
+  //FIXME: Syntax Errror here
+  const postAddRecommendation = () => {
+    fetch('http://localhost:5000/ConfiguredRecommendation/add/', requestOptions)
+      .then((response) => response.json())
+      .then((data) => setPostResponse({ postResultId: data.id }));
+  };
+
+  const handleClose = () => {
+    setOpenFirst(false);
+    setOpenSecond(false);
+    setOpenThird(false);
+    setOpenFourth(false);
+  };
+
+  const cancelConfirmation = () => {
+    setOpenThird(true);
+    setOpenFourth(false);
+    setOpenFirst(false);
+    setOpenSecond(false);
+  };
+
+  const toggleDialog = () => {
+    setShowDialog(!showDialog);
+  };
 
 
-    // Setting the Granularity attribute
-    const [granularity, setGranularity] = React.useState("");
-    const handleGranularity = (event) => {
-        setGranularity(event.target.value);
-    };
 
-    // Setting the perio attribute
-    const [periodicity, setPeriodicity] = React.useState();
-    const handlePeriodicity = (event) => {
-        setPeriodicity(event.target.value);
-    };
-
-    // Setting Repetition attribute
-    const [Repetition, setRepetition] = React.useState(null);
-    const handleRepetition = (event) => {
-        setRepetition(event.target.value);
-    };
-
-    // Setting the dayWeek attribute
-    const [dayWeek, setDayWeek] = React.useState("");
-    const handleDayWeek = (event) => {
-        setDayWeek(event.target.value);
-    };
-
-    // Setting the occurence Date attribute
-    const [dayMonth, setDayMonth] = React.useState("");
-    const handleDayMonth = (event) => {
-        setDayMonth(event.target.value);
-    };
-
-    // Setting the startDate attribute
-    const [startDate, setStartDate] = React.useState("");
-    const handleStartDate = (event) => {
-        setStartDate(event.target.value);
-    };
-
-    // Setting the endDate attribute
-    const [endDate, setEndDate] = React.useState("");
-    const handleEndDate = (event) => {
-        setStartDate(event.target.value);
-    };
-
-    // Setting the hourRepeated attribute  
-    const [hourRepeated, setHourRepeated] = React.useState();
-    const handleHourRepeated = (event) => {
-        setHourRepeated(event.target.value);
-    };
-
-    // Setting the occurence Date attribute
-    const [occurenceDate, setOccurenceDate] = React.useState("");
-    const handleOccurenceDate = (event) => {
-        setOccurenceDate(event.target.value);
-    };
-
-
-    // Seeting the Center Point attribute 
-    const [centerPoint, setCenterPoint] = React.useState(null)
-    const handleCenterPoint = (event) => {
-        setCenterPoint(event.target.value);
-    };
-
-    // Seeing the Span attribute
-    const [span, setSpan] = React.useState(null);
-    const handleSpan = (event) => {
-        setSpan(event.target.value);
-    };
-
-
-    // Setting the CreatedBy attribute
-    const [createdBy, setCreatedBy] = React.useState("");
-    const handleCreatedBy = (event) => {
-        setCreatedBy(event.target.value);
-    };
-
-    // Setting the CreatedOn attribute
-    const [createdOn, setCreatedOn] = React.useState("");
-    const handleCreatedOn = (event) => {
-        setCreatedOn(event);
-    };
-
-    const [data, setData] = React.useState([]);
-
-
-    const fetchData = async () => {
-        let response = await getAllRecommendations();
-        setData(response);
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-
-
-    //TODO:Set the hooks for the Title, Subtitle, Button Boolean, (Making of Table Generic) - C.S.B
-    //TODO:Set hook array for the name of the columns of the table and the filter list (Making of Table Generic) - C.S.B
-
-
-    /**
-       * set the items to be comprssed function
-       * @param {*} event
-       */
-
-    // this method is used for the compressed table rows button (lite)
-    const handleChangeDense = (event) => {
-        setDense(event.target.checked);
-    };
-
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    /**
- * This function handles the sorting and sets them
- * @param {} event 
- * @param {*} index 
- */
-    const handleRequestSort = (property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-    };
-
-    /**
- * This function handles the changing of paginations (pages)
- * @param {} event 
- * @param {*} newPage
- */
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    /**
- * This function handles population of row on each ne
- * @param {*} event  
- */
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-
-    // handling the empty rows for the method that compresses the table rows
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
-    const handleClickOpenFirst = () => {
-        setOpenFirst(true);
-    }
-
-    const handleCloseFirst = () => {
-        setOpenFirst(false);
-    }
-
-    const handleClickOpenSecond = () => {
-        setOpenSecond(true);
-        setOpenFirst(false)
-    }
-    const handleClickOpenThird = () => {
-        setOpenThird(true);
-        setOpenSecond(false);
-    }
-
-    const handleClickOpenFourth = () => {
-        setOpenFourth(true);
-        setOpenThird(false);
-    }
-
-    const handleDone = () => {
-        // console.log(title, asset, assetType, parameters, granularity, periodicity, Repetition, dayWeek, dayMonth, hourRepeated, centerPoint, span);
-        postAddRecommendation();
-        setOpenFirst(false);
-        setOpenSecond(false);
-        setOpenThird(false);
-        setOpenFourth(false);
-    }
-
-    /**
-     * Post Method
-     */
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name: title,
-            type: 'Yearly Wash Optimization',
-            recurrenceDayOfWeek: 3,
-            createdOn: new Date().toJSON(),
-            createdBy: 'BOSSSS',
-            recurrenceDateTime: '2025-01-01T' + hourRepeated + ':00',
-            granularity: periodicity,
-            parameters: null
-        })
-    };
-    const [postResponse, setPostResponse] = React.useState(null);
-    //FIXME: Syntax Errror here
-    const postAddRecommendation = () => {
-        fetch('http://localhost:5000/ConfiguredRecommendation/add/', requestOptions)
-            .then(response => response.json())
-            .then(data => setPostResponse({ postResultId: data.id }));
-    }
-
-    const handleClose = () => {
-        setOpenFirst(false);
-        setOpenSecond(false);
-        setOpenThird(false);
-        setOpenFourth(false);
-    }
-
-    const cancelConfirmation = () => {
-        setOpenThird(true);
-        setOpenFourth(false);
-        setOpenFirst(false);
-        setOpenSecond(false);
-    }
-
-    function FormRow() {
-        return (
-            <React.Fragment>
-                <Grid item xs={4} id="gridItem">
-                    <button className="gridTransparent">
-                        <Paper id="paperTheme">
-                            <Typography id="gridBoxTitle">
-                                Wash Optmization
-                        </Typography></Paper>
-                    </button>
-                    <button className="gridTransparent">
-                        <Paper id="paperTheme">
-                            <Typography id="gridBoxTitle">
-                                Fuse Replacement
-                        </Typography></Paper>
-                    </button>
-                    <button className="gridTransparent">
-                        <Paper id="paperTheme">
-                            <Typography id="gridBoxTitle">
-                                ETC
-                        </Typography>
-                        </Paper>
-                    </button>
-                </Grid>
-                <Grid item xs={4}>
-                    <button className="gridTransparent">
-                        <Paper id="paperTheme">
-                            <Typography id="gridBoxTitle">
-                                Gearbox Replacement
-                        </Typography></Paper>
-                    </button>
-                    <button className="gridTransparent">
-                        <Paper id="paperTheme">
-                            <Typography id="gridBoxTitle">
-                                Panel Angle
-                        </Typography></Paper>
-                    </button>
-                    <button className="gridTransparent">
-                        <Paper id="paperTheme">
-                            <Typography id="gridBoxTitle">
-                                Other
-                        </Typography></Paper>
-                    </button>
-                </Grid>
-            </React.Fragment>
-        );
-    }
-
+  function FormRow() {
     return (
+      <React.Fragment>
+        <Grid item xs={4} id="gridItem">
+          <button className="gridTransparent">
+            <Paper id="paperTheme">
+              <Typography id="gridBoxTitle">Wash Optmization</Typography>
+            </Paper>
+          </button>
+          <button className="gridTransparent">
+            <Paper id="paperTheme">
+              <Typography id="gridBoxTitle">Fuse Replacement</Typography>
+            </Paper>
+          </button>
+          <button className="gridTransparent">
+            <Paper id="paperTheme">
+              <Typography id="gridBoxTitle">ETC</Typography>
+            </Paper>
+          </button>
+        </Grid>
+        <Grid item xs={4}>
+          <button className="gridTransparent">
+            <Paper id="paperTheme">
+              <Typography id="gridBoxTitle">Gearbox Replacement</Typography>
+            </Paper>
+          </button>
+          <button className="gridTransparent">
+            <Paper id="paperTheme">
+              <Typography id="gridBoxTitle">Panel Angle</Typography>
+            </Paper>
+          </button>
+          <button className="gridTransparent">
+            <Paper id="paperTheme">
+              <Typography id="gridBoxTitle">Other</Typography>
+            </Paper>
+          </button>
+        </Grid>
+      </React.Fragment>
+    );
+  }
 
+  return (
+    <div id="main-container">
+      <div></div>
+      <div>
+        <br></br>
+        <Grid
+          id="grid-container1"
+          container
+          spacing={1}
+          className="gridContainerStyle"
+        >
+          <Grid id="grid1" item>
+            <h3 id="title">Manage Recommendations</h3>
+            <h6 id="subtitle">
+              Add, edit, delete and browse the configured recommendation
+            </h6>
+          </Grid>
+          <Grid item>
 
-        <div id="main-container">
+            {/* <Button id="recBtn" onClick={handleClickOpenFirst}>
+              Create Recommendation
+            </Button>
+
+            {openFirst ? (
+              <TemplateDialog
+                openDialog={openFirst}
+                onCloseDialog={() => setOpenFirst(false)}
+              />
+            ) : (
+                <div></div>
+              )} */}
+
             <div>
+              <Button id="recBtn" onClick={toggleDialog}>
+                Create Recommendation
+              </Button>
 
+              <CarouselDialog show={showDialog} toggle={toggleDialog}>
+                <Carousel>
+                  {({ getItemProps }) =>
+                    items.map((Item) => (
+                      <Item
+                        {...getItemProps({
+                          key: Item,
+                          dismiss: toggleDialog,
+                        })}
+                      />
+                    ))
+                  }
+                </Carousel>
+              </CarouselDialog>
             </div>
-            <div>
-                <br></br>
-                <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-                    <Grid id="grid1" item>
 
-                        <h3 id="title">Manage Recommendations</h3>
-                        <h6 id="subtitle">Add, edit, delete and browse the configured recommendation</h6>
-                    </Grid >
-                    <Grid item>
-                        <Button id='recBtn' onClick={handleClickOpenFirst}>Create Recommendation</Button>
-                        {openFirst ? <TemplateDialog openDialog={openFirst} onCloseDialog={()=>setOpenFirst(false)} /> : <div></div>}
-{/* 
+            {/* 
 
                         <Button id='recBtn' onClick={()=>{setIsOpen(true)}}>Test Button</Button>
                         <ModalParent open={isOpen} onClose={()=>setIsOpen(false)}></ModalParent> */}
-                        {/* <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal> */}
+            {/* <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal> */}
 
-                      
-
-                        {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
+            {/* <Dialog open={openFirst} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
@@ -562,7 +632,7 @@ function ManageRecommendationTable(props) {
                             </DialogActions>
                         </Dialog> */}
 
-                        {/* <Dialog open={openSecond} onClose={handleClose} aria-labelledby="form-dialog-title">
+            {/* <Dialog open={openSecond} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
@@ -675,8 +745,7 @@ function ManageRecommendationTable(props) {
                             </DialogActions>
                         </Dialog> */}
 
-
-                        {/* <Dialog open={openThird} onClose={handleClose} aria-labelledby="form-dialog-title">
+            {/* <Dialog open={openThird} onClose={handleClose} aria-labelledby="form-dialog-title">
                             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                                 <CloseIcon />
                             </IconButton>
@@ -769,7 +838,7 @@ function ManageRecommendationTable(props) {
                             </DialogActions>
                         </Dialog> */}
 
-                        {/* <Dialog open={openFourth} onClose={cancelConfirmation} aria-labelledby="form-dialog-title">
+            {/* <Dialog open={openFourth} onClose={cancelConfirmation} aria-labelledby="form-dialog-title">
 
                             <IconButton aria-label="close" id="closeButton" onClick={cancelConfirmation}>
                                 <CloseIcon />
@@ -910,140 +979,161 @@ function ManageRecommendationTable(props) {
                                 <Button id="nextBtn" onClick={handleDone}>Confirm</Button>
                             </DialogActions>
                         </Dialog> */}
+          </Grid>
+        </Grid>
+        <br></br>
+      </div>
 
-
-                    </Grid>
-                </Grid>
-                <br></br>
-            </div>
-
-            <div>
-                <div>
-                    <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-                        <Grid item id="grid2">
-                            <Search id="search" />
-                        </Grid>
-                        <Grid item>
-                            <CssTextField
-                                // className={CssTextField} // also declared in the .css file
-                                id="custom-css-standard-input"
-                                label="Search"
-                                inputProps={{
-                                    style: {
-                                        fontSize: 15, fontFamily: [
-                                            'Segoe UI',
-                                            ' Tahoma',
-                                            '"Geneva"',
-                                            'Verdana',
-                                            '"sans-serif"',
-                                        ].join(','),
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        fontSize: 15, fontFamily: [
-                                            'Segoe UI',
-                                            ' Tahoma',
-                                            '"Geneva"',
-                                            'Verdana',
-                                            '"sans-serif"',
-                                        ].join(','),
-                                    }
-                                }}>
-                            </CssTextField>
-                        </Grid>
-                        <Grid item>
-                            <Button size="small" id="filterBtn" endIcon={<FilterList />}>Add Filter</Button>
-                        </Grid>
-
-                    </Grid>
-                </div>
-            </div>
-            <br></br>
-            <div id="root">
-                <Paper id="paper">
-                    <Toolbar id="toolbar">
-                        <h6 className="toolBarTitle" variant="h6" id="tableTitle" component="div">
-                            Configured Recommendations
-                                </h6>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={dense}
-                                    onChange={handleChangeDense}
-                                    color="default"
-                                    inputProps={{ 'aria-label': 'checkbox with default color' }}
-                                />}
-                            label={
-                                <h6 id="controlLabel">Lite</h6>
-                            }
-                        />
-                    </Toolbar>
-                    <TableContainer>
-                        <Table
-                            id="table"
-                            aria-labelledby="tableTitle"
-                            size={dense ? 'small' : 'medium'}
-                            aria-label="enhanced table"
-                        >
-                            <EnhancedTableHead
-                                order={order}
-                                orderBy={orderBy}
-                                onRequestSort={handleRequestSort}
-                                rowCount={data.length} might be uselfull for later
-                            />
-
-                            <TableBody id="table-body">
-                                {/* {stableSort(data, getComparator(order, orderBy))*/
-                                    // slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    data.map((row) => {
-                                        return (
-                                            <TableRow
-                                                key={row.title}
-                                                className="custom"
-                                            >
-                                                <TableCell className="custom">
-                                                </TableCell>
-                                                <TableCell
-                                                    component="th"
-                                                    scope="row"
-                                                    padding="default"
-                                                    className="primaryKey"
-                                                    id="tableBody">
-                                                    {row.name}
-                                                </TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.granularity}</TableCell>
-                                                {/* <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell> */}
-                                                <TableCell className="custom" id="tableBody">{row.type}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.createdOn}</TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                {emptyRows > 0 && (
-                                    <TableRow className="center" classes={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                        <TableCell className="center" />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        id="pagination"
-                        rowsPerPageOptions={[10, 25, 50, 100]}
-                        component="div"
-                        count={data.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </Paper>
-            </div>
-          
+      <div>
+        <div>
+          <Grid
+            id="grid-container2"
+            container
+            spacing={1}
+            className="gridContainerStyle"
+          >
+            <Grid item id="grid2">
+              <Search id="search" />
+            </Grid>
+            <Grid item>
+              <CssTextField
+                // className={CssTextField} // also declared in the .css file
+                id="custom-css-standard-input"
+                label="Search"
+                inputProps={{
+                  style: {
+                    fontSize: 15,
+                    fontFamily: [
+                      'Segoe UI',
+                      ' Tahoma',
+                      '"Geneva"',
+                      'Verdana',
+                      '"sans-serif"',
+                    ].join(','),
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    fontSize: 15,
+                    fontFamily: [
+                      'Segoe UI',
+                      ' Tahoma',
+                      '"Geneva"',
+                      'Verdana',
+                      '"sans-serif"',
+                    ].join(','),
+                  },
+                }}
+              ></CssTextField>
+            </Grid>
+            <Grid item>
+              <Button size="small" id="filterBtn" endIcon={<FilterList />}>
+                Add Filter
+              </Button>
+            </Grid>
+          </Grid>
         </div>
-       
-    );
+      </div>
+      <br></br>
+      <div id="root">
+        <Paper id="paper">
+          <Toolbar id="toolbar">
+            <h6
+              className="toolBarTitle"
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
+              Configured Recommendations
+            </h6>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={dense}
+                  onChange={handleChangeDense}
+                  color="default"
+                  inputProps={{ 'aria-label': 'checkbox with default color' }}
+                />
+              }
+              label={<h6 id="controlLabel">Lite</h6>}
+            />
+          </Toolbar>
+          <TableContainer>
+            <Table
+              id="table"
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={data.length}
+                might
+                be
+                uselfull
+                for
+                later
+              />
+
+              <TableBody id="table-body">
+                {
+                  /* {stableSort(data, getComparator(order, orderBy))*/
+                  // slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  data.map((row) => {
+                    return (
+                      <TableRow key={row.title} className="custom">
+                        <TableCell className="custom"></TableCell>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          padding="default"
+                          className="primaryKey"
+                          id="tableBody"
+                        >
+                          {row.name}
+                        </TableCell>
+                        <TableCell className="custom" id="tableBody">
+                          {row.granularity}
+                        </TableCell>
+                        {/* <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
+                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell> */}
+                        <TableCell className="custom" id="tableBody">
+                          {row.type}
+                        </TableCell>
+                        <TableCell className="custom" id="tableBody">
+                          {row.createdOn}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                }
+                {emptyRows > 0 && (
+                  <TableRow
+                    className="center"
+                    classes={{ height: (dense ? 33 : 53) * emptyRows }}
+                  >
+                    <TableCell className="center" />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            id="pagination"
+            rowsPerPageOptions={[10, 25, 50, 100]}
+            component="div"
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </div>
+    </div>
+  );
 }
 
 export default ManageRecommendationTable;

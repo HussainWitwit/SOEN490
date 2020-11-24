@@ -7,8 +7,7 @@ import TemplateConfiguration from './TemplateConfiguration';
 import DateConfiguration from './DateConfiguration';
 import RecommendationConfiguration from './RecommendationConfiguration';
 import ConfirmationPage from './ConfirmationPage';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+
 
 
 
@@ -143,20 +142,6 @@ export default function Modal({ open, children, onClose,...props}) {
                         <Route exact path="/" component={ConfirmationPage}/>
                     </Switch>
                 </div> */}
-            <Carousel>
-                <div>
-                    {/* <img src="assets/1.jpeg" /> */}
-                    <p className="legend">Legend 1</p>
-                </div>
-                <div>
-                    {/* <img src="assets/2.jpeg" /> */}
-                    <p className="legend">Legend 2</p>
-                </div>
-                <div>
-                    {/* <img src="assets/3.jpeg" /> */}
-                    <p className="legend">Legend 3</p>
-                </div>
-            </Carousel>
 
 
                 <button onClick={onClose}>Close Modal</button>

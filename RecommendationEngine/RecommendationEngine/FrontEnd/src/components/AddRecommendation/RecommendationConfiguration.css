@@ -327,6 +327,7 @@
      max-height: 65vh;
      min-width: 100vh;
      max-width: 100vh;
+     /* margin-left: 4%; */
     }
 
     .templateConfig{
@@ -345,7 +346,6 @@
 
     .templateConfigBox{
         min-height: 290px;
-        bottom: 10%;
     }
 
     #confirmationDialog{
@@ -355,11 +355,11 @@
         max-width: 100vh;
     }
 
-    .tempDialog{
+    #tempDialog{
         display: flex;
         align-items: center;
-        min-height: 65vh;
-        max-height: 65vh;
+        min-height: 50vh;
+        max-height: 50vh;
         min-width: 80vh;
         max-width: 100vh;
     }

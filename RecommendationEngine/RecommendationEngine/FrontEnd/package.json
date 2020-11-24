@@ -26,12 +26,9 @@
     "react-dom": "^16.0.0",
     "react-hot-loader": "^4.13.0",
     "react-icons": "^3.11.0",
-    "react-multi-carousel": "^2.5.5",
     "react-notification-timeline": "0.0.8",
     "react-notifications-menu": "^1.0.1",
     "react-pro-sidebar": "^0.4.4",
-    "react-redux": "^7.2.2",
-    "react-responsive-carousel": "^3.2.10",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.0",
@@ -40,7 +37,8 @@
     "redux": "^4.0.5",
     "rimraf": "^2.6.2",
     "sass-loader": "^10.0.5",
-    "styled-components": "^4.3.2"
+    "spring2": "npm:react-spring@^5.7.2",
+    "styled-components": "^4.4.1"
   },
   "jest": {
     "collectCoverage": true,
