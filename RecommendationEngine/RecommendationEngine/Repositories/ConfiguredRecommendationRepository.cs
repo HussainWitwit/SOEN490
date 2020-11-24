@@ -4,6 +4,7 @@ using Models.DB;
 using Interfaces.Repositories;
 using System.Collections.Generic;
 using RecommendationEngine.Models.Application;
+using RecommendationEngine.ExceptionHandler;
 using Microsoft.EntityFrameworkCore;
 
 namespace RecommendationEngine.Repositories
@@ -12,17 +13,24 @@ namespace RecommendationEngine.Repositories
     {
         private RecommendationEngineDBContext _recommendationEngineDb;
 
-        public ConfiguredRecommendationRepository(RecommendationEngineDBContext recommendationEngineDb) {
+        public ConfiguredRecommendationRepository(RecommendationEngineDBContext recommendationEngineDb)
+        {
             _recommendationEngineDb = recommendationEngineDb;
         }
 
-        public DBRecommendationSchedule Add(DBRecommendationSchedule schedule) {
+        public DBRecommendationSchedule Add(DBRecommendationSchedule schedule)
+        {
+            if (!_recommendationEngineDb.Assets.Any())
+            {
+                throw new GlobalException(400, "Bad Request", "There are no assets associated to this recommendation.", "RecommendationEngine");
+            }
             _recommendationEngineDb.RecommendationSchedules.Add(schedule);
             _recommendationEngineDb.SaveChanges();
             return schedule;
         }
 
-        public List<ConfiguredRecommendation> Get() {
+        public List<ConfiguredRecommendation> Get()
+        {
             List<DBRecommendationSchedule> dbRecommendations = _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
             List<ConfiguredRecommendation> recommendations = new List<ConfiguredRecommendation>();
             foreach (DBRecommendationSchedule dbRecommendation in dbRecommendations)
@@ -44,7 +52,8 @@ namespace RecommendationEngine.Repositories
             return recommendations;
         }
 
-        public DBRecommendationType GetRecommendationTypeByType(string recommendationType) {
+        public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
+        {
             return _recommendationEngineDb.RecommendationTypes
                 .Where(rec => rec.Type.Equals(recommendationType))
                 .FirstOrDefault();
