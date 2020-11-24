@@ -15,16 +15,14 @@ namespace RecommendationEngine.Controllers
     public class AssetController : ControllerBase
     {
         private IAssetService _assetService;
-        private IDriveService _driveService;
 
-        public AssetController(IAssetService assetService, IDriveService driveService)
+        public AssetController(IAssetService assetService)
         {
             _assetService = assetService;
-            _driveService = driveService;
         }
 
         [HttpGet("get")]
-        public Task<IActionResult> GetAssets()
+        public IActionResult GetAssets()
         {
             try
             {
