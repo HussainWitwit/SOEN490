@@ -75,7 +75,7 @@ namespace RecommendationEngine.Services
             {
                 return _assets;
             }
-            return _assets = _assetRepository.Get();
+            return _assets = _assetRepository.GetAssetsList();
         }
 
         private List<AssetComposite> GetChildren(int assetId)
@@ -133,13 +133,13 @@ namespace RecommendationEngine.Services
 
         private async Task<List<DBAsset>> BuildAssets(List<PFPortfolio> assets, bool isPortfolio, DBAsset client)
         {
-            Dictionary<string, dynamic> assetsEnergyType = new Dictionary<string, dynamic>();
+            Dictionary<string, dynamic> assetsEnergyTypes = new Dictionary<string, dynamic>();
 
             if (!isPortfolio)
             {
                 List<string> assetIds = assets.Select(asset => asset.Id).ToList();
-                List<PFMetadata> assetEnergyTypes = await _driveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
-                assetsEnergyType = assetEnergyTypes.Select(assetMetadata =>
+                List<PFMetadata> assetsMetadata = await _driveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
+                assetsEnergyTypes = assetsMetadata.Select(assetMetadata =>
                     new { elementPath = assetMetadata.ElementPath, energyType = assetMetadata.Metadata["ENERGY_SOURCE"] })
                     .ToDictionary(asset => asset.elementPath, asset => asset.energyType);
             }
@@ -158,7 +158,7 @@ namespace RecommendationEngine.Services
                         Name = x.Id,
                         ElementPath = x.Id,
                         DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
-                        EnergyType = isPortfolio ? null : assetsEnergyType.Where(asset => asset.Key == x.Id).FirstOrDefault().Value, //we need the assetmetada API to populate this (null for now)
+                        EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
                         Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
                         AcPower = isPortfolio ? 0 : plant.AcCapacity,

@@ -26,7 +26,7 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb.SaveChanges();
         }
 
-        public List<DBAsset> Get()
+        public List<DBAsset> GetAssetsList()
         {
              return _recommendationEngineDb.Assets.ToList();
         }

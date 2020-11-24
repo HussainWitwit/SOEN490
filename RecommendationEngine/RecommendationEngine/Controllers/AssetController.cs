@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using Quartz.Impl.AdoJobStore;
 using RecommendationEngine.ExceptionHandler;
-using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Controllers
 {
