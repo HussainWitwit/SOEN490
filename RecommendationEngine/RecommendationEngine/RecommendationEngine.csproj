@@ -7,7 +7,6 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>FrontEnd\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-    <UserSecretsId>45c4e360-abcc-4c02-9dec-2907e09b030b</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.0.0" />
