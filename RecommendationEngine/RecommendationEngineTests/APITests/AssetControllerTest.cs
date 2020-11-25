@@ -8,15 +8,14 @@ using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Models.Application.APIModels;
 using Models.Application.Asset;
 using Models.DB;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
 using RecommendationEngine.Services.ExternalAPI;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngineTests.UnitTests.ControllerTest
 {
@@ -66,7 +65,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
 
         public void AddAssetList(List<DBAsset> asset) { }
 
-        public List<DBAsset> Get()
+        public List<DBAsset> GetAssetsList()
         {
             return MockData.MockAssets.BasicDBAssetList;
         }
@@ -88,19 +87,36 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
     {
         public async Task<List<PFPortfolio>> GetPortfolios()
         {
-            await Task.Delay(1000);
+            await Task.Delay(1);
             return MockData.MockAssets.BasicPortfolios;
         }
         public async Task<List<PFPortfolio>> GetPlants()
         {
-            await Task.Delay(1000);
+            await Task.Delay(1);
             return MockData.MockAssets.BasicPlants;
         }
 
-        public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
+        public async Task<PFPlant> GetPlantById(string plantId)
         {
-            await Task.Delay(1000);
+            await Task.Delay(1);
             return MockData.MockAssets.BasicPlant;
         }
+
+        public async Task<List<PFPPAPrice>> GetPPAPriceByPlantId(string plantId)
+        {
+            await Task.Delay(1);
+            return new List<PFPPAPrice>();
+        }
+        public async Task<List<PFMetadata>> GetAssetsMetadataByPlantIds(List<string> plantIds)
+        {
+            await Task.Delay(1);
+            return new List<PFMetadata>();
+        }
+        public async Task<Dictionary<string, List<PFPredictedEnergy>>> GetDailyPredictedEnergyByPlantIds(DateTime startTime, DateTime endTime, List<string> plantIds)
+        {
+            await Task.Delay(1);
+            return new Dictionary<string, List<PFPredictedEnergy>>();
+        }
+
     }
 }

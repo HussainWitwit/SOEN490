@@ -24,9 +24,12 @@ namespace RecommendationScheduler.RecommendationTypes
 
             _jobLogger.LogInformation(job, "Starting Yearly Wash Optimization Recommendation");
             //API variables
-            double predictedEnergy = _driveService.GetPredictedEnergy();
-            double energyPrice = _driveService.GetEnergyPrice();
-            double dcCapacity = _driveService.GetDCCapacity();
+            double predictedEnergy = 0;
+            double energyPrice = 0;
+            double dcCapacity = 0;
+            //double predictedEnergy = _driveService.GetPredictedEnergy();
+            //double energyPrice = _driveService.GetEnergyPrice();
+            //double dcCapacity = _driveService.GetDCCapacity();
 
             //Parameters TODO: switch Start of soiling season, End of soiling season, Soiling rate, Cost of cleaning into API once we get the access 
             DateTime startSoiling = new DateTime(2020, 1, 1, 1, 0, 0);
