@@ -340,7 +340,7 @@ function ManageRecommendationTable () {
                                 {data && data.map((element, index) => {
                                     return (
                                         <TableRow
-                                            key={element.Name}
+                                            key={element.name}
                                             className="custom"
                                         >
                                             <TableCell className="custom">
@@ -351,13 +351,13 @@ function ManageRecommendationTable () {
                                                 padding="default"
                                                 className="primaryKey"
                                                 id="tableBody">
-                                                {element.Name}
+                                                {element.name}
                                             </TableCell>
-                                            <TableCell className="custom" id="tableBody">{element.Type}</TableCell>
-                                            <TableCell className="custom" id="tableBody">{element.Granularity}</TableCell>
+                                            <TableCell className="custom" id="tableBody">{element.type}</TableCell>
+                                            <TableCell className="custom" id="tableBody">{element.granularity}</TableCell>
                                             {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDatetime}</TableCell> */}
                                             {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDayOfWeek}</TableCell> */}
-                                            <TableCell className="custom" id="tableBody">{element.CreatedOn}</TableCell>
+                                            <TableCell className="custom" id="tableBody">{element.createdOn}</TableCell>
                                             {/* <TableCell className="custom" id="tableBody">{element.CreatedBy}</TableCell> */}
                                         </TableRow>
                                     );

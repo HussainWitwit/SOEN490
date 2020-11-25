@@ -1,18 +1,18 @@
 //You have to make sure that the method that fetches this object
 //have exactly this attribute, or it will break and it will be hard to debug.
-export type ConfiguredRecommendation = {
-    Name: string,
-    Type: string,
-    Granularity: string,
-    CreatedBy: string,
-    RecurrenceDayOfWeek: number,
-    RecurrenceDatetime: string,
-    CreatedOn: string,
-    Parameters: ConfiguredRecommendationParameter[]
+export interface ConfiguredRecommendation {
+    name: string,
+    type: string,
+    granularity: string,
+    createdBy: string,
+    recurrenceDayOfWeek: number,
+    recurrenceDatetime: string,
+    createdOn: string,
+    parameters: ConfiguredRecommendationParameter[]
     
 }
 
-export type ConfiguredRecommendationParameter = {
-    ParameterName: string,
-    ParameterValue: string
+export interface ConfiguredRecommendationParameter {
+    parameterName: string,
+    parameterValue: string
 }
