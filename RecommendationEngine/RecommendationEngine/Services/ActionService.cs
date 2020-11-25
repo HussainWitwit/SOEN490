@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Interfaces.Repositories;
-using Interfaces.Services;
-using RecommendationEngine.Services.ExternalAPI;
+﻿using Interfaces.Repositories;
+using Interfaces.Services.ExternalAPI;
 
-namespace RecommendationEngine.Services
+namespace Interfaces.Services
 {
     public class ActionService: IActionService
     {
