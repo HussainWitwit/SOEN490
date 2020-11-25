@@ -7,3 +7,5 @@ coverage:
     patch:
       default:
         threshold: 10%
+ignore:
+  - "RecommendationEngine/Models"  # ignore models
