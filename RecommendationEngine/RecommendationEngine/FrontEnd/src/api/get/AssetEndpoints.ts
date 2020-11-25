@@ -36,15 +36,15 @@ export const getAllAssets = async () =>{
 const AssignResponse = function(response:any): Asset {
     //Make sure the returned value is exactly equal to entity attribute for the entity in question
     return {
-      Id: response.id.toString(),
-      Name: response.name,
-      DisplayText: response.displayText,
-      EnergyType: response.EnergyType,
-      TimeZone: response.TimeZone,
-      ElementPath: response.ElementPath,
-      AcPower: response.AcPower,
-      Children : response.children.map((child: any) => {
-          return AssignResponse(child);  
-      })  
+      id: response.id.toString(),
+      name: response.name,
+      displayText: response.displayText,
+      energyType: response.EnergyType,
+      timeZone: response.TimeZone,
+      elementPath: response.ElementPath,
+      acPower: response.AcPower,
+      children : response.children ? response.children.map((child: any) => {
+          return AssignResponse(child)  
+      })  : []
     };
 }

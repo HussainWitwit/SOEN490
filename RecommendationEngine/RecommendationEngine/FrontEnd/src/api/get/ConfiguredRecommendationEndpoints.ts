@@ -10,7 +10,6 @@ export const getAllConfiguredRecommendations = async () => {
         {
             configuredRecommendations = AssignResponse(jsonResponse);
             return configuredRecommendations;
-            // return formatResponse(jsonResponse); //change the name to FetchResponse
         }
         else{
             return [];
@@ -29,17 +28,17 @@ const AssignResponse = function(response: any): ConfiguredRecommendation[] {
     //Make sure the returned value is exactly equal to entity attribute for the entity in question
     let result =  response.map((element: any) => {
         return {
-            Name: element.name,
-            Type: element.type,
-            Granularity: element.granularity,
-            CreatedBy: element.createdBy,
-            RecurrenceDayOfWeek: element.recurrenceDayOfWeek,
-            RecurrenceDatetime: element.recurrenceDatetime,
-            CreatedOn: element.createdOn,
-            Parameters : element.parameters ? element.parameters.map((parameter: any) => {
+            name: element.name,
+            type: element.type,
+            granularity: element.granularity,
+            createdBy: element.createdBy,
+            recurrenceDayOfWeek: element.recurrenceDayOfWeek,
+            recurrenceDatetime: element.recurrenceDatetime,
+            createdOn: element.createdOn,
+            parameters : element.parameters ? element.parameters.map((parameter: any) => {
                 return { 
-                  ParameterName: parameter.parameterName,
-                  ParameterValue: parameter.parameterValue,
+                  parameterName: parameter.parameterName,
+                  parameterValue: parameter.parameterValue,
                 }  
             })  : []
           };

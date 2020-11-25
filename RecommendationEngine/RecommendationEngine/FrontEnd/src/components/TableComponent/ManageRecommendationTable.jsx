@@ -48,21 +48,6 @@ export const CssTextField = withStyles({
 
 })(TextField);
 
-// /**
-//   * creation of the Data Object
-//   * @param {*} title
-//   * @param {*} frequency
-//   * @param {*} startDate
-//   * @param {*} startTime
-//   * @param {*} endDate
-//   * @param {*} endTime
-//   * @param {*} template
-//   * @param {*} qlgorithm 
-//   */
-// function createData(title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
-//     return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
-// }
-
 
 
 
@@ -83,7 +68,6 @@ function descendingComparator (a, b, orderBy) {
     return 0;
 }
 
-// Same thing here
 
 /**
 * This function hanldles the comparison of items gets them - future methods
