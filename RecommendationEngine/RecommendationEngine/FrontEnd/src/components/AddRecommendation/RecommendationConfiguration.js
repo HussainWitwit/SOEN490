@@ -15,6 +15,9 @@ import 'date-fns';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import "./RecommendationConfiguration.css";
+import { setTitle, setAsset, setCenterPoint, setSpan } from '../ReduxActions/ParametersConfigurationActions';
+import { useSelector, useDispatch } from 'react-redux';
+import {batchActions} from 'redux-batched-actions';
 
 const Slide = styled.div`
 
@@ -76,48 +79,44 @@ const BootstrapInput = withStyles((theme) => ({
 
 const RecommendationConfiguration = (props) => {
 
+  const dispatchTitle = useDispatch();
+  const dispatchAsset = useDispatch();
+  const dispatchCenterPoint = useDispatch();
+  const dispatchSpan = useDispatch();
+
   // Setting the Title attribute
-  const [title, setTitle] = React.useState("");
+  const [titleOnChange, setTitleOnChange] = React.useState("");
   const handleTitle = (event) => {
-    setTitle(event.target.value);
+    setTitleOnChange(event.target.value);
   };
 
   // Setting the Asset attribute
-  const [asset, setAsset] = React.useState("");
+  const [assetOnChange, setAssetOnChange] = React.useState("");
   const handleAsset = (event) => {
-    setAsset(event.target.value);
+    setAssetOnChange(event.target.value);
   }
 
   // Setting the Parameters attribute
-  const [parameters, setParameters] = React.useState("");
+  const [parametersOnChange, setParametersOnChange] = React.useState("");
   const handleParameters = (event) => {
-    setParameters(event.target.value);
+    setParametersOnChange(event.target.value);
   };
 
 
   // Seeting the Center Point attribute 
-  const [centerPoint, setCenterPoint] = React.useState(null)
+  const [centerPointOnChange, setCenterPointOnChange] = React.useState(null)
   const handleCenterPoint = (event) => {
-    setCenterPoint(event.target.value);
+    setCenterPointOnChange(event.target.value);
   };
 
   // Seeing the Span attribute
-  const [span, setSpan] = React.useState(null);
+  const [spanOnChange, setSpanOnChange] = React.useState(null);
   const handleSpan = (event) => {
-    setSpan(event.target.value);
+    setSpanOnChange(event.target.value);
   };
 
   return (
     <Slide>
-      {/* <h1>RecommendationConfiguration</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit dolor sit amet.
-        Ligula eget dolor. Aenean massa.
-      </p>
-      <button onClick={props.dismiss}>Cancel</button>
-      <button onClick={() => props.select(1)}>Back</button>
-      <button onClick={() => props.select(3)}>Next</button> */}
-
       <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
         <CloseIcon />
       </IconButton>
@@ -135,7 +134,7 @@ const RecommendationConfiguration = (props) => {
               <NativeSelect
                 id="demo-customized-select-native"
                 className="recBoxDate"
-                value={asset}
+                value={assetOnChange}
                 onChange={handleAsset}
                 input={<BootstrapInput />}
               >
@@ -152,7 +151,7 @@ const RecommendationConfiguration = (props) => {
               <NativeSelect
                 id="demo-customized-select-native"
                 className="recBoxDate"
-                value={parameters}
+                value={parametersOnChange}
                 onChange={handleParameters}
                 input={<BootstrapInput />}
               >
@@ -163,7 +162,7 @@ const RecommendationConfiguration = (props) => {
           </div>
         </DialogContent>
 
-        {parameters == "centerPointSpan" &&
+        {parametersOnChange == "centerPointSpan" &&
           <DialogContent>
             <div className="onelinerAlign">
               <DialogContentText id="recLabel3">Center Point Increment: </DialogContentText>
@@ -181,7 +180,7 @@ const RecommendationConfiguration = (props) => {
             </div>
           </DialogContent>
         }
-        {parameters == "centerPointSpan" &&
+        {parametersOnChange == "centerPointSpan" &&
           <DialogContent>
             <div className="onelinerAlign">
               <DialogContentText id="recLabel3">Span Increment: </DialogContentText>
@@ -204,7 +203,13 @@ const RecommendationConfiguration = (props) => {
 
       <DialogActions>
         <Button id="cancelBtn" onClick={() => props.select(1)}>Back</Button>
-        <Button id="nextBtn" onClick={() => props.select(3)}>Next</Button>
+        <Button id="nextBtn" onClick={() => {
+          props.select(3);
+          dispatchTitle(batchActions([setTitle(titleOnChange), setSpan(spanOnChange)], 'DO_BOTH'))
+          // dispatchAsset(setAsset(assetOnChange)),
+          // dispatchCenterPoint(setCenterPoint(centerPointOnChange)),
+          // dispatchSpan(setSpan(spanOnChange))
+        }}>Next</Button>
       </DialogActions>
 
     </Slide>

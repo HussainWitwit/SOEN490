@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import 'date-fns';
 import Divider from '@material-ui/core/Divider';
 import "./ConfirmationPage.css";
+import { useSelector } from 'react-redux';
 
 const Slide = styled.div`
 
@@ -144,6 +145,11 @@ const ConfirmationPage = (props) => {
       .then(data => setPostResponse({ postResultId: data.id }));
   }
 
+  const recTitle = useSelector(state => state.title);
+  const recAsset= useSelector(state => state.asset);
+  const recCenterPoint = useSelector (state => state.centerPoint);
+  const recSpan = useSelector (state => state.span);
+
   return (
     <Slide>  
       <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
@@ -157,21 +163,21 @@ const ConfirmationPage = (props) => {
           <br></br>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Template: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">Yearly Wash Optmization</DialogContentText>
+  <DialogContentText id="confirmationLabelOutput">Yearly Wash Optmization</DialogContentText>
           </div>
         </DialogContent>
 
         <DialogContent>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Title: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">{(title === "" ? "Undefined" : title)}</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">{(recTitle)}</DialogContentText>
           </div>
         </DialogContent>
 
         <DialogContent>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Asset: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">{(asset === "" ? "Feature Coming soon!" : asset)}</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">{(recAsset === "" ? "Feature Coming soon!" : recAsset)}</DialogContentText>
           </div>
         </DialogContent>
 
@@ -206,7 +212,7 @@ const ConfirmationPage = (props) => {
         <DialogContent>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Day of the Week/Month: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">{(dayWeek === "" ? "Underfined" : (dayWeek != "" ? dayWeek : dayMonth))}</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">{(dayWeek === "" ? "Undefined" : (dayWeek != "" ? dayWeek : dayMonth))}</DialogContentText>
           </div>
         </DialogContent>
 
@@ -249,14 +255,14 @@ const ConfirmationPage = (props) => {
           <br></br>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Center Point: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">{(centerPoint === null ? "Undefined" : centerPoint)}</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">{(recCenterPoint === null ? "Undefined" : recCenterPoint)}</DialogContentText>
           </div>
         </DialogContent>
 
         <DialogContent>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Span: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">{(span === null ? "Undefined" : span)}</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">{(recSpan === null ? "Undefined" : recSpan)}</DialogContentText>
           </div>
         </DialogContent>
 

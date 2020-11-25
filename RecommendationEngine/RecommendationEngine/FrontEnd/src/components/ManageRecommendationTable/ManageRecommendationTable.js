@@ -43,6 +43,8 @@ import TemplateConfiguration from '../AddRecommendation/TemplateConfiguration';
 import DateConfiguration from '../AddRecommendation/DateConfiguration';
 import RecommendationConfiguration from '../AddRecommendation/RecommendationConfiguration';
 import ConfirmationPage from '../AddRecommendation/ConfirmationPage';
+import {increment} from '../ReduxActions';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const CssTextField = withStyles({
   root: {
