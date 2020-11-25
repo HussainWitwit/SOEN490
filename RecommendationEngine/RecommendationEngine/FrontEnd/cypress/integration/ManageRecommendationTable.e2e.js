@@ -32,8 +32,6 @@ describe("Manage Recommendation Table", () => {
         cy.get('#table-row > :nth-child(2)').should('be.visible')
         cy.get('#table-row > :nth-child(3)').should('be.visible')
         cy.get('#table-row > :nth-child(4)').should('be.visible')
-        cy.get('#table-row > :nth-child(6)').should('be.visible')
-        cy.get('#table-row > :nth-child(7)').should('be.visible')
         cy.get('#pagination > .MuiToolbar-root').should('be.visible')
         cy.get('.MuiTablePagination-actions').should('be.visible')
     })
