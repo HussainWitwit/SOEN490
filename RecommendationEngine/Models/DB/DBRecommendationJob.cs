@@ -15,7 +15,7 @@ namespace Models.DB
         public string TriggeredBy { get; set; }
         public int JobDuration { get; set; }
         public DateTime Timestamp { get; set; }
-        public virtual ICollection<DBRecommendationJobResult> ResultsList { get; set; }
+        public virtual DBRecommendationJobResult JobResult { get; set; }
         public virtual DBAsset Asset { get; set; }
         public virtual DBRecommendationSchedule Schedule { get; set; }
         public virtual ICollection<DBRecommendationJobLog> LogsList { get; set; }

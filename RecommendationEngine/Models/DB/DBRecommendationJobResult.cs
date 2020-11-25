@@ -11,9 +11,9 @@ namespace Models.DB
         public int RecommendationJobResultId { get; set; }
         public string DisplayText { get; set; }
         public string Result { get; set; }
-        public double CostOfAction { get; set; } // changed, check db
+        public double CostOfAction { get; set; }
         public double CostOfInaction { get; set; }
-        public double Benefit { get; set; } // changed, check db
+        public double Benefit { get; set; }
         public double ConfidencePercentage { get; set; }
         public double ReturnOfInvestment { get; set; }
         public double NetSaving { get; set; }

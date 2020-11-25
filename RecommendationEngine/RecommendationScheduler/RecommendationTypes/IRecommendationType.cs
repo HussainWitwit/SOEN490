@@ -1,5 +1,4 @@
-﻿using Interfaces.Services.ExternalAPI;
-using Models.DB;
+﻿using Models.DB;
 
 namespace RecommendationScheduler.RecommendationTypes
 {
