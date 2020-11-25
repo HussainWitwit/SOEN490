@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,7 +17,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-
+import { getAllConfiguredRecommendations } from "../../api/get/ConfiguredRecommendationEndpoints";
 import './ManageRecommendationTable.css';
 
 export const CssTextField = withStyles({
@@ -48,71 +48,8 @@ export const CssTextField = withStyles({
 
 })(TextField);
 
-/**
-  * creation of the Data Object
-  * @param {*} title
-  * @param {*} frequency
-  * @param {*} startDate
-  * @param {*} startTime
-  * @param {*} endDate
-  * @param {*} endTime
-  * @param {*} template
-  * @param {*} qlgorithm 
-  */
-function createData(title, frequency, startDate, startTime, endDate, endTime, template, algorithm) {
-    return { title, frequency, startDate, startTime, endDate, endTime, template, algorithm };
-}
 
-const mockRows = [
-    createData('W33ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W34ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W35ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W36ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W37ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W38ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W39ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W40ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W41ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W42ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W43ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W44ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W45ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W46ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W47ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W48ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W49ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W50ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W51ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W52ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W53ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W54ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W55ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W56ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W57ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W58ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W59ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W60ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W61ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W62ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W63ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W64ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W65ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W66ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W67ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W68ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W69ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W70ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W71ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W72ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W73ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W74ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W75ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W76ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W77ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W78ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W79ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-    createData('W80ID', 'Bi-Weekly', 'May 26, 2020', '7:30 PM', 'June 23, 2021', '7:30 PM', 'Wash Optimization', 'WO Algorithm'),
-];
+
 
 /**
    * This function handles compares row items - future methods
@@ -121,7 +58,7 @@ const mockRows = [
    * @param {*} orderBy
  
    */
-function descendingComparator(a, b, orderBy) {
+function descendingComparator (a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
@@ -131,7 +68,6 @@ function descendingComparator(a, b, orderBy) {
     return 0;
 }
 
-// Same thing here
 
 /**
 * This function hanldles the comparison of items gets them - future methods
@@ -139,7 +75,7 @@ function descendingComparator(a, b, orderBy) {
 * @param {*} orderBy 
 */
 
-function getComparator(order, orderBy) {
+function getComparator (order, orderBy) {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
@@ -153,7 +89,7 @@ function getComparator(order, orderBy) {
 * @param {} event 
 * @param {*} index 
 */
-function stableSort(array, comparator) {
+function stableSort (array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
         const order = comparator(a[0], b[0]);
@@ -164,12 +100,13 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'title', numeric: false, label: 'Title' },
-    { id: 'frequency', numeric: false, label: 'Frequency' },
-    { id: 'startDate', numeric: true, label: 'Start Date' },
-    { id: 'endDate', numeric: true, label: 'End Date' },
-    { id: 'template', numeric: true, label: 'Template' },
-    { id: 'algorithm', numeric: true, label: 'Algorithm' },
+    { id: 'title', label: 'Title' },
+    { id: 'type', label: 'Type' },
+    { id: 'granularity', label: 'Granularity' },
+    // { id: 'RecDateTime', label: 'Recurrence Datetime' },
+    // { id: 'RecDayOfWeek', label: 'Day of week' },
+    { id: 'createdOn', label: 'Created On' },
+    // { id: 'createdBy', label: 'Created By' },
 ];
 
 /**
@@ -178,7 +115,7 @@ const headCells = [
  
    */
 
-export function EnhancedTableHead(props) {
+export function EnhancedTableHead (props) {
     const { order, orderBy, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -223,14 +160,25 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string,
 };
 
-function ManageRecommendationTable() {
+function ManageRecommendationTable () {
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('');
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    //TODO:Set the hooks for the Title, Subtitle, Button Boolean, 
-    //TODO:Set hook array for the name of the columns of the table and the filter list 
+    const [data, setData] = React.useState([]);
+
+    /**
+     * Asynchronous function that fetches all the configured recommendations
+     */
+    const fetchData = async () => {
+        let response = await getAllConfiguredRecommendations();
+        setData(response);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
     /**
@@ -276,8 +224,7 @@ function ManageRecommendationTable() {
     };
 
     // handling the empty rows for the method that compresses the table rows
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, mockRows.length - page * rowsPerPage);
-
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data ? data.length - page * rowsPerPage : 1);
     return (
         <div id="main-container">
             <div>
@@ -368,36 +315,37 @@ function ManageRecommendationTable() {
                                 order={order}
                                 orderBy={orderBy}
                                 onRequestSort={handleRequestSort}
-                                rowCount={mockRows.length} might be uselfull for later
+                                rowCount={data ? data.length : 1}
                             />
 
                             <TableBody id="table-body">
-                                {stableSort(mockRows, getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
-                                        return (
-                                            <TableRow
-                                                key={row.title}
-                                                className="custom"
-                                            >
-                                                <TableCell  className="custom">
-                                                </TableCell>
-                                                <TableCell
-                                                    component="th"
-                                                    scope="row"
-                                                    padding="default"
-                                                    className="primaryKey"
-                                                    id="tableBody">
-                                                    {row.title}
-                                                </TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.frequency}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.template}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.algorithm}</TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
+                                {/* {stableSort(data, getComparator(order, orderBy))
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) */}
+                                {data && data.map((element, index) => {
+                                    return (
+                                        <TableRow
+                                            key={element.name}
+                                            className="custom"
+                                        >
+                                            <TableCell className="custom">
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                padding="default"
+                                                className="primaryKey"
+                                                id="tableBody">
+                                                {element.name}
+                                            </TableCell>
+                                            <TableCell className="custom" id="tableBody">{element.type}</TableCell>
+                                            <TableCell className="custom" id="tableBody">{element.granularity}</TableCell>
+                                            {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDatetime}</TableCell> */}
+                                            {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDayOfWeek}</TableCell> */}
+                                            <TableCell className="custom" id="tableBody">{element.createdOn}</TableCell>
+                                            {/* <TableCell className="custom" id="tableBody">{element.CreatedBy}</TableCell> */}
+                                        </TableRow>
+                                    );
+                                })}
                                 {emptyRows > 0 && (
                                     <TableRow className="center" classes={{ height: (dense ? 33 : 53) * emptyRows }}>
                                         <TableCell className="center" />
@@ -410,7 +358,7 @@ function ManageRecommendationTable() {
                         id="pagination"
                         rowsPerPageOptions={[10, 25, 50, 100]}
                         component="div"
-                        count={mockRows.length}
+                        count={data ? data.length : 1}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onChangePage={handleChangePage}
