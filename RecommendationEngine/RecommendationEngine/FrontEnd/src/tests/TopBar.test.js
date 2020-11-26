@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopBar from '../components/TopBar/TopBar.js';
-import Breadcrumb from '../components/Breadcrumb/Breadcrumb.js';
-import NotificationBell from '../components/Notification/NotificationBell.js';
+import TopBar from '../containers/TopBar/TopBar.jsx';
+import NotificationBell from '../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
@@ -28,8 +27,6 @@ describe('TopBar component', () => {
 
     it('It finds the breadcrumb element', () => {
         const output = shallow(<TopBar />);
-        let component = output.find(Breadcrumb);
-        expect(component).toHaveLength(1);
         expect(output.find('#breadcrumb')).toBeTruthy();
     });
 
@@ -41,6 +38,11 @@ describe('TopBar component', () => {
     it('It finds the img element', () => {
         const output = shallow(<TopBar />);
         expect(output.find('#img')).toBeTruthy();
+    });
+
+    it('It finds the change button element', () => {
+        const output = shallow(<TopBar />);
+        expect(output.find('#change_button')).toBeTruthy();
     });
 
     it('It finds the img element', () => {

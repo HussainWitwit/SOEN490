@@ -40,11 +40,12 @@ namespace Models.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DBRecommendationJobResult>().HasOne(p => p.Job)
+                .WithOne(a => a.Result)
+                .HasForeignKey<DBRecommendationJobResult>(a => a.RecommendationJobResultId);
 
             modelBuilder.Entity<DBAssetRecommendationSchedule>()
                 .HasKey(c => new { c.AssetId, c.ScheduleId });
-
-
             modelBuilder.Entity<DBAssetRecommendationSchedule>()
                 .HasOne(x => x.Asset)
                 .WithMany(m => m.RecommendationSchedulesList)

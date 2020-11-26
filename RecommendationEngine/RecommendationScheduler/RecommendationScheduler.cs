@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Threading.Tasks;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
@@ -46,13 +47,16 @@ namespace RecommendationScheduler
 
         public async Task ScheduleJobAsync(DBRecommendationSchedule schedule)
         {
-            RecommendationJobFactory factory = new RecommendationJobFactory(schedule);
-            IJobDetail job = factory.CreateRecommendationJob();
-            ITrigger trigger = TriggerBuilder.Create()
-                .ForJob(job)
-                .WithSchedule(ScheduleBuilder(schedule))
-                .Build();
-            await _scheduler.ScheduleJob(job, trigger);
+            if (schedule.AssetsList?.Count > 0)
+            {
+                RecommendationJobFactory factory = new RecommendationJobFactory(schedule);
+                IJobDetail job = factory.CreateRecommendationJob();
+                ITrigger trigger = TriggerBuilder.Create()
+                    .ForJob(job)
+                    .WithSchedule(ScheduleBuilder(schedule))
+                    .Build();
+                await _scheduler.ScheduleJob(job, trigger);
+            }
         }
 
         private IScheduleBuilder ScheduleBuilder(DBRecommendationSchedule schedule)

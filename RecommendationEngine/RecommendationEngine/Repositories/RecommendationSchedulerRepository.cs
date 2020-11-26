@@ -12,7 +12,7 @@ namespace RecommendationEngine.Repositories
 {
     public class RecommendationSchedulerRepository: IRecommendationSchedulerRepository
     {
-        private RecommendationEngineDBContext _recommendationEngineDb;
+        private readonly RecommendationEngineDBContext _recommendationEngineDb;
 
         public RecommendationSchedulerRepository(RecommendationEngineDBContext recommendationEngineDb)
         {
@@ -26,13 +26,15 @@ namespace RecommendationEngine.Repositories
 
         public DBRecommendationSchedule GetDbRecommendationScheduleById(int id)
         {
-            return _recommendationEngineDb.RecommendationSchedules.Include(x=>x.RecommendationType).Include(x=>x.AssetsList).FirstOrDefault(x =>
+            return _recommendationEngineDb.RecommendationSchedules.Include(x=>x.RecommendationType).Include(x=>x.AssetsList)
+                .ThenInclude(x => x.Asset).Include(x=>x.ParametersList).FirstOrDefault(x =>
                 x.RecommendationScheduleId == id);
         }
 
         public List<DBRecommendationSchedule> GetDbRecommendationSchedules()
         {
-            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
+            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList)
+                .ThenInclude(x=>x.Asset).ToList();
         }
 
         public DBRecommendationJob AddRecommendationJob(DBRecommendationJob job)

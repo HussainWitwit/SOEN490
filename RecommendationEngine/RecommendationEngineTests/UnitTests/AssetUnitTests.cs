@@ -25,7 +25,7 @@ namespace RecommendationEngineTests
             _driveMock = new Mock<IDriveService>();
             _assetServiceMock = new AssetService(_driveMock.Object, _assetRepoMock.Object, _assetTypeRepoMock.Object);
             List<DBAsset> dbAssets = MockAssets.BasicDBAssetList;
-            _assetRepoMock.Setup(x => x.Get()).Returns(dbAssets);
+            _assetRepoMock.Setup(x => x.GetAssetsList()).Returns(dbAssets);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace RecommendationEngineTests
             //Assert
             Assert.IsInstanceOf(typeof(AssetComposite), assetComposite);
             Assert.NotNull(assetComposite);
-            _assetRepoMock.Verify(x => x.Get(), Times.AtLeastOnce());
+            _assetRepoMock.Verify(x => x.GetAssetsList(), Times.AtLeastOnce());
         }
 
         [Test]

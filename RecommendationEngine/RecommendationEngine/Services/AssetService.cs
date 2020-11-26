@@ -5,6 +5,7 @@ using Interfaces.Services;
 using Models.DB;
 using Interfaces.Repositories;
 using Models.Application.Asset;
+using Models.Application.APIModels;
 using System.Threading.Tasks;
 using RecommendationEngine.Services.ExternalAPI.APIModels;
 using Interfaces.Services.ExternalApi;
@@ -55,19 +56,17 @@ namespace RecommendationEngine.Services
             var portfolios = await _driveService.GetPortfolios();
             var plants = await _driveService.GetPlants();
 
-            List<DBAsset> result = new List<DBAsset>();
             List<PFPortfolio> listOfPortfolios = portfolios.ToList();
             List<PFPortfolio> listOfPlants = plants.ToList();
 
             DBAsset client = GetClient(listOfPortfolios);
 
-            result.Add(client);
             _assetRepository.AddAsset(client);
 
-            List<DBAsset> parentDBAssets = BuildAssets(listOfPortfolios, true, client);
+            List<DBAsset> parentDBAssets = await BuildAssets(listOfPortfolios, true, client);
             _assetRepository.AddAssetList(parentDBAssets);
 
-            List<DBAsset> childDBAssets = BuildAssets(listOfPlants, false, client);
+            List<DBAsset> childDBAssets = await BuildAssets(listOfPlants, false, client);
             _assetRepository.AddAssetList(childDBAssets);
         }
 
@@ -77,7 +76,7 @@ namespace RecommendationEngine.Services
             {
                 return _assets;
             }
-            return _assets = _assetRepository.Get();
+            return _assets = _assetRepository.GetAssetsList();
         }
 
         private List<AssetComposite> GetChildren(int assetId)
@@ -103,7 +102,7 @@ namespace RecommendationEngine.Services
             {
                 Name = dbasset.Name,
                 Id = dbasset.AssetId,
-                AcPower = dbasset.AcPower,
+                AcPower = !Double.IsNaN(dbasset.AcPower) ? dbasset.AcPower : 0,
                 DisplayText = dbasset.DisplayText,
                 ElementPath = dbasset.ElementPath,
                 EnergyType = dbasset.EnergyType,
@@ -125,30 +124,45 @@ namespace RecommendationEngine.Services
                 .Distinct()
                 .Select(x => new DBAsset()
                 {
-                    Name = x
+                    Name = x,
+                    DisplayText = x
                 })
                 .FirstOrDefault();
 
             return client;
         }
 
-        private List<DBAsset> BuildAssets(List<PFPortfolio> plants, bool isPortfolio, DBAsset client)
+        private async Task<List<DBAsset>> BuildAssets(List<PFPortfolio> assets, bool isPortfolio, DBAsset client)
         {
-            PFPlant plant;
-            List<DBAsset> assetList = plants
+            Dictionary<string, dynamic> assetsEnergyTypes = new Dictionary<string, dynamic>();
+
+            if (!isPortfolio)
+            {
+                List<string> assetIds = assets.Select(asset => asset.Id).ToList();
+                List<PFMetadata> assetsMetadata = await _driveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
+                assetsEnergyTypes = assetsMetadata.Select(assetMetadata =>
+                    new { elementPath = assetMetadata.ElementPath, energyType = assetMetadata.Metadata["ENERGY_SOURCE"] })
+                    .ToDictionary(asset => asset.elementPath, asset => asset.energyType);
+            }
+
+            PFPlant plant = new PFPlant();
+            List<DBAsset> assetList = assets
                 .Select(x =>
                 {
-                    plant = Task.Run(() => { return GetPlantByPortfolioId(x.Id); }).Result;
-
+                    if (!isPortfolio)
+                    {
+                        plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
+                    }
+                    
                     return new DBAsset()
                     {
                         Name = x.Id,
                         ElementPath = x.Id,
-                        DisplayText = string.IsNullOrEmpty(x.Name) ? x.Id : x.Name,
-                        EnergyType = null, //we need the assetmetada API to populate this (null for now)
+                        DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
+                        EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
                         Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
-                        AcPower = isPortfolio ? -1 : plant.AcCapacity,
+                        AcPower = isPortfolio ? 0 : plant.AcCapacity,
                         ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
                     };
                 }
@@ -157,9 +171,10 @@ namespace RecommendationEngine.Services
             return assetList;
         }
 
-        private async Task<PFPlant> GetPlantByPortfolioId(string id)
+        private async Task<PFPlant> GetPlantById(string id)
         {
-            PFPlant plant = await _driveService.GetPlantByPortfolioId(id);
+
+            PFPlant plant = await _driveService.GetPlantById(id);
             return plant;
         }
 
@@ -171,7 +186,7 @@ namespace RecommendationEngine.Services
 
         private string GetParentId(string id)
         {
-            string parentId = Task.Run(() => { return GetPlantByPortfolioId(id); }).Result.PortfolioId;
+            String parentId = Task.Run(() => { return GetPlantById(id); }).Result.PortfolioId;
             return parentId;
         }
     }

@@ -1,0 +1,11 @@
+coverage:
+  round: up
+  status:
+    project:
+      default:
+        threshold: 5%
+    patch:
+      default:
+        threshold: 10%
+ignore:
+  - "RecommendationEngine/Models"  # ignore models

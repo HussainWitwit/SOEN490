@@ -16,6 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { getAllConfiguredRecommendations } from "../../api/get/ConfiguredRecommendationEndpoints";
 import Switch from '@material-ui/core/Switch';
 import 'date-fns';
 import './ManageRecommendationTable.css';
@@ -80,41 +81,65 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-// export function descendingComparator (a, b, orderBy) {
-//     if (b[orderBy] < a[orderBy]) {
-//         return -1;
-//     }
-//     if (b[orderBy] > a[orderBy]) {
-//         return 1;
-//     }
-//     return 0;
-// }
-
-// export function getComparator (order, orderBy) {
-//     return order === 'desc'
-//         ? (a, b) => descendingComparator(a, b, orderBy)
-//         : (a, b) => -descendingComparator(a, b, orderBy);
-// }
-
-// export function stableSort (array, comparator) {
-//     const stabilizedThis = array.map((el, index) => [el, index]);
-//     stabilizedThis.sort((a, b) => {
-//         const order = comparator(a[0], b[0]);
-//         if (order !== 0) return order;
-//         return a[1] - b[1];
-//     });
-//     return stabilizedThis.map((el) => el[0]);
-// }
-
-const headCells = [
-  { id: 'title', numeric: false, label: 'Title' },
-  { id: 'frequency', numeric: false, label: 'Frequency' },
-  { id: 'template', numeric: true, label: 'Template' },
-  { id: 'createdOn', numeric: true, label: 'created On' },
-];
+/**
+   * This function handles compares row items - future methods
+   * @param {*} a
+   * @param {*} b
+   * @param {*} orderBy
+ 
+   */
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
 
 /**
- * cMethod that will serve for the creation of the table header
+* This function hanldles the comparison of items gets them - future methods
+* @param {} order
+* @param {*} orderBy 
+*/
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+
+/**
+* This function can handle the sorting of the row items - future methods
+* @param {} event 
+* @param {*} index 
+*/
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
+
+const headCells = [
+  { id: 'title', label: 'Title' },
+  { id: 'type', label: 'Type' },
+  { id: 'granularity', label: 'Granularity' },
+  // { id: 'RecDateTime', label: 'Recurrence Datetime' },
+  // { id: 'RecDayOfWeek', label: 'Day of week' },
+  { id: 'createdOn', label: 'Created On' },
+  // { id: 'createdBy', label: 'Created By' },
+];
+
+
+/**
+ * Method that will serve for the creation of the table header
  * @param {*} props
  */
 
@@ -171,21 +196,20 @@ function ManageRecommendationTable() {
   const [orderBy, setOrderBy] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [showDialog, setShowDialog] = React.useState(false);
   const [data, setData] = React.useState([]);
-
-  const fetchData = async () => {
-    let response = await getAllRecommendations();
-    setData(response);
-  };
+  const [showDialog, setShowDialog] = React.useState(false);
+  
+   /**
+     * Asynchronous function that fetches all the configured recommendations
+     */
+    const fetchData = async () => {
+      let response = await getAllConfiguredRecommendations();
+      setData(response);
+  }
 
   useEffect(() => {
-    fetchData();
+      fetchData();
   }, []);
-
-  //TODO:Set the hooks for the Title, Subtitle, Button Boolean, (Making of Table Generic) - C.S.B
-  
-  //TODO:Set hook array for the name of the columns of the table and the filter list (Making of Table Generic) - C.S.B
 
   /**
    * set the items to be comprssed function
@@ -250,12 +274,12 @@ function ManageRecommendationTable() {
             </h6>
           </Grid>
           <Grid item>
-             <div>
+            <div>
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
               <CarouselDialog show={showDialog} toggle={toggleDialog}>
-                <Carousel>{({ getItemProps }) =>items.map((Item) => (<Item {...getItemProps({ key: Item, dismiss: toggleDialog,})}/>))}</Carousel>
+                <Carousel>{({ getItemProps }) => items.map((Item) => (<Item {...getItemProps({ key: Item, dismiss: toggleDialog, })} />))}</Carousel>
               </CarouselDialog>
             </div>
           </Grid>
@@ -271,10 +295,10 @@ function ManageRecommendationTable() {
             <Grid item>
               <CssTextField id="custom-css-standard-input" label="Search"
                 inputProps={{
-                  style: { fontSize: 15, fontFamily: ['Segoe UI',' Tahoma','"Geneva"','Verdana','"sans-serif"',].join(','),},
+                  style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), },
                 }}
-                InputLabelProps={{ style: {fontSize: 15, fontFamily: ['Segoe UI',' Tahoma','"Geneva"','Verdana','"sans-serif"',].join(','),},}}>
-                </CssTextField>
+                InputLabelProps={{ style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), }, }}>
+              </CssTextField>
             </Grid>
             <Grid item>
               <Button size="small" id="filterBtn" endIcon={<FilterList />}>
@@ -291,7 +315,7 @@ function ManageRecommendationTable() {
             <h6 className="toolBarTitle" variant="h6" id="tableTitle" component="div"> Configured Recommendations</h6>
             <FormControlLabel
               control={
-                <Switch checked={dense} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }}/>
+                <Switch checked={dense} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }} />
               }
               label={<h6 id="controlLabel">Lite</h6>}
             />
@@ -302,45 +326,45 @@ function ManageRecommendationTable() {
             >
               <EnhancedTableHead order={order} orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                rowCount={data.length}
+                rowCount={data ? data.length : 1}
               />
               <TableBody id="table-body">
-                {
-                  /* {stableSort(data, getComparator(order, orderBy))*/
-                  // slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  data.map((row) => {
-                    return (
-                      <TableRow key={row.title} className="custom">
-                        <TableCell className="custom"></TableCell>
-                        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody"> {row.name}
-                        </TableCell>
-                        <TableCell className="custom" id="tableBody">
-                          {row.granularity}
-                        </TableCell>
-                        {/* <TableCell className="custom" id="tableBody">{row.startDate}<br></br>{row.startTime}</TableCell>
-                                                <TableCell className="custom" id="tableBody">{row.endDate}<br></br>{row.endTime}</TableCell> */}
-                        <TableCell className="custom" id="tableBody">
-                          {row.type}
-                        </TableCell>
-                        <TableCell className="custom" id="tableBody">
-                          {row.createdOn}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-                }
+                {/* {stableSort(data, getComparator(order, orderBy))
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) */}
+                {data && data.map((element, index) => {
+                  return (
+                    <TableRow
+                      key={element.name}
+                      className="custom"
+                    >
+                      <TableCell className="custom">
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        padding="default"
+                        className="primaryKey"
+                        id="tableBody">
+                        {element.name}
+                      </TableCell>
+                      <TableCell className="custom" id="tableBody">{element.type}</TableCell>
+                      <TableCell className="custom" id="tableBody">{element.granularity}</TableCell>
+                      {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDatetime}</TableCell> */}
+                      {/* <TableCell className="custom" id="tableBody">{element.RecurrenceDayOfWeek}</TableCell> */}
+                      <TableCell className="custom" id="tableBody">{element.createdOn}</TableCell>
+                      {/* <TableCell className="custom" id="tableBody">{element.CreatedBy}</TableCell> */}
+                    </TableRow>
+                  );
+                })}
                 {emptyRows > 0 && (
-                  <TableRow
-                    className="center"
-                    classes={{ height: (dense ? 33 : 53) * emptyRows }}
-                  >
+                  <TableRow className="center" classes={{ height: (dense ? 33 : 53) * emptyRows }}>
                     <TableCell className="center" />
                   </TableRow>
                 )}
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination id="pagination" rowsPerPageOptions={[10, 25, 50, 100]} component="div" count={data.length} rowsPerPage={rowsPerPage} page={page} onChangePage={handleChangePage} onChangeRowsPerPage={handleChangeRowsPerPage}/>
+          <TablePagination id="pagination" rowsPerPageOptions={[10, 25, 50, 100]} component="div" count={data.length} rowsPerPage={rowsPerPage} page={page} onChangePage={handleChangePage} onChangeRowsPerPage={handleChangeRowsPerPage} />
         </Paper>
       </div>
     </div>
