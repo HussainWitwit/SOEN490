@@ -1,10 +1,7 @@
 import React from 'react'
-import styled from 'styled-components';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -17,10 +14,6 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import "./DateConfiguration.css";
-
-const Slide = styled.div`
-
-`;
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -36,7 +29,6 @@ const BootstrapInput = withStyles((theme) => ({
       fontSize: 16,
       padding: '10px 26px 10px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
-      // Use the system font instead of the default Roboto font.
       fontFamily: [
           'Segoe UI', "Tahoma", "Geneva", "Verdana", "sans-serif"
       ].join(','),
@@ -99,16 +91,7 @@ const DateConfiguration = (props) => {
   };
 
   return (
-    <Slide>
-      {/* <h1>Date Configuration</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-        ligula eget dolor. Aenean massa.
-      </p>
-      <button onClick={props.dismiss}>Cancel</button>
-      <button onClick={() => props.select(0)}>Back</button>
-      <button onClick={() => props.select(2)}>Next</button> */}
-
+    <div>
       <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
         <CloseIcon />
       </IconButton>
@@ -218,7 +201,7 @@ const DateConfiguration = (props) => {
         <Button id="cancelBtn" onClick={() => props.select(0)}>Back</Button>
         <Button id="nextBtn" onClick={() => props.select(2)}>Next</Button>
       </DialogActions>
-    </Slide>
+    </div>
 
   );
 }

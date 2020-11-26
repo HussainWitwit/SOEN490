@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,10 +10,6 @@ import 'date-fns';
 import Divider from '@material-ui/core/Divider';
 import "./ConfirmationPage.css";
 import { useSelector } from 'react-redux';
-
-const Slide = styled.div`
-
-`;
 
 const ConfirmationPage = (props) => {
 
@@ -123,6 +118,10 @@ const ConfirmationPage = (props) => {
     setCreatedOn(event);
   };
 
+ /**
+   * Post Method
+   */
+
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -151,7 +150,7 @@ const ConfirmationPage = (props) => {
   const recSpan = useSelector (state => state.span);
 
   return (
-    <Slide>  
+    <div>  
       <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
         <CloseIcon />
       </IconButton>
@@ -170,7 +169,7 @@ const ConfirmationPage = (props) => {
         <DialogContent>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Title: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">{(recTitle)}</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">{(recTitle === "" ? "Undefined" : recTitle)}</DialogContentText>
           </div>
         </DialogContent>
 
@@ -289,8 +288,7 @@ const ConfirmationPage = (props) => {
         <Button id="cancelBtn" onClick={() => props.select(2)}>Back</Button>
         <Button id="nextBtn" onClick={()=>{postAddRecommendation()}, props.dismiss}>Confirm</Button>
       </DialogActions>
-    </Slide>
-    
+    </div>
   )
 };
 

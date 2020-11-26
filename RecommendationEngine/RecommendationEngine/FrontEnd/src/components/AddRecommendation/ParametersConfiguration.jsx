@@ -1,6 +1,4 @@
 import React from 'react'
-import styled from 'styled-components';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -14,14 +12,10 @@ import FormControl from '@material-ui/core/FormControl';
 import 'date-fns';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
-import "./RecommendationConfiguration.css";
+import "./ParametersConfiguration.css";
 import { setTitle, setAsset, setCenterPoint, setSpan } from '../ReduxActions/ParametersConfigurationActions';
-import { useSelector, useDispatch } from 'react-redux';
-import {batchActions} from 'redux-batched-actions';
-
-const Slide = styled.div`
-
-`;
+import { setParam } from '../ReduxReducers/ParametersConfigurationReducers';
+import { useDispatch } from 'react-redux';
 
 export const CssTextField = withStyles({
 
@@ -65,7 +59,6 @@ const BootstrapInput = withStyles((theme) => ({
     fontSize: 16,
     padding: '10px 26px 10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
     fontFamily: [
       'Segoe UI', "Tahoma", "Geneva", "Verdana", "sans-serif"
     ].join(','),
@@ -77,12 +70,10 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const RecommendationConfiguration = (props) => {
 
-  const dispatchTitle = useDispatch();
-  const dispatchAsset = useDispatch();
-  const dispatchCenterPoint = useDispatch();
-  const dispatchSpan = useDispatch();
+const ParametersConfiguration = (props) => {
+
+  const dispatch = useDispatch();
 
   // Setting the Title attribute
   const [titleOnChange, setTitleOnChange] = React.useState("");
@@ -116,11 +107,11 @@ const RecommendationConfiguration = (props) => {
   };
 
   return (
-    <Slide>
+    <div>
       <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
         <CloseIcon />
       </IconButton>
-      <DialogTitle id="form-dialog-title" className="dialogTitle">Recommendation Configuration</DialogTitle>
+      <DialogTitle id="form-dialog-title" className="dialogTitle">Parameters Configuration</DialogTitle>
       <DialogContent className="recConfigPaper">
 
         <DialogContentText id="recLabel">Title of Recommendation</DialogContentText>
@@ -203,17 +194,25 @@ const RecommendationConfiguration = (props) => {
 
       <DialogActions>
         <Button id="cancelBtn" onClick={() => props.select(1)}>Back</Button>
-        <Button id="nextBtn" onClick={() => {
-          props.select(3);
-          dispatchTitle(batchActions([setTitle(titleOnChange), setSpan(spanOnChange)], 'DO_BOTH'))
-          // dispatchAsset(setAsset(assetOnChange)),
-          // dispatchCenterPoint(setCenterPoint(centerPointOnChange)),
-          // dispatchSpan(setSpan(spanOnChange))
-        }}>Next</Button>
+        
+        <Button id="nextBtn" onClick={() => (
+         
+          props.select(3),
+          dispatch(setTitle(titleOnChange),setSpan(spanOnChange))
+         
+        )
+        }>Next</Button> 
+
+
+        {/* <Button id="nextBtn" onClick={() => (
+    dispatch(setParam(titleOnChange,spanOnChange))
+        
+       )}>Next</Button> */}
+
       </DialogActions>
 
-    </Slide>
+    </div>
   )
 };
 
-export default RecommendationConfiguration
+export default ParametersConfiguration

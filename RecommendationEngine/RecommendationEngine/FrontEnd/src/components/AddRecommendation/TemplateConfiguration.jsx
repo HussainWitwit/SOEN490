@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -9,13 +8,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import { Select, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import "./TemplateConfiguration.css";
 
-const Slide = styled.div`
-`;
-
 const TemplateConfiguration = (props) => {
+
+    // Will serve on future implementations 
 
     // Setting the Title attribute
     const [title, setTitle] = React.useState("");
@@ -97,16 +95,7 @@ const TemplateConfiguration = (props) => {
     }
 
     return (
-        <Slide>
-            {/* <h1>Template Configuration</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                ligula eget dolor.
-             </p>
-            <button onClick={props.dismiss}>Cancel</button>
-            <button onClick={() => props.select(1)}>Next</button> */}
-
-
+        <div>
             <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
                 <CloseIcon />
             </IconButton>
@@ -161,7 +150,7 @@ const TemplateConfiguration = (props) => {
                 <Button id="cancelBtn" onClick={props.dismiss}>Cancel</Button>
                 <Button id="nextBtn" onClick={() => props.select(1)}>Next</Button>
             </DialogActions>
-        </Slide>
+        </div>
     )
 }
 

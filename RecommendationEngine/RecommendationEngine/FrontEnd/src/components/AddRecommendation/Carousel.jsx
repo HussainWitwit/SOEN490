@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Spring } from 'spring2'
 import { Transition } from 'spring2'
 import { animated } from 'spring2'
-
-
 
 const CarouselContent = ({ children, activeIndex, prevIndex }) => (
   <Transition
@@ -44,30 +42,7 @@ const HeightTransition = ({ children }) => (
 
 function Carousel({children}) {
 
-// state = {
-//     activeIndex: 0,
-//     prevIndex: -1
-//   }
-
-  // const [activeIndex, setActiveIndex] = 0; 
-  // const [prevIndex, setPrevIndex] =-1;
-
   const [state, setState] = React.useState({activeIndex: 0, prevIndex:-1});
-
-  // const handleActiveIndex = (index) => {
-  //   setActiveIndex(index);
-  // }
-
-
-  // const handlePrevIndex = (activeIndex) => {
-  //   setPrevIndex(activeIndex);
-  // }
-
-  // const select = (index) => {
-  //     setState((prevState)=>{{prevIndex: prevState.activeIndex; activeIndex: index}});
-  //   }
-  // }
-  
 
   const select = index => {
     setState(prevState => ({
@@ -81,7 +56,6 @@ function Carousel({children}) {
     select: select
   })
 
-  // render() {
     return (
       <HeightTransition>
         <CarouselContent
@@ -94,7 +68,6 @@ function Carousel({children}) {
         </CarouselContent>
       </HeightTransition>
     )
-  
 }
 
 export default Carousel;
