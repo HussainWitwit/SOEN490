@@ -7,7 +7,7 @@ namespace Models.DB
     [Table("RecommendationJobResult")]
     public class DBRecommendationJobResult
     {
-        [Key]
+        [Key, ForeignKey("RecommendationJob")]
         public int RecommendationJobResultId { get; set; }
         public string DisplayText { get; set; }
         public string Result { get; set; }

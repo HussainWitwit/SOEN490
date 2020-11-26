@@ -11,11 +11,10 @@ namespace Models.DB
         [Key]
         public int RecommendationJobId { get; set; }
         public string Status { get; set; }
-        public string Result { get; set; }
         public string TriggeredBy { get; set; }
         public int JobDuration { get; set; }
         public DateTime Timestamp { get; set; }
-        public virtual DBRecommendationJobResult JobResult { get; set; }
+        public virtual DBRecommendationJobResult Result { get; set; }
         public virtual DBAsset Asset { get; set; }
         public virtual DBRecommendationSchedule Schedule { get; set; }
         public virtual ICollection<DBRecommendationJobLog> LogsList { get; set; }
