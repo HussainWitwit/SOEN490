@@ -114,84 +114,9 @@ const ParametersConfiguration = (props) => {
       <DialogTitle id="form-dialog-title" className="dialogTitle">Parameters Configuration</DialogTitle>
       <DialogContent className="recConfigPaper">
 
-        <DialogContentText id="recLabel">Title of Recommendation</DialogContentText>
-        <CssTextField autoFocus margin="dense" id="name" type="text" placeholder="Wash Optimization P20" onChange={handleTitle}></CssTextField>
-
-        <DialogContent>
-          <br></br>
-          <div className="onelinerAlign">
-            <DialogContentText id="recLabel2">Asset: </DialogContentText>
-            <FormControl>
-              <NativeSelect
-                id="demo-customized-select-native"
-                className="recBoxDate"
-                value={assetOnChange}
-                onChange={handleAsset}
-                input={<BootstrapInput />}
-              >
-                <option aria-label="None" value="" >None</option>
-              </NativeSelect>
-            </FormControl>
-          </div>
-        </DialogContent>
-
-        <DialogContent>
-          <div className="onelinerAlign">
-            <DialogContentText id="recLabel2">Parameters: </DialogContentText>
-            <FormControl>
-              <NativeSelect
-                id="demo-customized-select-native"
-                className="recBoxDate"
-                value={parametersOnChange}
-                onChange={handleParameters}
-                input={<BootstrapInput />}
-              >
-                <option aria-label="None" value="" >None</option>
-                <option value={"centerPointSpan"}>Center Point and Span</option>
-              </NativeSelect>
-            </FormControl>
-          </div>
-        </DialogContent>
-
-        {parametersOnChange == "centerPointSpan" &&
-          <DialogContent>
-            <div className="onelinerAlign">
-              <DialogContentText id="recLabel3">Center Point Increment: </DialogContentText>
-              <TextField
-                id="outlined-number"
-                className="recBoxNumber"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleCenterPoint}
-                variant="outlined"
-                size="small"
-              />
-            </div>
-          </DialogContent>
-        }
-        {parametersOnChange == "centerPointSpan" &&
-          <DialogContent>
-            <div className="onelinerAlign">
-              <DialogContentText id="recLabel3">Span Increment: </DialogContentText>
-              <TextField
-                id="outlined-number"
-                className="recBoxNumber"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={handleSpan}
-                variant="outlined"
-                size="small"
-              />
-            </div>
-          </DialogContent>
-        }
+       {/* return code for parameters will go here */}
 
       </DialogContent>
-
       <DialogActions>
         <Button id="cancelBtn" onClick={() => props.select(1)}>Back</Button>
         
@@ -202,7 +127,6 @@ const ParametersConfiguration = (props) => {
          
         )
         }>Next</Button> 
-
 
         {/* <Button id="nextBtn" onClick={() => (
     dispatch(setParam(titleOnChange,spanOnChange))

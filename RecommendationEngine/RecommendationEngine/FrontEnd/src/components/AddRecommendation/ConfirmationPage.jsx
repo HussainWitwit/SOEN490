@@ -158,7 +158,7 @@ const ConfirmationPage = (props) => {
       <DialogContent className="confirmationDialog">
         
       <DialogContent>
-          <br></br>
+        
           <div className="onelinerAlign">
              <DialogContentText id="confirmationTitle">Configuration Details </DialogContentText>
           </div>
