@@ -77,3 +77,8 @@
 .hide {
     display: none;
 }
+
+.logo{
+    position: fixed;
+    bottom: 0;
+}

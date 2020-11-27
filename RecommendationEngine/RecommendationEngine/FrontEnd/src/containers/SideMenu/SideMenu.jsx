@@ -4,6 +4,7 @@ import { Drawer, List, CssBaseline, Typography, ListItem, ListItemIcon, ListItem
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 import { SideMenuItems } from './ListItemObjects.ts';
+import LogoSVGComponent from './LogoSVGComponent.jsx';
 
 //TODO: We should maybe modified the style of the Nested Recommendations to let the user know in which sub-context
 //TODO: he is currently in without needing to drop-down. 
@@ -127,6 +128,7 @@ export default function SideMenu (props) {
                     </ListItemText>
                 </ListItem>
                 {SideMenuItems.map((item, index) => (menuOptions(item, index)))}
+                <div className="logo"><LogoSVGComponent/></div>
             </Drawer>
         </div>
     )
