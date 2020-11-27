@@ -4,13 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton'
-import FormControl from '@material-ui/core/FormControl';
 import 'date-fns';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import "./ParametersConfiguration.css";
 import { setTitle, setAsset, setCenterPoint, setSpan } from '../ReduxActions/ParametersConfigurationActions';

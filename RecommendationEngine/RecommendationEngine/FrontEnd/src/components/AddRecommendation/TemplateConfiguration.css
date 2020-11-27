@@ -138,8 +138,9 @@
     }
 
     .templateConfigBox{
-        min-height: 290px;
+        max-width: 50%;
         bottom: 10%;
+        height: 50%;
     }
 
     .tempDialog{

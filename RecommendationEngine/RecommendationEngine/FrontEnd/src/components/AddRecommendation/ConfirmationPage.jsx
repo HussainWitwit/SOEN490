@@ -148,6 +148,7 @@ const ConfirmationPage = (props) => {
   const recAsset = useSelector(state => state.asset);
   const recCenterPoint = useSelector(state => state.centerPoint);
   const recSpan = useSelector(state => state.span);
+  const combinedState = useSelector(state => state.combine);
 
   return (
     <div>
@@ -210,7 +211,7 @@ const ConfirmationPage = (props) => {
         <DialogContent>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Frequency of Repetition: </DialogContentText>
-            <DialogContentText id="confirmationLabelOutput">{(Repetition === "" ? "Undefined" : Repetition + " time(s)")}</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">{(Repetition === null ? "Undefined" : Repetition + " time(s)")}</DialogContentText>
           </div>
         </DialogContent>
 

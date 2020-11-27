@@ -52,10 +52,12 @@
     }
 
     .recConfigPaper{
-     min-height: 50vh;
-     max-height: 50vh;
-     min-width: 100vh;
-     max-width: 100vh;
+        display: flex;
+        align-items: center;
+        min-height: 65vh;
+        max-height: 65vh;
+        min-width: 80vh;
+        max-width: 100vh;
     }
 
     #recLabel{

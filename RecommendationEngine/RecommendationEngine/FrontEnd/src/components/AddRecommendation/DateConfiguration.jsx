@@ -16,7 +16,10 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
+import { setTitle, setAsset, setCenterPoint, setSpan } from '../ReduxActions/ParametersConfigurationActions';
+import { setCombinedState } from '../ReduxActions/DateConfigurationActions';
 import Radio from '@material-ui/core/Radio';
+import { useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import "./DateConfiguration.css";
 
@@ -75,12 +78,15 @@ const BootstrapInput = withStyles((theme) => ({
 
 const DateConfiguration = (props) => {
 
+  const dispatch = useDispatch();
 
   // Setting the Title attribute
   const [titleOnChange, setTitleOnChange] = React.useState("");
   const handleTitle = (event) => {
     setTitleOnChange(event.target.value);
   };
+
+  const [combinedState, setCombinedState] = React.useState("Hello");
 
   // Setting the Asset attribute
   const [assetOnChange, setAssetOnChange] = React.useState("");
@@ -150,7 +156,7 @@ const DateConfiguration = (props) => {
       <DialogTitle id="form-dialog-title" className="dialogTitle">Wash Optmization Configuration</DialogTitle>
       <DialogContent className="recConfigPaper">
 
-        <Form.Group controlId="formBasicEmail">
+        {/* <Form.Group controlId="formBasicEmail">
         <DialogContent>
           <div className="onelinerAlign">
             <DialogContentText id="recLabel2">Title: </DialogContentText>
@@ -304,11 +310,18 @@ const DateConfiguration = (props) => {
               </form>
             </div>
           </DialogContent>
-        }
+        } */}
+
+        
       </DialogContent>
       <DialogActions>
         <Button id="cancelBtn" onClick={() => props.select(0)}>Back</Button>
-        <Button id="nextBtn" onClick={() => props.select(2)}>Next</Button>
+        <Button id="nextBtn" onClick={() => {
+          props.select(2);
+          // dispatch(setCombinedState(
+          // combinedState
+          // ));
+          }}>Next</Button>
       </DialogActions>
     </div>
 

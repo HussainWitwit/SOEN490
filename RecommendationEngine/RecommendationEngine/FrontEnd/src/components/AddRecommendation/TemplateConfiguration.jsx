@@ -101,7 +101,7 @@ const TemplateConfiguration = (props) => {
             </IconButton>
             <DialogTitle id="form-dialog-title" className="dialogTitle">Template Configuration</DialogTitle>
             <DialogContent className="tempDialog">
-                <DialogContent className="templateConfigBox">
+                {/* <DialogContent className="templateConfigBox">
 
                     <DialogContent className="dialogPaper">
                         <div id="gridRoot">
@@ -144,7 +144,7 @@ const TemplateConfiguration = (props) => {
                     <DialogContentText id="templateLabel">Algorithm Used </DialogContentText>
                     <DialogContentText id="templateLabelOutput">WO Algorithm</DialogContentText>
 
-                </DialogContent>
+                </DialogContent> */}
             </DialogContent>
             <DialogActions>
                 <Button id="cancelBtn" onClick={props.dismiss}>Cancel</Button>
