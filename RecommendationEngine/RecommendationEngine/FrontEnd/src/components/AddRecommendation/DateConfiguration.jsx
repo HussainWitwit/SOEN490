@@ -13,39 +13,91 @@ import 'date-fns';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import { Form } from 'react-bootstrap';
 import "./DateConfiguration.css";
+
+export const CssTextField = withStyles({
+
+  root: {
+    width: '360px',
+    color: '252733',
+    fontSize: 100,
+
+    '& label.Mui-focused': {
+      color: '#868282',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#252733',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#252733',
+      },
+      '&:hover fieldset': {
+        borderColor: '#252733',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#252733',
+      },
+    },
+  },
+
+})(TextField);
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
-      'label + &': {
-          marginTop: theme.spacing(3),
-      },
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
   },
   input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    fontFamily: [
+      'Segoe UI', "Tahoma", "Geneva", "Verdana", "sans-serif"
+    ].join(','),
+    '&:focus': {
       borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.background.paper,
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      padding: '10px 26px 10px 12px',
-      transition: theme.transitions.create(['border-color', 'box-shadow']),
-      fontFamily: [
-          'Segoe UI', "Tahoma", "Geneva", "Verdana", "sans-serif"
-      ].join(','),
-      '&:focus': {
-          borderRadius: 4,
-          borderColor: '#80bdff',
-          boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-      },
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
   },
 }))(InputBase);
 
 const DateConfiguration = (props) => {
 
+
+  // Setting the Title attribute
+  const [titleOnChange, setTitleOnChange] = React.useState("");
+  const handleTitle = (event) => {
+    setTitleOnChange(event.target.value);
+  };
+
+  // Setting the Asset attribute
+  const [assetOnChange, setAssetOnChange] = React.useState("");
+  const handleAsset = (event) => {
+    setAssetOnChange(event.target.value);
+  }
+
+  // Seeting the Prefered Scenario
+  const [scenario, setScenario] = React.useState("");
+  const handleScenario = (event) => {
+    setScenario(event.target.value);
+  }
+
   // Setting the perio attribute
-  const [periodicity, setPeriodicity] = React.useState();
+  const [granularity, setGranularity] = React.useState();
   const handlePeriodicity = (event) => {
-    setPeriodicity(event.target.value);
+    setGranularity(event.target.value);
   };
 
   // Setting Repetition attribute
@@ -95,17 +147,74 @@ const DateConfiguration = (props) => {
       <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
         <CloseIcon />
       </IconButton>
-      <DialogTitle id="form-dialog-title" className="dialogTitle">Date Configuration</DialogTitle>
+      <DialogTitle id="form-dialog-title" className="dialogTitle">Wash Optmization Configuration</DialogTitle>
       <DialogContent className="recConfigPaper">
+
+        <Form.Group controlId="formBasicEmail">
+        <DialogContent>
+          <div className="onelinerAlign">
+            <DialogContentText id="recLabel2">Title: </DialogContentText>
+          <Form.Control type="email" className="recBoxDate" onChange={handleTitle} placeholder="Wash Optimization P20" />
+          <Form.Text className="text-muted">
+          </Form.Text>
+          </div>
+        </DialogContent>
+        </Form.Group>
 
         <DialogContent>
           <div className="onelinerAlign">
-            <DialogContentText id="recLabel2">Occurence: </DialogContentText>
+            <DialogContentText id="recLabel2">Asset: </DialogContentText>
             <FormControl>
               <NativeSelect
                 id="demo-customized-select-native"
                 className="recBoxDate"
-                value={periodicity}
+                value={assetOnChange}
+                onChange={handleAsset}
+                input={<BootstrapInput />}
+              >
+                <option aria-label="None" value="" >None</option>
+              </NativeSelect>
+            </FormControl>
+          </div>
+        </DialogContent>
+
+        <DialogContent>
+          <br></br>
+          <div className="onelinerAlign">
+            <DialogContentText id="recLabel2">Prefered Scenario: </DialogContentText>
+            <FormControl component="fieldset">
+              <RadioGroup row aria-label="position" name="position" defaultValue="top">
+                <FormControlLabel
+                  value="start"
+                  control={<Radio color="primary" />}
+                  label="Return on Investment"
+                  onChange={handleScenario}
+                  labelPlacement="start"
+                  id="recLabel4"
+                />
+                <FormControlLabel
+                  value="start"
+                  control={<Radio color="primary" />}
+                  label="Net Saving"
+                  onChange={handleScenario}
+                  labelPlacement="start"
+                  id="recLabel4"
+                />
+              </RadioGroup>
+            </FormControl>
+          </div>
+        </DialogContent>
+
+
+
+        <DialogContent>
+          <div className="onelinerAlign">
+            <DialogContentText id="recLabel2">Granularity: </DialogContentText>
+            <FormControl>
+              <NativeSelect
+                id="demo-customized-select-native"
+                className="recBoxDate"
+                value={granularity}
                 onChange={handlePeriodicity}
                 input={<BootstrapInput />}
               >
@@ -119,7 +228,7 @@ const DateConfiguration = (props) => {
           </div>
         </DialogContent>
 
-        {periodicity !== "" &&
+        {granularity !== "" &&
 
           <DialogContent>
             <div className="onelinerAlign">
@@ -139,7 +248,7 @@ const DateConfiguration = (props) => {
           </DialogContent>
         }
 
-        {periodicity != "" && periodicity !== "Yearly" && periodicity !== "Monthly" ?
+        {granularity != "" && granularity !== "Yearly" && granularity !== "Monthly" ?
           <DialogContent>
             <div className="onelinerAlign">
               <DialogContentText id="recLabel2">Day of the Week: </DialogContentText>
@@ -153,7 +262,7 @@ const DateConfiguration = (props) => {
                 <Button value="Monday" onClick={handleDayWeek}>S</Button>
               </ButtonGroup>
             </div>
-          </DialogContent> : (periodicity != "" ? <DialogContent>
+          </DialogContent> : (granularity != "" ? <DialogContent>
             <div className="onelinerAlign">
               <DialogContentText id="recLabel2">Day of the Month: </DialogContentText>
               <form className="timePickerContainer" noValidate>
@@ -172,7 +281,7 @@ const DateConfiguration = (props) => {
             </div>
           </DialogContent> : "")}
 
-        {periodicity !== "" &&
+        {granularity !== "" &&
           <DialogContent>
             <br></br>
             <div className="onelinerAlign">
