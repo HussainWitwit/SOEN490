@@ -4,7 +4,7 @@ using Moq;
 using NUnit.Framework;
 using RecommendationEngine.Controllers;
 using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI;
+using Interfaces.Services.ExternalAPI;
 
 namespace RecommendationEngineTests.APITests
 {

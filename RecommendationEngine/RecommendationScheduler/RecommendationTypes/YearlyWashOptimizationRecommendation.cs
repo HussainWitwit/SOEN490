@@ -31,15 +31,16 @@ namespace RecommendationScheduler.RecommendationTypes
         private string _preferedScenario = "returnOnInvestment";
         private List<string> _plantIds = new List<string>();
         //Variable declarations
-        private SoilingCalculations _soilingNoAction = new SoilingCalculations();
-        private SoilingCalculations _soilingWithAction = new SoilingCalculations();
+        private SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
+        private SoilingCalculations _soilingWithAction = new SoilingCalculations();// object for Soiling Calculation , with action , aka the impact of soiling with cleaning schedule  
         List<DateTime> _cleaningDates = new List<DateTime>(); //List of Cleaning days for a specific centerPoint and span combination
         List<DateTime> _bestCleaningDates = new List<DateTime>(); //to temporary store the best cleaning dates / they are later transformed into actions
-        private List<double> _predictedEnergyList;
-        private List<double> _energyPricesList;
+        private List<double> _predictedEnergyList;// stores predicted energy from API
+        private List<double> _energyPricesList; // stores energy prices from API
         private int _dayCount = 0; //needed for retrieving the predicted energy for a specific day
-        private int _cumulativeCleaning;
-        private double _plantDCCapacity;
+        private int _cumulativeCleaning; //The number of cleanings so far
+        private double _plantDCCapacity; //stores the value of DC Capacity 
+        private Boolean _isWashDay = false; //used for check if wash date method
         //Temporary output variables for Result soilingScenarioect
         private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
         private DBRecommendationJobResult _result = new DBRecommendationJobResult();
@@ -66,7 +67,7 @@ namespace RecommendationScheduler.RecommendationTypes
             int span = 1;
 
             //Initializing variables
-            _soilingNoAction.SoilingDerate = 1.0;
+            _soilingNoAction.SoilingDerate = 1.0; 
             _soilingWithAction.SoilingDerate = 1.0;
 
             //Initializing output 
@@ -80,9 +81,10 @@ namespace RecommendationScheduler.RecommendationTypes
                 span = _spanIncrement;
                 centerPoint = _startSoiling;
 
-                while (centerPoint.AddDays(span) < _endSoiling || centerPoint.AddDays(-span) > _startSoiling) //TODO : ask power factors why -span 
+                while (centerPoint.AddDays(span) < _endSoiling || centerPoint.AddDays(-span) > _startSoiling)
                 {
                     ResetValues();
+
                     // computes various outputs for a all day within soiling season with a specific combination of center point + span
                     for (currentDate = _startSoiling; _endSoiling.CompareTo(currentDate) > 0; currentDate = currentDate.AddDays(1))// iterate through all days within soiling season
                     {
@@ -157,9 +159,9 @@ namespace RecommendationScheduler.RecommendationTypes
             _tempResult.CostOfAction = 0;
             _tempResult.ReturnOnInvestment = 0;
             _tempResult.NetSaving = 0;
-            _soilingNoAction.SumOfPredictedRevenueLoss = 0; // total sum of all the revenue loss for one centerpoint and span
+            _soilingNoAction.SumOfPredictedRevenueLoss = 0; 
             _soilingWithAction.SumOfPredictedRevenueLoss = 0;
-            _cumulativeCleaning = 0; //The number of cleanings so far
+            _cumulativeCleaning = 0; 
             _cleaningDates.Clear();
             _bestCleaningDates.Clear();
             _dayCount = 0;
@@ -177,18 +179,21 @@ namespace RecommendationScheduler.RecommendationTypes
         }
         private void CheckIfWashDay(DateTime currentDate, DateTime centerPoint, int span)
         {
+            _isWashDay = false;
             if (currentDate > _startSoiling.AddDays(_soilingBuffer) && currentDate < _endSoiling.AddDays(-_soilingBuffer) && (((currentDate - centerPoint).Days % span) == 0))
             {
                 _cleaningDates.Add(currentDate);
                 _soilingWithAction.SoilingDerate = 1.0;// reset to 1 because cleaning will be done
                 _cumulativeCleaning += 1;
+                _isWashDay = true;
             }
+            
         }
         private void CalculateSoilingDerateWithAction(DateTime currentDate)
         {
-            if (currentDate > _startSoiling && currentDate < _endSoiling && _soilingWithAction.SoilingDerate != 1.0) //TODO : review float issue with 1.0
+            if (currentDate > _startSoiling && currentDate < _endSoiling && !_isWashDay)
             {
-                //SoilingDerateWithAct holds the value of the previous day as it has not been calculated yet
+                //_soilingWithAction.SoilingDerate holds the value of the previous day as it has not been calculated yet
                 _soilingWithAction.SoilingDerate = Math.Max(_soilingWithAction.SoilingDerate, (_soilingWithAction.SoilingDerate * (1 + _soilingRate) * (1 + _cumulativeCleaning * _accelerator)));
             }
         }
