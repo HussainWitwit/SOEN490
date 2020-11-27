@@ -118,9 +118,9 @@ const ConfirmationPage = (props) => {
     setCreatedOn(event);
   };
 
- /**
-   * Post Method
-   */
+  /**
+    * Post Method
+    */
 
   const requestOptions = {
     method: 'POST',
@@ -145,24 +145,30 @@ const ConfirmationPage = (props) => {
   }
 
   const recTitle = useSelector(state => state.title);
-  const recAsset= useSelector(state => state.asset);
-  const recCenterPoint = useSelector (state => state.centerPoint);
-  const recSpan = useSelector (state => state.span);
+  const recAsset = useSelector(state => state.asset);
+  const recCenterPoint = useSelector(state => state.centerPoint);
+  const recSpan = useSelector(state => state.span);
 
   return (
-    <div>  
+    <div>
       <IconButton aria-label="close" id="closeButton" onClick={props.dismiss}>
         <CloseIcon />
       </IconButton>
       <DialogTitle id="form-dialog-title" className="dialogTitle">Confirmation</DialogTitle>
       <DialogContent className="confirmationDialog">
-        <DialogContent>
+        
+      <DialogContent>
+          <br></br>
+          <div className="onelinerAlign">
+             <DialogContentText id="confirmationTitle">Configuration Details </DialogContentText>
+          </div>
+        </DialogContent>
 
-          <DialogContentText id="confirmationTitle">Configuration Details </DialogContentText>
+        <DialogContent>
           <br></br>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Template: </DialogContentText>
-  <DialogContentText id="confirmationLabelOutput">Yearly Wash Optmization</DialogContentText>
+            <DialogContentText id="confirmationLabelOutput">Yearly Wash Optmization</DialogContentText>
           </div>
         </DialogContent>
 
@@ -248,9 +254,13 @@ const ConfirmationPage = (props) => {
         <Divider className="confirmationDivider" />
         <br></br>
 
+        <DialogContent>
+          <div className="onelinerAlign">
+             <DialogContentText id="confirmationTitle">Parameters Details </DialogContentText>
+          </div>
+        </DialogContent>
 
         <DialogContent>
-          <DialogContentText id="confirmationTitle">Parameters Details</DialogContentText>
           <br></br>
           <div className="onelinerAlign">
             <DialogContentText id="confirmationLabel">Center Point: </DialogContentText>
@@ -286,7 +296,7 @@ const ConfirmationPage = (props) => {
       </DialogContent>
       <DialogActions>
         <Button id="cancelBtn" onClick={() => props.select(2)}>Back</Button>
-        <Button id="nextBtn" onClick={()=>{postAddRecommendation()}, props.dismiss}>Confirm</Button>
+        <Button id="nextBtn" onClick={() => { postAddRecommendation() }, props.dismiss}>Confirm</Button>
       </DialogActions>
     </div>
   )
