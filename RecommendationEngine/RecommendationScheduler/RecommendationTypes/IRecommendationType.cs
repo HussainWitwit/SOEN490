@@ -4,6 +4,6 @@ namespace RecommendationScheduler.RecommendationTypes
 {
     public interface IRecommendationType
     {
-        public void ExecuteAlgorithm(DBRecommendationJob job);
+        public DBRecommendationJobResult ExecuteAlgorithm(DBRecommendationJob job);
     }
 }
