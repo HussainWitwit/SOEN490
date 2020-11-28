@@ -13,7 +13,7 @@ const Frame = styled(animated.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1205;
+  z-index: 2000;
 `
 
 const Content = styled(animated.div)`
@@ -39,18 +39,20 @@ const  CarouselDialog = ({ show, children }) => (
     }}
     delay={1}
   >
-    {show && (styles => (
-      <Frame
-        style={{
-          opacity: styles.opacity,
-          pointerEvents: styles.pointerEvents
-        }}
-      >
-        <Content style={styles} onClick={e => e.stopPropagation()}>
-          {children}
-        </Content>
-      </Frame>
-    ))}
+    {show &&
+      (styles => (
+        <Frame
+          style={{
+            opacity: styles.opacity,
+            pointerEvents: styles.pointerEvents
+          }}
+          // onClick={toggle}
+        >
+          <Content style={styles} onClick={e => e.stopPropagation()}>
+            {children}
+          </Content>
+        </Frame>
+      ))}
   </Transition>)
 
 export default CarouselDialog

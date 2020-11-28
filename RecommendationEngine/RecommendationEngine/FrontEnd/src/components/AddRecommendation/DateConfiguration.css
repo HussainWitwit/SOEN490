@@ -52,11 +52,11 @@
     }
 
     .recConfigPaper{
-        display: flex;
-        align-items: center;
-        min-height: 65vh;
-        max-height: 65vh;
-        min-width: 80vh;
+        /* display: flex;
+        align-items: center; */
+        min-height: 60vh;
+        max-height: 60vh;
+        min-width: 100vh;
         max-width: 100vh;
     }
 
