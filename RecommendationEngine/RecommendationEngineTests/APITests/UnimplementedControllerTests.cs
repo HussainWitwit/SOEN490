@@ -1,5 +1,4 @@
-﻿using System;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Moq;
 using NUnit.Framework;
 using RecommendationEngine.Controllers;
@@ -74,5 +73,5 @@ namespace RecommendationEngineTests.APITests
         }
     }
 }
-    
+
 

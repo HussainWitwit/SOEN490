@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +11,11 @@ using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
 using RecommendationEngine.Services.ExternalAPI;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace RecommendationEngineTests.UnitTests.ControllerTest
 {

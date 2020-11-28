@@ -1,5 +1,4 @@
-﻿using System;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Models.DB;
 
 namespace RecommendationEngine.Repositories

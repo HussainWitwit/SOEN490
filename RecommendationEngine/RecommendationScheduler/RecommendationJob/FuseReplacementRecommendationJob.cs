@@ -1,6 +1,6 @@
 ﻿namespace RecommendationScheduler.RecommendationJob
 {
-    public class FuseReplacementRecommendationJob: RecommendationJob
+    public class FuseReplacementRecommendationJob : RecommendationJob
     {
         protected override void ExecuteJob()
         {

@@ -1,5 +1,4 @@
-﻿using System;
-namespace Models.Application
+﻿namespace Models.Application
 {
     public class ConfiguredRecommendationParameter
     {
