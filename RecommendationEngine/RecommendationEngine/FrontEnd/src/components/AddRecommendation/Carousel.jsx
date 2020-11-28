@@ -34,12 +34,6 @@ const CarouselContent = ({ children, activeIndex, prevIndex }) => (
   </Transition>
 )
 
-const HeightTransition = ({ children }) => (
-  <Spring native force from={{ height: "auto" }} to={{ height: "auto" }}>
-    {styles => <animated.div style={styles}>{children}</animated.div>}
-  </Spring>
-)
-
 function Carousel({children}) {
 
   const [state, setState] = React.useState({activeIndex: 0, prevIndex:-1});
@@ -57,7 +51,6 @@ function Carousel({children}) {
   })
 
     return (
-      <HeightTransition>
         <CarouselContent
           activeIndex={state.activeIndex}
           prevIndex={state.prevIndex}
@@ -66,7 +59,6 @@ function Carousel({children}) {
             getItemProps: getItemProps
           })}
         </CarouselContent>
-      </HeightTransition>
     )
 }
 
