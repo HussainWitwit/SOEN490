@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RightPanel from '../containers/RightPanel/RightPanel.jsx';
+import RightPanelDrawer from '../containers/RightPanel/RightPanelDrawer.jsx';
 import Enzyme, { shallow } from '../enzyme';
-import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { AssetTree } from '../components/AssetTreeView/AssetTreeView';
@@ -32,13 +31,13 @@ describe('AssetTreeView component', () => {
     });
 
     it('It finds the swipeable drawer component', () => {
-        const output = shallow(<RightPanel />);
+        const output = shallow(<RightPanelDrawer />);
         let component = output.find(SwipeableDrawer);
         expect(component).toHaveLength(1);
     });
 
     it('It finds the asset tree', () => {
-        const output = shallow(<RightPanel />);
+        const output = shallow(<RightPanelDrawer />);
         let component = output.find(AssetTree);
         expect(component).toHaveLength(1);
     });

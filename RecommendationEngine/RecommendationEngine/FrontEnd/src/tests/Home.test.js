@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from '../components/Home/Home.jsx';
 import Enzyme, { shallow } from '../enzyme';
-import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import '../components/Home/Home.css';
 import ManageRecommendationTable from '../components/TableComponent/ManageRecommendationTable';
