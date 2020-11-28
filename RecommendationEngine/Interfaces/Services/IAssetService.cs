@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Models.Application.Asset;
 using System.Threading.Tasks;
-using Models.Application.Asset;
-using Models.DB;
 
 namespace Interfaces.Services
 {

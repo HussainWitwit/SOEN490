@@ -1,11 +1,9 @@
 ﻿using Interfaces.Repositories;
-using Interfaces.Services;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI;
 
 namespace RecommendationEngine.Repositories
 {
-    public class ActionRepository: IActionRepository
+    public class ActionRepository : IActionRepository
     {
         private RecommendationEngineDBContext _recommendationEngineDb;
 

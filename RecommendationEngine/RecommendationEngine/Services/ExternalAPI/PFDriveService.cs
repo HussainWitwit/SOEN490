@@ -1,14 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Models.Application.APIModels;
 using Newtonsoft.Json;
 using RecommendationEngine.ExceptionHandler;
-using Models.Application.APIModels;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
-using System.Collections;
 using System.Text;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace RecommendationEngine.Services.ExternalAPI
 {

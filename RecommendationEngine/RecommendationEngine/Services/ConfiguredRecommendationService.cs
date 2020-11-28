@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Models.Application;
+﻿using Interfaces.Repositories;
 using Interfaces.Services;
-using Interfaces.Repositories;
+using Models.Application;
 using Models.DB;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
@@ -20,7 +20,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
 
         public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
         {
-            List<DBRecommendationSchedule> schedules =  _repository.GetRecommendationScheduleList();
+            List<DBRecommendationSchedule> schedules = _repository.GetRecommendationScheduleList();
             return schedules.Select((element) => new ConfiguredRecommendation
             {
                 Name = element.Name,
@@ -33,6 +33,6 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 Parameters = null
             }).ToList();
         }
-   
+
     }
 }

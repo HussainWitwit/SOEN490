@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Interfaces.Repositories;
 using Interfaces.Utilities;
-using Microsoft.Extensions.Configuration;
-using Models.DB;
 using Moq;
 using NUnit.Framework;
 using Quartz;
-using Quartz.Impl;
 using RecommendationScheduler.RecommendationJob;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationJob

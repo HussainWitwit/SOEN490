@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using Interfaces.Repositories;
 using Models.DB;
-using Interfaces.Repositories;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {

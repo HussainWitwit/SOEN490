@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Models.Application.Asset;
 using Models.DB;
 using Moq;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 using RecommendationEngine.Services;
 using RecommendationEngine.Services.ExternalAPI;
 using RecommendationEngineTests.UnitTests.MockData;
+using System.Collections.Generic;
 
 namespace RecommendationEngineTests
 {

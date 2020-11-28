@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using Interfaces.Repositories;
-using Models.Application.Asset;
-using Models.DB;
+﻿using Interfaces.Repositories;
 using Moq;
 using NUnit.Framework;
 using RecommendationEngine.Services;
 using RecommendationEngine.Services.ExternalAPI;
-using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests
 {
@@ -23,7 +19,7 @@ namespace RecommendationEngineTests
         private Mock<ICaseRepository> _caseRepo;
         private CaseService _caseService;
 
-        private Mock<IEnergyMarketRepository> _energyMarketRepo; 
+        private Mock<IEnergyMarketRepository> _energyMarketRepo;
         private EnergyMarketService _energyMarketService;
 
         private Mock<IEventRepository> _eventRepo;
@@ -103,6 +99,6 @@ namespace RecommendationEngineTests
 
             Assert.IsNotNull(_workOrderRepo.Object);
             Assert.IsNotNull(_workOrderService);
-        } 
+        }
     }
 }

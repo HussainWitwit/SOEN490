@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using Models.DB;
-using Interfaces.Repositories;
-using System.Collections.Generic;
-using Models.Application;
+﻿using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Models.DB;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {

@@ -3,7 +3,7 @@ using Models.DB;
 
 namespace RecommendationScheduler.RecommendationTypes
 {
-    public class YearlyWashOptimizationRecommendation: IRecommendationType
+    public class YearlyWashOptimizationRecommendation : IRecommendationType
     {
         private IRecommendationJobLogger _jobLogger;
         public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger)

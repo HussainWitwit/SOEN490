@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using Interfaces.Repositories;
 using Interfaces.Services;
+using Models.Application.APIModels;
+using Models.Application.Asset;
 using Models.DB;
 using RecommendationEngine.Services.ExternalAPI;
-using Interfaces.Repositories;
-using Models.Application.Asset;
-using Models.Application.APIModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -33,7 +33,7 @@ namespace RecommendationEngine.Services
             _assetTypeRepository = assetTypeRepository;
             GetDBAssets();
             _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
-    }
+        }
 
         public Asset GetAssetsTreeview()
         {
@@ -152,7 +152,7 @@ namespace RecommendationEngine.Services
                     {
                         plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
                     }
-                    
+
                     return new DBAsset()
                     {
                         Name = x.Id,
