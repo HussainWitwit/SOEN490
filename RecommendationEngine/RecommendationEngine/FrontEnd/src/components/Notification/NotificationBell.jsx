@@ -28,9 +28,9 @@ function NotificationBell () {
                 data={notification}
                 height='260px'
                 width='300px'
-                cardOption={notification => console.log(notification)}
+                cardOption={cardNotification => console.log(cardNotification)}
                 viewAllbtn={{ text: 'see all' }}
-                markAsRead={notification => console.log(notification)}
+                markAsRead={markNotification => console.log(markNotification)}
                 headerBackgroundColor='white'
                 header={
                     {
