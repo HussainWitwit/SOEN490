@@ -1,0 +1,49 @@
+#root{
+    min-width: 860px;
+}
+
+#table{
+    min-width: 850px;
+}
+
+#paper{
+    width: 100%;
+    margin-bottom: 8px;
+    min-width: 850px;
+}
+
+
+.toolBarTitle{
+    flex: 1 1 100%;
+    margin-left: 10px;
+    color: grey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+}
+
+
+#controlLabel {
+    color: #212529;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-transform: none;
+    margin-top: 5px;
+    font-size: 12px;
+    width: 20px;
+}
+
+
+#tableBody{
+    background-color: #FFFFFF;
+    color: #252733;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+}
+
+
+
+.center{
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    column-span: 6;
+}
