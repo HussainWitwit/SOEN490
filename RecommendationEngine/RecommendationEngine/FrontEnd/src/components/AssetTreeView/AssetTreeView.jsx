@@ -56,7 +56,7 @@ function AssetIcon ({ type }) {
       return <FontAwesomeIcon className='label-icon' icon={faSun} />;
     default:
       return <FontAwesomeIcon className='label-icon' icon={faQuestion} />;
-  };
+  }
 }
 
 AssetIcon.propTypes = {
@@ -138,9 +138,9 @@ export function AssetTree () {
     fetchData();
   }, []);
 
-  const DisplayAssetNodeTree = (data) => (
-    <AssetTreeItem nodeId={data.id} labelText={data.displayText} assetType='asset' key = {data.id}>
-      {data.children && data.children.length > 0 && data.children.map((child) => (
+  const DisplayAssetNodeTree = (displayData) => (
+    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key = {displayData.id}>
+      {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
       }
