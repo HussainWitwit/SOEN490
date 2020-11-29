@@ -72,10 +72,11 @@ grid-template-areas:
 
   #item {
     display: grid;
-    border-width: 5px;
-    border-color: orange;
+    border-width: 2px;
+    border-radius: 5%;
+    border-color: #DFE0EB;
     border-style: solid;
-    background-color: red;
+    background-color: white;
     align-items: center;
     height: 120px;
     width: 120px;
@@ -85,14 +86,48 @@ grid-template-areas:
     align-content: center;
 }
 
-/* .title-label.MuiTypography-root{
-  margin-top: 40%;
-} */
+#item:hover{
+  background-color:orange;
+}
+
+#item:focus{
+  background-color:red;
+}
+
+#item:active {
+  background-color: blue;
+  background: #e5e5e5;
+  -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+          box-shadow: inset 0px 0px 5px #c1c1c1;
+   outline: solid;
+}
+
+#listItem{
+  background-color: aqua;
+  width: 100%;
+  margin-top: 10%;
+}
+
+.title-label.MuiTypography-root{
+  color: #687480;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  margin-bottom: 15%;
+  text-align: center;
+  /* background-color: orange; */
+  padding: 3%;
+}
 
 #templateIcon{
   text-align: center;
-    justify-content: center;
-    align-content: center;
+  justify-content: center;
+  align-content: center;
+  color: #687480;
+  width: 35%;
+  height: 35%;
+  margin-bottom: 5%;
     /* align-items: center; */
 }
 
@@ -109,8 +144,7 @@ grid-template-areas:
   color:#868282;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
-  min-width: 150px;
-  max-width: 150px;
+  min-width: 90%;
 }
 
 
@@ -179,6 +213,7 @@ margin: 0;
   align-content: left;
   align-items: left;
   align-self: left;
+  width: 100%;
 } 
 
 .listAlign{
@@ -188,9 +223,21 @@ margin: 0;
   list-style-type: none;
   padding: 0;
   margin: 0; 
+  width: 100%;
 }
 
-
+.listAlign2{
+  align-content: left;
+  align-items: left;
+  align-self: left;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 4%;
+  width: 100%;
+  margin-top:10%;
+  background-color: aqua;
+  list-style-type: decimal;
+}
 
 
 
