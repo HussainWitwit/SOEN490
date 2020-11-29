@@ -67,7 +67,7 @@ namespace RecommendationScheduler.RecommendationJob
         public abstract void ExecuteJob();
 
         //TODO: add custom to each rec type
-        protected abstract void GetFromApi();
+        protected abstract void GetFromAPI();
 
         protected abstract void GetFromDB();
 

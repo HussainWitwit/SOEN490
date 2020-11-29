@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Interfaces.Repositories;
 using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
+using Models.Application.APIModels;
 using Models.Application.Asset;
 using Models.DB;
 using Models.Recommendation.YearlyWash;
@@ -33,101 +34,11 @@ namespace RecommendationScheduler.RecommendationJob
         //TODO: BACK TO PROTECTED
         public override void ExecuteJob()
         {
-            RecommendationScheduleId = 1;
-            CreateRecommendationJob();
-            GetFromApi();
             GetFromDB();
+            GetFromAPI();
             YearlyWashOptimizationRecommendation ywoRecommendation = new YearlyWashOptimizationRecommendation(_jobLogger);
             DBRecommendationJobResult _result = ywoRecommendation.ExecuteAlgorithm(_recommendationJob, _apiValues, _parameters);
             SaveResult(_recommendationJob, _result);
-        }
-
-        protected async override void GetFromApi()
-        {
-            //TODO: APIs need to be fixed on PF's side, for now we are running the algorithm with the following values
-            //API variables
-            //Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = await _driveService.GetDailyPredictedEnergyByPlantIds(_startSoiling, _endSoiling, _plantIds);
-            //_apiValues.PredictEnergyList = predictedEnergyDict["assets"].FirstOrDefault().Attributes[0]["values"];
-
-
-
-            //List<PFPPAPrice> energyPrices = await _driveService.GetPPAPriceByPlantId(_plantIds.FirstOrDefault());
-            //double avgPrice;
-
-            //for(DateTime date = _startSoiling; date <= _endSoiling; date.AddDays(1))
-            //{
-            //    avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => x.Price).DefaultIfEmpty(37).Average();
-            //    energyPricesList.Add(avgPrice);
-            //}
-
-
-
-            //List<PFMetadata> metadata = await _driveService.GetAssetsMetadataByPlantIds(_plantIds);
-            //var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
-            //plantDCCapacity = plantMetadata["DC_Capacity"];
-
-            _apiValues.PlantDCCapacity = 25;
-
-            _apiValues.PredictEnergyList = new List<double>
-            {
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-            };
-
-            _apiValues.EnergyPricesList = new List<double>
-            {
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-            };
-
         }
 
         protected override void GetFromDB()
@@ -151,6 +62,36 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.Accelerator = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "accelerator").FirstOrDefault().ParamValue;
             _parameters.PreferedScenario = _recommendationJob.Schedule.PreferedScenario;
             _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
+            _parameters.Asset = _recommendationJob.Asset;
+        }
+
+        protected async override void GetFromAPI()
+        {
+            //TODO: APIs need to be fixed on PF's side, for now we are running the algorithm with the following values
+            //API variables
+            Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _driveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, _parameters.PlantIds)).Result;
+            _apiValues.PredictEnergyList = predictedEnergyDict["assets"].FirstOrDefault().Attributes[0].Values.Select(pe => (pe / 100)).ToList();
+
+            List<PFMetadata> metadata = Task.Run(async () => await _driveService.GetAssetsMetadataByPlantIds(_parameters.PlantIds)).Result;
+            var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
+            _apiValues.PlantDCCapacity = plantMetadata["DC_Capacity"] / 1000;
+
+            //List<PFPPAPrice> energyPrices = Task.Run(async () => await _driveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
+            //double avgPrice;
+
+            //_apiValues.EnergyPricesList = new List<double>();
+
+            //for (DateTime date = _parameters.StartSoiling; date <= _parameters.EndSoiling; date.AddDays(1))
+            //{
+            //    avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => (x.Price / 100)).DefaultIfEmpty(37).Average();
+            //    _apiValues.EnergyPricesList.Add(avgPrice);
+            //}
+
+            _apiValues.EnergyPricesList = Enumerable.Repeat(0.3, ((_parameters.EndSoiling - _parameters.StartSoiling).Days + 1)).ToList();
+
+            //_apiValues.PlantDCCapacity = 25;
+
+            //_apiValues.PredictEnergyList = Enumerable.Repeat(_parameters.EndSoiling.Subtract(_parameters.StartSoiling), 240);
         }
     }
 }

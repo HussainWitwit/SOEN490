@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Models.DB;
 
 namespace Models.Recommendation.YearlyWash
 {
     public class YearlyWashParameters
     {
+        public DBAsset Asset { get; set; }
         public double CenterPointIncrement { get; set; } //TODO: CHANGE DOUBLE TO INT IN DB
         public double SpanIncrement { get; set; } //TODO: CHANGE DOUBLE TO INT IN DB
         public DateTime StartSoiling { get; set; }

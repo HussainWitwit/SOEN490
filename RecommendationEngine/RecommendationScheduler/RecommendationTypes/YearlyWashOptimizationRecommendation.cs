@@ -61,6 +61,7 @@ namespace RecommendationScheduler.RecommendationTypes
             //Initializing output 
             _result.ReturnOnInvestment = 0;
             _result.NetSaving = 0;
+            _result.Asset = _userParameters.Asset;
 
             _jobLogger.LogInformation(job, "Looking for best cleaning dates...");
 
