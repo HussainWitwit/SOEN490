@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Interfaces.Repositories;
+using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
+using Models.Application.Asset;
 using Models.DB;
 using Quartz;
 
@@ -16,6 +18,7 @@ namespace RecommendationScheduler.RecommendationJob
         protected Stopwatch watch = new Stopwatch();
         protected IRecommendationJobLogger _jobLogger;
         protected IRecommendationSchedulerRepository _schedulerRepository;
+        protected IDriveService _driveService;
 
         public Task Execute(IJobExecutionContext context)
         {
@@ -62,5 +65,13 @@ namespace RecommendationScheduler.RecommendationJob
 
         // Contains custom behaviour
         protected abstract void ExecuteJob();
+
+        //TODO: add custom to each rec type
+        //protected abstract IRecommendationJobApiValues GetFromApi();
+        protected abstract void GetFromApi();
+
+
+        protected abstract void GetFromDB();
+
     }
 }
