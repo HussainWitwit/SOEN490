@@ -36,6 +36,7 @@ export default function AddRecommendationDialog(props) {
         setIndex(state => (state - 1) % 4);
     }, []);
     
+    //FIXME: Transition bug...
     const onNextPreviousTransition = useTransition(index, element => element, {
         from: { opacity: 0, transform: next ? 'translate3d(100%,0,0)' : 'translate3d(-100%,0,0)'},
         enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },

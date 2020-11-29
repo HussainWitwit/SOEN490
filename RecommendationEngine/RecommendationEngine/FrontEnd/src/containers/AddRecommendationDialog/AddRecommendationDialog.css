@@ -20,7 +20,7 @@
     /* background-color: teal; */
     border-radius: 8px;
     overflow: hidden;
-    font-size: 70px;
+    /* font-size: 70px; */
 }
 
 .dialog-content.MuiDialogContent-root {
@@ -108,8 +108,8 @@
     height: 100%;
     width: 100%;
     display: grid;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
     color: white;
     font-size: 50px;
     font-weight: 800;

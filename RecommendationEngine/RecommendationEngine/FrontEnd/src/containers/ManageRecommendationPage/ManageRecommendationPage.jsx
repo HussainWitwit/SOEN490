@@ -7,8 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import { getAllConfiguredRecommendations } from "../../api/get/ConfiguredRecommendationEndpoints";
 import 'date-fns';
 import './ManageRecommendationPage.css';
-import CarouselDialog from '../../components/AddRecommendation/CarouselDialog';
-import Carousel from '../../components/AddRecommendation/Carousel';
 import TemplateConfiguration from '../../components/AddRecommendation/TemplateConfiguration';
 import DateConfiguration from '../../components/AddRecommendation/DateConfiguration';
 import ParametersConfiguration from '../../components/AddRecommendation/ParametersConfiguration';
@@ -40,80 +38,6 @@ export const CssTextField = withStyles({
     },
   },
 })(TextField);
-
-// const BootstrapInput = withStyles((theme) => ({
-//   root: {
-//     'label + &': {
-//       marginTop: theme.spacing(3),
-//     },
-//   },
-//   input: {
-//     borderRadius: 4,
-//     position: 'relative',
-//     backgroundColor: theme.palette.background.paper,
-//     border: '1px solid #ced4da',
-//     fontSize: 16,
-//     padding: '10px 26px 10px 12px',
-//     transition: theme.transitions.create(['border-color', 'box-shadow']),
-//     // Use the system font instead of the default Roboto font.
-//     fontFamily: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'].join(
-//       ','
-//     ),
-//     '&:focus': {
-//       borderRadius: 4,
-//       borderColor: '#80bdff',
-//       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-//     },
-//   },
-// }))(InputBase);
-
-/**
-   * This function handles compares row items - future methods
-   * @param {*} a
-   * @param {*} b
-   * @param {*} orderBy
- 
-   */
-// function descendingComparator(a, b, orderBy) {
-//   if (b[orderBy] < a[orderBy]) {
-//     return -1;
-//   }
-//   if (b[orderBy] > a[orderBy]) {
-//     return 1;
-//   }
-//   return 0;
-// }
-
-/**
-* This function hanldles the comparison of items gets them - future methods
-* @param {} order
-* @param {*} orderBy 
-*/
-
-// function getComparator(order, orderBy) {
-//   return order === 'desc'
-//     ? (a, b) => descendingComparator(a, b, orderBy)
-//     : (a, b) => -descendingComparator(a, b, orderBy);
-// }
-
-
-/**
-* This function can handle the sorting of the row items - future methods
-* @param {} event 
-* @param {*} index 
-*/
-// function stableSort(array, comparator) {
-//   const stabilizedThis = array.map((el, index) => [el, index]);
-//   stabilizedThis.sort((a, b) => {
-//     const order = comparator(a[0], b[0]);
-//     if (order !== 0) return order;
-//     return a[1] - b[1];
-//   });
-//   return stabilizedThis.map((el) => el[0]);
-// }
-
-
-
 
 
 function ManageRecommendationPage() {
