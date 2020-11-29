@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models.Recommendation.YearlyWash
+namespace Models.Recommendation.YearlyWashOptimization
 {
     public class YearlyWashAPIValues
     {

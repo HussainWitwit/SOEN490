@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Interfaces.Utilities;
 using Models.DB;
-using Models.Recommendation.YearlyWash;
+using Models.Recommendation.YearlyWashOptimization;
 using Moq;
 using NUnit.Framework;
 using RecommendationScheduler.RecommendationTypes;
@@ -20,7 +20,9 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
         public void Setup()
         {
             _loggerMock = new Mock<IRecommendationJobLogger>();
-            _yearlyWashOptimizationRecommendation = new YearlyWashOptimizationRecommendation(_loggerMock.Object);
+            DBRecommendationJob testJob = new DBRecommendationJob();
+
+            _yearlyWashOptimizationRecommendation = new YearlyWashOptimizationRecommendation(_loggerMock.Object, testJob);
         }
 
         [Test]
@@ -29,11 +31,11 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             //Arrange
             _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
              //Act
-            DBRecommendationJob testJob = new DBRecommendationJob();
+            
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
             GetDummy1(userParameters, apiValues);
-            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(testJob, apiValues, userParameters);
+            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(apiValues, userParameters);
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
             List<DateTime> mockCleaningDays = new List<DateTime>();
@@ -49,27 +51,28 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
 
         }
+
+        [Test]
         public void TestStartNoScheduleOnStart2()
         {
             //Arrange
             _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
             //Act
-            DBRecommendationJob testJob = new DBRecommendationJob();
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
             GetDummy2(userParameters, apiValues); 
-            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(testJob, apiValues, userParameters);
+            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(apiValues, userParameters);
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
             List<DateTime> mockCleaningDays = new List<DateTime>();
-            mockCleaningDays.Add(new DateTime(2020, 10, 21));
+            mockCleaningDays.Add(new DateTime(2020, 10, 19));
 
             //Assert
             Assert.AreEqual(Convert.ToInt32(testResult.CostOfAction), 50);
             Assert.AreEqual(Convert.ToInt32(testResult.CostOfInaction), 27);
             Assert.AreEqual(Convert.ToInt32(testResult.NetSaving), -38);
-            Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 23);
-            Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 11);
+            Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 24);
+            Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 12);
             Assert.AreEqual(cleaningDays, mockCleaningDays);
             _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
         }

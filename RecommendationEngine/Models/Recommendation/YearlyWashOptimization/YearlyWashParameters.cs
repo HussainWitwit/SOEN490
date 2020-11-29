@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Models.DB;
 
-namespace Models.Recommendation.YearlyWash
+namespace Models.Recommendation.YearlyWashOptimization
 {
     public class YearlyWashParameters
     {

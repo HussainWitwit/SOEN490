@@ -10,7 +10,7 @@ using Interfaces.Utilities;
 using Models.Application.APIModels;
 using Models.Application.Asset;
 using Models.DB;
-using Models.Recommendation.YearlyWash;
+using Models.Recommendation.YearlyWashOptimization;
 using RecommendationScheduler.RecommendationTypes;
 
 namespace RecommendationScheduler.RecommendationJob
@@ -35,8 +35,8 @@ namespace RecommendationScheduler.RecommendationJob
         {
             GetFromDB();
             GetFromAPI();
-            YearlyWashOptimizationRecommendation ywoRecommendation = new YearlyWashOptimizationRecommendation(_jobLogger);
-            DBRecommendationJobResult _result = ywoRecommendation.ExecuteAlgorithm(_recommendationJob, _apiValues, _parameters);
+            YearlyWashOptimizationRecommendation ywoRecommendation = new YearlyWashOptimizationRecommendation(_jobLogger, _recommendationJob);
+            DBRecommendationJobResult _result = ywoRecommendation.ExecuteAlgorithm(_apiValues, _parameters);
             SaveResult(_recommendationJob, _result);
         }
 
