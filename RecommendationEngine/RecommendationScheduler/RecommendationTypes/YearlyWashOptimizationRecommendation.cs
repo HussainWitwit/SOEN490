@@ -5,7 +5,7 @@ namespace RecommendationScheduler.RecommendationTypes
 {
     public class YearlyWashOptimizationRecommendation : IRecommendationType
     {
-        private IRecommendationJobLogger _jobLogger;
+        private readonly IRecommendationJobLogger _jobLogger;
         public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger)
         {
             _jobLogger = jobLogger;

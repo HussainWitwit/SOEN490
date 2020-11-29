@@ -20,7 +20,6 @@ namespace RecommendationEngine.Services
         private IAssetTypeRepository _assetTypeRepository;
         private List<DBAsset> _assets;
         private DBAssetType _portfolioAssetType;
-        private DBAssetType _plantAssetType;
 
         public AssetService(
                 IDriveService driveService,
@@ -159,7 +158,7 @@ namespace RecommendationEngine.Services
                         ElementPath = x.Id,
                         DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
                         EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
-                        Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
+                        Type = isPortfolio ? _portfolioAssetType : null,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
                         AcPower = isPortfolio ? 0 : plant.AcCapacity,
                         ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)

@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace RecommendationScheduler
 {
-    public class RecommendationScheduler : IRecommendationScheduler, IDisposable
+    public sealed class RecommendationScheduler : IRecommendationScheduler, IDisposable
     {
-        private IScheduler _scheduler;
-        private IRecommendationSchedulerRepository _recommendationSchedulerRepository;
-        private IConfiguration _configuration;
+        private readonly IScheduler _scheduler;
+        private readonly IRecommendationSchedulerRepository _recommendationSchedulerRepository;
+        private readonly IConfiguration _configuration;
 
         public RecommendationScheduler(IScheduler scheduler, IRecommendationSchedulerRepository recommendationSchedulerRepository, IConfiguration configuration)
         {

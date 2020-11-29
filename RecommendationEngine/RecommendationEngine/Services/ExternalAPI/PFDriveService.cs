@@ -42,7 +42,7 @@ namespace RecommendationEngine.Services.ExternalAPI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 
@@ -70,7 +70,7 @@ namespace RecommendationEngine.Services.ExternalAPI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 
@@ -98,7 +98,7 @@ namespace RecommendationEngine.Services.ExternalAPI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 
@@ -126,7 +126,7 @@ namespace RecommendationEngine.Services.ExternalAPI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 
@@ -159,7 +159,7 @@ namespace RecommendationEngine.Services.ExternalAPI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 
@@ -201,7 +201,7 @@ namespace RecommendationEngine.Services.ExternalAPI
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
 

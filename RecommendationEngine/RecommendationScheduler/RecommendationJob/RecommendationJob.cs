@@ -38,7 +38,7 @@ namespace RecommendationScheduler.RecommendationJob
                     watch.Elapsed.Seconds);
                 return Task.CompletedTask;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Handle exception
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
