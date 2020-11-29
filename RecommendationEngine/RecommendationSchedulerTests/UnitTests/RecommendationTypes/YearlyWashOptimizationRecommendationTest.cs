@@ -32,7 +32,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             DBRecommendationJob testJob = new DBRecommendationJob();
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
-            GetDummy(userParameters, apiValues);
+            GetDummy1(userParameters, apiValues);
             DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(testJob, apiValues, userParameters);
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
@@ -49,8 +49,33 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
 
         }
+        public void TestStartNoScheduleOnStart2()
+        {
+            //Arrange
+            _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
+            //Act
+            DBRecommendationJob testJob = new DBRecommendationJob();
+            YearlyWashParameters userParameters = new YearlyWashParameters();
+            YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
+            GetDummy2(userParameters, apiValues); 
+            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(testJob, apiValues, userParameters);
 
-        public void GetDummy(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
+            var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
+            List<DateTime> mockCleaningDays = new List<DateTime>();
+            mockCleaningDays.Add(new DateTime(2020, 10, 21));
+
+            //Assert
+            Assert.AreEqual(Convert.ToInt32(testResult.CostOfAction), 50);
+            Assert.AreEqual(Convert.ToInt32(testResult.CostOfInaction), 27);
+            Assert.AreEqual(Convert.ToInt32(testResult.NetSaving), -38);
+            Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 23);
+            Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 11);
+            Assert.AreEqual(cleaningDays, mockCleaningDays);
+            _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
+        }
+
+       
+        public void GetDummy1(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
         {
 
             apiValues.PlantDCCapacity = 25;
@@ -85,7 +110,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
                 240,240,240,240,240,
             };
 
-           apiValues.EnergyPricesList = new List<double>
+            apiValues.EnergyPricesList = new List<double>
             {
                 0.1,0.1,0.1,0.1,0.1,
                 0.1,0.1,0.1,0.1,0.1,
@@ -116,8 +141,48 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             };
 
             parameters.CenterPointIncrement = 2;
-            parameters.SpanIncrement = 2; 
+            parameters.SpanIncrement = 2;
             parameters.StartSoiling = new DateTime(2020, 08, 1);
+            parameters.EndSoiling = new DateTime(2020, 11, 1);
+            parameters.SoilingRate = -0.0025;
+            parameters.CostCleaning = 2;
+            parameters.SoilingBuffer = 3;
+            parameters.Accelerator = 0.33;
+            parameters.PreferedScenario = "ROI";
+            parameters.PlantIds = new List<string>();
+            parameters.PlantIds.Add("RENEW01_2070.93.001");
+            parameters.Asset = new DBAsset();
+        }
+        public void GetDummy2(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
+        {
+
+            apiValues.PlantDCCapacity = 25;
+
+            apiValues.PredictEnergyList = new List<double>
+            {
+                240,240,240,240,240,
+                240,240,240,240,240,
+                240,240,240,240,240,
+                240,240,240,240,240,
+                240,240,240,240,240,
+                240,240,240,240,240,
+                240,
+            };
+
+            apiValues.EnergyPricesList = new List<double>
+            {
+                0.1,0.1,0.1,0.1,0.1,
+                0.1,0.1,0.1,0.1,0.1,
+                0.1,0.1,0.1,0.1,0.1,
+                0.1,0.1,0.1,0.1,0.1,
+                0.1,0.1,0.1,0.1,0.1,
+                0.1,0.1,0.1,0.1,0.1,
+                0.1,
+            };
+
+            parameters.CenterPointIncrement = 2;
+            parameters.SpanIncrement = 2;
+            parameters.StartSoiling = new DateTime(2020, 10, 1);
             parameters.EndSoiling = new DateTime(2020, 11, 1);
             parameters.SoilingRate = -0.0025;
             parameters.CostCleaning = 2;
