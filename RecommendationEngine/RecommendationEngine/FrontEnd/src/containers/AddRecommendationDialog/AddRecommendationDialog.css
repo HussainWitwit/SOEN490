@@ -103,13 +103,21 @@
     background-color: #4DD3EF;
 }
 
+#closeButton{
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    color: grey;
+}
+
+
 .mocked-content > div{
     cursor: pointer;
     height: 100%;
     width: 100%;
     display: grid;
-    /* justify-content: center; */
-    /* align-items: center; */
+    /* justify-content: center;
+    align-items: center; */
     color: white;
     font-size: 50px;
     font-weight: 800;

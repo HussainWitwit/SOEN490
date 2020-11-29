@@ -1,0 +1,199 @@
+#modal-container {
+    /* background-color: green; */
+    color: black;
+    display: grid;
+    /* justify-content: space-evenly;
+    grid-template-columns: 100px 50px 100px; 
+    grid-template-rows: 80px auto 80px; 
+      */
+    width: 800px; 
+    height: 500px;
+
+   
+
+    
+  }
+
+#parent-div
+{
+  /* width: 200px; 
+  height: 500px; */
+  /* background-color: green; */
+  /* display: grid;
+  grid-auto-rows:50%;
+  grid-gap: 10px; */
+
+  /* grid-template-rows: 90px 90px; */
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* grid-auto-rows: minmax(100px,auto);  */
+
+
+  
+}
+
+#grid{
+  display: grid;
+  grid-template-columns: 140px 140px; 
+  row-gap: 50px; 
+  white-space: 2px;
+  display: grid;
+  background-color: blue;
+  
+} 
+
+#info-div {
+display: grid;
+background-color: orange;
+grid-template-rows: auto;
+width: 100%;
+height: 500px;
+grid-template-areas: 
+"inputs"
+"input";
+
+}
+
+/* 
+  .grid-item.MuiGrid-root.grid-item{
+
+  } */
+
+  /* #parent-grid{
+    display: grid;
+    width: 100%;
+    hei
+    background-color: blue;
+
+  } */
+
+
+
+  #item {
+    display: grid;
+    border-width: 5px;
+    border-color: orange;
+    border-style: solid;
+    background-color: red;
+    align-items: center;
+    height: 120px;
+    width: 120px;
+    margin-left: 20%;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
+
+/* .title-label.MuiTypography-root{
+  margin-top: 40%;
+} */
+
+#templateIcon{
+  text-align: center;
+    justify-content: center;
+    align-content: center;
+    /* align-items: center; */
+}
+
+#templateLabel {
+  color: #212529;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  min-width: 150px;
+  max-width: 150px;
+}
+
+#templateLabel2 {
+  color:#868282;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  min-width: 150px;
+  max-width: 150px;
+}
+
+
+#templateLabelOutput {
+  color:#868282;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  min-width: 200px;
+  max-width: 200px;
+}
+
+#closeButton{
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  color: grey;
+}
+
+.dialogPaper{
+width: 270px;
+height: 290px;
+padding: 0;
+margin: 0; 
+}
+
+.templateConfig{
+  display: flex;
+  align-items: center;
+  min-height: 65vh;
+  max-height: 65vh;
+  min-width: 100vh;
+  max-width: 100vh;
+
+}
+
+.templateConfigBox{
+  max-width: 50%;
+  bottom: 10%;
+  height: 50%;
+}
+
+.tempDialog{
+  display: flex;
+  align-items: center;
+  min-height: 65vh;
+  max-height: 65vh;
+  min-width: 80vh;
+  max-width: 100vh;
+}
+
+.dialogTitle > * {
+  color: #252733 !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 24px !important;
+}
+
+.onelinerAlign{
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+}
+
+.onelinerAlign2{
+  display: flex;
+  vertical-align: top;
+  align-content: left;
+  align-items: left;
+  align-self: left;
+} 
+
+.listAlign{
+  align-content: left;
+  align-items: left;
+  align-self: left;
+  list-style-type: none;
+  padding: 0;
+  margin: 0; 
+}
+
+
+
+
+
+
+  
+
