@@ -7,8 +7,8 @@ namespace Models.Recommendation.YearlyWash
     public class YearlyWashParameters
     {
         public DBAsset Asset { get; set; }
-        public double CenterPointIncrement { get; set; } //TODO: CHANGE DOUBLE TO INT IN DB
-        public double SpanIncrement { get; set; } //TODO: CHANGE DOUBLE TO INT IN DB
+        public double CenterPointIncrement { get; set; } 
+        public double SpanIncrement { get; set; }
         public DateTime StartSoiling { get; set; }
         public DateTime EndSoiling { get; set; }
         public double SoilingRate { get; set; }

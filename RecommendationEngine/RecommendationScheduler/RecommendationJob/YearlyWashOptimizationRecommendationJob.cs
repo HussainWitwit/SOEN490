@@ -31,8 +31,7 @@ namespace RecommendationScheduler.RecommendationJob
             _driveService = driveService;
         }
 
-        //TODO: BACK TO PROTECTED
-        public override void ExecuteJob()
+        protected override void ExecuteJob()
         {
             GetFromDB();
             GetFromAPI();
@@ -44,18 +43,12 @@ namespace RecommendationScheduler.RecommendationJob
         protected override void GetFromDB()
         {
             //Parameters TODO: switch Start of soiling season, End of soiling season, Soiling rate, Cost of cleaning into API once we get the access 
-            //_parameters.CenterPointIncrement = 2; //TODO: CHANGE DOUBLE TO INT IN DB
-            //_parameters.SpanIncrement = 2; //TODO: CHANGE DOUBLE TO INT IN DB
             _parameters.StartSoiling = new DateTime(2020, 08, 1);
             _parameters.EndSoiling = new DateTime(2020, 11, 1);
             _parameters.SoilingRate = -0.0025;
             _parameters.CostCleaning = 2;
-            //_parameters.SoilingBuffer = 3;
-            //_parameters.Accelerator = 0.33;
-            //_parameters.PreferedScenario = "returnOnInvestment";
-            //_parameters.PlantIds = new List<string>();
-            //_parameters.PlantIds.Add("RENEW01_2070.93.001"); //TODO: to remove once in the db
 
+            //Parameters from recommendation schedule 
             _parameters.CenterPointIncrement = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "center point increment").FirstOrDefault().ParamValue;
             _parameters.SpanIncrement = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "span increment").FirstOrDefault().ParamValue;
             _parameters.SoilingBuffer = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "soiling season buffer").FirstOrDefault().ParamValue;
@@ -65,10 +58,9 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.Asset = _recommendationJob.Asset;
         }
 
-        protected async override void GetFromAPI()
+        protected override void GetFromAPI()
         {
             //TODO: APIs need to be fixed on PF's side, for now we are running the algorithm with the following values
-            //API variables
             Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _driveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, _parameters.PlantIds)).Result;
             _apiValues.PredictEnergyList = predictedEnergyDict["assets"].FirstOrDefault().Attributes[0].Values.Select(pe => (pe / 100)).ToList();
 
@@ -88,10 +80,6 @@ namespace RecommendationScheduler.RecommendationJob
             //}
 
             _apiValues.EnergyPricesList = Enumerable.Repeat(0.3, ((_parameters.EndSoiling - _parameters.StartSoiling).Days + 1)).ToList();
-
-            //_apiValues.PlantDCCapacity = 25;
-
-            //_apiValues.PredictEnergyList = Enumerable.Repeat(_parameters.EndSoiling.Subtract(_parameters.StartSoiling), 240);
         }
     }
 }

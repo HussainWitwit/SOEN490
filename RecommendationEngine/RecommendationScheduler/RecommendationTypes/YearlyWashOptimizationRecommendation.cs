@@ -15,7 +15,6 @@ namespace RecommendationScheduler.RecommendationTypes
     {
         //Dependency Injection variables
         private IRecommendationJobLogger _jobLogger;
-        private IDriveService _driveService;
 
         //Variable declarations
         private SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
@@ -33,10 +32,6 @@ namespace RecommendationScheduler.RecommendationTypes
         private YearlyWashParameters _userParameters = new YearlyWashParameters();
         private YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
 
-        //TODO: REMOVE
-        DateTime bestCenterPoint = new DateTime();
-        double bestSpanInc = 0;
-        int count = 0;
         private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
 
         public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger)
@@ -90,15 +85,12 @@ namespace RecommendationScheduler.RecommendationTypes
                         _dayCount += 1;
                     }
 
-                    count += 1; //TODO: REMOVE
                     UpdateTempOutput(_cumulativeCleaning, _apiValues.PlantDCCapacity);
 
                     if ((parameters.PreferedScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
-                        || (_userParameters.PreferedScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving  //TODO: VERIFY STRING NAME WITH FRONT END
+                        || (_userParameters.PreferedScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving
                     {
                         UpdateBestResult();
-                        bestCenterPoint = centerPoint;
-                        bestSpanInc = span;
 
                     }
 
@@ -149,7 +141,6 @@ namespace RecommendationScheduler.RecommendationTypes
                 _cumulativeCleaning += 1;
                 _isWashDay = true;
             }
-
         }
         private void CalculateSoilingDerateWithAction(DateTime currentDate, Boolean _isWashDay, int _cumulativeCleaning)
         {
@@ -172,7 +163,7 @@ namespace RecommendationScheduler.RecommendationTypes
             _actions.Clear();
             _cleaningDates.ForEach(date =>
             {
-                _actions.Add(new DBAction() { Date = date });
+                _actions.Add(new DBAction() { Date = date, Asset = _result.Asset, DisplayText = "wash day", Title = "ywo" + _result.Asset.AssetId});
             });
 
             _result.ActionsSuggestedList = _actions;

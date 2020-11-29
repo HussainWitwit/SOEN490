@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Interfaces.Repositories;
 using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
-using Models.Application.Asset;
 using Models.DB;
 using Quartz;
 
@@ -63,10 +62,8 @@ namespace RecommendationScheduler.RecommendationJob
             _recommendationJob = _schedulerRepository.AddRecommendationJob(job);
         }
 
-        // Contains custom behaviour TODO: PROTECTED
-        public abstract void ExecuteJob();
+        protected abstract void ExecuteJob();
 
-        //TODO: add custom to each rec type
         protected abstract void GetFromAPI();
 
         protected abstract void GetFromDB();
