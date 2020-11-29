@@ -126,6 +126,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             parameters.PreferedScenario = "ROI";
             parameters.PlantIds = new List<string>();
             parameters.PlantIds.Add("RENEW01_2070.93.001");
+            parameters.Asset = new DBAsset();
         }
     }
 }
