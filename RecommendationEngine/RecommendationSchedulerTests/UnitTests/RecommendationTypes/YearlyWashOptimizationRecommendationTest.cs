@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
-using Microsoft.Extensions.Configuration;
 using Models.DB;
+using Models.Recommendation.YearlyWash;
 using Moq;
 using NUnit.Framework;
-using Quartz;
 using RecommendationScheduler.RecommendationTypes;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
@@ -19,9 +14,9 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
     {
         private Mock<IRecommendationJobLogger> _loggerMock;
         private YearlyWashOptimizationRecommendation _yearlyWashOptimizationRecommendation;
-        private IDriveService _driveService;
+       
 
-        [SetUp]
+    [SetUp]
         public void Setup()
         {
             _loggerMock = new Mock<IRecommendationJobLogger>();
@@ -31,35 +26,36 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
         [Test]
         public void TestStartNoScheduleOnStart()
         {
-            //new YeaApiValues 
             //Arrange
             _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
-
-            //Act
+             //Act
             DBRecommendationJob testJob = new DBRecommendationJob();
-            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(testJob, );
+            YearlyWashParameters userParameters = new YearlyWashParameters();
+            YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
+            GetDummy(userParameters, apiValues);
+            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(testJob, apiValues, userParameters);
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
-            var mockCleaningDays = new List<DateTime>();
+            List<DateTime> mockCleaningDays = new List<DateTime>();
             mockCleaningDays.Add(new DateTime(2020, 09, 22));
 
-            Assert.AreEqual((int)testResult.CostOfAction, 50);
-            Assert.AreEqual((int)testResult.CostOfInaction, 233);
-            Assert.AreEqual((int)testResult.NetSaving, 47);
-            Assert.AreEqual((int)testResult.ReturnOnInvestment, 195);
-            Assert.AreEqual((int)testResult.Benefit, 97);
-            Assert.AreEqual(cleaningDays, mockCleaningDays);
-
             //Assert
+            Assert.AreEqual(Convert.ToInt32(testResult.CostOfAction), 50);
+            Assert.AreEqual(Convert.ToInt32(testResult.CostOfInaction), 233);
+            Assert.AreEqual(Convert.ToInt32(testResult.NetSaving), 47);
+            Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 195);
+            Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 97);
+            Assert.AreEqual(cleaningDays, mockCleaningDays);
             _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
 
         }
 
-        public getDummy()
+        public void GetDummy(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
         {
-            _apiValues.PlantDCCapacity = 25;
 
-            _apiValues.PredictEnergyList = new List<double>
+            apiValues.PlantDCCapacity = 25;
+
+            apiValues.PredictEnergyList = new List<double>
             {
                 240,240,240,240,240,
                 240,240,240,240,240,
@@ -89,7 +85,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
                 240,240,240,240,240,
             };
 
-            _apiValues.EnergyPricesList = new List<double>
+           apiValues.EnergyPricesList = new List<double>
             {
                 0.1,0.1,0.1,0.1,0.1,
                 0.1,0.1,0.1,0.1,0.1,
@@ -119,18 +115,17 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
                 0.1,0.1,0.1,0.1,0.1,
             };
 
-            //Parameters TODO: switch Start of soiling season, End of soiling season, Soiling rate, Cost of cleaning into API once we get the access 
-            //_parameters.CenterPointIncrement = 2; //TODO: CHANGE DOUBLE TO INT IN DB
-            //_parameters.SpanIncrement = 2; //TODO: CHANGE DOUBLE TO INT IN DB
-            _parameters.StartSoiling = new DateTime(2020, 08, 1);
-            _parameters.EndSoiling = new DateTime(2020, 11, 1);
-            _parameters.SoilingRate = -0.0025;
-            _parameters.CostCleaning = 2;
-            //_parameters.SoilingBuffer = 3;
-            //_parameters.Accelerator = 0.33;
-            //_parameters.PreferedScenario = "returnOnInvestment";
-            //_parameters.PlantIds = new List<string>();
-            //_parameters.PlantIds.Add("RENEW01_2070.93.001"); //TODO: to remove once in the db
+            parameters.CenterPointIncrement = 2;
+            parameters.SpanIncrement = 2; 
+            parameters.StartSoiling = new DateTime(2020, 08, 1);
+            parameters.EndSoiling = new DateTime(2020, 11, 1);
+            parameters.SoilingRate = -0.0025;
+            parameters.CostCleaning = 2;
+            parameters.SoilingBuffer = 3;
+            parameters.Accelerator = 0.33;
+            parameters.PreferedScenario = "ROI";
+            parameters.PlantIds = new List<string>();
+            parameters.PlantIds.Add("RENEW01_2070.93.001");
         }
     }
 }

@@ -91,26 +91,6 @@ namespace RecommendationSchedulerTests.UnitTests
                     },
                     new DBRecommendationSchedule
                     {
-                        RecommendationScheduleId = 3,
-                        RecommendationType = new DBRecommendationType
-                        {
-                            Type = "Fuse Replacement"
-                        },
-                        Granularity = "Weekly",
-                        RecurrenceDayOfWeek = 2,
-                        AssetsList = new List<DBAssetRecommendationSchedule>
-                        {
-                            new DBAssetRecommendationSchedule
-                            {
-                                Asset = new DBAsset
-                                {
-                                    AssetId = 3
-                                }
-                            }
-                        }
-                    },
-                    new DBRecommendationSchedule
-                    {
                         RecommendationScheduleId = 4,
                         RecommendationType = new DBRecommendationType
                         {
@@ -248,7 +228,7 @@ namespace RecommendationSchedulerTests.UnitTests
             //Assert
             _schedulerMock.Verify(x => x.Start(CancellationToken.None), Times.AtLeastOnce);
             _recommendationSchedulerRepoMock.Verify(x=>x.GetDbRecommendationSchedules(), Times.Once);
-            _schedulerMock.Verify(x => x.ScheduleJob(It.IsAny<IJobDetail>(), It.IsAny<ITrigger>(), CancellationToken.None), Times.Exactly(9));
+            _schedulerMock.Verify(x => x.ScheduleJob(It.IsAny<IJobDetail>(), It.IsAny<ITrigger>(), CancellationToken.None), Times.Exactly(8));
         }
 
         [Test]
