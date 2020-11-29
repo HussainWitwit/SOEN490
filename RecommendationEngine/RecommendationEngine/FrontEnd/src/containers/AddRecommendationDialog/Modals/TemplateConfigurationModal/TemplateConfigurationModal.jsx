@@ -31,10 +31,9 @@ function TemplateConfigurationModal(props) {
             <div id="parent-div">
                 <div id="grid">
                     {TemplateItems.map((item, index) => (<TemplateCard name={item.name} icon={item.listItemIcon} />))}
-                part 1
                 </div>
                 <div id="info-div">
-                    <List>
+                    <List style={{maxHeight: '100%', overflow: 'auto'}}>
 
                         <ListItem>
                             <div className="onelinerAlign2">
@@ -46,7 +45,7 @@ function TemplateConfigurationModal(props) {
                                 </DialogContentText>
                             </div>
                         </ListItem>
-                        <Divider />
+                        <Divider classes={{root: 'divider-item'}} />
                         <ListItem>
                             <div className="onelinerAlign2">
                                 <DialogContentText id="templateLabel2">
@@ -59,7 +58,7 @@ function TemplateConfigurationModal(props) {
                                 </DialogContentText>
                             </div>
                         </ListItem>
-                        <Divider />
+                        <Divider classes={{root: 'divider-item'}} />
                         <ListItem>
                             <div className="onelinerAlign2">
                                 <DialogContentText id="templateLabel2">
@@ -70,7 +69,7 @@ function TemplateConfigurationModal(props) {
                                 </DialogContentText>
                             </div>
                         </ListItem>
-                        <Divider />
+                        <Divider classes={{root: 'divider-item'}} />
                         <ListItem>
                             <div className="onelinerAlign2">
                                 <DialogContentText id="templateLabel2">
