@@ -2,14 +2,18 @@ import React, { useState, useCallback } from 'react';
 import { useTransition, animated } from 'react-spring';
 import Draggable from 'react-draggable';
 import { Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, DialogContentText} from '@material-ui/core';
+import TemplateConfigurationModal from '../AddRecommendationDialog/Modals/TemplateConfigurationModal';
+import DetailsConfigurationModal from '../AddRecommendationDialog/Modals/DetailsConfigurationModal';
+import ParametersConfigurationModal from '../AddRecommendationDialog/Modals/ParametersConfigurationModal';
+import ConfirmationModal from '../AddRecommendationDialog/Modals/ConfirmationModal';
 import './AddRecommendationDialog.css';
 
 
 const pages = [
-    ({ style }) => <animated.div style={{ ...style, background: 'lightpink' }}>A</animated.div>,
-    ({ style }) => <animated.div style={{ ...style, background: 'lightblue' }}>B</animated.div>,
-    ({ style }) => <animated.div style={{ ...style, background: 'lightgreen' }}>C</animated.div>,
-    ({ style }) => <animated.div style={{ ...style, background: 'teal' }}>D</animated.div>,
+    ({ style }) => <TemplateConfigurationModal dialogStyle={style}/>,
+    ({ style }) => <DetailsConfigurationModal dialogStyle={style}/>,
+    ({ style }) => <ParametersConfigurationModal dialogStyle={style}/>,
+    ({ style }) => <ConfirmationModal dialogStyle={style}/>,
   ]
 
 function PaperComponent(props) {
@@ -64,7 +68,7 @@ export default function AddRecommendationDialog(props) {
         }}
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Subscribe
+          Configuration 
         </DialogTitle>
         <DialogContent classes = {{
             root: 'dialog-content',
@@ -87,7 +91,7 @@ export default function AddRecommendationDialog(props) {
                 <Button id = 'next-btn' onClick={onClickNext} variant = 'outlined'>Next</Button>
             }
             {index == 3 &&
-                <Button id = 'next-btn' variant = 'outlined'>Confirm</Button>
+                <Button id = 'next-btn' onClick={props.close} variant = 'outlined'>Confirm</Button>
             }
         </DialogActions>
       </Dialog>

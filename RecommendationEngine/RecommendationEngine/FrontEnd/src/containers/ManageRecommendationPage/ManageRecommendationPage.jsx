@@ -159,12 +159,8 @@ function ManageRecommendationPage() {
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
-              {showDialog && <AddRecommendationDialog close ={toggleDialog} open = {showDialog}/>}
-              {
-              // <CarouselDialog show={showDialog}>
-              //   <Carousel>{({ getItemProps }) => items.map((Item) => (<Item {...getItemProps({ key: Item, dismiss: toggleDialog })} />))}</Carousel>
-              // </CarouselDialog>
-            }
+              {showDialog && 
+              <AddRecommendationDialog close ={toggleDialog} open = {showDialog}/>}
             </div>
           </Grid>
         </Grid>
