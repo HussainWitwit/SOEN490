@@ -1,7 +1,8 @@
 ﻿using Interfaces.Repositories;
+using Interfaces.Services;
 using Interfaces.Services.ExternalAPI;
 
-namespace Interfaces.Services
+namespace RecommendationEngine.Services
 {
     public class ActionService: IActionService
     {
