@@ -62,5 +62,11 @@ namespace RecommendationEngine.Repositories
             }
             _recommendationEngineDb.SaveChanges();
         }
+
+        public void AddResult(DBRecommendationJob _recommendationJob, DBRecommendationJobResult _result)
+        {
+            _recommendationJob.Result = _result;
+            _recommendationEngineDb.SaveChanges();
+        }
     }
 }

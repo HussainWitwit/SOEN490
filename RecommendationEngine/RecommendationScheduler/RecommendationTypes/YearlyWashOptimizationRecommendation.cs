@@ -4,9 +4,10 @@ using System;
 using Interfaces.Services.ExternalAPI;
 using System.Linq;
 using System.Collections.Generic;
-using Models.Application.RecommendationEngine.YearlyWash;
+using Models.Recommendation.YearlyWash;
 using Models.Application.APIModels;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace RecommendationScheduler.RecommendationTypes
 {
@@ -16,62 +17,42 @@ namespace RecommendationScheduler.RecommendationTypes
         private IRecommendationJobLogger _jobLogger;
         private IDriveService _driveService;
 
-        //Execute function variables
-        //Temporary Hard Code values
-        private int _centerPointIncrement = 2; //TODO: CHANGE DOUBLE TO INT IN DB
-        private int _spanIncrement = 2; //TODO: CHANGE DOUBLE TO INT IN DB
-        private DateTime _startSoiling = new DateTime(2020, 08, 1);
-        private DateTime _endSoiling = new DateTime(2020, 11, 1);
-        private double _soilingRate = -0.0025;
-        private double _costCleaning = 2;
-        private double _soilingBuffer = 3;
-        private double _accelerator = 0.33;
-        private string _preferedScenario = "returnOnInvestment";
-        private List<string> _plantIds = new List<string>();
         //Variable declarations
         private SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
         private SoilingCalculations _soilingWithAction = new SoilingCalculations();// object for Soiling Calculation , with action , aka the impact of soiling with cleaning schedule  
         private List<DateTime> _cleaningDates = new List<DateTime>(); //List of Cleaning days for a specific centerPoint and span combination
-        private List<DateTime> _bestCleaningDates = new List<DateTime>(); //to temporary store the best cleaning dates / they are later transformed into actions
         private int _cumulativeCleaning = 0; //The number of cleanings so far
         private int _dayCount = 1; //needed for retrieving the predicted energy for a specific day
         private Boolean _isWashDay = false; //used for check if wash date method
 
-        //Values from APIs
-        private List<double> predictEnergyList = new List<double>();// stores predicted energy from API
-        private List<double>  energyPricesList = new List<double>();
-        private double plantDCCapacity = 0.0;//stores the value of DC Capacity
-
         //Temporary output variables for Result soilingScenarioect
         private DBRecommendationJobResult _result = new DBRecommendationJobResult();
         private DBRecommendationJobResult _tempResult = new DBRecommendationJobResult();
-        
+
+        //Execute method params passed by job sheduler
+        private YearlyWashParameters _userParameters = new YearlyWashParameters();
+        private YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
 
         //TODO: REMOVE
         DateTime bestCenterPoint = new DateTime();
-        int bestSpanInc = 0;
+        double bestSpanInc = 0;
         int count = 0;
         private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
 
-        public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger, IDriveService driveservice)
+        public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger)
         {
             _jobLogger = jobLogger;
-            _driveService = driveservice;
         }
-        public DBRecommendationJobResult ExecuteAlgorithm(DBRecommendationJob job)
+        public DBRecommendationJobResult ExecuteAlgorithm(DBRecommendationJob job, YearlyWashAPIValues apiValues, YearlyWashParameters parameters)
         {
-
+            _apiValues = apiValues;
+            _userParameters = parameters;
             _jobLogger.LogInformation(job, "Starting Yearly Wash Optimization Recommendation");
 
-            //Parameters TODO: switch Start of soiling season, End of soiling season, Soiling rate, Cost of cleaning into API once we get the access 
-            _plantIds.Add("RENEW01_2070.93.001"); //TODO: to remove once in the db
-
-            GetAPIValues();
-
             //Initializing scenario parameters
-            DateTime centerPoint = _startSoiling;
+            DateTime centerPoint = _userParameters.StartSoiling;
             DateTime currentDate;
-            int span;
+            double span;
 
             //Initializing variables
             _soilingNoAction.SoilingDerate = 1.0;
@@ -83,36 +64,36 @@ namespace RecommendationScheduler.RecommendationTypes
 
             _jobLogger.LogInformation(job, "Looking for best cleaning dates...");
 
-            while (centerPoint < _endSoiling)
+            while (centerPoint < _userParameters.EndSoiling)
             {
-                span = _spanIncrement;
+                span = _userParameters.SpanIncrement;
 
-                while (centerPoint.AddDays(span) < _endSoiling || centerPoint.AddDays(-span) > _startSoiling)
+                while (centerPoint.AddDays(span) < _userParameters.EndSoiling || centerPoint.AddDays(-span) > _userParameters.StartSoiling)
                 {
                     ResetValues();
 
                     // computes various outputs for a all day within soiling season with a specific combination of center point + span
                     // start at day 2, since first day values are given by ResetValues() -> there is no soiling yet...
-                    for (currentDate = _startSoiling.AddDays(1); _endSoiling.CompareTo(currentDate) > 0; currentDate = currentDate.AddDays(1))// iterate through all days within soiling season
+                    for (currentDate = _userParameters.StartSoiling.AddDays(1); _userParameters.EndSoiling.CompareTo(currentDate) > 0; currentDate = currentDate.AddDays(1))// iterate through all days within soiling season
                     {
                         //NoAction
                         CalculateSoilingDerateNoAction();
-                        CalculateSoilingImpact(_soilingNoAction, predictEnergyList, energyPricesList);
+                        CalculateSoilingImpact(_soilingNoAction, _apiValues.PredictEnergyList, _apiValues.EnergyPricesList);
 
                         CheckIfWashDay(currentDate, centerPoint, span);
 
                         //WithAction
                         CalculateSoilingDerateWithAction(currentDate, _isWashDay, _cumulativeCleaning);
-                        CalculateSoilingImpact(_soilingWithAction, predictEnergyList, energyPricesList);
+                        CalculateSoilingImpact(_soilingWithAction, _apiValues.PredictEnergyList, _apiValues.EnergyPricesList);
 
                         _dayCount += 1;
                     }
 
                     count += 1; //TODO: REMOVE
-                    UpdateTempOutput(_cumulativeCleaning, plantDCCapacity);
+                    UpdateTempOutput(_cumulativeCleaning, _apiValues.PlantDCCapacity);
 
-                    if ((_preferedScenario == "returnOnInvestment" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
-                        || (_preferedScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving  //TODO: VERIFY STRING NAME WITH FRONT END
+                    if ((parameters.PreferedScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
+                        || (_userParameters.PreferedScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving  //TODO: VERIFY STRING NAME WITH FRONT END
                     {
                         UpdateBestResult();
                         bestCenterPoint = centerPoint;
@@ -120,9 +101,9 @@ namespace RecommendationScheduler.RecommendationTypes
 
                     }
 
-                    span += _spanIncrement;
+                    span += _userParameters.SpanIncrement;
                 }
-                centerPoint = centerPoint.AddDays(_centerPointIncrement);
+                centerPoint = centerPoint.AddDays(parameters.CenterPointIncrement);
             }
 
             _jobLogger.LogInformation(job, "Best combination found!");
@@ -130,103 +111,6 @@ namespace RecommendationScheduler.RecommendationTypes
             return _result;
         }
 
-        public void RetrieveFromDB()
-        {
-            //centerPointIncrement = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "centerpoint increment").FirstOrDefault().ParamValue;
-            //spanIncrement = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "span increment").FirstOrDefault().ParamValue;
-
-            //TODO: Once inside of database, switch to this 
-            //startSoiling = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "start soiling").FirstOrDefault().ParamValue;
-            //endSoiling = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "end soiling").FirstOrDefault().ParamValue;
-            //soilingRate = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "soiling rate").FirstOrDefault().ParamValue;
-            //costCleaning = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "cost cleaning").FirstOrDefault().ParamValue;
-            //soilingBuffer = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "soiling buffer").FirstOrDefault().ParamValue;
-            //accelerator = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "accelerator").FirstOrDefault().ParamValue;
-            //preferedScenario = job.Schedule.ParametersList.Where(x => x.RecommendationParameter.Name == "pefered scenario").FirstOrDefault().ParamValue;
-            //plantIds = job.Schedule.AssetList.FirstOrDefault().ParamValue;
-        }
-        private async void GetAPIValues()
-        {
-            //TODO: APIs need to be fixed on PF's side, for now we are running the algorithm with the following values
-            //API variables
-            //Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = await _driveService.GetDailyPredictedEnergyByPlantIds(_startSoiling, _endSoiling, _plantIds);
-            //predictEnergyList = predictedEnergyDict["assets"].FirstOrDefault().Attributes[0]["values"];
-
-            predictEnergyList = new List<double>
-            {
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-            };
-
-            //List<PFPPAPrice> energyPrices = await _driveService.GetPPAPriceByPlantId(_plantIds.FirstOrDefault());
-            //double avgPrice;
-
-            //for(DateTime date = _startSoiling; date <= _endSoiling; date.AddDays(1))
-            //{
-            //    avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => x.Price).DefaultIfEmpty(37).Average();
-            //    energyPricesList.Add(avgPrice);
-            //}
-
-            energyPricesList = new List<double>
-            {
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-            };
-
-            //List<PFMetadata> metadata = await _driveService.GetAssetsMetadataByPlantIds(_plantIds);
-            //var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
-            //plantDCCapacity = plantMetadata["DC_Capacity"];
-
-            plantDCCapacity = 25;
-        }
         private void ResetValues()
         {
             //reset values for new date
@@ -241,12 +125,11 @@ namespace RecommendationScheduler.RecommendationTypes
             _soilingWithAction.SumOfPredictedRevenueLoss = 0;
             _cumulativeCleaning = 0;
             _cleaningDates.Clear();
-            _bestCleaningDates.Clear();
             _dayCount = 1;
         }
         private void CalculateSoilingDerateNoAction()
         {
-            _soilingNoAction.SoilingDerate = (1 + _soilingRate) * _soilingNoAction.SoilingDerate;
+            _soilingNoAction.SoilingDerate = (1 + _userParameters.SoilingRate) * _soilingNoAction.SoilingDerate;
         }
         private void CalculateSoilingImpact(SoilingCalculations soilingScenario, List<double> predictEnergyList, List<double> energyPricesList)
         {
@@ -255,10 +138,10 @@ namespace RecommendationScheduler.RecommendationTypes
             soilingScenario.PredictedRevenueLoss = energyPricesList[_dayCount] * soilingScenario.PredictedEnergyLoss;
             soilingScenario.SumOfPredictedRevenueLoss += soilingScenario.PredictedRevenueLoss; // for every day, add the predicted revenue loss
         }
-        private void CheckIfWashDay(DateTime currentDate, DateTime centerPoint, int span)
+        private void CheckIfWashDay(DateTime currentDate, DateTime centerPoint, double span)
         {
             _isWashDay = false;
-            if (currentDate > _startSoiling.AddDays(_soilingBuffer) && currentDate < _endSoiling.AddDays(-_soilingBuffer) && (((currentDate - centerPoint).Days % span) == 0))
+            if (currentDate > _userParameters.StartSoiling.AddDays(_userParameters.SoilingBuffer) && currentDate < _userParameters.EndSoiling.AddDays(-_userParameters.SoilingBuffer) && (((currentDate - centerPoint).Days % span) == 0))
             {
                 _cleaningDates.Add(currentDate);
                 _soilingWithAction.SoilingDerate = 1.0;// reset to 1 because cleaning will be done
@@ -269,38 +152,34 @@ namespace RecommendationScheduler.RecommendationTypes
         }
         private void CalculateSoilingDerateWithAction(DateTime currentDate, Boolean _isWashDay, int _cumulativeCleaning)
         {
-            if (currentDate > _startSoiling && currentDate < _endSoiling && !_isWashDay)
+            if (currentDate > _userParameters.StartSoiling && currentDate < _userParameters.EndSoiling && !_isWashDay)
             {
                 //_soilingWithAction.SoilingDerate holds the value of the previous day as it has not been calculated yet
-                _soilingWithAction.SoilingDerate = Math.Max(_soilingNoAction.SoilingDerate, (_soilingWithAction.SoilingDerate * (1 + _soilingRate * (1 + _cumulativeCleaning * _accelerator))));
+                _soilingWithAction.SoilingDerate = Math.Max(_soilingNoAction.SoilingDerate, (_soilingWithAction.SoilingDerate * (1 + _userParameters.SoilingRate * (1 + _cumulativeCleaning * _userParameters.Accelerator))));
             }
         }
         private void UpdateTempOutput(int _cumulativeCleaning, double plantDCCapacity)
         {
             _tempResult.CostOfInaction = _soilingNoAction.SumOfPredictedRevenueLoss;
             _tempResult.Benefit = _tempResult.CostOfInaction - _soilingWithAction.SumOfPredictedRevenueLoss;
-            _tempResult.CostOfAction = _cumulativeCleaning * _costCleaning * plantDCCapacity;
+            _tempResult.CostOfAction = _cumulativeCleaning * _userParameters.CostCleaning * plantDCCapacity;
             _tempResult.ReturnOnInvestment = _tempResult.Benefit / _tempResult.CostOfAction * 100;
             _tempResult.NetSaving = _tempResult.Benefit - _tempResult.CostOfAction;
         }
         private void UpdateBestResult()
         {
             _actions.Clear();
-            _bestCleaningDates = _cleaningDates; //TODO: NOT GOOD
-
-            _bestCleaningDates.ForEach(date =>
+            _cleaningDates.ForEach(date =>
             {
                 _actions.Add(new DBAction() { Date = date });
             });
 
             _result.ActionsSuggestedList = _actions;
-
             _result.CostOfAction = _tempResult.CostOfAction;
             _result.CostOfInaction = _tempResult.CostOfInaction;
-            _result.NetSaving = _tempResult.NetSaving; 
-            _result.Benefit = _tempResult.Benefit; 
-            _result.ReturnOnInvestment = _tempResult.ReturnOnInvestment; 
-            //TODO: bring back actions
+            _result.NetSaving = _tempResult.NetSaving;
+            _result.Benefit = _tempResult.Benefit;
+            _result.ReturnOnInvestment = _tempResult.ReturnOnInvestment;
         }
     }
 }

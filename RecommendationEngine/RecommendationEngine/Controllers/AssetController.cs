@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using Interfaces.Repositories;
 using Interfaces.Services;
 using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
@@ -14,6 +15,7 @@ using Models.DB;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using Quartz;
+using Quartz.Impl;
 using RecommendationEngine.ExceptionHandler;
 using RecommendationScheduler.RecommendationJob;
 using RecommendationScheduler.RecommendationTypes;
@@ -27,12 +29,15 @@ namespace RecommendationEngine.Controllers
         private IAssetService _assetService;
         private IRecommendationJobLogger _jobLogger;//TODO: remove
         private IDriveService _driveService;//TODO: remove
+        private IRecommendationSchedulerRepository _repo;
 
-        public AssetController(IAssetService assetService, IRecommendationJobLogger jobLogger, IDriveService driveService)
+        public AssetController(IAssetService assetService, IRecommendationJobLogger jobLogger, IDriveService driveService, IRecommendationSchedulerRepository repository)
         {
             _assetService = assetService;
-            _jobLogger = jobLogger;
-            _driveService = driveService;
+
+            _jobLogger = jobLogger;//TODO: REmove
+            _driveService = driveService;// TODO: REMOVE
+            _repo = repository; //TODO: remove
         }
 
         [HttpGet("get")]
@@ -40,9 +45,8 @@ namespace RecommendationEngine.Controllers
         {
             try
             {
-                DBRecommendationJob job = new DBRecommendationJob();
-                YearlyWashOptimizationRecommendation ywoRecommendation = new YearlyWashOptimizationRecommendation(_jobLogger, _driveService);
-                ywoRecommendation.ExecuteAlgorithm(job);
+                YearlyWashOptimizationRecommendationJob job = new YearlyWashOptimizationRecommendationJob(_jobLogger, _repo, _driveService);
+                job.ExecuteJob();
                 return Ok(_assetService.GetAssetsTreeview());
             }
             catch (GlobalException e)

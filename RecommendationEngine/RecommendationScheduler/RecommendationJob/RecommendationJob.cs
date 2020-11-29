@@ -63,15 +63,18 @@ namespace RecommendationScheduler.RecommendationJob
             _recommendationJob = _schedulerRepository.AddRecommendationJob(job);
         }
 
-        // Contains custom behaviour
-        protected abstract void ExecuteJob();
+        // Contains custom behaviour TODO: PROTECTED
+        public abstract void ExecuteJob();
 
         //TODO: add custom to each rec type
-        //protected abstract IRecommendationJobApiValues GetFromApi();
         protected abstract void GetFromApi();
 
-
         protected abstract void GetFromDB();
+
+        protected void SaveResult(DBRecommendationJob job, DBRecommendationJobResult result)
+        {
+            _schedulerRepository.AddResult(job, result);
+        }
 
     }
 }

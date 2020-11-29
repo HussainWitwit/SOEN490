@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.Application.RecommendationEngine.YearlyWash
+namespace Models.Recommendation.YearlyWash
 {
     public class SoilingCalculations
     {
