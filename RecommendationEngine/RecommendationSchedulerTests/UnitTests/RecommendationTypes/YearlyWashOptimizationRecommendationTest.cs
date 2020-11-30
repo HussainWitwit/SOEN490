@@ -65,14 +65,14 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
             List<DateTime> mockCleaningDays = new List<DateTime>();
-            mockCleaningDays.Add(new DateTime(2020, 10, 19));
+            mockCleaningDays.Add(new DateTime(2020, 10, 17));
 
             //Assert
             Assert.AreEqual(Convert.ToInt32(testResult.CostOfAction), 50);
-            Assert.AreEqual(Convert.ToInt32(testResult.CostOfInaction), 27);
-            Assert.AreEqual(Convert.ToInt32(testResult.NetSaving), -38);
-            Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 24);
-            Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 12);
+            Assert.AreEqual(Convert.ToInt32(testResult.CostOfInaction), 73);
+            Assert.AreEqual(Convert.ToInt32(testResult.NetSaving), -15);
+            Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 70);
+            Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 35);
             Assert.AreEqual(cleaningDays, mockCleaningDays);
             _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
         }
@@ -162,26 +162,10 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             apiValues.PlantDCCapacity = 25;
 
             apiValues.PredictEnergyList = new List<double>
-            {
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,240,240,240,240,
-                240,
-            };
+            {300,280,287,243,292,216,275,210,225,279,220,260,277,234,219,235,223,235,281,252,248,257,240,299,299,289,210,294,246,227,223};
 
             apiValues.EnergyPricesList = new List<double>
-            {
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,0.1,0.1,0.1,0.1,
-                0.1,
-            };
+            { 0.1,0.5,0.5,0.4,0.3,0.3,0.4,0.1,0.2,0.1,0.1,0.1,0.2,0.1,0.3,0.4,0.2,0.5,0.4,0.3,0.1,0.2,0.3,0.4,0.1,0.5,0.5,0.1,0.3,0.1,0.1 };
 
             parameters.CenterPointIncrement = 2;
             parameters.SpanIncrement = 2;
