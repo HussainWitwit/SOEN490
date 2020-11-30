@@ -5,7 +5,7 @@ using Models.DB;
 using Moq;
 using NUnit.Framework;
 using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI;
+using Interfaces.Services.ExternalAPI;
 using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests

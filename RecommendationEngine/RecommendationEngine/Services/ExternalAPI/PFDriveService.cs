@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Text;
 using System.Net.Http.Headers;
+using Interfaces.Services.ExternalAPI;
 
 namespace RecommendationEngine.Services.ExternalAPI
 {
@@ -213,3 +214,4 @@ namespace RecommendationEngine.Services.ExternalAPI
 
     }
 }
+ 

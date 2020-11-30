@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI;
+using Interfaces.Services.ExternalAPI;
 
 namespace RecommendationEngineTests.UnitTests.ControllerTest
 {

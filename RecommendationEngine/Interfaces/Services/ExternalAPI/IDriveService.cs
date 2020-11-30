@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models.Application.APIModels;
 
-namespace RecommendationEngine.Services.ExternalAPI
+namespace Interfaces.Services.ExternalAPI
 {
     public interface IDriveService
     {

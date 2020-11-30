@@ -3,11 +3,12 @@ using System.Linq;
 using System.Collections.Generic;
 using Interfaces.Services;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI;
 using Interfaces.Repositories;
 using Models.Application.Asset;
 using Models.Application.APIModels;
 using System.Threading.Tasks;
+using Models.Application.APIModels;
+using Interfaces.Services.ExternalAPI;
 
 
 namespace RecommendationEngine.Services

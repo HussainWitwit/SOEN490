@@ -1,5 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
+using Interfaces.Repositories;
 using Interfaces.Services;
+using Interfaces.Services.ExternalAPI;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
 

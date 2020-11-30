@@ -23,12 +23,6 @@ namespace RecommendationScheduler.RecommendationJob
                         .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
                         .WithDescription(Schedule.Description)
                         .Build();
-                case "Fuse Replacement":
-                    return JobBuilder.Create<FuseReplacementRecommendationJob>()
-                        .WithIdentity(Schedule.RecommendationScheduleId.ToString())
-                        .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
-                        .WithDescription(Schedule.Description)
-                        .Build();
                 default:
                     throw new System.NotImplementedException();
             }
