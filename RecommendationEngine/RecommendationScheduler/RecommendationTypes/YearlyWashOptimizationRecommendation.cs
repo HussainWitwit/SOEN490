@@ -6,10 +6,7 @@ using System.Collections.Generic;
 
 namespace RecommendationScheduler.RecommendationTypes
 {
-    public class YearlyWashOptimizationRecommendation : IRecommendationType
-    {
-        private readonly IRecommendationJobLogger _jobLogger;
-        public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger)
+
     public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashAPIValues>
         {
             //Dependency Injection variables
