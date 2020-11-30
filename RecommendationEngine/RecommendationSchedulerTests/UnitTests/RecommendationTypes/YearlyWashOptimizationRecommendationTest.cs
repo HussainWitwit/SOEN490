@@ -35,7 +35,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
             GetDummy1(userParameters, apiValues);
-            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(apiValues, userParameters);
+            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(userParameters, apiValues);
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
             List<DateTime> mockCleaningDays = new List<DateTime>();
@@ -61,7 +61,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
             GetDummy2(userParameters, apiValues); 
-            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(apiValues, userParameters);
+            DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(userParameters, apiValues);
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
             List<DateTime> mockCleaningDays = new List<DateTime>();

@@ -37,7 +37,7 @@ namespace RecommendationScheduler.RecommendationJob
 
             GetFromAPI();
             YearlyWashOptimizationRecommendation ywoRecommendation = new YearlyWashOptimizationRecommendation(_jobLogger, _recommendationJob);
-            DBRecommendationJobResult _result = ywoRecommendation.ExecuteAlgorithm(_apiValues, _parameters);
+            DBRecommendationJobResult _result = ywoRecommendation.ExecuteAlgorithm(_parameters, _apiValues);
             SaveResult(_recommendationJob, _result);
         }
 

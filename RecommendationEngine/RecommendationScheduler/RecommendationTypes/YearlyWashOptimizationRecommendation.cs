@@ -8,10 +8,11 @@ using Models.Recommendation.YearlyWashOptimization;
 using Models.Application.APIModels;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Runtime.InteropServices.ComTypes;
+using Models.Recommendation;
 
 namespace RecommendationScheduler.RecommendationTypes
 {
-    public class YearlyWashOptimizationRecommendation : IRecommendationType
+    public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashAPIValues>
     {
         //Dependency Injection variables
         private IRecommendationJobLogger _jobLogger;
@@ -41,11 +42,12 @@ namespace RecommendationScheduler.RecommendationTypes
             _job = job;
         }
 
-        public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashAPIValues apiValues, YearlyWashParameters parameters)
+        public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
         {
+            _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
+
             _apiValues = apiValues;
             _userParameters = parameters;
-            _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
 
             //Initializing scenario parameters
             DateTime centerPoint = _userParameters.StartSoiling;
@@ -90,7 +92,7 @@ namespace RecommendationScheduler.RecommendationTypes
 
                     UpdateTempOutput(_cumulativeCleaning, _apiValues.PlantDCCapacity);
 
-                    if ((parameters.PreferedScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
+                    if ((_userParameters.PreferedScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
                         || (_userParameters.PreferedScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving
                     {
                         UpdateBestResult();
@@ -99,7 +101,7 @@ namespace RecommendationScheduler.RecommendationTypes
 
                     span += _userParameters.SpanIncrement;
                 }
-                centerPoint = centerPoint.AddDays(parameters.CenterPointIncrement);
+                centerPoint = centerPoint.AddDays(_userParameters.CenterPointIncrement);
             }
 
             _jobLogger.LogInformation(_job, "Best combination found!");

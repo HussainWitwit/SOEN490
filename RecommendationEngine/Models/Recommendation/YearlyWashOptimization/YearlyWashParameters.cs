@@ -4,7 +4,7 @@ using Models.DB;
 
 namespace Models.Recommendation.YearlyWashOptimization
 {
-    public class YearlyWashParameters
+    public class YearlyWashParameters: RecommendationParameters
     {
         public DBAsset Asset { get; set; }
         public double CenterPointIncrement { get; set; } 

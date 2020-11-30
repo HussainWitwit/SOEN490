@@ -16,6 +16,5 @@
 
   <ItemGroup>
     <Folder Include="Application\APIModels\" />
-    <Folder Include="Recommendation\" />
   </ItemGroup>
 </Project>
