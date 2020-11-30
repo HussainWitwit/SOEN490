@@ -21,9 +21,9 @@ namespace RecommendationScheduler.RecommendationTypes
         private SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
         private SoilingCalculations _soilingWithAction = new SoilingCalculations();// object for Soiling Calculation , with action , aka the impact of soiling with cleaning schedule  
         private List<DateTime> _cleaningDates = new List<DateTime>(); //List of Cleaning days for a specific centerPoint and span combination
-        private int _cumulativeCleaning = 0; //The number of cleanings so far
-        private int _dayCount = 1; //needed for retrieving the predicted energy for a specific day
-        private Boolean _isWashDay = false; //used for check if wash date method
+        private int _cumulativeCleaning = 0; 
+        private int _dayCount = 1; 
+        private Boolean _isWashDay = false;
 
         //Temporary output variables for Result soilingScenarioect
         private DBRecommendationJobResult _result = new DBRecommendationJobResult();
@@ -40,6 +40,7 @@ namespace RecommendationScheduler.RecommendationTypes
             _jobLogger = jobLogger;
             _job = job;
         }
+
         public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashAPIValues apiValues, YearlyWashParameters parameters)
         {
             _apiValues = apiValues;
