@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Interfaces.Services.ExternalAPI;
+using Microsoft.Extensions.Configuration;
 using Models.Application.APIModels;
 using Newtonsoft.Json;
 using RecommendationEngine.ExceptionHandler;

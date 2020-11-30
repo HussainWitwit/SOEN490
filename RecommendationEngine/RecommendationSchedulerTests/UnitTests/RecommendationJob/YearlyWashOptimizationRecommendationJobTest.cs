@@ -1,4 +1,5 @@
 using Interfaces.Repositories;
+using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
 using Models.DB;
 using Moq;
@@ -16,6 +17,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
         private Mock<IRecommendationSchedulerRepository> _recommendationSchedulerRepoMock;
         private Mock<IJobExecutionContext> _contextMock;
         private YearlyWashOptimizationRecommendationJob _yearlyWashOptimizationRecommendationJob;
+        private IDriveService _driveService;
 
         [SetUp]
         public void Setup()
@@ -23,7 +25,8 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
             _loggerMock = new Mock<IRecommendationJobLogger>();
             _recommendationSchedulerRepoMock = new Mock<IRecommendationSchedulerRepository>();
             _contextMock = new Mock<IJobExecutionContext>();
-            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object);
+
+            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object, _driveService);
         }
 
         [Test]

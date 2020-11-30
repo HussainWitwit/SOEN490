@@ -11,5 +11,6 @@ namespace Interfaces.Repositories
         public DBRecommendationJob AddRecommendationJob(DBRecommendationJob job);
         public void UpdateRecommendationJobStatus(int jobId, string status);
         public void UpdateRecommendationJobStatus(int jobId, string status, int jobDurationSeconds);
+        public void AddResult(DBRecommendationJob recommendationJob, DBRecommendationJobResult result);
     }
 }

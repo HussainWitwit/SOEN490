@@ -1,9 +1,9 @@
 ﻿using Interfaces.Repositories;
 using Interfaces.Services;
+using Interfaces.Services.ExternalAPI;
 using Models.Application.APIModels;
 using Models.Application.Asset;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;

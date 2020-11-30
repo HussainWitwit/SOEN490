@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
+using Interfaces.Services.ExternalAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Models.Application.APIModels;
@@ -10,7 +11,6 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI;
 using System;
 using System.Collections.Generic;
 using System.Net;

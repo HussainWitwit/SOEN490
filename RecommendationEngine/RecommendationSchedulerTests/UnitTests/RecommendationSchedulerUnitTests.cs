@@ -88,12 +88,12 @@ namespace RecommendationSchedulerTests.UnitTests
                             }
                         }
                     },
-                    new DBRecommendationSchedule
+                     new DBRecommendationSchedule
                     {
                         RecommendationScheduleId = 3,
                         RecommendationType = new DBRecommendationType
                         {
-                            Type = "Fuse Replacement"
+                            Type = "Yearly Wash Optimization"
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 2,

@@ -8,6 +8,6 @@ namespace Models.Application.APIModels
         public string Interval { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public List<Dictionary<string, dynamic>> Attributes { get; set; }
+        public List<PFAttribute> Attributes { get; set; }
     }
 }

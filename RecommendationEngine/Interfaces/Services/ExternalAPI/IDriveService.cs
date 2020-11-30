@@ -1,9 +1,9 @@
-﻿using Models.Application.APIModels;
+using Models.Application.APIModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace RecommendationEngine.Services.ExternalAPI
+namespace Interfaces.Services.ExternalAPI
 {
     public interface IDriveService
     {
