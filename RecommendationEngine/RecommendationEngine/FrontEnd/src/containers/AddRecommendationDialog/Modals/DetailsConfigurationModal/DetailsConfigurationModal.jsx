@@ -16,36 +16,49 @@ const TYPE_ASSET = 'Asset';
 const granularityItems = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 const TYPE_GRANULARITY = 'Granularity';
 
+const contentObjectValues = {
+    title: null,
+    asset: null,
+    ron: null,
+    granularity: null,
+    repeatDay: null,
+    repeatDate: null,
+    repeatTime: null
+}
+
 function DetailsConfigurationModal(props) {
     const [granularity, setGranularity] = useState(granularityItems[0]);
     const [asset, setAsset] = useState(assetItems[0]);
-    const RadioButtonChoice = (props) => {
-        return (
-            <div id = 'element-container'>
-                 <Form.Check type="radio" aria-label="radio 1" />
-            </div>
-        );
-    }
-
+    const [screenContent, setScreenContent] = useState(contentObjectValues);
+    const [test, setTest] = useState('');
     const handleDropDownSelect = (event, type) => {
         event.preventDefault();
         if(type == TYPE_ASSET) {
             setAsset(event.target.value);
+            setScreenContent(...{asset: event.target.value});
         }
         else if(type == TYPE_GRANULARITY){
             setGranularity(event.target.value);
+            // setScreenContent(...{granularity: event.target.value});
         }
+    }
+
+    const handleTitleEvent = (event) => {
+        console.log(event.target.value);
+        // setTest(event.target.value);
     }
     
     const InputText = (props) => {
         return (
             <div id = 'element-container'>
+                <div id = 'text-container'>
                 <p id = 'text'>{props.title}</p>
+                </div>
                 {!props.drownDown &&
-                <Form.Control type="email" className="text-input-container" onChange={() => {}} placeholder="Wash Optimization P20" />
+                    <Form.Control type="email"className="text-input-container" onChange={handleTitleEvent} placeholder="Wash Optimization P20" />
                 }   
                 {props.drownDown &&
-                    <Form.Control as="select" onChange = {event => handleDropDownSelect(event, props.type)} value = {props.type == TYPE_ASSET ? asset: granularity} className="text-input-container"> 
+                    <Form.Control as="select" onChange = {event => handleDropDownSelect(event, props.type)} value = {props.type == TYPE_ASSET ? screenContent.asset: screenContent.granularity} className="text-input-container"> 
                         {props.items && props.items.map((element) => {
                             return <option>{element}</option>
                         })}
@@ -54,6 +67,7 @@ function DetailsConfigurationModal(props) {
             </div>
         );
     }
+    // console.log(test)
     return (
             <animated.div id="ModalContainer" style={props.dialogStyle}>
                 <div id = 'basic-information-container'>
@@ -61,19 +75,19 @@ function DetailsConfigurationModal(props) {
                     <InputText title = {'Title: '} drownDown = {false}></InputText>
                     <InputText title = {'Asset: '} drownDown = {true} items = {assetItems} type = {TYPE_ASSET}></InputText>
                     <div id = 'scenario-container'>
-                        <p id = 'text'>Prefered Scenario: </p>
+                        <p id = 'text-3'>Prefered Scenario: </p>
                         <RadioGroup row aria-label="position" name="position" defaultValue="start">
                         <FormControlLabel
                             value="Return On Investment"
                             control={<Radio color="primary" />}
                             label="Return On Investment"
-                            labelPlacement="start"
+                            labelPlacement="top"
                             />
                         <FormControlLabel
                             value="Net Saving"
                             control={<Radio color="primary" />}
                             label="Net Saving"
-                            labelPlacement="start"
+                            labelPlacement="top"
                             />
                             </RadioGroup>
                     </div>          
@@ -82,39 +96,44 @@ function DetailsConfigurationModal(props) {
                     <p>Recurrence</p>
                     <InputText title = {'Granularity: '} drownDown = {true} items = {granularityItems} type = {TYPE_GRANULARITY}></InputText>
                     <div id = 'repeat-container'>
-                        <p id = 'text-2'>Repeat on: </p>
-                        {granularity == granularityItems[1] &&
+                        <p id = 'text'>Repeat on: </p>
+                        {screenContent.granularity == granularityItems[1] &&
                         <ButtonGroup id = 'day-of-week-container' aria-label="small outlined button group">
-                            <Button value="1" onClick={() => {}}>M</Button>
+                            {['S','M', 'T', 'W', 'T', 'F', 'S'].map((element, index) => {
+                                return <Button value = {index.toString()} onClick = {() => setScreenContent(... {repeatDay: index})}>{element}</Button>
+                            })
+                            }
+                            {/* <Button value="1" onClick={() => {}}>M</Button>
                             <Button value="2" onClick={() => {}}>T</Button>
                             <Button value="3" onClick={() => {}}>W</Button>
                             <Button value="4" onClick={() => {}}>T</Button>
                             <Button value="5" onClick={() => {}}>F</Button>
                             <Button value="6" onClick={() => {}}>S</Button>
-                            <Button value="0" onClick={() => {}}>S</Button>
+                            <Button value="0" onClick={() => {}}>S</Button> */}
                         </ButtonGroup>
                         }
-                        {(granularity == granularityItems[2] || granularity == granularityItems[3]) &&
+                        {(screenContent.granularity == granularityItems[2] || screenContent.granularity == granularityItems[3]) &&
+                        <div id = 'date-container'>
                         <TextField
                             id="date"
                             type="date"
                             size="small"
                             defaultValue="2020-01-01"
-                            className="timePickerTextfield"
-                            onChange={() => {}}
+                            onChange={(event) => setScreenContent(... {repeatDate: event.target.value})}
                             InputLabelProps={{
                             shrink: true,
                             }}
-                        />
+                        /> 
+                        <div id= 'space-right'></div>
+                        </div>
                         }
-                        {granularity != granularityItems[3] &&
+                        {screenContent.granularity != granularityItems[3] &&
                         <TextField
                             id="time"
                             size="small"
                             type="time"
-                            defaultValue="07:30"
-                            className="timePickerTextfield"
-                            onChange={() => {}}
+                            defaultValue="06:30"
+                            onChange={(event) => setScreenContent(... {repeatTime: event.target.value})}
                             InputLabelProps={{
                             shrink: true,
                             }}
