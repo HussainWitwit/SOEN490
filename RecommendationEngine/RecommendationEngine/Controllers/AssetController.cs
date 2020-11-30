@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-using Interfaces.Repositories;
 using Interfaces.Services;
-using Interfaces.Services.ExternalAPI;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
+using System.Threading.Tasks;
 
 namespace RecommendationEngine.Controllers
 {
@@ -44,7 +37,8 @@ namespace RecommendationEngine.Controllers
                 await _assetService.Convert();
                 return Ok();
             }
-            catch (GlobalException e){
+            catch (GlobalException e)
+            {
                 return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
         }

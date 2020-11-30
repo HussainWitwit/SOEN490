@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {
-    public class RecommendationSchedulerRepository: IRecommendationSchedulerRepository
+    public class RecommendationSchedulerRepository : IRecommendationSchedulerRepository
     {
         private readonly RecommendationEngineDBContext _recommendationEngineDb;
 
@@ -25,15 +22,15 @@ namespace RecommendationEngine.Repositories
 
         public DBRecommendationSchedule GetDbRecommendationScheduleById(int id)
         {
-            return _recommendationEngineDb.RecommendationSchedules.Include(x=>x.RecommendationType).Include(x=>x.AssetsList)
-                .ThenInclude(x => x.Asset).Include(x=>x.ParametersList).FirstOrDefault(x =>
-                x.RecommendationScheduleId == id);
+            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList)
+                .ThenInclude(x => x.Asset).Include(x => x.ParametersList).FirstOrDefault(x =>
+                  x.RecommendationScheduleId == id);
         }
 
         public List<DBRecommendationSchedule> GetDbRecommendationSchedules()
         {
             return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList)
-                .ThenInclude(x=>x.Asset).ToList();
+                .ThenInclude(x => x.Asset).ToList();
         }
 
         public DBRecommendationJob AddRecommendationJob(DBRecommendationJob job)

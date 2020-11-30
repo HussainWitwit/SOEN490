@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
 using Models.Application.APIModels;
-using Models.Application.Asset;
 using Models.DB;
 using Models.Recommendation.YearlyWashOptimization;
 using RecommendationScheduler.RecommendationTypes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RecommendationScheduler.RecommendationJob
 {
@@ -76,7 +73,7 @@ namespace RecommendationScheduler.RecommendationJob
 
             _apiValues.EnergyPricesList = new List<double>();
 
-            for(DateTime date = _parameters.StartSoiling; date <= _parameters.EndSoiling; date = date.AddDays(1))
+            for (DateTime date = _parameters.StartSoiling; date <= _parameters.EndSoiling; date = date.AddDays(1))
             {
                 avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => (x.Price / 100)).DefaultIfEmpty(37).Average();
                 _apiValues.EnergyPricesList.Add(avgPrice);

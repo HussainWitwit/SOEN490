@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using Interfaces.Repositories;
 using Models.DB;
-using Interfaces.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {
@@ -28,7 +28,7 @@ namespace RecommendationEngine.Repositories
 
         public List<DBAsset> GetAssetsList()
         {
-             return _recommendationEngineDb.Assets.ToList();
+            return _recommendationEngineDb.Assets.ToList();
         }
 
         public DBAsset GetAssetByName(string assetName)

@@ -6,7 +6,7 @@ import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import { AssetTree } from '../../components/AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
-import './RightPanel.css';
+import './RightPanelDrawer.css';
 
 RightPanelDrawer.propType = {
     isDrawerOpen: PropTypes.bool.isRequired,

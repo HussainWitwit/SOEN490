@@ -1,16 +1,16 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
 using Models.DB;
 using Quartz;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RecommendationScheduler.RecommendationJob
 {
-    public abstract class RecommendationJob: IJob
+    public abstract class RecommendationJob : IJob
     {
         public int RecommendationScheduleId { get; set; }
         protected DBRecommendationJob _recommendationJob;
@@ -40,7 +40,7 @@ namespace RecommendationScheduler.RecommendationJob
                     watch.Elapsed.Seconds);
                 return Task.CompletedTask;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Handle exception
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",

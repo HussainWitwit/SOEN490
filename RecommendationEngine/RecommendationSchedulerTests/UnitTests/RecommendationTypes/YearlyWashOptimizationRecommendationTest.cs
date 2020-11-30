@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Interfaces.Utilities;
 using Models.DB;
 using Models.Recommendation.YearlyWashOptimization;
 using Moq;
 using NUnit.Framework;
 using RecommendationScheduler.RecommendationTypes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
 {
@@ -14,9 +14,9 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
     {
         private Mock<IRecommendationJobLogger> _loggerMock;
         private YearlyWashOptimizationRecommendation _yearlyWashOptimizationRecommendation;
-       
 
-    [SetUp]
+
+        [SetUp]
         public void Setup()
         {
             _loggerMock = new Mock<IRecommendationJobLogger>();
@@ -30,8 +30,8 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
         {
             //Arrange
             _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
-             //Act
-            
+            //Act
+
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
             GetDummy1(userParameters, apiValues);
@@ -60,7 +60,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             //Act
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
-            GetDummy2(userParameters, apiValues); 
+            GetDummy2(userParameters, apiValues);
             DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(userParameters, apiValues);
 
             var cleaningDays = testResult.ActionsSuggestedList.Select(day => day.Date).ToList();
@@ -77,7 +77,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
         }
 
-       
+
         public void GetDummy1(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
         {
 

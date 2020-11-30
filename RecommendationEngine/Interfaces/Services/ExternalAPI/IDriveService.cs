@@ -1,7 +1,7 @@
-﻿using System;
+using Models.Application.APIModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.Application.APIModels;
 
 namespace Interfaces.Services.ExternalAPI
 {

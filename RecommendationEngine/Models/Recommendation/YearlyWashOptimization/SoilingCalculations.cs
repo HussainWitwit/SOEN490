@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Models.Recommendation.YearlyWashOptimization
+﻿namespace Models.Recommendation.YearlyWashOptimization
 {
     public class SoilingCalculations
     {
@@ -10,6 +6,6 @@ namespace Models.Recommendation.YearlyWashOptimization
         public double PredictedEnergyAfterSoiling { get; set; } // Predicted Energy produce by SP with its current soil level
         public double PredictedEnergyLoss { get; set; } // The difference between the Predicted Energy and the Predicty Energy due to the soiling levels for that day
         public double PredictedRevenueLoss { get; set; } // Predicted Revenue Loss due to the soiling level
-        public double SumOfPredictedRevenueLoss { get; set; } 
+        public double SumOfPredictedRevenueLoss { get; set; }
     }
 }

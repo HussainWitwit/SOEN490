@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Models.DB;
 using System.Collections.Generic;
-using Models.DB;
 
 namespace Interfaces.Repositories
 {

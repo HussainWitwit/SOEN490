@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Models.DB;
+using System;
 using System.Collections.Generic;
-using Models.DB;
 
 namespace Models.Recommendation.YearlyWashOptimization
 {
-    public class YearlyWashParameters: RecommendationParameters
+    public class YearlyWashParameters : RecommendationParameters
     {
         public DBAsset Asset { get; set; }
-        public double CenterPointIncrement { get; set; } 
+        public double CenterPointIncrement { get; set; }
         public double SpanIncrement { get; set; }
         public DateTime StartSoiling { get; set; }
         public DateTime EndSoiling { get; set; }

@@ -1,11 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System;
 
 namespace Models.DB
 {
-    public class RecommendationEngineDBContext: DbContext
+    public class RecommendationEngineDBContext : DbContext
     {
         public DbSet<DBAction> Actions { get; set; }
         public DbSet<DBAsset> Assets { get; set; }

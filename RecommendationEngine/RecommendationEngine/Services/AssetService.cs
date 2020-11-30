@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using Interfaces.Repositories;
 using Interfaces.Services;
-using Models.DB;
-using Interfaces.Repositories;
-using Models.Application.Asset;
-using Models.Application.APIModels;
-using System.Threading.Tasks;
-using Models.Application.APIModels;
 using Interfaces.Services.ExternalAPI;
+using Models.Application.APIModels;
+using Models.Application.Asset;
+using Models.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace RecommendationEngine.Services
@@ -21,7 +20,6 @@ namespace RecommendationEngine.Services
         private IAssetTypeRepository _assetTypeRepository;
         private List<DBAsset> _assets;
         private DBAssetType _portfolioAssetType;
-        private DBAssetType _plantAssetType;
 
         public AssetService(
                 IDriveService driveService,
@@ -34,7 +32,7 @@ namespace RecommendationEngine.Services
             _assetTypeRepository = assetTypeRepository;
             GetDBAssets();
             _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
-    }
+        }
 
         public Asset GetAssetsTreeview()
         {
@@ -153,14 +151,14 @@ namespace RecommendationEngine.Services
                     {
                         plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
                     }
-                    
+
                     return new DBAsset()
                     {
                         Name = x.Id,
                         ElementPath = x.Id,
                         DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
                         EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
-                        Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
+                        Type = isPortfolio ? _portfolioAssetType : null,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
                         AcPower = isPortfolio ? 0 : plant.AcCapacity,
                         ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
