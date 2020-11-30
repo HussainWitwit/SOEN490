@@ -34,6 +34,7 @@ namespace RecommendationScheduler.RecommendationJob
         protected override void ExecuteJob()
         {
             GetFromDB();
+
             GetFromAPI();
             YearlyWashOptimizationRecommendation ywoRecommendation = new YearlyWashOptimizationRecommendation(_jobLogger, _recommendationJob);
             DBRecommendationJobResult _result = ywoRecommendation.ExecuteAlgorithm(_apiValues, _parameters);
@@ -68,18 +69,18 @@ namespace RecommendationScheduler.RecommendationJob
             var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
             _apiValues.PlantDCCapacity = plantMetadata["DC_Capacity"] / 1000;
 
-            //List<PFPPAPrice> energyPrices = Task.Run(async () => await _driveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
-            //double avgPrice;
+            List<PFPPAPrice> energyPrices = Task.Run(async () => await _driveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
+            double avgPrice;
 
-            //_apiValues.EnergyPricesList = new List<double>();
+            energyPrices = energyPrices.Where(energyPrice => energyPrice.EffectiveStartTime >= _parameters.StartSoiling && energyPrice.EffectiveEndTime <= _parameters.EndSoiling).ToList();
 
-            //for (DateTime date = _parameters.StartSoiling; date <= _parameters.EndSoiling; date.AddDays(1))
-            //{
-            //    avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => (x.Price / 100)).DefaultIfEmpty(37).Average();
-            //    _apiValues.EnergyPricesList.Add(avgPrice);
-            //}
+            _apiValues.EnergyPricesList = new List<double>();
 
-            _apiValues.EnergyPricesList = Enumerable.Repeat(0.3, ((_parameters.EndSoiling - _parameters.StartSoiling).Days + 1)).ToList();
+            for(DateTime date = _parameters.StartSoiling; date <= _parameters.EndSoiling; date = date.AddDays(1))
+            {
+                avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => (x.Price / 100)).DefaultIfEmpty(37).Average();
+                _apiValues.EnergyPricesList.Add(avgPrice);
+            }
         }
     }
 }

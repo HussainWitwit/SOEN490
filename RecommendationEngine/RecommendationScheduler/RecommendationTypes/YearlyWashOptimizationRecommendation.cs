@@ -4,7 +4,7 @@ using System;
 using Interfaces.Services.ExternalAPI;
 using System.Linq;
 using System.Collections.Generic;
-using Models.Recommendation.YearlyWash;
+using Models.Recommendation.YearlyWashOptimization;
 using Models.Application.APIModels;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Runtime.InteropServices.ComTypes;
@@ -15,6 +15,7 @@ namespace RecommendationScheduler.RecommendationTypes
     {
         //Dependency Injection variables
         private IRecommendationJobLogger _jobLogger;
+        private DBRecommendationJob _job;
 
         //Variable declarations
         private SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
@@ -28,21 +29,22 @@ namespace RecommendationScheduler.RecommendationTypes
         private DBRecommendationJobResult _result = new DBRecommendationJobResult();
         private DBRecommendationJobResult _tempResult = new DBRecommendationJobResult();
 
-        //Execute method params passed by job sheduler
+        //Execute method params passed by _job sheduler
         private YearlyWashParameters _userParameters = new YearlyWashParameters();
         private YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
 
         private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
 
-        public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger)
+        public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger, DBRecommendationJob job)
         {
             _jobLogger = jobLogger;
+            _job = job;
         }
-        public DBRecommendationJobResult ExecuteAlgorithm(DBRecommendationJob job, YearlyWashAPIValues apiValues, YearlyWashParameters parameters)
+        public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashAPIValues apiValues, YearlyWashParameters parameters)
         {
             _apiValues = apiValues;
             _userParameters = parameters;
-            _jobLogger.LogInformation(job, "Starting Yearly Wash Optimization Recommendation");
+            _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
 
             //Initializing scenario parameters
             DateTime centerPoint = _userParameters.StartSoiling;
@@ -58,7 +60,7 @@ namespace RecommendationScheduler.RecommendationTypes
             _result.NetSaving = 0;
             _result.Asset = _userParameters.Asset;
 
-            _jobLogger.LogInformation(job, "Looking for best cleaning dates...");
+            _jobLogger.LogInformation(_job, "Looking for best cleaning dates...");
 
             while (centerPoint < _userParameters.EndSoiling)
             {
@@ -99,7 +101,7 @@ namespace RecommendationScheduler.RecommendationTypes
                 centerPoint = centerPoint.AddDays(parameters.CenterPointIncrement);
             }
 
-            _jobLogger.LogInformation(job, "Best combination found!");
+            _jobLogger.LogInformation(_job, "Best combination found!");
 
             return _result;
         }
