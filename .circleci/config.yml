@@ -8,10 +8,9 @@ jobs:
       - image: circleci/node:13.8
     steps:
       - checkout
-        path: ~/SOEN490
       - run:
           name: Restore Backend
-          command: dotnet restore RecommendationEngine.sln
+          command: ls
           working_directory: ~/SOEN490/RecommendationEngine
       - run:
           name: Build Backend
