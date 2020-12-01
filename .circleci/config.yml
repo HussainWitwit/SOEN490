@@ -11,36 +11,36 @@ jobs:
       - run:
           name: Restore Backend
           command: dotnet restore RecommendationEngine.sln
-          working_directory: ~/RecommendationEngine
+          working_directory: ~/SOEN490/RecommendationEngine
       - run:
           name: Build Backend
           command: dotnet build RecommendationEngine.sln
-          working_directory: ~/RecommendationEngine
+          working_directory: ~/SOEN490/RecommendationEngine
       - run:
           name: Running Backend Tests
           command: dotnet test --collect:"XPlat Code Coverage"
-          working_directory: ~/RecommendationEngine
+          working_directory: ~/SOEN490/RecommendationEngine
       - run:
           name: Running Backend Tests
           command: bash <(curl -s https://codecov.io/bash) -cF backend
-          working_directory: ~/RecommendationEngine
+          working_directory: ~/SOEN490/RecommendationEngine
       - run:
           name: Running Backend Tests
           command: dotnet test --collect:"XPlat Code Coverage"
-          working_directory: ~/RecommendationEngine
+          working_directory: ~/SOEN490/RecommendationEngine
       - run:
           name: Uploading Backend Tests Coverage
           command: bash <(curl -s https://codecov.io/bash) -cF backend
-          working_directory: ~/RecommendationEngine/RecommendationEngine/FrontEnd
+          working_directory: ~/SOEN490/RecommendationEngine/RecommendationEngine/FrontEnd
       - run:
           name: Installing Frontend Dependencies
           command: npm ci
-          working_directory: ~/RecommendationEngine/RecommendationEngine/FrontEnd
+          working_directory: ~/SOEN490/RecommendationEngine/RecommendationEngine/FrontEnd
       - run:
           name: Running Frontend Tests
           command: npm run test:ci
-          working_directory: ~/RecommendationEngine/RecommendationEngine/FrontEnd
+          working_directory: ~/SOEN490/RecommendationEngine/RecommendationEngine/FrontEnd
       - run:
           name: Uploading Frontend Tests Coverage
           command: bash <(curl -s https://codecov.io/bash) -cF frontend
-          working_directory: ~/RecommendationEngine/RecommendationEngine/FrontEnd
+          working_directory: ~/SOEN490/RecommendationEngine/RecommendationEngine/FrontEnd
