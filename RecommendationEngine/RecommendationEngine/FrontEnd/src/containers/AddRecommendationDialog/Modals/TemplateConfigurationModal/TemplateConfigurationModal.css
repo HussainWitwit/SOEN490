@@ -42,7 +42,7 @@ height: 80px;
   margin-top: 4%;
 }
 
-#item-template {
+#item-template-default {
   display: grid;
   border-width: 2px;
   border-radius: 5%;
@@ -54,19 +54,30 @@ height: 80px;
   width: 110px;
   margin-left: 25%;
   text-align: center;
+  z-index: 2000;
 }
 
-#item-template:hover{
-  background-color: lightgray;
+#item-template-default:hover{
+  background-color: whitesmoke;
 }
 
-#item-template:active > div{
-  background-color: grey;
+#item-template-default:active{
+  background-color: whitesmoke;
 }
 
-#list-item{
-  width: 100%;
-  margin-top: 15%;
+#item-template-selected{
+  display: grid;
+  border-radius: 5%;
+  border-color:  #4DD3EF;
+  border-width: 3.5px;
+  border-style: solid;
+  background-color: white;
+  align-items: center;
+  height: 110px;
+  width: 110px;
+  margin-left: 25%;
+  text-align: center;
+   z-index: 2000;
 }
 
 .template-label.MuiTypography-root{
@@ -76,6 +87,7 @@ height: 80px;
   font-size: 11px;
   margin-bottom: 15%;
   text-align: center;
+  z-index: -2000;
   padding-inline: 5%;
 }
 
