@@ -42,7 +42,6 @@
     "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^10.0.5",
-    "spring2": "npm:react-spring@^5.7.2",
     "styled-components": "^4.4.1"
   },
   "jest": {
