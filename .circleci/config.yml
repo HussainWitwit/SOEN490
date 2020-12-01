@@ -11,8 +11,7 @@ jobs:
         path: ~/SOEN490
       - run:
           name: Restore Backend
-          command: dotnet restore RecommendationEngine.sln
-          working_directory: ~/SOEN490/RecommendationEngine
+          command: ls
       - run:
           name: Build Backend
           command: dotnet build RecommendationEngine.sln
