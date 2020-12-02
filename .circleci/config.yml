@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Uploading Backend Tests Coverage
           command: bash <(curl -s https://codecov.io/bash) -cF backend
-          working_directory: ./RecommendationEngine/RecommendationEngine
+          working_directory: ./RecommendationEngine
   buildFrontend:
     docker:
       - image: cypress/base:13.8.0
