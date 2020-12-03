@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
-import { AssetTree } from '../../components/AssetTreeView/AssetTreeView';
+import { AssetTree } from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
 import './RightPanel.css';
 

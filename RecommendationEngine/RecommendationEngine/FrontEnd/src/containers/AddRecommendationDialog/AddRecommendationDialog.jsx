@@ -3,7 +3,7 @@ import { useTransition, animated } from 'react-spring';
 import Draggable from 'react-draggable';
 import { Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import TemplateConfigurationModal from '../AddRecommendationDialog/Modals/TemplateConfigurationModal/TemplateConfigurationModal';
+import TemplateConfigurationModal from '../TemplateConfigurationModal/TemplateConfigurationModal';
 import DetailsConfigurationModal from '../AddRecommendationDialog/Modals/DetailsConfigurationModal/DetailsConfigurationModal';
 import ParametersConfigurationModal from '../AddRecommendationDialog/Modals/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../AddRecommendationDialog/Modals/ConfirmationModal/ConfirmationModal';

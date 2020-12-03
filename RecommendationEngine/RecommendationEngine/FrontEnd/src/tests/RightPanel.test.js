@@ -5,7 +5,7 @@ import Enzyme, { shallow } from '../enzyme';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { AssetTree } from '../components/AssetTreeView/AssetTreeView';
+import { AssetTree } from '../containers/AssetTreeView/AssetTreeView';
 import ReactTestUtils from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
