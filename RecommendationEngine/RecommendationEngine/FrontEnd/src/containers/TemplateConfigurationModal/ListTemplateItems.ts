@@ -13,7 +13,7 @@ type ListTemplateObject = {
 };
 
 var washOptimization: ListTemplateObject = {
-    name: 'Wash Optimization',
+    name: 'Yearly Wash Optimization',
     listItemIcon: FaSolarPanel,
 };
 

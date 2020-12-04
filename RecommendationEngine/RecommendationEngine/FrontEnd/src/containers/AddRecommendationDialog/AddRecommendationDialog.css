@@ -14,10 +14,11 @@
 } */
 
 .dialog-container.MuiDialog-paper {
-    width: 850px;
-    height: 650px;
+    width: 750px;
+    height: 600px;
+    max-height: 850px;
+    max-width: 750px;
     background-color: rgba(255, 255, 255, 1);
-    /* background-color: teal; */
     border-radius: 8px;
     overflow: hidden;
     /* font-size: 70px; */
@@ -25,8 +26,8 @@
 
 .dialog-content.MuiDialogContent-root {
     /* background-color: teal; */
-    padding: 10px;
-    display: grid;
+    padding: 0;
+    /* display: flex; */
     overflow: hidden;
 }
 
@@ -111,9 +112,10 @@
 }
 
 
-.mocked-content > div{
+#mocked-content > div{
     cursor: pointer;
-    height: 100%;
+    position: absolute;
+    height: 75%;
     width: 100%;
     display: grid;
     /* justify-content: center;

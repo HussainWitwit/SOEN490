@@ -3,10 +3,10 @@ import { useTransition, animated } from 'react-spring';
 import Draggable from 'react-draggable';
 import { Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import TemplateConfigurationModal from '../TemplateConfigurationModal/TemplateConfigurationModal';
-import DetailsConfigurationModal from '../AddRecommendationDialog/Modals/DetailsConfigurationModal/DetailsConfigurationModal';
-import ParametersConfigurationModal from '../AddRecommendationDialog/Modals/ParametersConfigurationModal/ParametersConfigurationModal';
-import ConfirmationModal from '../AddRecommendationDialog/Modals/ConfirmationModal/ConfirmationModal';
+import TemplateConfigurationModal from '../../containers/TemplateConfigurationModal/TemplateConfigurationModal';
+import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
+import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
+import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
 import './AddRecommendationDialog.css';
 
 const pages = [
@@ -37,6 +37,8 @@ export default function AddRecommendationDialog(props) {
   }, []);
 
   const onNextPreviousTransition = useTransition(index, element => element, {
+    // initial: { transform: 'translate3d(0%, 0%,0)' },
+    reset: true,
     from: { opacity: 0, transform: next ? 'translate3d(100%,0,0)' : 'translate3d(-100%,0,0)' },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
     leave: { opacity: 0, transform: next ? 'translate3d(-50%,0,0)' : 'translate3d(50%,0,0)' },
@@ -77,7 +79,7 @@ export default function AddRecommendationDialog(props) {
         root: 'dialog-content',
         dividers: false
       }}>
-        <div className='mocked-content'>
+        <div id="mocked-content">
           {onNextPreviousTransition.map(({ item, props, key }) => {
             const Page = pages[item]
             return <Page key={key} style={props} />

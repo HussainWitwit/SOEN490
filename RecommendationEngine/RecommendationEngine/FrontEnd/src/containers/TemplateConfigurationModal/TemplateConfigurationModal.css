@@ -1,24 +1,26 @@
-#modal-container {
+#template-modal-container > div{
     display: grid;
-    width: 800px; 
-    height: 500px;
+    width: 100%; 
+    height: 100%;
+    text-shadow: none;
+    align-content: center;
   }
 
 #parent-div {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: 1fr 1.2fr;
 }
 
 #template-grid{
   display: grid;
   grid-template-columns: 135px 135px; 
   grid-template-rows: 135px 135px;
-  row-gap: 2px; 
-  white-space: 2px;
+  row-gap: 5px; 
+  column-gap: 20px;
 } 
 
 #info-div {
-width: 100%;
+width: 90%;
 height: 100%;
 }
 
@@ -42,60 +44,59 @@ height: 80px;
   margin-top: 4%;
 }
 
-#item-template-default {
+#item-template-default{
   display: grid;
   border-width: 2px;
-  border-radius: 5%;
+  border-radius: 10px;
   border-color: #DFE0EB;
   border-style: solid;
   background-color: white;
   align-items: center;
-  height: 110px;
-  width: 110px;
+  height: 120px;
+  width: 120px;
   margin-left: 25%;
   text-align: center;
-  z-index: 2000;
 }
+
 
 #item-template-default:hover{
-  background-color: whitesmoke;
+  background-color: #4DD3EF;
+  border-width: 3.5px;
+  border-color: #4DD3EF;
+  transition: all 500ms;
 }
 
-#item-template-default:active{
-  background-color: whitesmoke;
-}
 
 #item-template-selected{
   display: grid;
-  border-radius: 5%;
+  border-radius: 10px;
   border-color:  #4DD3EF;
   border-width: 3.5px;
+  box-shadow: 0px 0px 10px 0px rgba(77,212,239,1); 
   border-style: solid;
-  background-color: white;
   align-items: center;
-  height: 110px;
-  width: 110px;
+  height: 120px;
+  width: 120px;
   margin-left: 25%;
   text-align: center;
-   z-index: 2000;
+  transition: all 500ms;
 }
 
-.template-label.MuiTypography-root{
+#template-label{
   color: #687480;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 11px;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
   text-align: center;
-  z-index: -2000;
-  padding-inline: 5%;
+  text-transform: none;
+  margin-top: 2%;
 }
 
 #template-icon{
   color: #687480;
   width: 30%;
   height: 30%;
-  margin-bottom: 5%;
 }
 
 .title-dialog-1.MuiTypography-root{

@@ -1,4 +1,13 @@
-#ModalContainer{
-    background-color: white;
+#confirmation-modal-container {
+    display: grid;
+  }
+
+  #confirmation-modal-content{
+    /* background-color: yellow; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    text-shadow: none;
     color: black;
   }

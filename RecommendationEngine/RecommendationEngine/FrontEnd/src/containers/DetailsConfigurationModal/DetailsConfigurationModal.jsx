@@ -40,13 +40,8 @@ function DetailsConfigurationModal(props) {
         }
     }
 
-    useEffect(() => {
-        console.log(screenContentSelection);
-    }, [screenContentSelection])
-    
-
     return (
-            <animated.div id="ModalContainer" style={props.dialogStyle}>
+            <animated.div id="details-configuration-modal" style={props.dialogStyle}>
                 <div id = 'basic-information-container'>
                     <p>Basic information</p>
                     <div id = 'element-container'>

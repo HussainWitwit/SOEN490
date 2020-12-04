@@ -1,31 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { animated } from 'react-spring';
 import { Typography } from '@material-ui/core';
-import './TemplateConfigurationModal.css'
 import { TemplateItems } from './ListTemplateItems.ts';
 import Divider from '@material-ui/core/Divider';
+import './TemplateConfigurationModal.css';
+
 
 function TemplateConfigurationModal(props) {
 
 
-    const [itemPressed, setItemPressed] = useState({ name: "", isPressed: true });
-    
+    const [itemPressedIndex, setItemPressedIndex] = useState(0);
+    const [screenContentSelection, setScreenContentSelection] = useState({templateName: TemplateItems[itemPressedIndex].name});
+
     const TemplateCard = (props) => {
         return (
-             
-            <div id={props.isPressed == false ? "item-template-default": props.itemName!= props.name ? "item-template-default" : "item-template-selected"} onClick={props.onClick}>
-                <div>
-                    <props.icon id="template-icon" />
-                </div>
-                <div>
-                    <Typography classes={{ root: 'template-label' }}>{props.name}</Typography>
-                </div>
+          <div id={props.isPressed ? 'item-template-selected': 'item-template-default'} onClick={props.onClick}>
+            <div >
+              <props.icon id="template-icon" />
             </div>
+              <Typography id ='template-label' >
+                {props.name}
+              </Typography>
+          </div>
         );
     }
+    useEffect(() => {
+        setScreenContentSelection({templateName: TemplateItems[itemPressedIndex].name});
+    }, [itemPressedIndex])
 
     return (
-        <animated.div id="modal-container" style={props.dialogStyle}>
+        <animated.div id="template-modal-container" style={props.dialogStyle}>
             <div id="parent-div">
                 <div id="template-grid">
                     {TemplateItems.map((item, index) => (
@@ -33,15 +37,15 @@ function TemplateConfigurationModal(props) {
                         <TemplateCard
                         name={item.name}
                         icon={item.listItemIcon}
-                        onClick={() => setItemPressed({ name: item.name, isPressed: (item.name == itemPressed.name? !itemPressed.isPressed : true) })}
-                        isPressed={itemPressed.isPressed}
-                        itemName={itemPressed.name}/>
+                        onClick={() => setItemPressedIndex(index)}
+                        isPressed={index == itemPressedIndex}
+                        />
 
                     ))}
                 </div>
                 <div id="info-div">
                     <div id="item-info1">
-                        <Typography classes={{ root: 'title-dialog-1' }}>Description {itemPressed.name == "" ? "" : "of " + itemPressed.name}</Typography>
+                    <Typography classes={{ root: 'title-dialog-1' }}>Description {TemplateItems[itemPressedIndex].name}</Typography>
                         <Typography classes={{ root: 'subtitle-dialog-1' }}>This recommendation is used to suggest the optimal time to wash your solar panels.</Typography>
                     </div>
                     <Divider classes={{ root: 'divider-item' }} />
@@ -56,11 +60,7 @@ function TemplateConfigurationModal(props) {
                         </ol>
 
                     </div>
-                    <Divider classes={{ root: 'divider-item' }} />
-                    <div id="item-info3">
-                        <Typography classes={{ root: 'title-dialog-1' }}>Assets</Typography>
-                        <Typography classes={{ root: 'subtitle-dialog-1' }}>Solar Panels</Typography>
-                    </div>
+                
                     <Divider classes={{ root: 'divider-item' }} />
                     <div id="item-info4">
                         <Typography classes={{ root: 'title-dialog-1' }}>Algorithm</Typography>
@@ -73,4 +73,4 @@ function TemplateConfigurationModal(props) {
     )
 }
 
-export default TemplateConfigurationModal
+export default TemplateConfigurationModal;

@@ -4,7 +4,9 @@ import './ConfirmationModal.css'
 
 function ConfirmationModal(props) {
     return (
-            <animated.div id="ModalContainer" style={props.dialogStyle}>Confirmation Modal</animated.div>
+            <animated.div id="confirmation-modal-container" style={props.dialogStyle}>
+                <div id ='confirmation-modal-content'>Confirmation Modal</div>
+            </animated.div>
     )
 }
 
