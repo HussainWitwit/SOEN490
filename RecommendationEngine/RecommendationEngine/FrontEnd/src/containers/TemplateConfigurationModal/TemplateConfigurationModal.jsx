@@ -38,7 +38,7 @@ function TemplateConfigurationModal(props) {
                         name={item.name}
                         icon={item.listItemIcon}
                         onClick={() => setItemPressedIndex(index)}
-                        isPressed={index == itemPressedIndex}
+                        isPressed={index === itemPressedIndex}
                         />
 
                     ))}
