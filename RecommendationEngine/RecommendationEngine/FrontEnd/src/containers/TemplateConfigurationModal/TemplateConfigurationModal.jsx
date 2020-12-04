@@ -10,7 +10,7 @@ function TemplateConfigurationModal(props) {
 
 
     const [itemPressedIndex, setItemPressedIndex] = useState(0);
-    const [screenContentSelection, setScreenContentSelection] = useState({templateName: TemplateItems[itemPressedIndex].name});
+    const [screenContentSelection, setScreenContentSelection] = useState(props.content ? props.content: {templateName: TemplateItems[itemPressedIndex].name});
 
     const TemplateCard = (props) => {
         return (
@@ -25,8 +25,9 @@ function TemplateConfigurationModal(props) {
         );
     }
     useEffect(() => {
-        setScreenContentSelection({templateName: TemplateItems[itemPressedIndex].name});
-    }, [itemPressedIndex])
+        // setScreenContentSelection({templateName: TemplateItems[itemPressedIndex].name});
+        props.updateContent({templateName: TemplateItems[itemPressedIndex].name});
+    }, [screenContentSelection])
 
     return (
         <animated.div id="template-modal-container" style={props.dialogStyle}>
@@ -37,7 +38,10 @@ function TemplateConfigurationModal(props) {
                         <TemplateCard
                         name={item.name}
                         icon={item.listItemIcon}
-                        onClick={() => setItemPressedIndex(index)}
+                        onClick={() => {
+                            setItemPressedIndex(index); 
+                            setScreenContentSelection({templateName: TemplateItems[index].name});
+                        }}
                         isPressed={index === itemPressedIndex}
                         />
 

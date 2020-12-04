@@ -1,17 +1,3 @@
-/* .background-app {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.25);
-    background-color: darkgreen; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1205;
-    transition: all 1s;    
-} */
 
 .dialog-container.MuiDialog-paper {
     width: 750px;
@@ -21,14 +7,18 @@
     background-color: rgba(255, 255, 255, 1);
     border-radius: 8px;
     overflow: hidden;
-    /* font-size: 70px; */
 }
 
 .dialog-content.MuiDialogContent-root {
-    /* background-color: teal; */
     padding: 0;
-    /* display: flex; */
     overflow: hidden;
+}
+
+#draggable-dialog-title{
+    color: #2691a7;
+    /* font-weight:bold;
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; */
 }
 
 #cancel-btn{

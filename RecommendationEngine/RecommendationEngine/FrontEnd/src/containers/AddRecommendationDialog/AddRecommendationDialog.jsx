@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { useTransition, animated } from 'react-spring';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useTransition } from 'react-spring';
 import Draggable from 'react-draggable';
 import { Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -10,11 +10,19 @@ import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationMo
 import './AddRecommendationDialog.css';
 
 const pages = [
-  ({ style }) => <TemplateConfigurationModal dialogStyle={style} />,
-  ({ style }) => <DetailsConfigurationModal dialogStyle={style} />,
+  ({ style, updateDialogContent, content }) => <TemplateConfigurationModal content = {content.template} updateContent = {updateDialogContent} dialogStyle={style} />,
+  ({ style, updateDialogContent, content}) => <DetailsConfigurationModal content = {content.basicConfiguration} updateContent = {updateDialogContent} dialogStyle={style} />,
   ({ style }) => <ParametersConfigurationModal dialogStyle={style} />,
   ({ style }) => <ConfirmationModal dialogStyle={style} />,
 ]
+
+const pageTitles = ["Template", "Configuration", "Parameter Configuration", "Confirmation"];
+
+const contentInitialValues = {
+  template: 'TESSST',
+  basicConfiguration: '',
+  parameters: ''
+}
 
 function PaperComponent(props) {
   return (
@@ -25,8 +33,21 @@ function PaperComponent(props) {
 }
 
 export default function AddRecommendationDialog(props) {
+  
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
+  const [dialogsContent, setDialogsContent] = useState(contentInitialValues);
+
+  const updateDialogsContent = (value) => {
+    if(value.templateName) {
+      setDialogsContent({...dialogsContent, template: value});
+    }
+    else {
+      setDialogsContent({...dialogsContent, basicConfiguration: value});
+    }
+  }
+
+  
   const onClickNext = useCallback(() => {
     setNext(true);
     setIndex(state => (state + 1) % 4);
@@ -37,25 +58,15 @@ export default function AddRecommendationDialog(props) {
   }, []);
 
   const onNextPreviousTransition = useTransition(index, element => element, {
-    // initial: { transform: 'translate3d(0%, 0%,0)' },
     reset: true,
     from: { opacity: 0, transform: next ? 'translate3d(100%,0,0)' : 'translate3d(-100%,0,0)' },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
     leave: { opacity: 0, transform: next ? 'translate3d(-50%,0,0)' : 'translate3d(50%,0,0)' },
   });
 
-  const initialTransitions = useTransition(index, element => element, {
-    from: {
-      opacity: 0,
-      x: next ? 200 : -200,
-    },
-    enter: { opacity: 1, x: 0 },
-    leave: {
-      opacity: 0,
-      x: next ? -100 : 100,
-    },
-    delay: 1
-  });
+  useEffect(() => {
+    console.log(dialogsContent);
+  }, [dialogsContent])
 
 
   return (
@@ -72,9 +83,9 @@ export default function AddRecommendationDialog(props) {
       <IconButton aria-label="close" id="closeButton" onClick={props.close}>
         <CloseIcon />
       </IconButton>
-      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-        Configuration
-        </DialogTitle>
+      <DialogTitle style={{ cursor: 'move' }} disableTypography = {false} id="draggable-dialog-title">
+        {pageTitles[index]}
+      </DialogTitle>
       <DialogContent classes={{
         root: 'dialog-content',
         dividers: false
@@ -82,7 +93,12 @@ export default function AddRecommendationDialog(props) {
         <div id="mocked-content">
           {onNextPreviousTransition.map(({ item, props, key }) => {
             const Page = pages[item]
-            return <Page key={key} style={props} />
+            return <Page 
+              key={key} 
+              style={props} 
+              updateDialogContent = {updateDialogsContent}
+              content = {dialogsContent}
+            />
           })
           }
         </div>

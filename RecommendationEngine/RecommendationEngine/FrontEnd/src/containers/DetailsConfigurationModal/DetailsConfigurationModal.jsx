@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTransition, animated } from 'react-spring';
+import { animated } from 'react-spring';
 import { Form } from 'react-bootstrap';
 import './DetailsConfigurationModal.css'
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -8,16 +8,10 @@ import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Checkbox from '@material-ui/core/Checkbox';
-
+import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 
 const assetItems = ['Asset 1', 'Asset 2', 'Asset 3','Asset 3','Asset 4'];
-const TYPE_ASSET = 'Asset';
 const granularityItems = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
-const TYPE_GRANULARITY = 'Granularity';
 
 const contentInitialValues = {
     title: '',
@@ -29,8 +23,6 @@ const contentInitialValues = {
     repeatTime: ''
 }
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 // TODO: fetch real assets
 const assets = [
@@ -40,18 +32,17 @@ const assets = [
   { title: 'The Dark Knight', year: 2008 },
 ];
 
+
+
+
+
 function DetailsConfigurationModal(props) {
-    const [screenContentSelection, setScreenContentSelection] = useState(contentInitialValues);
-    
-    // const handleDropDownSelect = (event, type) => {
-    //     event.preventDefault();
-    //     if(type == TYPE_ASSET) {
-    //         setScreenContentSelection({asset: event.target.value});
-    //     }
-    //     else if(type == TYPE_GRANULARITY){
-    //         setScreenContentSelection({granularity: event.target.value});
-    //     }
-    // }
+
+    const [screenContentSelection, setScreenContentSelection] = useState(props.content ? props.content: contentInitialValues);
+
+    useEffect(() => {
+      props.updateContent(screenContentSelection);
+    }, [screenContentSelection])
 
     return (
       <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -77,40 +68,19 @@ function DetailsConfigurationModal(props) {
             <div id="text-container">
               <p id="text">Asset: </p>
             </div>
-            <Autocomplete
-              id="multiple-select-asset-container"
-              limitTags={2}
-              multiple
-              defaultValue={[assets[0]]}
-              options={assets}
-              disableCloseOnSelect
-              getOptionLabel={(option) => option.title}
+            <MultiSelectAutocomplete 
+              contentLabel = "Assets..." 
+              items = {assets} 
               onChange={(event, value) => {
                 setScreenContentSelection({
                   ...screenContentSelection,
                   asset: value,
                 });
-              }}
-              renderOption={(option, { selected }) => (
-                <React.Fragment>
-                  <Checkbox
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                  />
-                  {option.title}
-                </React.Fragment>
-              )}
-              style={{ width: '100%' }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  placeholder="Assets..."
-                />
-              )}
-            />
+              }} 
+              maxElement = {1}
+              variant = {"outlined"}
+              isReadOnly = {false}
+              />
           </div>
           <div id="scenario-container">
             <p id="text-3">Prefered Scenario: </p>
@@ -171,7 +141,7 @@ function DetailsConfigurationModal(props) {
           </div>
           <div id="repeat-container">
             <p id="text">Repeat on: </p>
-            {screenContentSelection.granularity == granularityItems[1] && (
+            {screenContentSelection.granularity === granularityItems[1] && (
               <ButtonGroup
                 id="day-of-week-container"
                 aria-label="small outlined button group"
@@ -193,8 +163,8 @@ function DetailsConfigurationModal(props) {
                 })}
               </ButtonGroup>
             )}
-            {(screenContentSelection.granularity == granularityItems[2] ||
-              screenContentSelection.granularity == granularityItems[3]) && (
+            {(screenContentSelection.granularity === granularityItems[2] ||
+              screenContentSelection.granularity === granularityItems[3]) && (
               <div id="date-container">
                 <TextField
                   id="date"
@@ -214,7 +184,7 @@ function DetailsConfigurationModal(props) {
                 <div id="space-right"></div>
               </div>
             )}
-            {screenContentSelection.granularity != granularityItems[3] && (
+            {screenContentSelection.granularity !== granularityItems[3] && (
               <TextField
                 id="time"
                 size="small"
