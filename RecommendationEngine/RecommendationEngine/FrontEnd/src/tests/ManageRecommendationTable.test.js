@@ -3,17 +3,20 @@ import ReactDOM from 'react-dom';
 import ManageRecommendationPage from '../containers/ManageRecommendationPage/ManageRecommendationPage';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { EnhancedTableHead } from '../containers/ManageRecommendationPage/ManageRecommendationPage';
+import { EnhancedTableHead } from '../components/TableComponent/ManageRecommendationTable';
+import { CssTextField } from '../components/TableComponent/ManageRecommendationTable';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
-import FormControl from '@material-ui/core/FormControl';
-
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableBody from '@material-ui/core/TableBody';
+import TablePagination from '@material-ui/core/TablePagination';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -29,112 +32,99 @@ describe('ManageRecommendationPage component', () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
-    it('It finds the main div', () => {
+    it('It finds the table in the component tree', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#main-container')).toBeTruthy();
+        expect(output).toHaveLength(1);
     });
 
     it('It finds the table head', () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableHead);
         expect(component).toHaveLength(1);
-        expect(output.find('#table-head')).toBeTruthy();
     });
 
     it('It finds a table row', () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableRow);
         expect(component).toHaveLength(1);
-        expect(output.find('#table-row')).toBeTruthy();
     });
 
     it('It finds all table cells', () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableCell);
         expect(component).toHaveLength(5);
-        expect(output.find('#table-cell')).toBeTruthy();
     });
 
     it("Finds the table labels", () => {
         const output = shallow(<EnhancedTableHead />);
         let component = output.find(TableSortLabel);
         expect(component).toHaveLength(4);
-        expect(output.find('#sort-label')).toBeTruthy();
     })
 
-    it('It finds the grid container', () => {
+    it('It finds the grids', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#grid-container1')).toBeTruthy();
+        let component = output.find(Grid);
+        expect(component).toHaveLength(7);
     });
 
-    it('It finds the grid', () => {
+    it('It finds the 2 buttons', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#grid1')).toBeTruthy();
+        let button = output.find(Button);
+        expect(button).toHaveLength(2);
     });
 
     it('It finds the title', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#title')).toBeTruthy();
+        let title = output.find('h3');
+        expect(title).toHaveLength(1);
     });
 
-    it('It finds the subtitle', () => {
+    it('It finds the subtitles', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#subtitle')).toBeTruthy();
-    });
-
-    it('It finds the create recommendation button', () => {
-        const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#recBtn')).toBeTruthy();
-    });
-
-    it('It finds the grid container', () => {
-        const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#grid-container2')).toBeTruthy();
-    });
-
-    it('It finds the grid', () => {
-        const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#grid2')).toBeTruthy();
+        let subtitle = output.find('h6');
+        expect(subtitle).toHaveLength(2);
     });
 
     it('It finds the searchbar', () => {
-        const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#search')).toBeTruthy();
-    });
-
-    it('It finds the textfield', () => {
-        const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#custom-css-standard-input')).toBeTruthy();
-    });
-
-    it('It finds the root', () => {
-        const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#root')).toBeTruthy();
+        const output = shallow(<ManageRecommendationTable />);
+        let searchbar = output.find(CssTextField);
+        expect(searchbar).toHaveLength(1);
     });
 
     it('It finds the paper component', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#paper')).toBeTruthy();
+        let paper = output.find(Paper);
+        expect(paper).toHaveLength(1);
     });
 
     it('It finds the toolbar', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#toolbar')).toBeTruthy();
+        let toolbar = output.find(Toolbar);
+        expect(toolbar).toHaveLength(1);
+    });
+
+    it('It finds the table container', () => {
+        const output = shallow(<ManageRecommendationPage />);
+        let container = output.find(TableContainer);
+        expect(container).toHaveLength(1);
     });
 
     it('It finds the table', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#table')).toBeTruthy();
+        let table = output.find(Table);
+        expect(table).toHaveLength(1);
     });
 
     it('It finds the table body', () => {
         const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#table-body')).toBeTruthy();
+        let table = output.find(TableBody);
+        expect(table).toHaveLength(1);
     });
 
     it('It finds the table pagination', () => {
-        const output = shallow(<ManageRecommendationPage />);
-        expect(output.find('#pagination')).toBeTruthy();
+        const output = shallow(<ManageRecommendationTable />);
+        let pagination = output.find(TablePagination);
+        expect(pagination).toHaveLength(1);
     });
 
     it("Finds the Dialog", () => {

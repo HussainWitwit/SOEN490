@@ -5,6 +5,9 @@ import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { AssetTree } from '../components/AssetTreeView/AssetTreeView';
+import IconButton from '@material-ui/core/IconButton';
+import Close from '@material-ui/icons/Close';
+import Icon from '@material-ui/core/Icon';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -20,9 +23,9 @@ describe('RightPanel component', () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
-    it('It finds the main div', () => {
+    it('It finds it in the component tree main div', () => {
         const output = shallow(<RightPanelDrawer />);
-        expect(output.find('#main-container')).toBeTruthy();
+        expect(output).toHaveLength(1);
     });
 
     it('It finds the swipeable drawer component', () => {
@@ -39,11 +42,19 @@ describe('RightPanel component', () => {
 
     it('It finds the icon button', () => {
         const output = shallow(<RightPanelDrawer />);
-        expect(output.find('#icon-button')).toBeTruthy();
+        let iconButton = output.find(IconButton);
+        expect(iconButton).toHaveLength(2);
+    });
+
+    it('Finds the icon', () => {
+        const output = shallow(<RightPanelDrawer />);
+        let icon = output.find(Icon);
+        expect(icon).toHaveLength(1);
     });
 
     it('It finds the close button', () => {
         const output = shallow(<RightPanelDrawer />);
-        expect(output.find('#close')).toBeTruthy();
+        let close = output.find(Icon);
+        expect(close).toHaveLength(1);
     });
 });
