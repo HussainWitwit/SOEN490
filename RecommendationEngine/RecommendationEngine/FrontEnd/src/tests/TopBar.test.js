@@ -4,6 +4,7 @@ import TopBar from '../containers/TopBar/TopBar.jsx';
 import NotificationBell from '../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import BreadcrumbsComponent from '../components/BreadcrumbsComponent/BreadcrumbsComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -19,40 +20,44 @@ describe('TopBar component', () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
-    it('It finds the main div', () => {
+    it('It finds it in the component tree', () => {
         const output = shallow(<TopBar />);
-        expect(output.find('#main-container')).toBeTruthy();
+        expect(output).toHaveLength(1);
     });
+
+    it('Finds the nav element', () => {
+        const output = shallow(<TopBar />);
+        let nav = output.find('nav');
+        expect(nav).toHaveLength(1);
+    })
 
     it('It finds the breadcrumb element', () => {
         const output = shallow(<TopBar />);
-        expect(output.find('#breadcrumb')).toBeTruthy();
+        let breadCrumb = output.find(BreadcrumbsComponent);
+        expect(breadCrumb).toHaveLength(1);
     });
 
     it('It finds the weather div', () => {
         const output = shallow(<TopBar />);
-        expect(output.find('#weather-div')).toBeTruthy();
+        let weatherDiv = output.find('div');
+        expect(weatherDiv).toHaveLength(2);
     });
 
     it('It finds the img element', () => {
         const output = shallow(<TopBar />);
-        expect(output.find('#img')).toBeTruthy();
+        let img = output.find('img');
+        expect(img).toHaveLength(1);
     });
 
     it('It finds the change button element', () => {
         const output = shallow(<TopBar />);
-        expect(output.find('#change_button')).toBeTruthy();
-    });
-
-    it('It finds the img element', () => {
-        const output = shallow(<TopBar />);
-        expect(output.find('#img')).toBeTruthy();
+        let change = output.find('p');
+        expect(change).toHaveLength(3);
     });
 
     it('It finds the NotificationBell element', () => {
         const output = shallow(<TopBar />);
         let component = output.find(NotificationBell);
         expect(component).toHaveLength(1);
-        expect(output.find('#notification-bell')).toBeTruthy();
     });
 });

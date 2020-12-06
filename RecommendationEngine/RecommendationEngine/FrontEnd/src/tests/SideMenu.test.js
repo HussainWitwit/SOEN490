@@ -7,7 +7,7 @@ import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import { fireEvent, render, getAllByTestId } from '@testing-library/react';
-
+import LogoSVGComponent from '../containers/SideMenu/LogoSVGComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -27,9 +27,9 @@ describe('SideMenu component', () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
-    it('It finds the main div', () => {
+    it('It finds it in the component tree', () => {
         const output = shallow(<SideMenu />);
-        expect(output.find('#main-container')).toBeTruthy();
+        expect(output).toHaveLength(1);
     });
 
     it('It finds the nested items', () => {
@@ -47,6 +47,12 @@ describe('SideMenu component', () => {
         const output = shallow(<SideMenu />);
         let avatar = output.find(Avatar);
         expect(avatar).toHaveLength(1);
+    });
+
+    it('It finds the logo', () => {
+        const output = shallow(<SideMenu />);
+        let logo = output.find(LogoSVGComponent);
+        expect(logo).toHaveLength(1);
 
     });
 
