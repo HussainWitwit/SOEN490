@@ -1,13 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using Interfaces.RecommendationScheduler;
-using RecommendationEngine.Models.Application;
+﻿using Interfaces.Repositories;
 using Interfaces.Services;
+using Models.Application;
 using Models.DB;
-using Interfaces.Services.ExternalApi;
-using RecommendationEngine.configuredRecommendationHelper;
-using Interfaces.Repositories;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
 {

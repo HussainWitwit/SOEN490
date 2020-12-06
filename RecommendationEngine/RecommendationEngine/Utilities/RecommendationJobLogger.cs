@@ -1,11 +1,10 @@
-﻿using System.Runtime.CompilerServices;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Interfaces.Utilities;
 using Models.DB;
 
 namespace RecommendationEngine.Utilities
 {
-    public class RecommendationJobLogger: IRecommendationJobLogger
+    public class RecommendationJobLogger : IRecommendationJobLogger
     {
         private IRecommendationJobLogRepository _jobLogRepository;
         public RecommendationJobLogger(IRecommendationJobLogRepository jobLogRepository)

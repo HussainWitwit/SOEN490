@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-using Models.DB;
-using Interfaces.Repositories;
-using System.Collections.Generic;
-using RecommendationEngine.Models.Application;
-using RecommendationEngine.ExceptionHandler;
+﻿using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Models.DB;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {

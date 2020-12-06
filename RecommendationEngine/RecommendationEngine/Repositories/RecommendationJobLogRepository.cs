@@ -1,12 +1,10 @@
-﻿using System;
-using Interfaces.Repositories;
-using Interfaces.Services;
+﻿using Interfaces.Repositories;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI;
+using System;
 
 namespace RecommendationEngine.Repositories
 {
-    public class RecommendationJobLogRepository: IRecommendationJobLogRepository
+    public class RecommendationJobLogRepository : IRecommendationJobLogRepository
     {
         private RecommendationEngineDBContext _recommendationEngineDb;
 
@@ -19,7 +17,7 @@ namespace RecommendationEngine.Repositories
         {
             DBRecommendationJobLog log = new DBRecommendationJobLog
             {
-                RecommendationJob =  job,
+                RecommendationJob = job,
                 Description = message,
                 Level = level,
                 Time = DateTime.Now

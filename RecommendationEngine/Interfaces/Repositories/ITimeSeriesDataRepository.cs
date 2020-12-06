@@ -1,5 +1,4 @@
-﻿using System;
-namespace Interfaces.Repositories
+﻿namespace Interfaces.Repositories
 {
     public interface ITimeSeriesDataRepository
     {

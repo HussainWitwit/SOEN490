@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Threading.Tasks;
-using Interfaces.RecommendationScheduler;
+﻿using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
-using Interfaces.Utilities;
 using Microsoft.Extensions.Configuration;
 using Models.DB;
 using Quartz;
-using Quartz.Impl;
-using Quartz.Logging;
 using RecommendationScheduler.RecommendationJob;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RecommendationScheduler
 {
-    public class RecommendationScheduler: IRecommendationScheduler, IDisposable
+    public sealed class RecommendationScheduler : IRecommendationScheduler, IDisposable
     {
-        private IScheduler _scheduler;
-        private IRecommendationSchedulerRepository _recommendationSchedulerRepository;
-        private IConfiguration _configuration;
+        private readonly IScheduler _scheduler;
+        private readonly IRecommendationSchedulerRepository _recommendationSchedulerRepository;
+        private readonly IConfiguration _configuration;
 
         public RecommendationScheduler(IScheduler scheduler, IRecommendationSchedulerRepository recommendationSchedulerRepository, IConfiguration configuration)
         {
@@ -32,7 +27,7 @@ namespace RecommendationScheduler
         {
             bool scheduleOnStartup = Convert.ToBoolean(_configuration["Scheduler:ScheduleOnStartup"]);
             await _scheduler.Start();
-            if(scheduleOnStartup)
+            if (scheduleOnStartup)
                 await ScheduleJobsOnStartupAsync();
         }
 

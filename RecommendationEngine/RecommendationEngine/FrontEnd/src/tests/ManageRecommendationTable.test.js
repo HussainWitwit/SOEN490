@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ManageRecommendationPage from '../containers/ManageRecommendationPage/ManageRecommendationPage';
 import Enzyme, { shallow } from '../enzyme';
-import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import { EnhancedTableHead } from '../containers/ManageRecommendationPage/ManageRecommendationPage';
 import TableHead from '@material-ui/core/TableHead';

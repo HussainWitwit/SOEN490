@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using Interfaces.Repositories;
 using Microsoft.Extensions.Configuration;
 using Models.DB;
 using Moq;
 using NUnit.Framework;
 using Quartz;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RecommendationSchedulerTests.UnitTests
 {
@@ -36,7 +35,7 @@ namespace RecommendationSchedulerTests.UnitTests
             _schedulerMock.Setup(x => x.Start(CancellationToken.None)).Returns(Task.CompletedTask);
 
             //Assert
-            _schedulerMock.Verify(x=>x.Start(CancellationToken.None), Times.Once);
+            _schedulerMock.Verify(x => x.Start(CancellationToken.None), Times.Once);
         }
 
         [Test]
@@ -89,12 +88,12 @@ namespace RecommendationSchedulerTests.UnitTests
                             }
                         }
                     },
-                    new DBRecommendationSchedule
+                     new DBRecommendationSchedule
                     {
                         RecommendationScheduleId = 3,
                         RecommendationType = new DBRecommendationType
                         {
-                            Type = "Fuse Replacement"
+                            Type = "Yearly Wash Optimization"
                         },
                         Granularity = "Weekly",
                         RecurrenceDayOfWeek = 2,
@@ -247,7 +246,7 @@ namespace RecommendationSchedulerTests.UnitTests
             await _recommendationScheduler.Start();
             //Assert
             _schedulerMock.Verify(x => x.Start(CancellationToken.None), Times.AtLeastOnce);
-            _recommendationSchedulerRepoMock.Verify(x=>x.GetDbRecommendationSchedules(), Times.Once);
+            _recommendationSchedulerRepoMock.Verify(x => x.GetDbRecommendationSchedules(), Times.Once);
             _schedulerMock.Verify(x => x.ScheduleJob(It.IsAny<IJobDetail>(), It.IsAny<ITrigger>(), CancellationToken.None), Times.Exactly(9));
         }
 
