@@ -223,8 +223,6 @@ function ManageRecommendationTable () {
         setPage(0);
     };
 
-    // handling the empty rows for the method that compresses the table rows
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data ? data.length - page * rowsPerPage : 1);
     return (
         <div id="main-container">
             <div>
@@ -346,11 +344,6 @@ function ManageRecommendationTable () {
                                         </TableRow>
                                     );
                                 })}
-                                {emptyRows > 0 && (
-                                    <TableRow className="center" classes={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                        <TableCell className="center" />
-                                    </TableRow>
-                                )}
                             </TableBody>
                         </Table>
                     </TableContainer>
