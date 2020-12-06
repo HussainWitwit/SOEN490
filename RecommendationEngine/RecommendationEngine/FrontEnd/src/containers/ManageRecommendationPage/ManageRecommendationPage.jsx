@@ -5,14 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { getAllConfiguredRecommendations } from "../../api/get/ConfiguredRecommendationEndpoints";
-import 'date-fns';
-import './ManageRecommendationPage.css';
-import TemplateConfiguration from '../../components/AddRecommendation/TemplateConfiguration';
-import DateConfiguration from '../../components/AddRecommendation/DateConfiguration';
-import ParametersConfiguration from '../../components/AddRecommendation/ParametersConfiguration';
-import ConfirmationPage from '../../components/AddRecommendation/ConfirmationPage';
 import ConfiguredRecommendationTable from '../../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
+import { connect } from 'react-redux';
+import { mapDispatchToProps } from '../AddRecommendationDialog/redux/reducer-actions';
+import 'date-fns';
+import './ManageRecommendationPage.css';
+
+
 export const CssTextField = withStyles({
   root: {
     width: '360px',
@@ -40,14 +40,11 @@ export const CssTextField = withStyles({
 })(TextField);
 
 
-function ManageRecommendationPage() {
+function ManageRecommendationPage(props) {
 
-  //TODO: items might not be necessary.
-  const items = [TemplateConfiguration, DateConfiguration, ParametersConfiguration, ConfirmationPage];
+  const { toggleDialog } = props;
   const [data, setData] = React.useState([]);
-  const [showDialog, setShowDialog] = React.useState(false);
   
-
   const fetchData = async () => {
       let response = await getAllConfiguredRecommendations();
       setData(response);
@@ -56,15 +53,6 @@ function ManageRecommendationPage() {
   useEffect(() => {
       fetchData();
   }, []);
-
-
-
-  // Setter to trigger the pop up dialog
-  const toggleDialog = () => {
-    setShowDialog(!showDialog);
-  };
-
-
 
   return (
     <div id="main-container">
@@ -83,8 +71,7 @@ function ManageRecommendationPage() {
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
-              {showDialog && 
-              <AddRecommendationDialog close ={toggleDialog} open = {showDialog}/>}
+              <AddRecommendationDialog />
             </div>
           </Grid>
         </Grid>
@@ -118,4 +105,4 @@ function ManageRecommendationPage() {
   );
 }
 
-export default ManageRecommendationPage;
+export default connect(null, mapDispatchToProps)(ManageRecommendationPage);
