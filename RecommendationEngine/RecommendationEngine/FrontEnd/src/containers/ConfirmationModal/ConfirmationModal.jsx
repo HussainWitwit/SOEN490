@@ -41,7 +41,7 @@ const parameters = [{ title: 'To Come', year: 1994 }];
 //   }),
 // };
 
-function ConfirmationModal(props) {
+export function ConfirmationModal (props) {
   const { dialogStyle, dialogsContent } = props;
 
   // const [postResponse, setPostResponse] = React.useState(null);

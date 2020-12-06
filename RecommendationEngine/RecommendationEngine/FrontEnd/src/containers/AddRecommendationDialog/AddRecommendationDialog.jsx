@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTransition } from 'react-spring';
 import Draggable from 'react-draggable';
-import { Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Fade, Slide
+import {
+  Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Fade, Slide
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from './redux/reducer-actions';
@@ -37,22 +38,22 @@ const pageTitles = [
 ];
 
 
-function PaperComponent(props) {
+export function PaperComponent (props) {
   return (
     <Draggable
       handle="#draggable-dialog-title"
       cancel={'[class*="MuiDialogContent-root"]'}
     >
-    <Paper {...props} />
+      <Paper {...props} />
     </Draggable>
   );
 }
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction= "up" ref={ref} {...props} />;
+const Transition = React.forwardRef(function Transition (props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function AddRecommendationDialog(props) {
+function AddRecommendationDialog (props) {
   const { dialogsContent, clear, isDialogOpen } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
@@ -141,8 +142,8 @@ function AddRecommendationDialog(props) {
             Next
           </Button>
         )}
-        {index == 3 && (
-          <Button id="next-btn" onClick={() => {}} variant="outlined">
+        {index === 3 && (
+          <Button id="next-btn" onClick={() => { }} variant="outlined">
             Confirm
           </Button>
         )}

@@ -7,8 +7,7 @@ import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../AddRecommendationDialog/redux/reducer-actions';
 
-
-function TemplateConfigurationModal({ template, dialogStyle,setTemplateName }) {
+function TemplateConfigurationModal ({ template, dialogStyle, setTemplateName }) {
 
   const TemplateCard = (props) => {
     return (
@@ -18,7 +17,7 @@ function TemplateConfigurationModal({ template, dialogStyle,setTemplateName }) {
         }
         onClick={props.onClick}
       >
-        <div>
+        <div data-testid="template-label">
           <props.icon id="template-icon" />
         </div>
         <Typography id="template-label">{props.name}</Typography>
@@ -28,10 +27,11 @@ function TemplateConfigurationModal({ template, dialogStyle,setTemplateName }) {
 
   return (
     <animated.div id="template-modal-container" style={dialogStyle}>
-      <div id="parent-div">
-        <div id="template-grid">
+      <div data-testid="templates" id="parent-div">
+        <div id="template-grid" data-testid="template">
           {TemplateItems.map((item, index) => (
             <TemplateCard
+              data-testid="template-inside"
               name={item.name}
               icon={item.listItemIcon}
               onClick={() => {

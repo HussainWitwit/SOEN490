@@ -23,10 +23,9 @@ const assets = [
   { title: 'The Godfather: Part II', year: 1974 },
   { title: 'The Dark Knight', year: 2008 },
 ];
-const assetItems = ['Asset 1', 'Asset 2', 'Asset 3', 'Asset 3', 'Asset 4'];
 const granularityItems = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 
-function DetailsConfigurationModal(props) {
+function DetailsConfigurationModal (props) {
   const {
     basicConfiguration,
     template,
@@ -45,7 +44,7 @@ function DetailsConfigurationModal(props) {
     } else {
       setGranularity('Daily');
     }
-  }, [template.name]);
+  }, [setGranularity, template.name]);
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -56,6 +55,7 @@ function DetailsConfigurationModal(props) {
             <p id="text">Title: </p>
           </div>
           <Form.Control
+            data-testid='title'
             type="email"
             className="text-input-container"
             value={basicConfiguration.title}
@@ -87,8 +87,9 @@ function DetailsConfigurationModal(props) {
           >
             <FormControlLabel
               checked={
-                basicConfiguration.preferredScenario == 'Return On Investment'
+                basicConfiguration.preferredScenario === 'Return On Investment'
               }
+              data-testid="option-ron"
               value="Return On Investment"
               control={<Radio color="primary" />}
               label="Return On Investment"
@@ -96,7 +97,8 @@ function DetailsConfigurationModal(props) {
               onClick={() => setPreferredScenario('Return On Investment')}
             />
             <FormControlLabel
-              checked={basicConfiguration.preferredScenario == 'Net Saving'}
+              checked={basicConfiguration.preferredScenario === 'Net Saving'}
+              data-testid="option-net"
               value="Net Saving"
               control={<Radio color="primary" />}
               label="Net Saving"
@@ -113,6 +115,7 @@ function DetailsConfigurationModal(props) {
             <p id="text">Granularity: </p>
           </div>
           <Form.Control
+            data-testid="granularity"
             disabled={template.name === TemplateItems[0].name}
             as="select"
             onChange={(event) => setGranularity(event.target.value)}
@@ -120,7 +123,7 @@ function DetailsConfigurationModal(props) {
             className="text-input-granularity"
           >
             {granularityItems.map((element) => {
-              return <option>{element}</option>;
+              return <option data-testid="granularity-option">{element}</option>;
             })}
           </Form.Control>
         </div>
@@ -134,6 +137,7 @@ function DetailsConfigurationModal(props) {
               {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((element, index) => {
                 return (
                   <Button
+                    data-testid='day'
                     value={index.toString()}
                     onClick={(event) => setRepeatDay(index)}
                   >
@@ -145,20 +149,21 @@ function DetailsConfigurationModal(props) {
           )}
           {(basicConfiguration.granularity === granularityItems[2] ||
             basicConfiguration.granularity === granularityItems[3]) && (
-            <div id="date-container">
-              <TextField
-                id="date"
-                type="date"
-                size="small"
-                defaultValue="2020-01-01"
-                onChange={(event) => setRepeatDate(event.target.value)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <div id="space-right"></div>
-            </div>
-          )}
+              <div id="date-container">
+                <TextField
+                  data-testid='date'
+                  id="date"
+                  type="date"
+                  size="small"
+                  defaultValue="2020-01-01"
+                  onChange={(event) => setRepeatDate(event.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <div id="space-right"></div>
+              </div>
+            )}
           {basicConfiguration.granularity !== granularityItems[3] && (
             <TextField
               id="time"

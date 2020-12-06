@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import Layout from './containers/AppLayout/Layout';
 import ManageRecommendationPage from './containers/ManageRecommendationPage/ManageRecommendationPage';
 import { hot } from 'react-hot-loader/root';
-import './stylesheet.css'
+import './stylesheet.css';
 
 function App (props) {
   return (
