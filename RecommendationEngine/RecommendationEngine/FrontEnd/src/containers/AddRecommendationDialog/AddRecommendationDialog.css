@@ -50,14 +50,13 @@
 }
 
 #previous-btn:hover {
-    background-color:rgb(253, 253, 130);
-    color: black;
-    transition: all 1s;
+    background-color:#909090;
+    transition: all 500ms;
     border-color: transparent;
 }
 
 #cancel-btn:hover{
-    background-color: red;
+    background-color: #ffc107;
     box-shadow: none;
     transition: all 500ms;
     border-color: transparent;
