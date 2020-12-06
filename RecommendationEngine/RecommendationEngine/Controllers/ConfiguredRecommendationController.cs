@@ -1,5 +1,7 @@
 ﻿using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Models.Application;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Controllers
 {
@@ -18,6 +20,20 @@ namespace RecommendationEngine.Controllers
         public IActionResult getConfiguredRecommendationList()
         {
             return Ok(_recommendationSchedulerService.GetConfiguredRecommendationList());
+        }
+
+        [HttpPost("add")]
+        public IActionResult addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
+            try
+            {
+                _recommendationSchedulerService.AddConfiguredRecommendation(configuredRecommendation);
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(e);
+            }
+            return Ok();
         }
     }
 }
