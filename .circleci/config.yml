@@ -1,0 +1,53 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+orbs:
+  node: circleci/node@4.1.0
+jobs:
+  buildBackend:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:3.1
+    steps:
+      - checkout
+      - node/install: 
+          node-version: "13.8.0"
+      - run:
+          name: Restore Backend
+          command: dotnet restore RecommendationEngine.sln
+          working_directory: ./RecommendationEngine
+      - run:
+          name: Build Backend
+          command: dotnet build RecommendationEngine.sln
+          working_directory: ./RecommendationEngine
+      - run:
+          name: Running Backend Tests
+          command: dotnet test --collect:"XPlat Code Coverage"
+          working_directory: ./RecommendationEngine
+      - run:
+          name: Uploading Backend Tests Coverage
+          command: bash <(curl -s https://codecov.io/bash) -cF backend
+          working_directory: ./RecommendationEngine
+  buildFrontend:
+    docker:
+      - image: cypress/base:13.8.0
+    steps:
+      - checkout
+      - run:
+          name: Installing Frontend Dependencies
+          command: npm i
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
+      - run:
+          name: Running Frontend Tests
+          command: npm run test:ci
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
+      - run:
+          name: Uploading Frontend Tests Coverage
+          command: bash <(curl -s https://codecov.io/bash) -cF frontend
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
+
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - buildBackend
+      - buildFrontend
+          

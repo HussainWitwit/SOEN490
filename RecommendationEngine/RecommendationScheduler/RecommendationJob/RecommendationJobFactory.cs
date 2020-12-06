@@ -1,6 +1,5 @@
 ﻿using Models.DB;
 using Quartz;
-using RecommendationScheduler.RecommendationTypes;
 
 namespace RecommendationScheduler.RecommendationJob
 {
@@ -17,14 +16,8 @@ namespace RecommendationScheduler.RecommendationJob
         {
             switch (Schedule.RecommendationType.Type)
             {
-                case "Yearly Wash Optimization": 
+                case "Yearly Wash Optimization":
                     return JobBuilder.Create<YearlyWashOptimizationRecommendationJob>()
-                        .WithIdentity(Schedule.RecommendationScheduleId.ToString())
-                        .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
-                        .WithDescription(Schedule.Description)
-                        .Build();
-                case "Fuse Replacement":
-                    return JobBuilder.Create<FuseReplacementRecommendationJob>()
                         .WithIdentity(Schedule.RecommendationScheduleId.ToString())
                         .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
                         .WithDescription(Schedule.Description)

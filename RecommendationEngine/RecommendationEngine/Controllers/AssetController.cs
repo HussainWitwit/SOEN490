@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
+using System.Threading.Tasks;
 
 namespace RecommendationEngine.Controllers
 {
@@ -37,7 +37,8 @@ namespace RecommendationEngine.Controllers
                 await _assetService.Convert();
                 return Ok();
             }
-            catch (GlobalException e){
+            catch (GlobalException e)
+            {
                 return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
         }

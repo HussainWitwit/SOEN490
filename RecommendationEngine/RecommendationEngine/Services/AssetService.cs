@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using Interfaces.Repositories;
 using Interfaces.Services;
-using Models.DB;
-using Interfaces.Repositories;
-using Models.Application.Asset;
+using Interfaces.Services.ExternalAPI;
 using Models.Application.APIModels;
+using Models.Application.Asset;
+using Models.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
-using Interfaces.Services.ExternalApi;
 
 namespace RecommendationEngine.Services
 {
@@ -153,14 +152,14 @@ namespace RecommendationEngine.Services
                     {
                         plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
                     }
-                    
+
                     return new DBAsset()
                     {
                         Name = x.Id,
                         ElementPath = x.Id,
                         DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
                         EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
-                        Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
+                        Type = isPortfolio ? _portfolioAssetType : null,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
                         AcPower = isPortfolio ? 0 : plant.AcCapacity,
                         ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)

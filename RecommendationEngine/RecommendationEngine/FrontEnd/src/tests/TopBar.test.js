@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import TopBar from '../containers/TopBar/TopBar.jsx';
 import NotificationBell from '../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../enzyme';
-import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
