@@ -8,6 +8,7 @@
         public string EnergyType { get; set; }
         public string TimeZone { get; set; }
         public string ElementPath { get; set; }
+        public string AssetType { get; set; }
         public double AcPower { get; set; }
     }
 }
