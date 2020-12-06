@@ -12,7 +12,7 @@ const detailsConfigInitialValues = {
     repeatTime: ''
 }
 
-const contentInitialValues = {
+export const contentInitialValues = {
     isDialogOpen: false,
     template: {name: TemplateItems[0].name},
     basicConfiguration: detailsConfigInitialValues,
