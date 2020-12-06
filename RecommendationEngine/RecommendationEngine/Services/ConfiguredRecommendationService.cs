@@ -1,7 +1,10 @@
-﻿using Interfaces.Repositories;
+﻿using Interfaces.RecommendationScheduler;
+using Interfaces.Repositories;
 using Interfaces.Services;
+using Interfaces.Services.ExternalAPI;
 using Models.Application;
 using Models.DB;
+using RecommendationEngine.configuredRecommendationHelper;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,9 +27,28 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             _scheduler = scheduler;
         }
 
-        public List<ConfiguredRecommendation> getConfiguredRecommendationList()
+        public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
         {
-            return _repository.Get();
+            List<DBRecommendationSchedule> dbconfiguredRecommendations = _repository.GetRecommendationScheduleList();
+
+            List<ConfiguredRecommendation> recommendations = new List<ConfiguredRecommendation>();
+
+            foreach (DBRecommendationSchedule dbConfigRecommendation in dbconfiguredRecommendations)
+            {
+                recommendations.Add(
+                    new ConfiguredRecommendation
+                    {
+                        Name = dbConfigRecommendation.Name,
+                        Type = dbConfigRecommendation.RecommendationType.Type,
+                        Granularity = dbConfigRecommendation.Granularity,
+                        CreatedBy = dbConfigRecommendation.ModifiedBy,
+                        RecurrenceDayOfWeek = dbConfigRecommendation.RecurrenceDayOfWeek,
+                        RecurrenceDatetime = dbConfigRecommendation.RecurrenceDatetime,
+                        CreatedOn = dbConfigRecommendation.CreatedOn,
+                        Parameters = null
+                    });
+            }
+            return recommendations;
         }
 
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)

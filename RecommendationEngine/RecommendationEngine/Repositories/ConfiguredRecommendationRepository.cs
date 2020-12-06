@@ -1,6 +1,7 @@
 ﻿using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Models.DB;
+using RecommendationEngine.ExceptionHandler;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,27 +27,10 @@ namespace RecommendationEngine.Repositories
             return schedule;
         }
 
-        public List<ConfiguredRecommendation> Get()
+        public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
-            List<DBRecommendationSchedule> dbRecommendations = _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
-            List<ConfiguredRecommendation> recommendations = new List<ConfiguredRecommendation>();
-            foreach (DBRecommendationSchedule dbRecommendation in dbRecommendations)
-            {
-                recommendations.Add(
-                    new ConfiguredRecommendation
-                    {
-                        Name = dbRecommendation.Name,
-                        Type = dbRecommendation.RecommendationType.Type,
-                        Granularity = dbRecommendation.Granularity,
-                        CreatedBy = dbRecommendation.ModifiedBy,
-                        RecurrenceDayOfWeek = dbRecommendation.RecurrenceDayOfWeek,
-                        RecurrenceDatetime = dbRecommendation.RecurrenceDatetime,
-                        CreatedOn = dbRecommendation.CreatedOn,
-                        Parameters = null
-                    }
-                    ); ;
-            }
-            return recommendations;
+             return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
+            
         }
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)

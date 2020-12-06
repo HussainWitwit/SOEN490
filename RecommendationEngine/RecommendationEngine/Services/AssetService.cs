@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
-using Interfaces.Services.ExternalApi;
 
 namespace RecommendationEngine.Services
 {
@@ -21,6 +19,7 @@ namespace RecommendationEngine.Services
         private IAssetTypeRepository _assetTypeRepository;
         private List<DBAsset> _assets;
         private DBAssetType _portfolioAssetType;
+        private DBAssetType _plantAssetType;
 
         public AssetService(
                 IDriveService driveService,

@@ -1,8 +1,8 @@
 ﻿using System;
-using RecommendationEngine.Models.Application;
 using RecommendationEngine.ExceptionHandler;
 using System.Linq;
 using Models.DB;
+using Models.Application;
 
 namespace RecommendationEngine.configuredRecommendationHelper
 {
