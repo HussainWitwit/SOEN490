@@ -103,7 +103,6 @@ export const addRecDialogContentReducer = function (state = contentInitialValues
             return contentInitialValues; 
 
         default:
-            console.log('error with your dispatch redux method');
             return state;
         } 
 }

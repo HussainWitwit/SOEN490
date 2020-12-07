@@ -4,10 +4,12 @@ import * as dispatchActionType from './dispatch-types';
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapDialogStateToProps = (state) => {
     return {
+      all: state,
       dialogsContent: state.addRecommendation,
       isDialogOpen: state.addRecommendation.isDialogOpen,
       template: state.addRecommendation.template,
-      basicConfiguration: state.addRecommendation.basicConfiguration
+      basicConfiguration: state.addRecommendation.basicConfiguration,
+      apiAssets: state.assetReducer.flatListAssets
     };
   };
 
