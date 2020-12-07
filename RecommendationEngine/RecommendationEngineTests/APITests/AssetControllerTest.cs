@@ -52,6 +52,17 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         }
 
         [Test]
+        public async Task GetAssetsList()
+        {
+            var response = await _client.GetAsync("/asset/getAssetsList");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<AssetLeaf> assetList = JsonConvert.DeserializeObject<List<AssetLeaf>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(assetList);
+            Assert.AreEqual(assetList[0].Name, MockData.MockAssets.BasicDBAssetList[0].Name);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
         public async Task Convert()
         {
             var response = await _client.GetAsync("/asset/convert");
