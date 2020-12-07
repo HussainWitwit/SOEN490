@@ -5,7 +5,8 @@ import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { getAllAssets } from "../../api/get/AssetEndpoints";
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../../api/redux/reducer-actions';
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -122,20 +123,7 @@ const mockList = [
   { title: 'Asset Title 4' },
 ];
 
-export function AssetTree () {
-
-  const [data, setData] = useState([]);
-
-  const fetchData = async () => {
-    let response = await getAllAssets();
-    setData(response);
-  }
-
-  // Make sure the api call is done only at first render or [upon request -> TODO ]
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+export function AssetTree ({nestedAssets}) {
   const DisplayAssetNodeTree = (displayData) => (
     <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
@@ -153,11 +141,13 @@ export function AssetTree () {
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
       >
-        {data &&
-          DisplayAssetNodeTree(data)
+        {nestedAssets &&
+          DisplayAssetNodeTree(nestedAssets)
         }
       </TreeView>
     </div>
   );
 
 }
+
+export default connect(mapStateToProps)(AssetTree);
