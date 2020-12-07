@@ -36,7 +36,10 @@ function DetailsConfigurationModal (props) {
     setRepeatDay,
     setRepeatDate,
     setRepeatTime,
+    apiAssets
   } = props;
+
+  console.log(apiAssets);
 
   useEffect(() => {
     if (template.name === TemplateItems[0].name) {
@@ -69,7 +72,8 @@ function DetailsConfigurationModal (props) {
           </div>
           <MultiSelectAutocomplete
             contentLabel="Assets..."
-            items={assets}
+            recommendationType = {template.name}
+            items={apiAssets}
             value={basicConfiguration.asset}
             onChange={(event, value) => updateAsset(value)}
             maxElement={1}

@@ -16,8 +16,10 @@ function MultiSelectAutocomplete(props) {
       defaultValue={props.defaultValue ? props.defaultValue : [props.items[0]]}
       value={props.value}
       options={props.items}
+      groupBy = {(option => option.assetType)}
+      getOptionDisabled = {option => props.recommendationType === "Yearly Wash Optimization" && option.assetType === "Portfolio"}
       disableCloseOnSelect
-      getOptionLabel={(option) => option.title}
+      getOptionLabel={(option) => option.displayText}
       onChange={props.onChange}
       disabled={props.isReadOnly === true ? true : false}
       renderOption={(option, { selected }) => (
@@ -28,7 +30,14 @@ function MultiSelectAutocomplete(props) {
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {option.title}
+          <div style = {{flexGrow: 1, display: "flex", justifyContent: "space-between", marginRight: 5}}>
+            <div>
+                {option.displayText}
+            </div>
+            <div style = {{opacity: 0.6}}>
+                {option.assetType}
+            </div>
+          </div>
         </React.Fragment>
       )}
       style={{ width: '100%' }}

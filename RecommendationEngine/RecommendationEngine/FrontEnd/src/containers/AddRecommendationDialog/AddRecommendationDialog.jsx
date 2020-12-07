@@ -54,7 +54,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 function AddRecommendationDialog (props) {
-  const { dialogsContent, clear, isDialogOpen } = props;
+  const { clear, isDialogOpen, all } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -86,8 +86,8 @@ function AddRecommendationDialog (props) {
   }
 
   useEffect(() => {
-    console.log(dialogsContent);
-  }, [dialogsContent]);
+    console.log(all);
+  }, [all]);
 
   return (
     <Dialog
