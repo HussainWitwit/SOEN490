@@ -5,7 +5,7 @@ import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { store } from '../configure-store';
+import { store } from '../redux/configure-store';
 
 Enzyme.configure({ adapter: new Adapter() });
 

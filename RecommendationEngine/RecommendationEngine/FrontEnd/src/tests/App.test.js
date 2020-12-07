@@ -2,7 +2,7 @@ import React from 'react';
 import App from '../App';
 import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { store } from '../configure-store';
+import { store } from '../redux/configure-store';
 
 it.skip('renders without crashing', async () => {
     const div = document.createElement('div');

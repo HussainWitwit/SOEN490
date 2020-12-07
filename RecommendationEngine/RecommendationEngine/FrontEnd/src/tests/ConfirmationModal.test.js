@@ -4,8 +4,8 @@ import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import ConfirmationModal from '../containers/ConfirmationModal/ConfirmationModal';
 import TextField from '@material-ui/core/TextField';
-import { store } from '../configure-store';
 import MultiSelectAutocomplete from '../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import { store } from '../redux/configure-store';
 
 Enzyme.configure({ adapter: new Adapter() });
 

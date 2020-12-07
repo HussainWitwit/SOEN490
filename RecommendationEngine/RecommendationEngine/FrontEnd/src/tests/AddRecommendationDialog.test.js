@@ -9,7 +9,7 @@ import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Slide
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { store } from '../configure-store';
+import { store } from '../redux/configure-store';
 import Draggable from 'react-draggable';
 
 Enzyme.configure({ adapter: new Adapter() });

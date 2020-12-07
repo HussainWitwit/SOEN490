@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { store } from '../configure-store';
+import { store } from '../redux/configure-store';
 import TemplateConfigurationModal from '../containers/TemplateConfigurationModal/TemplateConfigurationModal';
 import { Typography } from '@material-ui/core';
 import { fireEvent, render, getAllByTestId } from '@testing-library/react';

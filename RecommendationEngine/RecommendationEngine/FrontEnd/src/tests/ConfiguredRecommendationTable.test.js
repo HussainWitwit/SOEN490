@@ -13,7 +13,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { EnhancedTableHead } from '../components/RecommendationTableHeader/RecommendationTableHeader';
-import { store } from '../configure-store';
+import { store } from '../redux/configure-store';
 
 Enzyme.configure({ adapter: new Adapter() });
 
