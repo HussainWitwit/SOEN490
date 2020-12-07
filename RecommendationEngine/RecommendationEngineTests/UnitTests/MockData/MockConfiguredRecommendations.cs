@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Models.Application;
 using Models.DB;
-using RecommendationEngine.Models.Application;
 
 namespace RecommendationEngineTests.UnitTests.MockData
 {
@@ -10,36 +10,36 @@ namespace RecommendationEngineTests.UnitTests.MockData
         public static ConfiguredRecommendation BASIC_CONFIGURED_RECOMMENDATION = RecommendationList.BasicConfiguredRecommendation();
         public static ConfiguredRecommendation BAD_CONFIGURED_RECOMMENDATION = RecommendationList.BadConfiguredRecommendation();
         public static ConfiguredRecommendation EMPTY_CONFIGURED_RECOMMENDATION = RecommendationList.EmptyConfiguredRecommendation();
-        public static List<ConfiguredRecommendation> BASIC_CONFIGURED_RECOMMENDATION_LIST = RecommendationList.BasicConfiguredRecommendationList();
+        public static List<DBRecommendationSchedule> BASIC_CONFIGURED_RECOMMENDATION_LIST = RecommendationList.BasicConfiguredRecommendationList();
         public static DBRecommendationType YEARLY_RECOMMENDATION_TYPE = RecommendationList.YearlyRecType();
         public static DBRecommendationSchedule CONVERTED_CONFIGURED_RECOMMENDATION = RecommendationList.BasicDBRecommendationSchedule();
 
         public static class RecommendationList
         {
-            public static List<ConfiguredRecommendation> BasicConfiguredRecommendationList()
+            public static List<DBRecommendationSchedule> BasicConfiguredRecommendationList()
             {
-                List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>() {
-                    new ConfiguredRecommendation
+                List<DBRecommendationSchedule> list = new List<DBRecommendationSchedule>() {
+                    new DBRecommendationSchedule
                     {
                         Name = "Wash Recommendation 1",
-                        CreatedBy = "Mohanad",
+                        ModifiedBy = "Mohanad",
                         CreatedOn = new DateTime().Date,
                         Granularity = "Yearly",
                         RecurrenceDatetime = new DateTime().Date,
                         RecurrenceDayOfWeek = 2,
-                        Type = "Yearly Wash Optimization",
-                        Parameters = null
+                        RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
+                        ParametersList = null
                     },
-                    new ConfiguredRecommendation
+                    new DBRecommendationSchedule
                     {
                         Name = "Wash Recommendation 1",
-                        CreatedBy = "Mohanad",
+                        ModifiedBy = "Mohanad",
                         CreatedOn = new DateTime().Date,
                         Granularity = "Yearly",
                         RecurrenceDatetime = new DateTime().Date,
                         RecurrenceDayOfWeek = 2,
-                        Type = "Yearly Wash Optimization",
-                        Parameters = null
+                        RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
+                        ParametersList = null
                     }
                 };
 
