@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -6,16 +7,16 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
-using Interfaces.Services.ExternalApi;
+using Interfaces.Services.ExternalAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Models.Application;
+using Models.Application.APIModels;
 using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.ConfiguredRecommendationServices;
-using RecommendationEngine.Models.Application;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngineTests.APITests
 {
@@ -66,7 +67,7 @@ namespace RecommendationEngineTests.APITests
             };
         }
 
-        public List<ConfiguredRecommendation> Get()
+        public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
             return UnitTests.MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
         }
@@ -74,26 +75,6 @@ namespace RecommendationEngineTests.APITests
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
             return UnitTests.MockData.MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
-        }
-    }
-
-    public class MockTestDrive : IDriveService
-    {
-        public async Task<List<PFPortfolio>> GetPortfolios()
-        {
-            await Task.Delay(1000);
-            return UnitTests.MockData.MockAssets.BasicPortfolios;
-        }
-        public async Task<List<PFPortfolio>> GetPlants()
-        {
-            await Task.Delay(1000);
-            return UnitTests.MockData.MockAssets.BasicPlants;
-        }
-
-        public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
-        {
-            await Task.Delay(1000);
-            return UnitTests.MockData.MockAssets.BasicPlant;
         }
     }
 }

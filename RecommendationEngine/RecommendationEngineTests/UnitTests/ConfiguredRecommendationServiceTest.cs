@@ -2,12 +2,13 @@
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
 using Interfaces.Services.ExternalApi;
+using Interfaces.Services.ExternalAPI;
+using Models.Application;
 using Models.DB;
 using Moq;
 using NUnit.Framework;
 using RecommendationEngine.ConfiguredRecommendationServices;
 using RecommendationEngine.ExceptionHandler;
-using RecommendationEngine.Models.Application;
 using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests.UnitTests
@@ -31,11 +32,12 @@ namespace RecommendationEngineTests.UnitTests
         [Test]
         public void GetRecommendationListTest()
         {
-            List<ConfiguredRecommendation> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
-            _repository.Setup(x => x.Get()).Returns(recommendation);
+            List<DBRecommendationSchedule> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(recommendation);
 
-            List<ConfiguredRecommendation> expected = _configuredRecommendationService.getConfiguredRecommendationList();
-            Assert.AreEqual(expected, recommendation);
+            List<ConfiguredRecommendation> expected = _configuredRecommendationService.GetConfiguredRecommendationList();
+            Assert.AreEqual(expected[0].Name, recommendation[0].Name);
+            Assert.AreEqual(expected[0].Granularity, recommendation[0].Granularity);
         }
 
         [Test]
