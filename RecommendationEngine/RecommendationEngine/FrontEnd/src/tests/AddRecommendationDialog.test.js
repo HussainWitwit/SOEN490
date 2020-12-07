@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import AddRecommendationDialog, {
-    PaperComponent
+    PaperComponent, Transition
 } from '../containers/AddRecommendationDialog/AddRecommendationDialog';
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton
+    Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Slide
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { store } from '../configure-store';
+import Draggable from 'react-draggable';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -16,60 +18,59 @@ describe('AddRecommendationDialog component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-
+    const output = shallow(<AddRecommendationDialog store={store} />).dive().dive();
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<AddRecommendationDialog />, div);
+        ReactDOM.render(<AddRecommendationDialog store={store} />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
     it('It finds the dialog component', () => {
-        const output = shallow(<AddRecommendationDialog />);
         let component = output.find(Dialog);
         expect(component).toHaveLength(1);
     });
 
     it('It finds the icon button', () => {
-        const output = shallow(<AddRecommendationDialog />);
         let component = output.find(IconButton);
         expect(component).toHaveLength(1);
     });
 
     it('Finds the close icon', () => {
-        const output = shallow(<AddRecommendationDialog />);
         let component = output.find(CloseIcon);
         expect(component).toHaveLength(1);
     });
 
     it('Finds the dialog title', () => {
-        const output = shallow(<AddRecommendationDialog />);
         let component = output.find(DialogTitle);
         expect(component).toHaveLength(1);
     });
 
     it('Finds the dialog content', () => {
-        const output = shallow(<AddRecommendationDialog />);
         let component = output.find(DialogContent);
         expect(component).toHaveLength(1);
     });
 
     it('Finds the dialog actions', () => {
-        const output = shallow(<AddRecommendationDialog />);
         let component = output.find(DialogActions);
         expect(component).toHaveLength(1);
     });
 
     it('Finds the action buttons', () => {
-        const output = shallow(<AddRecommendationDialog />);
         let component = output.find(Button);
-        expect(component).toHaveLength(3);
+        expect(component).toHaveLength(2);
     });
 
     it('Finds the paper component', () => {
-        const output = shallow(<AddRecommendationDialog />);
-        let component = output.find(PaperComponent);
+        const output = shallow(<PaperComponent />);
+        expect(output).toHaveLength(1);
+        let component = output.find(Draggable);
         expect(component).toHaveLength(1);
     });
 
+    it('Finds the transition component', () => {
+        const output = shallow(<Transition />);
+        let component = output.find(Slide);
+        expect(component).toHaveLength(1);
+    });
 });

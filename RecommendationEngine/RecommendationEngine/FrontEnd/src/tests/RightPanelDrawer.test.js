@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import RightPanelDrawer from '../containers/RightPanel/RightPanelDrawer.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { AssetTree } from '../components/AssetTreeView/AssetTreeView';
+import { AssetTree } from '../containers/AssetTreeView/AssetTreeView';
+// import { AssetTree } from '../components/AssetTreeView/AssetTreeView';
 import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 Enzyme.configure({ adapter: new Adapter() });
 

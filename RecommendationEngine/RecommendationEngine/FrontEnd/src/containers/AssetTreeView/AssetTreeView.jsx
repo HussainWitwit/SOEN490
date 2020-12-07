@@ -122,8 +122,6 @@ const mockList = [
   { title: 'Asset Title 4' },
 ];
 
-
-
 export function AssetTree () {
 
   const [data, setData] = useState([]);
@@ -139,7 +137,7 @@ export function AssetTree () {
   }, []);
 
   const DisplayAssetNodeTree = (displayData) => (
-    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key = {displayData.id}>
+    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))

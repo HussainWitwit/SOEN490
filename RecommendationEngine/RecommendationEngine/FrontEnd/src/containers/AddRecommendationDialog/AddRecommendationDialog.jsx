@@ -49,7 +49,7 @@ export function PaperComponent (props) {
   );
 }
 
-const Transition = React.forwardRef(function Transition (props, ref) {
+export const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
@@ -91,6 +91,7 @@ function AddRecommendationDialog (props) {
 
   return (
     <Dialog
+      data-testid="dialog"
       open={isDialogOpen}
       onClose={closeDialog}
       PaperComponent={PaperComponent}
@@ -130,6 +131,7 @@ function AddRecommendationDialog (props) {
         </Button>
         {index > 0 && (
           <Button
+            data-testid="cancel-button"
             id="previous-btn"
             onClick={onClickPrevious}
             variant="outlined"
