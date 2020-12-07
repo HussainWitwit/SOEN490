@@ -6,20 +6,27 @@
  * Note: Follow this structure for every controller from the 
  * back-end. Also, it needs to be strongly typed, i.e typescript.
  * A.J.U.U
+ * TODO: unit test the fetch method (jest)
+ * TODO: Integration test as well
  */
 
 import { Asset } from "../../entities/Asset";
-//TODO: unit test the fetch method (jest)
-//TODO: Integration test as well
-export const getAllAssets = async () =>{
+
+export const client = async (endpoint: string) => {
     let assetResult: Asset;
+    let flatListOfAssets: Asset[];
     try {
-        let response = await fetch('asset/get'); //Do not make a typing mistake in the api call
+        // let response = await fetch('asset/getAssetsNested'); //Do not make a typing mistake in the api call
+        let response = await fetch(endpoint); //Do not make a typing mistake in the api call
         const jsonResponse = await response.json();
-        if(jsonResponse) {
+        if(jsonResponse && endpoint.includes('Nested')) {
             //Make sure the returned value is exactly equal to entity attribute
             assetResult = AssignResponse(jsonResponse);
             return assetResult;
+        }
+        else if(jsonResponse && endpoint.includes('List')){
+            flatListOfAssets = jsonResponse;
+            return flatListOfAssets;
         }
         else{
             return [];
@@ -27,6 +34,10 @@ export const getAllAssets = async () =>{
     }catch(error) {
         return [];
     }
+}
+
+client.get = (endpoint: string) => {
+    return client(endpoint);
 }
 
 /**
