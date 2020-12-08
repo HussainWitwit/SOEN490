@@ -1,6 +1,6 @@
 import * as dispatchActionType from './dispatch-types';
-import { AssetClient } from '../get/AssetEndpoints';
-import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../get/ConfiguredRecommendationEndpoints';
+import { AssetClient } from '../../api/get/AssetEndpoints';
+import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../../api/get/ConfiguredRecommendationEndpoints';
 //Note: All the following Actions target the AddRecommendationDialog Reducer only
 
 //**GETTER** This method will allow you to direct access to all the states value from the store

@@ -1,6 +1,6 @@
 import * as dispatchActionType from './dispatch-types';
 //Note: All the following Actions target the AddRecommendationDialog Reducer only
-import { mapDispatchApiToProps } from '../../../api/redux/reducer-actions';
+import { mapDispatchApiToProps } from '../ApiReducer/reducer-actions';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapDialogStateToProps = (state) => {

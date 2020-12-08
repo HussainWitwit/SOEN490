@@ -1,4 +1,4 @@
-import * as dispatchType from '../containers/AddRecommendationDialog/redux/dispatch-types';
+import * as dispatchType from '../redux/AddRecDialogReducer/dispatch-types';
 import { AddConfiguredRecDialogReducer } from '../containers/AddRecommendationDialog/redux/reducer';
 import { TemplateItems } from '../containers/TemplateConfigurationModal/ListTemplateItems';
 const detailsConfigInitialValues = {

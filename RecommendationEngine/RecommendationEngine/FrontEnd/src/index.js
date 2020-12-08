@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
-import { store } from './redux/configure-store';
-import {getNestedAssets, getFlatListAssets, getConfiguredRecommendationList} from './api/redux/reducer-actions';
+import { store } from './redux/store';
+import {getNestedAssets, getFlatListAssets, getConfiguredRecommendationList} from './redux/ApiReducer/reducer-actions';
 
 store.dispatch(getNestedAssets);
 store.dispatch(getFlatListAssets);

@@ -5,7 +5,7 @@ import {
   Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Fade, Slide
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchMergedToProps } from './redux/reducer-actions';
+import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import CloseIcon from '@material-ui/icons/Close';
 import TemplateConfigurationModal from '../../containers/TemplateConfigurationModal/TemplateConfigurationModal';
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
