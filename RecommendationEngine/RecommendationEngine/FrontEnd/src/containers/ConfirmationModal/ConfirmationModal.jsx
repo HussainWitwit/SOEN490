@@ -9,48 +9,13 @@ import {
 } from '../AddRecommendationDialog/redux/reducer-actions';
 import './ConfirmationModal.css';
 
-// TODO: fetch real assets
-const assets = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Godfather: Part II', year: 1974 },
-];
-
+//TODO: Implement parameters
 const parameters = [{ title: 'To Come', year: 1994 }];
 
-// const requestOptions = {
-//   method: 'POST',
-//   headers: { 'Content-Type': 'application/json' },
-//   body: JSON.stringify({
-//     name: '',
-//     type: 'Yearly Wash Optimization',
-//     recurrenceDayOfWeek: '',
-//     createdOn: new Date().toJSON(),
-//     createdBy: '',
-//     recurrenceDateTime: '2025-01-01T' + hourRepeated + ':00',
-//     granularity: '',
-//     parameters: null,
-//   }),
-// };
 
 export function ConfirmationModal (props) {
-  const { dialogStyle, dialogsContent } = props;
 
-  // const [postResponse, setPostResponse] = React.useState(null);
-  // //FIXME: Syntax Errror here
-  // const postAddRecommendation = () => {
-  //   fetch('http://localhost:5000/ConfiguredRecommendation/add/', requestOptions)
-  //     .then((response) => response.json())
-  //     .then((data) => setPostResponse({ postResultId: data.id }));
-  // };
+  const { dialogStyle, dialogsContent } = props;
 
   return (
     <animated.div id="confirmation-modal-container" style={dialogStyle}>
@@ -87,7 +52,7 @@ export function ConfirmationModal (props) {
           <MultiSelectAutocomplete
             contentLabel="Parameters..."
             items={parameters}
-            defaultValue={assets}
+            defaultValue={parameters}
             boxLabelName={'Parameters'}
             variant={'outlined'}
             isReadOnly={true}
@@ -95,7 +60,7 @@ export function ConfirmationModal (props) {
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."
-            items={assets}
+            items={dialogsContent.basicConfiguration.asset}
             defaultValue={dialogsContent.basicConfiguration.asset}
             boxLabelName={'Assets'}
             variant={'outlined'}

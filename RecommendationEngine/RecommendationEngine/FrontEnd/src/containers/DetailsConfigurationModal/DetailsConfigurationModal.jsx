@@ -10,19 +10,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
-import {
-  mapDialogStateToProps,
-  mapDispatchToProps,
-} from '../AddRecommendationDialog/redux/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../AddRecommendationDialog/redux/reducer-actions';
 import { TemplateItems } from '../TemplateConfigurationModal/ListTemplateItems';
 
-// TODO: fetch real assets
-const assets = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-];
 const granularityItems = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 
 function DetailsConfigurationModal (props) {
@@ -39,15 +29,13 @@ function DetailsConfigurationModal (props) {
     apiAssets
   } = props;
 
-  console.log(apiAssets);
-
   useEffect(() => {
     if (template.name === TemplateItems[0].name) {
       setGranularity('Yearly');
     } else {
       setGranularity('Daily');
     }
-  }, [setGranularity, template.name]);
+  }, [template.name]);
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -91,23 +79,23 @@ function DetailsConfigurationModal (props) {
           >
             <FormControlLabel
               checked={
-                basicConfiguration.preferredScenario === 'Return On Investment'
+                basicConfiguration.preferredScenario === 'ROI'
               }
               data-testid="option-ron"
               value="Return On Investment"
               control={<Radio color="primary" />}
               label="Return On Investment"
               labelPlacement="top"
-              onClick={() => setPreferredScenario('Return On Investment')}
+              onClick={() => setPreferredScenario('ROI')}
             />
             <FormControlLabel
-              checked={basicConfiguration.preferredScenario === 'Net Saving'}
+              checked={basicConfiguration.preferredScenario === 'netSaving'}
               data-testid="option-net"
               value="Net Saving"
               control={<Radio color="primary" />}
               label="Net Saving"
               labelPlacement="top"
-              onClick={() => setPreferredScenario('Net Saving')}
+              onClick={() => setPreferredScenario('netSaving')}
             />
           </RadioGroup>
         </div>

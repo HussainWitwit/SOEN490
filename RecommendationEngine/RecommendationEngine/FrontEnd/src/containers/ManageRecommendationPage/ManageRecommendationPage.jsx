@@ -4,11 +4,11 @@ import { FilterList, Search } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { getAllConfiguredRecommendations } from "../../api/get/ConfiguredRecommendationEndpoints";
 import ConfiguredRecommendationTable from '../../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../AddRecommendationDialog/redux/reducer-actions';
+import { mapStateToProps } from '../../api/redux/reducer-actions';
 import 'date-fns';
 import './ManageRecommendationPage.css';
 
@@ -42,17 +42,7 @@ export const CssTextField = withStyles({
 
 function ManageRecommendationPage(props) {
 
-  const { toggleDialog } = props;
-  const [data, setData] = React.useState([]);
-  
-  const fetchData = async () => {
-      let response = await getAllConfiguredRecommendations();
-      setData(response);
-  }
-
-  useEffect(() => {
-      fetchData();
-  }, []);
+  const { toggleDialog, configuredRecommendationList } = props;
 
   return (
     <div id="main-container">
@@ -100,9 +90,9 @@ function ManageRecommendationPage(props) {
         </div>
       </div>
       <br></br>
-      <ConfiguredRecommendationTable data = {data} />
+      <ConfiguredRecommendationTable data = {configuredRecommendationList} />
     </div>
   );
 }
 
-export default connect(null, mapDispatchToProps)(ManageRecommendationPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageRecommendationPage);
