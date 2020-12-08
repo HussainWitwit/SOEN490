@@ -6,10 +6,11 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { store } from './redux/configure-store';
-import {getNestedAssets, getFlatListAssets} from './api/redux/reducer-actions';
+import {getNestedAssets, getFlatListAssets, getConfiguredRecommendationList} from './api/redux/reducer-actions';
 
 store.dispatch(getNestedAssets);
 store.dispatch(getFlatListAssets);
+store.dispatch(getConfiguredRecommendationList);
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');

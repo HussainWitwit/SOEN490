@@ -2,10 +2,11 @@ import * as type from './dispatch-types';
 
 export const initialValues = {
     nestedAssets: [],
-    flatListAssets: []
+    flatListAssets: [],
+    configuredRecommendationList: [],
   };
 
-  export const AssetsReducer = function (state = initialValues, action) {
+  export const ApiReducer = function (state = initialValues, action) {
     switch(action.type) {
         case type.GET_NESTED_ASSETS: 
             return {
@@ -16,6 +17,11 @@ export const initialValues = {
             return {
                 ...state,
                 flatListAssets: action.payload
+            };
+        case type.GET_CONFIGURED_RECOMMENDATION_LIST:
+            return {
+                ...state,
+                configuredRecommendationList: action.payload
             };
             default:
                 return state
