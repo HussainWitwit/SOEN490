@@ -203,6 +203,7 @@ namespace RecommendationEngine.Services
                     EnergyType = dbasset.EnergyType,
                     AssetType = dbasset.Type.Name,
                     TimeZone = dbasset.TimeZone,
+                    
                 }
             ).ToList();
 

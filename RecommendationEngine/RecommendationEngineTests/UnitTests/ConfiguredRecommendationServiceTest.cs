@@ -17,6 +17,7 @@ namespace RecommendationEngineTests.UnitTests
     {
         private ConfiguredRecommendationService _configuredRecommendationService;
         private Mock<IConfiguredRecommendationRepository> _repository;
+        private Mock<IAssetRepository> _assetRepository;
         private Mock<IDriveService> _driveService;
         private Mock<IRecommendationScheduler> _scheduler;
 
@@ -24,9 +25,10 @@ namespace RecommendationEngineTests.UnitTests
         public void Setup()
         {
             _repository = new Mock<IConfiguredRecommendationRepository>();
+            _assetRepository = new Mock<IAssetRepository>();
             _driveService = new Mock<IDriveService>();
             _scheduler = new Mock<IRecommendationScheduler>();
-            _configuredRecommendationService = new ConfiguredRecommendationService(_driveService.Object, _repository.Object, _scheduler.Object);
+            _configuredRecommendationService = new ConfiguredRecommendationService(_driveService.Object, _repository.Object, _assetRepository.Object, _scheduler.Object);
         }
 
         [Test]

@@ -85,6 +85,11 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         {
             return MockData.MockAssets.BasicDBAsset;
         }
+
+        public DBAsset GetAssetById(int assetId)
+        {
+            return MockData.MockAssets.BasicDBAsset;
+        }
     }
 
     public class TestAssetTypeRepositoryMock : IAssetTypeRepository

@@ -29,7 +29,8 @@ namespace RecommendationEngine.Repositories
 
         public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
-             return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
+             return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList).ThenInclude(asset => asset.Asset).
+                ThenInclude(asset => asset.Type).ToList();
             
         }
 
