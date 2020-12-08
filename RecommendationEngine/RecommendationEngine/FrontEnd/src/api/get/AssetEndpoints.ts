@@ -12,7 +12,7 @@
 
 import { Asset } from "../../entities/Asset";
 
-export const client = async (endpoint: string) => {
+export const AssetClient = async (endpoint: string) => {
     let assetResult: Asset;
     let flatListOfAssets: Asset[];
     try {
@@ -36,8 +36,8 @@ export const client = async (endpoint: string) => {
     }
 }
 
-client.get = (endpoint: string) => {
-    return client(endpoint);
+AssetClient.get = (endpoint: string) => {
+    return AssetClient(endpoint);
 }
 
 /**
