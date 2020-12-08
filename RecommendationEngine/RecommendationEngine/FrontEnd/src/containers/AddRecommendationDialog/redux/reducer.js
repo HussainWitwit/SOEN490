@@ -5,6 +5,7 @@ import * as type from './dispatch-types';
 const detailsConfigInitialValues = {
     title: '',
     asset: [],
+    createdBy: 'Alain',
     preferredScenario: '',
     granularity: 'Daily',
     repeatDay: '',
@@ -12,6 +13,9 @@ const detailsConfigInitialValues = {
     repeatTime: ''
 }
 
+
+//TODO: Merge template, basic Config and parameters. Should be one object 
+//  called smt like configuredRecommendation.
 export const contentInitialValues = {
     isDialogOpen: false,
     template: {name: TemplateItems[0].name},
@@ -19,7 +23,7 @@ export const contentInitialValues = {
     parameters: {}
   };
 
-export const addRecDialogContentReducer = function (state = contentInitialValues, action) {
+export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
     switch(action.type) {
         case type.UPDATE_RECOMMENDATION_TEMPLATE:
                 return {

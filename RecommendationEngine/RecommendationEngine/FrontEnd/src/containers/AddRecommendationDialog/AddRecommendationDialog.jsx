@@ -5,7 +5,7 @@ import {
   Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Fade, Slide
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps } from './redux/reducer-actions';
+import { mapDialogStateToProps, mapDispatchMergedToProps } from './redux/reducer-actions';
 import CloseIcon from '@material-ui/icons/Close';
 import TemplateConfigurationModal from '../../containers/TemplateConfigurationModal/TemplateConfigurationModal';
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
@@ -54,7 +54,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 function AddRecommendationDialog (props) {
-  const { clear, isDialogOpen, all } = props;
+  const { clear, isDialogOpen, all, basicConfiguration, template, postConfiguredRecommendation} = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -83,6 +83,20 @@ function AddRecommendationDialog (props) {
   const closeDialog = () => {
     clear();
     setIndex(0);
+  }
+  //Post method
+  const confirmDialogEvent = async () => {
+    postConfiguredRecommendation({
+        type: template.name,
+        name: basicConfiguration.title,
+        granularity: basicConfiguration.granularity,
+        createdBy: basicConfiguration.createdBy,
+        recurrenceDayOfWeek: basicConfiguration.repeatDay,
+        recurrenceDatetime: basicConfiguration.repeatDate, //Not correct format,
+        assetIdList: basicConfiguration.asset.map((e) => { //Could perhaps have it in store...Also duplicated with assets:Asset[]
+          return e.id;
+        })
+    })
   }
 
   useEffect(() => {
@@ -153,4 +167,4 @@ function AddRecommendationDialog (props) {
     </Dialog>
   );
 }
-export default connect(mapDialogStateToProps, mapDispatchToProps)(AddRecommendationDialog)
+export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(AddRecommendationDialog)
