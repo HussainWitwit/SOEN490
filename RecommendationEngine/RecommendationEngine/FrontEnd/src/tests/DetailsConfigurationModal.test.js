@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import DetailsConfigurationModal from '../containers/DetailsConfigurationModal/DetailsConfigurationModal';
-import { store } from '../redux/configure-store';
+import { DetailsConfigurationModal } from '../containers/DetailsConfigurationModal/DetailsConfigurationModal';
+import { store } from '../redux/store';
 import MultiSelectAutocomplete from '../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import { fireEvent, render, getAllByTestId } from '@testing-library/react';
+
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -16,18 +17,37 @@ describe('DetailsConfigurationModal component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const wrapper = shallow(<DetailsConfigurationModal store={store} />).dive().dive();
-    const component = shallow(<DetailsConfigurationModal store={store} />).dive().dive().dive()
+    const wrapper = shallow(<DetailsConfigurationModal 
+        template = {{name: 'Unit test'}}
+        basicConfiguration = {{
+            title: '',
+            asset: [],
+            createdBy: 'Alain',
+            preferredScenario: '',
+            granularity: 'Monthly',
+            repeatDay: '',
+            repeatDate: '',
+            repeatTime: ''
+        }}
+        setTitle = {(value) => {}}
+        updateAsset = {(value) => {}}
+        setPreferredScenario = {(value) => {}}
+        setGranularity = {(value) => {}}
+        setRepeatDay = {(value) => {}}
+        setRepeatDate = {(value) => {}}
+        setRepeatTime = {(value) => {}}
+        apiAssets = {[]}
+    />);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<DetailsConfigurationModal store={store} />, div);
+        ReactDOM.render(wrapper, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
     it('Finds the divs', () => {
         let divs = wrapper.find('div');
-        expect(divs).toHaveLength(10);
+        expect(divs).toHaveLength(12);
     });
 
     it('Finds the subtitle', () => {
@@ -46,18 +66,18 @@ describe('DetailsConfigurationModal component', () => {
     });
 
     it('Finds the radio buttons', () => {
-        let radioButtons = component.find(RadioGroup);
+        let radioButtons = wrapper.find(RadioGroup);
         expect(radioButtons).toHaveLength(1);
     });
 
     it('Finds the text', () => {
-        let text = component.find(TextField);
-        expect(text).toHaveLength(1);
+        let text = wrapper.find(TextField);
+        expect(text).toHaveLength(2);
     });
 
     describe('Test clicks', () => {
         it("Simulates clicks on different options", () => {
-            const { container } = render(<DetailsConfigurationModal store={store} />);
+            const { container } = render(wrapper);
 
             const buttonRon = getAllByTestId(container, 'option-ron');
             const buttonNetSaving = getAllByTestId(container, 'option-net');

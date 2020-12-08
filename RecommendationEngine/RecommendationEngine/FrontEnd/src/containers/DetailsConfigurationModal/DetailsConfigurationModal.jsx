@@ -15,7 +15,7 @@ import { TemplateItems } from '../TemplateConfigurationModal/ListTemplateItems';
 
 const granularityItems = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 
-function DetailsConfigurationModal (props) {
+export function DetailsConfigurationModal (props) {
   const {
     basicConfiguration,
     template,

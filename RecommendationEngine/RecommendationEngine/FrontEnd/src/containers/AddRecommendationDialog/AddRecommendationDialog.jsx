@@ -53,7 +53,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function AddRecommendationDialog (props) {
+export function AddRecommendationDialog (props) {
   const { clear, isDialogOpen, all, basicConfiguration, template, postConfiguredRecommendation} = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);

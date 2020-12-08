@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import AddRecommendationDialog, {
-    PaperComponent, Transition
+import { AddRecommendationDialog , PaperComponent, Transition
 } from '../containers/AddRecommendationDialog/AddRecommendationDialog';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Slide
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { store } from '../redux/configure-store';
+import { store } from '../redux/store';
 import Draggable from 'react-draggable';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -18,7 +17,7 @@ describe('AddRecommendationDialog component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<AddRecommendationDialog store={store} />).dive().dive();
+    const output = shallow(<AddRecommendationDialog store={store} />);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');

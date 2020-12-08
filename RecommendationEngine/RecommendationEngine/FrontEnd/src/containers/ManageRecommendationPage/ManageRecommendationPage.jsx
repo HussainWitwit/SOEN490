@@ -40,7 +40,7 @@ export const CssTextField = withStyles({
 })(TextField);
 
 
-function ManageRecommendationPage(props) {
+export function ManageRecommendationPage(props) {
 
   const { toggleDialog, configuredRecommendationList } = props;
 
@@ -61,7 +61,7 @@ function ManageRecommendationPage(props) {
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
-              <AddRecommendationDialog />
+              <AddRecommendationDialog {...props}/>
             </div>
           </Grid>
         </Grid>

@@ -1,11 +1,12 @@
 import * as dispatchType from '../redux/AddRecDialogReducer/dispatch-types';
-import { AddConfiguredRecDialogReducer } from '../containers/AddRecommendationDialog/redux/reducer';
+import { AddConfiguredRecDialogReducer } from '../redux/AddRecDialogReducer/reducer';
 import { TemplateItems } from '../containers/TemplateConfigurationModal/ListTemplateItems';
 const detailsConfigInitialValues = {
   title: '',
   asset: [],
   preferredScenario: '',
   granularity: 'Daily',
+  createdBy: 'Alain',
   repeatDay: '',
   repeatDate: '',
   repeatTime: ''
