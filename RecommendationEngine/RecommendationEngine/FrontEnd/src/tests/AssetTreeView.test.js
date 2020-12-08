@@ -4,7 +4,7 @@ import RightPanelDrawer from '../containers/RightPanel/RightPanelDrawer.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { AssetTree } from '../containers/AssetTreeView/AssetTreeView';
+import { AssetTree }  from '../containers/AssetTreeView/AssetTreeView';
 import { MinusSquare, PlusSquare, TransitionComponent, AssetTreeItem, SearchComboBox } from '../containers/AssetTreeView/AssetTreeView';
 import Collapse from '@material-ui/core/Collapse';
 import TreeItem from '@material-ui/lab/TreeItem';

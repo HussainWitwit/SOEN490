@@ -1,5 +1,5 @@
 import * as dispatchType from '../containers/AddRecommendationDialog/redux/dispatch-types';
-import { addRecDialogContentReducer } from '../containers/AddRecommendationDialog/redux/reducer';
+import { AddConfiguredRecDialogReducer } from '../containers/AddRecommendationDialog/redux/reducer';
 import { TemplateItems } from '../containers/TemplateConfigurationModal/ListTemplateItems';
 const detailsConfigInitialValues = {
   title: '',
@@ -20,12 +20,12 @@ let state = {
 
 describe('Add Recommendation Dialog reducer', () => {
     it('should return the initial state', () => {
-      expect(addRecDialogContentReducer(undefined, {})).toEqual(state)
+      expect(AddConfiguredRecDialogReducer(undefined, {})).toEqual(state)
     })
   
     it('should handle UPDATE_RECOMMENDATION_TEMPLATE', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE,
           payload: {
             name: 'Run the tests',
@@ -39,7 +39,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle UPDATE_TITLE', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_TITLE,
           payload: {
             title: 'Run the tests',
@@ -56,7 +56,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle UPDATE_ASSET', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_ASSET,
           payload: {
             asset: [{name: "Asset 3", id: 0}, {name: "Asset test", id: 1}],
@@ -73,7 +73,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle UPDATE_PREFERRED_SCENARIO', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_PREFERRED_SCENARIO,
           payload: {
             preferredScenario: 'Net Saving',
@@ -90,7 +90,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle UPDATE_GRANULARITY', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_GRANULARITY,
           payload: {
             granularity: 'Weekly',
@@ -107,7 +107,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle UPDATE_REPEAT_DAY', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_REPEAT_DAY,
           payload: {
             repeatDay: 0,
@@ -124,7 +124,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle UPDATE_REPEAT_DATE', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_REPEAT_DATE,
           payload: {
             repeatDate: '2020/01/01',
@@ -141,7 +141,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle UPDATE_REPEAT_TIME', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.UPDATE_REPEAT_TIME,
           payload: {
             repeatTime: '09:31 AM',
@@ -158,7 +158,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle TOGGLE Dialog', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.TOGGLE_DIALOG,
           payload: {
             isDialogOpen: true,
@@ -172,7 +172,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
     it('should handle CLEAR Dialog', () => {
       expect(
-        addRecDialogContentReducer(state, {
+        AddConfiguredRecDialogReducer(state, {
           type: dispatchType.CLEAR
         })
       ).toEqual({
