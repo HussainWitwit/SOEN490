@@ -1,4 +1,4 @@
-import { ConfiguredRecommendation } from "../../entities/ConfiguredRecommendation";
+import { ConfiguredRecommendation } from "../../models/ConfiguredRecommendation";
 //TODO: unit test the fetch method (jest)
 //TODO: Integration test as well
 

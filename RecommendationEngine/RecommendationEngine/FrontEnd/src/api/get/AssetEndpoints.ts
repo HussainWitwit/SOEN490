@@ -10,7 +10,7 @@
  * TODO: Integration test as well
  */
 
-import { Asset } from "../../entities/Asset";
+import { Asset } from "../../models/Asset";
 
 export const AssetClient = async (endpoint: string) => {
     let assetResult: Asset;
