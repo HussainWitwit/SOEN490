@@ -12,6 +12,12 @@ import { connect } from 'react-redux';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import { TemplateItems } from '../TemplateConfigurationModal/ListTemplateItems';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const granularityItems = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 
@@ -29,6 +35,9 @@ export function DetailsConfigurationModal (props) {
     apiAssets
   } = props;
 
+  // const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+
   useEffect(() => {
     if (template.name === TemplateItems[0].name) {
       setGranularity('Yearly');
@@ -45,13 +54,16 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Title: </p>
           </div>
-          <Form.Control
-            data-testid='title'
-            type="email"
-            className="text-input-container"
-            value={basicConfiguration.title}
-            onChange={(event) => setTitle(event.target.value)}
-            placeholder="Wash Optimization P20"
+          <TextField
+              error = {basicConfiguration.title === ''} 
+              label = {basicConfiguration.title === '' ? "Required.": ''}
+              value = {basicConfiguration.title}
+              data-testid='title'
+              className="title-input-field"
+              placeholder = "Your title here..."
+              variant="outlined"
+              onChange={(event) => setTitle(event.target.value)}
+    
           />
         </div>
         <div id="element-container">
@@ -75,7 +87,6 @@ export function DetailsConfigurationModal (props) {
             row
             aria-label="position"
             name="position"
-            defaultValue="start"
           >
             <FormControlLabel
               checked={
@@ -131,7 +142,8 @@ export function DetailsConfigurationModal (props) {
                   <Button
                     data-testid='day'
                     value={index.toString()}
-                    onClick={(event) => setRepeatDay(index)}
+                    onClick={(event) => setRepeatDay(index+1)}
+                    style = {{backgroundColor: index === basicConfiguration.repeatDay ? "#98AFC7": "white"}}
                   >
                     {element}
                   </Button>
@@ -139,38 +151,37 @@ export function DetailsConfigurationModal (props) {
               })}
             </ButtonGroup>
           )}
-          {(basicConfiguration.granularity === granularityItems[2] ||
-            basicConfiguration.granularity === granularityItems[3]) && (
-              <div id="date-container">
-                <TextField
-                  data-testid='date'
-                  id="date"
-                  type="date"
-                  size="small"
-                  defaultValue="2020-01-01"
-                  onChange={(event) => setRepeatDate(event.target.value)}
-                  InputLabelProps={{
-                    shrink: true,
+           <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            {(basicConfiguration.granularity === granularityItems[2] ||
+              basicConfiguration.granularity === granularityItems[3]) && (
+                <div id = "recommendation-date-picker">
+                <KeyboardDatePicker
+                  id="date-picker"
+                  autoOk                  
+                  views = {basicConfiguration.granularity === "Yearly" ? ["year"] : ["year", "month", "date"]}
+                  inputVariant="outlined"
+                  label="Date"
+                  minDate = {new Date()}
+                  format={basicConfiguration.granularity === "Yearly" ? "yyyy" : "dd/MM/yyyy"}
+                  value={basicConfiguration.repeatDate}
+                  onChange={(date) => setRepeatDate(date)}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
                   }}
-                />
-                <div id="space-right"></div>
-              </div>
+                /> 
+                </div>
+              )}
+            {basicConfiguration.granularity !== granularityItems[3] && (
+             <KeyboardTimePicker
+                label="Time"
+                id = "recommendation-time-picker"
+                // variant="inline"
+                inputVariant="outlined"
+                value={basicConfiguration.repeatTime}
+                onChange={date => setRepeatTime(date)}
+              />
             )}
-          {basicConfiguration.granularity !== granularityItems[3] && (
-            <TextField
-              id="time"
-              size="small"
-              type="time"
-              defaultValue="06:30"
-              onChange={(event) => setRepeatTime(event.target.value)}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                step: 300,
-              }}
-            />
-          )}
+          </MuiPickersUtilsProvider>
         </div>
       </div>
     </animated.div>
