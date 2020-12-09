@@ -110,6 +110,7 @@ export function AddRecommendationDialog (props) {
       data-testid="dialog"
       open={isDialogOpen}
       onClose={closeDialog}
+      disableBackdropClick = {true}
       PaperComponent={PaperComponent}
       TransitionComponent={Transition}
       aria-labelledby="draggable-dialog-title"
