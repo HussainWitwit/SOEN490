@@ -14,6 +14,7 @@ function MultiSelectAutocomplete(props) {
       limitTags={props.maxElement}
       multiple //TODO: Add case that checks the recommendation type and disabled multiple selection
       defaultValue={props.defaultValue ? props.defaultValue : [props.items[0]]}
+      data-testid="autocomplete-component"
       value={props.value}
       options={props.items}
       groupBy = {(option => option.assetType)}

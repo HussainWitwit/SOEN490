@@ -73,7 +73,7 @@ export default function ConfiguredRecommendationTable (props) {
               headers={headCells}
               rowCount={props.data ? props.data.length : 1}
             />
-            <TableBody id="table-body">
+            <TableBody id="table-body" data-testid="table-body-cypress">
               {props.data && props.data.map((element, index) => {
                 return (
                   <TableRow

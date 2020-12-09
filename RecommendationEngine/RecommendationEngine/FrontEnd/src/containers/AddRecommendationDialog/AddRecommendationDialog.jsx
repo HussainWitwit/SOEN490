@@ -142,12 +142,12 @@ export function AddRecommendationDialog (props) {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button id="cancel-btn" onClick={closeDialog} variant="outlined">
+        <Button data-testid="cancel-button" id="cancel-btn" onClick={closeDialog} variant="outlined">
           Cancel
         </Button>
         {index > 0 && (
           <Button
-            data-testid="cancel-button"
+            data-testid="previous-button"
             id="previous-btn"
             onClick={onClickPrevious}
             variant="outlined"
@@ -161,7 +161,7 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" onClick={confirmDialogEvent} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Confirm
           </Button>
         )}
