@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -7,16 +6,14 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Models.Application;
-using Models.Application.APIModels;
 using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.ConfiguredRecommendationServices;
+using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests.APITests
 {
@@ -51,7 +48,7 @@ namespace RecommendationEngineTests.APITests
         [Test]
         public async Task AddRecommendations()
         {
-            var payload = UnitTests.MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            var payload = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
             var response = await _client.PutAsync("/configuredrecommendation/add", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
             Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
         }
@@ -69,12 +66,12 @@ namespace RecommendationEngineTests.APITests
 
         public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
-            return UnitTests.MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
         }
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
-            return UnitTests.MockData.MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+            return MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
         }
     }
 }

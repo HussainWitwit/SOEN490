@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
-using Interfaces.Services.ExternalApi;
 using Interfaces.Services.ExternalAPI;
 using Models.Application;
 using Models.DB;
@@ -50,6 +49,7 @@ namespace RecommendationEngineTests.UnitTests
             DBRecommendationSchedule afterConversion = MockConfiguredRecommendations.CONVERTED_CONFIGURED_RECOMMENDATION;
 
             _repository.Setup(x => x.GetRecommendationTypeByType("Yearly Wash Optimization")).Returns(recommendationType);
+            _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
             _configuredRecommendationService.AddConfiguredRecommendation(beforeConversion);
             _repository.Setup(x => x.Add(afterConversion));
