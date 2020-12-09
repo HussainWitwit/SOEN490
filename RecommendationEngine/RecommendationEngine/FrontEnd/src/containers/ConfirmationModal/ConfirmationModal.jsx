@@ -33,7 +33,7 @@ export function ConfirmationModal (props) {
           />
           <TextField
             id="outlined-read-only-algo"
-            label="Algorithm"
+            label="Recommendation Type"
             defaultValue={dialogsContent.template.name}
             InputProps={{
               readOnly: true,
@@ -70,7 +70,8 @@ export function ConfirmationModal (props) {
           <TextField
             id="outlined-read-only-recurrence"
             label="Recurrence"
-            defaultValue={`${dialogsContent.basicConfiguration.granularity}, ${dialogsContent.basicConfiguration.repeatDate}, ${dialogsContent.basicConfiguration.repeatDay}, ${dialogsContent.basicConfiguration.repeatDate}, ${dialogsContent.basicConfiguration.repeatTime}`}
+            //String manipulation could be done to display a more cleaner text... 
+            defaultValue={`${dialogsContent.basicConfiguration.granularity}, ${dialogsContent.basicConfiguration.repeatDate},  ${dialogsContent.basicConfiguration.repeatTime}`}
             InputProps={{
               readOnly: true,
               disableUnderline: true,

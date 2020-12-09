@@ -43,9 +43,10 @@ function MultiSelectAutocomplete(props) {
       style={{ width: '100%' }}
       renderInput={(params) => (
         <TextField
+          error = {props.value && props.value.length === 0} 
           {...params}
           variant={props.variant}
-          label={props.boxLabelName}
+          label={props.value ? props.value.length === 0 ? "Required. ": props.boxLabelName : ''}
           placeholder={props.contentLabel}
         />
       )}

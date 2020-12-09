@@ -9,6 +9,9 @@
     text-shadow: none;
 
 }
+.title-input-field{
+  width: 100%;
+}
 
 #basic-information-container {
     display: flex; 
@@ -25,6 +28,7 @@
   margin-bottom: 25px;
   justify-content: flex-start;
   width: 90%;
+  /* height: 5ch; */
 }
 
 .text-input-container {
@@ -98,8 +102,14 @@
   margin: 0 25px 0 0px;
 }
 
-#date{
-  width: 15ch;
+
+#recommendation-date-picker{
+  width: 20ch;
+  margin-right: 15px;
+}
+
+#recommendation-time-picker {
+  width: 10ch;
 }
 
 #date-container {
@@ -109,6 +119,10 @@
 
 #space-right {
   width: 5ch;
+}
+
+#space-between-pickers{
+  inline-size: 4ch;
 }
 
 .MuiAutocomplete-popupIndicator {

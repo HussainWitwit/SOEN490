@@ -93,6 +93,12 @@
     background-color: #4DD3EF;
 }
 
+#next-btn.Mui-disabled{
+    background-color: lightgrey;
+    color: black;
+    opacity: 0.8;
+}
+
 #closeButton{
     position: absolute;
     right: 4px;
