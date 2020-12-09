@@ -1,8 +1,13 @@
+/** All of the following reducer actions will allow any connected component that pass these objects
+ * as a param in the connect()() HOC to access value from the store and modify its value.
+ * Make sure you don't have multiple components calling those actions in a manner that could break 
+ * your logic.
+ */
 import * as dispatchActionType from './dispatch-types';
-//Note: All the following Actions target the AddRecommendationDialog Reducer only
+//Note: importing mapDispatchToProps from api reducer so that we could dispatch its actions too.
 import { mapDispatchApiToProps } from '../ApiReducer/reducer-actions';
 
-//**GETTER** This method will allow you to direct access to all the states value from the store
+//**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
 export const mapDialogStateToProps = (state) => {
     return {
       all: state,
@@ -104,7 +109,7 @@ export const mapDialogStateToProps = (state) => {
   //order to modify the value in the store
   export const mapDispatchToProps = (dispatch) => {
     return {
-      setTemplateName: (value) => dispatch(setTemplateName(value)),
+      setTemplateName: (value) =>  dispatch(setTemplateName(value)),
       setTitle: (value) => dispatch(setTitle(value)),
       updateAsset: (value) => dispatch(updateAsset(value)),
       setPreferredScenario: (value) => dispatch(setPreferredScenario(value)),
@@ -117,6 +122,7 @@ export const mapDialogStateToProps = (state) => {
     };
   };
 
+  //We can merged multiple mapDispatchToPros. In this case, I need to pass the reducer actions of two different reducers
   export const mapDispatchMergedToProps = (dispatch) => {
     return {
       ...mapDispatchApiToProps(dispatch),

@@ -1,7 +1,12 @@
+/** All of the following reducer actions will allow any connected component that pass these objects
+ * as a param in the connect()() HOC to access value from the store and modify its value.
+ * Make sure you don't have multiple components calling those actions in a manner that could break 
+ * your logic.
+ * Note: All the following Actions target the api calls Reducer only
+ */
 import * as dispatchActionType from './dispatch-types';
-import { AssetClient } from '../../api/get/AssetEndpoints';
-import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../../api/get/ConfiguredRecommendationEndpoints';
-//Note: All the following Actions target the AddRecommendationDialog Reducer only
+import { AssetClient } from '../../api/endpoints/AssetEndpoints';
+import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({apiReducer}) => {
