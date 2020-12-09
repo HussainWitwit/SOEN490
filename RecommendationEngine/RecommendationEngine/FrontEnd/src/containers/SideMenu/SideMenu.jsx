@@ -117,6 +117,7 @@ export default function SideMenu (props) {
                 variant="permanent"
                 className="drawer"
                 classes={{ paper: "drawer-paper" }}>
+                <div id="navigation-pages">
                 <ListItem alignItems="flex-start" className="top-header" key = {'header'}>
                     <ListItemAvatar>
                         <Avatar alt="Kenzo" src="../assets/images/avatar1.jpeg" />
@@ -128,6 +129,7 @@ export default function SideMenu (props) {
                     </ListItemText>
                 </ListItem>
                 {SideMenuItems.map((item, index) => (menuOptions(item, index)))}
+                </div>
                 <div className="logo"><LogoSVGComponent/></div>
             </Drawer>
         </div>
