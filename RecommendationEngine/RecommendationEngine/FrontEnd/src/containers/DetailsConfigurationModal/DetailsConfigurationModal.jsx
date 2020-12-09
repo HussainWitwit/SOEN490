@@ -147,6 +147,7 @@ export function DetailsConfigurationModal (props) {
                 <div id = "recommendation-date-picker">
                 <KeyboardDatePicker
                   id="date-picker"
+                  data-testid = 'date'
                   autoOk                  
                   views = {basicConfiguration.granularity === "Yearly" ? ["year"] : ["year", "month", "date"]}
                   inputVariant="outlined"
@@ -164,6 +165,7 @@ export function DetailsConfigurationModal (props) {
             {basicConfiguration.granularity !== granularityItems[3] && (
              <KeyboardTimePicker
                 label="Time"
+                data-testid = 'time'
                 id = "recommendation-time-picker"
                 inputVariant="outlined"
                 value={basicConfiguration.repeatTime}

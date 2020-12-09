@@ -47,7 +47,7 @@ describe('DetailsConfigurationModal component', () => {
 
     it('Finds the divs', () => {
         let divs = wrapper.find('div');
-        expect(divs).toHaveLength(12);
+        expect(divs).toHaveLength(11);
     });
 
     it('Finds the subtitle', () => {
@@ -72,7 +72,7 @@ describe('DetailsConfigurationModal component', () => {
 
     it('Finds the text', () => {
         let text = wrapper.find(TextField);
-        expect(text).toHaveLength(2);
+        expect(text).toHaveLength(1);
     });
 
     describe('Test clicks', () => {

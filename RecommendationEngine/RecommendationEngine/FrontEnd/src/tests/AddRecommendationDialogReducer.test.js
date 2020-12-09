@@ -4,12 +4,12 @@ import { TemplateItems } from '../containers/TemplateConfigurationModal/ListTemp
 const detailsConfigInitialValues = {
   title: '',
   asset: [],
-  preferredScenario: '',
-  granularity: 'Daily',
   createdBy: 'Alain',
-  repeatDay: '',
-  repeatDate: '',
-  repeatTime: ''
+  preferredScenario: 'ROI',
+  granularity: 'Yearly',
+  repeatDay: 1, 
+  repeatDate: new Date(),
+  repeatTime: new Date('2020-01-01T07:00:00.000-05:00')
 }
 
 let state = {
