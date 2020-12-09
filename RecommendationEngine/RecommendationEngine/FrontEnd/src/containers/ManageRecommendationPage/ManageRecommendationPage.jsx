@@ -7,8 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import ConfiguredRecommendationTable from '../../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
-import { mapDispatchToProps } from '../AddRecommendationDialog/redux/reducer-actions';
-import { mapStateToProps } from '../../api/redux/reducer-actions';
+import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
 import 'date-fns';
 import './ManageRecommendationPage.css';
 
@@ -40,7 +40,7 @@ export const CssTextField = withStyles({
 })(TextField);
 
 
-function ManageRecommendationPage(props) {
+export function ManageRecommendationPage(props) {
 
   const { toggleDialog, configuredRecommendationList } = props;
 
@@ -61,7 +61,7 @@ function ManageRecommendationPage(props) {
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
-              <AddRecommendationDialog />
+              <AddRecommendationDialog {...props}/>
             </div>
           </Grid>
         </Grid>

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { SvgIcon, Typography, TextField, Collapse } from '@material-ui/core';
 import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { connect } from 'react-redux';
-import { mapStateToProps } from '../../api/redux/reducer-actions';
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -92,9 +90,9 @@ export function AssetTreeItem (props) {
 }
 
 AssetTreeItem.propTypes = {
-  nodeId: PropTypes.string.isRequired,
-  labelText: PropTypes.string.isRequired,
-  assetType: PropTypes.string.isRequired,
+  nodeId: PropTypes.string,
+  labelText: PropTypes.string,
+  assetType: PropTypes.string,
   labelInfo: PropTypes.string, //TODO: Could be useful to display the number of Asset children
 };
 
@@ -149,5 +147,3 @@ export function AssetTree ({nestedAssets}) {
   );
 
 }
-
-export default connect(mapStateToProps)(AssetTree);

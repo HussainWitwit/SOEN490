@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import ConfirmationModal from '../containers/ConfirmationModal/ConfirmationModal';
 import TextField from '@material-ui/core/TextField';
 import MultiSelectAutocomplete from '../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
-import { store } from '../redux/configure-store';
+import { store } from '../redux/store';
 
 Enzyme.configure({ adapter: new Adapter() });
 

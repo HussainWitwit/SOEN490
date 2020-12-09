@@ -5,7 +5,7 @@ import { TemplateItems } from './ListTemplateItems.ts';
 import Divider from '@material-ui/core/Divider';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps } from '../AddRecommendationDialog/redux/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
 function TemplateConfigurationModal ({ template, dialogStyle, setTemplateName }) {
 

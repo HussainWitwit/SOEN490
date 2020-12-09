@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { AddConfiguredRecDialogReducer } from '../containers/AddRecommendationDialog/redux/reducer';
-import { ApiReducer } from '../api/redux/reducer';
+import { AddConfiguredRecDialogReducer } from './AddRecDialogReducer/reducer';
+import { ApiReducer } from './ApiReducer/reducer';
 
 const rootReducer = combineReducers({
   addRecommendation: AddConfiguredRecDialogReducer,

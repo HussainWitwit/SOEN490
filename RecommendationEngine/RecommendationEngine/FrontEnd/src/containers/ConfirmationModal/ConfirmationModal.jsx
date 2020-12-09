@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import {
   mapDialogStateToProps,
   mapDispatchToProps,
-} from '../AddRecommendationDialog/redux/reducer-actions';
+} from '../../redux/AddRecDialogReducer/reducer-actions';
 import './ConfirmationModal.css';
 
 //TODO: Implement parameters

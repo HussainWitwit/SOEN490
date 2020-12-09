@@ -5,7 +5,7 @@ import {
   Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Fade, Slide
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchMergedToProps } from './redux/reducer-actions';
+import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import CloseIcon from '@material-ui/icons/Close';
 import TemplateConfigurationModal from '../../containers/TemplateConfigurationModal/TemplateConfigurationModal';
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
@@ -53,7 +53,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function AddRecommendationDialog (props) {
+export function AddRecommendationDialog (props) {
   const { clear, isDialogOpen, all, basicConfiguration, template, postConfiguredRecommendation} = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);

@@ -30,18 +30,6 @@ describe('AssetTreeView component', () => {
         expect(output).toHaveLength(1);
     });
 
-    it('It finds the swipeable drawer component', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let component = output.find(SwipeableDrawer);
-        expect(component).toHaveLength(1);
-    });
-
-    it('It finds the asset tree', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let component = output.find(AssetTree);
-        expect(component).toHaveLength(1);
-    });
-
     it('It finds svg icon', () => {
         const output = shallow(<MinusSquare />);
         expect(output).toHaveLength(1);
