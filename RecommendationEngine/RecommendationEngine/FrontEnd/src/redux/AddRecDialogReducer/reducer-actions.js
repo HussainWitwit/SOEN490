@@ -119,7 +119,7 @@ export const mapDialogStateToProps = (state) => {
 
   export const mapDispatchMergedToProps = (dispatch) => {
     return {
-      ...mapDispatchApiToProps,
-      ...mapDispatchToProps
+      ...mapDispatchApiToProps(dispatch),
+      ...mapDispatchToProps(dispatch)
     }
   }

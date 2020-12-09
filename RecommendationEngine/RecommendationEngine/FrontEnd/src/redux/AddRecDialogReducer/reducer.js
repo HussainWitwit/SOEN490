@@ -6,11 +6,11 @@ const detailsConfigInitialValues = {
     title: '',
     asset: [],
     createdBy: 'Alain',
-    preferredScenario: '',
+    preferredScenario: 'ROI',
     granularity: 'Daily',
-    repeatDay: '',
-    repeatDate: '',
-    repeatTime: ''
+    repeatDay: 1,
+    repeatDate: new Date(),
+    repeatTime: new Date('2020-01-01T07:00:00.000-05:00')
 }
 
 

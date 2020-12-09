@@ -36,14 +36,14 @@ export const mapStateToProps = ({apiReducer}) => {
     });
   }
 
-  //TODO: [test with backend] should call a nested dispatch on the ConfiguredRecommendationTable.
+
   export const postConfiguredRecommendation = async (dispatch, configuredRecommendation) => {
     const response = await PostConfiguredRecommendation(configuredRecommendation);
     dispatch({
       type: dispatchActionType.POST_CONFIGURED_RECOMMENDATION,
       payload: response,
     });
-    if(response === 200) { //TODO: check if this is the correct response from the post request.
+    if(response.status === 200) { 
       //TODO: Successful post, send notifications...
       await getConfiguredRecommendationList(dispatch); //To test
     }
