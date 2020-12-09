@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList, Search } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,7 +9,6 @@ import AddRecommendationDialog from '../../containers/AddRecommendationDialog/Ad
 import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
-import 'date-fns';
 import './ManageRecommendationPage.css';
 
 

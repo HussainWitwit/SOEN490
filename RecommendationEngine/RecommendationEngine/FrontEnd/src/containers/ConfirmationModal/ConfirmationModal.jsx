@@ -3,10 +3,7 @@ import { animated } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { connect } from 'react-redux';
-import {
-  mapDialogStateToProps,
-  mapDispatchToProps,
-} from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import './ConfirmationModal.css';
 
 //TODO: Implement parameters
@@ -70,7 +67,7 @@ export function ConfirmationModal (props) {
           <TextField
             id="outlined-read-only-recurrence"
             label="Recurrence"
-            //String manipulation could be done to display a more cleaner text... 
+            //String manipulation could be done to display text in a more cleaner text... 
             defaultValue={`${dialogsContent.basicConfiguration.granularity}, ${dialogsContent.basicConfiguration.repeatDate},  ${dialogsContent.basicConfiguration.repeatTime}`}
             InputProps={{
               readOnly: true,

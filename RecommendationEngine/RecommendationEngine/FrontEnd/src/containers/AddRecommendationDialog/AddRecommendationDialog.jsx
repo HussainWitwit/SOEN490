@@ -97,34 +97,13 @@ export function AddRecommendationDialog (props) {
         recurrenceDayOfWeek: basicConfiguration.repeatDay,
         modifiedBy: '',
         recurrenceDatetime: basicConfiguration.granularity === "Yearly" ? basicConfiguration.repeatDate.toISOString() : basicConfiguration.repeatTime.toISOString() , //Not correct format,
-        assetIdList: basicConfiguration.asset.map((e) => { //Could perhaps have it in store...Also duplicated with assets:Asset[]
+        assetIdList: basicConfiguration.asset.map((e) => { 
           return e.id;
         })
     });
     clear();
     setIndex(0);
   }
-
-  const isFormComplete = (contentForm) => {
-    if(contentForm.template.name) {
-      return false;
-    }
-    else if(contentForm.basicConfiguration.asset.length === 0) {
-      return false;
-    }
-    else {
-      return true;
-    }
-  }
-
-
-  useEffect(() => {
-    if(isFormComplete(dialogsContent)){
-      setIsDialogContentComplete(true)
-    }else {
-      setIsDialogContentComplete(false)
-    }
-  }, [dialogsContent])
 
   return (
     <Dialog
@@ -182,7 +161,7 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" onClick={confirmDialogEvent} variant="outlined" disabled = {!isDialogContentComplete}>
+          <Button id="next-btn" onClick={confirmDialogEvent} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Confirm
           </Button>
         )}

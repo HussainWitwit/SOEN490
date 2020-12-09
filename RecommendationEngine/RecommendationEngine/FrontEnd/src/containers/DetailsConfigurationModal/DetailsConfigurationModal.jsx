@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { animated } from 'react-spring';
 import { Form } from 'react-bootstrap';
 import './DetailsConfigurationModal.css';
@@ -35,16 +35,6 @@ export function DetailsConfigurationModal (props) {
     apiAssets
   } = props;
 
-  // const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-
-
-  useEffect(() => {
-    if (template.name === TemplateItems[0].name) {
-      setGranularity('Yearly');
-    } else {
-      setGranularity('Daily');
-    }
-  }, [template.name]);
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -143,7 +133,7 @@ export function DetailsConfigurationModal (props) {
                     data-testid='day'
                     value={index.toString()}
                     onClick={(event) => setRepeatDay(index+1)}
-                    style = {{backgroundColor: index === basicConfiguration.repeatDay ? "#98AFC7": "white"}}
+                    style = {{backgroundColor: index === basicConfiguration.repeatDay - 1 ? "#98AFC7": "white"}}
                   >
                     {element}
                   </Button>
@@ -175,7 +165,6 @@ export function DetailsConfigurationModal (props) {
              <KeyboardTimePicker
                 label="Time"
                 id = "recommendation-time-picker"
-                // variant="inline"
                 inputVariant="outlined"
                 value={basicConfiguration.repeatTime}
                 onChange={date => setRepeatTime(date)}
