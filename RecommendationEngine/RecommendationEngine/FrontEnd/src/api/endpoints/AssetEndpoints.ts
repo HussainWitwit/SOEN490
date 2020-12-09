@@ -7,10 +7,9 @@
  * back-end. Also, it needs to be strongly typed, i.e typescript.
  * A.J.U.U
  * TODO: unit test the fetch method (jest)
- * TODO: Integration test as well
  */
 
-import { Asset } from "../../models/Asset";
+import { Asset } from "../models/Asset";
 
 export const AssetClient = async (endpoint: string) => {
     let assetResult: Asset;

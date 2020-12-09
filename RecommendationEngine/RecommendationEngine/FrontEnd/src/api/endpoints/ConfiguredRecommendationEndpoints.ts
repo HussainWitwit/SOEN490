@@ -1,7 +1,10 @@
-import { ConfiguredRecommendation } from "../../models/ConfiguredRecommendation";
 //TODO: unit test the fetch method (jest)
-//TODO: Integration test as well
+/**
+ * I tried to implement a similar logic as the AssetEndpoints, but it was quite annoying. 
+ * I believe we have to figure out the typescript issue first.
+ */
 
+import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
 
 export const GetConfiguredRecommendationList = async () => {
 
@@ -38,20 +41,6 @@ export const GetConfiguredRecommendationList = async () => {
     }
     return response;
   };
-
-
-
-// export const ConfigureRecommendationPost = async (endpoint: string, object = {}) => {
-
-// }
-
-// ConfigureClient.get = (endpoint:string, customConfig = {}) => {
-//     return ConfiguredRecommendationClient(endpoint);
-// }
-
-// ConfigureClient.post = (endpoint:string, customConfig = {}) => {
-//     return ConfigureRecommendationPost(endpoint, customConfig);
-// }
 
 /**
  * 
