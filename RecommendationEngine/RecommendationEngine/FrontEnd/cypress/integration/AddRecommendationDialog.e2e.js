@@ -64,31 +64,31 @@ describe('Add Recommendation Dialog', () => {
         cy.get('.MuiPickersYearSelection-container > :nth-child(3)').click();
     });
 
-    it('Can post a recommendaiton for Yearly Wash optimization', () => {
+    // it('Can post a recommendaiton for Yearly Wash optimization', () => {
         
-        cy.get('#item-template-selected').click();
-        cy.get('#next-btn').click();
-        cy.get('[data-testid=title] > .MuiInputBase-root > .MuiInputBase-input').type("Hellow World");
-        cy.wait(500);
-        cy.get('[data-testid=autocomplete-component] > .MuiFormControl-root > .MuiInputBase-root').type('ni');
-        cy.contains('Nickelson 2').should('be.visible').click();
-        cy.wait(500);
-        cy.get('#details-configuration-modal > :nth-child(1) > :nth-child(1)').click(); //clicking randomly to close the dropdown
-        cy.get('[data-testid=option-net]').click();
-        cy.wait(500);
-        cy.get('[data-testid=granularity]').should('be.disabled');
-        cy.get('.MuiInputAdornment-root > .MuiButtonBase-root').click();
-        cy.wait(500);
-        cy.get('.MuiPickersYearSelection-container > :nth-child(3)').click();
-        cy.wait(500);
-        cy.get('#next-btn').click();
-        cy.wait(500);
-        cy.get('#next-btn').click();
-        cy.wait(500);
-        cy.get('[data-testid=confirm-button]').click();
-        cy.get('[data-testid=dialog]').should('not.exist');
-        // cy.get('[data-testid=table-body-cypress]').children().should('have.length', number + 1); //Wanted to make sure the size of the table increased by 1. It did increased, however this line was failing
-    });
+    //     cy.get('#item-template-selected').click();
+    //     cy.get('#next-btn').click();
+    //     cy.get('[data-testid=title] > .MuiInputBase-root > .MuiInputBase-input').type("Hellow World");
+    //     cy.wait(500);
+    //     cy.get('[data-testid=autocomplete-component] > .MuiFormControl-root > .MuiInputBase-root').type('ni');
+    //     cy.contains('Nickelson 2').should('be.visible').click();
+    //     cy.wait(500);
+    //     cy.get('#details-configuration-modal > :nth-child(1) > :nth-child(1)').click(); //clicking randomly to close the dropdown
+    //     cy.get('[data-testid=option-net]').click();
+    //     cy.wait(500);
+    //     cy.get('[data-testid=granularity]').should('be.disabled');
+    //     cy.get('.MuiInputAdornment-root > .MuiButtonBase-root').click();
+    //     cy.wait(500);
+    //     cy.get('.MuiPickersYearSelection-container > :nth-child(3)').click();
+    //     cy.wait(500);
+    //     cy.get('#next-btn').click();
+    //     cy.wait(500);
+    //     cy.get('#next-btn').click();
+    //     cy.wait(500);
+    //     cy.get('[data-testid=confirm-button]').click();
+    //     cy.get('[data-testid=dialog]').should('not.exist');
+    //     // cy.get('[data-testid=table-body-cypress]').children().should('have.length', number + 1); //Wanted to make sure the size of the table increased by 1. It did increased, however this line was failing
+    // });
 
   });
   
