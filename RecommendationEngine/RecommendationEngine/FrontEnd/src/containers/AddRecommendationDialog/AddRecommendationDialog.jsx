@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useTransition } from 'react-spring';
 import Draggable from 'react-draggable';
 import {
-  Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Fade, Slide
+  Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Slide
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
@@ -54,9 +54,10 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 export function AddRecommendationDialog (props) {
-  const { clear, isDialogOpen, all, basicConfiguration, template, postConfiguredRecommendation} = props;
+  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, dialogsContent} = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
+  const [isDialogContentComplete, setIsDialogContentComplete] = useState(false);
 
   const onClickNext = useCallback(() => {
     setNext(true);
@@ -91,17 +92,39 @@ export function AddRecommendationDialog (props) {
         name: basicConfiguration.title,
         granularity: basicConfiguration.granularity,
         createdBy: basicConfiguration.createdBy,
+        createdOn: new Date().toISOString(),
+        preferredScenario: basicConfiguration.preferredScenario,
         recurrenceDayOfWeek: basicConfiguration.repeatDay,
-        recurrenceDatetime: basicConfiguration.repeatDate, //Not correct format,
+        modifiedBy: '',
+        recurrenceDatetime: basicConfiguration.granularity === "Yearly" ? basicConfiguration.repeatDate.toISOString() : basicConfiguration.repeatTime.toISOString() , //Not correct format,
         assetIdList: basicConfiguration.asset.map((e) => { //Could perhaps have it in store...Also duplicated with assets:Asset[]
           return e.id;
         })
-    })
+    });
+    clear();
+    setIndex(0);
   }
 
+  const isFormComplete = (contentForm) => {
+    if(contentForm.template.name) {
+      return false;
+    }
+    else if(contentForm.basicConfiguration.asset.length === 0) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+
   useEffect(() => {
-    console.log(all);
-  }, [all]);
+    if(isFormComplete(dialogsContent)){
+      setIsDialogContentComplete(true)
+    }else {
+      setIsDialogContentComplete(false)
+    }
+  }, [dialogsContent])
 
   return (
     <Dialog
@@ -159,7 +182,7 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" onClick={() => { }} variant="outlined">
+          <Button id="next-btn" onClick={confirmDialogEvent} variant="outlined" disabled = {!isDialogContentComplete}>
             Confirm
           </Button>
         )}

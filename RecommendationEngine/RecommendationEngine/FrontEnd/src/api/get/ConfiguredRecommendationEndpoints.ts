@@ -26,13 +26,17 @@ export const GetConfiguredRecommendationList = async () => {
 
   //FIXME: Syntax Errror here
   export const PostConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
-    fetch('http://localhost:5000/ConfiguredRecommendation/add/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(recommendation)
-    })
-      .then((response) => response.json())
-      .then((data) => ({ postResultId: data.id }));
+    let response;
+    try {
+        response = await fetch('ConfiguredRecommendation/add/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(recommendation)
+        })
+    }catch(error) {
+        console.log(error);
+    }
+    return response;
   };
 
 

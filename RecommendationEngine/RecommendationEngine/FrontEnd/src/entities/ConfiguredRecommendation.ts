@@ -6,6 +6,7 @@ export interface ConfiguredRecommendation {
     type: string,
     granularity: string,
     createdBy: string,
+    preferredScenario: string,
     recurrenceDayOfWeek: number,
     recurrenceDatetime: string,
     createdOn: string,

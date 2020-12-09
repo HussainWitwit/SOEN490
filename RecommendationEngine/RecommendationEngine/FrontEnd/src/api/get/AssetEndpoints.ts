@@ -32,6 +32,7 @@ export const AssetClient = async (endpoint: string) => {
             return [];
         }
     }catch(error) {
+        console.log(error);
         return [];
     }
 }
