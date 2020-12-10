@@ -80,23 +80,23 @@ export function DetailsConfigurationModal (props) {
           >
             <FormControlLabel
               checked={
-                basicConfiguration.preferredScenario === 'ROI'
+                basicConfiguration.preferredScenario === 'Return on Investment'
               }
               data-testid="option-ron"
               value="Return On Investment"
               control={<Radio color="primary" />}
               label="Return On Investment"
               labelPlacement="top"
-              onClick={() => setPreferredScenario('ROI')}
+              onClick={() => setPreferredScenario('Return on Investment')}
             />
             <FormControlLabel
-              checked={basicConfiguration.preferredScenario === 'netSaving'}
+              checked={basicConfiguration.preferredScenario === 'Net Saving'}
               data-testid="option-net"
               value="Net Saving"
               control={<Radio color="primary" />}
               label="Net Saving"
               labelPlacement="top"
-              onClick={() => setPreferredScenario('netSaving')}
+              onClick={() => setPreferredScenario('Net Saving')}
             />
           </RadioGroup>
         </div>
