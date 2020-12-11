@@ -27,7 +27,7 @@ import * as type from './dispatch-types';
 const detailsConfigInitialValues = {
     title: '',
     asset: [],
-    createdBy: 'Alain',
+    createdBy: 'Kenzo',
     preferredScenario: 'ROI',
     granularity: 'Yearly',
     repeatDay: 1, //Why in the back-end the day of the week are from 1 to 7? Isn't it supposed to be 0 to 6.
