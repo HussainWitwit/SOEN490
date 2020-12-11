@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { animated } from 'react-spring';
 import { Form } from 'react-bootstrap';
 import './DetailsConfigurationModal.css';
@@ -19,7 +19,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-const granularityItems = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
+const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
 export function DetailsConfigurationModal (props) {
   const {
@@ -35,6 +35,14 @@ export function DetailsConfigurationModal (props) {
     apiAssets
   } = props;
 
+  useEffect(() => {
+    if(template.name === "Yearly Wash Optimization") {
+      setGranularity('Yearly');
+    }
+    else {
+      setGranularity('Weekly');
+    }
+  }, [template.name])
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -122,7 +130,7 @@ export function DetailsConfigurationModal (props) {
         </div>
         <div id="repeat-container">
           <p id="text">Repeat on: </p>
-          {basicConfiguration.granularity === granularityItems[1] && (
+          {basicConfiguration.granularity === granularityItems[0] && (
             <ButtonGroup
               id="day-of-week-container"
               aria-label="small outlined button group"
@@ -142,18 +150,18 @@ export function DetailsConfigurationModal (props) {
             </ButtonGroup>
           )}
            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            {(basicConfiguration.granularity === granularityItems[2] ||
-              basicConfiguration.granularity === granularityItems[3]) && (
+            {(basicConfiguration.granularity === granularityItems[1] ||
+              basicConfiguration.granularity === granularityItems[2]) && (
                 <div id = "recommendation-date-picker">
                 <KeyboardDatePicker
                   id="date-picker"
                   data-testid = 'date'
                   autoOk                  
-                  views = {basicConfiguration.granularity === "Yearly" ? ["year"] : ["year", "month", "date"]}
+                  views = {["year", "month", "date"]}
                   inputVariant="outlined"
                   label="Date"
                   minDate = {new Date()}
-                  format={basicConfiguration.granularity === "Yearly" ? "yyyy" : "dd/MM/yyyy"}
+                  format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
                   KeyboardButtonProps={{
@@ -162,7 +170,7 @@ export function DetailsConfigurationModal (props) {
                 /> 
                 </div>
               )}
-            {basicConfiguration.granularity !== granularityItems[3] && (
+            {basicConfiguration.granularity !== granularityItems[2] && (
              <KeyboardTimePicker
                 label="Time"
                 data-testid = 'time'

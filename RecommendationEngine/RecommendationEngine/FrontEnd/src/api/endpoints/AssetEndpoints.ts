@@ -11,21 +11,16 @@
 
 import { Asset } from "../models/Asset";
 
-export const AssetClient = async (endpoint: string) => {
+export const getNestedAssetList = async () => {
     let assetResult: Asset;
-    let flatListOfAssets: Asset[];
     try {
         // let response = await fetch('asset/getAssetsNested'); //Do not make a typing mistake in the api call
-        let response = await fetch(endpoint); //Do not make a typing mistake in the api call
+        let response = await fetch('asset/getAssetsNested'); //Do not make a typing mistake in the api call
         const jsonResponse = await response.json();
-        if(jsonResponse && endpoint.includes('Nested')) {
+        if(jsonResponse) {
             //Make sure the returned value is exactly equal to entity attribute
             assetResult = AssignResponse(jsonResponse);
             return assetResult;
-        }
-        else if(jsonResponse && endpoint.includes('List')){
-            flatListOfAssets = jsonResponse;
-            return flatListOfAssets;
         }
         else{
             return [];
@@ -36,9 +31,27 @@ export const AssetClient = async (endpoint: string) => {
     }
 }
 
-AssetClient.get = (endpoint: string) => {
-    return AssetClient(endpoint);
+export const getFlatAssetList = async () => {
+    let assetResult: Asset;
+    try {
+        // let response = await fetch('asset/getAssetsNested'); //Do not make a typing mistake in the api call
+        let response = await fetch('asset/getAssetsList'); //Do not make a typing mistake in the api call
+        const jsonResponse = await response.json();
+        if(jsonResponse) {
+            //Make sure the returned value is exactly equal to entity attribute
+            assetResult = jsonResponse;
+            return assetResult;
+        }
+        else{
+            return [];
+        }
+    }catch(error) {
+        console.log(error);
+        return [];
+    }
 }
+
+
 
 /**
  * 

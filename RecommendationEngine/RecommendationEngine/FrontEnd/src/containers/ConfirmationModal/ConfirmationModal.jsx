@@ -20,9 +20,10 @@ export function ConfirmationModal (props) {
         <div id="confirmation-sub-header">Summary</div>
         <div id="confirmation-content-body">
           <TextField
+            error = {!dialogsContent.basicConfiguration.title}
             id="outlined-read-only-title"
             label="Recommendation Title"
-            defaultValue={dialogsContent.basicConfiguration.title}
+            defaultValue={dialogsContent.basicConfiguration.title ? dialogsContent.basicConfiguration.title : "Invalid"}
             InputProps={{
               readOnly: true,
               disableUnderline: true,
@@ -40,7 +41,7 @@ export function ConfirmationModal (props) {
           <TextField
             id="outlined-read-only-small"
             label="Preferred Scenario"
-            defaultValue={dialogsContent.basicConfiguration.preferredScenario}
+            defaultValue={dialogsContent.basicConfiguration.preferredScenario === "ROI" ? "Return On Investment" : "Net Saving"}
             InputProps={{
               readOnly: true,
               disableUnderline: true,
@@ -50,16 +51,17 @@ export function ConfirmationModal (props) {
             contentLabel="Parameters..."
             items={parameters}
             defaultValue={parameters}
-            boxLabelName={'Parameters'}
+            boxLabelName={'Selected Parameters'}
             variant={'outlined'}
             isReadOnly={true}
             maxElement={1}
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."
+            error = {dialogsContent.basicConfiguration.asset.length === 0}
             items={dialogsContent.basicConfiguration.asset}
             defaultValue={dialogsContent.basicConfiguration.asset}
-            boxLabelName={'Assets'}
+            boxLabelName={'Selected Assets'}
             variant={'outlined'}
             isReadOnly={true}
             maxElement={10}

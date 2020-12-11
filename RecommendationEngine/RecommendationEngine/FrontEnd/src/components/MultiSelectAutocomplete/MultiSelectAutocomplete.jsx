@@ -47,7 +47,7 @@ function MultiSelectAutocomplete(props) {
           error = {props.value && props.value.length === 0} 
           {...params}
           variant={props.variant}
-          label={props.value ? props.value.length === 0 ? "Required. ": props.boxLabelName : ''}
+          label={props.value ? props.value.length === 0 ? "Required. ": props.boxLabelName : props.boxLabelName ? props.boxLabelName : ''}
           placeholder={props.contentLabel}
         />
       )}
