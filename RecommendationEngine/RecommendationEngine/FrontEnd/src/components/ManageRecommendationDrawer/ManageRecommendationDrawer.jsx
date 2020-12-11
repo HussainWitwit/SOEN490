@@ -25,10 +25,15 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
   const [isPinClicked, setIsPinClicked] = useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
-  const lastFiveStatus = [{ status: 'Running', id: 40404040 }, { status: 'Success', id: 40404040 }, { status: 'Failure', id: 40404040 }, { status: 'Success', id: 40404040 }, { status: 'Success', id: 40404040 }]
+  const lastFiveStatus = [{ status: 'Running', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }, { status: 'Failure', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }]
   const values = [122, 122, 122, 122]
   const parameters = ["Param1", "Param1", "Param1", "Param1"]
   const assets = ["Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1"]
+
+  // Switch between "Success", "Failure" and "Running" to see the different status ui.
+  const lastExecutionStatus = "Running"
+
+  const tooltipContent = 'id'
   // const [data, setData] = useState([]);
 
   // const fetchData = async () => {
@@ -106,14 +111,14 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
             <p className='value-title'>Last Five Executions</p>
             <div className='last-five-status'>
               {lastFiveStatus.map((value) => {
-                return <Tooltip title={"id: " + value.id}><div className={value.status}></div></Tooltip>
+                return <Tooltip title={<span><p>Id: {value.id}</p><p>Status: {value.status}</p><p>Date: {value.date}</p></span>}><div className={value.status}></div></Tooltip>
               })}
             </div>
           </Grid>
           <Grid item xs={12}>
             <p className='value-title'>Last Execution Status</p>
-            <div className='execution-status'>
-              <Chip label="RUNNING" />
+            <div className={'execution-status-' + lastExecutionStatus}>
+              <Chip label={lastExecutionStatus.toUpperCase()} />
             </div>
           </Grid>
           <Grid item xs={12}>

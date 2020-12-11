@@ -269,9 +269,9 @@
     width: 50px;
 }
 
-.execution-status .MuiChip-root{
-    border: 1px solid #4AC71F;
-    background-color: #4AC71F;
+.execution-status-Running .MuiChip-root{
+    border: 1px solid #FDB62F;
+    background-color: #FDB62F;
     padding: 5px 15px;
     color: white;
     width: 140px;
@@ -283,9 +283,46 @@
     font-size: 10px;
 }
 
-.execution-status{
+.execution-status-Running{
     text-align: center;
 }
+
+.execution-status-Success .MuiChip-root{
+    border: 1px solid #49C71F;
+    background-color: #49C71F;
+    padding: 5px 15px;
+    color: white;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    font-family: 'Mulish';
+    font-size: 10px;
+}
+
+.execution-status-Success{
+    text-align: center;
+}
+
+.execution-status-Failure .MuiChip-root{
+    border: 1px solid #FF0000;
+    background-color: #FF0000;
+    padding: 5px 15px;
+    color: white;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    font-family: 'Mulish';
+    font-size: 10px;
+}
+
+.execution-status-Failure{
+    text-align: center;
+}
+
 .last-five-status{
     text-align: center;
     width: 100%;
