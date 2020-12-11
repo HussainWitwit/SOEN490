@@ -15,10 +15,9 @@
 }
 
 #draggable-dialog-title{
-    color: #2691a7;
-    /* font-weight:bold;
-    font-size: 18px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    color: grey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: x-large;
 }
 
 #cancel-btn{

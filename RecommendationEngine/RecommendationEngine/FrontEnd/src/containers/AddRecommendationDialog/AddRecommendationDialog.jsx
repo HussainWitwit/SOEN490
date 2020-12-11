@@ -31,9 +31,9 @@ const pages = [
 ];
 
 const pageTitles = [
-  'Template',
-  'Configuration',
-  'Parameter Configuration',
+  'Template Selection',
+  'Recommendation Configuration',
+  'Parameters Configuration',
   'Confirmation',
 ];
 

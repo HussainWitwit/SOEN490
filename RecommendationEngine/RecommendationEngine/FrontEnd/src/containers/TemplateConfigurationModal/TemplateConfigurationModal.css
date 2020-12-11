@@ -60,10 +60,11 @@ height: 80px;
 
 
 #item-template-default:hover{
-  background-color: #4DD3EF;
-  border-width: 3.5px;
-  border-color: #4DD3EF;
+  background-color:#4DD3EF;
+  border-width: 2.5px;
+  border-color: transparent;
   transition: all 500ms;
+  box-shadow: 0 0 2px 0 rgb(77,212,239,1);
 }
 
 
@@ -71,8 +72,7 @@ height: 80px;
   display: grid;
   border-radius: 10px;
   border-color:  #4DD3EF;
-  border-width: 3.5px;
-  box-shadow: 0px 0px 10px 0px rgba(77,212,239,1); 
+  border-width: 3.5px; 
   border-style: solid;
   align-items: center;
   height: 120px;
@@ -80,6 +80,7 @@ height: 80px;
   margin-left: 25%;
   text-align: center;
   transition: all 500ms;
+  box-shadow: 0 0 2px 0 rgb(77,212,239,1);
 }
 
 #template-label{

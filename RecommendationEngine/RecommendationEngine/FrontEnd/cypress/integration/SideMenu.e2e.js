@@ -16,6 +16,7 @@ describe("Side Menu", () => {
         cy.get('.settings > p').should('exist')
         cy.get(':nth-child(4) > :nth-child(1)').should('exist') // Main Settings
         cy.get(':nth-child(7) > [data-testid=listitem1]').should('exist') // Notifications
+        cy.get('.logo > svg').should('exist') // logo
     })
 
     it("Clicks on Recommendations", () => {
