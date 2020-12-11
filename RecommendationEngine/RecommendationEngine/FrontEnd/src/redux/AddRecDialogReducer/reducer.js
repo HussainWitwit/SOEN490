@@ -51,10 +51,6 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                     template: {
                         ...state.template,
                         name: action.payload.name
-                    },
-                    basicConfiguration: {
-                        ...state.basicConfiguration,
-                        granularity: action.payload.name === 'Yearly Wash Optimization' ? 'Yearly' : state.basicConfiguration.granularity
                     }
                 };
 
