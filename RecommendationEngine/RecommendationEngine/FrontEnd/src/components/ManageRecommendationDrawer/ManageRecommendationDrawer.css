@@ -1,0 +1,292 @@
+/* Header font */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap');
+
+.drawer-container.MuiDrawer-paper{
+    width: 230px;
+}
+
+.drawer-pin{
+    width: 20px;
+    height: 20px
+}
+
+.drawer-close {
+    color: black;
+    font-size: 21px!important;
+}
+
+.drawer-pinned-icon {
+    color: darkblue;
+    font-size: 14px!important;
+    transform: rotate(0deg);
+    transition: all 0.5s;
+}
+.drawer-unpinned-icon {
+    color: black;
+    font-size: 14px!important;
+    transform: rotate(90deg);
+    transition: all 0.5s;
+}
+
+.drawer-header-container {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr 0.7fr; 
+    align-content: center;
+    height: 55px;
+    font-size: 14px;
+    font-family: 'Mulish', sans-serif;
+    padding-left: 5px;
+    color: black
+}
+
+.drawer-container.MuiDrawer-paper{
+    background-color: white;
+}
+
+.header-space {
+    height: 35px;
+    width: 100%;
+}
+
+.drawer-content {
+    margin-left: 15px;
+}
+
+.drawer-title {
+    font-family: 'Mulish';
+    font-size: 16px;
+}
+
+.drawer-subtitle {
+    letter-spacing: 0.3px;
+    font-family: Mulish;
+    font-size: 14px;
+}
+
+.drawer-description {
+    color: #687480;
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+.view-more {
+    color:#6A6A6A;
+    font-weight: bold;
+}
+
+.inputs {
+    float: left;
+    margin-right: 50px;
+}
+
+.outputs {
+    
+}
+
+.assets {
+    float: left;
+    /* margin-top: 20px;
+    margin-right: 50px; */
+}
+
+.parameters {
+    margin-top: 20px;
+}
+
+.values {
+    margin: 0;
+    padding: 0;
+    color: #687480;
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+.value-title {
+    padding-top: 20px;
+    font-family: 'Mulish';
+    font-size: 12px;
+}
+
+.day {
+    float: left;
+    margin-left: 12px;
+    font-family: 'Mulish';
+    float: left;
+    margin-left: 6px;
+    font-family: 'Mulish';
+    letter-spacing: 5px;
+    border-radius: 20px;
+    text-indent: 5px;
+}
+
+.lastday{
+    margin-left: 15px;
+}
+
+.start {
+    width: 50%;
+    padding-top: 22px;
+    font-size: 12px;
+}
+
+.end {
+    width: 50%;
+    padding-top: 22px;
+    font-size: 12px;
+}
+
+.date-picker{
+    display: flex;
+}
+
+.date-picker .MuiSvgIcon-root{
+    width: 20px;
+}
+
+.date-picker .MuiInputBase-input{
+    font-size: 12px;
+}
+
+.delete-button .MuiButton-outlined{
+    border: 1px solid red;
+    padding: 5px 15px;
+    color: red;
+    width: 180px;
+    height: 34px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.delete-button .MuiButton-label{
+    font-family: 'Mulish';
+    font-size: 10px;
+}
+
+.delete-button{
+    text-align:center; 
+    vertical-align: middle;
+}
+
+.edit-recommendation-button .MuiButton-outlined{
+    border: 1px solid #2196F3;
+    padding: 5px 15px;
+    color: #2196F3;
+    width: 180px;
+    height: 34px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.edit-recommendation-button .MuiButton-label{
+    font-family: 'Mulish';
+    font-size: 10px;
+}
+
+.edit-recommendation-button{
+    text-align:center; 
+    vertical-align: middle;
+}
+
+.force-run-button .MuiButton-outlined{
+    border: 1px solid #FDB62F;
+    padding: 5px 15px;
+    color: #FDB62F;
+    width: 180px;
+    height: 34px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.force-run-button .MuiButton-label{
+    font-family: 'Mulish';
+    font-size: 10px;
+}
+
+.force-run-button{
+    text-align:center; 
+    vertical-align: middle;
+}
+
+.created-by{
+    font-family: 'Mulish';
+    float: left;
+    font-size: 12px;
+}
+
+.edited-by{
+    font-family: 'Mulish';
+    float: left;
+    font-size: 12px;
+}
+
+.start{
+    color: #687480;
+}
+
+.end{
+    color: #687480;
+}
+
+.repeat-on{
+    color: #687480;
+    font-size: 12px;
+}
+
+.day-selection{
+    display: table;
+}
+
+.frequency {
+    font-family: 'Mulish';
+    font-size: 14px;
+    padding-top: 20px;
+}
+
+.created-edited-by{
+    display: table;
+    padding-top: 15px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.created-edited-by-name{
+    float: left;
+    color:#687480;
+    margin-left: 30px;
+    width: fit-content;
+    width: 50px;
+}
+
+.execution-status .MuiChip-root{
+    border: 1px solid #4AC71F;
+    background-color: #4AC71F;
+    padding: 5px 15px;
+    color: white;
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    font-family: 'Mulish';
+    font-size: 10px;
+}
+
+.execution-status{
+    text-align: center;
+}
+.last-five-status{
+    text-align: center;
+    width: 100%;
+}
+.oval{
+    height: 22px;
+    width: 6px;
+    background-color: blue;
+    border-radius: 30%;
+    margin-right: 7px;
+    display: inline-block;
+    margin: 5 auto;
+}
