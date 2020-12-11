@@ -85,6 +85,13 @@ export const RightPanelReducer = function (
     case type.CLOSE_ALL:
       return rightPanelInitialState;
 
+    // Special case: the ChangeTabIndex gets called after a Close since we're closing the item. 
+    // We then need to handle the ground case when we have 2 tabs and closing the second
+    case type.CHANGE_TAB_INDEX:
+      return{
+        ...state,
+        selectedTabIndex: state.tabs.length>1?action.payload.selectedTabIndex:0
+      }
     default:
       return state;
   }

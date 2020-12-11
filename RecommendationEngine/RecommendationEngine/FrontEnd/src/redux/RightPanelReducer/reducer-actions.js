@@ -5,15 +5,6 @@
  */
 import * as dispatchActionType from './dispatch-types';
 
-//**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
-export const mapRightPanelStateToProps = (state) => {
-  return {
-    all: state,
-    isOpen: state.rightPanelReducer.isOpen,
-    tabs: state.rightPanelReducer.tabs
-  };
-};
-
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
   return {
@@ -59,14 +50,34 @@ export const closeAll = () => {
   };
 };
 
+export const changeTabIndex = (value) => {
+  return {
+    type: dispatchActionType.CHANGE_TAB_INDEX,
+    payload: {
+      selectedTabIndex: value
+    }
+  };
+}
+
+//**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
+export const mapRightPanelStateToProps = (state) => {
+  return {
+    all: state,
+    isOpen: state.rightPanelReducer.isOpen,
+    tabs: state.rightPanelReducer.tabs,
+    selectedTabIndex: state.rightPanelReducer.selectedTabIndex
+  };
+};
+
 //This method will allow you to pass the actions as a prop to the connected component in
 //order to modify the value in the store
 export const mapDispatchToProps = (dispatch) => {
   return {
-    openAssetTreeview: (value) => dispatch(openAssetTreeview()),
+    openAssetTreeview: () => dispatch(openAssetTreeview()),
     openScheduleDrilldown: (value) => dispatch(openScheduleDrilldown(value)),
-    closeAssetTreeview: (value) => dispatch(closeAssetTreeview()),
+    closeAssetTreeview: () => dispatch(closeAssetTreeview()),
     closeScheduleDrilldown: (value) => dispatch(closeScheduleDrilldown(value)),
     closeAll: () => dispatch(closeAll()),
+    changeTabIndex: (value) => dispatch(changeTabIndex(value))
   };
 };
