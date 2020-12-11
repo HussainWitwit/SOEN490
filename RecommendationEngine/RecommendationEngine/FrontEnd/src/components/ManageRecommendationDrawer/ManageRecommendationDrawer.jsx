@@ -25,7 +25,7 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
   const [isPinClicked, setIsPinClicked] = useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
-  const lastFiveStatus = [{ status: 'Running', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }, { status: 'Failure', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }]
+  const lastFiveStatus = [null, { status: 'Running', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }, { status: 'Failure', id: 40404040, date: "05-02-2020" }, { status: 'Success', id: 40404040, date: "05-02-2020" }]
   const values = [122, 122, 122, 122]
   const parameters = ["Param1", "Param1", "Param1", "Param1"]
   const assets = ["Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1"]
@@ -111,7 +111,9 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
             <p className='value-title'>Last Five Executions</p>
             <div className='last-five-status'>
               {lastFiveStatus.map((value) => {
-                return <Tooltip title={<span><p>Id: {value.id}</p><p>Status: {value.status}</p><p>Date: {value.date}</p></span>}><div className={value.status}></div></Tooltip>
+                return value == null ? 
+                <Tooltip title="No status available"><div className="Empty"></div></Tooltip>
+                : <Tooltip title={<span><p>Id: {value.id}</p><p>Status: {value.status}</p><p>Date: {value.date}</p></span>}><div className={value.status}></div></Tooltip>
               })}
             </div>
           </Grid>
