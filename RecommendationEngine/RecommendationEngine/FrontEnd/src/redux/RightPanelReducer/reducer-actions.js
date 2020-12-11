@@ -18,9 +18,6 @@ export const mapRightPanelStateToProps = (state) => {
 export const openAssetTreeview = () => {
   return {
     type: dispatchActionType.OPEN_ASSET_TREEVIEW,
-    payload: {
-      isOpen: true,
-    },
   };
 };
 
@@ -28,7 +25,6 @@ export const openScheduleDrilldown = (value) => {
   return {
     type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
     payload: {
-      isOpen: true,
       response: Math.random()
     },
   };
@@ -48,27 +44,18 @@ export const openScheduleDrilldown = (value) => {
 export const closeAssetTreeview = () => {
   return {
     type: dispatchActionType.CLOSE_ASSET_TREEVIEW,
-    payload: {
-      isOpen: false,
-    },
   };
 };
 
 export const closeScheduleDrilldown = (value) => {
   return {
     type: dispatchActionType.CLOSE_SCHEDULE_DRILLDOWN,
-    payload: {
-      isOpen: false,
-    },
   };
 };
 
 export const closeAll = () => {
   return {
     type: dispatchActionType.CLOSE_ALL,
-    payload: {
-      isOpen: false,
-    },
   };
 };
 
