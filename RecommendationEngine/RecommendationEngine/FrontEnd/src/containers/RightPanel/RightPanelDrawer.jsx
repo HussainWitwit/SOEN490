@@ -4,75 +4,147 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
-import  { AssetTree }  from '../AssetTreeView/AssetTreeView';
+import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
+import { AssetTree } from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+
 import './RightPanelDrawer.css';
 
-RightPanelDrawer.propType = {
-    isDrawerOpen: PropTypes.bool.isRequired,
-    isInternalClosed: PropTypes.bool.isRequired,
-    isDrawerPinned: PropTypes.bool.isRequired
-}
+const mockTabs = [{}];
 
+RightPanelDrawer.propType = {
+  isDrawerOpen: PropTypes.bool.isRequired,
+  isInternalClosed: PropTypes.bool.isRequired,
+  isDrawerPinned: PropTypes.bool.isRequired,
+};
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
-export function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDrawerPinned, nestedAssets }) {
+export function RightPanelDrawer({
+  isDrawerOpen,
+  isInternalClosed,
+  isDrawerPinned,
+  nestedAssets,
+}) {
+  const [isOpen, setIsOpen] = useState(
+    isDrawerOpen === undefined ? false : isDrawerOpen
+  );
+  const [isPinClicked, setIsPinClicked] = useState(false);
 
-    const [isOpen, setIsOpen] = useState(isDrawerOpen === undefined ? false : isDrawerOpen);
-    const [isPinClicked, setIsPinClicked] = useState(false);
-    
-    const toggleDrawer = (open) => (event) => {
-        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    isInternalClosed(open);
+    setIsOpen(open);
+  };
+
+  const pinDrawerEvent = () => {
+    setIsPinClicked(!isPinClicked);
+    isDrawerPinned(!isPinClicked);
+  };
+
+  useEffect(() => {
+    setIsOpen(isDrawerOpen);
+  }, [isDrawerOpen]);
+
+  return (
+    <div>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
+      <div className="header-space"></div>
+      <SwipeableDrawer
+        anchor="right"
+        open={isPinClicked || isOpen}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+        BackdropProps={{ invisible: true }}
+        variant={'persistent'}
+        classes={{ paper: 'drawer-container' }}
+      >
+        {
+          <div className="flex-direction-column">
+            <div className="header-space"></div>
+            <Tabs>
+              <TabList>
+                <Tab>
+                  Asset Selection
+                  <IconButton
+                    className="drawer-icon-button"
+                    onClick={toggleDrawer(!isOpen)}
+                  >
+                    <Close className="drawer-close"></Close>
+                  </IconButton>
+                </Tab>
+                <Tab>
+                  Drilldown
+                  <IconButton
+                    className="drawer-icon-button"
+                    onClick={toggleDrawer(!isOpen)}
+                  >
+                    <Close className="drawer-close"></Close>
+                  </IconButton>
+                </Tab>
+              </TabList>
+              <TabPanel>
+                <AssetTree nestedAssets={nestedAssets} />
+              </TabPanel>
+              <TabPanel>
+                <p>
+                  <b>Luigi</b> (
+                  <i>Japanese: ルイージ Hepburn: Ruīji, [ɾɯ.iː.dʑi̥]</i>) (
+                  <i>English: /luˈiːdʒi/; Italian: [luˈiːdʒi]</i>) is a
+                  fictional character featured in video games and related media
+                  released by Nintendo. Created by prominent game designer
+                  Shigeru Miyamoto, Luigi is portrayed as the slightly younger
+                  but taller fraternal twin brother of Nintendo's mascot Mario,
+                  and appears in many games throughout the Mario franchise,
+                  often as a sidekick to his brother.
+                </p>
+                <p>
+                  Source:{' '}
+                  <a href="https://en.wikipedia.org/wiki/Luigi" target="_blank">
+                    Wikipedia
+                  </a>
+                </p>
+              </TabPanel>
+            </Tabs>
+
+            {/* <div className="drawer-header-container">
+              <p>Asset Selection</p>
+              <IconButton className="drawer-pin" onClick={pinDrawerEvent}>
+                <Icon
+                  className={classNames({
+                    'drawer-pinned-icon': isPinClicked,
+                    'drawer-unpinned-icon': !isPinClicked,
+                  })}
+                >
+                  push_pin
+                </Icon>
+              </IconButton>
+              {!isPinClicked && (
+                <IconButton
+                  className="drawer-pin"
+                  onClick={toggleDrawer(!isOpen)}
+                >
+                  <Close className="drawer-close"></Close>
+                </IconButton>
+              )}
+            </div> */}
+            <div>{/* <AssetTree nestedAssets = {nestedAssets} /> */}</div>
+          </div>
         }
-        isInternalClosed(open);
-        setIsOpen(open);
-      };
-
-      const pinDrawerEvent = () => {
-        setIsPinClicked(!isPinClicked);
-        isDrawerPinned(!isPinClicked)
-      }
-
-
-      useEffect(() => {
-        setIsOpen(isDrawerOpen);
-      }, [isDrawerOpen])
-    
-    return (
-        <div>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            <div className = 'header-space'></div>
-            <SwipeableDrawer
-            anchor = 'right'
-            open={isPinClicked || isOpen}
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
-            BackdropProps={{ invisible: true }}
-            variant = {'persistent'}
-            classes = {{paper: 'drawer-container'}}
-            >
-            {<div className = 'flex-direction-column'>
-                <div className = 'header-space'></div>
-                <div className= 'drawer-header-container'>
-                    <p>Asset Selection</p>
-                    <IconButton className ='drawer-pin' onClick = {pinDrawerEvent}>
-                        <Icon className = {classNames({'drawer-pinned-icon': isPinClicked, 'drawer-unpinned-icon': !isPinClicked})}>push_pin</Icon>
-                    </IconButton>
-                    {!isPinClicked && 
-                    <IconButton className ='drawer-pin' onClick = {toggleDrawer(!isOpen)}>
-                        <Close className = 'drawer-close'></Close>
-                    </IconButton>
-                    }
-                </div>
-                <div>
-                    <AssetTree nestedAssets = {nestedAssets} />
-                </div>
-        </div>}
-        </SwipeableDrawer>
-        </div>
-    );
+      </SwipeableDrawer>
+    </div>
+  );
 }
 export default connect(mapStateToProps)(RightPanelDrawer);
