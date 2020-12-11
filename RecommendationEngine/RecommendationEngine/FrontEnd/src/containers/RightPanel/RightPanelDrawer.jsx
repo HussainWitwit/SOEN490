@@ -5,8 +5,9 @@ import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
-import { AssetTree } from '../AssetTreeView/AssetTreeView';
+import AssetTree from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
+import ManageRecommendationDrawer from '../../components/ManageRecommendationDrawer/ManageRecommendationDrawer';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
 import Grid from '@material-ui/core/Grid';
@@ -54,7 +55,7 @@ export function RightPanelDrawer({
   useEffect(() => {
     setIsOpen(isDrawerOpen);
   }, [isDrawerOpen]);
-
+  
   return (
     <div>
       <link
@@ -96,26 +97,10 @@ export function RightPanelDrawer({
                 </Tab>
               </TabList>
               <TabPanel>
-                <AssetTree nestedAssets={nestedAssets} />
+                <AssetTree />
               </TabPanel>
               <TabPanel>
-                <p>
-                  <b>Luigi</b> (
-                  <i>Japanese: ルイージ Hepburn: Ruīji, [ɾɯ.iː.dʑi̥]</i>) (
-                  <i>English: /luˈiːdʒi/; Italian: [luˈiːdʒi]</i>) is a
-                  fictional character featured in video games and related media
-                  released by Nintendo. Created by prominent game designer
-                  Shigeru Miyamoto, Luigi is portrayed as the slightly younger
-                  but taller fraternal twin brother of Nintendo's mascot Mario,
-                  and appears in many games throughout the Mario franchise,
-                  often as a sidekick to his brother.
-                </p>
-                <p>
-                  Source:{' '}
-                  <a href="https://en.wikipedia.org/wiki/Luigi" target="_blank">
-                    Wikipedia
-                  </a>
-                </p>
+                <ManageRecommendationDrawer />
               </TabPanel>
             </Tabs>
 
@@ -147,4 +132,4 @@ export function RightPanelDrawer({
     </div>
   );
 }
-export default connect(mapStateToProps)(RightPanelDrawer);
+export default RightPanelDrawer;

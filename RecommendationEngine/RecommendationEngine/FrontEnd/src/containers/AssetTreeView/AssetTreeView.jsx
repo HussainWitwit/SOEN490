@@ -5,6 +5,8 @@ import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
+import { connect } from 'react-redux';
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -147,3 +149,4 @@ export function AssetTree ({nestedAssets}) {
   );
 
 }
+export default connect(mapStateToProps)(AssetTree);
