@@ -23,6 +23,9 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
   const [isOpen, setIsOpen] = useState(isDrawerOpen === undefined ? false : isDrawerOpen);
   const [isPinClicked, setIsPinClicked] = useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+  const lastFiveStatus = ['Running', 'Success', 'Failure', 'Success', 'Success'];
+
   // const [data, setData] = useState([]);
 
   // const fetchData = async () => {
@@ -98,11 +101,9 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
           </Grid>
           <p className='value-title'>Last Five Execution</p>
           <div className='last-five-status'>
-            <div className='oval'></div>
-            <div className='oval'></div>
-            <div className='oval'></div>
-            <div className='oval'></div>
-            <div className='oval'></div>
+            {lastFiveStatus.map((value) => {
+              return <div className={value}></div>
+            })}
           </div>
           <Grid item xs={12}>
             <p className='value-title'>Last Execution Status</p>
