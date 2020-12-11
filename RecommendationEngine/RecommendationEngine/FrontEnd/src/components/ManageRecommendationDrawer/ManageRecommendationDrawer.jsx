@@ -7,6 +7,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import 'date-fns';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
+import Tooltip from '@material-ui/core/Tooltip';
 // import {getConfiguredRecommendationById} from '../../api/get/ConfiguredRecommendationEndpoints'
 
 
@@ -24,8 +25,10 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
   const [isPinClicked, setIsPinClicked] = useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
-  const lastFiveStatus = ['Running', 'Success', 'Failure', 'Success', 'Success'];
-
+  const lastFiveStatus = [{ status: 'Running', id: 40404040 }, { status: 'Success', id: 40404040 }, { status: 'Failure', id: 40404040 }, { status: 'Success', id: 40404040 }, { status: 'Success', id: 40404040 }]
+  const values = [122, 122, 122, 122]
+  const parameters = ["Param1", "Param1", "Param1", "Param1"]
+  const assets = ["Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1"]
   // const [data, setData] = useState([]);
 
   // const fetchData = async () => {
@@ -72,25 +75,25 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
           <Grid item xs={12}>
             <div className='assets'>
               <p className='value-title'>Assets</p>
-              <p className='values'>Asset1, Asset2, Asset3, Asset4</p>
+              {assets.map((value) => {
+                return <div className='asset-values'>{value}, </div>
+              })}
             </div>
           </Grid>
           <Grid item xs={6}>
             <div className='inputs'>
               <p className='value-title'>Parameters</p>
-              <p className='values'>Param1</p>
-              <p className='values'>Param1</p>
-              <p className='values'>Param1</p>
-              <p className='values'>Param1</p>
+              {parameters.map((value) => {
+                return <div className='values'>{value}</div>
+              })}
             </div>
           </Grid>
           <Grid item xs={6}>
             <div className='outputs'>
               <p className='value-title'>Value</p>
-              <p className='values'>122</p>
-              <p className='values'>122</p>
-              <p className='values'>122</p>
-              <p className='values'>122</p>
+              {values.map((value) => {
+                return <div className='values'>{value}</div>
+              })}
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -99,12 +102,14 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
               <p className='values'>Yearly, every Monday 3pm</p>
             </div>
           </Grid>
-          <p className='value-title'>Last Five Execution</p>
-          <div className='last-five-status'>
-            {lastFiveStatus.map((value) => {
-              return <div className={value}></div>
-            })}
-          </div>
+          <Grid item xs={12}>
+            <p className='value-title'>Last Five Executions</p>
+            <div className='last-five-status'>
+              {lastFiveStatus.map((value) => {
+                return <Tooltip title={"id: " + value.id}><div className={value.status}></div></Tooltip>
+              })}
+            </div>
+          </Grid>
           <Grid item xs={12}>
             <p className='value-title'>Last Execution Status</p>
             <div className='execution-status'>
@@ -117,7 +122,6 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
               <p className='created-edited-by-name'>Alain</p>
             </div>
           </Grid>
-          {/* <p className='edit-recommendation' onClick={editRecommendation}>Edit recommendation</p> */}
           <Grid item xs={12}>
             <div className='edit-recommendation-button'>
               <Button variant="outlined">Edit a Recommendation</Button>

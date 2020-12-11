@@ -101,6 +101,15 @@
     word-wrap: break-word;
 }
 
+.asset-values{
+    margin: 0;
+    padding: 0;
+    color: #687480;
+    font-size: 12px;
+    word-wrap: break-word;
+    float: left;
+}
+
 .value-title {
     padding-top: 20px;
     font-family: 'Mulish';
