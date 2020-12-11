@@ -23,8 +23,8 @@ const rightPanelInitialState = {
   selectedTabIndex: 0,
 };
 
-const DRILLDOWN_TITLE = 'Drilldown';
-const ASSET_TREEVIEW_TITLE = 'Asset Treeview';
+const DRILLDOWN_NAME = 'Drilldown';
+const ASSET_TREEVIEW_NAME = 'AssetTreeview';
 
 export const RightPanelReducer = function (
   state = rightPanelInitialState,
@@ -32,25 +32,25 @@ export const RightPanelReducer = function (
 ) {
   switch (action.type) {
     case type.OPEN_ASSET_TREEVIEW: {
-      if (state.tabs.some((e) => e.title === ASSET_TREEVIEW_TITLE))
+      if (state.tabs.some((e) => e.name === ASSET_TREEVIEW_NAME))
         return {
           ...state,
-          selectedTabIndex: state.tabs.findIndex(tab => tab.title === ASSET_TREEVIEW_TITLE),
+          selectedTabIndex: state.tabs.findIndex(tab => tab.name === ASSET_TREEVIEW_NAME),
         };
       return {
         ...state,
         isOpen: true,
         selectedTabIndex: state.tabs.length,
-        tabs: [...state.tabs, { title: ASSET_TREEVIEW_TITLE }],
+        tabs: [...state.tabs, { name: ASSET_TREEVIEW_NAME }],
       };
     }
     case type.OPEN_SCHEDULE_DRILLDOWN: {
-      if (state.tabs.some((e) => e.title === DRILLDOWN_TITLE))
+      if (state.tabs.some((e) => e.name === DRILLDOWN_NAME))
         return {
           ...state,
-          selectedTabIndex: state.tabs.findIndex(tab => tab.title === DRILLDOWN_TITLE),
+          selectedTabIndex: state.tabs.findIndex(tab => tab.name === DRILLDOWN_NAME),
           tabs: state.tabs.map((e) =>
-            e.title === DRILLDOWN_TITLE
+            e.name === DRILLDOWN_NAME
               ? { ...e, response: action.payload.response }
               : e
           ),
@@ -61,7 +61,7 @@ export const RightPanelReducer = function (
         selectedTabIndex: state.tabs.length,
         tabs: [
           ...state.tabs,
-          { title: DRILLDOWN_TITLE, response: action.payload.response },
+          { name: DRILLDOWN_NAME, response: action.payload.response },
         ],
       };
     }
@@ -70,17 +70,17 @@ export const RightPanelReducer = function (
     case type.CLOSE_ASSET_TREEVIEW:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.title === DRILLDOWN_TITLE),
+        isOpen: state.tabs.some((e) => e.name === DRILLDOWN_NAME),
         selectedTabIndex: 0,
-        tabs: state.tabs.filter((tab) => tab.title !== ASSET_TREEVIEW_TITLE),
+        tabs: state.tabs.filter((tab) => tab.name !== ASSET_TREEVIEW_NAME),
       };
 
     case type.CLOSE_SCHEDULE_DRILLDOWN:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.title === ASSET_TREEVIEW_TITLE),
+        isOpen: state.tabs.some((e) => e.name === ASSET_TREEVIEW_NAME),
         selectedTabIndex: 0,
-        tabs: state.tabs.filter((tab) => tab.title !== DRILLDOWN_TITLE),
+        tabs: state.tabs.filter((tab) => tab.name !== DRILLDOWN_NAME),
       };
     case type.CLOSE_ALL:
       return rightPanelInitialState;
