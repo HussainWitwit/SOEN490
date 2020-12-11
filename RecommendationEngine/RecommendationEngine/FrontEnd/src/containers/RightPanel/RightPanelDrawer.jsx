@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
@@ -8,14 +8,14 @@ import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import AssetTree from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
 import ManageRecommendationDrawer from '../../components/ManageRecommendationDrawer/ManageRecommendationDrawer';
+import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 
 import './RightPanelDrawer.css';
 
+// TODO: Create a map of all tabs with their handlers, components, etc
 const mockTabs = [{}];
+
 
 RightPanelDrawer.propType = {
   isDrawerOpen: PropTypes.bool.isRequired,
@@ -25,17 +25,19 @@ RightPanelDrawer.propType = {
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
 export function RightPanelDrawer({
-  isDrawerOpen,
-  isInternalClosed,
   isDrawerPinned,
-  nestedAssets,
+  isOpen,
+  tabs,
+  selectedTabIndex,
+  closeAssetTreeview,
+  closeScheduleDrilldown,
+  closeAll,
+  changeTabIndex
 }) {
-  const [isOpen, setIsOpen] = useState(
-    isDrawerOpen === undefined ? false : isDrawerOpen
-  );
   const [isPinClicked, setIsPinClicked] = useState(false);
 
-  const toggleDrawer = (open) => (event) => {
+  // TODO: Check with Alain whats the point of InternalClosed
+  /*const toggleDrawer = (open) => (event) => {
     if (
       event &&
       event.type === 'keydown' &&
@@ -45,16 +47,20 @@ export function RightPanelDrawer({
     }
     isInternalClosed(open);
     setIsOpen(open);
-  };
+  };*/
 
   const pinDrawerEvent = () => {
     setIsPinClicked(!isPinClicked);
     isDrawerPinned(!isPinClicked);
   };
 
-  useEffect(() => {
-    setIsOpen(isDrawerOpen);
-  }, [isDrawerOpen]);
+  const handleCloseAssetTreeview = () => {
+    closeAssetTreeview();
+  }
+
+  const handleCloseScheduleDrilldown = () => {
+    closeScheduleDrilldown();
+  }
   
   return (
     <div>
@@ -66,8 +72,7 @@ export function RightPanelDrawer({
       <SwipeableDrawer
         anchor="right"
         open={isPinClicked || isOpen}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
+        onClose={closeAll}
         BackdropProps={{ invisible: true }}
         variant={'persistent'}
         classes={{ paper: 'drawer-container' }}
@@ -75,26 +80,17 @@ export function RightPanelDrawer({
         {
           <div className="flex-direction-column">
             <div className="header-space"></div>
-            <Tabs>
+            <Tabs selectedIndex={selectedTabIndex} onSelect={index => changeTabIndex(index)}>
               <TabList>
-                <Tab>
-                  Asset Selection
+                {tabs && tabs.map(tab => (<Tab>
+                  {tab.title}
                   <IconButton
                     className="drawer-icon-button"
-                    onClick={toggleDrawer(!isOpen)}
+                    onClick={tab.title === 'Asset Treeview'? handleCloseAssetTreeview: handleCloseScheduleDrilldown}
                   >
                     <Close className="drawer-close"></Close>
                   </IconButton>
-                </Tab>
-                <Tab>
-                  Drilldown
-                  <IconButton
-                    className="drawer-icon-button"
-                    onClick={toggleDrawer(!isOpen)}
-                  >
-                    <Close className="drawer-close"></Close>
-                  </IconButton>
-                </Tab>
+                </Tab>))}
               </TabList>
               <TabPanel>
                 <AssetTree />
@@ -132,4 +128,4 @@ export function RightPanelDrawer({
     </div>
   );
 }
-export default RightPanelDrawer;
+export default connect(mapRightPanelStateToProps, mapDispatchToProps)(RightPanelDrawer)
