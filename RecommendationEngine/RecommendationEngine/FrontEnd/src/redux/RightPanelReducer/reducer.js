@@ -20,10 +20,11 @@ import * as type from './dispatch-types';
 const rightPanelInitialState = {
   isOpen: false,
   tabs: [],
+  selectedTabIndex: 0,
 };
 
 const DRILLDOWN_TITLE = 'Drilldown';
-const ASSET_TREEVIEW_TITLE = 'Asset Treeview'
+const ASSET_TREEVIEW_TITLE = 'Asset Treeview';
 
 export const RightPanelReducer = function (
   state = rightPanelInitialState,
@@ -31,38 +32,56 @@ export const RightPanelReducer = function (
 ) {
   switch (action.type) {
     case type.OPEN_ASSET_TREEVIEW: {
-      if (state.tabs.some((e) => e.title === ASSET_TREEVIEW_TITLE)) return state;
+      if (state.tabs.some((e) => e.title === ASSET_TREEVIEW_TITLE))
+        return {
+          ...state,
+          selectedTabIndex: state.tabs.findIndex(tab => tab.title === ASSET_TREEVIEW_TITLE),
+        };
       return {
         ...state,
         isOpen: true,
+        selectedTabIndex: state.tabs.length,
         tabs: [...state.tabs, { title: ASSET_TREEVIEW_TITLE }],
       };
     }
     case type.OPEN_SCHEDULE_DRILLDOWN: {
-      if (state.tabs.some((e) => e.title === DRILLDOWN_TITLE)) return {
-        ...state,
-        tabs: state.tabs.map((e) => (e.title === DRILLDOWN_TITLE? {...e, response: action.payload.response} : e))
-      };
+      if (state.tabs.some((e) => e.title === DRILLDOWN_TITLE))
+        return {
+          ...state,
+          selectedTabIndex: state.tabs.findIndex(tab => tab.title === DRILLDOWN_TITLE),
+          tabs: state.tabs.map((e) =>
+            e.title === DRILLDOWN_TITLE
+              ? { ...e, response: action.payload.response }
+              : e
+          ),
+        };
       return {
         ...state,
         isOpen: true,
-        tabs: [...state.tabs, { title: DRILLDOWN_TITLE, response: action.payload.response}],
+        selectedTabIndex: state.tabs.length,
+        tabs: [
+          ...state.tabs,
+          { title: DRILLDOWN_TITLE, response: action.payload.response },
+        ],
       };
     }
 
+    // So far we only handle two tabs at the same time, which then explains why we move the selectedTabIndex to 0 once we close any tab
     case type.CLOSE_ASSET_TREEVIEW:
       return {
         ...state,
         isOpen: state.tabs.some((e) => e.title === DRILLDOWN_TITLE),
-        tabs: state.tabs.filter(tab => tab.title !== ASSET_TREEVIEW_TITLE)
-      }
+        selectedTabIndex: 0,
+        tabs: state.tabs.filter((tab) => tab.title !== ASSET_TREEVIEW_TITLE),
+      };
 
     case type.CLOSE_SCHEDULE_DRILLDOWN:
       return {
         ...state,
         isOpen: state.tabs.some((e) => e.title === ASSET_TREEVIEW_TITLE),
-        tabs: state.tabs.filter(tab => tab.title !== DRILLDOWN_TITLE)
-      }
+        selectedTabIndex: 0,
+        tabs: state.tabs.filter((tab) => tab.title !== DRILLDOWN_TITLE),
+      };
     case type.CLOSE_ALL:
       return rightPanelInitialState;
 
