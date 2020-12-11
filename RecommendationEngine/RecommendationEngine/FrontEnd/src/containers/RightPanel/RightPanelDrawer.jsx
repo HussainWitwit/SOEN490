@@ -61,6 +61,19 @@ export function RightPanelDrawer({
   const handleCloseScheduleDrilldown = () => {
     closeScheduleDrilldown();
   }
+
+  const tabOptions = {
+    AssetTreeview: {
+      title: 'Asset Treeview',
+      closeHandler: handleCloseAssetTreeview,
+      component: (<AssetTree />)
+    },
+    Drilldown: {
+      title: 'Drilldown',
+      closeHandler: handleCloseScheduleDrilldown,
+      component: (<ManageRecommendationDrawer />)
+    },
+  }
   
   return (
     <div>
@@ -83,21 +96,18 @@ export function RightPanelDrawer({
             <Tabs selectedIndex={selectedTabIndex} onSelect={index => changeTabIndex(index)}>
               <TabList>
                 {tabs && tabs.map(tab => (<Tab>
-                  {tab.title}
+                  {tabOptions[tab.name].title}
                   <IconButton
                     className="drawer-icon-button"
-                    onClick={tab.title === 'Asset Treeview'? handleCloseAssetTreeview: handleCloseScheduleDrilldown}
+                    onClick={tabOptions[tab.name].closeHandler}
                   >
                     <Close className="drawer-close"></Close>
                   </IconButton>
                 </Tab>))}
               </TabList>
-              <TabPanel>
-                <AssetTree />
-              </TabPanel>
-              <TabPanel>
-                <ManageRecommendationDrawer />
-              </TabPanel>
+              {tabs && tabs.map(tab => (<TabPanel>
+                {tabOptions[tab.name].component}
+              </TabPanel>))}
             </Tabs>
 
             {/* <div className="drawer-header-container">
