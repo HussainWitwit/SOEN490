@@ -61,7 +61,7 @@ describe('Add Recommendation Dialog', () => {
         cy.get('[data-testid=granularity]').should('be.disabled');
         cy.get('.MuiInputAdornment-root > .MuiButtonBase-root').click();
         cy.wait(500);
-        cy.get('.MuiPickersYearSelection-container > :nth-child(3)').click();
+        cy.get(':nth-child(4) > :nth-child(4) > .MuiButtonBase-root > .MuiIconButton-label > .MuiTypography-root').click();
     });
 
     // it('Can post a recommendaiton for Yearly Wash optimization', () => {
