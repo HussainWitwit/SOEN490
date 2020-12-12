@@ -8,6 +8,7 @@ import 'date-fns';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
+import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 // import {getConfiguredRecommendationById} from '../../api/get/ConfiguredRecommendationEndpoints'
 
 
@@ -30,6 +31,12 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
   const parameters = ["Param1", "Param1", "Param1", "Param1"]
   const assets = ["Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1", "Asset1"]
 
+  // Animation style
+  const props = useSpring({
+    opacity: 1,
+    transform: 'translate3d(0px,0,0)',
+    from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
+  })
   // Switch between "Success", "Failure" and "Running" to see the different status ui.
   const lastExecutionStatus = "Running"
 
@@ -69,7 +76,7 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
   }, [isDrawerOpen])
 
   return (
-    <div>
+    <animated.div style={props}>
       <div className='drawer-content'>
         <Grid container>
           <Grid item xs={12}>
@@ -85,7 +92,7 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
               })}
             </div>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <div className='inputs'>
               <p className='value-title'>Parameters</p>
               {parameters.map((value) => {
@@ -93,12 +100,18 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
               })}
             </div>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <div className='outputs'>
               <p className='value-title'>Value</p>
               {values.map((value) => {
                 return <div className='values'>{value}</div>
               })}
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className='assets'>
+              <p className='value-title'>Preferred Scenario</p>
+              <p className='values'>Net saving</p>
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -111,9 +124,9 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
             <p className='value-title'>Last Five Executions</p>
             <div className='last-five-status'>
               {lastFiveStatus.map((value) => {
-                return value == null ? 
-                <Tooltip title="No status available"><div className="Empty"></div></Tooltip>
-                : <Tooltip title={<span><p>Id: {value.id}</p><p>Status: {value.status}</p><p>Date: {value.date}</p></span>}><div className={value.status}></div></Tooltip>
+                return value == null ?
+                  <Tooltip title="No status available"><div className="Empty"></div></Tooltip>
+                  : <Tooltip title={<span><p>Id: {value.id}</p><p>Status: {value.status}</p><p>Date: {value.date}</p></span>}><div className={value.status}></div></Tooltip>
               })}
             </div>
           </Grid>
@@ -146,6 +159,6 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
           </Grid>
         </Grid>
       </div>
-    </div>
+    </animated.div>
   );
 }
