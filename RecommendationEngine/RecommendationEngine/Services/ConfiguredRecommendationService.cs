@@ -8,6 +8,7 @@ using Models.DB;
 using RecommendationEngine.configuredRecommendationHelper;
 using System.Collections.Generic;
 using System.Linq;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
 {
@@ -46,7 +47,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                         Type = dbConfigRecommendation.RecommendationType.Type,
                         Granularity = dbConfigRecommendation.Granularity,
                         CreatedBy = dbConfigRecommendation.ModifiedBy,
-                        PreferedScenario = dbConfigRecommendation.PreferedScenario,
+                        PreferredScenario = dbConfigRecommendation.PreferedScenario,
                         AssetIdList = dbConfigRecommendation.AssetsList.Select(asset => asset.AssetId).ToList(),
                         AssetList = dbConfigRecommendation.AssetsList.Select(asset => ConvertDBAssetIntoAssetLeaf(asset.Asset)).ToList(),
                         RecurrenceDayOfWeek = dbConfigRecommendation.RecurrenceDayOfWeek,
@@ -68,7 +69,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 Name = configuredRecommendation.Name,
                 DisplayText = recommendationType.DisplayText,
                 Granularity = configuredRecommendation.Granularity,
-                PreferedScenario = configuredRecommendation.PreferedScenario,
+                PreferedScenario = configuredRecommendation.PreferredScenario,
                 CreatedOn = configuredRecommendation.CreatedOn,
                 ModifiedBy = configuredRecommendation.CreatedBy,
                 RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
@@ -110,6 +111,51 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 ElementPath = asset.ElementPath,
                 EnergyType = asset.EnergyType,
                 TimeZone = asset.TimeZone,
+            };
+        }
+
+        public ConfiguredRecommendation GetConfiguredRecommendationById(int id)
+        {
+
+            DBRecommendationSchedule schedule = _recommendationRepository.GetRecommendationScheduleById(id);
+
+            if (schedule == null)
+            {
+                throw new GlobalException
+                {
+                    ApplicationName = "RecommendationEngine",
+                    ErrorMessage = "Could not find a configured recommendation",
+                    Code = 404,
+                    Type = "Not Found"
+                };
+            }
+
+            return new ConfiguredRecommendation
+            {
+                Id = schedule.RecommendationScheduleId,
+                Name = schedule.Name,
+                Type = schedule.RecommendationType.Type,
+                Description = schedule.Description,
+                CreatedBy = schedule.ModifiedBy,
+                CreatedOn = schedule.CreatedOn,
+                PreferredScenario = schedule.PreferedScenario,
+                RecurrenceDatetime = schedule.RecurrenceDatetime,
+                RecurrenceDayOfWeek = schedule.RecurrenceDayOfWeek,
+                Granularity = schedule.Granularity,
+                AssetList = schedule.AssetsList.Select(x => new AssetLeaf
+                {
+                    Name = x.Asset.Name,
+                    DisplayText = x.Asset.DisplayText,
+                    AcPower = x.Asset.AcPower,
+                    ElementPath = x.Asset.ElementPath,
+                    EnergyType = x.Asset.EnergyType,
+                    TimeZone = x.Asset.TimeZone
+                }).ToList(),
+                Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
+                {
+                    ParameterName = x.RecommendationParameter.DisplayText,
+                    ParameterValue = x.ParamValue
+                }).ToList()
             };
         }
     }
