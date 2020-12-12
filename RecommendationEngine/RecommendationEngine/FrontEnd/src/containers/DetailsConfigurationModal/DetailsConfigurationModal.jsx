@@ -17,6 +17,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
+  KeyboardDateTimePicker
 } from '@material-ui/pickers';
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
@@ -152,32 +153,31 @@ export function DetailsConfigurationModal (props) {
            <MuiPickersUtilsProvider utils={DateFnsUtils}>
             {(basicConfiguration.granularity === granularityItems[1] ||
               basicConfiguration.granularity === granularityItems[2]) && (
-                <div id = "recommendation-date-picker">
-                <KeyboardDatePicker
-                  id="date-picker"
+                <KeyboardDateTimePicker
+                  id="recommendation-date-picker"
                   data-testid = 'date'
                   autoOk                  
-                  views = {["year", "month", "date"]}
                   inputVariant="outlined"
-                  label="Date"
+                  label="Date & Time"
                   minDate = {new Date()}
-                  format={"dd/MM/yyyy"}
+                  // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
                 /> 
-                </div>
               )}
-             <KeyboardTimePicker
-                label="Time"
-                data-testid = 'time'
-                id = "recommendation-time-picker"
-                inputVariant="outlined"
-                value={basicConfiguration.repeatTime}
-                onChange={date => setRepeatTime(date)}
-              />
+              {basicConfiguration.granularity === granularityItems[0] &&
+              <KeyboardTimePicker
+                  label="Time"
+                  data-testid = 'time'
+                  id = "recommendation-time-picker"
+                  inputVariant="outlined"
+                  value={basicConfiguration.repeatTime}
+                  onChange={date => setRepeatTime(date)}
+                />
+              }
           </MuiPickersUtilsProvider>
         </div>
       </div>
