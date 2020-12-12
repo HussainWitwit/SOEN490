@@ -86,7 +86,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
-                    PreferedScenario = "ROI",
+                    PreferredScenario = "ROI",
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     Type = "Yearly Wash Optimization",

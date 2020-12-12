@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -72,6 +73,11 @@ namespace RecommendationEngineTests.APITests
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
             return MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+        }
+
+        public DBRecommendationSchedule GetRecommendationScheduleById(int id)
+        {
+            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST.First();
         }
     }
 }
