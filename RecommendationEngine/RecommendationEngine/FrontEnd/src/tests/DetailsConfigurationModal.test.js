@@ -16,9 +16,9 @@ describe('DetailsConfigurationModal component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const wrapper = shallow(<DetailsConfigurationModal 
-        template = {{name: 'Unit test'}}
-        basicConfiguration = {{
+    const wrapper = shallow(<DetailsConfigurationModal
+        template={{ name: 'Unit test' }}
+        basicConfiguration={{
             title: '',
             asset: [],
             createdBy: 'Alain',
@@ -28,14 +28,14 @@ describe('DetailsConfigurationModal component', () => {
             repeatDate: '',
             repeatTime: ''
         }}
-        setTitle = {(value) => {}}
-        updateAsset = {(value) => {}}
-        setPreferredScenario = {(value) => {}}
-        setGranularity = {(value) => {}}
-        setRepeatDay = {(value) => {}}
-        setRepeatDate = {(value) => {}}
-        setRepeatTime = {(value) => {}}
-        apiAssets = {[]}
+        setTitle={(value) => { }}
+        updateAsset={(value) => { }}
+        setPreferredScenario={(value) => { }}
+        setGranularity={(value) => { }}
+        setRepeatDay={(value) => { }}
+        setRepeatDate={(value) => { }}
+        setRepeatTime={(value) => { }}
+        apiAssets={[]}
     />);
 
     it('It renders without crashing', async () => {
@@ -46,7 +46,7 @@ describe('DetailsConfigurationModal component', () => {
 
     it('Finds the divs', () => {
         let divs = wrapper.find('div');
-        expect(divs).toHaveLength(11);
+        expect(divs).toHaveLength(10);
     });
 
     it('Finds the subtitle', () => {
