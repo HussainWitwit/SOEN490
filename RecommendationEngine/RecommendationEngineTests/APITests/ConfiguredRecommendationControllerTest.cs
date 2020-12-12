@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
+using Interfaces.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Models.Application;
 using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -32,7 +34,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<MockTestRepository>().AsImplementedInterfaces();
-                    builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockConfiguredRecommendationService>().AsImplementedInterfaces();
                     builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -46,11 +48,13 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
-        public async Task AddRecommendations()
+        public async Task AddRecommendation()
         {
-            var payload = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
-            var response = await _client.PutAsync("/configuredrecommendation/add", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
-            Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
+            var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            string json = JsonConvert.SerializeObject(recommendation);
+            var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/configuredrecommendation/add", body);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }
 
@@ -72,6 +76,22 @@ namespace RecommendationEngineTests.APITests
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
             return MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+        }
+    }
+
+    public class MockConfiguredRecommendationService : IConfiguredRecommendationService
+    {
+        public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
+            
+        }
+
+        public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
+        {
+            return new List<ConfiguredRecommendation>()
+            {
+                MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION
+            };
         }
     }
 }

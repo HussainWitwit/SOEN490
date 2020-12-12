@@ -20,6 +20,25 @@ namespace RecommendationEngineTests.UnitTests.MockData
         {
             public static List<DBRecommendationSchedule> BasicConfiguredRecommendationList()
             {
+                DBAsset asset = new DBAsset
+                {
+                    AssetId = 9,
+                    Name = "dbasset9",
+                    AcPower = 17,
+                    Type = new DBAssetType() { Name = "plant" },
+                    DisplayText = "asset 9",
+                    ElementPath = "path9",
+                    EnergyType = "pv",
+                    TimeZone = "timezoneTest"
+
+                };
+
+                DBAssetRecommendationSchedule dbAssetRecSchedule = new DBAssetRecommendationSchedule()
+                {
+                    Asset = asset,
+                    AssetId = 9
+                };
+
                 List<DBRecommendationSchedule> list = new List<DBRecommendationSchedule>() {
                     new DBRecommendationSchedule
                     {
@@ -34,7 +53,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         RecurrenceDayOfWeek = 2,
                         RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
                         ParametersList = null,
-                        AssetsList = new List<DBAssetRecommendationSchedule>()
+                        AssetsList = new List<DBAssetRecommendationSchedule>() { dbAssetRecSchedule }
                         
                     },
                     new DBRecommendationSchedule
@@ -50,7 +69,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         RecurrenceDayOfWeek = 2,
                         RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
                         ParametersList = null,
-                        AssetsList = new List<DBAssetRecommendationSchedule>()
+                        AssetsList = new List<DBAssetRecommendationSchedule>() { dbAssetRecSchedule }
                     }
                 };
 
@@ -86,7 +105,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
-                    PreferedScenario = "ROI",
+                    PreferredScenario = "ROI",
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     Type = "Yearly Wash Optimization",
