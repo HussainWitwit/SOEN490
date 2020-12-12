@@ -81,7 +81,7 @@ export function ConfiguredRecommendationTable (props) {
                   <TableRow
                     key={element.name}
                     className="custom"
-                    onClick = {props.openScheduleDrilldown}
+                    onClick = {() => props.openScheduleDrilldown(element.id)}
                   >
                     <TableCell className="custom">
                     </TableCell>

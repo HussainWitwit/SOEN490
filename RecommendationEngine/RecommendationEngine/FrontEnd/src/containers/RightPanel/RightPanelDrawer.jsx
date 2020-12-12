@@ -2,20 +2,13 @@ import React, { useState } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
-import Icon from '@material-ui/core/Icon';
-import classNames from 'classnames';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import AssetTree from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
 import ManageRecommendationDrawer from '../../components/ManageRecommendationDrawer/ManageRecommendationDrawer';
 import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
-
 import './RightPanelDrawer.css';
-
-// TODO: Create a map of all tabs with their handlers, components, etc
-const mockTabs = [{}];
-
 
 RightPanelDrawer.propType = {
   isDrawerOpen: PropTypes.bool.isRequired,
@@ -71,7 +64,7 @@ export function RightPanelDrawer({
     Drilldown: {
       title: 'Drilldown',
       closeHandler: handleCloseScheduleDrilldown,
-      component: (<ManageRecommendationDrawer />)
+      component: (<ManageRecommendationDrawer configuredRecommendation={tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     },
   }
   
