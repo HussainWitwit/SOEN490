@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
+using Interfaces.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Models.Application;
 using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -32,7 +34,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<MockTestRepository>().AsImplementedInterfaces();
-                    builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockConfiguredRecommendationService>().AsImplementedInterfaces();
                     builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -74,6 +76,22 @@ namespace RecommendationEngineTests.APITests
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
             return MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+        }
+    }
+
+    public class MockConfiguredRecommendationService : IConfiguredRecommendationService
+    {
+        public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
+            
+        }
+
+        public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
+        {
+            return new List<ConfiguredRecommendation>()
+            {
+                MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION
+            };
         }
     }
 }
