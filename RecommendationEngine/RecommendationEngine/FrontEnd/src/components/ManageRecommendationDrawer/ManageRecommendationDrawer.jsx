@@ -19,7 +19,7 @@ ManageRecommendationDrawer.propType = {
 
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
-export default function ManageRecommendationDrawer({isInternalClosed, isDrawerPinned, configuredRecommendation }) {
+export default function ManageRecommendationDrawer({ isInternalClosed, isDrawerPinned, configuredRecommendation }) {
 
   const [isPinClicked, setIsPinClicked] = useState(false);
 
@@ -29,7 +29,7 @@ export default function ManageRecommendationDrawer({isInternalClosed, isDrawerPi
     transform: 'translate3d(0px,0,0)',
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   })
-  // Switch between "Success", "Failure" and "Running" to see the different status ui.
+
 
   // const [data, setData] = useState([]);
 
@@ -65,8 +65,13 @@ export default function ManageRecommendationDrawer({isInternalClosed, isDrawerPi
           <Grid item xs={12}>
             <div className='assets'>
               <p className='value-title'>Assets</p>
-              {configuredRecommendation.assetList && configuredRecommendation.assetList.map((asset) => {
-                return <div className='asset-values'>{asset.displayText}, </div>
+              {configuredRecommendation.assetList && configuredRecommendation.assetList.map((asset, index) => {
+                if (configuredRecommendation.assetList.length == index + 1) {
+                  return <div className='asset-values'>{asset.displayText} </div>
+                }
+                else {
+                  return <div className='asset-values'>{asset.displayText}, </div>
+                }
               })}
             </div>
           </Grid>
@@ -110,9 +115,15 @@ export default function ManageRecommendationDrawer({isInternalClosed, isDrawerPi
           </Grid>
           <Grid item xs={12}>
             <p className='value-title'>Last Execution Status</p>
-            <div className={'execution-status-' + (configuredRecommendation.lastJobs && configuredRecommendation.lastJobs[4] && configuredRecommendation.lastJobs[4].status)}>
-              <Chip label={configuredRecommendation.lastJobs && configuredRecommendation.lastJobs[4] && configuredRecommendation.lastJobs[4].status.toUpperCase()} />
-            </div>
+                {configuredRecommendation.lastJobs && configuredRecommendation.lastJobs[4] ?
+              <div className={'execution-status-' + (configuredRecommendation.lastJobs && configuredRecommendation.lastJobs[4] && configuredRecommendation.lastJobs[4].status)}>
+                <Chip label={configuredRecommendation.lastJobs && configuredRecommendation.lastJobs[4] && configuredRecommendation.lastJobs[4].status.toUpperCase()} />
+              </div>
+                :
+              <div className={'execution-status-Empty'}>
+                <Chip label="NO STATUS" />
+              </div>
+            }
           </Grid>
           <Grid item xs={12}>
             <div className='created-edited-by'>
@@ -137,6 +148,6 @@ export default function ManageRecommendationDrawer({isInternalClosed, isDrawerPi
           </Grid>
         </Grid>
       </div>
-    </animated.div>
+    </animated.div >
   );
 }
