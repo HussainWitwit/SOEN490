@@ -14,7 +14,7 @@ export const openAssetTreeview = () => {
 };
 
 export const openScheduleDrilldown = async (dispatch, id) => {
-  const response = await getConfiguredRecommendationById(1);
+  const response = await getConfiguredRecommendationById(id);
   dispatch({
     type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
     payload: {

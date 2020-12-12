@@ -89,6 +89,10 @@
     margin-right: 50px; */
 }
 
+.recommendationType {
+    float: left;
+}
+
 .parameters {
     margin-top: 20px;
 }
@@ -354,7 +358,7 @@
     display: inline-block;
     margin: 5 auto;
 }
-.Failure{
+.Failed{
     height: 22px;
     width: 6px;
     background-color: #FF0000;

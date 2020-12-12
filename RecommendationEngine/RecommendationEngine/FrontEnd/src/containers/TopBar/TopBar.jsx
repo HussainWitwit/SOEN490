@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import NotificationBell from '../../components/Notification/NotificationBell';
 import BreadcrumbsComponent from '../../components/BreadcrumbsComponent/BreadcrumbsComponent'
+import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
+import { connect } from 'react-redux';
 import './TopBar.css';
 
-function TopBar(props) {
+function TopBar({openAssetTreeview}) {
 
   const [locationDetails, setLocationDetails] = React.useState(null);
   const [weatherDetails, setWeatherDetails] = React.useState(null);
   const [isChangeClicked, setIsChangeClicked] = React.useState(false);
 
-  const changeAssetEvent = () => {
+  /*const changeAssetEvent = () => {
     props.changeAsset(!props.sharedChangeAssetValue || !isChangeClicked);
     setIsChangeClicked(!props.sharedChangeAssetValue || !isChangeClicked);
-}
+}*/
 
   // eslint-disable-next-line
   const getCurrentLocation = async () => {
@@ -38,7 +40,7 @@ function TopBar(props) {
     <div id="main-containter">
       <nav>
         <BreadcrumbsComponent id="breadcrumb"/>
-        <p id="change_button"className="change_button" onClick = {changeAssetEvent}>Change</p>
+        <p id="change_button"className="change_button" onClick = {openAssetTreeview}>Change</p>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
@@ -50,4 +52,4 @@ function TopBar(props) {
   );
 }
 
-export default TopBar;
+export default connect(null, mapDispatchToProps)(TopBar)

@@ -9,25 +9,39 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private IConfiguredRecommendationService _recommendationSchedulerService;
+        private IConfiguredRecommendationService _configuredRecommendationService;
 
-        public ConfiguredRecommendationController(IConfiguredRecommendationService recommendationSchedulerService)
+        public ConfiguredRecommendationController(IConfiguredRecommendationService configuredRecommendationService)
         {
-            _recommendationSchedulerService = recommendationSchedulerService;
+            _configuredRecommendationService = configuredRecommendationService;
         }
 
         [HttpGet("get")]
-        public IActionResult getConfiguredRecommendationList()
+        public IActionResult GetConfiguredRecommendationList()
         {
-            return Ok(_recommendationSchedulerService.GetConfiguredRecommendationList());
+            return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
         }
 
-        [HttpPost("add")]
-        public IActionResult addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        [HttpGet("configuredRecommendation/{id}")]
+        public IActionResult GetConfiguredRecommendationById(int id)
         {
             try
             {
-                _recommendationSchedulerService.AddConfiguredRecommendation(configuredRecommendation);
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationById(id));
+
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+        }
+
+        [HttpPost("add")]
+        public IActionResult AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
+            try
+            {
+                _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation);
             }
             catch (GlobalException e)
             {
