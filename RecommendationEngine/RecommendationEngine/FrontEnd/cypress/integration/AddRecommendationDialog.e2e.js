@@ -31,19 +31,16 @@ describe('Add Recommendation Dialog', () => {
         cy.get('[data-testid=template] > :nth-child(3)').click();
     });
 
-    it('Can navigate between contexts. ', () => {
-        cy.get('#next-btn').click();
-        cy.wait(500);
-        cy.get('#next-btn').click();
-        cy.wait(500);
+    it('Can navigate between first page and second page ', () => {
         cy.get('#next-btn').click();
         cy.wait(500);
         cy.get('[data-testid=previous-button]').click();
+    });
+
+    it('Next button is disabled when required inputs are empty ', () => {
+        cy.get('#next-btn').click();
         cy.wait(500);
-        cy.get('[data-testid=previous-button]').click();
-        cy.wait(500);
-        cy.get('[data-testid=previous-button]').click();
-        cy.wait(500);
+        cy.get('#next-btn').should('be.disabled');;
     });
 
     it('Can fill info in Basic Configuration context for Yearly Wash optimization', () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -8,11 +8,13 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 function MultiSelectAutocomplete(props) {
+  const [isFirstTyping, setIsFirstTyping] = useState(true);
+
   return (
     <Autocomplete
       id={props.id ? props.id : ''}
       limitTags={props.maxElement}
-      multiple //TODO: Add case that checks the recommendation type and disabled multiple selection
+      multiple 
       defaultValue={props.defaultValue ? props.defaultValue : [props.items[0]]}
       data-testid="autocomplete-component"
       value={props.value}
@@ -44,11 +46,12 @@ function MultiSelectAutocomplete(props) {
       style={{ width: '100%' }}
       renderInput={(params) => (
         <TextField
-          error = {props.value && props.value.length === 0} 
+          error = {props.value && props.value.length === 0 && !isFirstTyping} 
           {...params}
           variant={props.variant}
           label={props.value ? props.value.length === 0 ? "Required. ": props.boxLabelName : props.boxLabelName ? props.boxLabelName : ''}
           placeholder={props.contentLabel}
+          onClick = {() => setIsFirstTyping(false)}
         />
       )}
     />

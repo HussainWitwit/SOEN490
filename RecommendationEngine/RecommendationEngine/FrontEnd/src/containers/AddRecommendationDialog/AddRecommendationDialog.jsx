@@ -155,8 +155,13 @@ export function AddRecommendationDialog (props) {
             Previous
           </Button>
         )}
-        {index <= 2 && (
+        {index === 0 && (
           <Button id="next-btn" onClick={onClickNext} variant="outlined">
+          Next
+        </Button>
+        )}
+        {(index <= 2 && index > 0) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Next
           </Button>
         )}

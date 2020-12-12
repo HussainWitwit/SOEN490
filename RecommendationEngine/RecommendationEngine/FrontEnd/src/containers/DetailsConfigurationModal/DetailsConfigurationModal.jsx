@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { animated } from 'react-spring';
 import { Form } from 'react-bootstrap';
 import './DetailsConfigurationModal.css';
@@ -35,11 +35,15 @@ export function DetailsConfigurationModal (props) {
     apiAssets
   } = props;
 
+  const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
+
   useEffect(() => {
     if(template.name === "Yearly Wash Optimization") {
       setGranularity('Yearly');
     }
   }, [template.name])
+
+ 
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -50,15 +54,14 @@ export function DetailsConfigurationModal (props) {
             <p id="text">Title: </p>
           </div>
           <TextField
-              error = {basicConfiguration.title === ''} 
+              error = {basicConfiguration.title === '' && !isFirstTypingTitle} 
               label = {basicConfiguration.title === '' ? "Required.": ''}
               value = {basicConfiguration.title}
               data-testid='title'
               className="title-input-field"
               placeholder = "Your title here..."
               variant="outlined"
-              onChange={(event) => setTitle(event.target.value)}
-    
+              onChange={(event) => { setIsFirstTypingTitle(false); setTitle(event.target.value); }}
           />
         </div>
         <div id="element-container">
