@@ -37,8 +37,8 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
     transform: 'translate3d(0px,0,0)',
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   })
-  // Switch between "Success", "Failure" and "Running" to see the different status ui.
-  const lastExecutionStatus = "Running"
+  // Switch between "Success", "Failure", "Running" or "Empty" to see the different status ui.
+  const lastExecutionStatus = null
 
   const tooltipContent = 'id'
   // const [data, setData] = useState([]);
@@ -132,33 +132,38 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
           </Grid>
           <Grid item xs={12}>
             <p className='value-title'>Last Execution Status</p>
-            <div className={'execution-status-' + lastExecutionStatus}>
-              <Chip label={lastExecutionStatus.toUpperCase()} />
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className='created-edited-by'>
-              <p className='edited-by'>Last edited by: </p>
-              <p className='created-edited-by-name'>Alain</p>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className='edit-recommendation-button'>
-              <Button variant="outlined">Edit a Recommendation</Button>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className='force-run-button'>
-              <Button variant="outlined">Force run</Button>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className='delete-button'>
-              <Button variant="outlined">Delete</Button>
-            </div>
-          </Grid>
+            {lastExecutionStatus == "Empty" || lastExecutionStatus == null ?
+              <div className={'execution-status-Empty'}>
+                <Chip label="NO STATUS" />
+              </div>
+              : <div className={'execution-status-' + lastExecutionStatus}>
+                <Chip label={lastExecutionStatus.toUpperCase()} />
+              </div>
+            }
+        </Grid>
+        <Grid item xs={12}>
+          <div className='created-edited-by'>
+            <p className='edited-by'>Last edited by: </p>
+            <p className='created-edited-by-name'>Alain</p>
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <div className='edit-recommendation-button'>
+            <Button variant="outlined">Edit a Recommendation</Button>
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <div className='force-run-button'>
+            <Button variant="outlined">Force run</Button>
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <div className='delete-button'>
+            <Button variant="outlined">Delete</Button>
+          </div>
+        </Grid>
         </Grid>
       </div>
-    </animated.div>
+    </animated.div >
   );
 }
