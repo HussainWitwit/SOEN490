@@ -40,8 +40,12 @@ jobs:
           command: npm run test:ci
           working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
       - run:
+          name: Running Frontend Tests
+          command: ls
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd/coverage
+      - run:
           name: Uploading Frontend Tests Coverage
-          command: bash <(curl -s https://codecov.io/bash) -cF frontend
+          command: bash <(curl -s https://codecov.io/bash) -cF frontend -f /root/project/SOEN490/RecommendationEngine/RecommendationEngine/FrontEnd/coverage/clover.xml
           working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
 
 workflows:
