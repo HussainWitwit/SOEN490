@@ -14,7 +14,6 @@
  * - declaring the string types as constants in another file
  */
 
-import { TemplateItems } from '../../containers/TemplateConfigurationModal/ListTemplateItems';
 import * as type from './dispatch-types';
 
 const rightPanelInitialState = {
@@ -26,6 +25,12 @@ const rightPanelInitialState = {
 const DRILLDOWN_NAME = 'Drilldown';
 const ASSET_TREEVIEW_NAME = 'AssetTreeview';
 
+/**
+ * The right panel reducer's main business logic is surrounds the idea that there should only be a maximum of 2 tabs open to avoid crowding;
+ *  - Asset selection
+ *  - Any type of drilldown view
+ * It is important to note that we have to return states as immutable objects in redux, and so the main functions used are map, filter and spread operator
+ */
 export const RightPanelReducer = function (
   state = rightPanelInitialState,
   action

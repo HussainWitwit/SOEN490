@@ -2,8 +2,10 @@
 //have exactly this attribute, or it will break and it will be hard to debug.
 import { Asset } from './Asset';
 export interface ConfiguredRecommendation {
+    id: number,
     name: string,
     type: string,
+    description: string,
     granularity: string,
     createdBy: string,
     preferredScenario: string,

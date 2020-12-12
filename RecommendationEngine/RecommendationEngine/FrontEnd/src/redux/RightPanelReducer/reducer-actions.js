@@ -4,6 +4,7 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
+import {getConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints'
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
@@ -12,25 +13,16 @@ export const openAssetTreeview = () => {
   };
 };
 
-export const openScheduleDrilldown = (value) => {
-  return {
+export const openScheduleDrilldown = async (dispatch, id) => {
+  const response = await getConfiguredRecommendationById(1);
+  dispatch({
     type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
     payload: {
-      response: Math.random()
-    },
-  };
+      isOpen: true,
+      response: response
+    }
+  });
 };
-
-// export const openScheduleDrilldown = async (dispatch) => {
-//   const response = await AssetClient.get('asset/getAssetsNested');
-//   dispatch({
-//     type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
-//     payload: {
-//       isOpen: true,
-//       response: response
-//     }
-//   });
-// };
 
 export const closeAssetTreeview = () => {
   return {
@@ -38,7 +30,7 @@ export const closeAssetTreeview = () => {
   };
 };
 
-export const closeScheduleDrilldown = (value) => {
+export const closeScheduleDrilldown = () => {
   return {
     type: dispatchActionType.CLOSE_SCHEDULE_DRILLDOWN,
   };
@@ -74,9 +66,9 @@ export const mapRightPanelStateToProps = (state) => {
 export const mapDispatchToProps = (dispatch) => {
   return {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
-    openScheduleDrilldown: (value) => dispatch(openScheduleDrilldown(value)),
+    openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
     closeAssetTreeview: () => dispatch(closeAssetTreeview()),
-    closeScheduleDrilldown: (value) => dispatch(closeScheduleDrilldown(value)),
+    closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
     closeAll: () => dispatch(closeAll()),
     changeTabIndex: (value) => dispatch(changeTabIndex(value))
   };
