@@ -142,7 +142,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 RecurrenceDatetime = schedule.RecurrenceDatetime,
                 RecurrenceDayOfWeek = schedule.RecurrenceDayOfWeek,
                 Granularity = schedule.Granularity,
-                LastJobs = schedule.JobsList.TakeLast(5).Select(x => new RecommendationJob
+                LastJobs = schedule.JobsList.TakeLast(5).Select(x => new ConfiguredRecommendationJob
                 {
                     Id = x.RecommendationJobId,
                     Status = x.Status,

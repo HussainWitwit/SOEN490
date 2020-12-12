@@ -2,7 +2,7 @@
 
 namespace Models.Application
 {
-    public class RecommendationJob
+    public class ConfiguredRecommendationJob
     {
         public int Id { get; set; }
         public string Status { get; set; }
