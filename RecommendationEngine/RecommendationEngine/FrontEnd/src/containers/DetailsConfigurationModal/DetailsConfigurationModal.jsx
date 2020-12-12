@@ -170,7 +170,6 @@ export function DetailsConfigurationModal (props) {
                 /> 
                 </div>
               )}
-            {basicConfiguration.granularity !== granularityItems[2] && (
              <KeyboardTimePicker
                 label="Time"
                 data-testid = 'time'
@@ -179,7 +178,6 @@ export function DetailsConfigurationModal (props) {
                 value={basicConfiguration.repeatTime}
                 onChange={date => setRepeatTime(date)}
               />
-            )}
           </MuiPickersUtilsProvider>
         </div>
       </div>

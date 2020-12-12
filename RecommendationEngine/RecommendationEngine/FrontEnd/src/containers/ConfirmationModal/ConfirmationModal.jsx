@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { animated } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
@@ -22,12 +22,12 @@ export function ConfirmationModal (props) {
     let time = dialogsContent.basicConfiguration.repeatTime;
     switch(dialogsContent.basicConfiguration.granularity) {
       case 'Yearly':
-        return(`Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]}`);
+        return(`Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
       case 'Monthly':
         return(`Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]}th of the month at ${time.toLocaleTimeString('en-us', formatTime)}`);
       case 'Weekly':
         let intDayOfWeek = dialogsContent.basicConfiguration.repeatDay;
-        return (`Every ${dayOfWeek[intDayOfWeek]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
+        return (`Every ${dayOfWeek[intDayOfWeek - 1]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
       default:
         return "Invalid";
     }
@@ -39,6 +39,7 @@ export function ConfirmationModal (props) {
         <div id="confirmation-sub-header">Summary</div>
         <div id="confirmation-content-body">
           <TextField
+            multiline = {true}
             error = {!dialogsContent.basicConfiguration.title}
             id="outlined-read-only-title"
             label="Recommendation Title"
