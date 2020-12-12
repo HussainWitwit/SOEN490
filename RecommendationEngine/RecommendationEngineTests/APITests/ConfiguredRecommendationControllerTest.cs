@@ -46,11 +46,13 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
-        public async Task AddRecommendations()
+        public async Task AddRecommendation()
         {
-            var payload = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
-            var response = await _client.PutAsync("/configuredrecommendation/add", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
-            Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
+            var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            string json = JsonConvert.SerializeObject(recommendation);
+            var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/configuredrecommendation/add", body);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }
 
