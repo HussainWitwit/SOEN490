@@ -87,8 +87,13 @@ export default function ManageRecommendationDrawer({ isDrawerOpen, isInternalClo
           <Grid item xs={12}>
             <div className='assets'>
               <p className='value-title'>Assets</p>
-              {assets.map((value) => {
-                return <div className='asset-values'>{value}, </div>
+              {assets.map((value, index) => {
+                if(assets.length == index + 1){
+                  return <div className='asset-values'>{value} </div>
+                }
+                else{
+                  return <div className='asset-values'>{value}, </div>
+                }
               })}
             </div>
           </Grid>
