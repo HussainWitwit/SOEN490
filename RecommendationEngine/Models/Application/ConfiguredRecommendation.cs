@@ -16,6 +16,7 @@ namespace Models.Application
         public int RecurrenceDayOfWeek { get; set; }
         public DateTime RecurrenceDatetime { get; set; }
         public DateTime CreatedOn { get; set; }
+        public List<RecommendationJob> LastJobs { get; set; }
         public List<int> AssetIdList { get; set; }
         public List<AssetLeaf> AssetList { get; set; }
         public List<ConfiguredRecommendationParameter> Parameters { get; set; }

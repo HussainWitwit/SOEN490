@@ -130,7 +130,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 };
             }
 
-            return new ConfiguredRecommendation
+            ConfiguredRecommendation configuredRecommendation = new ConfiguredRecommendation
             {
                 Id = schedule.RecommendationScheduleId,
                 Name = schedule.Name,
@@ -142,6 +142,12 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 RecurrenceDatetime = schedule.RecurrenceDatetime,
                 RecurrenceDayOfWeek = schedule.RecurrenceDayOfWeek,
                 Granularity = schedule.Granularity,
+                LastJobs = schedule.JobsList.TakeLast(5).Select(x => new RecommendationJob
+                {
+                    Id = x.RecommendationJobId,
+                    Status = x.Status,
+                    Timestamp = x.Timestamp
+                }).ToList(),
                 AssetList = schedule.AssetsList.Select(x => new AssetLeaf
                 {
                     Name = x.Asset.Name,
@@ -157,6 +163,9 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                     ParameterValue = x.ParamValue
                 }).ToList()
             };
+            // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
+            while (configuredRecommendation.LastJobs.Count < 5) configuredRecommendation.LastJobs.Insert(0, null);
+            return configuredRecommendation;
         }
     }
 }
