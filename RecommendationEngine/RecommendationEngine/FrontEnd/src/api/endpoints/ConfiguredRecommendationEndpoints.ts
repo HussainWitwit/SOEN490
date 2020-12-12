@@ -29,8 +29,6 @@ export const GetConfiguredRecommendationList = async () => {
 
 export const getConfiguredRecommendationById = async (id:number) => {
     let configuredRecommendations: ConfiguredRecommendation;
-    if(id===-1)
-        return {};
     try{
         let response = await fetch ('ConfiguredRecommendation/configuredRecommendation/'+id);
         const jsonResponse = await response.json();
@@ -80,7 +78,7 @@ export const getConfiguredRecommendationById = async (id:number) => {
             recurrenceDayOfWeek: response.recurrenceDayOfWeek,
             recurrenceDatetime: response.recurrenceDatetime,
             createdOn: response.createdOn,
-            assetList: response.assets,
+            assetList: response.assetList,
             lastJobs: response.lastJobs,
             parameters : response.parameters
           };
@@ -94,6 +92,7 @@ const mapConfiguredRecommendations = function(response: any): ConfiguredRecommen
     //Make sure the returned value is exactly equal to entity attribute for the entity in question
     let result =  response.map((element: any) => {
         return {
+            id: element.id,
             name: element.name,
             type: element.type,
             granularity: element.granularity,

@@ -43,6 +43,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 recommendations.Add(
                     new ConfiguredRecommendation
                     {
+                        Id = dbConfigRecommendation.RecommendationScheduleId,
                         Name = dbConfigRecommendation.Name,
                         Type = dbConfigRecommendation.RecommendationType.Type,
                         Granularity = dbConfigRecommendation.Granularity,
