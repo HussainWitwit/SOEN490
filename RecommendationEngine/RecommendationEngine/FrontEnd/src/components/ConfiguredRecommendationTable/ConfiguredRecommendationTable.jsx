@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader'
 import Switch from '@material-ui/core/Switch';
+import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
+import { connect } from 'react-redux';
 import './ConfiguredRecommendationTable.css';
 import 'date-fns';
 
@@ -21,7 +23,7 @@ const headCells = [
 ];
 
 //TODO: This should be a generic component, ask Alain if help is needed.
-export default function ConfiguredRecommendationTable (props) {
+export function ConfiguredRecommendationTable (props) {
 
   const [dense, setDense] = React.useState(false);
   const [order, setOrder] = React.useState('asc');
@@ -79,6 +81,7 @@ export default function ConfiguredRecommendationTable (props) {
                   <TableRow
                     key={element.name}
                     className="custom"
+                    onClick = {props.openScheduleDrilldown}
                   >
                     <TableCell className="custom">
                     </TableCell>
@@ -109,3 +112,5 @@ export default function ConfiguredRecommendationTable (props) {
     </div>
   );
 }
+
+export default connect(null, mapDispatchToProps)(ConfiguredRecommendationTable);
