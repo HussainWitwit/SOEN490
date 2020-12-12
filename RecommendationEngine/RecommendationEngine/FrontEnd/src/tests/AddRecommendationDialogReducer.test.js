@@ -4,7 +4,7 @@ import { TemplateItems } from '../containers/TemplateConfigurationModal/ListTemp
 const detailsConfigInitialValues = {
   title: '',
   asset: [],
-  createdBy: 'Alain',
+  createdBy: 'Kenzo',
   preferredScenario: 'ROI',
   granularity: 'Yearly',
   repeatDay: 1, 

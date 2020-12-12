@@ -4,10 +4,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
-import  { AssetTree }  from '../AssetTreeView/AssetTreeView';
+import AssetTree  from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
 import './RightPanelDrawer.css';
 
 RightPanelDrawer.propType = {
@@ -18,7 +16,7 @@ RightPanelDrawer.propType = {
 
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
-export function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDrawerPinned, nestedAssets }) {
+export function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDrawerPinned }) {
 
     const [isOpen, setIsOpen] = useState(isDrawerOpen === undefined ? false : isDrawerOpen);
     const [isPinClicked, setIsPinClicked] = useState(false);
@@ -68,11 +66,10 @@ export function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDrawerPinne
                     }
                 </div>
                 <div>
-                    <AssetTree nestedAssets = {nestedAssets} />
+                    <AssetTree />
                 </div>
         </div>}
         </SwipeableDrawer>
         </div>
     );
 }
-export default connect(mapStateToProps)(RightPanelDrawer);
