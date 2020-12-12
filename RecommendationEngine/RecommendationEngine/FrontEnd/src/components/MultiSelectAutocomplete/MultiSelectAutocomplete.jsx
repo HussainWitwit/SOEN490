@@ -10,7 +10,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 function MultiSelectAutocomplete(props) {
   return (
     <Autocomplete
-      id="multiple-select-asset-container"
+      id={props.id ? props.id : ''}
       limitTags={props.maxElement}
       multiple //TODO: Add case that checks the recommendation type and disabled multiple selection
       defaultValue={props.defaultValue ? props.defaultValue : [props.items[0]]}

@@ -39,9 +39,6 @@ export function DetailsConfigurationModal (props) {
     if(template.name === "Yearly Wash Optimization") {
       setGranularity('Yearly');
     }
-    else {
-      setGranularity('Weekly');
-    }
   }, [template.name])
 
   return (

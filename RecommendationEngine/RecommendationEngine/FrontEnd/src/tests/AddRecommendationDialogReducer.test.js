@@ -9,7 +9,7 @@ const detailsConfigInitialValues = {
   granularity: 'Yearly',
   repeatDay: 1, 
   repeatDate: new Date(),
-  repeatTime: new Date('2020-01-01T07:00:00.000-05:00')
+  repeatTime: new Date()
 }
 
 let state = {
