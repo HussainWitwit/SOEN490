@@ -81,12 +81,8 @@ export const getConfiguredRecommendationById = async (id:number) => {
             recurrenceDatetime: response.recurrenceDatetime,
             createdOn: response.createdOn,
             assetList: response.assets,
-            parameters : response.parameters ? response.parameters.map((parameter: any) => {
-                return { 
-                  parameterName: parameter.parameterName,
-                  parameterValue: parameter.parameterValue,
-                }  
-            })  : []
+            lastJobs: response.lastJobs,
+            parameters : response.parameters
           };
 }
 
