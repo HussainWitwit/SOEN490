@@ -9,3 +9,4 @@ coverage:
         threshold: 10%
 ignore:
   - "RecommendationEngine/Models"  # ignore models
+  - "RecommendationEngine/RecommendationEngine/Repositories" #ignore repositories
