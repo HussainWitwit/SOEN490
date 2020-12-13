@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
-using Interfaces.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Models.Application;
 using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -35,7 +33,8 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<MockTestRepository>().AsImplementedInterfaces();
-                    builder.RegisterType<MockConfiguredRecommendationService>().AsImplementedInterfaces();
+                    builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockAssetRepository>().AsImplementedInterfaces();
                     builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -56,6 +55,14 @@ namespace RecommendationEngineTests.APITests
             var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("/configuredrecommendation/add", body);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public async Task GetRecommendationByIdTest()
+        {
+            var response = await _client.GetAsync("/configuredrecommendation/configuredrecommendation/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            var expected = response.Content;
         }
     }
 
@@ -85,19 +92,29 @@ namespace RecommendationEngineTests.APITests
         }
     }
 
-    public class MockConfiguredRecommendationService : IConfiguredRecommendationService
+    public class MockAssetRepository : IAssetRepository
     {
-        public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        public void AddAsset(DBAsset asset)
         {
-            
         }
 
-        public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
+        public void AddAssetList(List<DBAsset> asset)
         {
-            return new List<ConfiguredRecommendation>()
-            {
-                MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION
-            };
+        }
+
+        public List<DBAsset> GetAssetsList()
+        {
+            return new List<DBAsset>();
+        }
+
+        public DBAsset GetAssetByName(string assetName)
+        {
+            return new DBAsset();
+        }
+
+        public DBAsset GetAssetById(int assetId)
+        {
+            return new DBAsset();
         }
     }
 }
