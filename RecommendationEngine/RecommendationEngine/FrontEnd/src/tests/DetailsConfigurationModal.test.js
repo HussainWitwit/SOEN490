@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { DetailsConfigurationModal } from '../containers/DetailsConfigurationModal/DetailsConfigurationModal';
-import { store } from '../redux/store';
 import MultiSelectAutocomplete from '../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -17,9 +16,9 @@ describe('DetailsConfigurationModal component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const wrapper = shallow(<DetailsConfigurationModal 
-        template = {{name: 'Unit test'}}
-        basicConfiguration = {{
+    const wrapper = shallow(<DetailsConfigurationModal
+        template={{ name: 'Unit test' }}
+        basicConfiguration={{
             title: '',
             asset: [],
             createdBy: 'Alain',
@@ -29,14 +28,14 @@ describe('DetailsConfigurationModal component', () => {
             repeatDate: '',
             repeatTime: ''
         }}
-        setTitle = {(value) => {}}
-        updateAsset = {(value) => {}}
-        setPreferredScenario = {(value) => {}}
-        setGranularity = {(value) => {}}
-        setRepeatDay = {(value) => {}}
-        setRepeatDate = {(value) => {}}
-        setRepeatTime = {(value) => {}}
-        apiAssets = {[]}
+        setTitle={(value) => { }}
+        updateAsset={(value) => { }}
+        setPreferredScenario={(value) => { }}
+        setGranularity={(value) => { }}
+        setRepeatDay={(value) => { }}
+        setRepeatDate={(value) => { }}
+        setRepeatTime={(value) => { }}
+        apiAssets={[]}
     />);
 
     it('It renders without crashing', async () => {
@@ -47,7 +46,7 @@ describe('DetailsConfigurationModal component', () => {
 
     it('Finds the divs', () => {
         let divs = wrapper.find('div');
-        expect(divs).toHaveLength(11);
+        expect(divs).toHaveLength(10);
     });
 
     it('Finds the subtitle', () => {
@@ -84,17 +83,13 @@ describe('DetailsConfigurationModal component', () => {
             const granularity = getAllByTestId(container, 'granularity');
             const granularityOption = getAllByTestId(container, 'granularity-option');
             const granularityOptionDate = getAllByTestId(container, 'date');
-            const day = getAllByTestId(container, 'title');
-
             fireEvent.click(buttonRon[0]); // return on investment
             fireEvent.click(buttonNetSaving[0]); // net saving
             fireEvent.click(granularity[0]); // granularity dropdown
-            fireEvent.click(granularityOption[0]); // daily
-            fireEvent.click(granularityOption[1]); // weekly 
+            fireEvent.click(granularityOption[0]); // weekly
+            fireEvent.click(granularityOption[1]); // monthly 
             fireEvent.click(granularityOptionDate[0]);
-            fireEvent.click(granularityOption[2]); // monthly 
-            fireEvent.click(granularityOption[3]); // yearly
-            fireEvent.click(day[0]); // day
+            fireEvent.click(granularityOption[2]); // yearly 
         });
     })
 

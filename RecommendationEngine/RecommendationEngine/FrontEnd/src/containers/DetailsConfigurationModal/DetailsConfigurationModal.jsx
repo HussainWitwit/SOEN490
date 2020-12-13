@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { animated } from 'react-spring';
 import { Form } from 'react-bootstrap';
 import './DetailsConfigurationModal.css';
@@ -17,6 +17,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
+  KeyboardDateTimePicker
 } from '@material-ui/pickers';
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
@@ -35,14 +36,15 @@ export function DetailsConfigurationModal (props) {
     apiAssets
   } = props;
 
+  const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
+
   useEffect(() => {
     if(template.name === "Yearly Wash Optimization") {
       setGranularity('Yearly');
     }
-    else {
-      setGranularity('Weekly');
-    }
   }, [template.name])
+
+ 
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -53,15 +55,14 @@ export function DetailsConfigurationModal (props) {
             <p id="text">Title: </p>
           </div>
           <TextField
-              error = {basicConfiguration.title === ''} 
+              error = {basicConfiguration.title === '' && !isFirstTypingTitle} 
               label = {basicConfiguration.title === '' ? "Required.": ''}
               value = {basicConfiguration.title}
               data-testid='title'
               className="title-input-field"
               placeholder = "Your title here..."
               variant="outlined"
-              onChange={(event) => setTitle(event.target.value)}
-    
+              onChange={(event) => { setIsFirstTypingTitle(false); setTitle(event.target.value); }}
           />
         </div>
         <div id="element-container">
@@ -152,34 +153,31 @@ export function DetailsConfigurationModal (props) {
            <MuiPickersUtilsProvider utils={DateFnsUtils}>
             {(basicConfiguration.granularity === granularityItems[1] ||
               basicConfiguration.granularity === granularityItems[2]) && (
-                <div id = "recommendation-date-picker">
-                <KeyboardDatePicker
-                  id="date-picker"
+                <KeyboardDateTimePicker
+                  id="recommendation-date-picker"
                   data-testid = 'date'
                   autoOk                  
-                  views = {["year", "month", "date"]}
                   inputVariant="outlined"
-                  label="Date"
+                  label="Date & Time"
                   minDate = {new Date()}
-                  format={"dd/MM/yyyy"}
+                  // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
                 /> 
-                </div>
               )}
-            {basicConfiguration.granularity !== granularityItems[2] && (
-             <KeyboardTimePicker
-                label="Time"
-                data-testid = 'time'
-                id = "recommendation-time-picker"
-                inputVariant="outlined"
-                value={basicConfiguration.repeatTime}
-                onChange={date => setRepeatTime(date)}
-              />
-            )}
+              {basicConfiguration.granularity === granularityItems[0] &&
+              <KeyboardTimePicker
+                  label="Time"
+                  data-testid = 'time'
+                  id = "recommendation-time-picker"
+                  inputVariant="outlined"
+                  value={basicConfiguration.repeatTime}
+                  onChange={date => setRepeatTime(date)}
+                />
+              }
           </MuiPickersUtilsProvider>
         </div>
       </div>

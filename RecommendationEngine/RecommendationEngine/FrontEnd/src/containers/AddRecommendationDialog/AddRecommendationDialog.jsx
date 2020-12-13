@@ -91,11 +91,11 @@ export function AddRecommendationDialog (props) {
         name: basicConfiguration.title,
         granularity: basicConfiguration.granularity,
         createdBy: basicConfiguration.createdBy,
-        createdOn: new Date().toISOString(),
+        createdOn: new Date(),
         preferredScenario: basicConfiguration.preferredScenario,
         recurrenceDayOfWeek: basicConfiguration.repeatDay,
         modifiedBy: '',
-        recurrenceDatetime: basicConfiguration.granularity === "Yearly" ? basicConfiguration.repeatDate.toISOString() : basicConfiguration.repeatTime.toISOString() , //Not correct format,
+        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
         assetIdList: basicConfiguration.asset.map((e) => { 
           return e.id;
         })
@@ -155,8 +155,13 @@ export function AddRecommendationDialog (props) {
             Previous
           </Button>
         )}
-        {index <= 2 && (
+        {index === 0 && (
           <Button id="next-btn" onClick={onClickNext} variant="outlined">
+          Next
+        </Button>
+        )}
+        {(index <= 2 && index > 0) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Next
           </Button>
         )}

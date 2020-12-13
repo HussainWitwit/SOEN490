@@ -51,7 +51,7 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.SpanIncrement = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "span increment").FirstOrDefault().ParamValue;
             _parameters.SoilingBuffer = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "soiling season buffer").FirstOrDefault().ParamValue;
             _parameters.Accelerator = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "accelerator").FirstOrDefault().ParamValue;
-            _parameters.PreferedScenario = _recommendationJob.Schedule.PreferedScenario;
+            _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
             _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
             _parameters.Asset = _recommendationJob.Asset;
         }

@@ -36,7 +36,11 @@ jobs:
           command: npm i
           working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
       - run:
-          name: Running Frontend Tests
+          name: Running Frontend Unit Tests
+          command: npm run test
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
+      - run:
+          name: Running Frontend System Tests
           command: npm run test:ci
           working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
       - run:

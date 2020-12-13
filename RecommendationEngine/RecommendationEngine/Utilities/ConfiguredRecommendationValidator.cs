@@ -4,10 +4,10 @@ using System.Linq;
 using Models.DB;
 using Models.Application;
 
-namespace RecommendationEngine.configuredRecommendationHelper
+namespace RecommendationEngine.ConfiguredRecommendationValidator
 {
 
-    public static class ConfiguredRecommendationHelper
+    public static class ConfiguredRecommendationValidator
     {
 
         public static void Validate(this ConfiguredRecommendation configuredRecommendation, DBRecommendationType recommendationType)

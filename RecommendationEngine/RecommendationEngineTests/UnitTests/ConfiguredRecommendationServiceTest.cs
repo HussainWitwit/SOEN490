@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
 using Interfaces.Services.ExternalAPI;
@@ -39,6 +40,7 @@ namespace RecommendationEngineTests.UnitTests
             List<ConfiguredRecommendation> expected = _configuredRecommendationService.GetConfiguredRecommendationList();
             Assert.AreEqual(expected[0].Name, recommendation[0].Name);
             Assert.AreEqual(expected[0].Granularity, recommendation[0].Granularity);
+            Assert.NotNull(expected[0].AssetList);
         }
 
         [Test]
@@ -67,6 +69,22 @@ namespace RecommendationEngineTests.UnitTests
         {
             ConfiguredRecommendation emptyRecommendationType = MockConfiguredRecommendations.EMPTY_CONFIGURED_RECOMMENDATION;
             Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(emptyRecommendationType));
+        }
+
+        [Test]
+        public void BadDayOfWeekTest()
+        {
+            ConfiguredRecommendation configuredRecommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            configuredRecommendation.RecurrenceDayOfWeek = 10;
+            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+        }
+
+        [Test]
+        public void BadDateTest()
+        {
+            ConfiguredRecommendation configuredRecommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            configuredRecommendation.RecurrenceDatetime = new DateTime(2000, 01, 01);
+            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
     }
 }

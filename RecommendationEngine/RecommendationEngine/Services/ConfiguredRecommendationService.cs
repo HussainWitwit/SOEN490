@@ -5,7 +5,7 @@ using Interfaces.Services.ExternalAPI;
 using Models.Application;
 using Models.Application.Asset;
 using Models.DB;
-using RecommendationEngine.configuredRecommendationHelper;
+using RecommendationEngine.ConfiguredRecommendationValidator;
 using System.Collections.Generic;
 using System.Linq;
 using RecommendationEngine.ExceptionHandler;
