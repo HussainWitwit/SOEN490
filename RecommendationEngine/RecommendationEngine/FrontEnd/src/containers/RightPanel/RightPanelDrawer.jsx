@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
@@ -58,6 +58,7 @@ export function RightPanelDrawer({
       <SwipeableDrawer
         anchor="right"
         open={isOpen}
+        onOpen={()=> {}}
         onClose={closeAll}
         BackdropProps={{ invisible: true }}
         variant={'persistent'}

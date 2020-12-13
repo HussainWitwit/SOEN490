@@ -74,7 +74,7 @@ export default function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  if (configuredRecommendation.assetList.length == index + 1) {
+                  if (configuredRecommendation.assetList.length === index + 1) {
                     return (
                       <div className="asset-values">{asset.displayText} </div>
                     );
