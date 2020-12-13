@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom';
 import { RightPanelDrawer } from '../containers/RightPanel/RightPanelDrawer.jsx';
 import Enzyme, { mount } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { AssetTree } from '../containers/AssetTreeView/AssetTreeView';
+import { Tabs, TabList } from 'react-tabs';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -38,23 +36,13 @@ describe('RightPanel component', () => {
         expect(component).toHaveLength(1);
     });
 
-    it('It finds the asset tree', () => {
-        let component = wrapper.find(AssetTree);
+    it('It finds the tab', () => {
+        let component = wrapper.find(Tabs);
         expect(component).toHaveLength(1);
     });
 
-    it('It finds the icon button', () => {
-        let iconButton = wrapper.find(IconButton);
-        expect(iconButton).toHaveLength(4);
-    });
-
-    it('Finds the icon', () => {
-        let icon = wrapper.find(Icon);
-        expect(icon).toHaveLength(1);
-    });
-
-    it('It finds the close button', () => {
-        let close = wrapper.find(Icon);
-        expect(close).toHaveLength(1);
+    it('It finds the tabs titles', () => {
+        let component = wrapper.find(TabList);
+        expect(component).toHaveLength(1);
     });
 });
