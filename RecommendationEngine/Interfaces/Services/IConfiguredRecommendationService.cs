@@ -6,5 +6,6 @@ namespace Interfaces.Services
     public interface IConfiguredRecommendationService
     {
         public List<ConfiguredRecommendation> GetConfiguredRecommendationList();
+        public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation);
     }
 }

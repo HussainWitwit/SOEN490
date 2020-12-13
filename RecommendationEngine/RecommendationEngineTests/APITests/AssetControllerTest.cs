@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
+using Interfaces.Services;
 using Interfaces.Services.ExternalAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -10,7 +11,9 @@ using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
+using RecommendationEngine.ExceptionHandler;
 using RecommendationEngine.Services;
+using RecommendationEngineTests.APITests;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -22,7 +25,11 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
     public class AssetControllerTest
     {
         private readonly TestServer _server;
+        private readonly TestServer _serverBad;
+
         private readonly HttpClient _client;
+        private readonly HttpClient _clientBad;
+
 
         public AssetControllerTest()
         {
@@ -33,16 +40,28 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
                 {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<AssetService>().AsImplementedInterfaces();
-                    builder.RegisterType<TestDrive>().AsImplementedInterfaces();
+                    builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                     builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
+
+            _serverBad = new TestServer(new WebHostBuilder()
+               .UseStartup<Startup>()
+               .ConfigureServices(services => services.AddAutofac())
+               .ConfigureTestContainer<ContainerBuilder>(builder =>
+               {
+                   builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
+                   builder.RegisterType<AssetServiceMock>().AsImplementedInterfaces();
+                   builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
+                   builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
+               }));
+            _clientBad = _serverBad.CreateClient();
         }
 
         [Test]
-        public async Task GetAssets()
+        public async Task GetAssetsNested()
         {
-            var response = await _client.GetAsync("/asset/get");
+            var response = await _client.GetAsync("/asset/getAssetsNested");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             var asset = JsonConvert.DeserializeObject<AssetComposite>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(asset);
@@ -51,10 +70,44 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         }
 
         [Test]
+        public async Task GetAssetsList()
+        {
+            var response = await _client.GetAsync("/asset/getAssetsList");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<AssetLeaf> assetList = JsonConvert.DeserializeObject<List<AssetLeaf>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(assetList);
+            Assert.AreEqual(assetList[0].Name, MockData.MockAssets.BasicDBAssetList[0].Name);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
         public async Task Convert()
         {
             var response = await _client.GetAsync("/asset/convert");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        //Tests with exceptions being thrown
+        [Test]
+        public async Task GetAssetsNestedBad()
+        {
+            var response = await _clientBad.GetAsync("/asset/getAssetsNested");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+     
+        }
+
+        [Test]
+        public async Task GetAssetsListBad()
+        {
+            var response = await _clientBad.GetAsync("/asset/getAssetsList");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public async Task ConvertBad()
+        {
+            var response = await _clientBad.GetAsync("/asset/convert");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
     }
 
@@ -73,6 +126,11 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         {
             return MockData.MockAssets.BasicDBAsset;
         }
+
+        public DBAsset GetAssetById(int assetId)
+        {
+            return MockData.MockAssets.BasicDBAsset;
+        }
     }
 
     public class TestAssetTypeRepositoryMock : IAssetTypeRepository
@@ -83,40 +141,26 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         }
     }
 
-    public class TestDrive : IDriveService
+    public class AssetServiceMock : IAssetService
     {
-        public async Task<List<PFPortfolio>> GetPortfolios()
+        Task IAssetService.Convert()
         {
-            await Task.Delay(1);
-            return MockData.MockAssets.BasicPortfolios;
-        }
-        public async Task<List<PFPortfolio>> GetPlants()
-        {
-            await Task.Delay(1);
-            return MockData.MockAssets.BasicPlants;
+            throw new GlobalException(400, "a", "b", "c");
         }
 
-        public async Task<PFPlant> GetPlantById(string plantId)
+        Asset IAssetService.GetAssetByName(string assetName)
         {
-            await Task.Delay(1);
-            return MockData.MockAssets.BasicPlant;
+            throw new GlobalException(400, "a", "b", "c");
         }
 
-        public async Task<List<PFPPAPrice>> GetPPAPriceByPlantId(string plantId)
+        List<AssetLeaf> IAssetService.GetAssetsList()
         {
-            await Task.Delay(1);
-            return new List<PFPPAPrice>();
-        }
-        public async Task<List<PFMetadata>> GetAssetsMetadataByPlantIds(List<string> plantIds)
-        {
-            await Task.Delay(1);
-            return new List<PFMetadata>();
-        }
-        public async Task<Dictionary<string, List<PFPredictedEnergy>>> GetDailyPredictedEnergyByPlantIds(DateTime startTime, DateTime endTime, List<string> plantIds)
-        {
-            await Task.Delay(1);
-            return new Dictionary<string, List<PFPredictedEnergy>>();
+            throw new GlobalException(400, "a", "b", "c");
         }
 
+        Asset IAssetService.GetAssetsTreeview()
+        {
+            throw new GlobalException(400, "a", "b", "c");
+        }
     }
 }

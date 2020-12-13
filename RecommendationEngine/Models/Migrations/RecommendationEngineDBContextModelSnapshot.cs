@@ -333,7 +333,13 @@ namespace RecommendationEngine.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("DisplayText")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("EnergyType")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Type")

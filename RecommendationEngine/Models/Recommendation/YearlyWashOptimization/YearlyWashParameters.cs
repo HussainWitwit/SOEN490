@@ -15,7 +15,7 @@ namespace Models.Recommendation.YearlyWashOptimization
         public double CostCleaning { get; set; }
         public double SoilingBuffer { get; set; }
         public double Accelerator { get; set; }
-        public string PreferedScenario { get; set; }
+        public string PreferredScenario { get; set; }
         public List<string> PlantIds { get; set; }
     }
 }

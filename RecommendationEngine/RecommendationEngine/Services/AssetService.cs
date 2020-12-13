@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace RecommendationEngine.Services
 {
 
@@ -20,6 +19,7 @@ namespace RecommendationEngine.Services
         private IAssetTypeRepository _assetTypeRepository;
         private List<DBAsset> _assets;
         private DBAssetType _portfolioAssetType;
+        private DBAssetType _plantAssetType;
 
         public AssetService(
                 IDriveService driveService,
@@ -32,6 +32,7 @@ namespace RecommendationEngine.Services
             _assetTypeRepository = assetTypeRepository;
             GetDBAssets();
             _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
+            _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
         }
 
         public Asset GetAssetsTreeview()
@@ -158,7 +159,7 @@ namespace RecommendationEngine.Services
                         ElementPath = x.Id,
                         DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
                         EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
-                        Type = isPortfolio ? _portfolioAssetType : null,
+                        Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
                         TimeZone = isPortfolio ? null : plant.TimeZone,
                         AcPower = isPortfolio ? 0 : plant.AcCapacity,
                         ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
@@ -186,6 +187,27 @@ namespace RecommendationEngine.Services
         {
             String parentId = Task.Run(() => { return GetPlantById(id); }).Result.PortfolioId;
             return parentId;
+        }
+
+        public List<AssetLeaf> GetAssetsList()
+        {
+            List<DBAsset> dbAssets = GetDBAssets();
+
+            List<AssetLeaf> assets = dbAssets.Distinct().Where(dbasset => dbasset.Type != null).Select(dbasset => new AssetLeaf()
+                {
+                    Name = dbasset.Name,
+                    Id = dbasset.AssetId,
+                    AcPower = !Double.IsNaN(dbasset.AcPower) ? dbasset.AcPower : 0,
+                    DisplayText = dbasset.DisplayText,
+                    ElementPath = dbasset.ElementPath,
+                    EnergyType = dbasset.EnergyType,
+                    AssetType = dbasset.Type.Name,
+                    TimeZone = dbasset.TimeZone,
+                    
+                }
+            ).ToList();
+
+            return assets;
         }
     }
 }

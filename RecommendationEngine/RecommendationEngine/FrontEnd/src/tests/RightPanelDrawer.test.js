@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RightPanelDrawer from '../containers/RightPanel/RightPanelDrawer.jsx';
-import Enzyme, { shallow } from '../enzyme';
+import { RightPanelDrawer } from '../containers/RightPanel/RightPanelDrawer.jsx';
+import Enzyme, { mount } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { AssetTree } from '../components/AssetTreeView/AssetTreeView';
+import { AssetTree } from '../containers/AssetTreeView/AssetTreeView';
+import { store } from '../redux/store';
+import { Provider } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -16,45 +17,44 @@ describe('RightPanel component', () => {
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
 
+    let wrapper;
+
+    beforeEach(() => {
+        wrapper = mount(<Provider store={store}><RightPanelDrawer /></Provider>);
+    })
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<RightPanelDrawer />, div);
+        ReactDOM.render(<Provider store={store}><RightPanelDrawer /></Provider>, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
     it('It finds it in the component tree main div', () => {
-        const output = shallow(<RightPanelDrawer />);
-        expect(output).toHaveLength(1);
+        expect(wrapper).toHaveLength(1);
     });
 
     it('It finds the swipeable drawer component', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let component = output.find(SwipeableDrawer);
+        let component = wrapper.find(SwipeableDrawer);
         expect(component).toHaveLength(1);
     });
 
     it('It finds the asset tree', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let component = output.find(AssetTree);
+        let component = wrapper.find(AssetTree);
         expect(component).toHaveLength(1);
     });
 
     it('It finds the icon button', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let iconButton = output.find(IconButton);
-        expect(iconButton).toHaveLength(2);
+        let iconButton = wrapper.find(IconButton);
+        expect(iconButton).toHaveLength(4);
     });
 
     it('Finds the icon', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let icon = output.find(Icon);
+        let icon = wrapper.find(Icon);
         expect(icon).toHaveLength(1);
     });
 
     it('It finds the close button', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let close = output.find(Icon);
+        let close = wrapper.find(Icon);
         expect(close).toHaveLength(1);
     });
 });

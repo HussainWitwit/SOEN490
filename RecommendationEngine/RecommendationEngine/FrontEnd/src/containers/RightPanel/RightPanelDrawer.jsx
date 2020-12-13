@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
-import { AssetTree } from '../../components/AssetTreeView/AssetTreeView';
+import AssetTree  from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
 import './RightPanelDrawer.css';
 
@@ -16,7 +16,7 @@ RightPanelDrawer.propType = {
 
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
-export default function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDrawerPinned }) {
+export function RightPanelDrawer({ isDrawerOpen, isInternalClosed, isDrawerPinned }) {
 
     const [isOpen, setIsOpen] = useState(isDrawerOpen === undefined ? false : isDrawerOpen);
     const [isPinClicked, setIsPinClicked] = useState(false);

@@ -87,8 +87,8 @@ namespace RecommendationScheduler.RecommendationTypes
 
                         UpdateTempOutput(_cumulativeCleaning, _apiValues.PlantDCCapacity);
 
-                        if ((_userParameters.PreferedScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
-                            || (_userParameters.PreferedScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving
+                        if ((_userParameters.PreferredScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
+                            || (_userParameters.PreferredScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving
                         {
                             UpdateBestResult();
 

@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RightPanelDrawer from '../containers/RightPanel/RightPanelDrawer.jsx';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { AssetTree } from '../components/AssetTreeView/AssetTreeView';
-import { MinusSquare, PlusSquare, TransitionComponent, AssetTreeItem, SearchComboBox } from '../components/AssetTreeView/AssetTreeView';
+import { AssetTree }  from '../containers/AssetTreeView/AssetTreeView';
+import { MinusSquare, PlusSquare, TransitionComponent, AssetTreeItem, SearchComboBox } from '../containers/AssetTreeView/AssetTreeView';
 import Collapse from '@material-ui/core/Collapse';
 import TreeItem from '@material-ui/lab/TreeItem';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import TreeView from '@material-ui/lab/TreeView';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -28,18 +25,6 @@ describe('AssetTreeView component', () => {
     it('It is visible in the component tree', () => {
         const output = shallow(<AssetTree />);
         expect(output).toHaveLength(1);
-    });
-
-    it('It finds the swipeable drawer component', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let component = output.find(SwipeableDrawer);
-        expect(component).toHaveLength(1);
-    });
-
-    it('It finds the asset tree', () => {
-        const output = shallow(<RightPanelDrawer />);
-        let component = output.find(AssetTree);
-        expect(component).toHaveLength(1);
     });
 
     it('It finds svg icon', () => {
@@ -69,11 +54,7 @@ describe('AssetTreeView component', () => {
         expect(component).toHaveLength(1);
     })
 
-    it("It finds the SearchComboBox component", () => {
-        const output = shallow(<AssetTreeItem />);
-        let component = output.find(Autocomplete);
-        expect(component).toHaveLength(0);
-    })
++
 
     it("It finds the AssetTree component", () => {
         const output = shallow(<AssetTree />);

@@ -16,12 +16,25 @@ namespace RecommendationEngine.Controllers
             _assetService = assetService;
         }
 
-        [HttpGet("get")]
-        public IActionResult GetAssets()
+        [HttpGet("getAssetsNested")]
+        public IActionResult GetAssetsNested()
         {
             try
             {
                 return Ok(_assetService.GetAssetsTreeview());
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+        }
+
+        [HttpGet("getAssetsList")]
+        public IActionResult GetAssetsList()
+        {
+            try
+            {
+                return Ok(_assetService.GetAssetsList());
             }
             catch (GlobalException e)
             {
