@@ -309,7 +309,7 @@
     text-align: center;
 }
 
-.execution-status-Failure .MuiChip-root{
+.execution-status-Failed .MuiChip-root{
     border: 1px solid #FF0000;
     background-color: #FF0000;
     padding: 5px 15px;
@@ -323,7 +323,7 @@
     font-size: 10px;
 }
 
-.execution-status-Failure{
+.execution-status-Failed{
     text-align: center;
 }
 
