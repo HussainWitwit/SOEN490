@@ -151,7 +151,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             parameters.CostCleaning = 2;
             parameters.SoilingBuffer = 3;
             parameters.Accelerator = 0.33;
-            parameters.PreferedScenario = "ROI";
+            parameters.PreferredScenario = "ROI";
             parameters.PlantIds = new List<string>();
             parameters.PlantIds.Add("RENEW01_2070.93.001");
             parameters.Asset = new DBAsset();
@@ -175,7 +175,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             parameters.CostCleaning = 2;
             parameters.SoilingBuffer = 3;
             parameters.Accelerator = 0.33;
-            parameters.PreferedScenario = "ROI";
+            parameters.PreferredScenario = "ROI";
             parameters.PlantIds = new List<string>();
             parameters.PlantIds.Add("RENEW01_2070.93.001");
             parameters.Asset = new DBAsset();
