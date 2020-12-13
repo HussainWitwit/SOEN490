@@ -37,7 +37,7 @@ function TopBar({openAssetTreeview}) {
   }, []);
 
   return (
-    <div id="main-containter">
+    <div className="main-container">
       <nav>
         <BreadcrumbsComponent id="breadcrumb"/>
         <p id="change_button"className="change_button" onClick = {openAssetTreeview}>Change</p>
