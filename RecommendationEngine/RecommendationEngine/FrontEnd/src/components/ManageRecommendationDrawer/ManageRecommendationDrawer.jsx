@@ -34,15 +34,15 @@ export default function ManageRecommendationDrawer({
   const stringRecurrenceFormatting = (granularity, dateInput, repeatDay) => {
     let date = new Date(dateInput);
     switch (granularity) {
-      case 'Yearlyy':
+      case 'Yearly':
         return `Every year on ${
           date.toLocaleTimeString('en-us', formatYear).split(',')[0]
         } at ${date.toLocaleTimeString('en-us', formatTime)}`;
-      case 'Yearlyyy':
+      case 'Monthly':
         return `Every ${
           date.toLocaleTimeString('en-us', formatMonth).split(',')[0]
         }th of the month at ${date.toLocaleTimeString('en-us', formatTime)}`;
-      case 'Yearly':
+      case 'Weekly':
         return `Every ${dayOfWeek[repeatDay - 1]} at ${date.toLocaleTimeString(
           'en-us',
           formatTime
