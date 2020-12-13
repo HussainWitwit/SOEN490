@@ -18,7 +18,6 @@ export const openScheduleDrilldown = async (dispatch, id) => {
   dispatch({
     type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
     payload: {
-      isOpen: true,
       response: response
     }
   });
