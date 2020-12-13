@@ -9,12 +9,6 @@ function TopBar({openAssetTreeview}) {
 
   const [locationDetails, setLocationDetails] = React.useState(null);
   const [weatherDetails, setWeatherDetails] = React.useState(null);
-  const [isChangeClicked, setIsChangeClicked] = React.useState(false);
-
-  /*const changeAssetEvent = () => {
-    props.changeAsset(!props.sharedChangeAssetValue || !isChangeClicked);
-    setIsChangeClicked(!props.sharedChangeAssetValue || !isChangeClicked);
-}*/
 
   // eslint-disable-next-line
   const getCurrentLocation = async () => {

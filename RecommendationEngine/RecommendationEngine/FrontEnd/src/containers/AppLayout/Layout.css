@@ -16,12 +16,12 @@ html {
     margin-right: auto;
     margin-left: 35px;
     margin-top: 20px;
-    transition: all 1s;
+    transition: all 0.5s;
 }
 
 .route-context-drawer {
     width: calc(100% - var(--drawer-width)); 
-    transition: all 1s; 
+    transition: all 0.5s; 
 }
 /* FIXME: Transitions not working
     Pin has a bug when the zoom is high

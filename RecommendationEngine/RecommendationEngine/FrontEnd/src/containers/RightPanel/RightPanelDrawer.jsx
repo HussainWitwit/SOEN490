@@ -18,7 +18,6 @@ RightPanelDrawer.propType = {
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
 export function RightPanelDrawer({
-  isDrawerPinned,
   isOpen,
   tabs,
   selectedTabIndex,
@@ -27,25 +26,6 @@ export function RightPanelDrawer({
   closeAll,
   changeTabIndex
 }) {
-  const [isPinClicked, setIsPinClicked] = useState(false);
-
-  // TODO: Check with Alain whats the point of InternalClosed
-  /*const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    isInternalClosed(open);
-    setIsOpen(open);
-  };*/
-
-  const pinDrawerEvent = () => {
-    setIsPinClicked(!isPinClicked);
-    isDrawerPinned(!isPinClicked);
-  };
 
   const handleCloseAssetTreeview = () => {
     closeAssetTreeview();
@@ -64,7 +44,7 @@ export function RightPanelDrawer({
     Drilldown: {
       title: 'Drilldown',
       closeHandler: handleCloseScheduleDrilldown,
-      component: (<ManageRecommendationDrawer configuredRecommendation={tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+      component: (<ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     },
   }
   
@@ -77,7 +57,7 @@ export function RightPanelDrawer({
       <div className="header-space"></div>
       <SwipeableDrawer
         anchor="right"
-        open={isPinClicked || isOpen}
+        open={isOpen}
         onClose={closeAll}
         BackdropProps={{ invisible: true }}
         variant={'persistent'}
@@ -102,29 +82,6 @@ export function RightPanelDrawer({
                 {tabOptions[tab.name].component}
               </TabPanel>))}
             </Tabs>
-
-            {/* <div className="drawer-header-container">
-              <p>Asset Selection</p>
-              <IconButton className="drawer-pin" onClick={pinDrawerEvent}>
-                <Icon
-                  className={classNames({
-                    'drawer-pinned-icon': isPinClicked,
-                    'drawer-unpinned-icon': !isPinClicked,
-                  })}
-                >
-                  push_pin
-                </Icon>
-              </IconButton>
-              {!isPinClicked && (
-                <IconButton
-                  className="drawer-pin"
-                  onClick={toggleDrawer(!isOpen)}
-                >
-                  <Close className="drawer-close"></Close>
-                </IconButton>
-              )}
-            </div> */}
-            <div>{/* <AssetTree nestedAssets = {nestedAssets} /> */}</div>
           </div>
         }
       </SwipeableDrawer>
