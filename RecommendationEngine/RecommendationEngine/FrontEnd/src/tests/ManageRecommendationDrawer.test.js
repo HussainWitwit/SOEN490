@@ -13,27 +13,39 @@ describe('ManageRecommendationDrawer component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
+    const output = shallow(<ManageRecommendationDrawer
+        configuredRecommendation={{
+            name: '',
+            description: '',
+            type: '',
+            preferredScenario: '',
+            granularity: '',
+            recurrenceDayOfWeek: '',
+            recurrenceDatetime: '',
+            createdBy: '',
+            assetList: [(value) => { }],
+            parameters: [(value) => { }],
+            lastJobs: [(value) => { }]
+        }}
+    />);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<ManageRecommendationDrawer />, div);
+        ReactDOM.render(output, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
     it('It finds it in the component tree main div', () => {
-        const output = shallow(<ManageRecommendationDrawer />);
         expect(output).toHaveLength(1);
     });
 
     it('It finds all 3 buttons', () => {
-        const output = shallow(<ManageRecommendationDrawer />);
         let buttons = output.find(Button);
         expect(buttons).toHaveLength(3);
     });
 
-    it('It finds all 5 tooltips for the last 5 execution status', () => {
-        const output = shallow(<ManageRecommendationDrawer />);
+    it('It finds the tooltip component', () => {
         let tooltip = output.find(Tooltip);
-        expect(tooltip).toHaveLength(5);
+        expect(tooltip).toHaveLength(1);
     });
 });
