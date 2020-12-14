@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities'
+import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
 
 //Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
 export default function ManageRecommendationDrawer({
@@ -90,7 +90,11 @@ export default function ManageRecommendationDrawer({
                 {configuredRecommendation.granularity &&
                   configuredRecommendation.recurrenceDayOfWeek &&
                   configuredRecommendation.recurrenceDatetime &&
-                  stringRecurrenceFormatting(configuredRecommendation.granularity, configuredRecommendation.recurrenceDatetime, configuredRecommendation.recurrenceDayOfWeek)}
+                  stringRecurrenceFormatting(
+                    configuredRecommendation.granularity,
+                    configuredRecommendation.recurrenceDatetime,
+                    configuredRecommendation.recurrenceDayOfWeek
+                  )}
               </p>
             </div>
           </Grid>
@@ -126,17 +130,11 @@ export default function ManageRecommendationDrawer({
               <div
                 className={
                   'execution-status-' +
-                  (configuredRecommendation.lastJobs &&
-                    configuredRecommendation.lastJobs[4] &&
-                    configuredRecommendation.lastJobs[4].status)
+                  configuredRecommendation.lastJobs[4].status
                 }
               >
                 <Chip
-                  label={
-                    configuredRecommendation.lastJobs &&
-                    configuredRecommendation.lastJobs[4] &&
-                    configuredRecommendation.lastJobs[4].status.toUpperCase()
-                  }
+                  label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
                 />
               </div>
             ) : (
