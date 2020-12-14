@@ -25,11 +25,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
     public class AssetControllerTest
     {
         private readonly TestServer _server;
-        private readonly TestServer _serverBad;
-
         private readonly HttpClient _client;
-        private readonly HttpClient _clientBad;
-
 
         public AssetControllerTest()
         {
@@ -44,18 +40,6 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
                     builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
-
-            _serverBad = new TestServer(new WebHostBuilder()
-               .UseStartup<Startup>()
-               .ConfigureServices(services => services.AddAutofac())
-               .ConfigureTestContainer<ContainerBuilder>(builder =>
-               {
-                   builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
-                   builder.RegisterType<AssetServiceMock>().AsImplementedInterfaces();
-                   builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
-                   builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
-               }));
-            _clientBad = _serverBad.CreateClient();
         }
 
         [Test]
@@ -86,29 +70,6 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
             var response = await _client.GetAsync("/asset/convert");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
-
-        //Tests with exceptions being thrown
-        [Test]
-        public async Task GetAssetsNestedBad()
-        {
-            var response = await _clientBad.GetAsync("/asset/getAssetsNested");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
-     
-        }
-
-        [Test]
-        public async Task GetAssetsListBad()
-        {
-            var response = await _clientBad.GetAsync("/asset/getAssetsList");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
-        }
-
-        [Test]
-        public async Task ConvertBad()
-        {
-            var response = await _clientBad.GetAsync("/asset/convert");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
-        }
     }
 
 
@@ -138,29 +99,6 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         public DBAssetType GetAssetTypeByName(string assetTypeName)
         {
             return MockData.MockAssets.PortfolioAssetType;
-        }
-    }
-
-    public class AssetServiceMock : IAssetService
-    {
-        Task IAssetService.Convert()
-        {
-            throw new GlobalException(400, "a", "b", "c");
-        }
-
-        Asset IAssetService.GetAssetByName(string assetName)
-        {
-            throw new GlobalException(400, "a", "b", "c");
-        }
-
-        List<AssetLeaf> IAssetService.GetAssetsList()
-        {
-            throw new GlobalException(400, "a", "b", "c");
-        }
-
-        Asset IAssetService.GetAssetsTreeview()
-        {
-            throw new GlobalException(400, "a", "b", "c");
         }
     }
 }
