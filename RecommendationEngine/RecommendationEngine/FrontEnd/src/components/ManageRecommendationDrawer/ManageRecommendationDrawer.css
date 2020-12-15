@@ -385,3 +385,38 @@
     display: inline-block;
     margin: 5 auto;
 }
+
+.execution-bar-tooltip.MuiTooltip-tooltip {
+    background-color: rgb(226, 226, 226);
+    color: black;
+    font-size: 14px;
+}
+
+.execution-bar-popper.MuiTooltip-popper {
+    opacity: 0.8;
+}
+
+
+.tooltip-status-style {
+    display: flex;
+    flex-direction: row;
+}
+
+.style-Failed {
+    color: #FF0000;
+    font-weight: bolder;
+    margin-left: 10px;
+}
+
+.style-Running {
+    font-weight: bolder;
+    margin-left: 10px;
+    font-style: italic;
+}
+
+.style-Success {
+    color: #49C71F;
+    font-weight: bolder;
+    margin-left: 10px;
+
+}

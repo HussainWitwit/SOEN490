@@ -79,6 +79,7 @@ export function ConfiguredRecommendationTable (props) {
               {props.data && props.data.map((element, index) => {
                 return (
                   <TableRow
+                    hover
                     key={element.name}
                     className="custom"
                     onClick = {() => props.openScheduleDrilldown(element.id)}

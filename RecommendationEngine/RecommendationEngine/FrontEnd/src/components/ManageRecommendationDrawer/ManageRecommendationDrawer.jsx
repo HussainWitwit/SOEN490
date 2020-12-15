@@ -95,17 +95,23 @@ export default function ManageRecommendationDrawer({
               {configuredRecommendation.lastJobs &&
                 configuredRecommendation.lastJobs.map((value) => {
                   return value == null ? (
-                    <Tooltip title="No status available" className="Tooltip">
+                    <Tooltip title="No status available">
                       <div className="Empty"></div>
                     </Tooltip>
                   ) : (
                       <Tooltip
+                        id = 'execution-bar'
+                        classes = {{
+                          tooltip: 'execution-bar-tooltip',
+                          popper: 'execution-bar-popper'
+                        }}
+                        arrow = {true}
                         title={
-                          <span>
-                            <p>Id: {value.id}</p>
-                            <p>Status: {value.status}</p>
-                            <p>Date: {value.timestamp}</p>
-                          </span>
+                          <div>
+                            {/* <div>Id: {value.id}</div> */}
+                            <div className = 'tooltip-status-style'>Status: <div className = {'style-'+value.status}>{value.status}</div></div>
+                            <div>Date: {value.timestamp}</div>
+                          </div>
                         }
                       >
                         <div className={value.status}></div>
