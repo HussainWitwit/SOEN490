@@ -12,8 +12,11 @@
     min-width: 850px;
 }
 
+.MuiTableRow-root:hover {
+    opacity: 0.7;
+}
 
-.toolBarTitle{
+.toolBarTitle {
     flex: 1 1 100%;
     margin-left: 10px;
     color: grey;
