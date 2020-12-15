@@ -107,7 +107,7 @@
 
 .asset-values{
     margin: 0;
-    padding: 0;
+    padding-right: 2px;
     color: #687480;
     font-size: 12px;
     word-wrap: break-word;

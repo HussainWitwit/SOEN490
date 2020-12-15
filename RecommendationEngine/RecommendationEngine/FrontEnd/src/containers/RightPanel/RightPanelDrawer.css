@@ -91,7 +91,6 @@
 
 .react-tabs__tab--selected {
   background: #fff;
-  border-color: rgb(100, 97, 97);
   color: black;
   border-radius: 5px 5px 0 0;
 }

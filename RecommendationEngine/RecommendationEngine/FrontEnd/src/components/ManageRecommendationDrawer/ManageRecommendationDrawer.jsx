@@ -7,7 +7,6 @@ import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 
-//Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
 export default function ManageRecommendationDrawer({
   configuredRecommendation,
 }) {
@@ -35,13 +34,11 @@ export default function ManageRecommendationDrawer({
     let date = new Date(dateInput);
     switch (granularity) {
       case 'Yearly':
-        return `Every year on ${
-          date.toLocaleTimeString('en-us', formatYear).split(',')[0]
-        } at ${date.toLocaleTimeString('en-us', formatTime)}`;
+        return `Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]
+          } at ${date.toLocaleTimeString('en-us', formatTime)}`;
       case 'Monthly':
-        return `Every ${
-          date.toLocaleTimeString('en-us', formatMonth).split(',')[0]
-        }th of the month at ${date.toLocaleTimeString('en-us', formatTime)}`;
+        return `Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]
+          }th of the month at ${date.toLocaleTimeString('en-us', formatTime)}`;
       case 'Weekly':
         return `Every ${dayOfWeek[repeatDay - 1]} at ${date.toLocaleTimeString(
           'en-us',
@@ -74,15 +71,7 @@ export default function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  if (configuredRecommendation.assetList.length === index + 1) {
-                    return (
-                      <div className="asset-values">{asset.displayText} </div>
-                    );
-                  } else {
-                    return (
-                      <div className="asset-values">{asset.displayText}, </div>
-                    );
-                  }
+                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ','}</div>
                 })}
             </div>
           </Grid>
@@ -133,50 +122,50 @@ export default function ManageRecommendationDrawer({
               {configuredRecommendation.lastJobs &&
                 configuredRecommendation.lastJobs.map((value) => {
                   return value == null ? (
-                    <Tooltip title="No status available">
+                    <Tooltip title="No status available" className="Tooltip">
                       <div className="Empty"></div>
                     </Tooltip>
                   ) : (
-                    <Tooltip
-                      title={
-                        <span>
-                          <p>Id: {value.id}</p>
-                          <p>Status: {value.status}</p>
-                          <p>Date: {value.timestamp}</p>
-                        </span>
-                      }
-                    >
-                      <div className={value.status}></div>
-                    </Tooltip>
-                  );
+                      <Tooltip
+                        title={
+                          <span>
+                            <p>Id: {value.id}</p>
+                            <p>Status: {value.status}</p>
+                            <p>Date: {value.timestamp}</p>
+                          </span>
+                        }
+                      >
+                        <div className={value.status}></div>
+                      </Tooltip>
+                    );
                 })}
             </div>
           </Grid>
           <Grid item xs={12}>
             <p className="value-title">Last Execution Status</p>
             {configuredRecommendation.lastJobs &&
-            configuredRecommendation.lastJobs[4] ? (
-              <div
-                className={
-                  'execution-status-' +
-                  (configuredRecommendation.lastJobs &&
-                    configuredRecommendation.lastJobs[4] &&
-                    configuredRecommendation.lastJobs[4].status)
-                }
-              >
-                <Chip
-                  label={
-                    configuredRecommendation.lastJobs &&
-                    configuredRecommendation.lastJobs[4] &&
-                    configuredRecommendation.lastJobs[4].status.toUpperCase()
+              configuredRecommendation.lastJobs[4] ? (
+                <div
+                  className={
+                    'execution-status-' +
+                    (configuredRecommendation.lastJobs &&
+                      configuredRecommendation.lastJobs[4] &&
+                      configuredRecommendation.lastJobs[4].status)
                   }
-                />
-              </div>
-            ) : (
-              <div className={'execution-status-Empty'}>
-                <Chip label="NO STATUS" />
-              </div>
-            )}
+                >
+                  <Chip
+                    label={
+                      configuredRecommendation.lastJobs &&
+                      configuredRecommendation.lastJobs[4] &&
+                      configuredRecommendation.lastJobs[4].status.toUpperCase()
+                    }
+                  />
+                </div>
+              ) : (
+                <div className={'execution-status-Empty'}>
+                  <Chip label="NO STATUS" />
+                </div>
+              )}
           </Grid>
           <Grid item xs={12}>
             <div className="created-edited-by">

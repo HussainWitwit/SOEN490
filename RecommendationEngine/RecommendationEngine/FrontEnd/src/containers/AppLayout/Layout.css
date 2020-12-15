@@ -20,7 +20,7 @@ html {
 }
 
 .route-context-drawer {
-    width: calc(100% - var(--drawer-width)); 
+    width: calc(99% - var(--drawer-width)); 
     transition: all 0.5s; 
 }
 /* FIXME: Transitions not working

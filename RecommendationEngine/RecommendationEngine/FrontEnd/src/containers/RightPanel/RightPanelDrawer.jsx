@@ -10,13 +10,6 @@ import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/Right
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 
-RightPanelDrawer.propType = {
-  isDrawerOpen: PropTypes.bool.isRequired,
-  isInternalClosed: PropTypes.bool.isRequired,
-  isDrawerPinned: PropTypes.bool.isRequired,
-};
-
-//Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
 export function RightPanelDrawer({
   isOpen,
   tabs,
