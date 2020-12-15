@@ -74,7 +74,7 @@ export default function ConfiguredRecommendationTable (props) {
               rowCount={props.data ? props.data.length : 1}
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
-              {props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element, index) => {
+              {props.data && props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element, index) => {
               return(
                   <TableRow
                     key={index} //we should maybe have the real configuredRec id passed here
