@@ -16,3 +16,7 @@ code {
 #background {
   background-color: #F7F8FC;
 }
+
+body {
+  overflow: hidden;
+}
