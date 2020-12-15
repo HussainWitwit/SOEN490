@@ -20,23 +20,15 @@ export function RightPanelDrawer({
   changeTabIndex
 }) {
 
-  const handleCloseAssetTreeview = () => {
-    closeAssetTreeview();
-  }
-
-  const handleCloseScheduleDrilldown = () => {
-    closeScheduleDrilldown();
-  }
-
   const tabOptions = {
     AssetTreeview: {
       title: 'Asset Treeview',
-      closeHandler: handleCloseAssetTreeview,
+      closeHandler: closeAssetTreeview,
       component: (<AssetTree />)
     },
     Drilldown: {
-      title: 'Drilldown',
-      closeHandler: handleCloseScheduleDrilldown,
+      title: 'Details',
+      closeHandler: closeScheduleDrilldown,
       component: (<ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     },
   }

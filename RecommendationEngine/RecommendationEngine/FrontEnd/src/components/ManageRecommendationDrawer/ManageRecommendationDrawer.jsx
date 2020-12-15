@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
 
 export default function ManageRecommendationDrawer({
   configuredRecommendation,
@@ -16,38 +17,6 @@ export default function ManageRecommendationDrawer({
     transform: 'translate3d(0px,0,0)',
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
-
-  var formatYear = { month: 'long', day: 'numeric' };
-  var formatMonth = { day: 'numeric' };
-  var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true };
-  var dayOfWeek = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-
-  const stringRecurrenceFormatting = (granularity, dateInput, repeatDay) => {
-    let date = new Date(dateInput);
-    switch (granularity) {
-      case 'Yearly':
-        return `Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]
-          } at ${date.toLocaleTimeString('en-us', formatTime)}`;
-      case 'Monthly':
-        return `Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]
-          }th of the month at ${date.toLocaleTimeString('en-us', formatTime)}`;
-      case 'Weekly':
-        return `Every ${dayOfWeek[repeatDay - 1]} at ${date.toLocaleTimeString(
-          'en-us',
-          formatTime
-        )}`;
-      default:
-        return 'Invalid';
-    }
-  };
 
   return (
     <animated.div style={props}>
@@ -112,7 +81,11 @@ export default function ManageRecommendationDrawer({
                 {configuredRecommendation.granularity &&
                   configuredRecommendation.recurrenceDayOfWeek &&
                   configuredRecommendation.recurrenceDatetime &&
-                  stringRecurrenceFormatting(configuredRecommendation.granularity, configuredRecommendation.recurrenceDatetime, configuredRecommendation.recurrenceDayOfWeek)}
+                  stringRecurrenceFormatting(
+                    configuredRecommendation.granularity,
+                    configuredRecommendation.recurrenceDatetime,
+                    configuredRecommendation.recurrenceDayOfWeek
+                  )}
               </p>
             </div>
           </Grid>
@@ -144,28 +117,22 @@ export default function ManageRecommendationDrawer({
           <Grid item xs={12}>
             <p className="value-title">Last Execution Status</p>
             {configuredRecommendation.lastJobs &&
-              configuredRecommendation.lastJobs[4] ? (
-                <div
-                  className={
-                    'execution-status-' +
-                    (configuredRecommendation.lastJobs &&
-                      configuredRecommendation.lastJobs[4] &&
-                      configuredRecommendation.lastJobs[4].status)
-                  }
-                >
-                  <Chip
-                    label={
-                      configuredRecommendation.lastJobs &&
-                      configuredRecommendation.lastJobs[4] &&
-                      configuredRecommendation.lastJobs[4].status.toUpperCase()
-                    }
-                  />
-                </div>
-              ) : (
-                <div className={'execution-status-Empty'}>
-                  <Chip label="NO STATUS" />
-                </div>
-              )}
+            configuredRecommendation.lastJobs[4] ? (
+              <div
+                className={
+                  'execution-status-' +
+                  configuredRecommendation.lastJobs[4].status
+                }
+              >
+                <Chip
+                  label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
+                />
+              </div>
+            ) : (
+              <div className={'execution-status-Empty'}>
+                <Chip label="NO STATUS" />
+              </div>
+            )}
           </Grid>
           <Grid item xs={12}>
             <div className="created-edited-by">
