@@ -8,7 +8,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
 
-//Extracting props instead of calling props everytime. Might be less readable. However, dev experience is amazing. A.J.U.U
 export default function ManageRecommendationDrawer({
   configuredRecommendation,
 }) {
@@ -41,15 +40,7 @@ export default function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  if (configuredRecommendation.assetList.length === index + 1) {
-                    return (
-                      <div className="asset-values">{asset.displayText} </div>
-                    );
-                  } else {
-                    return (
-                      <div className="asset-values">{asset.displayText}, </div>
-                    );
-                  }
+                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ','}</div>
                 })}
             </div>
           </Grid>
@@ -104,22 +95,22 @@ export default function ManageRecommendationDrawer({
               {configuredRecommendation.lastJobs &&
                 configuredRecommendation.lastJobs.map((value) => {
                   return value == null ? (
-                    <Tooltip title="No status available">
+                    <Tooltip title="No status available" className="Tooltip">
                       <div className="Empty"></div>
                     </Tooltip>
                   ) : (
-                    <Tooltip
-                      title={
-                        <span>
-                          <p>Id: {value.id}</p>
-                          <p>Status: {value.status}</p>
-                          <p>Date: {value.timestamp}</p>
-                        </span>
-                      }
-                    >
-                      <div className={value.status}></div>
-                    </Tooltip>
-                  );
+                      <Tooltip
+                        title={
+                          <span>
+                            <p>Id: {value.id}</p>
+                            <p>Status: {value.status}</p>
+                            <p>Date: {value.timestamp}</p>
+                          </span>
+                        }
+                      >
+                        <div className={value.status}></div>
+                      </Tooltip>
+                    );
                 })}
             </div>
           </Grid>
