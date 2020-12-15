@@ -18,5 +18,9 @@ code {
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  min-width:1000px;        /* Suppose you want minimum width of 1000px */
+  width: auto !important;  /* Firefox will set width as auto */
+  width:1000px;
 }
