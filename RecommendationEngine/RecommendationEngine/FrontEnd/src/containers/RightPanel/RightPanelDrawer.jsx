@@ -34,7 +34,7 @@ export function RightPanelDrawer({
       component: (<AssetTree />)
     },
     Drilldown: {
-      title: 'Drilldown',
+      title: 'Details',
       closeHandler: closeScheduleDrilldown,
       component: (<ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     },

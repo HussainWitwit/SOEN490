@@ -22,7 +22,7 @@ const rightPanelInitialState = {
   selectedTabIndex: 0,
 };
 
-const DRILLDOWN_NAME = 'Drilldown';
+const DRILLDOWN_NAME = 'Details';
 const ASSET_TREEVIEW_NAME = 'AssetTreeview';
 
 /**
