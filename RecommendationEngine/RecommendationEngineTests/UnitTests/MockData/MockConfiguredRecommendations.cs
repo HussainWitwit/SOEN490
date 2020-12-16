@@ -46,15 +46,24 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         Name = "Wash Recommendation 1",
                         ModifiedBy = "Mohanad",
                         CreatedOn = new DateTime().Date,
+                        Description = "Description",
                         Granularity = "Yearly",
                         PreferedScenario = "ROI",
                         DisplayText = "Wash Recommendation 1",
                         RecurrenceDatetime = new DateTime().Date,
                         RecurrenceDayOfWeek = 2,
                         RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
-                        ParametersList = null,
-                        AssetsList = new List<DBAssetRecommendationSchedule>() { dbAssetRecSchedule }
-                        
+                        ParametersList = new List<DBRecommendationScheduleParameter>{ new DBRecommendationScheduleParameter
+                        {
+                            ParamValue = 1,
+                            RecommendationParameter = new DBRecommendationParameter
+                            {
+                                Name = "TestParam"
+                            }
+                        }},
+                        AssetsList = new List<DBAssetRecommendationSchedule>() { dbAssetRecSchedule },
+                        JobsList = new List<DBRecommendationJob>{new DBRecommendationJob{RecommendationJobId = 1, Status = "Success", Timestamp = DateTime.Now}},
+
                     },
                     new DBRecommendationSchedule
                     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
 using Interfaces.Services.ExternalAPI;
@@ -85,6 +86,26 @@ namespace RecommendationEngineTests.UnitTests
             ConfiguredRecommendation configuredRecommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
             configuredRecommendation.RecurrenceDatetime = new DateTime(2000, 01, 01);
             Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+        }
+
+        [Test]
+        public void GetRecommendationByIdTest()
+        {
+            DBRecommendationSchedule recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST.First();
+            _repository.Setup(x => x.GetRecommendationScheduleById(It.IsAny<int>())).Returns(recommendation);
+
+            ConfiguredRecommendation expected = _configuredRecommendationService.GetConfiguredRecommendationById(1);
+            Assert.AreEqual("Wash Recommendation 1", expected.Name);
+            Assert.AreEqual("Yearly", expected.Granularity);
+            Assert.AreEqual("Description", expected.Description);
+            Assert.AreEqual("Mohanad", expected.CreatedBy);
+            Assert.AreEqual("ROI", expected.PreferredScenario);
+            Assert.AreEqual("Yearly Wash Optimization", expected.Type);
+            Assert.AreEqual(2, expected.RecurrenceDayOfWeek);
+            Assert.AreEqual(5, expected.LastJobs.Count);
+            Assert.AreEqual(1, expected.Parameters.Count);
+            Assert.AreEqual(1, expected.AssetList.Count);
+            Assert.NotNull(expected.AssetList);
         }
     }
 }

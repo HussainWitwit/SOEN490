@@ -40,5 +40,14 @@ namespace RecommendationEngine.Repositories
                 .Where(rec => rec.Type.Equals(recommendationType))
                 .FirstOrDefault();
         }
+
+        public DBRecommendationSchedule GetRecommendationScheduleById(int id)
+        {
+            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType)
+                .Include(x => x.AssetsList).ThenInclude(x => x.Asset)
+                .Include(x => x.ParametersList).ThenInclude(x => x.RecommendationParameter)
+                .Include(x => x.JobsList)
+                .FirstOrDefault(x => x.RecommendationScheduleId == id);
+        }
     }
 }

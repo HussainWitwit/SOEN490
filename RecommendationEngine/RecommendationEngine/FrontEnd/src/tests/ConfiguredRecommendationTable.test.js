@@ -21,7 +21,7 @@ describe.only('ConfiguredRecommendationTable component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<ConfiguredRecommendationTable store={store} />);
+    const output = shallow(<ConfiguredRecommendationTable store={store} />).dive();
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');

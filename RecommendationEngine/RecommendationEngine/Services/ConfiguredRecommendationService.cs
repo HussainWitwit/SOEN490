@@ -8,6 +8,7 @@ using Models.DB;
 using RecommendationEngine.ConfiguredRecommendationValidator;
 using System.Collections.Generic;
 using System.Linq;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
 {
@@ -42,6 +43,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 recommendations.Add(
                     new ConfiguredRecommendation
                     {
+                        Id = dbConfigRecommendation.RecommendationScheduleId,
                         Name = dbConfigRecommendation.Name,
                         Type = dbConfigRecommendation.RecommendationType.Type,
                         Granularity = dbConfigRecommendation.Granularity,
@@ -111,6 +113,60 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 EnergyType = asset.EnergyType,
                 TimeZone = asset.TimeZone,
             };
+        }
+
+        public ConfiguredRecommendation GetConfiguredRecommendationById(int id)
+        {
+
+            DBRecommendationSchedule schedule = _recommendationRepository.GetRecommendationScheduleById(id);
+
+            if (schedule == null)
+            {
+                throw new GlobalException
+                {
+                    ApplicationName = "RecommendationEngine",
+                    ErrorMessage = "Could not find a configured recommendation",
+                    Code = 404,
+                    Type = "Not Found"
+                };
+            }
+
+            ConfiguredRecommendation configuredRecommendation = new ConfiguredRecommendation
+            {
+                Id = schedule.RecommendationScheduleId,
+                Name = schedule.Name,
+                Type = schedule.RecommendationType.Type,
+                Description = schedule.Description,
+                CreatedBy = schedule.ModifiedBy,
+                CreatedOn = schedule.CreatedOn,
+                PreferredScenario = schedule.PreferedScenario,
+                RecurrenceDatetime = schedule.RecurrenceDatetime,
+                RecurrenceDayOfWeek = schedule.RecurrenceDayOfWeek,
+                Granularity = schedule.Granularity,
+                LastJobs = schedule.JobsList.TakeLast(5).Select(x => new ConfiguredRecommendationJob
+                {
+                    Id = x.RecommendationJobId,
+                    Status = x.Status,
+                    Timestamp = x.Timestamp
+                }).ToList(),
+                AssetList = schedule.AssetsList.Select(x => new AssetLeaf
+                {
+                    Name = x.Asset.Name,
+                    DisplayText = x.Asset.DisplayText,
+                    AcPower = x.Asset.AcPower,
+                    ElementPath = x.Asset.ElementPath,
+                    EnergyType = x.Asset.EnergyType,
+                    TimeZone = x.Asset.TimeZone
+                }).ToList(),
+                Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
+                {
+                    ParameterName = x.RecommendationParameter.DisplayText,
+                    ParameterValue = x.ParamValue
+                }).ToList()
+            };
+            // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
+            while (configuredRecommendation.LastJobs.Count < 5) configuredRecommendation.LastJobs.Insert(0, null);
+            return configuredRecommendation;
         }
     }
 }

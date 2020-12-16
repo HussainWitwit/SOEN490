@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ManageRecommendationPage } from '../containers/ManageRecommendationPage/ManageRecommendationPage';
+import ManageRecommendationPage from '../containers/ManageRecommendationPage/ManageRecommendationPage';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { store } from '../redux/store';
+import { Provider } from 'react-redux';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -13,12 +14,12 @@ describe.only('ManageRecommendationPage component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<ManageRecommendationPage store={store} />);
+    const output = shallow(<ManageRecommendationPage store={store} />).dive().dive();
 
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<ManageRecommendationPage store={store} />, div);
+        ReactDOM.render(<Provider store={store}><ManageRecommendationPage store={store} /></Provider>, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 

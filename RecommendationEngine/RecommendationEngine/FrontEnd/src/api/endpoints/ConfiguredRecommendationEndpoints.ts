@@ -15,7 +15,7 @@ export const GetConfiguredRecommendationList = async () => {
         const jsonResponse = await response.json();
         if(jsonResponse)
         {
-            configuredRecommendations = AssignResponse(jsonResponse);
+            configuredRecommendations = mapConfiguredRecommendations(jsonResponse);
             return configuredRecommendations;
         }
         else{
@@ -24,6 +24,25 @@ export const GetConfiguredRecommendationList = async () => {
     }
     catch(error) {
         return [];
+    }
+}
+
+export const getConfiguredRecommendationById = async (id:number) => {
+    let configuredRecommendations: ConfiguredRecommendation;
+    try{
+        let response = await fetch ('ConfiguredRecommendation/configuredRecommendation/'+id);
+        const jsonResponse = await response.json();
+        if(jsonResponse)
+        {
+            configuredRecommendations = mapConfiguredRecommendation(jsonResponse);
+            return configuredRecommendations;
+        }
+        else{
+            return {};
+        }
+    }
+    catch(error) {
+        return {};
     }
 }
 
@@ -43,13 +62,37 @@ export const GetConfiguredRecommendationList = async () => {
   };
 
 /**
- * 
+ * Maps a response to a configured recommendation
  * @param {*} response 
  */
-const AssignResponse = function(response: any): ConfiguredRecommendation[] {
+  const mapConfiguredRecommendation = function(response: any): ConfiguredRecommendation {
+    //Make sure the returned value is exactly equal to entity attribute for the entity in question
+        return {
+            id: response.id,
+            name: response.name,
+            description: response.description,
+            type: response.type,
+            granularity: response.granularity,
+            createdBy: response.createdBy,
+            preferredScenario: response.preferredScenario,
+            recurrenceDayOfWeek: response.recurrenceDayOfWeek,
+            recurrenceDatetime: response.recurrenceDatetime,
+            createdOn: response.createdOn,
+            assetList: response.assetList,
+            lastJobs: response.lastJobs,
+            parameters : response.parameters
+          };
+}
+
+/**
+ * Maps a response to a list of configured recommendation
+ * @param {*} response 
+ */
+const mapConfiguredRecommendations = function(response: any): ConfiguredRecommendation[] {
     //Make sure the returned value is exactly equal to entity attribute for the entity in question
     let result =  response.map((element: any) => {
         return {
+            id: element.id,
             name: element.name,
             type: element.type,
             granularity: element.granularity,

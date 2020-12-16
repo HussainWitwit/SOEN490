@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { AddConfiguredRecDialogReducer } from './AddRecDialogReducer/reducer';
 import { ApiReducer } from './ApiReducer/reducer';
+import { RightPanelReducer } from './RightPanelReducer/reducer'
 
 /**
  * Add your reducer here... Each reducer should have its own folder. 
@@ -8,7 +9,8 @@ import { ApiReducer } from './ApiReducer/reducer';
  */
 const rootReducer = combineReducers({
   addRecommendation: AddConfiguredRecDialogReducer,
-  apiReducer: ApiReducer
+  apiReducer: ApiReducer,
+  rightPanelReducer: RightPanelReducer
 })
 
 export default rootReducer

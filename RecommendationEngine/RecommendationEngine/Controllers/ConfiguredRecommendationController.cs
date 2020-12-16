@@ -22,6 +22,20 @@ namespace RecommendationEngine.Controllers
             return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
         }
 
+        [HttpGet("configuredRecommendation/{id}")]
+        public IActionResult GetConfiguredRecommendationById(int id)
+        {
+            try
+            {
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationById(id));
+
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(e);
+            }
+        }
+
         [HttpPost("add")]
         public IActionResult AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {

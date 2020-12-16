@@ -149,6 +149,4 @@ export function AssetTree ({nestedAssets}) {
   );
 
 }
-
 export default connect(mapStateToProps)(AssetTree);
-
