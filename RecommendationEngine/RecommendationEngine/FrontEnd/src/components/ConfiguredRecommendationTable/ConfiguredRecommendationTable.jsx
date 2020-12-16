@@ -28,7 +28,7 @@ export default function ConfiguredRecommendationTable (props) {
   const [orderBy, setOrderBy] = React.useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
-  //TODO: Beware for data as props
+ 
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
@@ -49,9 +49,6 @@ export default function ConfiguredRecommendationTable (props) {
     setPage(0);
   };
 
-  // handling the empty props.data for the method that compresses the table props.data
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.data ? (props.data.length - page * rowsPerPage) : 0);
-  console.log(props.data);
   return (
     <div id="root">
       <Paper id="paper">
@@ -95,18 +92,13 @@ export default function ConfiguredRecommendationTable (props) {
                     <TableCell className="custom" id="tableBody">{element.createdOn}</TableCell>
                   </TableRow>              
               )})}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination 
           id="pagination" 
           component="div" 
-          rowsPerPageOptions={[5, 10, 25, 50, 100]} 
+          rowsPerPageOptions={[10, 25, 50, 100]} 
           count={props.data ? props.data.length : 1} 
           rowsPerPage={rowsPerPage} 
           page={page} 
