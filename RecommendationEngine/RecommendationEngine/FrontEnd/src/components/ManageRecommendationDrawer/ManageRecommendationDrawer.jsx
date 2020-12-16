@@ -110,7 +110,8 @@ export default function ManageRecommendationDrawer({
                           <div>
                             {/* <div>Id: {value.id}</div> */}
                             <div className = 'tooltip-status-style'>Status: <div className = {'style-'+value.status}>{value.status}</div></div>
-                            <div>Date: {value.timestamp}</div>
+                                <div>Date: {value.timestamp}</div>
+                                {value.timestamp}
                           </div>
                         }
                       >

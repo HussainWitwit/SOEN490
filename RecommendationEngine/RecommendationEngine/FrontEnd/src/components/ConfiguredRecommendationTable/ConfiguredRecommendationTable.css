@@ -21,7 +21,7 @@
 }
 
 .MuiTableRow-root.Mui-selected, .MuiTableRow-root.Mui-selected:hover {
-    background-color: grey !important;
+    background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
 #controlLabel {
