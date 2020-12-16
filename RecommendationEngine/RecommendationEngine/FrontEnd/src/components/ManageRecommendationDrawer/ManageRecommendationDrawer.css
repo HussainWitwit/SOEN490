@@ -387,9 +387,10 @@
 }
 
 .execution-bar-tooltip.MuiTooltip-tooltip {
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(255, 255, 255);
     color: black;
     font-size: 14px;
+    border: 1px solid #000;
 }
 
 .execution-bar-popper.MuiTooltip-popper {
@@ -400,6 +401,7 @@
 .tooltip-status-style {
     display: flex;
     flex-direction: row;
+    margin-bottom: 5px;
 }
 
 .style-Failed {

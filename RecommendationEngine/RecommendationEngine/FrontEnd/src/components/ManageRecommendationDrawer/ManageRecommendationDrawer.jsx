@@ -20,112 +20,112 @@ export default function ManageRecommendationDrawer({
 
   const formatDate = (value) => {
     return (
-      value.timestamp.substring(0,10)
+      value.timestamp.substring(0, 10)
     )
-}
+  }
 
-return (
-  <animated.div style={props}>
-    <div className="drawer-content">
-      <Grid container>
-        <Grid item xs={12}>
-          <p className="drawer-title">{configuredRecommendation.name}</p>
-          <p className="drawer-subtitle">Description</p>
-          <div className="drawer-description">
-            {configuredRecommendation.description}
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="recommendationType">
-            <p className="value-title">Type</p>
-            <p className="values">{configuredRecommendation.type}</p>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="assets">
-            <p className="value-title">Assets</p>
-            {configuredRecommendation.assetList &&
-              configuredRecommendation.assetList.map((asset, index) => {
-                return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ','}</div>
-              })}
-          </div>
-        </Grid>
-        <Grid item xs={8}>
-          <div className="inputs">
-            <p className="value-title">Parameters</p>
-            {configuredRecommendation.parameters &&
-              configuredRecommendation.parameters.map((parameter) => {
-                return (
-                  <div className="values">{parameter.parameterName}</div>
-                );
-              })}
-          </div>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="outputs">
-            <p className="value-title">Value</p>
-            {configuredRecommendation.parameters &&
-              configuredRecommendation.parameters.map((parameter) => {
-                return (
-                  <div className="values">{parameter.parameterValue}</div>
-                );
-              })}
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="assets">
-            <p className="value-title">Preferred Scenario</p>
-            <p className="values">
-              {configuredRecommendation.preferredScenario}
-            </p>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="assets">
-            <p className="value-title">Schedule</p>
-            <p className="values">
-              {configuredRecommendation.granularity &&
-                configuredRecommendation.recurrenceDayOfWeek &&
-                configuredRecommendation.recurrenceDatetime &&
-                stringRecurrenceFormatting(
-                  configuredRecommendation.granularity,
-                  configuredRecommendation.recurrenceDatetime,
-                  configuredRecommendation.recurrenceDayOfWeek
-                )}
-            </p>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <p className="value-title">Last Five Executions</p>
-          <div className="last-five-status">
-            {configuredRecommendation.lastJobs &&
-              configuredRecommendation.lastJobs.map((value) => {
-                return value == null ? (
-                  <Tooltip title="No status available">
-                    <div className="Empty"></div>
-                  </Tooltip>
-                ) : (
-                    <Tooltip
-                      id='execution-bar'
-                      classes={{
-                        tooltip: 'execution-bar-tooltip',
-                        popper: 'execution-bar-popper'
-                      }}
-                      arrow={true}
-                      title={
-                        <div>
-                          {/* <div>Id: {value.id}</div> */}
-                          <div className='tooltip-status-style'>Status: <div className={'style-' + value.status}>{value.status}</div></div>
-                          <div>Date: {formatDate(value)}</div>
-                        </div>
-                      }
-                    >
-                      <div className={value.status}></div>
-                    </Tooltip>
+  const formatTime = (value) => {
+    return (
+      value.timestamp.substring(11, 20)
+    )
+  }
+
+  return (
+    <animated.div style={props}>
+      <div className="drawer-content">
+        <Grid container>
+          <Grid item xs={12}>
+            <p className="drawer-title">{configuredRecommendation.name}</p>
+            <p className="drawer-subtitle">Description</p>
+            <div className="drawer-description">
+              {configuredRecommendation.description}
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="recommendationType">
+              <p className="value-title">Type</p>
+              <p className="values">{configuredRecommendation.type}</p>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="assets">
+              <p className="value-title">Assets</p>
+              {configuredRecommendation.assetList &&
+                configuredRecommendation.assetList.map((asset, index) => {
+                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ','}</div>
+                })}
+            </div>
+          </Grid>
+          <Grid item xs={8}>
+            <div className="inputs">
+              <p className="value-title">Parameters</p>
+              {configuredRecommendation.parameters &&
+                configuredRecommendation.parameters.map((parameter) => {
+                  return (
+                    <div className="values">{parameter.parameterName}</div>
                   );
-              })}
-          </div>
-        </Grid>
+                })}
+            </div>
+          </Grid>
+          <Grid item xs={4}>
+            <div className="outputs">
+              <p className="value-title">Value</p>
+              {configuredRecommendation.parameters &&
+                configuredRecommendation.parameters.map((parameter) => {
+                  return (
+                    <div className="values">{parameter.parameterValue}</div>
+                  );
+                })}
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="assets">
+              <p className="value-title">Preferred Scenario</p>
+              <p className="values">
+                {configuredRecommendation.preferredScenario}
+              </p>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="assets">
+              <p className="value-title">Schedule</p>
+              <p className="values">
+                {configuredRecommendation.granularity &&
+                  configuredRecommendation.recurrenceDayOfWeek &&
+                  configuredRecommendation.recurrenceDatetime &&
+                  stringRecurrenceFormatting(
+                    configuredRecommendation.granularity,
+                    configuredRecommendation.recurrenceDatetime,
+                    configuredRecommendation.recurrenceDayOfWeek
+                  )}
+              </p>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <p className="value-title">Last Five Executions</p>
+            <div className="last-five-status">
+              {configuredRecommendation.lastJobs &&
+                configuredRecommendation.lastJobs.map((value) => (
+                  <Tooltip
+                    id='execution-bar'
+                    classes={{
+                      tooltip: 'execution-bar-tooltip',
+                      popper: 'execution-bar-popper'
+                    }}
+                    placement='top'
+                    arrow={true}
+                    title={value !== null ?
+                      <div>
+                        <div className='tooltip-status-style'>Status: <div className={'style-' + value.status}>{value.status}</div></div>
+                        <div>Date: {formatDate(value)} at {formatTime(value)}</div>
+                      </div>
+                      : "No status Avalaible"}
+                  >
+                    <div className={value !== null ? value.status : "Empty"}></div>
+                  </Tooltip>
+                ))}
+            </div>
+          </Grid>
         <Grid item xs={12}>
           <p className="value-title">Last Execution Status</p>
           {configuredRecommendation.lastJobs &&
@@ -171,6 +171,6 @@ return (
         </Grid>
       </Grid>
     </div>
-  </animated.div>
+  </animated.div >
 );
 }
