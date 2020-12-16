@@ -18,16 +18,9 @@ export default function ManageRecommendationDrawer({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
 
-  const formatDate = (value) => {
-    return (
-      value.timestamp.substring(0, 10)
-    )
-  }
-
-  const formatTime = (value) => {
-    return (
-      value.timestamp.substring(11, 20)
-    )
+  const formatDateTime = (date) => {
+    let timeStamp = new Date(date);
+      return timeStamp.toLocaleString();
   }
 
   return (
@@ -38,7 +31,7 @@ export default function ManageRecommendationDrawer({
             <p className="drawer-title">{configuredRecommendation.name}</p>
             <p className="drawer-subtitle">Description</p>
             <div className="drawer-description">
-              {configuredRecommendation.description}
+              {configuredRecommendation.description ? configuredRecommendation.description : 'N/A'}
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -52,37 +45,33 @@ export default function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ','}</div>
+                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
                 })}
             </div>
           </Grid>
           <Grid item xs={8}>
             <div className="inputs">
               <p className="value-title">Parameters</p>
-              {configuredRecommendation.parameters &&
-                configuredRecommendation.parameters.map((parameter) => {
-                  return (
-                    <div className="values">{parameter.parameterName}</div>
-                  );
-                })}
+              <div className="values">{configuredRecommendation.parameters.length ?
+                (configuredRecommendation.parameters.map((parameter) => {
+                  return parameter.parameterName;
+                })) : 'N/A'}</div>
             </div>
           </Grid>
           <Grid item xs={4}>
             <div className="outputs">
               <p className="value-title">Value</p>
-              {configuredRecommendation.parameters &&
-                configuredRecommendation.parameters.map((parameter) => {
-                  return (
-                    <div className="values">{parameter.parameterValue}</div>
-                  );
-                })}
+              <div className="values">{configuredRecommendation.parameters.length ?
+                (configuredRecommendation.parameters.map((parameter) => {
+                  return parameter.value;
+                })) : 'N/A'}</div>
             </div>
           </Grid>
           <Grid item xs={12}>
             <div className="assets">
               <p className="value-title">Preferred Scenario</p>
               <p className="values">
-                {configuredRecommendation.preferredScenario}
+                {configuredRecommendation.preferredScenario === 'ROI' ? 'Return on investment' : 'Net Saving'}
               </p>
             </div>
           </Grid>
@@ -117,7 +106,7 @@ export default function ManageRecommendationDrawer({
                     title={value !== null ?
                       <div>
                         <div className='tooltip-status-style'>Status: <div className={'style-' + value.status}>{value.status}</div></div>
-                        <div>Date: {formatDate(value)} at {formatTime(value)}</div>
+                        <div>Date: {formatDateTime(value.timestamp)}</div>
                       </div>
                       : "No status Avalaible"}
                   >
