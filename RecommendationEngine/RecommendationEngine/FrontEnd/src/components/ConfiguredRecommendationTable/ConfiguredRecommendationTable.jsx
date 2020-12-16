@@ -30,6 +30,8 @@ export function ConfiguredRecommendationTable (props) {
   const [orderBy, setOrderBy] = React.useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
+  const [isSelected, setIsSelected] = React.useState(null);
+
   //TODO: Beware for data as props
 
   const handleChangeDense = (event) => {
@@ -77,12 +79,16 @@ export function ConfiguredRecommendationTable (props) {
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
               {props.data && props.data.map((element, index) => {
-                return (
+                  return (
                   <TableRow
-                    hover
-                    key={element.name}
-                    className="custom"
-                    onClick = {() => props.openScheduleDrilldown(element.id)}
+                        hover
+                        selected={isSelected === element.id}
+                        key={element.name}
+                        className="custom"
+                        onClick={() => {
+                            props.openScheduleDrilldown(element.id)
+                            setIsSelected(element.id)
+                        }}
                   >
                     <TableCell className="custom">
                     </TableCell>
