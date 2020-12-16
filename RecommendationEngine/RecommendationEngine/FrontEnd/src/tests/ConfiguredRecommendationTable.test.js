@@ -63,16 +63,6 @@ describe.only('ConfiguredRecommendationTable component', () => {
         expect(component).toHaveLength(1);
     });
 
-    it('It finds a table row', () => {
-        let component = output.find(TableRow);
-        expect(component).toHaveLength(1);
-    });
-
-    it('It finds all table cells', () => {
-        let component = output.find(TableCell);
-        expect(component).toHaveLength(1);
-    });
-
     it("Finds the table labels", () => {
         let component = output.find(FormControlLabel);
         expect(component).toHaveLength(1);

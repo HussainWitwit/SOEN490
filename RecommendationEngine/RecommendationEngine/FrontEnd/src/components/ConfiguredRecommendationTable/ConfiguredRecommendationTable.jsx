@@ -53,9 +53,6 @@ export function ConfiguredRecommendationTable (props) {
     setPage(0);
   };
 
-  // handling the empty rows for the method that compresses the table rows
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.data ? (props.data.length - page * rowsPerPage) : 0);
-
   return (
     <div id="root">
       <Paper id="paper">
@@ -78,12 +75,12 @@ export function ConfiguredRecommendationTable (props) {
               rowCount={props.data ? props.data.length : 1}
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
-              {props.data && props.data.map((element, index) => {
-                  return (
+              {props.data && props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element) => {
+              return(
                   <TableRow
                         hover
                         selected={isSelected === element.id}
-                        key={element.name}
+                        key={element.id}
                         className="custom"
                         onClick={() => {
                             props.openScheduleDrilldown(element.id)
@@ -103,18 +100,21 @@ export function ConfiguredRecommendationTable (props) {
                     <TableCell className="custom" id="tableBody">{element.type}</TableCell>
                     <TableCell className="custom" id="tableBody">{element.granularity}</TableCell>
                     <TableCell className="custom" id="tableBody">{element.createdOn}</TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow className="center" classes={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell className="center" />
-                </TableRow>
-              )}
+                  </TableRow>              
+              )})}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination id="pagination" rowsPerPageOptions={[10, 25, 50, 100]} count={props.data ? props.data.length : 1} rowsPerPage={rowsPerPage} page={page} onChangePage={handleChangePage} onChangeRowsPerPage={handleChangeRowsPerPage} />
+        <TablePagination 
+          id="pagination" 
+          component="div" 
+          rowsPerPageOptions={[10, 25, 50, 100]} 
+          count={props.data ? props.data.length : 1} 
+          rowsPerPage={rowsPerPage} 
+          page={page} 
+          onChangePage={handleChangePage} 
+          onChangeRowsPerPage={handleChangeRowsPerPage} 
+        />
       </Paper>
     </div>
   );
