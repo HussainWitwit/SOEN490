@@ -93,31 +93,25 @@ export default function ManageRecommendationDrawer({
             <p className="value-title">Last Five Executions</p>
             <div className="last-five-status">
               {configuredRecommendation.lastJobs &&
-                configuredRecommendation.lastJobs.map((value) => {
-                  return value == null ? (
-                    <Tooltip title="No status available">
-                      <div className="Empty"></div>
-                    </Tooltip>
-                  ) : (
-                      <Tooltip
-                        id = 'execution-bar'
-                        classes = {{
-                          tooltip: 'execution-bar-tooltip',
-                          popper: 'execution-bar-popper'
-                        }}
-                        arrow = {true}
-                        title={
-                          <div>
-                            {/* <div>Id: {value.id}</div> */}
-                            <div className = 'tooltip-status-style'>Status: <div className = {'style-'+value.status}>{value.status}</div></div>
-                            <div>Date: {value.timestamp}</div>
-                          </div>
-                        }
-                      >
-                        <div className={value.status}></div>
-                      </Tooltip>
-                    );
-                })}
+                configuredRecommendation.lastJobs.map((value) => (
+                    <Tooltip
+                      id = 'execution-bar'
+                      classes = {{
+                        tooltip: 'execution-bar-tooltip',
+                        popper: 'execution-bar-popper'
+                      }}
+                      placement = 'top'
+                      arrow = {true}
+                      title={value !== null ?
+                        <div>
+                          <div className = 'tooltip-status-style'>Status: <div className = {'style-'+value.status}>{value.status}</div></div>
+                          <div>Date: {value.timestamp}</div>
+                        </div>
+                      : "No status Avalaible"} 
+                    >
+                        <div className={value !== null ? value.status : "Empty"}></div>
+                    </Tooltip>               
+                ))}
             </div>
           </Grid>
           <Grid item xs={12}>
