@@ -1,22 +1,24 @@
-﻿using System;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Interfaces.Repositories;
+using Interfaces.Services;
+using Interfaces.Services.ExternalAPI;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Models.Application.APIModels;
+using Models.Application.Asset;
+using Models.DB;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using RecommendationEngine;
+using RecommendationEngine.ExceptionHandler;
+using RecommendationEngine.Services;
+using RecommendationEngineTests.APITests;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Interfaces.Repositories;
-using Interfaces.Services.ExternalApi;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Models.Application.Asset;
-using Models.DB;
-using Moq;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using RecommendationEngine;
-using RecommendationEngine.Services;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
 
 namespace RecommendationEngineTests.UnitTests.ControllerTest
 {
@@ -34,20 +36,31 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
                 {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<AssetService>().AsImplementedInterfaces();
-                    builder.RegisterType<TestDrive>().AsImplementedInterfaces();
+                    builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                     builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
         }
 
         [Test]
-        public async Task GetAssets()
+        public async Task GetAssetsNested()
         {
-            var response = await _client.GetAsync("/asset/get");
+            var response = await _client.GetAsync("/asset/getAssetsNested");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             var asset = JsonConvert.DeserializeObject<AssetComposite>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(asset);
             Assert.AreEqual(asset.Id, MockData.MockAssets.BasicDBAssetList[0].AssetId);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public async Task GetAssetsList()
+        {
+            var response = await _client.GetAsync("/asset/getAssetsList");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<AssetLeaf> assetList = JsonConvert.DeserializeObject<List<AssetLeaf>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(assetList);
+            Assert.AreEqual(assetList[0].Name, MockData.MockAssets.BasicDBAssetList[0].Name);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -66,11 +79,16 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
 
         public void AddAssetList(List<DBAsset> asset) { }
 
-        public List<DBAsset> Get()
+        public List<DBAsset> GetAssetsList()
         {
             return MockData.MockAssets.BasicDBAssetList;
         }
         public DBAsset GetAssetByName(string assetName)
+        {
+            return MockData.MockAssets.BasicDBAsset;
+        }
+
+        public DBAsset GetAssetById(int assetId)
         {
             return MockData.MockAssets.BasicDBAsset;
         }
@@ -81,26 +99,6 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         public DBAssetType GetAssetTypeByName(string assetTypeName)
         {
             return MockData.MockAssets.PortfolioAssetType;
-        }
-    }
-
-    public class TestDrive : IDriveService
-    {
-        public async Task<List<PFPortfolio>> GetPortfolios()
-        {
-            await Task.Delay(1000);
-            return MockData.MockAssets.BasicPortfolios;
-        }
-        public async Task<List<PFPortfolio>> GetPlants()
-        {
-            await Task.Delay(1000);
-            return MockData.MockAssets.BasicPlants;
-        }
-
-        public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
-        {
-            await Task.Delay(1000);
-            return MockData.MockAssets.BasicPlant;
         }
     }
 }

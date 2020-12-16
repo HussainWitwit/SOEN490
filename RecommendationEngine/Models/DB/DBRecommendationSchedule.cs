@@ -16,6 +16,7 @@ namespace Models.DB
         public string Granularity { get; set; }
         public string Description { get; set; }
         public int RecurrenceDayOfWeek { get; set; }
+        public string PreferedScenario { get; set; }
         public DateTime RecurrenceDatetime { get; set; }
         public DateTime CreatedOn { get; set; }
         public virtual DBRecommendationType RecommendationType { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
-using Interfaces.Services.ExternalApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Models.DB;
@@ -14,8 +14,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.ConfiguredRecommendationServices;
-using RecommendationEngine.Models.Application;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
+using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests.APITests
 {
@@ -35,6 +34,7 @@ namespace RecommendationEngineTests.APITests
                 {
                     builder.RegisterType<MockTestRepository>().AsImplementedInterfaces();
                     builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockAssetRepository>().AsImplementedInterfaces();
                     builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -48,11 +48,21 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
-        public async Task AddRecommendations()
+        public async Task AddRecommendation()
         {
-            var payload = UnitTests.MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
-            var response = await _client.PutAsync("/configuredrecommendation/add", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
-            Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
+            var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            string json = JsonConvert.SerializeObject(recommendation);
+            var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/configuredrecommendation/add", body);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public async Task GetRecommendationByIdTest()
+        {
+            var response = await _client.GetAsync("/configuredrecommendation/configuredrecommendation/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            var expected = response.Content;
         }
 
         [Test]
@@ -74,14 +84,19 @@ namespace RecommendationEngineTests.APITests
             };
         }
 
-        public List<ConfiguredRecommendation> Get()
+        public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
-            return UnitTests.MockData.MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
         }
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
-            return UnitTests.MockData.MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+            return MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+        }
+
+        public DBRecommendationSchedule GetRecommendationScheduleById(int id)
+        {
+            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST.First();
         }
 
         public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id) {
@@ -89,23 +104,29 @@ namespace RecommendationEngineTests.APITests
         }
     }
 
-    public class MockTestDrive : IDriveService
+    public class MockAssetRepository : IAssetRepository
     {
-        public async Task<List<PFPortfolio>> GetPortfolios()
+        public void AddAsset(DBAsset asset)
         {
-            await Task.Delay(1000);
-            return UnitTests.MockData.MockAssets.BasicPortfolios;
-        }
-        public async Task<List<PFPortfolio>> GetPlants()
-        {
-            await Task.Delay(1000);
-            return UnitTests.MockData.MockAssets.BasicPlants;
         }
 
-        public async Task<PFPlant> GetPlantByPortfolioId(string portfolioId)
+        public void AddAssetList(List<DBAsset> asset)
         {
-            await Task.Delay(1000);
-            return UnitTests.MockData.MockAssets.BasicPlant;
+        }
+
+        public List<DBAsset> GetAssetsList()
+        {
+            return new List<DBAsset>();
+        }
+
+        public DBAsset GetAssetByName(string assetName)
+        {
+            return new DBAsset();
+        }
+
+        public DBAsset GetAssetById(int assetId)
+        {
+            return new DBAsset();
         }
     }
 }

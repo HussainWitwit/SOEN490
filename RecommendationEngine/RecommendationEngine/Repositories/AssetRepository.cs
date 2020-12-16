@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using Interfaces.Repositories;
 using Models.DB;
-using Interfaces.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {
@@ -26,7 +26,7 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb.SaveChanges();
         }
 
-        public List<DBAsset> Get()
+        public List<DBAsset> GetAssetsList()
         {
             return _recommendationEngineDb.Assets.ToList();
         }
@@ -34,6 +34,11 @@ namespace RecommendationEngine.Repositories
         public DBAsset GetAssetByName(string assetName)
         {
             return _recommendationEngineDb.Assets.FirstOrDefault(a => a.Name == assetName);
+        }
+
+        public DBAsset GetAssetById(int assetId)
+        {
+            return _recommendationEngineDb.Assets.FirstOrDefault(a => a.AssetId == assetId);
         }
     }
 }

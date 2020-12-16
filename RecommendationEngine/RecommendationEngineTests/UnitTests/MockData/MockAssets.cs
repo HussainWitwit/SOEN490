@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Models.Application.APIModels;
 using Models.DB;
-using RecommendationEngine.Services.ExternalAPI.APIModels;
+using System.Collections.Generic;
 
 namespace RecommendationEngineTests.UnitTests.MockData
 {
@@ -15,9 +14,26 @@ namespace RecommendationEngineTests.UnitTests.MockData
         public static List<PFPortfolio> BasicPortfolios = AssetList.BasicPortfolios();
         public static List<PFPortfolio> BasicPlants = AssetList.BasicPortfolios();
         public static PFPlant BasicPlant = AssetList.BasicPlant();
+        public static DBAsset DBAsset = AssetList.BasicDBAsset();
 
         public static class AssetList
         {
+            public static DBAsset BasicDBAsset()
+            {
+                DBAsset asset = new DBAsset()
+                {
+                    AssetId = 44,
+                    Name = "asset44",
+                    AcPower = 5,
+                    DisplayText = "displayText",
+                    ElementPath = "asset44.path",
+                    EnergyType = "pv",
+                    Type = BasicAssetType
+                };
+
+                return asset;
+            }
+
             public static DBAssetType BasicDBAssetType()
             {
                 DBAssetType asset = new DBAssetType()

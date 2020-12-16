@@ -1,0 +1,119 @@
+
+.dialog-container.MuiDialog-paper {
+    width: 750px;
+    height: 600px;
+    max-height: 850px;
+    max-width: 750px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dialog-content.MuiDialogContent-root {
+    padding: 0;
+    overflow: hidden;
+}
+
+#draggable-dialog-title{
+    color: grey;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: x-large;
+}
+
+#cancel-btn{
+    width: 100px;
+    text-align: center;
+    background-color:#C4C4C4;
+    color: #FFFFFF;
+    padding: 7px 25px 7px 25px;
+    text-transform: none;
+    margin: 5px 10px 5px 10px;
+    box-shadow: none;
+    font-size: 18px;
+    border-color:#C4C4C4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+#previous-btn{
+    width: 100px;
+    text-align: center;
+    background-color:#C4C4C4;
+    color: white;
+    padding: 7px 25px 7px 25px;
+    text-transform: none;
+    margin: 5px 10px 5px 10px;
+    box-shadow: none;
+    font-size: 18px;
+    border-color:#C4C4C4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+#previous-btn:hover {
+    background-color:#909090;
+    transition: all 500ms;
+    border-color: transparent;
+}
+
+#cancel-btn:hover{
+    background-color: #ffc107;
+    box-shadow: none;
+    transition: all 500ms;
+    border-color: transparent;
+}
+
+#cancel-btn:active{
+    border-color: transparent;
+}
+
+#next-btn{
+    width: 100px;
+    text-align: center;
+    color: white;
+    border-color: transparent;
+    text-transform: none;
+    background-color: #4DD3EF;
+    margin: 5px 10px 5px 10px;
+    padding: 7px 25px 7px 25px;
+    box-shadow: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+
+#next-btn:hover {
+    box-shadow: none;
+    transition: all 500ms;
+    color: white;
+    background-color: #2691a7;
+}
+
+#next-btn:active {
+    box-shadow: none;
+    border-color: transparent;
+    background-color: #4DD3EF;
+}
+
+#next-btn.Mui-disabled{
+    background-color: lightgrey;
+    color: black;
+    opacity: 0.8;
+}
+
+#closeButton{
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    color: grey;
+}
+
+
+#mocked-content > div{
+    cursor: pointer;
+    position: absolute;
+    height: 75%;
+    width: 100%;
+    display: grid;
+    color: white;
+    font-size: 50px;
+    font-weight: 800;
+    will-change: transform, opacity;
+  }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Interfaces.Services;
+﻿using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Models.Application;
 using RecommendationEngine.ExceptionHandler;
-using RecommendationEngine.Models.Application;
-using RecommendationEngine.ConfiguredRecommendationServices;
 
 namespace RecommendationEngine.Controllers
 {
@@ -14,25 +9,43 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private IConfiguredRecommendationService _recommendationSchedulerService;
+        private IConfiguredRecommendationService _configuredRecommendationService;
 
-        public ConfiguredRecommendationController(IConfiguredRecommendationService recommendationSchedulerService)
+        public ConfiguredRecommendationController(IConfiguredRecommendationService configuredRecommendationService)
         {
-            _recommendationSchedulerService = recommendationSchedulerService;
+            _configuredRecommendationService = configuredRecommendationService;
         }
 
         [HttpGet("get")]
-        public IActionResult getConfiguredRecommendationList() {
-            return Ok(_recommendationSchedulerService.getConfiguredRecommendationList());
+        public IActionResult GetConfiguredRecommendationList()
+        {
+            return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
+        }
+
+        [HttpGet("configuredRecommendation/{id}")]
+        public IActionResult GetConfiguredRecommendationById(int id)
+        {
+            try
+            {
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationById(id));
+
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(e);
+            }
         }
 
         [HttpPost("add")]
-        public IActionResult addConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation) {
-            try {
-                _recommendationSchedulerService.AddConfiguredRecommendation(configuredRecommendation);
+        public IActionResult AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
+            try
+            {
+                _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation);
             }
-            catch (GlobalException e) {
-                return BadRequest(new {e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            catch (GlobalException e)
+            {
+                return BadRequest(e);
             }
             return Ok();
         }
@@ -42,7 +55,7 @@ namespace RecommendationEngine.Controllers
         {
             try
             {
-                _recommendationSchedulerService.EditConfiguredRecommendation(configuredRecommendation, id);
+                _configuredRecommendationService.EditConfiguredRecommendation(configuredRecommendation, id);
             }
             catch (GlobalException e)
             {

@@ -10,23 +10,21 @@ describe('TopBar component', () => {
     })
 
     it("Expects all top-bar elements to be visible", () => {
-        cy.get('.breadcrumb > :nth-child(1) > svg').should('exist')
+        cy.get('.MuiBreadcrumbs-ol > :nth-child(1) > .MuiTypography-root').should('exist') //done
         cy.wait(500)
-        cy.get(':nth-child(1) > .btn').should('exist')
+        cy.get('.MuiBreadcrumbs-ol > :nth-child(2)').should('exist') // done
         cy.wait(500)
-        cy.get('.breadcrumb > :nth-child(2)').should('exist')
+        cy.get(':nth-child(3) > .MuiTypography-root > svg > path').should('exist') // done
         cy.wait(500)
-        cy.get('.breadcrumb > :nth-child(3)').should('exist')
+        cy.get(':nth-child(3) > .MuiTypography-root').should('exist') // done
         cy.wait(500)
-        cy.get(':nth-child(3) > .MuiButtonBase-root > .MuiButton-label').should('exist')
+        cy.get(':nth-child(5) > .MuiTypography-root').should('exist') // done
         cy.wait(500)
-        cy.get('.icon > .image').click()
+        cy.get('#change_button').should('exist')
         cy.wait(500)
-        cy.get('.temperature_icon').should('exist')
+        cy.get('#change_button').click()
         cy.wait(500)
-        cy.get('.weather > :nth-child(1)').should('exist')
-        cy.wait(500)
-        cy.get('.weather > :nth-child(2)').should('exist')
+        cy.get('#img').should('exist')
         cy.wait(500)
     })
 
