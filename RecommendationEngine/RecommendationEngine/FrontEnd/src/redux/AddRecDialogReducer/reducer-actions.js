@@ -107,7 +107,7 @@ export const mapDialogStateToProps = (state) => {
 
   export const isEditable = () => {
     return {
-      type: 'EDITING_EXISTING_CONFIGURED_RECOMMENDATION'
+      type: EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
     }
   }
 

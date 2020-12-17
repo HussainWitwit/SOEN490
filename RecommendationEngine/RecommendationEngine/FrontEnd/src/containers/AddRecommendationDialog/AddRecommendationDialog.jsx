@@ -38,7 +38,7 @@ const pageTitles = [
 ];
 
 
-export function PaperComponent (props) {
+export function PaperComponent(props) {
   return (
     <Draggable
       handle="#draggable-dialog-title"
@@ -49,12 +49,12 @@ export function PaperComponent (props) {
   );
 }
 
-export const Transition = React.forwardRef(function Transition (props, ref) {
+export const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function AddRecommendationDialog (props) {
-  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation} = props;
+export function AddRecommendationDialog(props) {
+  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -86,7 +86,8 @@ export function AddRecommendationDialog (props) {
   }
   //Post method
   const confirmDialogEvent = async () => {
-    postConfiguredRecommendation({
+    if (isEditing) {
+      editConfiguredRecommendation({
         type: template.name,
         name: basicConfiguration.title,
         granularity: basicConfiguration.granularity,
@@ -96,10 +97,27 @@ export function AddRecommendationDialog (props) {
         recurrenceDayOfWeek: basicConfiguration.repeatDay,
         modifiedBy: '',
         recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
-        assetIdList: basicConfiguration.asset.map((e) => { 
+        assetIdList: basicConfiguration.asset.map((e) => {
           return e.id;
         })
-    });
+      }, basicConfiguration.id);
+    }
+    else {
+      postConfiguredRecommendation({
+        type: template.name,
+        name: basicConfiguration.title,
+        granularity: basicConfiguration.granularity,
+        createdBy: basicConfiguration.createdBy,
+        createdOn: new Date(),
+        preferredScenario: basicConfiguration.preferredScenario,
+        recurrenceDayOfWeek: basicConfiguration.repeatDay,
+        modifiedBy: '',
+        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+        assetIdList: basicConfiguration.asset.map((e) => {
+          return e.id;
+        })
+      });
+    }
     clear();
     setIndex(0);
   }
@@ -109,7 +127,7 @@ export function AddRecommendationDialog (props) {
       data-testid="dialog"
       open={isDialogOpen}
       onClose={closeDialog}
-      disableBackdropClick = {true}
+      disableBackdropClick={true}
       PaperComponent={PaperComponent}
       TransitionComponent={Transition}
       aria-labelledby="draggable-dialog-title"
@@ -157,16 +175,16 @@ export function AddRecommendationDialog (props) {
         )}
         {index === 0 && (
           <Button id="next-btn" onClick={onClickNext} variant="outlined">
-          Next
-        </Button>
+            Next
+          </Button>
         )}
         {(index <= 2 && index > 0) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Next
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Confirm
           </Button>
         )}

@@ -6,7 +6,7 @@
  */
 import * as dispatchActionType from './dispatch-types';
 import { getNestedAssetList,  getFlatAssetList } from '../../api/endpoints/AssetEndpoints';
-import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { GetConfiguredRecommendationList, PostConfiguredRecommendation, EditConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({apiReducer}) => {
@@ -55,6 +55,14 @@ export const mapStateToProps = ({apiReducer}) => {
     else {
       //TODO: Error with post, send notifications...
     }
+  }
+
+  export const editConfiguredRecommendation = async (dispatch, configuredRecommendation, id) => {
+    const response = await EditConfiguredRecommendation(configuredRecommendation, id);
+    dispatch({
+      type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
+      payload: response,
+    });
   }
 
   

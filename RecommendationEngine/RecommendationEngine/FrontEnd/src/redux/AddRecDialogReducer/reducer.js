@@ -118,7 +118,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case 'isEditing':
+        case type.EDITING_EXISTING_CONFIGURED_RECOMMENDATION:
             return {
                 ...state,
                 isEditing: !state.isEditing
