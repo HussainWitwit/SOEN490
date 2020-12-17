@@ -7,6 +7,7 @@
 import * as dispatchActionType from './dispatch-types';
 import { getNestedAssetList,  getFlatAssetList } from '../../api/endpoints/AssetEndpoints';
 import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { getTemplateDetailsInfo } from '../../api/endpoints/TemplateDetailsEndpoints';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({apiReducer}) => {
@@ -57,6 +58,13 @@ export const mapStateToProps = ({apiReducer}) => {
     }
   }
 
+  export const getTemplateDetails = async (dispatch) => {
+    const response = await getTemplateDetailsInfo();
+    dispatch({
+      type: dispatchActionType.GET_TEMPLATE_DETAILS,
+      payload: response,
+    })
+  }
   
   //This method will allow you to pass the actions as a prop to the connected component in
   //order to modify the value in the store
@@ -65,6 +73,7 @@ export const mapStateToProps = ({apiReducer}) => {
         getNestedAssets: () =>  getNestedAssets(dispatch),
         getFlatListAssets: () => getFlatListAssets(dispatch),
         getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
-        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation)
+        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation),
+        // getTemplateDetails: () => getTemplateDetails(dispatch)
     };
   };

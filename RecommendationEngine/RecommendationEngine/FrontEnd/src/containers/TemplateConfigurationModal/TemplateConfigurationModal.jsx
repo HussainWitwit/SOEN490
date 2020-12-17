@@ -5,9 +5,9 @@ import { TemplateItems } from './ListTemplateItems.ts';
 import Divider from '@material-ui/core/Divider';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
-function TemplateConfigurationModal ({ template, dialogStyle, setTemplateName }) {
+function TemplateConfigurationModal ({ template, dialogStyle, setTemplateName, templateDetailsList }) {
 
   const TemplateCard = (props) => {
     return (

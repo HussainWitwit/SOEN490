@@ -4,6 +4,7 @@ export const initialValues = {
     nestedAssets: [],
     flatListAssets: [],
     configuredRecommendationList: [],
+    templateDetailsList: [],
   };
 
   export const ApiReducer = function (state = initialValues, action) {
@@ -23,6 +24,11 @@ export const initialValues = {
                 ...state,
                 configuredRecommendationList: action.payload
             };
+        case type.GET_TEMPLATE_DETAILS:
+            return {
+                ...state,
+                templateDetailsList: action.payload
+            }
             default:
                 return state
     }
