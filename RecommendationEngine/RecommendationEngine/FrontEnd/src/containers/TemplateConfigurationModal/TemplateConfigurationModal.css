@@ -25,23 +25,20 @@ height: 100%;
 }
 
 #item-info1{
-height: 80px;
+height: 130px;
+margin-bottom: 7%;
 }
 
 #item-info2{
   height: 100px;
   margin-top: 5%;
-  margin-top: 0.1%;
+  margin-bottom: 5%;
 }
 
 #item-info3{
-  height: 65px;
-  margin-top: 4%;
-}
-
-#item-info4{
   height: 80px;
-  margin-top: 4%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 #item-template-default{
@@ -61,10 +58,11 @@ height: 80px;
 
 #item-template-default:hover{
   background-color:#4DD3EF;
+  
   border-width: 2.5px;
   border-color: transparent;
   transition: all 500ms;
-  box-shadow: 0 0 2px 0 rgb(77,212,239,1);
+  box-shadow: 0 0 1px 0 rgb(77,212,239,1);
 }
 
 
@@ -100,6 +98,15 @@ height: 80px;
   height: 30%;
 }
 
+.title-dialog-0.MuiTypography-root{
+  color: #212529;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  min-width: 90%;
+  margin-bottom: 2%;
+}
+
 .title-dialog-1.MuiTypography-root{
   color: #212529;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -112,7 +119,7 @@ height: 80px;
   color:#868282;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
-  max-width: 85%;
+  width: 85%;
   margin-top: 2%;
 }
 
