@@ -2,14 +2,17 @@
 //have exactly this attribute, or it will break and it will be hard to debug.
 import { Asset } from './Asset';
 export interface ConfiguredRecommendation {
+    id: number,
     name: string,
     type: string,
+    description: string,
     granularity: string,
     createdBy: string,
     preferredScenario: string,
     recurrenceDayOfWeek: number,
     recurrenceDatetime: string,
     createdOn: string,
+    lastJobs: ConfiguredRecommendationJob[],
     assetIdList?: number[],
     assetList?: Asset[],
     parameters?: ConfiguredRecommendationParameter[]
@@ -19,4 +22,10 @@ export interface ConfiguredRecommendation {
 export interface ConfiguredRecommendationParameter {
     parameterName: string,
     parameterValue: string
+}
+
+export interface ConfiguredRecommendationJob {
+    id: number,
+    status: string
+    timestamp: Date
 }

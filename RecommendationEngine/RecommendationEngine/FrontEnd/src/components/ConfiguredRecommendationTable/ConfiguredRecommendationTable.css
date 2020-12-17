@@ -12,8 +12,7 @@
     min-width: 850px;
 }
 
-
-.toolBarTitle{
+.toolBarTitle {
     flex: 1 1 100%;
     margin-left: 10px;
     color: grey;
@@ -21,6 +20,9 @@
     font-size: 16px;
 }
 
+.MuiTableRow-root.Mui-selected, .MuiTableRow-root.Mui-selected:hover {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+}
 
 #controlLabel {
     color: #212529;
@@ -33,10 +35,10 @@
 
 
 #tableBody{
-    background-color: #FFFFFF;
     color: #252733;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 12px;
+    cursor: pointer;
 }
 
 

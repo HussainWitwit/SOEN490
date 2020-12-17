@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader'
 import Switch from '@material-ui/core/Switch';
+import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
+import { connect } from 'react-redux';
 import './ConfiguredRecommendationTable.css';
 import 'date-fns';
 
@@ -21,14 +23,16 @@ const headCells = [
 ];
 
 //TODO: This should be a generic component, ask Alain if help is needed.
-export default function ConfiguredRecommendationTable (props) {
+export function ConfiguredRecommendationTable (props) {
 
   const [dense, setDense] = React.useState(false);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
- 
+  const [isSelected, setIsSelected] = React.useState(null);
+
+  //TODO: Beware for data as props
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
@@ -71,11 +75,17 @@ export default function ConfiguredRecommendationTable (props) {
               rowCount={props.data ? props.data.length : 1}
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
-              {props.data && props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element, index) => {
+              {props.data && props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element) => {
               return(
                   <TableRow
-                    key={index} //we should maybe have the real configuredRec id passed here
-                    className="custom"
+                        hover
+                        selected={isSelected === element.id}
+                        key={element.id}
+                        className="custom"
+                        onClick={() => {
+                            props.openScheduleDrilldown(element.id)
+                            setIsSelected(element.id)
+                        }}
                   >
                     <TableCell className="custom">
                     </TableCell>
@@ -109,3 +119,5 @@ export default function ConfiguredRecommendationTable (props) {
     </div>
   );
 }
+
+export default connect(null, mapDispatchToProps)(ConfiguredRecommendationTable);
