@@ -14,3 +14,39 @@
     font-size: 25px;
     font-weight: normal;
   }
+
+.table-header-cell {
+  align-items: right;
+  background-color: teal;
+}
+
+.table-header-row {
+  /* background-color: pink; */
+}
+
+.MuiTableRow-root {
+  /* background-color: green; */
+  border-bottom: unset;
+  /* border: solid; */
+}
+
+#table-container {
+  width: 95%;
+  background-color: yellow;
+  border-radius: 10px;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.MuiTable-root {
+  border-radius: 15px;
+}
+
+.MuiInputBase-root {
+  height: 40px;
+  width: 170px;
+}
+.default-value {
+  width: 100px;
+  /* height: 10px; */
+}
