@@ -7,9 +7,11 @@ import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
+import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { connect } from 'react-redux';
 
-export default function ManageRecommendationDrawer({
-  configuredRecommendation,
+export function ManageRecommendationDrawer({
+  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
 }) {
   // Animation style
   const props = useSpring({
@@ -145,7 +147,7 @@ export default function ManageRecommendationDrawer({
         </Grid>
         <Grid item xs={12}>
           <div className="edit-recommendation-button">
-            <Button variant="outlined">Edit a Recommendation</Button>
+            <Button variant="outlined" onClick = {() => {toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation);}}>Edit a Recommendation</Button>
           </div>
         </Grid>
         <Grid item xs={12}>
@@ -163,3 +165,5 @@ export default function ManageRecommendationDrawer({
   </animated.div >
 );
 }
+//FIXME: Might be better if you put the three buttons inside a cnomponent and have that component being connected and not the whole drawer... 
+export default connect(null, mapDispatchToProps)(ManageRecommendationDrawer)

@@ -15,7 +15,8 @@ export const mapDialogStateToProps = (state) => {
       isDialogOpen: state.addRecommendation.isDialogOpen,
       template: state.addRecommendation.template,
       basicConfiguration: state.addRecommendation.basicConfiguration,
-      apiAssets: state.apiReducer.flatListAssets
+      apiAssets: state.apiReducer.flatListAssets,
+      isEditing: state.addRecommendation.isEditing
     };
   };
 
@@ -104,6 +105,23 @@ export const mapDialogStateToProps = (state) => {
     };
   };
 
+  export const isEditable = () => {
+    return {
+      type: 'EDITING_EXISTING_CONFIGURED_RECOMMENDATION'
+    }
+  }
+
+  export const setEditableConfiguredRecommendation = (dispatch, value) => {
+    dispatch(setTemplateName(value.type));
+    dispatch(updateAsset(value.assetList));
+    dispatch(setTitle(value.name));
+    dispatch(setPreferredScenario(value.preferredScenario));
+    dispatch(setGranularity(value.granularity));
+    dispatch(setRepeatDay(value.recurrenceDayOfWeek));
+    dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
+    dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
+  }
+
   
   //This method will allow you to pass the actions as a prop to the connected component in
   //order to modify the value in the store
@@ -117,6 +135,7 @@ export const mapDialogStateToProps = (state) => {
       setRepeatDay: (value) => dispatch(setRepeatDay(value)),
       setRepeatDate: (value) => dispatch(setRepeatDate(value)),
       setRepeatTime: (value) => dispatch(setRepeatTime(value)),
+      setEditableConfiguredRecommendation: (value) => setEditableConfiguredRecommendation(dispatch, value),
       toggleDialog: () => dispatch(toggleDialog()),
       clear: () => dispatch(clear()),
     };

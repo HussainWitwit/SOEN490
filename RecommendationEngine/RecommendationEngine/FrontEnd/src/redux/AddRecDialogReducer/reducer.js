@@ -40,7 +40,8 @@ export const contentInitialValues = {
     isDialogOpen: false,
     template: {name: TemplateItems[0].name},
     basicConfiguration: detailsConfigInitialValues,
-    parameters: {}
+    parameters: {},
+    isEditing: false,
   };
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
@@ -115,6 +116,12 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                     ...state.basicConfiguration,
                     repeatTime: action.payload.repeatTime
                 }
+            };
+
+        case 'isEditing':
+            return {
+                ...state,
+                isEditing: !state.isEditing
             };
 
         case type.TOGGLE_DIALOG: 
