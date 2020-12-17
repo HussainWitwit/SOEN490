@@ -5,12 +5,12 @@ import { TemplateItems } from './ListTemplateItems.ts';
 import Divider from '@material-ui/core/Divider';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
 function TemplateConfigurationModal({ template, dialogStyle, setTemplateName, templateDetailsList }) {
 
-  const [templateDescription, setTemplateDescription] = useState("This recommendation is used to suggest the optimal time to wash your solar panels. The algorithm takes in consideration:  dates  of soiling seasons, the rate of soiling, the energy price, predicated energy, cost of cleaning and more.");
-  const [inputList, setInputList] = useState(["Center Point", "Span Increment", "Soiling Season Buffer", "Acccelerator"]);
+  const [templateDescription, setTemplateDescription] = useState("")
+    const [inputList, setInputList] = useState(["Center Point", "Span Increment", "Soiling Season Buffer", "Acccelerator"]);
   const [algorithmName, setAlgorithmName] = useState("Yearly Wash Optimization Algorithm");
 
   const TemplateCard = (props) => {
@@ -95,4 +95,4 @@ function TemplateConfigurationModal({ template, dialogStyle, setTemplateName, te
   );
 }
 
-export default connect(mapDialogStateToProps, mapDispatchToProps)(TemplateConfigurationModal);
+export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(TemplateConfigurationModal);

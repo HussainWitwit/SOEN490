@@ -5,12 +5,12 @@ export const getTemplateDetailsInfo = async () => {
     let templates: TemplateDetails[];
 
     try{
-        let response = await fetch ('');
+        let response = await fetch ('RecommendationType/get');
 
         const jsonResponse = await response.json();
         if(jsonResponse)
         {
-            templates  = AssignResponse(jsonResponse);
+            templates  = setResponse(jsonResponse);
             return templates;
         }
         else{
@@ -22,7 +22,7 @@ export const getTemplateDetailsInfo = async () => {
     }
 }
 
-const AssignResponse = function(response: any): TemplateDetails[] { 
+const setResponse = function(response: any): TemplateDetails[] { 
 
 let result = response.map((obj: any) => {
     return {
@@ -31,7 +31,8 @@ let result = response.map((obj: any) => {
         algorithmName: obj.algorithmName,
         inputList: obj.inputList ? obj.inputList.map((input: any) => {
             return {
-                parameterName : input.parameterName
+                parameterName : input.parameterName,
+                defaultValue: input.defaultValue
             }
         }) : [] 
         };

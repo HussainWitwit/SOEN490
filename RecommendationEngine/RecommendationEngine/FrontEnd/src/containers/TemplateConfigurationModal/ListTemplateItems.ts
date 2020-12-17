@@ -29,7 +29,6 @@ var gearboxReplacement: ListTemplateObject = {
     description: "Description of GR Algorithm",
     inputList: ["Input 1", "Input 2", "Input 3", "Input 4"],
     algorithName:"GR Algorithm"
-
 };
 
 var panelAngle: ListTemplateObject = {

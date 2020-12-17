@@ -74,6 +74,6 @@ export const mapStateToProps = ({apiReducer}) => {
         getFlatListAssets: () => getFlatListAssets(dispatch),
         getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
         postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation),
-        // getTemplateDetails: () => getTemplateDetails(dispatch)
+        getTemplateDetails: () => getTemplateDetails(dispatch)
     };
   };

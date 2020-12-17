@@ -12,7 +12,7 @@ import { getNestedAssets, getFlatListAssets, getConfiguredRecommendationList, ge
 store.dispatch(getNestedAssets);
 store.dispatch(getFlatListAssets);
 store.dispatch(getConfiguredRecommendationList);
-// store.dispatch(getTemplateDetails);
+store.dispatch(getTemplateDetails);
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');

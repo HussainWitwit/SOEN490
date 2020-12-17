@@ -7,4 +7,5 @@ export interface TemplateDetails {
 
 export interface TemplateDetailsInput {
     parameterName: string,
+    defaultValue: number
 }

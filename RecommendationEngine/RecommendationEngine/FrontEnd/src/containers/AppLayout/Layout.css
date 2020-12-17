@@ -10,7 +10,7 @@ html {
 
 .right-main-context {
     flex-grow: 1;
-    overflow: scroll;
+    overflow-x: scroll;
 }
 
 .route-context {
