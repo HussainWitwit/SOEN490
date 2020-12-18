@@ -185,7 +185,7 @@ export function AddRecommendationDialog(props) {
         )}
         {index === 3 && (
           <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
-            Confirm
+            {isEditing ? Save : Confirm}
           </Button>
         )}
       </DialogActions>

@@ -38,24 +38,25 @@ const detailsConfigInitialValues = {
 
 export const contentInitialValues = {
     isDialogOpen: false,
-    template: {name: TemplateItems[0].name},
+    template: { name: TemplateItems[0].name },
     basicConfiguration: detailsConfigInitialValues,
     parameters: {},
     isEditing: false,
-  };
+    id: null
+};
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
-    switch(action.type) {
+    switch (action.type) {
         case type.UPDATE_RECOMMENDATION_TEMPLATE:
-                return {
-                    ...state,
-                    template: {
-                        ...state.template,
-                        name: action.payload.name
-                    }
-                };
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    name: action.payload.name
+                }
+            };
 
-        case type.UPDATE_TITLE: 
+        case type.UPDATE_TITLE:
             return {
                 ...state,
                 basicConfiguration: {
@@ -64,7 +65,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_ASSET: 
+        case type.UPDATE_ASSET:
             return {
                 ...state,
                 basicConfiguration: {
@@ -73,7 +74,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_PREFERRED_SCENARIO: 
+        case type.UPDATE_PREFERRED_SCENARIO:
             return {
                 ...state,
                 basicConfiguration: {
@@ -82,7 +83,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_GRANULARITY: 
+        case type.UPDATE_GRANULARITY:
             return {
                 ...state,
                 basicConfiguration: {
@@ -91,7 +92,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_DAY: 
+        case type.UPDATE_REPEAT_DAY:
             return {
                 ...state,
                 basicConfiguration: {
@@ -100,7 +101,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_DATE: 
+        case type.UPDATE_REPEAT_DATE:
             return {
                 ...state,
                 basicConfiguration: {
@@ -109,7 +110,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_TIME: 
+        case type.UPDATE_REPEAT_TIME:
             return {
                 ...state,
                 basicConfiguration: {
@@ -118,22 +119,28 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
+        case type.UPDATE_ID:
+            return {
+                ...state,
+                id: action.payload.id
+            };
+
         case type.EDITING_EXISTING_CONFIGURED_RECOMMENDATION:
             return {
                 ...state,
                 isEditing: !state.isEditing
             };
 
-        case type.TOGGLE_DIALOG: 
+        case type.TOGGLE_DIALOG:
             return {
                 ...state,
                 isDialogOpen: !state.isDialogOpen
             };
 
         case type.CLEAR:
-            return contentInitialValues; 
+            return contentInitialValues;
 
         default:
             return state;
-        } 
+    }
 }

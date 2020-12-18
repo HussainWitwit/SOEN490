@@ -63,6 +63,13 @@ export const mapStateToProps = ({apiReducer}) => {
       type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
       payload: response,
     });
+    if(response.status === 200) { 
+      //TODO: Successful post, send notifications...
+      await getConfiguredRecommendationList(dispatch); //To test
+    }
+    else {
+      //TODO: Error with post, send notifications...
+    }
   }
 
   
@@ -73,6 +80,7 @@ export const mapStateToProps = ({apiReducer}) => {
         getNestedAssets: () =>  getNestedAssets(dispatch),
         getFlatListAssets: () => getFlatListAssets(dispatch),
         getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
-        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation)
+        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation),
+        editConfiguredRecommendation: (configuredRecommendation, id) => editConfiguredRecommendation(dispatch, configuredRecommendation, id)
     };
   };

@@ -147,7 +147,7 @@ export function ManageRecommendationDrawer({
         </Grid>
         <Grid item xs={12}>
           <div className="edit-recommendation-button">
-            <Button variant="outlined" onClick = {() => {toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation);}}>Edit a Recommendation</Button>
+            <Button variant="outlined" onClick = {() => {toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, configuredRecommendation.id);}}>Edit a Recommendation</Button>
           </div>
         </Grid>
         <Grid item xs={12}>

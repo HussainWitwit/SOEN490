@@ -93,6 +93,15 @@ export const mapDialogStateToProps = (state) => {
     };
   };
 
+  export const setId = (value) => {
+    return {
+      type: dispatchActionType.UPDATE_ID,
+      payload: {
+        id: value,
+      },
+    };
+  };
+
   export const toggleDialog = () => {
     return {
       type: dispatchActionType.TOGGLE_DIALOG,
@@ -105,13 +114,13 @@ export const mapDialogStateToProps = (state) => {
     };
   };
 
-  export const isEditable = () => {
+  export const setEditable = () => {
     return {
       type: EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
     }
   }
 
-  export const setEditableConfiguredRecommendation = (dispatch, value) => {
+  export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
     dispatch(setTemplateName(value.type));
     dispatch(updateAsset(value.assetList));
     dispatch(setTitle(value.name));
@@ -120,6 +129,8 @@ export const mapDialogStateToProps = (state) => {
     dispatch(setRepeatDay(value.recurrenceDayOfWeek));
     dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
     dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
+    dispatch(setId(id));
+    dispatch(setEditable());
   }
 
   
