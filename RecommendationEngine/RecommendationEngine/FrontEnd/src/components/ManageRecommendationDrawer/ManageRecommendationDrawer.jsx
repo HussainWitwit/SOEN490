@@ -54,7 +54,7 @@ export function ManageRecommendationDrawer({
           <Grid item xs={8}>
             <div className="inputs">
               <p className="value-title">Parameters</p>
-              <div className="values">{configuredRecommendation.parameters.length ?
+                          <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter) => {
                   return parameter.parameterName;
                 })) : 'N/A'}</div>
@@ -63,7 +63,7 @@ export function ManageRecommendationDrawer({
           <Grid item xs={4}>
             <div className="outputs">
               <p className="value-title">Value</p>
-              <div className="values">{configuredRecommendation.parameters.length ?
+                          <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter) => {
                   return parameter.value;
                 })) : 'N/A'}</div>

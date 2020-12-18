@@ -116,7 +116,7 @@ export const mapDialogStateToProps = (state) => {
 
   export const setEditable = () => {
     return {
-      type: EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
+        type: dispatchActionType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
     }
   }
 

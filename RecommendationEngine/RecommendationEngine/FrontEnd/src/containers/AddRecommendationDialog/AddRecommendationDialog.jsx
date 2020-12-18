@@ -178,14 +178,15 @@ export function AddRecommendationDialog(props) {
             Next
           </Button>
         )}
-        {(index <= 2 && index > 0) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+                  {console.log(basicConfiguration)}
+              {(index <= 2 && index > 0) && (
+                  <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || (basicConfiguration.asset != null && basicConfiguration.asset.length === 0)}>
             Next
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
-            {isEditing ? Save : Confirm}
+                  <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || (basicConfiguration.asset != null && basicConfiguration.asset.length === 0)}>
+            {isEditing ? "Save" : "Confirm"}
           </Button>
         )}
       </DialogActions>
