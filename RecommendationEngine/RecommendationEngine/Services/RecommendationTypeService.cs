@@ -5,6 +5,7 @@ using Interfaces.Services.ExternalAPI;
 using Models.Recommendation;
 using Interfaces.Repositories;
 using System.Linq;
+using Models.DB;
 
 namespace RecommendationEngine.Services
 {
