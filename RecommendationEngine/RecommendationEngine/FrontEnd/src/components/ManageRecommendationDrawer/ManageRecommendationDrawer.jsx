@@ -47,14 +47,14 @@ export function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
+                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList != null && configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
                 })}
             </div>
           </Grid>
           <Grid item xs={8}>
             <div className="inputs">
               <p className="value-title">Parameters</p>
-                          <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
+                          <div className="values">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter) => {
                   return parameter.parameterName;
                 })) : 'N/A'}</div>
