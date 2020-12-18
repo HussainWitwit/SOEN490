@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
+using System.Threading.Tasks;
 
 namespace RecommendationEngine.Controllers
 {
@@ -19,12 +16,25 @@ namespace RecommendationEngine.Controllers
             _assetService = assetService;
         }
 
-        [HttpGet("get")]
-        public IActionResult GetAssets()
+        [HttpGet("getAssetsNested")]
+        public IActionResult GetAssetsNested()
         {
             try
             {
                 return Ok(_assetService.GetAssetsTreeview());
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+        }
+
+        [HttpGet("getAssetsList")]
+        public IActionResult GetAssetsList()
+        {
+            try
+            {
+                return Ok(_assetService.GetAssetsList());
             }
             catch (GlobalException e)
             {
@@ -40,7 +50,8 @@ namespace RecommendationEngine.Controllers
                 await _assetService.Convert();
                 return Ok();
             }
-            catch (GlobalException e){
+            catch (GlobalException e)
+            {
                 return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
         }

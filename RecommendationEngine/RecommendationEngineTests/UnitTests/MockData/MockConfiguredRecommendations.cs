@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using Models.Application;
+using Models.Application.Asset;
 using Models.DB;
-using RecommendationEngine.Models.Application;
+using Moq;
 
 namespace RecommendationEngineTests.UnitTests.MockData
 {
@@ -10,38 +12,73 @@ namespace RecommendationEngineTests.UnitTests.MockData
         public static ConfiguredRecommendation BASIC_CONFIGURED_RECOMMENDATION = RecommendationList.BasicConfiguredRecommendation();
         public static ConfiguredRecommendation BAD_CONFIGURED_RECOMMENDATION = RecommendationList.BadConfiguredRecommendation();
         public static ConfiguredRecommendation EMPTY_CONFIGURED_RECOMMENDATION = RecommendationList.EmptyConfiguredRecommendation();
-        public static List<ConfiguredRecommendation> BASIC_CONFIGURED_RECOMMENDATION_LIST = RecommendationList.BasicConfiguredRecommendationList();
+        public static List<DBRecommendationSchedule> BASIC_CONFIGURED_RECOMMENDATION_LIST = RecommendationList.BasicConfiguredRecommendationList();
         public static DBRecommendationType YEARLY_RECOMMENDATION_TYPE = RecommendationList.YearlyRecType();
         public static DBRecommendationSchedule CONVERTED_CONFIGURED_RECOMMENDATION = RecommendationList.BasicDBRecommendationSchedule();
 
         public static class RecommendationList
         {
-            public static List<ConfiguredRecommendation> BasicConfiguredRecommendationList()
+            public static List<DBRecommendationSchedule> BasicConfiguredRecommendationList()
             {
-                List<ConfiguredRecommendation> list = new List<ConfiguredRecommendation>() {
-                    new ConfiguredRecommendation
+                DBAsset asset = new DBAsset
+                {
+                    AssetId = 9,
+                    Name = "dbasset9",
+                    AcPower = 17,
+                    Type = new DBAssetType() { Name = "plant" },
+                    DisplayText = "asset 9",
+                    ElementPath = "path9",
+                    EnergyType = "pv",
+                    TimeZone = "timezoneTest"
+
+                };
+
+                DBAssetRecommendationSchedule dbAssetRecSchedule = new DBAssetRecommendationSchedule()
+                {
+                    Asset = asset,
+                    AssetId = 9
+                };
+
+                List<DBRecommendationSchedule> list = new List<DBRecommendationSchedule>() {
+                    new DBRecommendationSchedule
                     {
-                        ConfiguredRecommendationId = 1,
+                        RecommendationScheduleId = 1,
                         Name = "Wash Recommendation 1",
-                        CreatedBy = "Mohanad",
+                        ModifiedBy = "Mohanad",
                         CreatedOn = new DateTime().Date,
+                        Description = "Description",
                         Granularity = "Yearly",
+                        PreferedScenario = "ROI",
+                        DisplayText = "Wash Recommendation 1",
                         RecurrenceDatetime = new DateTime().Date,
                         RecurrenceDayOfWeek = 2,
-                        Type = "Yearly Wash Optimization",
-                        Parameters = null
+                        RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
+                        ParametersList = new List<DBRecommendationScheduleParameter>{ new DBRecommendationScheduleParameter
+                        {
+                            ParamValue = 1,
+                            RecommendationParameter = new DBRecommendationParameter
+                            {
+                                Name = "TestParam"
+                            }
+                        }},
+                        AssetsList = new List<DBAssetRecommendationSchedule>() { dbAssetRecSchedule },
+                        JobsList = new List<DBRecommendationJob>{new DBRecommendationJob{RecommendationJobId = 1, Status = "Success", Timestamp = DateTime.Now}},
+
                     },
-                    new ConfiguredRecommendation
+                    new DBRecommendationSchedule
                     {
-                        ConfiguredRecommendationId = 2,
-                        Name = "Wash Recommendation 1",
-                        CreatedBy = "Mohanad",
+                        RecommendationScheduleId = 2,
+                        Name = "Wash Recommendation 2",
+                        ModifiedBy = "Mohanad",
                         CreatedOn = new DateTime().Date,
                         Granularity = "Yearly",
+                        PreferedScenario = "ROI",
+                        DisplayText = "Wash Recommendation 2",
                         RecurrenceDatetime = new DateTime().Date,
                         RecurrenceDayOfWeek = 2,
-                        Type = "Yearly Wash Optimization",
-                        Parameters = null
+                        RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
+                        ParametersList = null,
+                        AssetsList = new List<DBAssetRecommendationSchedule>() { dbAssetRecSchedule }
                     }
                 };
 
@@ -54,22 +91,36 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 {
                     Type = "Yearly Wash Optimization",
                     DisplayText = "Yearly Wash Optimization (yearly)",
-                    Description = "Runs the wash optimization on a yearly basis"
+                    Description = "Runs the wash optimization on a yearly basis",
                 };
             }
 
             public static ConfiguredRecommendation BasicConfiguredRecommendation()
             {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "asset44",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "asset 44",
+                    ElementPath = "asset44.path",
+                    EnergyType = "pv"
+                };
+
                 return new ConfiguredRecommendation
                 {
                     Name = "Wash Rec",
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
+                    PreferredScenario = "ROI",
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     Type = "Yearly Wash Optimization",
-                    Parameters = null
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset}
                 };
             }
 

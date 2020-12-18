@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Models.DB;
 using System.Collections.Generic;
-using Models.DB;
 
 namespace Interfaces.Repositories
 {
@@ -9,7 +8,8 @@ namespace Interfaces.Repositories
     {
         public void AddAsset(DBAsset asset);
         public void AddAssetList(List<DBAsset> asset);
-        public List<DBAsset> Get();
+        public List<DBAsset> GetAssetsList();
         public DBAsset GetAssetByName(string assetName);
+        public DBAsset GetAssetById(int assetId);
     }
 }

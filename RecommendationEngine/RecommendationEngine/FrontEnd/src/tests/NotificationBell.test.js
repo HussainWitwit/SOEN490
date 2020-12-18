@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NotificationBell from '../components/Notification/NotificationBell.js';
+import NotificationBell from '../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../enzyme';
-import renderer from 'react-test-renderer';
 import Notifications from "react-notifications-menu";
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -20,15 +19,14 @@ describe('NotificationBell component', () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
-    it('It finds the main div', () => {
+    it('It finds it in the component tree', () => {
         const output = shallow(<NotificationBell />);
-        expect(output.find('#main-container')).toBeTruthy();
+        expect(output).toHaveLength(1);
     });
 
     it('It finds the notifications element', () => {
         const output = shallow(<NotificationBell />);
         let component = output.find(Notifications);
         expect(component).toHaveLength(1);
-        expect(output.find('#notifications')).toBeTruthy();
     });
 });

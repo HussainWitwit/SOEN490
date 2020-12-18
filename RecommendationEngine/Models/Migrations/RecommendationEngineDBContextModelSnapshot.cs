@@ -138,9 +138,6 @@ namespace RecommendationEngine.Migrations
                     b.Property<int>("JobDuration")
                         .HasColumnType("int");
 
-                    b.Property<string>("Result")
-                        .HasColumnType("longtext");
-
                     b.Property<int?>("ScheduleRecommendationScheduleId")
                         .HasColumnType("int");
 
@@ -190,19 +187,18 @@ namespace RecommendationEngine.Migrations
             modelBuilder.Entity("Models.DB.DBRecommendationJobResult", b =>
                 {
                     b.Property<int>("RecommendationJobResultId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int?>("AssetId")
                         .HasColumnType("int");
 
-                    b.Property<double>("BenefitOfResult")
+                    b.Property<double>("Benefit")
                         .HasColumnType("double");
 
                     b.Property<double>("ConfidencePercentage")
                         .HasColumnType("double");
 
-                    b.Property<double>("Cost")
+                    b.Property<double>("CostOfAction")
                         .HasColumnType("double");
 
                     b.Property<double>("CostOfInaction")
@@ -211,17 +207,18 @@ namespace RecommendationEngine.Migrations
                     b.Property<string>("DisplayText")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("JobRecommendationJobId")
-                        .HasColumnType("int");
+                    b.Property<double>("NetSaving")
+                        .HasColumnType("double");
 
                     b.Property<string>("Result")
                         .HasColumnType("longtext");
 
+                    b.Property<double>("ReturnOnInvestment")
+                        .HasColumnType("double");
+
                     b.HasKey("RecommendationJobResultId");
 
                     b.HasIndex("AssetId");
-
-                    b.HasIndex("JobRecommendationJobId");
 
                     b.ToTable("RecommendationJobResult");
                 });
@@ -273,6 +270,9 @@ namespace RecommendationEngine.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PreferedScenario")
                         .HasColumnType("longtext");
 
                     b.Property<int?>("RecommendationTypeId")
@@ -441,8 +441,10 @@ namespace RecommendationEngine.Migrations
                         .HasForeignKey("AssetId");
 
                     b.HasOne("Models.DB.DBRecommendationJob", "Job")
-                        .WithMany("ResultsList")
-                        .HasForeignKey("JobRecommendationJobId");
+                        .WithOne("Result")
+                        .HasForeignKey("Models.DB.DBRecommendationJobResult", "RecommendationJobResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Models.DB.DBRecommendationParameter", b =>

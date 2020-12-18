@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Interfaces.Repositories;
+using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
-using Microsoft.Extensions.Configuration;
 using Models.DB;
 using Moq;
 using NUnit.Framework;
 using Quartz;
-using Quartz.Impl;
 using RecommendationScheduler.RecommendationJob;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 {
@@ -20,6 +17,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
         private Mock<IRecommendationSchedulerRepository> _recommendationSchedulerRepoMock;
         private Mock<IJobExecutionContext> _contextMock;
         private YearlyWashOptimizationRecommendationJob _yearlyWashOptimizationRecommendationJob;
+        private Mock<IDriveService> _driveService;
 
         [SetUp]
         public void Setup()
@@ -27,7 +25,9 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
             _loggerMock = new Mock<IRecommendationJobLogger>();
             _recommendationSchedulerRepoMock = new Mock<IRecommendationSchedulerRepository>();
             _contextMock = new Mock<IJobExecutionContext>();
-            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object);
+            _driveService = new Mock<IDriveService>();
+
+            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object, _driveService.Object);
         }
 
         [Test]

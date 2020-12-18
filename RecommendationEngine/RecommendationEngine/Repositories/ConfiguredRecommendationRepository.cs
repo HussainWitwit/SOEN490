@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
-using Models.DB;
-using Interfaces.Repositories;
-using System.Collections.Generic;
-using RecommendationEngine.Models.Application;
-using RecommendationEngine.ExceptionHandler;
+﻿using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Models.DB;
+using RecommendationEngine.ExceptionHandler;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {
@@ -20,33 +18,20 @@ namespace RecommendationEngine.Repositories
 
         public DBRecommendationSchedule Add(DBRecommendationSchedule schedule)
         {
+            if (!_recommendationEngineDb.Assets.Any())
+            {
+                throw new GlobalException(400, "Bad Request", "There are no assets associated to this recommendation.", "RecommendationEngine");
+            }
             _recommendationEngineDb.RecommendationSchedules.Add(schedule);
             _recommendationEngineDb.SaveChanges();
             return schedule;
         }
 
-        public List<ConfiguredRecommendation> Get()
+        public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
-            List<DBRecommendationSchedule> dbRecommendations = _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
-            List<ConfiguredRecommendation> recommendations = new List<ConfiguredRecommendation>();
-            foreach (DBRecommendationSchedule dbRecommendation in dbRecommendations)
-            {
-                recommendations.Add(
-                    new ConfiguredRecommendation
-                    {
-                        ConfiguredRecommendationId = dbRecommendation.RecommendationScheduleId,
-                        Name = dbRecommendation.Name,
-                        Type = dbRecommendation.RecommendationType.Type,
-                        Granularity = dbRecommendation.Granularity,
-                        CreatedBy = dbRecommendation.ModifiedBy,
-                        RecurrenceDayOfWeek = dbRecommendation.RecurrenceDayOfWeek,
-                        RecurrenceDatetime = dbRecommendation.RecurrenceDatetime,
-                        CreatedOn = dbRecommendation.CreatedOn,
-                        Parameters = null
-                    }
-                    ); ;
-            }
-            return recommendations;
+             return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList).ThenInclude(asset => asset.Asset).
+                ThenInclude(asset => asset.Type).ToList();
+            
         }
 
         public void Delete(int id)
@@ -66,6 +51,15 @@ namespace RecommendationEngine.Repositories
             return _recommendationEngineDb.RecommendationTypes
                 .Where(rec => rec.Type.Equals(recommendationType))
                 .FirstOrDefault();
+        }
+
+        public DBRecommendationSchedule GetRecommendationScheduleById(int id)
+        {
+            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType)
+                .Include(x => x.AssetsList).ThenInclude(x => x.Asset)
+                .Include(x => x.ParametersList).ThenInclude(x => x.RecommendationParameter)
+                .Include(x => x.JobsList)
+                .FirstOrDefault(x => x.RecommendationScheduleId == id);
         }
     }
 }

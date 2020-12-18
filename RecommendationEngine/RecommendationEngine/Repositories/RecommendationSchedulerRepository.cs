@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Interfaces.Repositories;
+﻿using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Models.DB;
-using RecommendationEngine.Models.Application;
-using RecommendationEngine.Services.ExternalAPI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Repositories
 {
-    public class RecommendationSchedulerRepository: IRecommendationSchedulerRepository
+    public class RecommendationSchedulerRepository : IRecommendationSchedulerRepository
     {
-        private RecommendationEngineDBContext _recommendationEngineDb;
+        private readonly RecommendationEngineDBContext _recommendationEngineDb;
 
         public RecommendationSchedulerRepository(RecommendationEngineDBContext recommendationEngineDb)
         {
@@ -26,13 +22,15 @@ namespace RecommendationEngine.Repositories
 
         public DBRecommendationSchedule GetDbRecommendationScheduleById(int id)
         {
-            return _recommendationEngineDb.RecommendationSchedules.Include(x=>x.RecommendationType).Include(x=>x.AssetsList).FirstOrDefault(x =>
-                x.RecommendationScheduleId == id);
+            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList)
+                .ThenInclude(x => x.Asset).Include(x => x.ParametersList).FirstOrDefault(x =>
+                  x.RecommendationScheduleId == id);
         }
 
         public List<DBRecommendationSchedule> GetDbRecommendationSchedules()
         {
-            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).ToList();
+            return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList)
+                .ThenInclude(x => x.Asset).ToList();
         }
 
         public DBRecommendationJob AddRecommendationJob(DBRecommendationJob job)
@@ -59,6 +57,12 @@ namespace RecommendationEngine.Repositories
                 dbRecommendationJob.Status = status;
                 dbRecommendationJob.JobDuration = jobDurationSeconds;
             }
+            _recommendationEngineDb.SaveChanges();
+        }
+
+        public void AddResult(DBRecommendationJob _recommendationJob, DBRecommendationJobResult _result)
+        {
+            _recommendationJob.Result = _result;
             _recommendationEngineDb.SaveChanges();
         }
     }

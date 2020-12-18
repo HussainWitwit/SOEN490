@@ -1,0 +1,133 @@
+#details-configuration-modal > div{
+    color: black;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px 0 30px;
+    text-shadow: none;
+
+}
+.title-input-field{
+  width: 100%;
+}
+
+#basic-information-container {
+    display: flex; 
+    flex-direction: row;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+#element-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  line-height: 0px;
+  margin-bottom: 25px;
+  justify-content: flex-start;
+  width: 90%;
+  /* height: 5ch; */
+}
+
+.text-input-container {
+  width: 550px;
+  height: 55px;
+}
+
+.text-input-granularity {
+  width: 550px;
+  height: 40px;
+}
+
+#text {
+  font-size: 18px;
+  color: grey;
+  text-shadow: none;
+  width: 10ch;
+  text-align: right;
+  margin-right: 10px;
+}
+
+#text-3{
+  font-size: 18px;
+  color: grey;
+  text-shadow: none;
+  width: 10ch;
+  text-align: right;
+  margin-right: 50px;
+}
+
+#content {
+    font-size: 30px;
+}
+
+#scenario-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 90%;
+}
+
+
+#granularity-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  line-height: 0px;
+  margin-bottom: 25px;
+  justify-content: flex-start;
+  width: 40%;
+}
+
+#repeat-container{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  line-height: 0px;
+  justify-content: flex-start;
+  width: 90%;
+  height: 4ch;
+}
+
+#text-2 {
+  margin-right: 55px;
+  font-size: 18px;
+  color: grey;
+  text-shadow: none;
+}
+
+#day-of-week-container {
+  margin: 0 25px 0 0px;
+}
+
+
+#recommendation-date-picker{
+  width: 22ch;
+}
+
+#recommendation-time-picker {
+  width: 10ch;
+}
+
+#date-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#space-right {
+  width: 5ch;
+}
+
+#space-between-pickers{
+  inline-size: 4ch;
+}
+
+.MuiAutocomplete-popupIndicator {
+  color: black;
+}
+
+.MuiAutocomplete-popper {
+  color: black;
+}

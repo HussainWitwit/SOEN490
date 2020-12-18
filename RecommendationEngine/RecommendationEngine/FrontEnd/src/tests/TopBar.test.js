@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopBar from '../components/TopBar/TopBar.js';
-import Breadcrumb from '../components/Breadcrumb/Breadcrumb.js';
-import NotificationBell from '../components/Notification/NotificationBell.js';
+import TopBar from '../containers/TopBar/TopBar.jsx';
+import NotificationBell from '../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../enzyme';
-import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
+import { store } from '../redux/store';
+import BreadcrumbsComponent from '../components/BreadcrumbsComponent/BreadcrumbsComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -17,41 +17,48 @@ describe('TopBar component', () => {
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<TopBar />, div);
+        ReactDOM.render(<TopBar store={store} />, div)
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
-    it('It finds the main div', () => {
-        const output = shallow(<TopBar />);
-        expect(output.find('#main-container')).toBeTruthy();
+    it('It finds it in the component tree', () => {
+        const output = shallow(<TopBar store={store} />).dive();
+        expect(output).toHaveLength(1);
     });
 
+    it('Finds the nav element', () => {
+        const output = shallow(<TopBar store={store} />).dive();
+        let nav = output.find('nav');
+        expect(nav).toHaveLength(1);
+    })
+
     it('It finds the breadcrumb element', () => {
-        const output = shallow(<TopBar />);
-        let component = output.find(Breadcrumb);
-        expect(component).toHaveLength(1);
-        expect(output.find('#breadcrumb')).toBeTruthy();
+        const output = shallow(<TopBar store={store} />).dive();
+        let breadCrumb = output.find(BreadcrumbsComponent);
+        expect(breadCrumb).toHaveLength(1);
     });
 
     it('It finds the weather div', () => {
-        const output = shallow(<TopBar />);
-        expect(output.find('#weather-div')).toBeTruthy();
+        const output = shallow(<TopBar store={store} />).dive();
+        let weatherDiv = output.find('div');
+        expect(weatherDiv).toHaveLength(2);
     });
 
     it('It finds the img element', () => {
-        const output = shallow(<TopBar />);
-        expect(output.find('#img')).toBeTruthy();
+        const output = shallow(<TopBar store={store} />).dive();
+        let img = output.find('img');
+        expect(img).toHaveLength(1);
     });
 
-    it('It finds the img element', () => {
-        const output = shallow(<TopBar />);
-        expect(output.find('#img')).toBeTruthy();
+    it('It finds the change button element', () => {
+        const output = shallow(<TopBar store={store} />).dive();
+        let change = output.find('p');
+        expect(change).toHaveLength(3);
     });
 
     it('It finds the NotificationBell element', () => {
-        const output = shallow(<TopBar />);
+        const output = shallow(<TopBar store={store} />).dive();
         let component = output.find(NotificationBell);
         expect(component).toHaveLength(1);
-        expect(output.find('#notification-bell')).toBeTruthy();
     });
 });

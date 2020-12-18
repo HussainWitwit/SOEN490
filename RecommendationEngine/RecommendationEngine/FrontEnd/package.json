@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@date-io/date-fns": "^1.3.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
-    "@date-io/date-fns": "^2.10.6",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
     "boostrap": "^2.0.0",
-    "bootstrap": "^4.1.3",
+    "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",
     "jquery": "^3.5.1",
@@ -20,23 +20,31 @@
     "merge": "^1.2.1",
     "oidc-client": "^1.9.0",
     "react": "^16.0.0",
-    "react-bootstrap": "^1.0.0-beta.14",
+    "react-bootstrap": "^1.4.0",
     "react-dates": "^21.8.0",
     "react-datetime": "^3.0.4",
     "react-dom": "^16.0.0",
+    "react-draggable": "^4.4.3",
     "react-hot-loader": "^4.13.0",
     "react-icons": "^3.11.0",
     "react-notification-timeline": "0.0.8",
     "react-notifications-menu": "^1.0.1",
     "react-pro-sidebar": "^0.4.4",
+    "react-redux": "^7.2.2",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.0",
     "react-spring": "^8.0.27",
+    "react-tabs": "^3.1.1",
     "reactstrap": "^8.4.1",
+    "redux": "^4.0.5",
+    "redux-actions": "^2.6.5",
+    "redux-batched-actions": "^0.5.0",
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^10.0.5",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.4.1"
   },
   "jest": {
     "collectCoverage": true,
@@ -46,9 +54,12 @@
       "!**/src/registerServiceWorker.js",
       "!**/src/tests/__snapshots__/**",
       "!**/src/tests/__snapshots__/**",
-      "!**/src/api/GET/TableEndpoints.js",
-      "!**/src/api/GET/AssetEndpoints.js",
-      "!**/src/entities/Asset.js"
+      "!**/src/api/get/AssetEndpoints.ts",
+      "!**/src/api/get/ConfiguredRecommendationEndpoints.ts",
+      "!**/src/entities/Asset.ts",
+      "!**/src/entities/ConfiguredRecommendation.ts",
+      "!**/src/redux/store.js",
+      "!**/src/redux/combined-reducers.js"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",
@@ -60,13 +71,9 @@
     "bracketSpacing": true,
     "useTabs": false
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint"
-    }
-  },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.12.1",
+    "@testing-library/react": "^11.2.2",
     "ajv": "^6.9.1",
     "babel-plugin-transform-imports": "^2.0.0",
     "cross-env": "^5.2.0",

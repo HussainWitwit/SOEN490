@@ -1,5 +1,3 @@
-using System.Collections.Specialized;
-using System.Reflection;
 using Autofac;
 using Autofac.Extras.Quartz;
 using Interfaces.RecommendationScheduler;
@@ -11,9 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Models.DB;
-using Quartz;
 using RecommendationEngine.Utilities;
 using RecommendationScheduler.RecommendationJob;
+using System.Collections.Specialized;
+using System.Reflection;
 
 namespace RecommendationEngine
 {
