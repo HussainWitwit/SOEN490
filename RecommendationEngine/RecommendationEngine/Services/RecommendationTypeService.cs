@@ -29,7 +29,7 @@ namespace RecommendationEngine.Services
                     AlgorithmName = recommendationType.Type,
                     InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
                     {
-                        ParameterName = param.Name,
+                        ParameterName = param.DisplayText,
                         DefaultValue = param.DefaultValue
                     }).ToList()
                 }).ToList();
