@@ -9,13 +9,13 @@ import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/Add
 
 function TemplateConfigurationModal(props) {
 
-  const {templateDetailsList, template, dialogStyle, setTemplateName} = props;
+  const { templateDetailsList, template, dialogStyle, setTemplateName } = props;
 
   const defaultParameterNameArray = [];
   const parameterNameArray = [];
 
   const [templateDescription, setTemplateDescription] = useState(templateDetailsList[0].templateDescription);
-  templateDetailsList[0].inputList.map((item,index) => (
+  templateDetailsList[0].inputList.map((item, index) => (
     defaultParameterNameArray[index] = item.parameterName
   ));
   const [inputList, setInputList] = useState(defaultParameterNameArray);
@@ -51,7 +51,8 @@ function TemplateConfigurationModal(props) {
                 setTemplateDescription(templateDetailsList[index].templateDescription);
                 setAlgorithmName(templateDetailsList[index].algorithmName);
                 templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
-                  parameterNameArray[inputIndex] = inputItem.parameterName
+                  parameterNameArray[inputIndex] = inputItem.parameterName,
+                  console.log(parameterNameArray)
                 ));
                 setInputList(parameterNameArray);
               }}
@@ -64,7 +65,8 @@ function TemplateConfigurationModal(props) {
         <div id="info-div">
           <div id="item-info1">
             <Typography classes={{ root: 'title-dialog-0' }}>
-            {template.name}
+              {template.name}
+              <Divider classes={{ root: 'divider-item' }} />
             </Typography>
 
             {templateDescription.split(".").map((item, index) => (
@@ -76,23 +78,26 @@ function TemplateConfigurationModal(props) {
             ))}
 
           </div>
-          <Divider classes={{ root: 'divider-item' }} />
-          <div id="item-info2">
-            <Typography classes={{ root: 'title-dialog-1' }}>Parameters Inputs</Typography>
-            <ol id="list-align">
-              <Typography classes={{ root: 'list-dialog-1' }}>
-                {inputList.map((item) => (
-                  <li>{item}</li>
-                ))}
 
-              </Typography>
-            </ol>
-          </div>
-
-          <Divider classes={{ root: 'divider-item' }} />
+          {/* <div id="item-info2"> */}
+          <Typography classes={{ root: 'title-dialog-1' }}>
+            Parameters Inputs
+            <Divider classes={{ root: 'divider-item' }} />
+          </Typography>
+          <ol id="list-align">
+            <Typography classes={{ root: 'list-dialog-1' }}>
+              {inputList && inputList.map((item) => (
+                <li>{item}</li>
+              ))}
+            </Typography>
+          </ol>
+          {/* </div> */}
+          {/* 
+          <Divider classes={{ root: 'divider-item' }} /> */}
           <div id="item-info3">
             <Typography classes={{ root: 'title-dialog-1' }}>
               Algorithm
+              <Divider classes={{ root: 'divider-item' }} />
             </Typography>
             <Typography classes={{ root: 'subtitle-dialog-1' }}>
               {algorithmName}

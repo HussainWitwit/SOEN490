@@ -25,14 +25,16 @@ height: 100%;
 }
 
 #item-info1{
-height: 130px;
-margin-bottom: 7%;
+min-height: 20%;
+margin-bottom: 5%;
+/* background-color: red; */
 }
 
 #item-info2{
   height: 100px;
   margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 12%;
+  background-color: green;
 }
 
 #item-info3{
@@ -111,6 +113,7 @@ margin-bottom: 7%;
   font-weight: bold;
   font-size: 12px;
   min-width: 90%;
+  margin-bottom: 2%;
 }
 
 .subtitle-dialog-1.MuiTypography-root{
@@ -119,6 +122,8 @@ margin-bottom: 7%;
   font-size: 12px;
   width: 85%;
   margin-top: 2%;
+  /* background: yellow; */
+  /* margin-bottom: 2%; */
 }
 
 .list-dialog-1.MuiTypography-root{
@@ -127,6 +132,8 @@ margin-bottom: 7%;
   font-size: 12px;
   min-width: 90%;
   margin-top: 2%;
+  margin-bottom: 7%;
+  /* background: orange; */
 }
 
 #item-align{
