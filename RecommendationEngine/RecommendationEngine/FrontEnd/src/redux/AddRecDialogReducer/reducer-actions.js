@@ -15,7 +15,8 @@ export const mapDialogStateToProps = (state) => {
       isDialogOpen: state.addRecommendation.isDialogOpen,
       template: state.addRecommendation.template,
       basicConfiguration: state.addRecommendation.basicConfiguration,
-      apiAssets: state.apiReducer.flatListAssets
+      apiAssets: state.apiReducer.flatListAssets,
+      templateDetailsList: state.apiReducer.templateDetailsList
     };
   };
 

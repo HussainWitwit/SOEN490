@@ -57,12 +57,10 @@ margin-bottom: 7%;
 
 
 #item-template-default:hover{
-  background-color:#4DD3EF;
-  
+  background-color: #E8E7E7;
   border-width: 2.5px;
   border-color: transparent;
   transition: all 500ms;
-  box-shadow: 0 0 1px 0 rgb(77,212,239,1);
 }
 
 
@@ -70,7 +68,7 @@ margin-bottom: 7%;
   display: grid;
   border-radius: 10px;
   border-color:  #4DD3EF;
-  border-width: 3.5px; 
+  border-width: 3px; 
   border-style: solid;
   align-items: center;
   height: 120px;
@@ -78,7 +76,7 @@ margin-bottom: 7%;
   margin-left: 25%;
   text-align: center;
   transition: all 500ms;
-  box-shadow: 0 0 2px 0 rgb(77,212,239,1);
+  box-shadow: 0 0 1px 0 rgb(77,212,239,1);
 }
 
 #template-label{

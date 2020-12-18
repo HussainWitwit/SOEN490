@@ -7,11 +7,19 @@ import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
-function TemplateConfigurationModal({ template, dialogStyle, setTemplateName, templateDetailsList }) {
+function TemplateConfigurationModal(props) {
 
-  const [templateDescription, setTemplateDescription] = useState("")
-    const [inputList, setInputList] = useState(["Center Point", "Span Increment", "Soiling Season Buffer", "Acccelerator"]);
-  const [algorithmName, setAlgorithmName] = useState("Yearly Wash Optimization Algorithm");
+  const {templateDetailsList, template, dialogStyle, setTemplateName} = props;
+
+  const defaultParameterNameArray = [];
+  const parameterNameArray = [];
+
+  const [templateDescription, setTemplateDescription] = useState(templateDetailsList[0].templateDescription);
+  templateDetailsList[0].inputList.map((item,index) => (
+    defaultParameterNameArray[index] = item.parameterName
+  ));
+  const [inputList, setInputList] = useState(defaultParameterNameArray);
+  const [algorithmName, setAlgorithmName] = useState(templateDetailsList[0].algorithmName);
 
   const TemplateCard = (props) => {
     return (
@@ -40,10 +48,12 @@ function TemplateConfigurationModal({ template, dialogStyle, setTemplateName, te
               icon={item.listItemIcon}
               onClick={() => {
                 setTemplateName(TemplateItems[index].name);
-                setTemplateDescription(TemplateItems[index].description);
-                setAlgorithmName(TemplateItems[index].algorithName);
-                setInputList(TemplateItems[index].inputList);
-
+                setTemplateDescription(templateDetailsList[index].templateDescription);
+                setAlgorithmName(templateDetailsList[index].algorithmName);
+                templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
+                  parameterNameArray[inputIndex] = inputItem.parameterName
+                ));
+                setInputList(parameterNameArray);
               }}
               isPressed={item.name === template.name}
             />
