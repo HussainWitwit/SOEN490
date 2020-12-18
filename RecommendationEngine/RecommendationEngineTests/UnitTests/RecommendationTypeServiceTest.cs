@@ -32,6 +32,8 @@ namespace RecommendationEngineTests.UnitTests
 
             List<ConfiguredRecommendationType> expected = _recommendationTypeService.GetRecommendationTypes();
             Assert.AreEqual(mockRecommendationTypes[0].Description, expected[0].TemplateDescription);
+            Assert.AreEqual(mockRecommendationTypes[0].DisplayText, expected[0].TemplateName);
+            Assert.AreEqual(mockRecommendationTypes.Count, expected.Count);
         }
     }
 }
