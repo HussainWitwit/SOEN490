@@ -42,6 +42,7 @@ namespace RecommendationEngine.Repositories
                 .FirstOrDefault();
             
             _recommendationEngineDb.Entry(recToEdit).CurrentValues.SetValues(schedule);
+            recToEdit.AssetsList = schedule.AssetsList;
             _recommendationEngineDb.SaveChanges();
             return schedule;
         }
