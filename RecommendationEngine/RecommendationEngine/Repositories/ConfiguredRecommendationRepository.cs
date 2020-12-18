@@ -32,19 +32,25 @@ namespace RecommendationEngine.Repositories
             if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id)) {
                 throw new GlobalException(400, "Bad Request", "Recommendation ID " + schedule.RecommendationScheduleId + " does not exist.", "Recommendation Engine");
             }
-            DBRecommendationSchedule recToEdit = _recommendationEngineDb.RecommendationSchedules.Where(x => x.RecommendationScheduleId == id).FirstOrDefault();
+
+            DBRecommendationSchedule recToEdit = _recommendationEngineDb.RecommendationSchedules
+                .Include(x => x.AssetsList)
+                .ThenInclude(x => x.Asset)
+                .Include(x => x.AssetsList)
+                .ThenInclude(x => x.Schedule)
+                .Where(x => x.RecommendationScheduleId == id)
+                .FirstOrDefault();
+            
             _recommendationEngineDb.Entry(recToEdit).CurrentValues.SetValues(schedule);
             _recommendationEngineDb.SaveChanges();
             return schedule;
         }
+
         public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
              return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList).ThenInclude(asset => asset.Asset).
                 ThenInclude(asset => asset.Type).ToList();
-            
         }
-        
-        
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
