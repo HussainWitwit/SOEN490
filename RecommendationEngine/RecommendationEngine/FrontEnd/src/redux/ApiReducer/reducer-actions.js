@@ -57,7 +57,7 @@ export const mapStateToProps = ({apiReducer}) => {
     }
   }
 
-  export const editConfiguredRecommendation = async (dispatch, configuredRecommendation, id) => {
+export const editConfiguredRecommendation = async (dispatch, configuredRecommendation, id) => {
     const response = await EditConfiguredRecommendation(configuredRecommendation, id);
     dispatch({
       type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,

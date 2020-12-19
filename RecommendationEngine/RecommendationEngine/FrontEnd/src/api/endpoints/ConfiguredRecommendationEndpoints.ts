@@ -61,6 +61,8 @@ export const PostConfiguredRecommendation = async (recommendation: ConfiguredRec
 
 //FIXME: Syntax Errror here
 export const EditConfiguredRecommendation = async (recommendation: ConfiguredRecommendation, id: number) => {
+    console.log(recommendation);
+    console.log(id);
     let response;
     try {
         response = await fetch('localhost:5000/ConfiguredRecommendation/edit/' + id, {

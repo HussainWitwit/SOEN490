@@ -54,7 +54,7 @@ export const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export function AddRecommendationDialog(props) {
-  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing } = props;
+  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing, id } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -85,8 +85,8 @@ export function AddRecommendationDialog(props) {
     setIndex(0);
   }
   //Post method
-  const confirmDialogEvent = async () => {
-    if (isEditing) {
+    const confirmDialogEvent = async () => {
+      if (isEditing) {
       editConfiguredRecommendation({
         type: template.name,
         name: basicConfiguration.title,
@@ -100,7 +100,7 @@ export function AddRecommendationDialog(props) {
         assetIdList: basicConfiguration.asset.map((e) => {
           return e.id;
         })
-      }, basicConfiguration.id);
+      }, id);
     }
     else {
       postConfiguredRecommendation({
@@ -178,7 +178,6 @@ export function AddRecommendationDialog(props) {
             Next
           </Button>
         )}
-                  {console.log(basicConfiguration)}
               {(index <= 2 && index > 0) && (
                   <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || (basicConfiguration.asset != null && basicConfiguration.asset.length === 0)}>
             Next
