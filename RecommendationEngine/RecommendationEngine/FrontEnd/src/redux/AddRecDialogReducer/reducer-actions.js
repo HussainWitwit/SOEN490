@@ -16,7 +16,8 @@ export const mapDialogStateToProps = (state) => {
       template: state.addRecommendation.template,
       basicConfiguration: state.addRecommendation.basicConfiguration,
       apiAssets: state.apiReducer.flatListAssets,
-      isEditing: state.addRecommendation.isEditing
+      isEditing: state.addRecommendation.isEditing,
+      id: state.addRecommendation.id
     };
   };
 
@@ -114,11 +115,11 @@ export const mapDialogStateToProps = (state) => {
     };
   };
 
-  export const setEditable = () => {
+export const setEditable = () => {
     return {
         type: dispatchActionType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
-    }
-  }
+    };
+};
 
   export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
     dispatch(setTemplateName(value.type));
@@ -146,7 +147,7 @@ export const mapDialogStateToProps = (state) => {
       setRepeatDay: (value) => dispatch(setRepeatDay(value)),
       setRepeatDate: (value) => dispatch(setRepeatDate(value)),
       setRepeatTime: (value) => dispatch(setRepeatTime(value)),
-      setEditableConfiguredRecommendation: (value) => setEditableConfiguredRecommendation(dispatch, value),
+      setEditableConfiguredRecommendation: (value, id) => setEditableConfiguredRecommendation(dispatch, value, id),
       toggleDialog: () => dispatch(toggleDialog()),
       clear: () => dispatch(clear()),
     };

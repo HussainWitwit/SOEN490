@@ -54,7 +54,7 @@ export const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export function AddRecommendationDialog(props) {
-  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing } = props;
+  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing, id } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -100,7 +100,7 @@ export function AddRecommendationDialog(props) {
         assetIdList: basicConfiguration.asset.map((e) => {
           return e.id;
         })
-      }, basicConfiguration.id);
+      }, id);
     }
     else {
       postConfiguredRecommendation({
