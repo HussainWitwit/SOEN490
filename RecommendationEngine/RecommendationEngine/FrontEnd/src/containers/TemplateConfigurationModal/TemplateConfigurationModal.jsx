@@ -51,10 +51,11 @@ function TemplateConfigurationModal(props) {
                 setTemplateDescription(templateDetailsList[index].templateDescription);
                 setAlgorithmName(templateDetailsList[index].algorithmName);
                 templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
-                  parameterNameArray[inputIndex] = inputItem.parameterName,
-                  console.log(parameterNameArray)
+                  parameterNameArray[inputIndex] = inputItem.parameterName
                 ));
-                setInputList(parameterNameArray);
+                console.log("inside the clicker" + parameterNameArray.length)
+                setInputList((parameterNameArray.length == 0 ? [] : parameterNameArray));
+                console.log("inside inputList: " + inputList);
               }}
               isPressed={item.name === template.name}
             />
@@ -63,49 +64,60 @@ function TemplateConfigurationModal(props) {
 
 
         <div id="info-div">
-          <div id="item-info1">
-            <Typography classes={{ root: 'title-dialog-0' }}>
-              {template.name}
-              <Divider classes={{ root: 'divider-item' }} />
+          {/* <div id="item-info1"> */}
+          <Typography classes={{ root: 'title-dialog-0' }}>
+            {template.name}
+            <Divider classes={{ root: 'divider-item' }} />
+          </Typography>
+
+          {templateDescription.split(".").map((item, index) => (
+
+            <Typography classes={{ root: 'subtitle-dialog-1' }}>
+               { item != "" ? item+ "." : ""}
             </Typography>
 
-            {templateDescription.split(".").map((item, index) => (
+          ))}
 
-              <Typography classes={{ root: 'subtitle-dialog-1' }}>
-                {item}
-              </Typography>
-
-            ))}
-
-          </div>
+          {/* </div> */}
 
           {/* <div id="item-info2"> */}
           <Typography classes={{ root: 'title-dialog-1' }}>
             Parameters Inputs
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
-          <ol id="list-align">
-            <Typography classes={{ root: 'list-dialog-1' }}>
-              {inputList && inputList.map((item) => (
-                <li>{item}</li>
-              ))}
-            </Typography>
-          </ol>
-          {/* </div> */}
-          {/* 
-          <Divider classes={{ root: 'divider-item' }} /> */}
-          <div id="item-info3">
-            <Typography classes={{ root: 'title-dialog-1' }}>
-              Algorithm
-              <Divider classes={{ root: 'divider-item' }} />
-            </Typography>
-            <Typography classes={{ root: 'subtitle-dialog-1' }}>
-              {algorithmName}
-            </Typography>
-          </div>
-        </div>
 
+          {inputList.length == 0 &&
+            <Typography classes={{ root: 'subtitle-dialog-1' }}>
+              No Available Inputs
+      </Typography>
+          }
+          {inputList != [] &&
+            <ol id="list-align">
+              <Typography classes={{ root: 'list-dialog-1' }}>
+                {inputList && inputList.map((item) => (
+                  console.log("inside the lister" + item),
+                  <li id="list-item">{item}</li>
+                ))}
+              </Typography>
+            </ol>
+          }
+
+
+          {/* </div> */}
+
+
+          {/* <div id="item-info3"> */}
+          <Typography classes={{ root: 'title-dialog-1' }}>
+            Algorithm
+              <Divider classes={{ root: 'divider-item' }} />
+          </Typography>
+          <Typography classes={{ root: 'subtitle-dialog-1' }}>
+            {algorithmName}
+          </Typography>
+        </div>
       </div>
+
+      {/* </div> */}
     </animated.div>
   );
 }
