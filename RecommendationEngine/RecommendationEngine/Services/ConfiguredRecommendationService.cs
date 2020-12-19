@@ -95,6 +95,23 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
 
             config.AssetsList = dbAssets;
 
+            // Add user defined parameters
+            List<DBRecommendationParameter> recommendationParameters =
+                _recommendationRepository.GetParametersForSchedule(config);
+            if (recommendationParameters.Count > configuredRecommendation.Parameters.Count)
+            {
+                throw new GlobalException(400, "Bad Request", "There are some missing parameters", "RecommendationEngine");
+            }
+
+            config.ParametersList = configuredRecommendation.Parameters.Select(parameter =>
+                new DBRecommendationScheduleParameter
+                {
+                    ParamValue = parameter.ParameterValue,
+                    ModifiedBy = configuredRecommendation.CreatedBy,
+                    RecommendationParameter =
+                        recommendationParameters.FirstOrDefault(x => x.DisplayText == parameter.ParameterName)
+                }).ToList();
+
             var schedule = _recommendationRepository.Add(config);
 
             _scheduler.ScheduleJobAsync(schedule);

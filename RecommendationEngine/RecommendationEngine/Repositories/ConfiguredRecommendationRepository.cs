@@ -49,5 +49,11 @@ namespace RecommendationEngine.Repositories
                 .Include(x => x.JobsList)
                 .FirstOrDefault(x => x.RecommendationScheduleId == id);
         }
+
+        public List<DBRecommendationParameter> GetParametersForSchedule(DBRecommendationSchedule schedule)
+        {
+            return _recommendationEngineDb.RecommendationParameters
+                .Where(x => x.ForRecommendationType.RecommendationTypeId == schedule.RecommendationType.RecommendationTypeId).ToList();
+        }
     }
 }
