@@ -16,12 +16,11 @@ export interface ConfiguredRecommendation {
     assetIdList?: number[],
     assetList?: Asset[],
     parameters?: ConfiguredRecommendationParameter[]
-    
 }
 
 export interface ConfiguredRecommendationParameter {
     parameterName: string,
-    parameterValue: string
+    parameterValue: number
 }
 
 export interface ConfiguredRecommendationJob {

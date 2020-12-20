@@ -5,6 +5,7 @@
   #paramater-modal-content{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-shadow: none;
     color: black;
@@ -20,19 +21,9 @@
   background-color: teal;
 }
 
-.table-header-row {
-  /* background-color: pink; */
-}
-
-.MuiTableRow-root {
-  /* background-color: green; */
-  border-bottom: unset;
-  /* border: solid; */
-}
-
 #table-container {
+  background-color: #f8f8ff;
   width: 95%;
-  background-color: yellow;
   border-radius: 10px;
   max-height: 100%;
   overflow: auto;
@@ -40,13 +31,13 @@
 
 .MuiTable-root {
   border-radius: 15px;
+  border: 10px;
 }
 
 .MuiInputBase-root {
   height: 40px;
-  width: 170px;
-}
-.default-value {
   width: 100px;
-  /* height: 10px; */
+}
+.value {
+  width: 100px;
 }

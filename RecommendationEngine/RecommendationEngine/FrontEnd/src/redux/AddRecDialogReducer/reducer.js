@@ -33,28 +33,34 @@ const detailsConfigInitialValues = {
     repeatDay: 1, //Why in the back-end the day of the week are from 1 to 7? Isn't it supposed to be 0 to 6.
     repeatDate: new Date(),
     repeatTime: new Date()
-}
+};
 
+export const parametersConfigInitialValues = {
+    centerPointIncrement: 0,
+    spanIncrement: 0,
+    accelerator: 0,
+    soilingSeasonBuffer: 0
+};
 
 export const contentInitialValues = {
     isDialogOpen: false,
-    template: {name: TemplateItems[0].name},
+    template: { name: TemplateItems[0].name },
     basicConfiguration: detailsConfigInitialValues,
-    parameters: {}
-  };
+    parameterConfiguration: parametersConfigInitialValues
+};
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
-    switch(action.type) {
+    switch (action.type) {
         case type.UPDATE_RECOMMENDATION_TEMPLATE:
-                return {
-                    ...state,
-                    template: {
-                        ...state.template,
-                        name: action.payload.name
-                    }
-                };
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    name: action.payload.name
+                }
+            };
 
-        case type.UPDATE_TITLE: 
+        case type.UPDATE_TITLE:
             return {
                 ...state,
                 basicConfiguration: {
@@ -63,7 +69,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_ASSET: 
+        case type.UPDATE_ASSET:
             return {
                 ...state,
                 basicConfiguration: {
@@ -72,7 +78,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_PREFERRED_SCENARIO: 
+        case type.UPDATE_PREFERRED_SCENARIO:
             return {
                 ...state,
                 basicConfiguration: {
@@ -81,7 +87,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_GRANULARITY: 
+        case type.UPDATE_GRANULARITY:
             return {
                 ...state,
                 basicConfiguration: {
@@ -90,7 +96,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_DAY: 
+        case type.UPDATE_REPEAT_DAY:
             return {
                 ...state,
                 basicConfiguration: {
@@ -99,7 +105,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_DATE: 
+        case type.UPDATE_REPEAT_DATE:
             return {
                 ...state,
                 basicConfiguration: {
@@ -108,7 +114,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_TIME: 
+        case type.UPDATE_REPEAT_TIME:
             return {
                 ...state,
                 basicConfiguration: {
@@ -117,16 +123,52 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.TOGGLE_DIALOG: 
+        case type.UPDATE_CENTERPOINT_INCREMENT:
+            return {
+                ...state,
+                parameterConfiguration: {
+                    ...state.parameterConfiguration,
+                    centerPointIncrement: action.payload.centerPointIncrement
+                }
+            };
+
+        case type.UPDATE_SPAN_INCREMENT:
+            return {
+                ...state,
+                parameterConfiguration: {
+                    ...state.parameterConfiguration,
+                    spanIncrement: action.payload.spanIncrement
+                }
+            };
+
+        case type.UPDATE_ACCELERATOR:
+            return {
+                ...state,
+                parameterConfiguration: {
+                    ...state.parameterConfiguration,
+                    accelerator: action.payload.accelerator
+                }
+            };
+
+        case type.UPDATE_SOILING_SEASON_BUFFER:
+            return {
+                ...state,
+                parameterConfiguration: {
+                    ...state.parameterConfiguration,
+                    soilingSeasonBuffer: action.payload.centerPointIncrement
+                }
+            };
+
+        case type.TOGGLE_DIALOG:
             return {
                 ...state,
                 isDialogOpen: !state.isDialogOpen
             };
 
         case type.CLEAR:
-            return contentInitialValues; 
+            return contentInitialValues;
 
         default:
             return state;
-        } 
+    }
 }
