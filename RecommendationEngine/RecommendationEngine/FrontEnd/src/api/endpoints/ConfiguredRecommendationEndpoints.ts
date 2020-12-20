@@ -65,7 +65,7 @@ export const EditConfiguredRecommendation = async (recommendation: ConfiguredRec
     console.log(id);
     let response;
     try {
-        response = await fetch('localhost:5000/ConfiguredRecommendation/edit/' + id, {
+        response = await fetch('ConfiguredRecommendation/edit/' + id, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(recommendation)
