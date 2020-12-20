@@ -149,6 +149,20 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                     Status = x.Status,
                     Timestamp = x.Timestamp
                 }).ToList(),
+                AssetList = schedule.AssetsList.Select(x => new AssetLeaf
+                {
+                    Name = x.Asset.Name,
+                    DisplayText = x.Asset.DisplayText,
+                    AcPower = x.Asset.AcPower,
+                    ElementPath = x.Asset.ElementPath,
+                    EnergyType = x.Asset.EnergyType,
+                    TimeZone = x.Asset.TimeZone
+                }).ToList(),
+                Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
+                {
+                    ParameterName = x.RecommendationParameter.DisplayText,
+                    ParameterValue = x.ParamValue
+                }).ToList()
             };
             // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
             while (configuredRecommendation.LastJobs.Count < 5) configuredRecommendation.LastJobs.Insert(0, null);
