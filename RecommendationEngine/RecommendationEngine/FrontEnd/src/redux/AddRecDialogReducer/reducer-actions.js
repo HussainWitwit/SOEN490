@@ -17,7 +17,7 @@ export const mapDialogStateToProps = (state) => {
       basicConfiguration: state.addRecommendation.basicConfiguration,
       apiAssets: state.apiReducer.flatListAssets,
       isEditing: state.addRecommendation.isEditing,
-      id: state.addRecommendation.id
+      configurationId: state.addRecommendation.id
     };
   };
 

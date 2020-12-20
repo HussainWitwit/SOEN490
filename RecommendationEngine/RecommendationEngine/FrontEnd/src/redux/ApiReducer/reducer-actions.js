@@ -7,6 +7,7 @@
 import * as dispatchActionType from './dispatch-types';
 import { getNestedAssetList,  getFlatAssetList } from '../../api/endpoints/AssetEndpoints';
 import { GetConfiguredRecommendationList, PostConfiguredRecommendation, EditConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { openScheduleDrilldown } from '../../redux/RightPanelReducer/reducer-actions';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({apiReducer}) => {
@@ -66,6 +67,7 @@ export const editConfiguredRecommendation = async (dispatch, configuredRecommend
     if(response.status === 200) { 
       //TODO: Successful post, send notifications...
       await getConfiguredRecommendationList(dispatch); //To test
+      openScheduleDrilldown(dispatch, id);
     }
     else {
       //TODO: Error with post, send notifications...
