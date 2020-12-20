@@ -73,7 +73,7 @@ export function DetailsConfigurationModal (props) {
             contentLabel="Assets..."
             recommendationType = {template.name}
             items={apiAssets}
-            value={basicConfiguration.asset}
+            value={basicConfiguration.asset ? basicConfiguration.asset : []}
             onChange={(event, value) => updateAsset(value)}
             maxElement={1}
             variant={'outlined'}
