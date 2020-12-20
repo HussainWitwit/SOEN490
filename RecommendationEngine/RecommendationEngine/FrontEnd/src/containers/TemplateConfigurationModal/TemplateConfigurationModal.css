@@ -24,25 +24,6 @@ width: 90%;
 height: 100%;
 }
 
-#item-info1{
-min-height: 20%;
-margin-bottom: 5%;
-/* background-color: red; */
-}
-
-#item-info2{
-  height: 100px;
-  margin-top: 5%;
-  margin-bottom: 12%;
-  background-color: green;
-}
-
-#item-info3{
-  height: 80px;
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-
 #item-template-default{
   display: grid;
   border-width: 2px;
@@ -115,7 +96,6 @@ margin-bottom: 5%;
   font-size: 12px;
   min-width: 90%;
   margin-bottom: 2%;
-  /* background-color: orange; */
 }
 
 .subtitle-dialog-1.MuiTypography-root{
@@ -123,8 +103,6 @@ margin-bottom: 5%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
   width: 85%;
-  /* margin-top: 2%; */
-  /* background: yellow; */
   padding-bottom: 2%;
 }
 

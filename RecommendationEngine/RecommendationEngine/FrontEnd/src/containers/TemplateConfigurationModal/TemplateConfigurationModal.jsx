@@ -7,19 +7,26 @@ import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
+
 function TemplateConfigurationModal(props) {
 
   const { templateDetailsList, template, dialogStyle, setTemplateName } = props;
 
-  const defaultParameterNameArray = [];
   const parameterNameArray = [];
+  const defaultParameterNameArray = [];
 
-  const [templateDescription, setTemplateDescription] = useState(templateDetailsList[0].templateDescription);
+  const defaultDescription  = templateDetailsList[0] ? templateDetailsList[0].templateDescription : "No Available Description";
+  const defaultAlgorithm = templateDetailsList[0] ? templateDetailsList[0].algorithmName : "No Available Algorithm";
+
+  if(templateDetailsList[0]){
   templateDetailsList[0].inputList.map((item, index) => (
     defaultParameterNameArray[index] = item.parameterName
   ));
+  }
+
+  const [templateDescription, setTemplateDescription] = useState(defaultDescription);
   const [inputList, setInputList] = useState(defaultParameterNameArray);
-  const [algorithmName, setAlgorithmName] = useState(templateDetailsList[0].algorithmName);
+  const [algorithmName, setAlgorithmName] = useState(defaultAlgorithm);
 
   const TemplateCard = (props) => {
     return (
@@ -40,47 +47,40 @@ function TemplateConfigurationModal(props) {
   return (
     <animated.div id="template-modal-container" style={dialogStyle}>
       <div data-testid="templates" id="parent-div">
-        <div id="template-grid" data-testid="template">
-          {TemplateItems.map((item, index) => (
+        <div  data-testid="template" id="template-grid">
+          {templateDetailsList.map((item, index) => (
             <TemplateCard
+              data-testid="template-card"
+              key={index}
               data-testid="template-inside"
-              name={item.name}
-              icon={item.listItemIcon}
+              name={item.templateName}
+              icon={TemplateItems[index].listItemIcon}
               onClick={() => {
-                setTemplateName(TemplateItems[index].name);
+                setTemplateName(templateDetailsList[index].templateName);
                 setTemplateDescription(templateDetailsList[index].templateDescription);
                 setAlgorithmName(templateDetailsList[index].algorithmName);
-                templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
+                {templateDetailsList[index].inputList && templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
                   parameterNameArray[inputIndex] = inputItem.parameterName
-                ));
-                console.log("inside the clicker" + parameterNameArray.length)
+                ));}
                 setInputList((parameterNameArray.length == 0 ? [] : parameterNameArray));
-                console.log("inside inputList: " + inputList);
               }}
-              isPressed={item.name === template.name}
+              isPressed={item.templateName === template.name}
             />
           ))}
         </div>
-
-
-        <div id="info-div">
-          {/* <div id="item-info1"> */}
+        <div id="info-div" data-testid="templateinfodiv">
           <Typography classes={{ root: 'title-dialog-0' }}>
             {template.name}
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
 
-          {templateDescription.split(".").map((item, index) => (
+          {templateDescription && templateDescription.split(".").map((item, index) => (
 
-            <Typography classes={{ root: 'subtitle-dialog-1' }}>
+            <Typography key={index} classes={{ root: 'subtitle-dialog-1' }}>
                { item != "" ? item+ "." : ""}
             </Typography>
 
           ))}
-
-          {/* </div> */}
-
-          {/* <div id="item-info2"> */}
           <Typography classes={{ root: 'title-dialog-1' }}>
             Parameters Inputs
             <Divider classes={{ root: 'divider-item' }} />
@@ -94,19 +94,12 @@ function TemplateConfigurationModal(props) {
           {inputList != [] &&
             <ol id="list-align">
               <Typography classes={{ root: 'list-dialog-1' }}>
-                {inputList && inputList.map((item) => (
-                  console.log("inside the lister" + item),
-                  <li id="list-item">{item}</li>
+                {inputList && inputList.map((item, index) => (
+                  <li id="list-item" key={index}>{item}</li>
                 ))}
               </Typography>
             </ol>
           }
-
-
-          {/* </div> */}
-
-
-          {/* <div id="item-info3"> */}
           <Typography classes={{ root: 'title-dialog-1' }}>
             Algorithm
               <Divider classes={{ root: 'divider-item' }} />
@@ -116,8 +109,6 @@ function TemplateConfigurationModal(props) {
           </Typography>
         </div>
       </div>
-
-      {/* </div> */}
     </animated.div>
   );
 }

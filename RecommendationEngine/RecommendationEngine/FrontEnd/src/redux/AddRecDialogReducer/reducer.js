@@ -38,7 +38,9 @@ const detailsConfigInitialValues = {
 
 export const contentInitialValues = {
     isDialogOpen: false,
-    template: {name: TemplateItems[0].name},
+    template: {
+        name: TemplateItems[0].name
+    },
     basicConfiguration: detailsConfigInitialValues,
     parameters: {}
   };

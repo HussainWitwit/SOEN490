@@ -1,3 +1,4 @@
+import { TemplateItems } from '../../containers/TemplateConfigurationModal/ListTemplateItems'
 import * as type from './dispatch-types';
 
 export const initialValues = {
