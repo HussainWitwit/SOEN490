@@ -13,7 +13,7 @@ describe('ManageRecommendationDrawer component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<ManageRecommendationDrawer
+    const output = shallow(<ManageRecommendationDrawer store={store}
         configuredRecommendation={{
             name: '',
             description: '',
@@ -27,7 +27,7 @@ describe('ManageRecommendationDrawer component', () => {
             parameters: [(value) => { }],
             lastJobs: [(value) => { }]
         }}
-    />);
+    />).dive();
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
