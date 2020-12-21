@@ -98,7 +98,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             // Add user defined parameters
             List<DBRecommendationParameter> recommendationParameters =
                 _recommendationRepository.GetParametersForSchedule(config);
-            if (recommendationParameters.Count > configuredRecommendation.Parameters.Count)
+            if (configuredRecommendation.Parameters != null && recommendationParameters.Count > configuredRecommendation.Parameters.Count)
             {
                 throw new GlobalException(400, "Bad Request", "There are some missing parameters", "RecommendationEngine");
             }
