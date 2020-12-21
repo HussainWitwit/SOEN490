@@ -6,7 +6,6 @@ import {GiBatteryPackAlt } from 'react-icons/gi';
 import { BiShapeTriangle } from 'react-icons/bi';
 import {  VscCircuitBoard } from 'react-icons/vsc';
 import { GoCalendar } from 'react-icons/go';
-// import { MdSchedule } from 'react-icons/md';
 
 type ListTemplateObject = {
     name: string,

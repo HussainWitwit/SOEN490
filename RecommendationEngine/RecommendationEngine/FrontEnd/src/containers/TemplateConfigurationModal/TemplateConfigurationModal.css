@@ -38,7 +38,6 @@ height: 100%;
   text-align: center;
 }
 
-
 #item-template-default:hover{
   background-color: #E8E7E7;
   border-width: 2.5px;
@@ -86,7 +85,6 @@ height: 100%;
   font-size: 15px;
   min-width: 90%;
   margin-bottom: 2%;
-  /* background-color: orange; */
 }
 
 .title-dialog-1.MuiTypography-root{
