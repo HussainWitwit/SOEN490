@@ -5,6 +5,7 @@
  */
 import * as dispatchActionType from './dispatch-types';
 import {getConfiguredRecommendationById, deleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import {getConfiguredRecommendationList} from '../ApiReducer/reducer-actions'
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
@@ -29,7 +30,13 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
     type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
     payload: response
   });
-  // closeScheduleDrilldown(dispatch,id);
+  if(response.status === 200) { 
+    //TODO: Successful post, send notifications...
+    await getConfiguredRecommendationList(dispatch); //To test
+  }
+  else {
+    //TODO: Error with post, send notifications...
+  }
 }
 
 export const closeAssetTreeview = () => {
