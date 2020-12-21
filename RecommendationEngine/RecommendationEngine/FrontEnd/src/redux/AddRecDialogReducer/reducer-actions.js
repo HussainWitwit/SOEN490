@@ -23,11 +23,38 @@ export const mapDialogStateToProps = (state) => {
   //**Actions --> Useful for unit testing the reducer.
   export const setTemplateName = (value) => {
     return {
-      type: dispatchActionType.UPDATE_RECOMMENDATION_TEMPLATE,
+      type: dispatchActionType.UPDATE_RECOMMENDATION_TEMPLATE_NAME,
       payload: {
         name: value
       }
     } 
+  }
+
+  export const setTemplateDescription = (value) => {
+    return {
+      type: dispatchActionType.UPDATE_RECOMMENDATION_TEMPLATE_DESCRIPTION,
+      payload: {
+        description: value
+      }
+    }
+  }
+
+  export const setInputList = (value) => {
+    return {
+      type: dispatchActionType.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST,
+      payload: {
+        inputList : value
+      }
+    }
+  }
+
+  export const setAlgorithmName = (value) => {
+    return {
+      type: dispatchActionType.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM,
+      payload: {
+        algorithmName : value
+      }
+    }
   }
 
   export const setTitle = (value) => {
@@ -111,6 +138,9 @@ export const mapDialogStateToProps = (state) => {
   export const mapDispatchToProps = (dispatch) => {
     return {
       setTemplateName: (value) =>  dispatch(setTemplateName(value)),
+      setTemplateDescription: (value) => dispatch(setTemplateDescription(value)),
+      setInputList: (value) => dispatch(setInputList(value)),
+      setAlgorithmName: (value) => dispatch(setAlgorithmName(value)),
       setTitle: (value) => dispatch(setTitle(value)),
       updateAsset: (value) => dispatch(updateAsset(value)),
       setPreferredScenario: (value) => dispatch(setPreferredScenario(value)),

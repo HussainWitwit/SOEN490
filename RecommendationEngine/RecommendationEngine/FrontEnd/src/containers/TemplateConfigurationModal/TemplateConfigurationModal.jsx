@@ -10,23 +10,9 @@ import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/Add
 
 function TemplateConfigurationModal(props) {
 
-  const { templateDetailsList, template, dialogStyle, setTemplateName } = props;
+  const { templateDetailsList, template, dialogStyle, setTemplateName, setAlgorithmName, setTemplateDescription, setInputList } = props;
 
   const parameterNameArray = [];
-  const defaultParameterNameArray = [];
-
-  const defaultDescription  = templateDetailsList[0] ? templateDetailsList[0].templateDescription : "No Available Description";
-  const defaultAlgorithm = templateDetailsList[0] ? templateDetailsList[0].algorithmName : "No Available Algorithm";
-
-  if(templateDetailsList[0]){
-  templateDetailsList[0].inputList.map((item, index) => (
-    defaultParameterNameArray[index] = item.parameterName
-  ));
-  }
-
-  const [templateDescription, setTemplateDescription] = useState(defaultDescription);
-  const [inputList, setInputList] = useState(defaultParameterNameArray);
-  const [algorithmName, setAlgorithmName] = useState(defaultAlgorithm);
 
   const TemplateCard = (props) => {
     return (
@@ -47,7 +33,7 @@ function TemplateConfigurationModal(props) {
   return (
     <animated.div id="template-modal-container" style={dialogStyle}>
       <div data-testid="templates" id="parent-div">
-        <div  data-testid="template" id="template-grid">
+        <div id="template-grid" data-testid="template" >
           {templateDetailsList.map((item, index) => (
             <TemplateCard
               data-testid="template-card"
@@ -59,9 +45,11 @@ function TemplateConfigurationModal(props) {
                 setTemplateName(templateDetailsList[index].templateName);
                 setTemplateDescription(templateDetailsList[index].templateDescription);
                 setAlgorithmName(templateDetailsList[index].algorithmName);
-                {templateDetailsList[index].inputList && templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
-                  parameterNameArray[inputIndex] = inputItem.parameterName
-                ));}
+                {
+                  templateDetailsList[index].inputList && templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
+                    parameterNameArray[inputIndex] = inputItem.parameterName
+                  ));
+                }
                 setInputList((parameterNameArray.length == 0 ? [] : parameterNameArray));
               }}
               isPressed={item.templateName === template.name}
@@ -73,28 +61,25 @@ function TemplateConfigurationModal(props) {
             {template.name}
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
-
-          {templateDescription && templateDescription.split(".").map((item, index) => (
-
+          {template.description && template.description.split(".").map((item, index) => (
             <Typography key={index} classes={{ root: 'subtitle-dialog-1' }}>
-               { item != "" ? item+ "." : ""}
+              { item != "" ? item + "." : ""}
             </Typography>
-
           ))}
           <Typography classes={{ root: 'title-dialog-1' }}>
             Parameters Inputs
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
 
-          {inputList.length == 0 &&
+          {template.inputList.length == 0 &&
             <Typography classes={{ root: 'subtitle-dialog-1' }}>
               No Available Inputs
       </Typography>
           }
-          {inputList != [] &&
+          {template.inputList != [] &&
             <ol id="list-align">
               <Typography classes={{ root: 'list-dialog-1' }}>
-                {inputList && inputList.map((item, index) => (
+                {template.inputList && template.inputList.map((item, index) => (
                   <li id="list-item" key={index}>{item}</li>
                 ))}
               </Typography>
@@ -105,7 +90,7 @@ function TemplateConfigurationModal(props) {
               <Divider classes={{ root: 'divider-item' }} />
           </Typography>
           <Typography classes={{ root: 'subtitle-dialog-1' }}>
-            {algorithmName}
+            {template.algorithmName}
           </Typography>
         </div>
       </div>
