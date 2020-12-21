@@ -2,7 +2,6 @@
 using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
 using Interfaces.Services;
-using Interfaces.Services.ExternalAPI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Models.Application.APIModels;
