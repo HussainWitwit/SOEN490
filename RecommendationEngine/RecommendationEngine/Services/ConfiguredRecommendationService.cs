@@ -1,7 +1,6 @@
 ﻿using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
 using Interfaces.Services;
-using Interfaces.Services.ExternalAPI;
 using Models.Application;
 using Models.Application.Asset;
 using Models.DB;
@@ -14,19 +13,16 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
 {
     public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {
-        private IDriveService _driveService;
         private IConfiguredRecommendationRepository _recommendationRepository;
         private IAssetRepository _assetRepository;
         private IRecommendationScheduler _scheduler;
 
         public ConfiguredRecommendationService(
-                IDriveService driveService,
                 IConfiguredRecommendationRepository recommendationRepository,
                 IAssetRepository assetRepository,
                 IRecommendationScheduler scheduler
         )
         {
-            _driveService = driveService;
             _recommendationRepository = recommendationRepository;
             _assetRepository = assetRepository;
             _scheduler = scheduler;
