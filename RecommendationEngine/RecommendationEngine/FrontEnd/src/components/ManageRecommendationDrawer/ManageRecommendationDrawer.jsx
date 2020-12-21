@@ -7,10 +7,12 @@ import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
 
 export default function ManageRecommendationDrawer({
   configuredRecommendation,
 }) {
+  const [open, setOpen] = React.useState(false);
   // Animation style
   const props = useSpring({
     opacity: 1,
@@ -18,9 +20,13 @@ export default function ManageRecommendationDrawer({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
 
+  const handleClickOpen = () => {
+    setOpen(!open);
+  };
+
   const formatDateTime = (date) => {
     let timeStamp = new Date(date);
-      return timeStamp.toLocaleString();
+    return timeStamp.toLocaleString();
   }
 
   return (
@@ -115,51 +121,52 @@ export default function ManageRecommendationDrawer({
                 ))}
             </div>
           </Grid>
-        <Grid item xs={12}>
-          <p className="value-title">Last Execution Status</p>
-          {configuredRecommendation.lastJobs &&
-            configuredRecommendation.lastJobs[4] ? (
-              <div
-                className={
-                  'execution-status-' +
-                  configuredRecommendation.lastJobs[4].status
-                }
-              >
-                <Chip
-                  label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
-                />
-              </div>
-            ) : (
-              <div className={'execution-status-Empty'}>
-                <Chip label="NO STATUS" />
-              </div>
-            )}
+          <Grid item xs={12}>
+            <p className="value-title">Last Execution Status</p>
+            {configuredRecommendation.lastJobs &&
+              configuredRecommendation.lastJobs[4] ? (
+                <div
+                  className={
+                    'execution-status-' +
+                    configuredRecommendation.lastJobs[4].status
+                  }
+                >
+                  <Chip
+                    label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
+                  />
+                </div>
+              ) : (
+                <div className={'execution-status-Empty'}>
+                  <Chip label="NO STATUS" />
+                </div>
+              )}
+          </Grid>
+          <Grid item xs={12}>
+            <div className="created-edited-by">
+              <p className="edited-by">Last edited by: </p>
+              <p className="created-edited-by-name">
+                {configuredRecommendation.createdBy}
+              </p>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="edit-recommendation-button">
+              <Button variant="outlined">Edit a Recommendation</Button>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="force-run-button">
+              <Button variant="outlined">Force run</Button>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="delete-button">
+              <Button variant="outlined" onClick={handleClickOpen}>Delete</Button>
+              <DeletePopUp title={configuredRecommendation.name} handleClickOpen={handleClickOpen} open={open} recommendationId={configuredRecommendation.id}/>
+            </div>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <div className="created-edited-by">
-            <p className="edited-by">Last edited by: </p>
-            <p className="created-edited-by-name">
-              {configuredRecommendation.createdBy}
-            </p>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="edit-recommendation-button">
-            <Button variant="outlined">Edit a Recommendation</Button>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="force-run-button">
-            <Button variant="outlined">Force run</Button>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="delete-button">
-            <Button variant="outlined">Delete</Button>
-          </div>
-        </Grid>
-      </Grid>
-    </div>
-  </animated.div >
-);
+      </div>
+    </animated.div >
+  );
 }
