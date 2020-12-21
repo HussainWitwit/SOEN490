@@ -9,6 +9,7 @@ using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Models.Application;
 using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -58,6 +59,16 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
+        public async Task AddRecommendationBadRequest()
+        {
+            var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_2;
+            string json = JsonConvert.SerializeObject(recommendation);
+            var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/configuredrecommendation/add", body);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+        }
+
+        [Test]
         public async Task GetRecommendationByIdTest()
         {
             var response = await _client.GetAsync("/configuredrecommendation/configuredrecommendation/1");
@@ -89,6 +100,11 @@ namespace RecommendationEngineTests.APITests
         public DBRecommendationSchedule GetRecommendationScheduleById(int id)
         {
             return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST.First();
+        }
+
+        public List<DBRecommendationParameter> GetParametersForSchedule(DBRecommendationSchedule schedule)
+        {
+            return MockConfiguredRecommendations.BASIC_PARAMETER_LIST.Select(x=>x.RecommendationParameter).ToList();
         }
     }
 
