@@ -1,6 +1,6 @@
 import { TemplateDetails } from "../models/TemplateDetails";
 
-export const getTemplateDetailsInfo = async () => {
+export const GetTemplateDetailsInfo = async () => {
 
     let templates: TemplateDetails[];
 

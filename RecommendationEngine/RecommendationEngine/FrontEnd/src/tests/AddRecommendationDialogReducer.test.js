@@ -16,10 +16,10 @@ let state = {
   isDialogOpen: false,
   template: {
     name: TemplateItems[0].name,
-    description: "This recommendation is used to suggest the optimal time to wash your solar panels. The algorithm takes in consideration:  dates  of soiling seasons, the rate of soiling, the energy price, predicated energy, cost of cleaning and more.",
-    inputList: ["Span Increment", "Center Point Increment", "Accelerator", "Soiling Season Buffer"],
-    algorithmName: "Yearly Wash Optimization"
-  },
+    description: TemplateItems[0].description,
+    inputList: TemplateItems[0].inputList,
+    algorithmName: TemplateItems[0].algorithmName
+},
   basicConfiguration: detailsConfigInitialValues,
   parameters: {}
 }

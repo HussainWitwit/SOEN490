@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { animated } from 'react-spring';
 import { Typography } from '@material-ui/core';
 import { TemplateItems } from './ListTemplateItems.ts';
