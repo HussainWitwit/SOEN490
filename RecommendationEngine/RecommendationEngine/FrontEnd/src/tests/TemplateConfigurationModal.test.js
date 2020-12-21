@@ -32,7 +32,7 @@ describe('TemplateConfigurationModal component', () => {
 
     it('Finds the typography elements', () => {
         let p = wrapper.find(Typography);
-        expect(p).toHaveLength(7);
+        expect(p).toHaveLength(8);
     });
 
     describe('Test clicks', () => {
