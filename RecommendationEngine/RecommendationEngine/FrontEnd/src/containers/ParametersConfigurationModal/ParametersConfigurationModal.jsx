@@ -8,23 +8,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import './ParametersConfigurationModal.css';
-import {
-    mapDialogStateToProps,
-    mapDispatchMergedToProps,
-    setCenterPointIncrement,
-    setSoilingSeasonBuffer,
-    setSpanIncrement,
-    setAccelerator
-} from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import { connect } from 'react-redux';
 
-// TODO: make the table 1D as it will be tackled by another user story. The table should be static for now
-function ParametersConfigurationModal (props) {
+export function ParametersConfigurationModal (props) {
 
     const headerCells = ['Parameter name', 'Value'];
     const { parameterConfiguration, setCenterPointIncrement, setSpanIncrement, setAccelerator, setSoilingSeasonBuffer } = props;
 
-    // TODO: these values should be pulled from the  database
     const rows = [
         { parameterDisplayName: 'Centerpoint increment', parameterValue: parameterConfiguration.centerPointIncrement, setParamValue: (value) => setCenterPointIncrement(value) },
         { parameterDisplayName: 'Span increment', parameterValue: parameterConfiguration.spanIncrement, setParamValue: (value) => setSpanIncrement(value) },
@@ -48,7 +39,7 @@ function ParametersConfigurationModal (props) {
                                 <TableRow>
                                     <TableCell>{cell.parameterDisplayName}</TableCell>
                                     <TableCell>
-                                        <TextField value={cell.parameterValue} onChange={(e) => cell.setParamValue(e.target.value)} className="value" type="number" variant="outlined"></TextField>
+                                        <TextField data-testID='parameter-value' value={cell.parameterValue} onChange={(e) => cell.setParamValue(e.target.value)} className="value" type="number" variant="outlined"></TextField>
                                     </TableCell>
                                 </TableRow>
                             ))}

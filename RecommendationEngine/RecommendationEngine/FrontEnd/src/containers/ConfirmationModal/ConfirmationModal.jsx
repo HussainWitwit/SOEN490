@@ -7,8 +7,6 @@ import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDia
 import './ConfirmationModal.css';
 import { convertObjectToArrayOfObjects } from '../../utilities/ConfiguredRecommendationUtilities';
 
-//TODO: Implement parameters
-const parameters = [{ title: 'To Come', year: 1994 }];
 var formatYear = { month: 'long', day: 'numeric' };
 var formatMonth = { day: 'numeric' };
 var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true };
@@ -34,8 +32,6 @@ export function ConfirmationModal (props) {
     }
   }
 
-
-  // console.log(convertObjectToArrayOfObjects(dialogsContent.parameterConfiguration));
   return (
     <animated.div id="confirmation-modal-container" style={dialogStyle}>
       <div id="confirmation-modal-content">
@@ -73,7 +69,7 @@ export function ConfirmationModal (props) {
           <MultiSelectAutocomplete
             contentLabel="Parameters..."
             items={convertObjectToArrayOfObjects(dialogsContent.parameterConfiguration)}
-            defaultValue={convertObjectToArrayOfObjects(dialogsContent.parameterConfiguration)}
+            defaultValue={convertObjectToArrayOfObjects(dialogsContent.parameterConfiguration).map((value) => { if (value !== 0) { return value } })}
             boxLabelName={'Selected Parameters'}
             variant={'outlined'}
             isReadOnly={true}

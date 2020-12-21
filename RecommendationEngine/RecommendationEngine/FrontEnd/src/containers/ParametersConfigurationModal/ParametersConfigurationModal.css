@@ -2,19 +2,19 @@
     display: grid;
   }
 
-  #paramater-modal-content{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-shadow: none;
-    color: black;
-  }
+#paramater-modal-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: none;
+  color: black;
+}
 
-  #sub-title {
-    font-size: 25px;
-    font-weight: normal;
-  }
+#sub-title {
+  font-size: 25px;
+  font-weight: normal;
+}
 
 .table-header-cell {
   align-items: right;
@@ -34,10 +34,11 @@
   border: 10px;
 }
 
-.MuiInputBase-root {
+.value .MuiInputBase-root {
   height: 40px;
   width: 100px;
 }
+
 .value {
   width: 100px;
 }
