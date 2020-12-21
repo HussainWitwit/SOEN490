@@ -13,6 +13,10 @@ function TemplateConfigurationModal(props) {
   const { templateDetailsList, template, dialogStyle, setTemplateName, setAlgorithmName, setTemplateDescription, setInputList } = props;
 
   const parameterNameArray = [];
+  const iconsList = [];
+  TemplateItems.map((item, index)=>(
+    iconsList[index] = item
+  ))
 
   const TemplateCard = (props) => {
     return (
@@ -40,7 +44,7 @@ function TemplateConfigurationModal(props) {
               key={index}
               data-testid="template-inside"
               name={item.templateName}
-              icon={TemplateItems[index].listItemIcon}
+              icon={iconsList[index].listItemIcon}
               onClick={() => {
                 setTemplateName(templateDetailsList[index].templateName);
                 setTemplateDescription(templateDetailsList[index].templateDescription);
