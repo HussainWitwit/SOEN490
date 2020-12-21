@@ -22,11 +22,11 @@ describe('Add Recommendation Dialog', () => {
 
     it('Selects between recommendation types', () => {
         // cy.get('#item-template-selected').click();
-        cy.get('[data-testid=template] > :nth-child(4)').click();
-        cy.get('[data-testid=template] > :nth-child(2)').click();
-        cy.get('[data-testid=template] > :nth-child(5)').click();
-        cy.get('[data-testid=template] > :nth-child(6)').click();
-        cy.get('[data-testid=template] > :nth-child(3)').click();
+        // cy.get('[data-testid=template] > :nth-child(4)').click();
+        // cy.get('[data-testid=template] > :nth-child(2)').click();
+        // cy.get('[data-testid=template] > :nth-child(5)').click();
+        // cy.get('[data-testid=template] > :nth-child(6)').click();
+        // cy.get('[data-testid=template] > :nth-child(3)').click();
     });
 
     it('Can navigate between first page and second page ', () => {
