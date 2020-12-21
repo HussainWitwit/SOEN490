@@ -205,8 +205,20 @@ namespace RecommendationEngineTests.UnitTests.MockData
 
             public static ConfiguredRecommendation UneditedConfiguredRecommendation()
             {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "asset44",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "asset 44",
+                    ElementPath = "asset44.path",
+                    EnergyType = "pv"
+                };
+
                 return new ConfiguredRecommendation
                 {
+                    Id = 1,
                     Name = "Wash Rec",
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
@@ -214,14 +226,30 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     Type = "Yearly Wash Optimization",
-                    Parameters = null
+                    Description = "Description of algo",
+                    PreferredScenario = "ROI",
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
 
             public static ConfiguredRecommendation EditedConfiguredRecommendation()
             {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "asset44",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "asset 44",
+                    ElementPath = "asset44.path",
+                    EnergyType = "pv"
+                };
+
                 return new ConfiguredRecommendation
                 {
+                    Id = 1,
                     Name = "Wash Rec W20",
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
@@ -229,7 +257,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 5,
                     Type = "Yearly Wash Optimization",
-                    Parameters = null
+                    Description = "Description of algo",
+                    PreferredScenario = "ROI",
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
         }

@@ -151,6 +151,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 }).ToList(),
                 AssetList = schedule.AssetsList.Select(x => new AssetLeaf
                 {
+                    Id = x.AssetId,
                     Name = x.Asset.Name,
                     DisplayText = x.Asset.DisplayText,
                     AcPower = x.Asset.AcPower,
@@ -169,7 +170,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             return configuredRecommendation;
         }
 
-        public void EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
             configuredRecommendation.Validate(recommendationType);
@@ -207,6 +208,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             config.AssetsList = dbAssets;
             var schedule = _recommendationRepository.Edit(config, id);
             _scheduler.ScheduleJobAsync(config);
+            return configuredRecommendation;
         }
     }
 }
