@@ -4,7 +4,7 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-import {getConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints'
+import {getConfiguredRecommendationById, deleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
@@ -22,6 +22,15 @@ export const openScheduleDrilldown = async (dispatch, id) => {
     }
   });
 };
+
+export const deleteConfiguredRecommendation = async (dispatch, id) => {
+  const response = await deleteRecommendationById(id);
+  dispatch({
+    type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
+    payload: response
+  });
+  // closeScheduleDrilldown(dispatch,id);
+}
 
 export const closeAssetTreeview = () => {
   return {
@@ -66,6 +75,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
     openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
+    deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id),
     closeAssetTreeview: () => dispatch(closeAssetTreeview()),
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
     closeAll: () => dispatch(closeAll()),
