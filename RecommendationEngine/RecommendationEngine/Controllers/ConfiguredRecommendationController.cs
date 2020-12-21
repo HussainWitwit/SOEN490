@@ -45,7 +45,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
             return Ok();
         }
