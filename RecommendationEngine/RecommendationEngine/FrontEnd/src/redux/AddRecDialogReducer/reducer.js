@@ -14,7 +14,6 @@
  * - declaring the string types as constants in another file
  */
 
-import { TemplateItems } from '../../containers/TemplateConfigurationModal/ListTemplateItems';
 import * as type from './dispatch-types';
 
 /*The attributes in the store are not exactly matching the object that is being sent during add recommendation.
@@ -39,17 +38,26 @@ const detailsConfigInitialValues = {
 export const contentInitialValues = {
     isDialogOpen: false,
     template: {
-        name: TemplateItems[0].name,
-        description: TemplateItems[0].description,
-        inputList: TemplateItems[0].inputList,
-        algorithmName: TemplateItems[0].algorithmName
+        name: "",
+        description: "",
+        inputList: [],
+        algorithmName: ""
     },
     basicConfiguration: detailsConfigInitialValues,
-    parameters: {}
-};
+    parameters: {},
+    templateDetailsList: [],
+}
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
     switch (action.type) {
+
+
+        case type.GET_TEMPLATE_DETAILS:
+            return {
+                ...state,
+                templateDetailsList: action.payload
+            }
+        
         case type.UPDATE_RECOMMENDATION_TEMPLATE_NAME:
             return {
                 ...state,
@@ -156,7 +164,20 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
             };
 
         case type.CLEAR:
-            return contentInitialValues;
+           
+            return {
+                ...state,
+                isDialogOpen: false,
+                basicConfiguration: detailsConfigInitialValues,
+                template: {
+                    ...state.template,
+                    name: action.payload.name,
+                    description: action.payload.description,
+                    inputList: action.payload.inputList,
+                    algorithmName: action.payload.algorithmName
+                },
+                parameters: {}
+              };
 
         default:
             return state;

@@ -11,7 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
-import { TemplateItems } from '../TemplateConfigurationModal/ListTemplateItems';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -33,13 +32,14 @@ export function DetailsConfigurationModal (props) {
     setRepeatDay,
     setRepeatDate,
     setRepeatTime,
-    apiAssets
+    apiAssets,
+    templateDetailsList
   } = props;
 
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
 
   useEffect(() => {
-    if(template.name === "Yearly Wash Optimization") {
+    if(template.name === templateDetailsList[0].templateName) {
       setGranularity('Yearly');
     }
   }, [template.name])
@@ -118,7 +118,7 @@ export function DetailsConfigurationModal (props) {
           </div>
           <Form.Control
             data-testid="granularity"
-            disabled={template.name === TemplateItems[0].name}
+            disabled={templateDetailsList ? template.name == templateDetailsList[0].templateName : template.name = "Template Name Unavailable"}
             as="select"
             onChange={(event) => setGranularity(event.target.value)}
             value={basicConfiguration.granularity}

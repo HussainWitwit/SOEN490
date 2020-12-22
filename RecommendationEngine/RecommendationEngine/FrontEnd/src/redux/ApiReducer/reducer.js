@@ -1,4 +1,3 @@
-import { TemplateItems } from '../../containers/TemplateConfigurationModal/ListTemplateItems'
 import * as type from './dispatch-types';
 
 export const initialValues = {
@@ -25,11 +24,6 @@ export const initialValues = {
                 ...state,
                 configuredRecommendationList: action.payload
             };
-        case type.GET_TEMPLATE_DETAILS:
-            return {
-                ...state,
-                templateDetailsList: action.payload
-            }
             default:
                 return state
     }

@@ -54,7 +54,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 export function AddRecommendationDialog (props) {
-  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation} = props;
+  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, templateDetailsList} = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -81,7 +81,7 @@ export function AddRecommendationDialog (props) {
   });
 
   const closeDialog = () => {
-    clear();
+    clear(templateDetailsList[0]);
     setIndex(0);
   }
   //Post method
@@ -100,7 +100,7 @@ export function AddRecommendationDialog (props) {
           return e.id;
         })
     });
-    clear();
+    clear(templateDetailsList[0]);
     setIndex(0);
   }
 
