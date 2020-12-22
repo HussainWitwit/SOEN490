@@ -1,22 +1,30 @@
 import React from 'react';
 import { animated } from 'react-spring';
 import { Typography } from '@material-ui/core';
-import { TemplateItems } from './ListTemplateItems.ts';
 import Divider from '@material-ui/core/Divider';
+import { FaSolarPanel } from 'react-icons/fa';
+import { BsFillGearFill } from 'react-icons/bs';
+import {GiBatteryPackAlt } from 'react-icons/gi';
+import { BiShapeTriangle } from 'react-icons/bi';
+import {  VscCircuitBoard } from 'react-icons/vsc';
+import { GoCalendar } from 'react-icons/go';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
 
 function TemplateConfigurationModal(props) {
 
-  const { templateDetailsList, template, dialogStyle, setTemplateName, setAlgorithmName, setTemplateDescription, setInputList } = props;
+  const { templateDetailsList, template, dialogStyle, setRecommendationType } = props;
 
-  const parameterNameArray = [];
-  const iconsList = [];
-  TemplateItems.map((item, index)=>(
-    iconsList[index] = item
-  ))
+  const TemplateIcon1 =  FaSolarPanel;
+  const TemplateIcon2= GoCalendar;
+  const TemplateIcon3 = BsFillGearFill;
+  const TemplateIcon4 =  GiBatteryPackAlt;
+  const TemplateIcon5 = BiShapeTriangle;
+  const TemplateIcon6 = VscCircuitBoard;
+
+  const iconsList = [TemplateIcon1, TemplateIcon2, TemplateIcon3, TemplateIcon4, TemplateIcon5, TemplateIcon6];
 
   const TemplateCard = (props) => {
     return (
@@ -44,17 +52,9 @@ function TemplateConfigurationModal(props) {
               key={index}
               data-testid="template-inside"
               name={item.templateName}
-              icon={iconsList[index].listItemIcon}
+              icon={iconsList[index]}
               onClick={() => {
-                setTemplateName(templateDetailsList[index].templateName);
-                setTemplateDescription(templateDetailsList[index].templateDescription);
-                setAlgorithmName(templateDetailsList[index].algorithmName);
-                {
-                  templateDetailsList[index].inputList && templateDetailsList[index].inputList.map((inputItem, inputIndex) => (
-                    parameterNameArray[inputIndex] = inputItem.parameterName
-                  ));
-                }
-                setInputList((parameterNameArray.length == 0 ? [] : parameterNameArray));
+                setRecommendationType(item)
               }}
               isPressed={item.templateName === template.name}
             />
@@ -84,7 +84,7 @@ function TemplateConfigurationModal(props) {
             <ol id="list-align">
               <Typography classes={{ root: 'list-dialog-1' }}>
                 {template.inputList && template.inputList.map((item, index) => (
-                  <li id="list-item" key={index}>{item}</li>
+                  <li id="list-item" key={index}>{item.parameterName}</li>
                 ))}
               </Typography>
             </ol>
@@ -102,4 +102,4 @@ function TemplateConfigurationModal(props) {
   );
 }
 
-export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(TemplateConfigurationModal);
+export default connect(mapDialogStateToProps, mapDispatchToProps)(TemplateConfigurationModal);
