@@ -151,8 +151,7 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
-//This method will allow you to pass the actions as a prop to the connected component in
-//order to modify the value in the store
+//This method will allow you to pass the actions as a prop to the connected component in order to modify the value in the store
 export const mapDispatchToProps = (dispatch) => {
   return {
     setTemplateName: (value) => dispatch(setTemplateName(value)),

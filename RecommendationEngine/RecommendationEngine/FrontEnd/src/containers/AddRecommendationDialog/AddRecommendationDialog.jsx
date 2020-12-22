@@ -37,7 +37,6 @@ const pageTitles = [
   'Confirmation',
 ];
 
-
 export function PaperComponent (props) {
   return (
     <Draggable
@@ -54,7 +53,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 export function AddRecommendationDialog (props) {
-  const { setBackToInitialValues, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation} = props;
+  const { setBackToInitialValues, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -87,18 +86,18 @@ export function AddRecommendationDialog (props) {
   //Post method
   const confirmDialogEvent = async () => {
     postConfiguredRecommendation({
-        type: template.name,
-        name: basicConfiguration.title,
-        granularity: basicConfiguration.granularity,
-        createdBy: basicConfiguration.createdBy,
-        createdOn: new Date(),
-        preferredScenario: basicConfiguration.preferredScenario,
-        recurrenceDayOfWeek: basicConfiguration.repeatDay,
-        modifiedBy: '',
-        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
-        assetIdList: basicConfiguration.asset.map((e) => { 
-          return e.id;
-        })
+      type: template.name,
+      name: basicConfiguration.title,
+      granularity: basicConfiguration.granularity,
+      createdBy: basicConfiguration.createdBy,
+      createdOn: new Date(),
+      preferredScenario: basicConfiguration.preferredScenario,
+      recurrenceDayOfWeek: basicConfiguration.repeatDay,
+      modifiedBy: '',
+      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+      assetIdList: basicConfiguration.asset.map((e) => {
+        return e.id;
+      })
     });
     closeDialog();
   }
@@ -108,7 +107,7 @@ export function AddRecommendationDialog (props) {
       data-testid="dialog"
       open={isDialogOpen}
       onClose={closeDialog}
-      disableBackdropClick = {true}
+      disableBackdropClick={true}
       PaperComponent={PaperComponent}
       TransitionComponent={Transition}
       aria-labelledby="draggable-dialog-title"
@@ -155,17 +154,17 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {index === 0 && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled = {!template.name}>
-          Next
-        </Button>
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!template.name}>
+            Next
+          </Button>
         )}
         {(index <= 2 && index > 0) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Next
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled = {!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
             Confirm
           </Button>
         )}
@@ -173,4 +172,5 @@ export function AddRecommendationDialog (props) {
     </Dialog>
   );
 }
+
 export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(AddRecommendationDialog)

@@ -4,23 +4,22 @@ import { Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import { FaSolarPanel } from 'react-icons/fa';
 import { BsFillGearFill } from 'react-icons/bs';
-import {GiBatteryPackAlt } from 'react-icons/gi';
+import { GiBatteryPackAlt } from 'react-icons/gi';
 import { BiShapeTriangle } from 'react-icons/bi';
-import {  VscCircuitBoard } from 'react-icons/vsc';
+import { VscCircuitBoard } from 'react-icons/vsc';
 import { GoCalendar } from 'react-icons/go';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
-
-function TemplateConfigurationModal(props) {
+function TemplateConfigurationModal (props) {
 
   const { templateDetailsList, template, dialogStyle, setRecommendationType } = props;
 
-  const TemplateIcon1 =  FaSolarPanel;
-  const TemplateIcon2= GoCalendar;
+  const TemplateIcon1 = FaSolarPanel;
+  const TemplateIcon2 = GoCalendar;
   const TemplateIcon3 = BsFillGearFill;
-  const TemplateIcon4 =  GiBatteryPackAlt;
+  const TemplateIcon4 = GiBatteryPackAlt;
   const TemplateIcon5 = BiShapeTriangle;
   const TemplateIcon6 = VscCircuitBoard;
 
@@ -60,7 +59,7 @@ function TemplateConfigurationModal(props) {
         </div>
         <div id="info-div" data-testid="templateinfodiv">
           <Typography classes={{ root: 'title-dialog-0' }}>
-            {template.name}
+            {templateDetailsList.length ? template.name : "No template available"}
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
           {template.description && template.description.split(".").map((item, index) => (

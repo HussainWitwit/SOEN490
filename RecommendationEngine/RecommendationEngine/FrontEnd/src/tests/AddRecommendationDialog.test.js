@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { AddRecommendationDialog , PaperComponent, Transition
+import {
+    AddRecommendationDialog, PaperComponent, Transition
 } from '../containers/AddRecommendationDialog/AddRecommendationDialog';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Slide
@@ -17,11 +18,10 @@ describe('AddRecommendationDialog component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<AddRecommendationDialog store={store} />);
-
+    const output = shallow(<AddRecommendationDialog template={{ name: '' }} />);
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<AddRecommendationDialog store={store} />, div);
+        ReactDOM.render(<AddRecommendationDialog template={{ name: '' }} />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
