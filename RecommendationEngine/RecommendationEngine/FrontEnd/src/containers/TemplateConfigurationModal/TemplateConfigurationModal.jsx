@@ -48,9 +48,7 @@ function TemplateConfigurationModal(props) {
         <div id="template-grid" data-testid="template" >
           {templateDetailsList.map((item, index) => (
             <TemplateCard
-              data-testid="template-card"
               key={index}
-              data-testid="template-inside"
               name={item.templateName}
               icon={iconsList[index]}
               onClick={() => {
@@ -67,7 +65,7 @@ function TemplateConfigurationModal(props) {
           </Typography>
           {template.description && template.description.split(".").map((item, index) => (
             <Typography key={index} classes={{ root: 'subtitle-dialog-1' }}>
-              { item != "" ? item + "." : ""}
+              { item !== "" ? item + "." : ""}
             </Typography>
           ))}
           <Typography classes={{ root: 'title-dialog-1' }}>
@@ -75,12 +73,12 @@ function TemplateConfigurationModal(props) {
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
 
-          {template.inputList.length == 0 &&
+          {template.inputList.length === 0 &&
             <Typography classes={{ root: 'subtitle-dialog-1' }}>
               No Available Inputs
       </Typography>
           }
-          {template.inputList != [] &&
+          {template.inputList !== [] &&
             <ol id="list-align">
               <Typography classes={{ root: 'list-dialog-1' }}>
                 {template.inputList && template.inputList.map((item, index) => (
