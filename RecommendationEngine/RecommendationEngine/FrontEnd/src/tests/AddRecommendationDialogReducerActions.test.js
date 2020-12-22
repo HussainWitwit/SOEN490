@@ -130,26 +130,12 @@ import * as action from '../redux/AddRecDialogReducer/reducer-actions';
       }
       expect(action.toggleDialog()).toEqual(expectedAction);
     });
-    it('fires an update that sets the dialog to close and clear all states', () => {
-      const value = {
-        name: "Yearly Wash Optimization",
-        description: "This recommendation is used to suggest the optimal time to wash your solar panels. The algorithm takes in consideration:  dates  of soiling seasons, the rate of soiling, the energy price, predicated energy, cost of cleaning and more.",
-        inputList: ["Span Increment", "Center Point Increment", "Accelerator", "Soiling Season Buffer"],
-        algorithmName: "Yearly Wash Optimization"
-      }
+
+    it('fires an update that sets the dialog to close and sets back the store states to their initial values', () => {
       const expectedAction = {
-        type: dispatchType.CLEAR,
-        payload: {
-          name: value.templateName,
-          description: value.templateDescription,
-          inputList: value.inputList,
-          algorithmName: value.algorithmName
-        }
-
+        type: dispatchType.SET_BACK_TO_INITIAL_VALUES
       }
-      expect(action.clear(value)).toEqual(expectedAction);
+      expect(action.setBackToInitialValues()).toEqual(expectedAction);
     });
-
-
-
+    
   });
