@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useTransition } from 'react-spring';
 import Draggable from 'react-draggable';
 import {
@@ -54,7 +54,7 @@ export const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export function AddRecommendationDialog(props) {
-    const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing, configurationId } = props;
+  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing, configurationId } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -121,6 +121,12 @@ export function AddRecommendationDialog(props) {
     clear();
     setIndex(0);
   }
+
+  useEffect(() => {
+   if(isEditing) {
+     setIndex(1);
+   }
+  }, [isEditing])
 
   return (
     <Dialog
