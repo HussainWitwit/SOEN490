@@ -1,6 +1,6 @@
 import * as dispatchType from '../redux/AddRecDialogReducer/dispatch-types';
 import { AddConfiguredRecDialogReducer } from '../redux/AddRecDialogReducer/reducer';
-import { TemplateItems } from '../containers/TemplateConfigurationModal/ListTemplateItems';
+
 const detailsConfigInitialValues = {
   title: '',
   asset: [],
@@ -15,13 +15,14 @@ const detailsConfigInitialValues = {
 let state = {
   isDialogOpen: false,
   template: {
-    name: TemplateItems[0].name,
-    description: TemplateItems[0].description,
-    inputList: TemplateItems[0].inputList,
-    algorithmName: TemplateItems[0].algorithmName
-},
+      name: "",
+      description: "",
+      inputList: [],
+      algorithmName: ""
+  },
   basicConfiguration: detailsConfigInitialValues,
-  parameters: {}
+  parameters: {},
+  templateDetailsList: [],
 }
 
 describe('Add Recommendation Dialog reducer', () => {
@@ -29,6 +30,18 @@ describe('Add Recommendation Dialog reducer', () => {
   // it('should return the initial state', () => {
   //   expect(AddConfiguredRecDialogReducer(undefined, {})).toEqual(state)
   // })
+
+  it('should handle GET_TEMPLATE_DETAILS', () => {
+    expect(
+      AddConfiguredRecDialogReducer(state, {
+        type: dispatchType.GET_TEMPLATE_DETAILS,
+        payload: []
+      })
+    ).toEqual({
+      ...state,
+      templateDetailsList: []
+    });
+  });
 
   it('should handle UPDATE_RECOMMENDATION_TEMPLATE_NAME', () => {
     expect(
@@ -42,9 +55,9 @@ describe('Add Recommendation Dialog reducer', () => {
       ...state,
       template: {
         name: "Run the tests",
-        description: "This recommendation is used to suggest the optimal time to wash your solar panels. The algorithm takes in consideration:  dates  of soiling seasons, the rate of soiling, the energy price, predicated energy, cost of cleaning and more.",
-        inputList: ["Span Increment", "Center Point Increment", "Accelerator", "Soiling Season Buffer"],
-        algorithmName: "Yearly Wash Optimization"
+        description: "",
+        inputList: [],
+        algorithmName: ""
       },
     });
   });
@@ -60,10 +73,10 @@ describe('Add Recommendation Dialog reducer', () => {
     ).toEqual({
       ...state,
       template: {
-        name: "Yearly Wash Optimization",
+        name: "",
         description: 'Run the tests',
-        inputList: ["Span Increment", "Center Point Increment", "Accelerator", "Soiling Season Buffer"],
-        algorithmName: "Yearly Wash Optimization"
+        inputList: [],
+        algorithmName: ""
       },
     });
   });
@@ -79,10 +92,10 @@ describe('Add Recommendation Dialog reducer', () => {
     ).toEqual({
       ...state,
       template: {
-        name: "Yearly Wash Optimization",
-        description: "This recommendation is used to suggest the optimal time to wash your solar panels. The algorithm takes in consideration:  dates  of soiling seasons, the rate of soiling, the energy price, predicated energy, cost of cleaning and more.",
+        name: "",
+        description: "",
         inputList: 'Run the tests',
-        algorithmName: "Yearly Wash Optimization",
+        algorithmName: "",
       },
     });
   });
@@ -99,9 +112,9 @@ describe('Add Recommendation Dialog reducer', () => {
     ).toEqual({
       ...state,
       template: {
-        name: "Yearly Wash Optimization",
-        description: "This recommendation is used to suggest the optimal time to wash your solar panels. The algorithm takes in consideration:  dates  of soiling seasons, the rate of soiling, the energy price, predicated energy, cost of cleaning and more.",
-        inputList: ["Span Increment", "Center Point Increment", "Accelerator", "Soiling Season Buffer"],
+        name: "",
+        description: "",
+        inputList: [],
         algorithmName: 'Run the tests',
        },
     });
