@@ -127,15 +127,9 @@ export const toggleDialog = () => {
   };
 };
 
-export const clear = (value) => {
+export const setBackToInitialValues = () => {
   return {
-    type: dispatchActionType.CLEAR,
-    payload: {
-      name: value.templateName,
-      description: value.templateDescription,
-      inputList: value.inputList,
-      algorithmName: value.algorithmName
-    }
+    type: dispatchActionType.SET_BACK_TO_INITIAL_VALUES
   }
 };
 
@@ -152,7 +146,7 @@ export const getTemplateDetails = async (dispatch) => {
     type: dispatchActionType.GET_TEMPLATE_DETAILS,
     payload: response,
   })
-  if (response) {
+  if (response.length) {
     setRecommendationType(dispatch, response[0]);
   }
 };
@@ -173,7 +167,7 @@ export const mapDispatchToProps = (dispatch) => {
     setRepeatDate: (value) => dispatch(setRepeatDate(value)),
     setRepeatTime: (value) => dispatch(setRepeatTime(value)),
     toggleDialog: () => dispatch(toggleDialog()),
-    clear: (value) => dispatch(clear(value)),
+    setBackToInitialValues: () => dispatch(setBackToInitialValues()),
     setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
     getTemplateDetails: () => getTemplateDetails(dispatch),
   };

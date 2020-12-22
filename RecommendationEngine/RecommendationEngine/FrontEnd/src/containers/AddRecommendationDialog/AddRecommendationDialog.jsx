@@ -54,7 +54,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 export function AddRecommendationDialog (props) {
-  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, templateDetailsList} = props;
+  const { setBackToInitialValues, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation} = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -81,7 +81,7 @@ export function AddRecommendationDialog (props) {
   });
 
   const closeDialog = () => {
-    clear(templateDetailsList[0]);
+    setBackToInitialValues();
     setIndex(0);
   }
   //Post method
@@ -100,8 +100,7 @@ export function AddRecommendationDialog (props) {
           return e.id;
         })
     });
-    clear(templateDetailsList[0]);
-    setIndex(0);
+    closeDialog();
   }
 
   return (
@@ -156,7 +155,7 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {index === 0 && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined">
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled = {!template.name}>
           Next
         </Button>
         )}

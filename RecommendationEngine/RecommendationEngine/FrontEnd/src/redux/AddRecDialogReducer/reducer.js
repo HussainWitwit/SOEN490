@@ -49,9 +49,8 @@ export const contentInitialValues = {
 }
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
+    
     switch (action.type) {
-
-
         case type.GET_TEMPLATE_DETAILS:
             return {
                 ...state,
@@ -163,20 +162,17 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 isDialogOpen: !state.isDialogOpen
             };
 
-        case type.CLEAR:
-           
+        case type.SET_BACK_TO_INITIAL_VALUES:
             return {
-                ...state,
-                isDialogOpen: false,
-                basicConfiguration: detailsConfigInitialValues,
+                ...contentInitialValues,
+                templateDetailsList: state.templateDetailsList,
                 template: {
-                    ...state.template,
-                    name: action.payload.name,
-                    description: action.payload.description,
-                    inputList: action.payload.inputList,
-                    algorithmName: action.payload.algorithmName
-                },
-                parameters: {}
+                    ...contentInitialValues.template,
+                    name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName: '',
+                    description:  state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription: '',
+                    inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
+                    algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
+                }
               };
 
         default:
