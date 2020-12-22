@@ -16,7 +16,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
-  KeyboardDatePicker,
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
 
@@ -33,7 +32,8 @@ export function DetailsConfigurationModal (props) {
     setRepeatDay,
     setRepeatDate,
     setRepeatTime,
-    apiAssets
+    apiAssets,
+    isEditing
   } = props;
 
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
@@ -159,7 +159,7 @@ export function DetailsConfigurationModal (props) {
                   autoOk                  
                   inputVariant="outlined"
                   label="Date & Time"
-                  minDate = {new Date()}
+                  minDate = {isEditing ? null : new Date()}
                   // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
