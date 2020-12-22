@@ -169,7 +169,18 @@ export function AddRecommendationDialog(props) {
         <Button data-testid="cancel-button" id="cancel-btn" onClick={closeDialog} variant="outlined">
           Cancel
         </Button>
-        {index > 0 && (
+        {(index === 1 && !isEditing) && (
+            <Button
+            data-testid="previous-button"
+            id="previous-btn"
+            onClick={onClickPrevious}
+            variant="outlined"
+          >
+            Previous
+          </Button>
+        )   
+        }
+        {index > 1 && (
           <Button
             data-testid="previous-button"
             id="previous-btn"
