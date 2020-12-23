@@ -115,7 +115,7 @@ export function DetailsConfigurationModal (props) {
           </div>
           <Form.Control
             data-testid="granularity"
-            disabled={templateDetailsList.length}
+            disabled={templateDetailsList.length > 0 && template.name === templateDetailsList[0].templateName}
             as="select"
             onChange={(event) => setGranularity(event.target.value)}
             value={basicConfiguration.granularity}
