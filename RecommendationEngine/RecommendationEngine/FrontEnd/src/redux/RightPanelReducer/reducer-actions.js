@@ -4,7 +4,7 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-import {getConfiguredRecommendationById, deleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import {GetConfiguredRecommendationById, deleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 import {getConfiguredRecommendationList} from '../ApiReducer/reducer-actions'
 
 //**Actions --> Useful for unit testing the reducer.
@@ -15,7 +15,7 @@ export const openAssetTreeview = () => {
 };
 
 export const openScheduleDrilldown = async (dispatch, id) => {
-  const response = await getConfiguredRecommendationById(id);
+  const response = await GetConfiguredRecommendationById(id);
   dispatch({
     type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
     payload: {

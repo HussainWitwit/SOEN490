@@ -3,15 +3,48 @@ import * as action from '../redux/AddRecDialogReducer/reducer-actions';
 
   describe('Verifying actions', () => {
 
-    it('fires an update template  action', () => {
-      const value = " Wash Optimization";
+    it('fires an update template  action of the name', () => {
+      const value = "Yearly Wash Optimization";
       const expectedAction = {
-        type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE,
+        type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_NAME,
         payload: {
           name: value
         }
       }
       expect(action.setTemplateName(value)).toEqual(expectedAction);
+    });
+
+    it('fires an update template  action of the description', () => {
+      const value = "This recommendation is used to suggest the optimal time to wash your solar panels. The algorithm takes in consideration:  dates  of soiling seasons, the rate of soiling, the energy price, predicated energy, cost of cleaning and more.";
+      const expectedAction = {
+        type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_DESCRIPTION,
+        payload: {
+          description: value
+        }
+      }
+      expect(action.setTemplateDescription(value)).toEqual(expectedAction);
+    });
+
+    it('fires an update template  action of the template input list', () => {
+      const value = ["Span Increment", "Center Point Increment", "Accelerator", "Soiling Season Buffer"];
+      const expectedAction = {
+        type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST,
+        payload: {
+          inputList: value
+        }
+      }
+      expect(action.setInputList(value)).toEqual(expectedAction);
+    });
+
+    it('fires an update template  action of the algorithm name', () => {
+      const value = "Yearly Wash Optimization";
+      const expectedAction = {
+        type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM,
+        payload: {
+          algorithmName: value
+        }
+      }
+      expect(action.setAlgorithmName(value)).toEqual(expectedAction);
     });
 
     it('fires an update to the title of the recommendation action', () => {
@@ -97,13 +130,12 @@ import * as action from '../redux/AddRecDialogReducer/reducer-actions';
       }
       expect(action.toggleDialog()).toEqual(expectedAction);
     });
-    it('fires an update that sets the dialog to close and clear all states', () => {
+
+    it('fires an update that sets the dialog to close and sets back the store states to their initial values', () => {
       const expectedAction = {
-        type: dispatchType.CLEAR,
+        type: dispatchType.SET_BACK_TO_INITIAL_VALUES
       }
-      expect(action.clear()).toEqual(expectedAction);
+      expect(action.setBackToInitialValues()).toEqual(expectedAction);
     });
-
-
-
+    
   });

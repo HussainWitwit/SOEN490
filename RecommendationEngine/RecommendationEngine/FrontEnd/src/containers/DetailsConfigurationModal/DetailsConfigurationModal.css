@@ -28,7 +28,6 @@
   margin-bottom: 25px;
   justify-content: flex-start;
   width: 90%;
-  /* height: 5ch; */
 }
 
 .text-input-container {
@@ -60,7 +59,7 @@
 }
 
 #content {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 #scenario-container {
@@ -69,7 +68,6 @@
   align-items: flex-end;
   width: 90%;
 }
-
 
 #granularity-input-container {
   display: flex;
@@ -101,7 +99,6 @@
 #day-of-week-container {
   margin: 0 25px 0 0px;
 }
-
 
 #recommendation-date-picker{
   width: 22ch;

@@ -1,13 +1,29 @@
 import React from 'react';
 import { animated } from 'react-spring';
 import { Typography } from '@material-ui/core';
-import { TemplateItems } from './ListTemplateItems.ts';
 import Divider from '@material-ui/core/Divider';
+import { FaSolarPanel } from 'react-icons/fa';
+import { BsFillGearFill } from 'react-icons/bs';
+import { GiBatteryPackAlt } from 'react-icons/gi';
+import { BiShapeTriangle } from 'react-icons/bi';
+import { VscCircuitBoard } from 'react-icons/vsc';
+import { GoCalendar } from 'react-icons/go';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 
-function TemplateConfigurationModal ({ template, dialogStyle, setTemplateName }) {
+function TemplateConfigurationModal (props) {
+
+  const { templateDetailsList, template, dialogStyle, setRecommendationType } = props;
+
+  const TemplateIcon1 = FaSolarPanel;
+  const TemplateIcon2 = GoCalendar;
+  const TemplateIcon3 = BsFillGearFill;
+  const TemplateIcon4 = GiBatteryPackAlt;
+  const TemplateIcon5 = BiShapeTriangle;
+  const TemplateIcon6 = VscCircuitBoard;
+
+  const iconsList = [TemplateIcon1, TemplateIcon2, TemplateIcon3, TemplateIcon4, TemplateIcon5, TemplateIcon6];
 
   const TemplateCard = (props) => {
     return (
@@ -28,50 +44,55 @@ function TemplateConfigurationModal ({ template, dialogStyle, setTemplateName })
   return (
     <animated.div id="template-modal-container" style={dialogStyle}>
       <div data-testid="templates" id="parent-div">
-        <div id="template-grid" data-testid="template">
-          {TemplateItems.map((item, index) => (
+        <div id="template-grid" data-testid="template" >
+          {templateDetailsList.map((item, index) => (
             <TemplateCard
-              data-testid="template-inside"
-              name={item.name}
-              icon={item.listItemIcon}
+              key={index}
+              name={item.templateName}
+              icon={iconsList[index]}
               onClick={() => {
-                setTemplateName(TemplateItems[index].name);
+                setRecommendationType(item)
               }}
-              isPressed={item.name === template.name}
+              isPressed={item.templateName === template.name}
             />
           ))}
         </div>
-        <div id="info-div">
-          <div id="item-info1">
-            <Typography classes={{ root: 'title-dialog-1' }}>
-              Description {template.name}
+        <div id="info-div" data-testid="templateinfodiv">
+          <Typography classes={{ root: 'title-dialog-0' }}>
+            {templateDetailsList.length ? template.name : "No template available"}
+            <Divider classes={{ root: 'divider-item' }} />
+          </Typography>
+          {template.description && template.description.split(".").map((item, index) => (
+            <Typography key={index} classes={{ root: 'subtitle-dialog-1' }}>
+              { item !== "" ? item + "." : ""}
             </Typography>
+          ))}
+          <Typography classes={{ root: 'title-dialog-1' }}>
+            Parameters Inputs
+            <Divider classes={{ root: 'divider-item' }} />
+          </Typography>
+
+          {template.inputList.length === 0 &&
             <Typography classes={{ root: 'subtitle-dialog-1' }}>
-              This recommendation is used to suggest the optimal time to wash
-              your solar panels.
-            </Typography>
-          </div>
-          <Divider classes={{ root: 'divider-item' }} />
-          <div id="item-info2">
-            <Typography classes={{ root: 'title-dialog-1' }}>Inputs</Typography>
+              No Available Inputs
+      </Typography>
+          }
+          {template.inputList !== [] &&
             <ol id="list-align">
               <Typography classes={{ root: 'list-dialog-1' }}>
-                <li>Input 1</li>
-                <li>Input 2</li>
-                <li>Input 3</li>
+                {template.inputList && template.inputList.map((item, index) => (
+                  <li id="list-item" key={index}>{item.parameterName}</li>
+                ))}
               </Typography>
             </ol>
-          </div>
-
-          <Divider classes={{ root: 'divider-item' }} />
-          <div id="item-info4">
-            <Typography classes={{ root: 'title-dialog-1' }}>
-              Algorithm
-            </Typography>
-            <Typography classes={{ root: 'subtitle-dialog-1' }}>
-              WO Algorithm
-            </Typography>
-          </div>
+          }
+          <Typography classes={{ root: 'title-dialog-1' }}>
+            Algorithm
+              <Divider classes={{ root: 'divider-item' }} />
+          </Typography>
+          <Typography classes={{ root: 'subtitle-dialog-1' }}>
+            {template.algorithmName}
+          </Typography>
         </div>
       </div>
     </animated.div>
