@@ -11,7 +11,7 @@
 
 import { Asset } from "../models/Asset";
 
-export const getNestedAssetList = async () => {
+export const GetNestedAssetList = async () => {
     let assetResult: Asset;
     try {
         // let response = await fetch('asset/getAssetsNested'); //Do not make a typing mistake in the api call
@@ -31,7 +31,7 @@ export const getNestedAssetList = async () => {
     }
 }
 
-export const getFlatAssetList = async () => {
+export const GetFlatAssetList = async () => {
     let assetResult: Asset;
     try {
         // let response = await fetch('asset/getAssetsNested'); //Do not make a typing mistake in the api call

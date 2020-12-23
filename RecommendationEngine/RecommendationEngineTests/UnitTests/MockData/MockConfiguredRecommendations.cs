@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Models.Application;
 using Models.Application.Asset;
 using Models.DB;
+using Models.Recommendation;
 using Moq;
 
 namespace RecommendationEngineTests.UnitTests.MockData
@@ -15,6 +16,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
         public static List<DBRecommendationSchedule> BASIC_CONFIGURED_RECOMMENDATION_LIST = RecommendationList.BasicConfiguredRecommendationList();
         public static DBRecommendationType YEARLY_RECOMMENDATION_TYPE = RecommendationList.YearlyRecType();
         public static DBRecommendationSchedule CONVERTED_CONFIGURED_RECOMMENDATION = RecommendationList.BasicDBRecommendationSchedule();
+        public static List<DBRecommendationType> RECOMMENDATION_TYPE = RecommendationList.RecommendationType();
 
         public static class RecommendationList
         {
@@ -83,6 +85,28 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 };
 
                 return list;
+            }
+
+            public static List<DBRecommendationType> RecommendationType()
+            {
+                List<DBRecommendationType> dbRecTypes = new List<DBRecommendationType>()
+                {
+                    new DBRecommendationType {
+                        RecommendationTypeId = 1,
+                        DisplayText = "Yearly Wash Optimzation",
+                        Description = "Description",
+                        EnergyType = "pv",
+                        Type = "Yearly Wash Optimzation",
+                        DefaultParametersList = new List<DBRecommendationParameter>() {
+                            new DBRecommendationParameter {
+                                DisplayText = "Center Point",
+                                DefaultValue = 3.25
+                            }
+                        }
+                    }
+                };
+
+                return dbRecTypes;
             }
 
             public static DBRecommendationType YearlyRecType()

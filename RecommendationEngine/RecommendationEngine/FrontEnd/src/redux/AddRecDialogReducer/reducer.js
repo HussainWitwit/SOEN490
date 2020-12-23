@@ -14,7 +14,6 @@
  * - declaring the string types as constants in another file
  */
 
-import { TemplateItems } from '../../containers/TemplateConfigurationModal/ListTemplateItems';
 import * as type from './dispatch-types';
 
 /*The attributes in the store are not exactly matching the object that is being sent during add recommendation.
@@ -38,23 +37,63 @@ const detailsConfigInitialValues = {
 
 export const contentInitialValues = {
     isDialogOpen: false,
-    template: {name: TemplateItems[0].name},
+    template: {
+        name: "",
+        description: "",
+        inputList: [],
+        algorithmName: ""
+    },
     basicConfiguration: detailsConfigInitialValues,
-    parameters: {}
-  };
+    parameters: {},
+    templateDetailsList: [],
+}
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
-    switch(action.type) {
-        case type.UPDATE_RECOMMENDATION_TEMPLATE:
-                return {
-                    ...state,
-                    template: {
-                        ...state.template,
-                        name: action.payload.name
-                    }
-                };
+    
+    switch (action.type) {
+        case type.GET_TEMPLATE_DETAILS:
+            return {
+                ...state,
+                templateDetailsList: action.payload
+            }
+        
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_NAME:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    name: action.payload.name,
+                }
+            };
 
-        case type.UPDATE_TITLE: 
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_DESCRIPTION:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    description: action.payload.description,
+                }
+            };
+
+            case type.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    inputList: action.payload.inputList,
+                }
+            };
+
+            case type.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    algorithmName: action.payload.algorithmName,
+                }
+            };
+
+        case type.UPDATE_TITLE:
             return {
                 ...state,
                 basicConfiguration: {
@@ -63,7 +102,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_ASSET: 
+        case type.UPDATE_ASSET:
             return {
                 ...state,
                 basicConfiguration: {
@@ -72,7 +111,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_PREFERRED_SCENARIO: 
+        case type.UPDATE_PREFERRED_SCENARIO:
             return {
                 ...state,
                 basicConfiguration: {
@@ -81,7 +120,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_GRANULARITY: 
+        case type.UPDATE_GRANULARITY:
             return {
                 ...state,
                 basicConfiguration: {
@@ -90,7 +129,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_DAY: 
+        case type.UPDATE_REPEAT_DAY:
             return {
                 ...state,
                 basicConfiguration: {
@@ -99,7 +138,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_DATE: 
+        case type.UPDATE_REPEAT_DATE:
             return {
                 ...state,
                 basicConfiguration: {
@@ -108,7 +147,7 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.UPDATE_REPEAT_TIME: 
+        case type.UPDATE_REPEAT_TIME:
             return {
                 ...state,
                 basicConfiguration: {
@@ -117,16 +156,26 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 }
             };
 
-        case type.TOGGLE_DIALOG: 
+        case type.TOGGLE_DIALOG:
             return {
                 ...state,
                 isDialogOpen: !state.isDialogOpen
             };
 
-        case type.CLEAR:
-            return contentInitialValues; 
+        case type.SET_BACK_TO_INITIAL_VALUES:
+            return {
+                ...contentInitialValues,
+                templateDetailsList: state.templateDetailsList,
+                template: {
+                    ...contentInitialValues.template,
+                    name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName: '',
+                    description:  state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription: '',
+                    inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
+                    algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
+                }
+              };
 
         default:
             return state;
-        } 
+    }
 }
