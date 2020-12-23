@@ -9,14 +9,12 @@ import { IconButton } from '@material-ui/core';
 import { mapDispatchToProps, mapRightPanelStateToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 
-//TODO: need to auto-refresh the page after i delete --> need to put in API reducer to automatically refresh
-//pass function as a props, to make it generic
 export function DeletePopUp(props) {
     const {deleteConfiguredRecommendation}=props;
     const {recommendationId}=props;
     const {closeScheduleDrilldown}=props;
     const handleClose = () => {
-        props.handleClickOpen();//maybe put this in line 19
+        props.handleClickOpen();
     };
 const deleteRecommendationEvent = async () => {
     deleteConfiguredRecommendation (recommendationId)
