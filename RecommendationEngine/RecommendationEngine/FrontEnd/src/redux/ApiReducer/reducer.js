@@ -4,6 +4,7 @@ export const initialValues = {
     nestedAssets: [],
     flatListAssets: [],
     configuredRecommendationList: [],
+    templateDetailsList: [],
   };
 
   export const ApiReducer = function (state = initialValues, action) {

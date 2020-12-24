@@ -5,7 +5,7 @@
  * Note: All the following Actions target the api calls Reducer only
  */
 import * as dispatchActionType from './dispatch-types';
-import { getNestedAssetList,  getFlatAssetList } from '../../api/endpoints/AssetEndpoints';
+import { GetNestedAssetList,  GetFlatAssetList } from '../../api/endpoints/AssetEndpoints';
 import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
@@ -18,7 +18,7 @@ export const mapStateToProps = ({apiReducer}) => {
 
   //**Actions --> Useful for unit testing the reducer.
   export const getNestedAssets = async (dispatch) => {
-    const response = await getNestedAssetList();
+    const response = await GetNestedAssetList();
     dispatch({
       type: dispatchActionType.GET_NESTED_ASSETS,
       payload: response,
@@ -26,7 +26,7 @@ export const mapStateToProps = ({apiReducer}) => {
   };
 
   export const getFlatListAssets = async (dispatch) => {
-    const response = await getFlatAssetList();
+    const response = await GetFlatAssetList();
     dispatch({
       type: dispatchActionType.GET_FLAT_LIST_ASSETS,
       payload: response,
@@ -56,7 +56,6 @@ export const mapStateToProps = ({apiReducer}) => {
       //TODO: Error with post, send notifications...
     }
   }
-
   
   //This method will allow you to pass the actions as a prop to the connected component in
   //order to modify the value in the store
@@ -65,6 +64,6 @@ export const mapStateToProps = ({apiReducer}) => {
         getNestedAssets: () =>  getNestedAssets(dispatch),
         getFlatListAssets: () => getFlatListAssets(dispatch),
         getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
-        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation)
+        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation),
     };
   };

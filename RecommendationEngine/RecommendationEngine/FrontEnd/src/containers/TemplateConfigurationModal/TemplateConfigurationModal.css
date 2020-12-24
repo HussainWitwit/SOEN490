@@ -24,26 +24,6 @@ width: 90%;
 height: 100%;
 }
 
-#item-info1{
-height: 80px;
-}
-
-#item-info2{
-  height: 100px;
-  margin-top: 5%;
-  margin-top: 0.1%;
-}
-
-#item-info3{
-  height: 65px;
-  margin-top: 4%;
-}
-
-#item-info4{
-  height: 80px;
-  margin-top: 4%;
-}
-
 #item-template-default{
   display: grid;
   border-width: 2px;
@@ -58,13 +38,11 @@ height: 80px;
   text-align: center;
 }
 
-
 #item-template-default:hover{
-  background-color:#4DD3EF;
+  background-color: #E8E7E7;
   border-width: 2.5px;
   border-color: transparent;
   transition: all 500ms;
-  box-shadow: 0 0 2px 0 rgb(77,212,239,1);
 }
 
 
@@ -72,7 +50,7 @@ height: 80px;
   display: grid;
   border-radius: 10px;
   border-color:  #4DD3EF;
-  border-width: 3.5px; 
+  border-width: 3px; 
   border-style: solid;
   align-items: center;
   height: 120px;
@@ -80,7 +58,7 @@ height: 80px;
   margin-left: 25%;
   text-align: center;
   transition: all 500ms;
-  box-shadow: 0 0 2px 0 rgb(77,212,239,1);
+  box-shadow: 0 0 1px 0 rgb(77,212,239,1);
 }
 
 #template-label{
@@ -100,20 +78,30 @@ height: 80px;
   height: 30%;
 }
 
+.title-dialog-0.MuiTypography-root{
+  color: #212529;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  min-width: 90%;
+  margin-bottom: 2%;
+}
+
 .title-dialog-1.MuiTypography-root{
   color: #212529;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   font-size: 12px;
   min-width: 90%;
+  margin-bottom: 2%;
 }
 
 .subtitle-dialog-1.MuiTypography-root{
   color:#868282;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
-  max-width: 85%;
-  margin-top: 2%;
+  width: 85%;
+  padding-bottom: 2%;
 }
 
 .list-dialog-1.MuiTypography-root{
@@ -121,7 +109,7 @@ height: 80px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
   min-width: 90%;
-  margin-top: 2%;
+  margin-bottom: 4%;
 }
 
 #item-align{
@@ -135,10 +123,16 @@ height: 80px;
   padding: 0;
   margin-left: 4%;
   width: 100%;
+  padding-bottom: 2%;
+}
+
+#list-item{
+  margin: 5px 0;
 }
 
 .divider-item.MuiDivider-root{
   max-width: 90%;
+  margin-bottom: 1%
 }
 
 

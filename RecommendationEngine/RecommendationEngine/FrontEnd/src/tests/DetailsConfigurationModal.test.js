@@ -18,6 +18,7 @@ describe('DetailsConfigurationModal component', () => {
     useStateSpy.mockImplementation((init) => [init, setState]);
     const wrapper = shallow(<DetailsConfigurationModal
         template={{ name: 'Unit test' }}
+        templateDetailsList={[]}
         basicConfiguration={{
             title: '',
             asset: [],
