@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { store } from '../redux/store';
+import { store, } from '../redux/store';
 import TemplateConfigurationModal from '../containers/TemplateConfigurationModal/TemplateConfigurationModal';
 import { Typography } from '@material-ui/core';
 import { fireEvent, render, getAllByTestId } from '@testing-library/react';
@@ -21,9 +21,13 @@ describe('TemplateConfigurationModal component', () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
+    it('It finds the modal in the component tree', () => {
+        expect(wrapper).toHaveLength(1);
+    });
+
     it('Finds the divs', () => {
         let divs = wrapper.find('div');
-        expect(divs).toHaveLength(6);
+        expect(divs).toHaveLength(3);
     });
 
     it('Finds the typography elements', () => {
@@ -35,11 +39,11 @@ describe('TemplateConfigurationModal component', () => {
         it("Simulates clicks on different options", () => {
             const { container } = render(<TemplateConfigurationModal store={store} />);
 
-            const templates = getAllByTestId(container, 'template-label');
             const template = getAllByTestId(container, 'template');
+            const templates = getAllByTestId(container, 'templates');
 
+            fireEvent.click(templates[0]);
             fireEvent.click(template[0]);
-            fireEvent.click(templates[1]);
         });
     })
 });

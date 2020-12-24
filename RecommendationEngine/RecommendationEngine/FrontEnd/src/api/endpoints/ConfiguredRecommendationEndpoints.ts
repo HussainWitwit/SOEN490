@@ -26,7 +26,7 @@ export const GetConfiguredRecommendationList = async () => {
     }
 }
 
-export const getConfiguredRecommendationById = async (id: number) => {
+export const GetConfiguredRecommendationById = async (id:number) => {
     let configuredRecommendations: ConfiguredRecommendation;
     try {
         let response = await fetch('ConfiguredRecommendation/configuredRecommendation/' + id);

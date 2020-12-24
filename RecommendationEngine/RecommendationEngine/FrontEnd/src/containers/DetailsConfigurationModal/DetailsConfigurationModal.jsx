@@ -11,7 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
-import { TemplateItems } from '../TemplateConfigurationModal/ListTemplateItems';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -33,18 +32,17 @@ export function DetailsConfigurationModal (props) {
     setRepeatDate,
     setRepeatTime,
     apiAssets,
-    isEditing
+    isEditing,
+    templateDetailsList
   } = props;
 
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
 
   useEffect(() => {
-    if(template.name === "Yearly Wash Optimization") {
+    if (template.name === templateDetailsList[0].templateName) {
       setGranularity('Yearly');
     }
   }, [template.name])
-
- 
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -55,14 +53,14 @@ export function DetailsConfigurationModal (props) {
             <p id="text">Title: </p>
           </div>
           <TextField
-              error = {basicConfiguration.title === '' && !isFirstTypingTitle} 
-              label = {basicConfiguration.title === '' ? "Required.": ''}
-              value = {basicConfiguration.title}
-              data-testid='title'
-              className="title-input-field"
-              placeholder = "Your title here..."
-              variant="outlined"
-              onChange={(event) => { setIsFirstTypingTitle(false); setTitle(event.target.value); }}
+            error={basicConfiguration.title === '' && !isFirstTypingTitle}
+            label={basicConfiguration.title === '' ? "Required." : ''}
+            value={basicConfiguration.title}
+            data-testid='title'
+            className="title-input-field"
+            placeholder="Your title here..."
+            variant="outlined"
+            onChange={(event) => { setIsFirstTypingTitle(false); setTitle(event.target.value); }}
           />
         </div>
         <div id="element-container">
@@ -71,7 +69,7 @@ export function DetailsConfigurationModal (props) {
           </div>
           <MultiSelectAutocomplete
             contentLabel="Assets..."
-            recommendationType = {template.name}
+            recommendationType={template.name}
             items={apiAssets}
             value={basicConfiguration.asset ? basicConfiguration.asset : []}
             onChange={(event, value) => updateAsset(value)}
@@ -118,7 +116,7 @@ export function DetailsConfigurationModal (props) {
           </div>
           <Form.Control
             data-testid="granularity"
-            disabled={template.name === TemplateItems[0].name}
+            disabled={templateDetailsList.length > 0 && template.name === templateDetailsList[0].templateName}
             as="select"
             onChange={(event) => setGranularity(event.target.value)}
             value={basicConfiguration.granularity}
@@ -141,8 +139,8 @@ export function DetailsConfigurationModal (props) {
                   <Button
                     data-testid='day'
                     value={index.toString()}
-                    onClick={(event) => setRepeatDay(index+1)}
-                    style = {{backgroundColor: index === basicConfiguration.repeatDay - 1 ? "#98AFC7": "white"}}
+                    onClick={(event) => setRepeatDay(index + 1)}
+                    style={{ backgroundColor: index === basicConfiguration.repeatDay - 1 ? "#98AFC7" : "white" }}
                   >
                     {element}
                   </Button>
@@ -150,13 +148,13 @@ export function DetailsConfigurationModal (props) {
               })}
             </ButtonGroup>
           )}
-           <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
             {(basicConfiguration.granularity === granularityItems[1] ||
               basicConfiguration.granularity === granularityItems[2]) && (
                 <KeyboardDateTimePicker
                   id="recommendation-date-picker"
-                  data-testid = 'date'
-                  autoOk                  
+                  data-testid='date'
+                  autoOk
                   inputVariant="outlined"
                   label="Date & Time"
                   minDate = {isEditing ? null : new Date()}
@@ -166,18 +164,18 @@ export function DetailsConfigurationModal (props) {
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
-                /> 
-              )}
-              {basicConfiguration.granularity === granularityItems[0] &&
-              <KeyboardTimePicker
-                  label="Time"
-                  data-testid = 'time'
-                  id = "recommendation-time-picker"
-                  inputVariant="outlined"
-                  value={basicConfiguration.repeatTime}
-                  onChange={date => setRepeatTime(date)}
                 />
-              }
+              )}
+            {basicConfiguration.granularity === granularityItems[0] &&
+              <KeyboardTimePicker
+                label="Time"
+                data-testid='time'
+                id="recommendation-time-picker"
+                inputVariant="outlined"
+                value={basicConfiguration.repeatTime}
+                onChange={date => setRepeatTime(date)}
+              />
+            }
           </MuiPickersUtilsProvider>
         </div>
       </div>

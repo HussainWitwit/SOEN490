@@ -14,7 +14,6 @@
  * - declaring the string types as constants in another file
  */
 
-import { TemplateItems } from '../../containers/TemplateConfigurationModal/ListTemplateItems';
 import * as type from './dispatch-types';
 
 /*The attributes in the store are not exactly matching the object that is being sent during add recommendation.
@@ -38,21 +37,61 @@ const detailsConfigInitialValues = {
 
 export const contentInitialValues = {
     isDialogOpen: false,
-    template: { name: TemplateItems[0].name },
+    template: {
+        name: "",
+        description: "",
+        inputList: [],
+        algorithmName: ""
+    },
     basicConfiguration: detailsConfigInitialValues,
     parameters: {},
+    templateDetailsList: [],
     isEditing: false,
     id: null
-};
+}
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
+    
     switch (action.type) {
-        case type.UPDATE_RECOMMENDATION_TEMPLATE:
+        case type.GET_TEMPLATE_DETAILS:
+            return {
+                ...state,
+                templateDetailsList: action.payload
+            }
+        
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_NAME:
             return {
                 ...state,
                 template: {
                     ...state.template,
-                    name: action.payload.name
+                    name: action.payload.name,
+                }
+            };
+
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_DESCRIPTION:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    description: action.payload.description,
+                }
+            };
+
+            case type.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    inputList: action.payload.inputList,
+                }
+            };
+
+            case type.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    algorithmName: action.payload.algorithmName,
                 }
             };
 
@@ -137,8 +176,18 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                 isDialogOpen: !state.isDialogOpen
             };
 
-        case type.CLEAR:
-            return contentInitialValues;
+        case type.SET_BACK_TO_INITIAL_VALUES:
+            return {
+                ...contentInitialValues,
+                templateDetailsList: state.templateDetailsList,
+                template: {
+                    ...contentInitialValues.template,
+                    name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName: '',
+                    description:  state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription: '',
+                    inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
+                    algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
+                }
+              };
 
         default:
             return state;

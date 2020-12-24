@@ -22,6 +22,6 @@ describe('ParametersConfigurationModal component', () => {
 
     it('Finds the divs', () => {
         let divs = wrapper.find('div');
-        expect(divs).toHaveLength(6);
+        expect(divs).toHaveLength(3);
     });
 });

@@ -73,7 +73,7 @@ export function ManageRecommendationDrawer({
             <div className="assets">
               <p className="value-title">Preferred Scenario</p>
               <p className="values">
-                {configuredRecommendation.preferredScenario === 'ROI' ? 'Return on investment' : 'Net Saving'}
+                {configuredRecommendation.preferredScenario === 'ROI' ? 'Return On Investment' : 'Net Saving'}
               </p>
             </div>
           </Grid>

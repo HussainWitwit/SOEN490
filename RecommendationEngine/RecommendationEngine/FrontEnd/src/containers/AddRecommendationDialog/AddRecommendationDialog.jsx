@@ -37,8 +37,7 @@ const pageTitles = [
   'Confirmation',
 ];
 
-
-export function PaperComponent(props) {
+export function PaperComponent (props) {
   return (
     <Draggable
       handle="#draggable-dialog-title"
@@ -53,8 +52,8 @@ export const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function AddRecommendationDialog(props) {
-  const { clear, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, editConfiguredRecommendation, isEditing, configurationId } = props;
+export function AddRecommendationDialog (props) {
+  const { setBackToInitialValues, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -81,7 +80,7 @@ export function AddRecommendationDialog(props) {
   });
 
   const closeDialog = () => {
-    clear();
+    setBackToInitialValues();
     setIndex(0);
   }
   //Post method
@@ -118,8 +117,7 @@ export function AddRecommendationDialog(props) {
         })
       });
     }
-    clear();
-    setIndex(0);
+    closeDialog();
   }
 
   useEffect(() => {
@@ -191,7 +189,7 @@ export function AddRecommendationDialog(props) {
           </Button>
               )}
         {index === 0 && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined">
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!template.name}>
             Next
           </Button>
         )}
@@ -209,4 +207,5 @@ export function AddRecommendationDialog(props) {
     </Dialog>
   );
 }
+
 export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(AddRecommendationDialog)
