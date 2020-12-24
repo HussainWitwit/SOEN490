@@ -24,14 +24,15 @@ const deleteRecommendationEvent = async () => {
             classes={{ paper: "dialog" }}
             open={props.open}
             onClose={handleClose}
+            id="dialogPopUp"
         >
             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <DialogTitle id="alert-message" >Are you sure you want to DELETE {props.title}?</DialogTitle>
+            <DialogTitle id="alertMessage" >Are you sure you want to DELETE {props.title}?</DialogTitle>
             <DialogActions>
                 <div id="buttons">
-                    <Button onClick={handleClose} id="cancel-button" variant="outlined">
+                    <Button onClick={handleClose} id="cancelButton" variant="outlined">
                         Cancel
           </Button>
           {/* onclick need to handle handleClose with deleteRecEvent */}
@@ -39,7 +40,7 @@ const deleteRecommendationEvent = async () => {
                         handleClose()
                         deleteRecommendationEvent()
                         closeScheduleDrilldown()
-                        }} id="delete-button" variant="outlined">
+                        }} id="deleteButton" variant="outlined">
                         Delete
           </Button>
                 </div>

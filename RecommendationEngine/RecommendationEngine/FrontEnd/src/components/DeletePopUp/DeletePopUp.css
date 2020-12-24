@@ -1,8 +1,8 @@
-#alert-message{
+#alertMessage{
     text-align: center;
 }
 
-#cancel-button{
+#cancelButton{
     width: 100px;
     text-align: center;
     background-color:#FFFFFF;
@@ -16,7 +16,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-#cancel-button:hover{
+#cancelButton:hover{
     background-color: #ffc107;
     box-shadow: none;
     transition: all 500ms;
@@ -24,7 +24,7 @@
     color: white;
 }
 
-#delete-button {
+#deleteButton {
     width: 100px;
     text-align: center;
     background-color:#FFFFFF;
@@ -38,7 +38,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-#delete-button:hover {
+#deleteButton:hover {
     box-shadow: none;
     transition: all 500ms;
     color: white;
