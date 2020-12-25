@@ -47,17 +47,6 @@ namespace Models.DB
             modelBuilder.Entity<DBAssetRecommendationSchedule>()
                 .HasKey(c => new { c.AssetId, c.ScheduleId });
 
-            modelBuilder.Entity<DBRecommendationSchedule>()
-                .HasMany(x => x.JobsList)
-                .WithOne(x => x.Schedule)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<DBRecommendationJob>()
-                .HasMany(y => y.LogsList)
-                .WithOne(x => x.RecommendationJob)
-                .OnDelete(DeleteBehavior.Cascade);
-
-
             modelBuilder.Entity<DBAssetRecommendationSchedule>()
                 .HasOne(x => x.Asset)
                 .WithMany(m => m.RecommendationSchedulesList)
@@ -66,6 +55,28 @@ namespace Models.DB
                 .HasOne(x => x.Schedule)
                 .WithMany(e => e.AssetsList)
                 .HasForeignKey(x => x.ScheduleId);
+
+            // Force cascade delete of weak entities types
+            modelBuilder.Entity<DBRecommendationSchedule>()
+                .HasMany(x => x.JobsList)
+                .WithOne(x => x.Schedule)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<DBRecommendationSchedule>()
+                .HasMany(x => x.ParametersList)
+                .WithOne(x => x.Schedule)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<DBRecommendationJob>()
+                .HasMany(y => y.LogsList)
+                .WithOne(x => x.RecommendationJob)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<DBRecommendationJob>()
+                .HasOne(y => y.Result)
+                .WithOne(x => x.Job)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<DBRecommendationJobResult>()
+                .HasMany(y => y.ActionsSuggestedList)
+                .WithOne(x => x.RecommendationJobResult)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
     }
