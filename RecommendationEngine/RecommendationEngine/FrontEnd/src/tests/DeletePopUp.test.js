@@ -13,7 +13,7 @@ describe('DeletePopUp component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<DeletePopUp store={store} />);
+    const output = shallow(<DeletePopUp store={store} title={''} handleClickOpen={jest.fn} open={jest.fn} recommendationId={1} closeScheduleDrilldown={jest.fn}/>);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
@@ -49,5 +49,9 @@ describe('DeletePopUp component', () => {
     it('Finds the action buttons', () => {
         let component = output.find(Button);
         expect(component).toHaveLength(2);
+    });
+
+    it('Simulate delete button onClick event', () => {
+        output.find('#deleteButton').simulate('click');
     });
 });
