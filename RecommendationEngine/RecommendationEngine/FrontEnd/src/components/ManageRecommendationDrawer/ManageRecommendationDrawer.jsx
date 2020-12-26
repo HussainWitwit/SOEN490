@@ -161,7 +161,7 @@ export default function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="delete-button">
-              <Button variant="outlined" onClick={handleClickOpen}>Delete</Button>
+              <Button variant="outlined" id="deleteButton" onClick={handleClickOpen}>Delete</Button>
               <DeletePopUp title={configuredRecommendation.name} handleClickOpen={handleClickOpen} open={open} recommendationId={configuredRecommendation.id}/>
             </div>
           </Grid>

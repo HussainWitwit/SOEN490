@@ -63,4 +63,8 @@ describe('ManageRecommendationDrawer component', () => {
         let tooltip = output.find(Tooltip);
         expect(tooltip).toHaveLength(1);
     });
+
+    it('Simulate delete button onClick event', () => {
+        output.find('#deleteButton').simulate('click');
+    });
 });

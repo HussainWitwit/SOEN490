@@ -22,6 +22,7 @@ describe.only('ConfiguredRecommendationTable component', () => {
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
     const output = shallow(<ConfiguredRecommendationTable store={store} />).dive();
+    const mockedEvent = { target: {} }
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
@@ -73,8 +74,18 @@ describe.only('ConfiguredRecommendationTable component', () => {
         expect(subtitle).toHaveLength(1);
     });
 
-    it('It finds the table pagination', () => {
+    it('It finds the table pagination and tests the onChangePage and onChangeRowsPerPage events', () => {
         let pagination = output.find(TablePagination);
+        pagination.props().onChangePage();
+        pagination.props().onChangeRowsPerPage(mockedEvent);
         expect(pagination).toHaveLength(1);
+    });
+
+    it('Simulate onChange lite switch event', () => {
+        output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn()});
+    });
+
+    it('Simulate handleSort event', () => {
+        output.find('#handleSort').props().onRequestSort();
     });
 });
