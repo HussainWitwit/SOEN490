@@ -10,15 +10,16 @@ import { mapDispatchToProps, mapRightPanelStateToProps } from '../../redux/Right
 import { connect } from 'react-redux';
 
 export function DeletePopUp(props) {
-    const {deleteConfiguredRecommendation}=props;
-    const {recommendationId}=props;
-    const {closeScheduleDrilldown}=props;
+    const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown } = props;
+
     const handleClose = () => {
         props.handleClickOpen();
     };
-const deleteRecommendationEvent = async () => {
-    deleteConfiguredRecommendation (recommendationId)
-}
+
+    const deleteRecommendationEvent = async () => {
+        deleteConfiguredRecommendation(recommendationId)
+    }
+
     return (
         <Dialog
             classes={{ paper: "dialog" }}
@@ -29,18 +30,17 @@ const deleteRecommendationEvent = async () => {
             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <DialogTitle id="alertMessage" >Are you sure you want to DELETE {props.title}?</DialogTitle>
+            <DialogTitle classes={{ root: 'alertMessage' }}>Are you sure you want to DELETE {props.title}?</DialogTitle>
             <DialogActions>
                 <div id="buttons">
                     <Button onClick={handleClose} id="cancelButton" variant="outlined">
                         Cancel
           </Button>
-          {/* onclick need to handle handleClose with deleteRecEvent */}
                     <Button onClick={() => {
                         handleClose()
                         deleteRecommendationEvent()
                         closeScheduleDrilldown()
-                        }} id="deleteButton" variant="outlined">
+                    }} id="deleteButton" variant="outlined">
                         Delete
           </Button>
                 </div>
@@ -49,4 +49,4 @@ const deleteRecommendationEvent = async () => {
     );
 }
 
-export default connect(mapRightPanelStateToProps,mapDispatchToProps)(DeletePopUp)
+export default connect(mapRightPanelStateToProps, mapDispatchToProps)(DeletePopUp)
