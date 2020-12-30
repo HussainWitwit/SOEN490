@@ -26,10 +26,6 @@ export const openScheduleDrilldown = async (dispatch, id) => {
 
 export const deleteConfiguredRecommendation = async (dispatch, id) => {
   const response = await deleteRecommendationById(id);
-  dispatch({
-    type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
-    payload: response
-  });
   if(response.status === 200) { 
     //TODO: Successful post, send notifications...
     await getConfiguredRecommendationList(dispatch); //To test
