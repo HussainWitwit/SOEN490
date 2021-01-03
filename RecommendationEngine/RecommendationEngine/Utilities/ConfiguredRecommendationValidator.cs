@@ -3,37 +3,81 @@ using RecommendationEngine.ExceptionHandler;
 using System.Linq;
 using Models.DB;
 using Models.Application;
+using System.Collections.Generic;
 
 namespace RecommendationEngine.ConfiguredRecommendationValidator
 {
 
     public static class ConfiguredRecommendationValidator
     {
+        private const string APP_NAME = "Recommendation Engine";
 
-        public static void Validate(this ConfiguredRecommendation configuredRecommendation, DBRecommendationType recommendationType)
+        public static void Validate(this ConfiguredRecommendation configuredRecommendation)
         {
-            string[] strs = new string[] { configuredRecommendation.Name, configuredRecommendation.CreatedBy, configuredRecommendation.Granularity, configuredRecommendation.Type };
+            EmptyOrNullField(configuredRecommendation);
+            ValidRecommendationType(configuredRecommendation);
+            ValidRecurrenceDayOfWeek(configuredRecommendation);
+            ValidDateRange(configuredRecommendation);
+            ValidPreferredScenario(configuredRecommendation);
+        }
 
-            //subject to change (until we globalize the type of recommendation & not hard-code them)
-            if (!configuredRecommendation.Type.Equals("Yearly Wash Optimization"))
-            {
-                throw new GlobalException(400, "Bad Request", "Recommendation Type is not correct!", "Recommendation Engine");
+        private static void throwException(int code, string errorType, string message)
+        {
+            throw new GlobalException(code, errorType, message, APP_NAME);
+        }
+
+        private static void EmptyOrNullField(ConfiguredRecommendation configuredRecommendation) {
+            string[] fields = new string[] {
+                configuredRecommendation.Name,
+                configuredRecommendation.CreatedBy,
+                configuredRecommendation.Granularity,
+                configuredRecommendation.Type,
+                configuredRecommendation.PreferredScenario
+            };
+
+            if (Array.Exists(fields, field => string.IsNullOrEmpty(field))) {
+                throwException(400, "Bad Request", "Empty or null field");
             }
+        }
 
-            if (Array.Exists(strs, str => string.IsNullOrEmpty(str)))
+        private static void ValidRecommendationType(ConfiguredRecommendation configuredRecommendation) {
+            string recommendationType = configuredRecommendation.Type;
+
+            string[] validRecommendationTypes = new string[] {
+                "Yearly Wash Optimization",
+                "Gear Replacement",
+                "Fuse Replacement",
+                "Panel Angle",
+                "ETC",
+                "Other"
+            };
+
+            if (Array.Exists(validRecommendationTypes, type => type.Equals(recommendationType)))
             {
-                throw new GlobalException(400, "Bad Request", "string empty or null", "Recommendation Engine");
+                throwException(400, "Bad Request", "The recommendation type \"" + recommendationType + "\" is not valid.");
             }
+        }
 
-            if (!Enumerable.Range(1, 7).Contains(configuredRecommendation.RecurrenceDayOfWeek))
+        private static void ValidRecurrenceDayOfWeek(ConfiguredRecommendation configuredRecommendation) {
+            int dayOfWeek = configuredRecommendation.RecurrenceDayOfWeek;
+
+            if (!Enumerable.Range(1, 7).Contains(dayOfWeek))
             {
-                throw new GlobalException(400, "Bad Request", "Day of week must be an int between 1 and 7.", "Recommendation Engine");
+                throwException(400, "Bad Request", "The reccurence day of week \"" + dayOfWeek + "\" is not valid. Day of week must be between 1 and 7.");
             }
+        }
 
-            DateTime[] dates = new DateTime[] {configuredRecommendation.RecurrenceDatetime };
-            if (Array.Exists(dates, date => date < DateTime.Today))
-            {
-                throw new GlobalException(400, "Bad Request", "date must be later or equal to today", "Recommendation Engine");
+        private static void ValidDateRange(ConfiguredRecommendation configuredRecommendation) {
+            if (configuredRecommendation.RecurrenceDatetime < DateTime.Today) {
+                throwException(400, "Bad Request", "The date must be later or equal to today.");
+            }
+        }
+
+        private static void ValidPreferredScenario(ConfiguredRecommendation configuredRecommendation) {
+            string scenario = configuredRecommendation.PreferredScenario;
+
+            if (!scenario.Equals("ROI") || !scenario.Equals("NetSaving")) {
+                throwException(400, "Bad Request", "The scenario \"" + scenario + "\" is not a valid scenario.");
             }
         }
     }
