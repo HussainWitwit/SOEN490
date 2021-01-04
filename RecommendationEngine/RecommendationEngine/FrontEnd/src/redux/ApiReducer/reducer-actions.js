@@ -6,7 +6,7 @@
  */
 import * as dispatchActionType from './dispatch-types';
 import { GetNestedAssetList,  GetFlatAssetList } from '../../api/endpoints/AssetEndpoints';
-import { GetConfiguredRecommendationList, PostConfiguredRecommendation, deleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { GetConfiguredRecommendationList, PostConfiguredRecommendation, DeleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({apiReducer}) => {
@@ -58,7 +58,7 @@ export const mapStateToProps = ({apiReducer}) => {
   }
   
   export const deleteConfiguredRecommendation = async (dispatch, id) => {
-    const response = await deleteRecommendationById(id);
+    const response = await DeleteRecommendationById(id);
     dispatch({
       type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
       payload: response

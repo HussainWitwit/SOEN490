@@ -46,7 +46,7 @@ export const GetConfiguredRecommendationById = async (id:number) => {
     }
 }
 
-export const deleteRecommendationById = async (id: number ) => {
+export const DeleteRecommendationById = async (id: number ) => {
     let response;
     try {
         response = await fetch('ConfiguredRecommendation/delete/'+ id, {
