@@ -65,6 +65,6 @@ describe('ManageRecommendationDrawer component', () => {
     });
 
     it('Simulate delete button onClick event', () => {
-        output.find('#deleteButton').simulate('click');
+        output.find('#deleteRecButton').simulate('click');
     });
 });
