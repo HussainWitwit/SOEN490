@@ -62,7 +62,13 @@ namespace RecommendationEngineTests.APITests
         {
             var response = await _client.GetAsync("/configuredrecommendation/configuredrecommendation/1");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-            var expected = response.Content;
+        }
+
+        [Test]
+        public async Task DeleteRecommendationByIdTest()
+        {
+            var response = await _client.DeleteAsync("/configuredrecommendation/delete/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }
 
