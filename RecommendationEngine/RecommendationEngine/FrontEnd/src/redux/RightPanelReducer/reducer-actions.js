@@ -4,8 +4,8 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-import {GetConfiguredRecommendationById, deleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
-import {getConfiguredRecommendationList} from '../ApiReducer/reducer-actions'
+import {GetConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { deleteConfiguredRecommendation } from '../ApiReducer/reducer-actions';
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
@@ -23,17 +23,6 @@ export const openScheduleDrilldown = async (dispatch, id) => {
     }
   });
 };
-
-export const deleteConfiguredRecommendation = async (dispatch, id) => {
-  const response = await deleteRecommendationById(id);
-  if(response.status === 200) { 
-    //TODO: Successful post, send notifications...
-    await getConfiguredRecommendationList(dispatch); //To test
-  }
-  else {
-    //TODO: Error with post, send notifications...
-  }
-}
 
 export const closeAssetTreeview = () => {
   return {
@@ -78,10 +67,15 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
     openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
-    deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id),
     closeAssetTreeview: () => dispatch(closeAssetTreeview()),
-    closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
     closeAll: () => dispatch(closeAll()),
     changeTabIndex: (value) => dispatch(changeTabIndex(value))
   };
 };
+
+export const mapDispatchDeletePopUpActions = (dispatch) => {
+  return {
+    closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
+    deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id)
+  }
+}

@@ -6,8 +6,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import "./DeletePopUp.css"
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
-import { mapDispatchToProps, mapRightPanelStateToProps } from '../../redux/RightPanelReducer/reducer-actions';
+import { mapDispatchDeletePopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
+
 
 export function DeletePopUp(props) {
     const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown } = props;
@@ -37,9 +38,9 @@ export function DeletePopUp(props) {
                         Cancel
           </Button>
                     <Button onClick={() => {
-                        handleClose()
-                        deleteRecommendationEvent()
-                        closeScheduleDrilldown()
+                        handleClose();
+                        deleteRecommendationEvent();
+                        closeScheduleDrilldown();
                     }} id="deleteButton" variant="outlined">
                         Delete
           </Button>
@@ -49,4 +50,4 @@ export function DeletePopUp(props) {
     );
 }
 
-export default connect(mapRightPanelStateToProps, mapDispatchToProps)(DeletePopUp)
+export default connect( null, mapDispatchDeletePopUpActions)(DeletePopUp)

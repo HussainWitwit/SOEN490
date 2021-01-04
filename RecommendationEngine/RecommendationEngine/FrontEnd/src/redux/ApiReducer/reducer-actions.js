@@ -6,7 +6,7 @@
  */
 import * as dispatchActionType from './dispatch-types';
 import { GetNestedAssetList,  GetFlatAssetList } from '../../api/endpoints/AssetEndpoints';
-import { GetConfiguredRecommendationList, PostConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { GetConfiguredRecommendationList, PostConfiguredRecommendation, deleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({apiReducer}) => {
@@ -57,6 +57,21 @@ export const mapStateToProps = ({apiReducer}) => {
     }
   }
   
+  export const deleteConfiguredRecommendation = async (dispatch, id) => {
+    const response = await deleteRecommendationById(id);
+    dispatch({
+      type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
+      payload: response
+    });
+    if(response.status === 200) { 
+      //TODO: Successful post, send notifications...
+      await getConfiguredRecommendationList(dispatch);
+    }
+    else {
+      //TODO: Error with post, send notifications...
+    }
+  }
+
   //This method will allow you to pass the actions as a prop to the connected component in
   //order to modify the value in the store
   export const mapDispatchApiToProps = (dispatch) => {
@@ -64,6 +79,6 @@ export const mapStateToProps = ({apiReducer}) => {
         getNestedAssets: () =>  getNestedAssets(dispatch),
         getFlatListAssets: () => getFlatListAssets(dispatch),
         getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
-        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation),
+        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation)
     };
   };
