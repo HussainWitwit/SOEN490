@@ -23,7 +23,7 @@ const headCells = [
 ];
 
 //TODO: This should be a generic component, ask Alain if help is needed.
-export function ConfiguredRecommendationTable (props) {
+export function ConfiguredRecommendationTable(props) {
 
   const [dense, setDense] = React.useState(false);
   const [order, setOrder] = React.useState('asc');
@@ -59,6 +59,7 @@ export function ConfiguredRecommendationTable (props) {
         <Toolbar id="toolbar">
           <h6 className="toolBarTitle" variant="h6" id="tableTitle" component="div"> Configured Recommendations</h6>
           <FormControlLabel
+            id="liteSwitch"
             control={
               <Switch checked={dense} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }} />
             }
@@ -69,23 +70,23 @@ export function ConfiguredRecommendationTable (props) {
           <Table
             id="table" aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'} aria-label="enhanced table"
           >
-            <EnhancedTableHead order={order} orderBy={orderBy}
+            <EnhancedTableHead id="handleSort" order={order} orderBy={orderBy}
               onRequestSort={handleRequestSort}
               headers={headCells}
               rowCount={props.data ? props.data.length : 1}
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
               {props.data && props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element) => {
-              return(
+                return (
                   <TableRow
-                        hover
-                        selected={isSelected === element.id}
-                        key={element.id}
-                        className="custom"
-                        onClick={() => {
-                            props.openScheduleDrilldown(element.id)
-                            setIsSelected(element.id)
-                        }}
+                    hover
+                    selected={isSelected === element.id}
+                    key={element.id}
+                    className="custom"
+                    onClick={() => {
+                      props.openScheduleDrilldown(element.id)
+                      setIsSelected(element.id)
+                    }}
                   >
                     <TableCell className="custom">
                     </TableCell>
@@ -100,20 +101,21 @@ export function ConfiguredRecommendationTable (props) {
                     <TableCell className="custom" id="tableBody">{element.type}</TableCell>
                     <TableCell className="custom" id="tableBody">{element.granularity}</TableCell>
                     <TableCell className="custom" id="tableBody">{element.createdOn}</TableCell>
-                  </TableRow>              
-              )})}
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination 
-          id="pagination" 
-          component="div" 
-          rowsPerPageOptions={[10, 25, 50, 100]} 
-          count={props.data ? props.data.length : 1} 
-          rowsPerPage={rowsPerPage} 
-          page={page} 
-          onChangePage={handleChangePage} 
-          onChangeRowsPerPage={handleChangeRowsPerPage} 
+        <TablePagination
+          id="pagination"
+          component="div"
+          rowsPerPageOptions={[10, 25, 50, 100]}
+          count={props.data ? props.data.length : 1}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
     </div>

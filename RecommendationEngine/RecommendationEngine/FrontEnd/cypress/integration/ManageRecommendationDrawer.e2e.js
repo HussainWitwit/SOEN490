@@ -1,6 +1,5 @@
 // describe('Manage Recommendation drawer Dialog', () => {
 
-
 //     beforeEach(() => {
 //         cy.visit('/');
 //     })
@@ -8,7 +7,7 @@
 //         cy.get(':nth-child(1) > .primaryKey').click()
 //         cy.wait(500)
 //     })
-    
+
 //     it("Finds all elements in the manage Recommendation Table", () => {
 //         cy.get(':nth-child(1) > .primaryKey').click()
 //         cy.wait(500)
@@ -59,6 +58,54 @@
 //         cy.get(':nth-child(1) > .primaryKey').click()
 //         cy.wait(500)
 //         cy.get('#react-tabs-0 > .MuiButtonBase-root > .MuiIconButton-label > .MuiSvgIcon-root').click()
+//         cy.wait(500)
+//     })
+
+//     it("Clicks on delete button", ()=>{
+//         cy.get(':nth-child(2) > .primaryKey').click()
+//         cy.wait(500)
+//         cy.get('.delete-button').click()
+//         cy.wait(500)
+//         cy.get('#deleteButton').click()
+//         cy.wait(500)
+//     })
+
+//     it("Clicks on cancel button", ()=>{
+//         cy.get(':nth-child(1) > .primaryKey').click()
+//         cy.wait(500)
+//         cy.get('.delete-button').click()
+//         cy.wait(500)
+//         cy.get('#cancelButton').click()
+//         cy.wait(500)
+//     })
+
+//     it("closes delete recommendation pop up", ()=>{
+//         cy.get(':nth-child(1) > .primaryKey').click()
+//         cy.wait(500)
+//         cy.get('.delete-button').click()
+//         cy.wait(500)
+//         cy.get('#closeButton').click()
+//         cy.wait(500)
+//     })
+
+//     it("Finds all elements in the delete recommendation pop up", () => {
+//         cy.get(':nth-child(1) > .primaryKey').click()
+//         cy.wait(500)
+//         cy.get('.delete-button').should('exist')
+//         cy.wait(500)
+//         cy.get('.delete-button').click()
+//         cy.wait(500)
+//         cy.get('#dialogPopUp').should('exist')
+//         cy.wait(500)
+//         cy.get('#closeButton').should('exist')
+//         cy.wait(500)
+//         cy.get('#alertMessage').should('exist')
+//         cy.wait(500)
+//         cy.get('#cancelButton').should('exist')
+//         cy.wait(500)
+//         cy.get('#deleteButton').should('exist')
+//         cy.wait(500)
+//         cy.get('#closeButton').click()
 //         cy.wait(500)
 //     })
 // });

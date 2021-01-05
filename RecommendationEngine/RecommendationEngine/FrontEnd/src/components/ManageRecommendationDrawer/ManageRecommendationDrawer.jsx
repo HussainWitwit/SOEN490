@@ -9,10 +9,12 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
 import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import { connect } from 'react-redux';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
 
 export function ManageRecommendationDrawer({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
 }) {
+  const [open, setOpen] = React.useState(false);
   // Animation style
   const props = useSpring({
     opacity: 1,
@@ -20,9 +22,13 @@ export function ManageRecommendationDrawer({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
 
+  const handleClickOpen = () => {
+    setOpen(!open);
+  };
+
   const formatDateTime = (date) => {
     let timeStamp = new Date(date);
-      return timeStamp.toLocaleString();
+    return timeStamp.toLocaleString();
   }
 
   return (
@@ -54,7 +60,7 @@ export function ManageRecommendationDrawer({
           <Grid item xs={8}>
             <div className="inputs">
               <p className="value-title">Parameters</p>
-                          <div className="values">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
+              <div className="values">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter) => {
                   return parameter.parameterName;
                 })) : 'N/A'}</div>
@@ -63,7 +69,7 @@ export function ManageRecommendationDrawer({
           <Grid item xs={4}>
             <div className="outputs">
               <p className="value-title">Value</p>
-                          <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
+              <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter) => {
                   return parameter.value;
                 })) : 'N/A'}</div>
@@ -117,53 +123,53 @@ export function ManageRecommendationDrawer({
                 ))}
             </div>
           </Grid>
-        <Grid item xs={12}>
-          <p className="value-title">Last Execution Status</p>
-          {configuredRecommendation.lastJobs &&
-            configuredRecommendation.lastJobs[4] ? (
-              <div
-                className={
-                  'execution-status-' +
-                  configuredRecommendation.lastJobs[4].status
-                }
-              >
-                <Chip
-                  label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
-                />
-              </div>
-            ) : (
-              <div className={'execution-status-Empty'}>
-                <Chip label="NO STATUS" />
-              </div>
-            )}
+          <Grid item xs={12}>
+            <p className="value-title">Last Execution Status</p>
+            {configuredRecommendation.lastJobs &&
+              configuredRecommendation.lastJobs[4] ? (
+                <div
+                  className={
+                    'execution-status-' +
+                    configuredRecommendation.lastJobs[4].status
+                  }
+                >
+                  <Chip
+                    label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
+                  />
+                </div>
+              ) : (
+                <div className={'execution-status-Empty'}>
+                  <Chip label="NO STATUS" />
+                </div>
+              )}
+          </Grid>
+          <Grid item xs={12}>
+            <div className="created-edited-by">
+              <p className="edited-by">Last edited by: </p>
+              <p className="created-edited-by-name">
+                {configuredRecommendation.createdBy}
+              </p>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="edit-recommendation-button">
+              <Button variant="outlined" onClick={() => { toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, configuredRecommendation.id); }}>Edit</Button>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="force-run-button">
+              <Button variant="outlined">Force run</Button>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <div className="delete-button">
+              <Button variant="outlined" id="deleteRecButton" onClick={handleClickOpen}>Delete</Button>
+              <DeletePopUp title={configuredRecommendation.name} handleClickOpen={handleClickOpen} open={open} recommendationId={configuredRecommendation.id} />
+            </div>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <div className="created-edited-by">
-            <p className="edited-by">Last edited by: </p>
-            <p className="created-edited-by-name">
-              {configuredRecommendation.createdBy}
-            </p>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="edit-recommendation-button">
-            <Button variant="outlined" onClick = {() => {toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, configuredRecommendation.id);}}>Edit</Button>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="force-run-button">
-            <Button variant="outlined">Force run</Button>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className="delete-button">
-            <Button variant="outlined">Delete</Button>
-          </div>
-        </Grid>
-      </Grid>
-    </div>
-  </animated.div >
-);
+      </div>
+    </animated.div>
+  );
 }
-//FIXME: Might be better if you put the three buttons inside a cnomponent and have that component being connected and not the whole drawer... 
 export default connect(null, mapDispatchToProps)(ManageRecommendationDrawer)

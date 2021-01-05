@@ -5,7 +5,7 @@
  * Note: All the following Actions target the api calls Reducer only
  */
 import * as dispatchActionType from './dispatch-types';
-import { GetConfiguredRecommendationList, PostConfiguredRecommendation, EditConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { GetConfiguredRecommendationList, PostConfiguredRecommendation, EditConfiguredRecommendation, DeleteRecommendationById } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 import { openScheduleDrilldown } from '../../redux/RightPanelReducer/reducer-actions';
 import { GetNestedAssetList,  GetFlatAssetList } from '../../api/endpoints/AssetEndpoints';
 
@@ -75,6 +75,21 @@ export const editConfiguredRecommendation = async (dispatch, configuredRecommend
   }
 
   
+  export const deleteConfiguredRecommendation = async (dispatch, id) => {
+    const response = await DeleteRecommendationById(id);
+    dispatch({
+      type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
+      payload: response
+    });
+    if(response.status === 200) { 
+      //TODO: Successful post, send notifications...
+      await getConfiguredRecommendationList(dispatch);
+    }
+    else {
+      //TODO: Error with post, send notifications...
+    }
+  }
+
   //This method will allow you to pass the actions as a prop to the connected component in
   //order to modify the value in the store
   export const mapDispatchApiToProps = (dispatch) => {
