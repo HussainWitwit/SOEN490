@@ -122,13 +122,13 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
 
             if (schedule == null)
             {
-                throw new GlobalException
+                Error error = new Error
                 {
-                    ApplicationName = "RecommendationEngine",
-                    ErrorMessage = "Could not find a configured recommendation",
-                    Code = 404,
-                    Type = "Not Found"
+                    Type = ErrorType.BAD_REQUEST,
+                    ErrorCode = 400,
+                    ErrorMessage = "There is no configured recommendation with recommendaion ID " + id
                 };
+                throw new GlobalException(error, "Recommendaiton Engine");
             }
 
             ConfiguredRecommendation configuredRecommendation = new ConfiguredRecommendation

@@ -1,14 +1,15 @@
-﻿/**
- * The following enumerator is used to label error types.
- * This can be convinent in order to ease communication with the front-end.
- */
+﻿
 
+/**
+* The following class is used to label error types.
+* This can be convinent in order to ease communication with the front-end.
+*/
 namespace RecommendationEngine.ExceptionHandler
 {
-    public enum ErrorType
+    static class ErrorType
     {
-        BAD_REQUEST,
-        VALIDATION,
-        API_ERROR,
+        public const string BAD_REQUEST = "BAD REQUEST";
+        public const string VALIDATION = "VALIDATION";
+        public const string API_ERROR = "API";
     }
 }

@@ -32,7 +32,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(e);
+                return BadRequest(new { e.ErrorList, e.AppName });
             }
         }
 
@@ -45,7 +45,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(e);
+                return BadRequest(new { e.ErrorList, e.AppName });
             }
             return Ok();
         }

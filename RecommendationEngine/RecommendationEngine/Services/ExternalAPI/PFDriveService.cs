@@ -45,8 +45,12 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                Error error = new Error {
+                    Type = ErrorType.API_ERROR,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the Portfolios with the PF API!"
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
         }
 
@@ -73,8 +77,13 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                Error error = new Error
+                {
+                    Type = ErrorType.API_ERROR,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the Plants with the PF API!"
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
         }
 
@@ -101,8 +110,13 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                Error error = new Error
+                {
+                    Type = ErrorType.API_ERROR,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching plant ID " + plantId + " with the PF API!"
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
         }
 
@@ -129,8 +143,13 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                Error error = new Error
+                {
+                    Type = ErrorType.API_ERROR,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the PA price of plant ID " + plantId + " with the PF API!"
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
         }
 
@@ -162,8 +181,13 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                Error error = new Error
+                {
+                    Type = ErrorType.API_ERROR,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the assets metadata with the PF API!"
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
         }
 
@@ -204,8 +228,13 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                Error error = new Error
+                {
+                    Type = ErrorType.API_ERROR,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the daily predicted energy price with the PF API!"
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
 
         }

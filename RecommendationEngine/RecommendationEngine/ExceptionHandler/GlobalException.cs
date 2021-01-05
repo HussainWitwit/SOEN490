@@ -20,6 +20,12 @@ namespace RecommendationEngine.ExceptionHandler
             this.AppName = AppName;
         }
 
+        public GlobalException(Error error, string AppName)
+        {
+            this.ErrorList = new List<Error> { error };
+            this.AppName = AppName;
+        }
+
         public IReadOnlyList<Error> GetErrorList() {
             //Return an unmodifiable list, we don't want to user to modify the error list in any way.
 

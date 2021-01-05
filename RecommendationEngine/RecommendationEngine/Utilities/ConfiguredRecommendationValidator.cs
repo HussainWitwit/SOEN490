@@ -9,7 +9,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
 
     public static class ConfiguredRecommendationValidator
     {
-        public static List<Error> ErrorList;
+        public static List<Error> ErrorList = new List<Error>();
         private const string APP_NAME = "Recommendation Engine";
 
         public static void Validate(this ConfiguredRecommendation configuredRecommendation)
@@ -23,14 +23,14 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
         }
 
         private static void ThrowPotentialError() {
-            if (!ErrorList.Any()) {
+            if (ErrorList.Any()) {
                 List<Error> copyList = new List<Error>(ErrorList);
                 ErrorList.Clear();
                 throw new GlobalException(copyList, APP_NAME);
             }
         }
 
-        private static void AddToErrors(ErrorType errorType, int errorCode, string message)
+        private static void AddToErrors(string errorType, int errorCode, string message)
         {
             ErrorList.Add(new Error(errorType, errorCode, message));
         }
@@ -61,9 +61,9 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
                 "Other"
             };
 
-            if (Array.Exists(validRecommendationTypes, type => type.Equals(recommendationType)))
+            if (Array.Exists(validRecommendationTypes, type => !type.Equals(recommendationType)))
             {
-                AddToErrors(ErrorType.VALIDATION, 400, "The recommendation type \"" + recommendationType + "\" is not valid.");
+                AddToErrors(ErrorType.VALIDATION, 400, "The recommendation type " + recommendationType  + " is not valid.");
             }
         }
 
@@ -72,7 +72,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
 
             if (!Enumerable.Range(1, 7).Contains(dayOfWeek))
             {
-                AddToErrors(ErrorType.VALIDATION, 400, "The reccurence day of week \"" + dayOfWeek + "\" is not valid. Day of week must be between 1 and 7.");
+                AddToErrors(ErrorType.VALIDATION, 400, "The reccurence day of week "  + dayOfWeek  + " is not valid. Day of week must be between 1 and 7.");
             }
         }
 
@@ -86,7 +86,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             string scenario = configuredRecommendation.PreferredScenario;
 
             if (!scenario.Equals("ROI") || !scenario.Equals("NetSaving")) {
-                AddToErrors(ErrorType.VALIDATION, 400, "The scenario \"" + scenario + "\" is not a valid scenario.");
+                AddToErrors(ErrorType.VALIDATION, 400, "The scenario " + scenario + " is not a valid scenario.");
             }
         }
     }

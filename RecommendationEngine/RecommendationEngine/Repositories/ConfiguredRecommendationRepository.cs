@@ -20,7 +20,13 @@ namespace RecommendationEngine.Repositories
         {
             if (!_recommendationEngineDb.Assets.Any())
             {
-                throw new GlobalException(400, "Bad Request", "There are no assets associated to this recommendation.", "RecommendationEngine");
+                Error error = new Error
+                {
+                    Type = ErrorType.BAD_REQUEST,
+                    ErrorCode = 400,
+                    ErrorMessage = "There are no assets associated to this recommendation."
+                };
+                throw new GlobalException(error, "RecommendationEngine");
             }
             _recommendationEngineDb.RecommendationSchedules.Add(schedule);
             _recommendationEngineDb.SaveChanges();
