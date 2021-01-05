@@ -46,6 +46,19 @@ export const GetConfiguredRecommendationById = async (id:number) => {
     }
 }
 
+export const DeleteRecommendationById = async (id: number ) => {
+    let response;
+    try {
+        response = await fetch('ConfiguredRecommendation/delete/'+ id, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }catch(error) {
+        console.log(error);
+    }
+    return response;
+  };
+
   //FIXME: Syntax Errror here
   export const PostConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
     let response;

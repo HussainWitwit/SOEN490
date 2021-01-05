@@ -1,0 +1,67 @@
+.alertMessage.MuiDialogTitle-root{
+    text-align: center;
+}
+
+#cancelButton{
+    width: 100px;
+    text-align: center;
+    background-color:#FFFFFF;
+    color: #C4C4C4;
+    padding: 7px 25px 7px 25px;
+    text-transform: none;
+    margin: 5px 10px 5px 10px;
+    box-shadow: none;
+    font-size: 18px;
+    border-color: #C4C4C4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+#cancelButton:hover{
+    background-color: #ffc107;
+    box-shadow: none;
+    transition: all 500ms;
+    border-color: transparent;
+    color: white;
+}
+
+#deleteButton {
+    width: 100px;
+    text-align: center;
+    background-color:#FFFFFF;
+    color: #FF0000;
+    padding: 7px 25px 7px 25px;
+    text-transform: none;
+    margin: 5px 10px 5px 10px;
+    box-shadow: none;
+    font-size: 18px;
+    border-color: #FF0000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+#deleteButton:hover {
+    box-shadow: none;
+    transition: all 500ms;
+    color: white;
+    background-color: #FF0000;
+}
+
+#buttons{
+    margin: auto;
+}
+
+.dialog.MuiDialog-paper{
+    max-height: 250px;
+    height: 200px;
+    width: 600px;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#closeButton{
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    color: grey;
+}

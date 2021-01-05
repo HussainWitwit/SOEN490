@@ -96,6 +96,11 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             _scheduler.ScheduleJobAsync(schedule);
         }
 
+        public void DeleteConfiguredRecommendation(int id)
+        {
+            _recommendationRepository.Delete(id);
+        }
+
         public AssetLeaf ConvertDBAssetIntoAssetLeaf(DBAsset asset)
         {
             return new AssetLeaf

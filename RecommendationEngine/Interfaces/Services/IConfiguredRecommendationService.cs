@@ -8,5 +8,6 @@ namespace Interfaces.Services
         public List<ConfiguredRecommendation> GetConfiguredRecommendationList();
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation);
         public ConfiguredRecommendation GetConfiguredRecommendationById(int id);
+        public void DeleteConfiguredRecommendation(int id);
     }
 }

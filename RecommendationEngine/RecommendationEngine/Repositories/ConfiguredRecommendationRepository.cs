@@ -34,6 +34,18 @@ namespace RecommendationEngine.Repositories
             
         }
 
+        public void Delete(int id)
+        {
+            if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id))
+            {
+                throw new GlobalException(400, "Bad Request", "Recommendation ID " + id + " does not exist!", "Recommendation Engine");
+            }
+            DBRecommendationSchedule configToRemove = _recommendationEngineDb.RecommendationSchedules
+                .FirstOrDefault(x => x.RecommendationScheduleId == id);
+            _recommendationEngineDb.RecommendationSchedules.Remove(configToRemove);
+            _recommendationEngineDb.SaveChanges();
+        }
+
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
             return _recommendationEngineDb.RecommendationTypes

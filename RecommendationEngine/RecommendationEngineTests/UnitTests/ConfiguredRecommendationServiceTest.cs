@@ -56,6 +56,21 @@ namespace RecommendationEngineTests.UnitTests
         }
 
         [Test]
+        public void DeleteRecommendationTest()
+        {
+            List<DBRecommendationSchedule> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            int recommentionId = 2;
+
+            _repository.Setup(x => x.Delete(recommentionId));
+            _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(new List<DBRecommendationSchedule>() { recommendation[0] });
+            _configuredRecommendationService.DeleteConfiguredRecommendation(recommentionId);
+
+            List<ConfiguredRecommendation> actual = _configuredRecommendationService.GetConfiguredRecommendationList();
+            Assert.AreEqual(1, actual.Count);
+            Assert.AreEqual(1, actual[0].Id);
+        }
+
+        [Test]
         public void BadRecommendationTypeTest()
         {
             ConfiguredRecommendation badRecommendationType = MockConfiguredRecommendations.BAD_CONFIGURED_RECOMMENDATION;
