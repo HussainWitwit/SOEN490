@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using Models.Application;
 using Models.DB;
 using Moq;
@@ -19,7 +18,6 @@ namespace RecommendationEngineTests.UnitTests
         private ConfiguredRecommendationService _configuredRecommendationService;
         private Mock<IConfiguredRecommendationRepository> _repository;
         private Mock<IAssetRepository> _assetRepository;
-        private Mock<IDriveService> _driveService;
         private Mock<IRecommendationScheduler> _scheduler;
 
         [SetUp]
@@ -27,9 +25,8 @@ namespace RecommendationEngineTests.UnitTests
         {
             _repository = new Mock<IConfiguredRecommendationRepository>();
             _assetRepository = new Mock<IAssetRepository>();
-            _driveService = new Mock<IDriveService>();
             _scheduler = new Mock<IRecommendationScheduler>();
-            _configuredRecommendationService = new ConfiguredRecommendationService(_driveService.Object, _repository.Object, _assetRepository.Object, _scheduler.Object);
+            _configuredRecommendationService = new ConfiguredRecommendationService(_repository.Object, _assetRepository.Object, _scheduler.Object);
         }
 
         [Test]
