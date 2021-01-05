@@ -3,24 +3,32 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace RecommendationEngine.ExceptionHandler
 {
     public class GlobalException : Exception
     {
-        public int Code { get; set; }
-        public string Type { get; set; }
-        public string ErrorMessage { get; set; }
-        public string ApplicationName { get; set; }
+        public List<Error> ErrorList { get; set; }
+        public string AppName { get; set; }
 
         public GlobalException() { }
 
-        public GlobalException(int Code, string Type, string ErrorMessage, string ApplicationName)
+        public GlobalException(List<Error> ErrorList, string AppName)
         {
-            this.Code = Code;
-            this.Type = Type;
-            this.ErrorMessage = ErrorMessage;
-            this.ApplicationName = ApplicationName;
+            this.ErrorList = ErrorList;
+            this.AppName = AppName;
+        }
+
+        public IReadOnlyList<Error> GetErrorList() {
+            //Return an unmodifiable list, we don't want to user to modify the error list in any way.
+
+            IReadOnlyList<Error> UnmodifiableErrorList = ErrorList.AsReadOnly();
+            return UnmodifiableErrorList;
+        }
+
+        public void SetErrorList(List<Error> errorList) {
+            //Do nothing, this is an attempt to modify the list, we are overriding the function.
         }
     }
 }
