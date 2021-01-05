@@ -74,9 +74,9 @@ namespace RecommendationEngineTests.APITests
         [Test]
         public async Task EditRecommendations()
         {
-            var payload = UnitTests.MockData.MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
-            var response = await _client.PutAsync("/configuredrecommendation/edit/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
-            Assert.AreEqual(response.ReasonPhrase, "Method Not Allowed");
+            var payload = MockConfiguredRecommendations.EDITED_CONFIGURED_RECOMMENDATION;
+            var response = await _client.PostAsync("/configuredrecommendation/edit/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }
 

@@ -217,7 +217,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 {
                     Name = "Wash Rec W20",
                     DisplayText = YEARLY_RECOMMENDATION_TYPE.DisplayText,
-                    Granularity = "Monthly",
+                    Granularity = "Yearly",
                     Description = YEARLY_RECOMMENDATION_TYPE.Description,
                     CreatedOn = new DateTime().Date,
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
