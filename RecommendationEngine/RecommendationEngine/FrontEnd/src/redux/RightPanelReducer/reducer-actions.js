@@ -4,7 +4,8 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-import {GetConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints'
+import {GetConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { deleteConfiguredRecommendation } from '../ApiReducer/reducer-actions';
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
@@ -72,3 +73,10 @@ export const mapDispatchToProps = (dispatch) => {
     changeTabIndex: (value) => dispatch(changeTabIndex(value))
   };
 };
+
+export const mapDispatchDeletePopUpActions = (dispatch) => {
+  return {
+    closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
+    deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id)
+  }
+}

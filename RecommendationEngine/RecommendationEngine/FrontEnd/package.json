@@ -54,12 +54,14 @@
       "!**/src/registerServiceWorker.js",
       "!**/src/tests/__snapshots__/**",
       "!**/src/tests/__snapshots__/**",
-      "!**/src/api/get/AssetEndpoints.ts",
-      "!**/src/api/get/ConfiguredRecommendationEndpoints.ts",
-      "!**/src/entities/Asset.ts",
-      "!**/src/entities/ConfiguredRecommendation.ts",
+      "!**/src/api/endpoints/AssetEndpoints.ts",
+      "!**/src/api/endpoints/ConfiguredRecommendationEndpoints.ts",
+      "!**/src/api/models/Asset.ts",
+      "!**/src/api/models/ConfiguredRecommendation.ts",
+      "!**/src/api/models/TemplateDetails.ts",
       "!**/src/redux/store.js",
-      "!**/src/redux/combined-reducers.js"
+      "!**/src/redux/combined-reducers.js",
+      "!**/src/redux/ApiReducer/**"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",

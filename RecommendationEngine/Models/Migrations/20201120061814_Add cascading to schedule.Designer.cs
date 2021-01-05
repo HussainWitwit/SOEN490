@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models.DB;
 
-namespace RecommendationEngine.Migrations
+namespace Models.Migrations
 {
     [DbContext(typeof(RecommendationEngineDBContext))]
-    partial class RecommendationEngineDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201120061814_Add cascading to schedule")]
+    partial class Addcascadingtoschedule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,6 +140,9 @@ namespace RecommendationEngine.Migrations
                     b.Property<int>("JobDuration")
                         .HasColumnType("int");
 
+                    b.Property<string>("Result")
+                        .HasColumnType("longtext");
+
                     b.Property<int?>("ScheduleRecommendationScheduleId")
                         .HasColumnType("int");
 
@@ -187,18 +192,19 @@ namespace RecommendationEngine.Migrations
             modelBuilder.Entity("Models.DB.DBRecommendationJobResult", b =>
                 {
                     b.Property<int>("RecommendationJobResultId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int?>("AssetId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Benefit")
+                    b.Property<double>("BenefitOfResult")
                         .HasColumnType("double");
 
                     b.Property<double>("ConfidencePercentage")
                         .HasColumnType("double");
 
-                    b.Property<double>("CostOfAction")
+                    b.Property<double>("Cost")
                         .HasColumnType("double");
 
                     b.Property<double>("CostOfInaction")
@@ -207,18 +213,17 @@ namespace RecommendationEngine.Migrations
                     b.Property<string>("DisplayText")
                         .HasColumnType("longtext");
 
-                    b.Property<double>("NetSaving")
-                        .HasColumnType("double");
+                    b.Property<int?>("JobRecommendationJobId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Result")
                         .HasColumnType("longtext");
 
-                    b.Property<double>("ReturnOnInvestment")
-                        .HasColumnType("double");
-
                     b.HasKey("RecommendationJobResultId");
 
                     b.HasIndex("AssetId");
+
+                    b.HasIndex("JobRecommendationJobId");
 
                     b.ToTable("RecommendationJobResult");
                 });
@@ -270,9 +275,6 @@ namespace RecommendationEngine.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PreferedScenario")
                         .HasColumnType("longtext");
 
                     b.Property<int?>("RecommendationTypeId")
@@ -381,8 +383,7 @@ namespace RecommendationEngine.Migrations
 
                     b.HasOne("Models.DB.DBRecommendationJobResult", "RecommendationJobResult")
                         .WithMany("ActionsSuggestedList")
-                        .HasForeignKey("RecommendationJobResultId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RecommendationJobResultId");
 
                     b.HasOne("Models.DB.DBWorkOrder", "WorkOrderOpened")
                         .WithMany("Actions")
@@ -442,10 +443,8 @@ namespace RecommendationEngine.Migrations
                         .HasForeignKey("AssetId");
 
                     b.HasOne("Models.DB.DBRecommendationJob", "Job")
-                        .WithOne("Result")
-                        .HasForeignKey("Models.DB.DBRecommendationJobResult", "RecommendationJobResultId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("ResultsList")
+                        .HasForeignKey("JobRecommendationJobId");
                 });
 
             modelBuilder.Entity("Models.DB.DBRecommendationParameter", b =>
@@ -470,8 +469,7 @@ namespace RecommendationEngine.Migrations
 
                     b.HasOne("Models.DB.DBRecommendationSchedule", "Schedule")
                         .WithMany("ParametersList")
-                        .HasForeignKey("ScheduleRecommendationScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ScheduleRecommendationScheduleId");
                 });
 #pragma warning restore 612, 618
         }
