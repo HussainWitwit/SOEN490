@@ -36,7 +36,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
         }
 
         private static void EmptyOrNullField(ConfiguredRecommendation configuredRecommendation) {
-            string[] fields = new string[] {
+            List<string> fields = new List<string> {
                 configuredRecommendation.Name,
                 configuredRecommendation.CreatedBy,
                 configuredRecommendation.Granularity,
@@ -44,9 +44,17 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
                 configuredRecommendation.PreferredScenario
             };
 
-            if (Array.Exists(fields, field => string.IsNullOrEmpty(field))) {
-                AddToErrors(ErrorType.VALIDATION, 400, "Empty or null field");
-            }
+            List<string> fieldNames = new List<string> {"Name", "CreatedBy", "Granularity", "Type", "PreferredScenario" };
+
+            int fieldIndex = 0;
+            fields.ForEach(field =>
+            {
+                if (string.IsNullOrEmpty(field))
+                {
+                    AddToErrors(ErrorType.VALIDATION, 400, "The field " + fieldNames.ElementAt(fieldIndex) + " is empty or null.");
+                }
+                fieldIndex++;
+            });
         }
 
         private static void ValidRecommendationType(ConfiguredRecommendation configuredRecommendation) {
@@ -85,7 +93,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
         private static void ValidPreferredScenario(ConfiguredRecommendation configuredRecommendation) {
             string scenario = configuredRecommendation.PreferredScenario;
 
-            if (!scenario.Equals("ROI") || !scenario.Equals("NetSaving")) {
+            if (!scenario.Equals("ROI") && !scenario.Equals("NetSaving")) {
                 AddToErrors(ErrorType.VALIDATION, 400, "The scenario " + scenario + " is not a valid scenario.");
             }
         }

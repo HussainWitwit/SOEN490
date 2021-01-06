@@ -174,7 +174,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
         public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate(recommendationType);
+            configuredRecommendation.Validate();
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {

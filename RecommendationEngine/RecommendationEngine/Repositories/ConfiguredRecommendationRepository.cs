@@ -36,7 +36,13 @@ namespace RecommendationEngine.Repositories
 
         public DBRecommendationSchedule Edit(DBRecommendationSchedule schedule, int id) {
             if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id)) {
-                throw new GlobalException(400, "Bad Request", "Recommendation ID " + schedule.RecommendationScheduleId + " does not exist.", "Recommendation Engine");
+                Error error = new Error
+                {
+                    Type = ErrorType.BAD_REQUEST,
+                    ErrorCode = 400,
+                    ErrorMessage = "There are no assets associated to this recommendation."
+                };
+                throw new GlobalException(error, "RecommendationEngine");
             }
 
             DBRecommendationSchedule recToEdit = _recommendationEngineDb.RecommendationSchedules
@@ -63,7 +69,13 @@ namespace RecommendationEngine.Repositories
         {
             if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id))
             {
-                throw new GlobalException(400, "Bad Request", "Recommendation ID " + id + " does not exist!", "Recommendation Engine");
+                Error error = new Error
+                {
+                    Type = ErrorType.BAD_REQUEST,
+                    ErrorCode = 400,
+                    ErrorMessage = "Recommendation ID " + id + " does not exist!"
+                };
+                throw new GlobalException(error, "RecommendationEngine");
             }
             DBRecommendationSchedule configToRemove = _recommendationEngineDb.RecommendationSchedules
                 .FirstOrDefault(x => x.RecommendationScheduleId == id);
