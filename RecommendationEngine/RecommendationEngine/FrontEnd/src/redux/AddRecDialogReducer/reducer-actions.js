@@ -9,6 +9,7 @@ import { mapDispatchApiToProps } from '../ApiReducer/reducer-actions';
 import { GetTemplateDetailsInfo } from '../../api/endpoints/TemplateDetailsEndpoints';
 
 //**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
+  /* istanbul ignore next */
 export const mapDialogStateToProps = (state) => {
     return {
       all: state,
@@ -168,6 +169,8 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
+  //TODO: Should be testable
+  /* istanbul ignore next */
   export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
     dispatch(setTemplateName(value.type));
     dispatch(updateAsset(value.assetList));
@@ -184,6 +187,7 @@ export const getTemplateDetails = async (dispatch) => {
   
   //This method will allow you to pass the actions as a prop to the connected component in
   //order to modify the value in the store
+  /* istanbul ignore next */
   export const mapDispatchToProps = (dispatch) => {
     return {
       setTemplateName: (value) =>  dispatch(setTemplateName(value)),
@@ -206,6 +210,7 @@ export const getTemplateDetails = async (dispatch) => {
   }
 
 //We can merged multiple mapDispatchToPros. In this case, I need to pass the reducer actions of two different reducers
+  /* istanbul ignore next */
 export const mapDispatchMergedToProps = (dispatch) => {
   return {
     ...mapDispatchApiToProps(dispatch),
