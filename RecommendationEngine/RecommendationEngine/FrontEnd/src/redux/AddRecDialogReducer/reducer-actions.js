@@ -145,6 +145,7 @@ export const setBackToInitialValues = () => {
   }
 };
 
+  /* istanbul ignore next */
 export const setRecommendationType = (dispatch, value) => {
   dispatch(setTemplateName(value.templateName));
   dispatch(setTemplateDescription(value.templateDescription));
@@ -158,6 +159,7 @@ export const setEditable = () => {
     };
 };
 
+/* istanbul ignore next */
 export const getTemplateDetails = async (dispatch) => {
   const response = await GetTemplateDetailsInfo();
   dispatch({

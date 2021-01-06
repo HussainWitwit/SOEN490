@@ -137,5 +137,22 @@ import * as action from '../redux/AddRecDialogReducer/reducer-actions';
       }
       expect(action.setBackToInitialValues()).toEqual(expectedAction);
     });
+
+    it('fires an update that sets the state of the AddRecommendation pop up to editing ', () => {
+      const expectedAction = {
+        type: dispatchType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION
+      }
+      expect(action.setEditable()).toEqual(expectedAction);
+    });
+    
+    it('fires an update that sets the id of the editing recommendation ', () => {
+      const expectedAction = {
+        type: dispatchType.UPDATE_ID,
+        payload: {
+          id: 1,
+        },
+      }
+      expect(action.setId(1)).toEqual(expectedAction);
+    });
     
   });
