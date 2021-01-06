@@ -3,6 +3,7 @@ using RecommendationEngine.ExceptionHandler;
 using System.Linq;
 using Models.Application;
 using System.Collections.Generic;
+using Models.DB;
 
 namespace RecommendationEngine.ConfiguredRecommendationValidator
 {
@@ -12,22 +13,25 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
         public static List<Error> ErrorList = new List<Error>();
         private const string APP_NAME = "Recommendation Engine";
 
-        public static void Validate(this ConfiguredRecommendation configuredRecommendation)
+        public static void ThrowPotentialException(this ConfiguredRecommendation configuredRecommendation, List<DBAssetRecommendationSchedule> assetList) {
+            Validate(configuredRecommendation, assetList);
+
+            if (ErrorList.Any())
+            {
+                List<Error> copyList = new List<Error>(ErrorList);
+                ErrorList.Clear();
+                throw new GlobalException(copyList, APP_NAME);
+            }
+        }
+
+        private static void Validate(this ConfiguredRecommendation configuredRecommendation, List<DBAssetRecommendationSchedule> assetsList)
         {
             EmptyOrNullField(configuredRecommendation);
             ValidRecommendationType(configuredRecommendation);
             ValidRecurrenceDayOfWeek(configuredRecommendation);
             ValidDateRange(configuredRecommendation);
             ValidPreferredScenario(configuredRecommendation);
-            ThrowPotentialError();
-        }
-
-        private static void ThrowPotentialError() {
-            if (ErrorList.Any()) {
-                List<Error> copyList = new List<Error>(ErrorList);
-                ErrorList.Clear();
-                throw new GlobalException(copyList, APP_NAME);
-            }
+            ValidAssetsList(assetsList);
         }
 
         private static void AddToErrors(string errorType, int errorCode, string message)
@@ -96,6 +100,21 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             if (!scenario.Equals("ROI") && !scenario.Equals("NetSaving")) {
                 AddToErrors(ErrorType.VALIDATION, 400, "The scenario " + scenario + " is not a valid scenario.");
             }
+        }
+
+        private static void ValidAssetsList(List<DBAssetRecommendationSchedule> assetsList)
+        {
+            assetsList.ForEach(asset =>
+            {
+                string assetType = asset.Asset.Name;
+                int assetId = asset.AssetId;
+
+                // We would like to check if the asset in question is plant by ensuring the number of decimals is more than 2.
+                if (assetType.Count(pattern => pattern == '.') < 2)
+                {
+                    AddToErrors(ErrorType.VALIDATION, 400, "The asset ID " + assetId + " is not a plant.");
+                }
+            });
         }
     }
 }

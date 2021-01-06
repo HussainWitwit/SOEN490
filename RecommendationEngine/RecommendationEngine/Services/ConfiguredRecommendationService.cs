@@ -59,7 +59,6 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate();
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {
@@ -90,6 +89,8 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             });
 
             config.AssetsList = dbAssets;
+
+            configuredRecommendation.ThrowPotentialException(dbAssets);
 
             var schedule = _recommendationRepository.Add(config);
 
@@ -174,7 +175,6 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
         public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate();
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {
@@ -207,6 +207,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             });
 
             config.AssetsList = dbAssets;
+            configuredRecommendation.ThrowPotentialException(dbAssets);
             var schedule = _recommendationRepository.Edit(config, id);
             _scheduler.ScheduleJobAsync(config);
             return configuredRecommendation;

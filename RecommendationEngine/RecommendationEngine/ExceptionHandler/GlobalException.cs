@@ -27,7 +27,7 @@ namespace RecommendationEngine.ExceptionHandler
         }
 
         public IReadOnlyList<Error> GetErrorList() {
-            //Return an unmodifiable list, we don't want to user to modify the error list in any way.
+            //Return an unmodifiable list, we don't want to user to modify the error list in any way, we are overriding the function.
 
             IReadOnlyList<Error> UnmodifiableErrorList = ErrorList.AsReadOnly();
             return UnmodifiableErrorList;
