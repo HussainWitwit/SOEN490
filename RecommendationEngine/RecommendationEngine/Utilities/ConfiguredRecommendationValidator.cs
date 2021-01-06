@@ -104,6 +104,11 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
 
         private static void ValidAssetsList(List<DBAssetRecommendationSchedule> assetsList)
         {
+            if (assetsList.Count() == 0) {
+                AddToErrors(ErrorType.VALIDATION, 400, "The assets list is empty.");
+                return;
+            }
+
             assetsList.ForEach(asset =>
             {
                 string assetType = asset.Asset.Name;
