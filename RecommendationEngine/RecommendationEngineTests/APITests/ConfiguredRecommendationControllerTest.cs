@@ -123,17 +123,17 @@ namespace RecommendationEngineTests.APITests
 
         public List<DBAsset> GetAssetsList()
         {
-            return new List<DBAsset>();
+            return MockAssets.BasicDBAssetList;
         }
 
         public DBAsset GetAssetByName(string assetName)
         {
-            return new DBAsset();
+            return MockAssets.BasicDBAssetList[2];
         }
 
         public DBAsset GetAssetById(int assetId)
         {
-            return new DBAsset();
+            return MockAssets.BasicDBAssetList[2];
         }
     }
 }

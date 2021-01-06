@@ -73,7 +73,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
                 "Other"
             };
 
-            if (Array.Exists(validRecommendationTypes, type => !type.Equals(recommendationType)))
+            if (Array.IndexOf(validRecommendationTypes, recommendationType) < 0)
             {
                 AddToErrors(ErrorType.VALIDATION, 400, "The recommendation type " + recommendationType  + " is not valid.");
             }

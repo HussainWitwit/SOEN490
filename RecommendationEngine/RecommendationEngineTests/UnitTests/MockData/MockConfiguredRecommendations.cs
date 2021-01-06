@@ -128,11 +128,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 AssetLeaf asset = new AssetLeaf
                 {
                     Id = 44,
-                    Name = "asset44",
+                    Name = "RENEW01_2070.93.011",
                     AcPower = 5,
                     AssetType = YearlyRecType().Description,
-                    DisplayText = "asset 44",
-                    ElementPath = "asset44.path",
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
                     EnergyType = "pv"
                 };
 
@@ -154,31 +154,59 @@ namespace RecommendationEngineTests.UnitTests.MockData
 
             public static ConfiguredRecommendation EmptyConfiguredRecommendation()
             {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "RENEW01_2070.93.011",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
+                    EnergyType = "pv"
+                };
+
                 return new ConfiguredRecommendation
                 {
-                    Name = "Wash Rec",
-                    CreatedBy = "",
+                    Name = "",
+                    CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
+                    PreferredScenario = "",
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     Type = "Yearly Wash Optimization",
-                    Parameters = null
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
 
             public static ConfiguredRecommendation BadConfiguredRecommendation()
             {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "RENEW01_2070",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "Parent",
+                    ElementPath = "RENEW01_2070",
+                    EnergyType = "pv"
+                };
+
                 return new ConfiguredRecommendation
                 {
-                    Name = "Wash Rec",
+                    Name = "This is bad",
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
-                    Type = "Yearly Wash",
-                    Parameters = null
+                    Type = "Yearly Wash Optimization",
+                    PreferredScenario = "ROI",
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
 
@@ -231,11 +259,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 AssetLeaf asset = new AssetLeaf
                 {
                     Id = 44,
-                    Name = "asset44",
+                    Name = "RENEW01_2070.93.011",
                     AcPower = 5,
                     AssetType = YearlyRecType().Description,
-                    DisplayText = "asset 44",
-                    ElementPath = "asset44.path",
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
                     EnergyType = "pv"
                 };
 
@@ -262,11 +290,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 AssetLeaf asset = new AssetLeaf
                 {
                     Id = 44,
-                    Name = "asset44",
+                    Name = "RENEW01_2070.93.011",
                     AcPower = 5,
                     AssetType = YearlyRecType().Description,
-                    DisplayText = "asset 44",
-                    ElementPath = "asset44.path",
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
                     EnergyType = "pv"
                 };
 
