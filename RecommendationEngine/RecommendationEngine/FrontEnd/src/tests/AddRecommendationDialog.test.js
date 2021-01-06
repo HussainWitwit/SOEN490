@@ -18,7 +18,7 @@ describe('AddRecommendationDialog component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<AddRecommendationDialog store={store} template={{ name: '' }} />);
+    const output = shallow(<AddRecommendationDialog store={store} template={{ name: '' }} setBackToInitialValues={jest.fn} basicConfiguration={{}}/>);
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
         ReactDOM.render(<AddRecommendationDialog store={store} template={{ name: '' }} />, div);
@@ -71,5 +71,17 @@ describe('AddRecommendationDialog component', () => {
         const output = shallow(<Transition />);
         let component = output.find(Slide);
         expect(component).toHaveLength(1);
+    });
+
+    it('Simulate cancel button onClick', () => {
+        output.find('#cancel-btn').simulate('click');
+    });
+
+    it('Simulate onClickNext function', () => {
+        output.find('#next-btn').simulate('click');
+    });
+
+    it('Simulate onClickPrevious function', () => {
+        output.find('#previous-btn').simulate('click');
     });
 });

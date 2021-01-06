@@ -4,7 +4,8 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-import {GetConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints'
+import {GetConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { deleteConfiguredRecommendation } from '../ApiReducer/reducer-actions';
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
@@ -13,6 +14,7 @@ export const openAssetTreeview = () => {
   };
 };
 
+/* istanbul ignore next */ //TODO: Should be testable
 export const openScheduleDrilldown = async (dispatch, id) => {
   const response = await GetConfiguredRecommendationById(id);
   dispatch({
@@ -51,6 +53,7 @@ export const changeTabIndex = (value) => {
 }
 
 //**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
+/* istanbul ignore next */
 export const mapRightPanelStateToProps = (state) => {
   return {
     all: state,
@@ -62,6 +65,7 @@ export const mapRightPanelStateToProps = (state) => {
 
 //This method will allow you to pass the actions as a prop to the connected component in
 //order to modify the value in the store
+/* istanbul ignore next */
 export const mapDispatchToProps = (dispatch) => {
   return {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
@@ -72,3 +76,11 @@ export const mapDispatchToProps = (dispatch) => {
     changeTabIndex: (value) => dispatch(changeTabIndex(value))
   };
 };
+
+/* istanbul ignore next */
+export const mapDispatchDeletePopUpActions = (dispatch) => {
+  return {
+    closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
+    deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id)
+  }
+}

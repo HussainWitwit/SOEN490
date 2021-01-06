@@ -14,6 +14,8 @@ const detailsConfigInitialValues = {
 
 let state = {
   isDialogOpen: false,
+  id: null,
+  isEditing: false,
   template: {
       name: "",
       description: "",
@@ -252,6 +254,52 @@ describe('Add Recommendation Dialog reducer', () => {
       isDialogOpen: true,
     });
   });
+
+  it('should handle the setting of the edited recommendation id: 1', () => {
+    expect(
+      AddConfiguredRecDialogReducer(state, {
+        type: dispatchType.UPDATE_ID,
+        payload: {
+          id: 1,
+        },
+      })
+    ).toEqual({
+      ...state,
+      id: 1,
+    });
+  });
+
+  it('should handle the update of recommendation pop state to editing', () => {
+    expect(
+      AddConfiguredRecDialogReducer(state, {
+        type: dispatchType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
+      })
+    ).toEqual({
+      ...state,
+      isEditing: true,
+    });
+  });
+
+  it('should correctly handle setting back the recommendation pop-up default values.  ', () => {
+    expect(
+      AddConfiguredRecDialogReducer(state, {
+        type: dispatchType.SET_BACK_TO_INITIAL_VALUES,
+      })
+    ).toEqual({
+      ...state,
+      templateDetailsList: state.templateDetailsList,
+      template: {
+          ...state.template,
+          name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName: '',
+          description:  state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription: '',
+          inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
+          algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
+      }
+    });
+  });
+
+
+
 
   // This test fails because of new Date()
   // it('should handle CLEAR Dialog', () => {

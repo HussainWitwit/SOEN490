@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using Models.Application;
 using Models.DB;
 using Moq;
@@ -19,7 +18,6 @@ namespace RecommendationEngineTests.UnitTests
         private ConfiguredRecommendationService _configuredRecommendationService;
         private Mock<IConfiguredRecommendationRepository> _repository;
         private Mock<IAssetRepository> _assetRepository;
-        private Mock<IDriveService> _driveService;
         private Mock<IRecommendationScheduler> _scheduler;
 
         [SetUp]
@@ -27,9 +25,8 @@ namespace RecommendationEngineTests.UnitTests
         {
             _repository = new Mock<IConfiguredRecommendationRepository>();
             _assetRepository = new Mock<IAssetRepository>();
-            _driveService = new Mock<IDriveService>();
             _scheduler = new Mock<IRecommendationScheduler>();
-            _configuredRecommendationService = new ConfiguredRecommendationService(_driveService.Object, _repository.Object, _assetRepository.Object, _scheduler.Object);
+            _configuredRecommendationService = new ConfiguredRecommendationService(_repository.Object, _assetRepository.Object, _scheduler.Object);
         }
 
         [Test]
@@ -56,6 +53,39 @@ namespace RecommendationEngineTests.UnitTests
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
             _configuredRecommendationService.AddConfiguredRecommendation(beforeConversion);
             _repository.Setup(x => x.Add(afterConversion));
+        }
+
+        [Test]
+        public void EditRecommendationTest()
+        {
+            DBRecommendationType recommendationType = MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+            ConfiguredRecommendation uneditedRec = MockConfiguredRecommendations.UNEDITED_CONFIGURED_RECOMMENDATION;
+            ConfiguredRecommendation editedConfigureRec = MockConfiguredRecommendations.EDITED_CONFIGURED_RECOMMENDATION;
+            DBRecommendationSchedule uneditedDBRec = MockConfiguredRecommendations.UNEDITED_DB_RECOMMENDATION;
+            DBRecommendationSchedule editedDBRec = MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
+
+            _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(new List<DBRecommendationSchedule> { uneditedDBRec, editedDBRec });
+            _repository.Setup(x => x.GetRecommendationTypeByType(uneditedRec.Type)).Returns(recommendationType);
+            _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
+            _repository.Setup(x => x.Edit(uneditedDBRec, 1)).Returns(editedDBRec);
+
+            ConfiguredRecommendation actual = _configuredRecommendationService.EditConfiguredRecommendation(editedConfigureRec, 1);
+            Assert.AreEqual(editedConfigureRec, actual);
+        }
+
+        [Test]
+        public void DeleteRecommendationTest()
+        {
+            List<DBRecommendationSchedule> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            int recommentionId = 2;
+
+            _repository.Setup(x => x.Delete(recommentionId));
+            _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(new List<DBRecommendationSchedule>() { recommendation[0] });
+            _configuredRecommendationService.DeleteConfiguredRecommendation(recommentionId);
+
+            List<ConfiguredRecommendation> actual = _configuredRecommendationService.GetConfiguredRecommendationList();
+            Assert.AreEqual(1, actual.Count);
+            Assert.AreEqual(1, actual[0].Id);
         }
 
         [Test]

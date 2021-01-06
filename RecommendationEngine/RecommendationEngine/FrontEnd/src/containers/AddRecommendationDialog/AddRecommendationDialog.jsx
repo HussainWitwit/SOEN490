@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useTransition } from 'react-spring';
 import Draggable from 'react-draggable';
 import {
@@ -48,12 +48,12 @@ export function PaperComponent (props) {
   );
 }
 
-export const Transition = React.forwardRef(function Transition (props, ref) {
+export const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export function AddRecommendationDialog (props) {
-  const { setBackToInitialValues, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation } = props;
+  const { setBackToInitialValues, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, isEditing, editConfiguredRecommendation, configurationId } = props;
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -85,22 +85,46 @@ export function AddRecommendationDialog (props) {
   }
   //Post method
   const confirmDialogEvent = async () => {
-    postConfiguredRecommendation({
-      type: template.name,
-      name: basicConfiguration.title,
-      granularity: basicConfiguration.granularity,
-      createdBy: basicConfiguration.createdBy,
-      createdOn: new Date(),
-      preferredScenario: basicConfiguration.preferredScenario,
-      recurrenceDayOfWeek: basicConfiguration.repeatDay,
-      modifiedBy: '',
-      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
-      assetIdList: basicConfiguration.asset.map((e) => {
-        return e.id;
-      })
-    });
+    if (isEditing) {
+      editConfiguredRecommendation({
+        type: template.name,
+        name: basicConfiguration.title,
+        granularity: basicConfiguration.granularity,
+        createdBy: basicConfiguration.createdBy,
+        createdOn: new Date(),
+        preferredScenario: basicConfiguration.preferredScenario,
+        recurrenceDayOfWeek: basicConfiguration.repeatDay,
+        modifiedBy: '',
+        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+        assetIdList: basicConfiguration.asset.map((e) => {
+          return e.id;
+        })
+      }, configurationId);
+    }
+    else {
+      postConfiguredRecommendation({
+        type: template.name,
+        name: basicConfiguration.title,
+        granularity: basicConfiguration.granularity,
+        createdBy: basicConfiguration.createdBy,
+        createdOn: new Date(),
+        preferredScenario: basicConfiguration.preferredScenario,
+        recurrenceDayOfWeek: basicConfiguration.repeatDay,
+        modifiedBy: '',
+        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+        assetIdList: basicConfiguration.asset.map((e) => {
+          return e.id;
+        })
+      });
+    }
     closeDialog();
   }
+
+  useEffect(() => {
+   if(isEditing) {
+     setIndex(1);
+   }
+  }, [isEditing])
 
   return (
     <Dialog
@@ -143,7 +167,18 @@ export function AddRecommendationDialog (props) {
         <Button data-testid="cancel-button" id="cancel-btn" onClick={closeDialog} variant="outlined">
           Cancel
         </Button>
-        {index > 0 && (
+        {(index === 1 && !isEditing) && (
+            <Button
+            data-testid="previous-button"
+            id="previous-btn"
+            onClick={onClickPrevious}
+            variant="outlined"
+          >
+            Previous
+          </Button>
+        )   
+        }
+        {index > 1 && (
           <Button
             data-testid="previous-button"
             id="previous-btn"
@@ -152,20 +187,20 @@ export function AddRecommendationDialog (props) {
           >
             Previous
           </Button>
-        )}
+              )}
         {index === 0 && (
           <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!template.name}>
             Next
           </Button>
         )}
-        {(index <= 2 && index > 0) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+              {(index <= 2 && index > 0) && (
+                  <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
             Next
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
-            Confirm
+          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || (basicConfiguration.asset != null && basicConfiguration.asset.length === 0)}>
+            {isEditing ? "Save" : "Confirm"}
           </Button>
         )}
       </DialogActions>

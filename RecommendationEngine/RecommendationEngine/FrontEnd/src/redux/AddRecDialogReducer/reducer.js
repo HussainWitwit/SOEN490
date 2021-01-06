@@ -46,6 +46,8 @@ export const contentInitialValues = {
     basicConfiguration: detailsConfigInitialValues,
     parameters: {},
     templateDetailsList: [],
+    isEditing: false,
+    id: null
 }
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
@@ -154,6 +156,18 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                     ...state.basicConfiguration,
                     repeatTime: action.payload.repeatTime
                 }
+            };
+
+        case type.UPDATE_ID:
+            return {
+                ...state,
+                id: action.payload.id
+            };
+
+        case type.EDITING_EXISTING_CONFIGURED_RECOMMENDATION:
+            return {
+                ...state,
+                isEditing: !state.isEditing
             };
 
         case type.TOGGLE_DIALOG:

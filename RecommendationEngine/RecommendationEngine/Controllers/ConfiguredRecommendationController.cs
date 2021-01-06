@@ -17,7 +17,7 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpGet("get")]
-        public IActionResult GetConfiguredRecommendationList()
+        public IActionResult getConfiguredRecommendationList()
         {
             return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
         }
@@ -46,6 +46,34 @@ namespace RecommendationEngine.Controllers
             catch (GlobalException e)
             {
                 return BadRequest(new { e.ErrorList, e.AppName });
+            }
+            return Ok();
+        }
+
+        [HttpPost("edit/{id}")]
+        public IActionResult editConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        {
+            try
+            {
+                _configuredRecommendationService.EditConfiguredRecommendation(configuredRecommendation, id);
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+            return Ok();
+        }
+
+        [HttpDelete("delete/{id}")]
+        public IActionResult deleteConfiguredRecommendation(int id)
+        {
+            try
+            {
+                _configuredRecommendationService.DeleteConfiguredRecommendation(id);
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
             return Ok();
         }

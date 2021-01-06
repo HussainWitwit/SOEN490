@@ -1,5 +1,4 @@
 ﻿using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using Models.Application.Asset;
 using Models.DB;
 using Moq;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 using RecommendationEngine.Services;
 using RecommendationEngineTests.UnitTests.MockData;
 using System.Collections.Generic;
+using Interfaces.Services.ExternalApi;
 
 namespace RecommendationEngineTests
 {
@@ -14,16 +14,18 @@ namespace RecommendationEngineTests
     {
         private Mock<IAssetRepository> _assetRepoMock;
         private Mock<IAssetTypeRepository> _assetTypeRepoMock;
-        private Mock<IDriveService> _driveMock;
+        private Mock<IAssetDriveService> _assetDriveMock;
         private AssetService _assetServiceMock;
+        private Mock<IMetadataDriveService> _metadataDriveMock;
 
         [SetUp]
         public void Setup()
         {
             _assetRepoMock = new Mock<IAssetRepository>();
             _assetTypeRepoMock = new Mock<IAssetTypeRepository>();
-            _driveMock = new Mock<IDriveService>();
-            _assetServiceMock = new AssetService(_driveMock.Object, _assetRepoMock.Object, _assetTypeRepoMock.Object);
+            _assetDriveMock = new Mock<IAssetDriveService>();
+            _metadataDriveMock = new Mock<IMetadataDriveService>();
+            _assetServiceMock = new AssetService(_assetDriveMock.Object, _assetRepoMock.Object, _assetTypeRepoMock.Object, _metadataDriveMock.Object);
             List<DBAsset> dbAssets = MockAssets.BasicDBAssetList;
             _assetRepoMock.Setup(x => x.GetAssetsList()).Returns(dbAssets);
         }

@@ -9,16 +9,19 @@ import { mapDispatchApiToProps } from '../ApiReducer/reducer-actions';
 import { GetTemplateDetailsInfo } from '../../api/endpoints/TemplateDetailsEndpoints';
 
 //**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
+  /* istanbul ignore next */
 export const mapDialogStateToProps = (state) => {
-  return {
-    all: state,
-    dialogsContent: state.addRecommendation,
-    isDialogOpen: state.addRecommendation.isDialogOpen,
-    template: state.addRecommendation.template,
-    basicConfiguration: state.addRecommendation.basicConfiguration,
-    apiAssets: state.apiReducer.flatListAssets,
-    templateDetailsList: state.addRecommendation.templateDetailsList,
-  };
+    return {
+      all: state,
+      dialogsContent: state.addRecommendation,
+      isDialogOpen: state.addRecommendation.isDialogOpen,
+      template: state.addRecommendation.template,
+      basicConfiguration: state.addRecommendation.basicConfiguration,
+      apiAssets: state.apiReducer.flatListAssets,
+      isEditing: state.addRecommendation.isEditing,
+      templateDetailsList: state.addRecommendation.templateDetailsList,
+      configurationId: state.addRecommendation.id
+    };
 };
 
 //**Actions --> Useful for unit testing the reducer.
@@ -112,6 +115,15 @@ export const setRepeatDate = (value) => {
   };
 };
 
+  export const setId = (value) => {
+    return {
+      type: dispatchActionType.UPDATE_ID,
+      payload: {
+        id: value,
+      },
+    };
+  };
+  
 export const setRepeatTime = (value) => {
   return {
     type: dispatchActionType.UPDATE_REPEAT_TIME,
@@ -133,6 +145,7 @@ export const setBackToInitialValues = () => {
   }
 };
 
+  /* istanbul ignore next */
 export const setRecommendationType = (dispatch, value) => {
   dispatch(setTemplateName(value.templateName));
   dispatch(setTemplateDescription(value.templateDescription));
@@ -140,6 +153,13 @@ export const setRecommendationType = (dispatch, value) => {
   dispatch(setAlgorithmName(value.algorithmName));
 };
 
+export const setEditable = () => {
+    return {
+        type: dispatchActionType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
+    };
+};
+
+/* istanbul ignore next */
 export const getTemplateDetails = async (dispatch) => {
   const response = await GetTemplateDetailsInfo();
   dispatch({
@@ -151,28 +171,48 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
-//This method will allow you to pass the actions as a prop to the connected component in order to modify the value in the store
-export const mapDispatchToProps = (dispatch) => {
-  return {
-    setTemplateName: (value) => dispatch(setTemplateName(value)),
-    setTemplateDescription: (value) => dispatch(setTemplateDescription(value)),
-    setInputList: (value) => dispatch(setInputList(value)),
-    setAlgorithmName: (value) => dispatch(setAlgorithmName(value)),
-    setTitle: (value) => dispatch(setTitle(value)),
-    updateAsset: (value) => dispatch(updateAsset(value)),
-    setPreferredScenario: (value) => dispatch(setPreferredScenario(value)),
-    setGranularity: (value) => dispatch(setGranularity(value)),
-    setRepeatDay: (value) => dispatch(setRepeatDay(value)),
-    setRepeatDate: (value) => dispatch(setRepeatDate(value)),
-    setRepeatTime: (value) => dispatch(setRepeatTime(value)),
-    toggleDialog: () => dispatch(toggleDialog()),
-    setBackToInitialValues: () => dispatch(setBackToInitialValues()),
-    setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
-    getTemplateDetails: () => getTemplateDetails(dispatch),
-  };
-};
+  //TODO: Should be testable
+  /* istanbul ignore next */
+  export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
+    dispatch(setTemplateName(value.type));
+    dispatch(updateAsset(value.assetList));
+    dispatch(setTitle(value.name));
+    dispatch(setPreferredScenario(value.preferredScenario));
+    dispatch(setGranularity(value.granularity));
+    dispatch(setRepeatDay(value.recurrenceDayOfWeek));
+    dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
+    dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
+    dispatch(setId(id));
+    dispatch(setEditable());
+  }
+
+  
+  //This method will allow you to pass the actions as a prop to the connected component in
+  //order to modify the value in the store
+  /* istanbul ignore next */
+  export const mapDispatchToProps = (dispatch) => {
+    return {
+      setTemplateName: (value) =>  dispatch(setTemplateName(value)),
+      setTemplateDescription: (value) => dispatch(setTemplateDescription(value)),
+      setInputList: (value) => dispatch(setInputList(value)),
+      setAlgorithmName: (value) => dispatch(setAlgorithmName(value)),
+      setTitle: (value) => dispatch(setTitle(value)),
+      updateAsset: (value) => dispatch(updateAsset(value)),
+      setPreferredScenario: (value) => dispatch(setPreferredScenario(value)),
+      setGranularity: (value) => dispatch(setGranularity(value)),
+      setRepeatDay: (value) => dispatch(setRepeatDay(value)),
+      setRepeatDate: (value) => dispatch(setRepeatDate(value)),
+      setRepeatTime: (value) => dispatch(setRepeatTime(value)),
+      setEditableConfiguredRecommendation: (value, id) => setEditableConfiguredRecommendation(dispatch, value, id),
+      toggleDialog: () => dispatch(toggleDialog()),
+      setBackToInitialValues: () => dispatch(setBackToInitialValues()),
+      getTemplateDetails: () => getTemplateDetails(dispatch),
+      setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
+    };
+  }
 
 //We can merged multiple mapDispatchToPros. In this case, I need to pass the reducer actions of two different reducers
+  /* istanbul ignore next */
 export const mapDispatchMergedToProps = (dispatch) => {
   return {
     ...mapDispatchApiToProps(dispatch),
