@@ -1,5 +1,4 @@
 ﻿using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
 using Models.DB;
 using Quartz;
@@ -7,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Interfaces.Services.ExternalApi;
 
 namespace RecommendationScheduler.RecommendationJob
 {
@@ -17,7 +17,7 @@ namespace RecommendationScheduler.RecommendationJob
         protected Stopwatch watch = new Stopwatch();
         protected IRecommendationJobLogger _jobLogger;
         protected IRecommendationSchedulerRepository _schedulerRepository;
-        protected IDriveService _driveService;
+        protected IMetadataDriveService _metadataDriveService;
 
         public Task Execute(IJobExecutionContext context)
         {

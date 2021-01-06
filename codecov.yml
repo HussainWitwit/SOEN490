@@ -10,5 +10,5 @@ coverage:
 ignore:
   - "RecommendationEngine/Models"  # ignore models
   - "RecommendationEngine/RecommendationEngine/Repositories" #ignore repositories
-  - "RecommendationEngine/RecommendationEngine/Services/PFDriveService.cs"
+  - "RecommendationEngine/RecommendationEngine/Services/ExternalAPI"
   - "RecommendationEngine/RecommendationSchedulerTests"

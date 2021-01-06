@@ -1,7 +1,6 @@
 ﻿using System;
 using Moq;
 using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using NUnit.Framework;
 using RecommendationEngine.Services;
 using Models.Recommendation;
@@ -15,14 +14,12 @@ namespace RecommendationEngineTests.UnitTests
     {
         private RecommendationTypeService _recommendationTypeService;
         private Mock<IRecommendationTypeRepository> _repository;
-        private Mock<IDriveService> _driveService;
 
         [SetUp]
         public void Setup()
         {
             _repository = new Mock<IRecommendationTypeRepository>();
-            _driveService = new Mock<IDriveService>();
-            _recommendationTypeService = new RecommendationTypeService(_driveService.Object, _repository.Object);
+            _recommendationTypeService = new RecommendationTypeService(_repository.Object);
         }
 
         [Test]

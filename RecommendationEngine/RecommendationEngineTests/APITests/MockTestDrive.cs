@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Interfaces.Services.ExternalAPI;
+using Interfaces.Services.ExternalApi;
 using Models.Application.APIModels;
 
 namespace RecommendationEngineTests.APITests
 {
-    public class MockTestDrive : IDriveService
+    public class MockTestDrive : IMetadataDriveService, IAssetDriveService
     {
         public async Task<List<PFPortfolio>> GetPortfolios()
         {
