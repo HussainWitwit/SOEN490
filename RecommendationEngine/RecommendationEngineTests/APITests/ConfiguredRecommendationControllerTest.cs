@@ -70,6 +70,14 @@ namespace RecommendationEngineTests.APITests
             var response = await _client.DeleteAsync("/configuredrecommendation/delete/1");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
+
+        [Test]
+        public async Task EditRecommendations()
+        {
+            var payload = MockConfiguredRecommendations.EDITED_CONFIGURED_RECOMMENDATION;
+            var response = await _client.PostAsync("/configuredrecommendation/edit/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
     }
 
     public class MockTestRepository : IConfiguredRecommendationRepository
@@ -97,6 +105,9 @@ namespace RecommendationEngineTests.APITests
             return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST.First();
         }
 
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id) {
+            return UnitTests.MockData.MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
+        }
         public void Delete(int id) { }
     }
 

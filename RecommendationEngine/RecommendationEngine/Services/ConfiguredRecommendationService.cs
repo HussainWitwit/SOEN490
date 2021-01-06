@@ -152,6 +152,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 }).ToList(),
                 AssetList = schedule.AssetsList.Select(x => new AssetLeaf
                 {
+                    Id = x.AssetId,
                     Name = x.Asset.Name,
                     DisplayText = x.Asset.DisplayText,
                     AcPower = x.Asset.AcPower,
@@ -167,6 +168,47 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
             };
             // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
             while (configuredRecommendation.LastJobs.Count < 5) configuredRecommendation.LastJobs.Insert(0, null);
+            return configuredRecommendation;
+        }
+
+        public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        {
+            var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
+            configuredRecommendation.Validate(recommendationType);
+
+            DBRecommendationSchedule config = new DBRecommendationSchedule
+            {
+                RecommendationScheduleId = id,
+                Name = configuredRecommendation.Name,
+                DisplayText = recommendationType.DisplayText,
+                Granularity = configuredRecommendation.Granularity,
+                Description = recommendationType.Description,
+                CreatedOn = configuredRecommendation.CreatedOn,
+                RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
+                RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
+                PreferedScenario = configuredRecommendation.PreferredScenario,
+                ModifiedBy = configuredRecommendation.CreatedBy,
+                RecommendationType = recommendationType
+            };
+
+            List<DBAssetRecommendationSchedule> dbAssets = new List<DBAssetRecommendationSchedule>();
+
+            configuredRecommendation.AssetIdList.ForEach(id =>
+            {
+                DBAsset asset = _assetRepository.GetAssetById(id);
+                DBAssetRecommendationSchedule assetSchedule = new DBAssetRecommendationSchedule
+                {
+                    Asset = asset,
+                    AssetId = asset.AssetId,
+                    Schedule = config,
+                };
+
+                dbAssets.Add(assetSchedule);
+            });
+
+            config.AssetsList = dbAssets;
+            var schedule = _recommendationRepository.Edit(config, id);
+            _scheduler.ScheduleJobAsync(config);
             return configuredRecommendation;
         }
     }

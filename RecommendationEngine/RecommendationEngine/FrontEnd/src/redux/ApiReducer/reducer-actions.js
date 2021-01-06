@@ -5,8 +5,9 @@
  * Note: All the following Actions target the api calls Reducer only
  */
 import * as dispatchActionType from './dispatch-types';
+import { GetConfiguredRecommendationList, PostConfiguredRecommendation, EditConfiguredRecommendation, DeleteRecommendationById } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { openScheduleDrilldown } from '../../redux/RightPanelReducer/reducer-actions';
 import { GetNestedAssetList,  GetFlatAssetList } from '../../api/endpoints/AssetEndpoints';
-import { GetConfiguredRecommendationList, PostConfiguredRecommendation, DeleteRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({apiReducer}) => {
@@ -56,6 +57,23 @@ export const mapStateToProps = ({apiReducer}) => {
       //TODO: Error with post, send notifications...
     }
   }
+
+export const editConfiguredRecommendation = async (dispatch, configuredRecommendation, id) => {
+    const response = await EditConfiguredRecommendation(configuredRecommendation, id);
+    dispatch({
+      type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
+      payload: response,
+    });
+    if(response.status === 200) { 
+      //TODO: Successful post, send notifications...
+      await getConfiguredRecommendationList(dispatch); //To test
+      openScheduleDrilldown(dispatch, id);
+    }
+    else {
+      //TODO: Error with post, send notifications...
+    }
+  }
+
   
   export const deleteConfiguredRecommendation = async (dispatch, id) => {
     const response = await DeleteRecommendationById(id);
@@ -79,6 +97,7 @@ export const mapStateToProps = ({apiReducer}) => {
         getNestedAssets: () =>  getNestedAssets(dispatch),
         getFlatListAssets: () => getFlatListAssets(dispatch),
         getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
-        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation)
+        postConfiguredRecommendation: (configuredRecommendation) => postConfiguredRecommendation(dispatch, configuredRecommendation),
+        editConfiguredRecommendation: (configuredRecommendation, id) => editConfiguredRecommendation(dispatch, configuredRecommendation, id)
     };
   };

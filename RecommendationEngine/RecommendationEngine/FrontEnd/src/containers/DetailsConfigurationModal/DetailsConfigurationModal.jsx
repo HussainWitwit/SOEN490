@@ -32,6 +32,7 @@ export function DetailsConfigurationModal (props) {
     setRepeatDate,
     setRepeatTime,
     apiAssets,
+    isEditing,
     templateDetailsList
   } = props;
 
@@ -70,7 +71,7 @@ export function DetailsConfigurationModal (props) {
             contentLabel="Assets..."
             recommendationType={template.name}
             items={apiAssets}
-            value={basicConfiguration.asset}
+            value={basicConfiguration.asset ? basicConfiguration.asset : []}
             onChange={(event, value) => updateAsset(value)}
             maxElement={1}
             variant={'outlined'}
@@ -156,7 +157,7 @@ export function DetailsConfigurationModal (props) {
                   autoOk
                   inputVariant="outlined"
                   label="Date & Time"
-                  minDate={new Date()}
+                  minDate = {isEditing ? null : new Date()}
                   // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}

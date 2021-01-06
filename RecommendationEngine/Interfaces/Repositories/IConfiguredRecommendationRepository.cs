@@ -10,5 +10,6 @@ namespace Interfaces.Repositories
         public void Delete(int id);
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType);
         public DBRecommendationSchedule GetRecommendationScheduleById(int id);
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id);
     }
 }

@@ -56,6 +56,24 @@ namespace RecommendationEngineTests.UnitTests
         }
 
         [Test]
+        public void EditRecommendationTest()
+        {
+            DBRecommendationType recommendationType = MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+            ConfiguredRecommendation uneditedRec = MockConfiguredRecommendations.UNEDITED_CONFIGURED_RECOMMENDATION;
+            ConfiguredRecommendation editedConfigureRec = MockConfiguredRecommendations.EDITED_CONFIGURED_RECOMMENDATION;
+            DBRecommendationSchedule uneditedDBRec = MockConfiguredRecommendations.UNEDITED_DB_RECOMMENDATION;
+            DBRecommendationSchedule editedDBRec = MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
+
+            _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(new List<DBRecommendationSchedule> { uneditedDBRec, editedDBRec });
+            _repository.Setup(x => x.GetRecommendationTypeByType(uneditedRec.Type)).Returns(recommendationType);
+            _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
+            _repository.Setup(x => x.Edit(uneditedDBRec, 1)).Returns(editedDBRec);
+
+            ConfiguredRecommendation actual = _configuredRecommendationService.EditConfiguredRecommendation(editedConfigureRec, 1);
+            Assert.AreEqual(editedConfigureRec, actual);
+        }
+
+        [Test]
         public void DeleteRecommendationTest()
         {
             List<DBRecommendationSchedule> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;

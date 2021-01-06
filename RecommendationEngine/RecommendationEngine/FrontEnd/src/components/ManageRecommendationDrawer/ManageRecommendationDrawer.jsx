@@ -7,10 +7,12 @@ import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
+import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { connect } from 'react-redux';
 import DeletePopUp from '../DeletePopUp/DeletePopUp';
 
-export default function ManageRecommendationDrawer({
-  configuredRecommendation,
+export function ManageRecommendationDrawer({
+  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
 }) {
   const [open, setOpen] = React.useState(false);
   // Animation style
@@ -51,14 +53,14 @@ export default function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
+                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList != null && configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
                 })}
             </div>
           </Grid>
           <Grid item xs={8}>
             <div className="inputs">
               <p className="value-title">Parameters</p>
-              <div className="values">{configuredRecommendation.parameters.length ?
+              <div className="values">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter) => {
                   return parameter.parameterName;
                 })) : 'N/A'}</div>
@@ -67,7 +69,7 @@ export default function ManageRecommendationDrawer({
           <Grid item xs={4}>
             <div className="outputs">
               <p className="value-title">Value</p>
-              <div className="values">{configuredRecommendation.parameters.length ?
+              <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter) => {
                   return parameter.value;
                 })) : 'N/A'}</div>
@@ -151,7 +153,7 @@ export default function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="edit-recommendation-button">
-              <Button variant="outlined">Edit a Recommendation</Button>
+              <Button variant="outlined" onClick={() => { toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, configuredRecommendation.id); }}>Edit</Button>
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -161,12 +163,13 @@ export default function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="delete-button">
-              <Button variant="outlined" id = "deleteRecButton" onClick={handleClickOpen}>Delete</Button>
-              <DeletePopUp title={configuredRecommendation.name} handleClickOpen={handleClickOpen} open={open} recommendationId={configuredRecommendation.id}/>
+              <Button variant="outlined" id="deleteRecButton" onClick={handleClickOpen}>Delete</Button>
+              <DeletePopUp title={configuredRecommendation.name} handleClickOpen={handleClickOpen} open={open} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
         </Grid>
       </div>
-    </animated.div >
+    </animated.div>
   );
 }
+export default connect(null, mapDispatchToProps)(ManageRecommendationDrawer)
