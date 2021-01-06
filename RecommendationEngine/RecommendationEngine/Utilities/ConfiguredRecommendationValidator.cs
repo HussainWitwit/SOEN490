@@ -109,6 +109,12 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
                 return;
             }
 
+            List<int> assetListIds = assetsList.Select(asset => asset.AssetId).ToList();
+            if (assetListIds.Count != assetListIds.Distinct().Count())
+            {
+                AddToErrors(ErrorType.VALIDATION, 400, "The assets list contains one or more duplicates.");
+            }
+
             assetsList.ForEach(asset =>
             {
                 string assetType = asset.Asset.Name;
