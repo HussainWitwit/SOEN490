@@ -14,7 +14,7 @@ export const openAssetTreeview = () => {
   };
 };
 
-/* istanbul ignore next */ //TODO: Should be testable
+/* istanbul ignore next */ 
 export const openScheduleDrilldown = async (dispatch, id) => {
   const response = await GetConfiguredRecommendationById(id);
   dispatch({

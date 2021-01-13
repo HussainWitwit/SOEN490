@@ -7,7 +7,6 @@ import './Layout.css';
 import { mapRightPanelStateToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 
-//FIXME: At 100% zoom in the web page, you can see that most contexts are too big.
 function Layout (props) {
   return (
     <div>

@@ -22,7 +22,6 @@ const headCells = [
   { id: 'createdOn', label: 'Created On' },
 ];
 
-//TODO: This should be a generic component, ask Alain if help is needed.
 export function ConfiguredRecommendationTable(props) {
 
   const [dense, setDense] = React.useState(false);
@@ -31,8 +30,6 @@ export function ConfiguredRecommendationTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [isSelected, setIsSelected] = React.useState(null);
-
-  //TODO: Beware for data as props
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);

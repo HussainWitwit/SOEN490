@@ -53,7 +53,7 @@ function AssetIcon ({ type }) {
       return <FontAwesomeIcon className='label-icon' icon={faCubes} />;
     case 'plant':
       return <FontAwesomeIcon className='label-icon' icon={faCube} />;
-    case 'asset': //TODO: Need extra logic for energy type
+    case 'asset': 
       return <FontAwesomeIcon className='label-icon' icon={faSun} />;
     default:
       return <FontAwesomeIcon className='label-icon' icon={faQuestion} />;
@@ -95,10 +95,9 @@ AssetTreeItem.propTypes = {
   nodeId: PropTypes.string,
   labelText: PropTypes.string,
   assetType: PropTypes.string,
-  labelInfo: PropTypes.string, //TODO: Could be useful to display the number of Asset children
+  labelInfo: PropTypes.string, 
 };
 
-//TODO: Need to be done 50% from scratch.
 export const SearchComboBox = () => {
   return (
     <Autocomplete

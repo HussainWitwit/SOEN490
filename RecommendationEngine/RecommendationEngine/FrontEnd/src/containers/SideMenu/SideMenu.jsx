@@ -6,8 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { SideMenuItems } from './ListItemObjects.ts';
 import LogoSVGComponent from './LogoSVGComponent.jsx';
 
-//TODO: We should maybe modified the style of the Nested Recommendations to let the user know in which sub-context
-//TODO: he is currently in without needing to drop-down. 
 export default function SideMenu (props) {
 
     const [openNested, setOpenNested] = React.useState(false);
@@ -39,7 +37,7 @@ export default function SideMenu (props) {
         setSelectedNestedItemIndex(nestedIndex);
         setIsNestedItemSelected(true);
     }
-    //TODO: NEED test 
+    
     const expandButton = (Icon) => (
         <IconButton size = "small" onClick = {() => {setOpenNested(!openNested)}}>
             <Icon className="icon-container" />

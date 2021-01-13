@@ -50,11 +50,10 @@ export const mapStateToProps = ({apiReducer}) => {
       payload: response,
     });
     if(response.status === 200) { 
-      //TODO: Successful post, send notifications...
-      await getConfiguredRecommendationList(dispatch); //To test
+      await getConfiguredRecommendationList(dispatch); 
     }
     else {
-      //TODO: Error with post, send notifications...
+        alert("An error occured when trying to add this recommendation into our server.");
     }
   }
 
@@ -65,12 +64,11 @@ export const editConfiguredRecommendation = async (dispatch, configuredRecommend
       payload: response,
     });
     if(response.status === 200) { 
-      //TODO: Successful post, send notifications...
-      await getConfiguredRecommendationList(dispatch); //To test
+      await getConfiguredRecommendationList(dispatch);
       openScheduleDrilldown(dispatch, id);
     }
     else {
-      //TODO: Error with post, send notifications...
+       alert("An error occured when trying to modify this recommendation from our server.");
     }
   }
 
@@ -82,11 +80,10 @@ export const editConfiguredRecommendation = async (dispatch, configuredRecommend
       payload: response
     });
     if(response.status === 200) { 
-      //TODO: Successful post, send notifications...
       await getConfiguredRecommendationList(dispatch);
     }
     else {
-      //TODO: Error with post, send notifications...
+        alert("An error occured when trying to delete this recommendation from our server.");
     }
   }
 

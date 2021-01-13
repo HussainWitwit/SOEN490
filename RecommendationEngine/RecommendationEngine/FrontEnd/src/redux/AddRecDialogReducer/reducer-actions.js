@@ -171,7 +171,6 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
-  //TODO: Should be testable
   /* istanbul ignore next */
   export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
     dispatch(setTemplateName(value.type));

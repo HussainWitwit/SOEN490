@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import './ConfirmationModal.css';
 
-//TODO: Implement parameters
-const parameters = [{ title: 'To Come', year: 1994 }];
+const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.
 var formatYear = { month: 'long', day: 'numeric' };
 var formatMonth = { day: 'numeric' };
 var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true};
