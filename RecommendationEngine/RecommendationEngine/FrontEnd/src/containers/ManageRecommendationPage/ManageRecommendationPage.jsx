@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList, Search } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import AddRecommendationDialog from '../../containers/AddRecommendationDialog/Ad
 import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
+import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
 
 
@@ -42,7 +43,22 @@ export const CssTextField = withStyles({
 export function ManageRecommendationPage(props) {
 
   const { toggleDialog, configuredRecommendationList } = props;
+  const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
+  const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
+  const updateSearch = async (input) => {
+    const filtered = defaultConfiguredRecList.filter(recommendation => {
+      return recommendation.name.toLowerCase().includes(input.toLowerCase())
+    })
+    setRecommendationList(filtered);
+ }
+
+  useEffect(() => {
+    setRecommendationList(configuredRecommendationList)
+    setDefaultConfiguredRecList(configuredRecommendationList)
+  }, [configuredRecommendationList])
+
+  console.log(recommendationList)
   return (
     <div id="main-container">
       <div></div>
@@ -69,16 +85,11 @@ export function ManageRecommendationPage(props) {
       <div>
         <div>
           <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id="grid2">
-              <Search id="search" />
-            </Grid>
             <Grid item>
-              <CssTextField id="custom-css-standard-input" label="Search"
-                inputProps={{
-                  style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), },
-                }}
-                InputLabelProps={{ style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), }, }}>
-              </CssTextField>
+              <SearchBar
+                placeholder = "Search for a recommendation..."
+                onChangeFun = {updateSearch}
+              />
             </Grid>
             <Grid item>
               <Button size="small" id="filterBtn" endIcon={<FilterList />}>
@@ -89,7 +100,7 @@ export function ManageRecommendationPage(props) {
         </div>
       </div>
       <br></br>
-      <ConfiguredRecommendationTable data = {configuredRecommendationList} />
+      <ConfiguredRecommendationTable data = {recommendationList} />
     </div>
   );
 }
