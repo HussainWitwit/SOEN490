@@ -33,7 +33,6 @@ describe("Side Menu", () => {
         cy.get('.MuiCollapse-wrapperInner > .MuiList-root > :nth-child(1)').click() // Manage
         cy.get('.MuiCollapse-wrapperInner > .MuiList-root > :nth-child(2)').click() // Jobs
         cy.get('.MuiCollapse-wrapperInner > .MuiList-root > :nth-child(3)').click() // Results
-        cy.get('.MuiCollapse-wrapperInner > .MuiList-root > :nth-child(4)').click() // Actions
     })
 
     it("Clicks on Work Orders, Main Settings and Notifications", () => {

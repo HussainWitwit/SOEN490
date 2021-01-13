@@ -6,12 +6,9 @@ import Enzyme, { shallow } from '../enzyme';
 import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
-import { fireEvent, render, getAllByTestId, findByText, queryAllByTestId, userEvent } from '@testing-library/react';
+import { render, queryAllByTestId } from '@testing-library/react';
 import LogoSVGComponent from '../containers/SideMenu/LogoSVGComponent';
-// import withRouter from '../containers/SideMenu/SideMenu';
 import { withRouter } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { history, createMemoryHistory } from 'history';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -75,6 +72,10 @@ describe('SideMenu component', () => {
 
     describe('Test clicks', () => {
         it("Simulates clicks on different options", async () => {
+            const { container } = render(<SideMenu />);
+            const outerOption = await queryAllByTestId(container, 'listitem1');
+            expect(outerOption).toHaveLength(5);
+
             // const history = createMemoryHistory();
 
             // const renderWithRouter = (ui, { route = '/' } = {}, props) => {
@@ -82,10 +83,6 @@ describe('SideMenu component', () => {
 
             //     return render(ui, { wrapper: BrowserRouter })
             // }
-
-            const { container } = render(<SideMenu />);
-            const outerOption = await queryAllByTestId(container, 'listitem1');
-            expect(outerOption).toHaveLength(5);
 
             // fireEvent.click(outerOption);
             // fireEvent.click(outerOption[1]);

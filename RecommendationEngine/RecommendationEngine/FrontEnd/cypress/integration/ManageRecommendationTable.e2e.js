@@ -2,7 +2,7 @@
 describe("Manage Recommendation Table", () => {
 
     beforeEach(() => {
-        cy.visit('/')
+        cy.visit('/recommendations/manage')
     })
 
     it("Finds the page title & subtitle", () => {

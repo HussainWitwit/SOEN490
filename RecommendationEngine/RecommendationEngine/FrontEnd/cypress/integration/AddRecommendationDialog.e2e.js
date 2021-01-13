@@ -2,7 +2,7 @@ describe('Add Recommendation Dialog', () => {
 
 
     beforeEach(() => {
-        cy.visit('/');
+        cy.visit('/recommendations/manage');
         cy.get('#recBtn').click();
     })
 
