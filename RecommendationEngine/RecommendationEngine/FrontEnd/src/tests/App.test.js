@@ -1,5 +1,5 @@
 import React from 'react';
-import App from '../App';
+import App from '../containers/App/App';
 import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom';
 import { store } from '../redux/store';

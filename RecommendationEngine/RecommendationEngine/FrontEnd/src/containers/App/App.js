@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Layout from './containers/AppLayout/Layout';
-import ManageRecommendationPage from './containers/ManageRecommendationPage/ManageRecommendationPage';
+import Layout from '../AppLayout/Layout';
+import ManageRecommendationPage from '../ManageRecommendationPage/ManageRecommendationPage';
 import { hot } from 'react-hot-loader/root';
-import './stylesheet.css';
+import './App.css';
 
 function App (props) {
   return (
