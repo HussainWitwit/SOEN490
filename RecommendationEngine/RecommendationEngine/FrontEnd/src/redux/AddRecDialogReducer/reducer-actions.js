@@ -4,25 +4,11 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-//Note: importing mapDispatchToProps from api reducer so that we could dispatch its actions too.
-import { mapDispatchApiToProps } from '../ApiReducer/reducer-actions';
+import { openScheduleDrilldown } from '../RightPanelReducer/reducer-actions';
+import { getConfiguredRecommendationList } from '../SharedReducer/reducer-actions';
 import { GetTemplateDetailsInfo } from '../../api/endpoints/TemplateDetailsEndpoints';
+import { AddConfiguredRecommendation, EditConfiguredRecommendation, DeleteRecommendationById } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
-//**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
-  /* istanbul ignore next */
-export const mapDialogStateToProps = (state) => {
-    return {
-      all: state,
-      dialogsContent: state.addRecommendation,
-      isDialogOpen: state.addRecommendation.isDialogOpen,
-      template: state.addRecommendation.template,
-      basicConfiguration: state.addRecommendation.basicConfiguration,
-      apiAssets: state.apiReducer.flatListAssets,
-      isEditing: state.addRecommendation.isEditing,
-      templateDetailsList: state.addRecommendation.templateDetailsList,
-      configurationId: state.addRecommendation.id
-    };
-};
 
 //**Actions --> Useful for unit testing the reducer.
 export const setTemplateName = (value) => {
@@ -172,7 +158,7 @@ export const getTemplateDetails = async (dispatch) => {
 };
 
   /* istanbul ignore next */
-  export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
+export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
     dispatch(setTemplateName(value.type));
     dispatch(updateAsset(value.assetList));
     dispatch(setTitle(value.name));
@@ -183,7 +169,74 @@ export const getTemplateDetails = async (dispatch) => {
     dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
     dispatch(setId(id));
     dispatch(setEditable());
-  }
+}
+
+/* istanbul ignore next */
+export const addConfiguredRecommendation = async (dispatch, configuredRecommendation) => {
+    const response = await AddConfiguredRecommendation(configuredRecommendation);
+    dispatch({
+        type: dispatchActionType.ADD_CONFIGURED_RECOMMENDATION,
+        payload: response,
+    });
+    if (response.status === 200) {
+        await getConfiguredRecommendationList(dispatch);
+    }
+    else {
+        alert("An error occured when trying to add this recommendation into our server.");
+    }
+}
+
+/* istanbul ignore next */
+export const editConfiguredRecommendation = async (dispatch, configuredRecommendation, id) => {
+    const response = await EditConfiguredRecommendation(configuredRecommendation, id);
+    dispatch({
+        type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
+        payload: response,
+    });
+    if (response.status === 200) {
+        await getConfiguredRecommendationList(dispatch);
+        openScheduleDrilldown(dispatch, id);
+    }
+    else {
+        alert("An error occured when trying to modify this recommendation from our server.");
+    }
+}
+
+/* istanbul ignore next */
+export const deleteConfiguredRecommendation = async (dispatch, id) => {
+    const response = await DeleteRecommendationById(id);
+    dispatch({
+        type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
+        payload: response
+    });
+    if (response.status === 200) {
+        await getConfiguredRecommendationList(dispatch);
+    }
+    else {
+        alert("An error occured when trying to delete this recommendation from our server.");
+    }
+}
+
+
+/* istanbul ignore next */
+export const postConfiguredRecommendation = async (dispatch, configuredRecommendation, editingState) => {
+    if (editingState.isEditing) {
+        await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.iD);
+    }
+    else {
+        await addConfiguredRecommendation(dispatch, configuredRecommendation);
+    }
+}
+
+//**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
+/* istanbul ignore next */
+export const mapDialogStateToProps = (state) => {
+    return {
+        all: state,
+        dialogsContent: state.addRecommendation,
+        apiAssets: state.sharedReducer.flatListAssets,
+    };
+};
 
   
   //This method will allow you to pass the actions as a prop to the connected component in
@@ -207,14 +260,6 @@ export const getTemplateDetails = async (dispatch) => {
       setBackToInitialValues: () => dispatch(setBackToInitialValues()),
       getTemplateDetails: () => getTemplateDetails(dispatch),
       setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
+      postConfiguredRecommendation: (configuredRecommendation, editingState) => postConfiguredRecommendation(dispatch, configuredRecommendation, editingState),
     };
   }
-
-//We can merged multiple mapDispatchToPros. In this case, I need to pass the reducer actions of two different reducers
-  /* istanbul ignore next */
-export const mapDispatchMergedToProps = (dispatch) => {
-  return {
-    ...mapDispatchApiToProps(dispatch),
-    ...mapDispatchToProps(dispatch)
-  }
-}

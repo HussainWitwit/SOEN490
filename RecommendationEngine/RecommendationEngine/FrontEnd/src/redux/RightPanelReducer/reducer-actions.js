@@ -4,8 +4,8 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-import {GetConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
-import { deleteConfiguredRecommendation } from '../ApiReducer/reducer-actions';
+import { GetConfiguredRecommendationById } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { deleteConfiguredRecommendation } from '../AddRecDialogReducer/reducer-actions';
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {

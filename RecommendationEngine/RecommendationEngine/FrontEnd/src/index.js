@@ -6,7 +6,7 @@ import App from '../src/containers/App/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import { getNestedAssets, getFlatListAssets, getConfiguredRecommendationList} from './redux/ApiReducer/reducer-actions';
+import { getNestedAssets, getFlatListAssets, getConfiguredRecommendationList} from './redux/SharedReducer/reducer-actions';
 import { getTemplateDetails } from './redux/AddRecDialogReducer/reducer-actions';
 
 //Making api capps at first render at top most component of the app.

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { AddConfiguredRecDialogReducer } from './AddRecDialogReducer/reducer';
-import { ApiReducer } from './ApiReducer/reducer';
+import { SharedReducer } from './SharedReducer/reducer';
 import { RightPanelReducer } from './RightPanelReducer/reducer'
 
 /**
@@ -9,7 +9,7 @@ import { RightPanelReducer } from './RightPanelReducer/reducer'
  */
 const rootReducer = combineReducers({
   addRecommendation: AddConfiguredRecDialogReducer,
-  apiReducer: ApiReducer,
+  sharedReducer: SharedReducer,
   rightPanelReducer: RightPanelReducer
 })
 

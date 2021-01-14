@@ -7,7 +7,7 @@ export const initialValues = {
     templateDetailsList: [],
   };
 
-  export const ApiReducer = function (state = initialValues, action) {
+  export const SharedReducer = function (state = initialValues, action) {
     switch(action.type) {
         case type.GET_NESTED_ASSETS: 
             return {

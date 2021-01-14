@@ -47,7 +47,10 @@ export const contentInitialValues = {
     parameters: {},
     templateDetailsList: [],
     isEditing: false,
-    id: null
+    iD: null,
+    addRecommenendationResponse: null,
+    editRecommendationReponse: null,
+    deleteRecommendationResponse: null
 }
 
 export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
@@ -187,7 +190,25 @@ export const AddConfiguredRecDialogReducer = function (state = contentInitialVal
                     inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
                     algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
                 }
-              };
+            };
+
+        case type.ADD_CONFIGURED_RECOMMENDATION:
+            return {
+                ...state,
+                addRecommenendationResponse: action.payload
+            };
+
+        case type.EDIT_CONFIGURED_RECOMMENDATION:
+            return {
+                ...state,
+                editRecommendationReponse: action.payload
+            };
+
+        case type.DELETE_CONFIGURE_RECOMMENDATION:
+            return {
+                ...state,
+                deleteRecommendationResponse: action.payload
+            };
 
         default:
             return state;
