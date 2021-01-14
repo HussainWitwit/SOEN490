@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
+import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {

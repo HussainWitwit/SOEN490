@@ -14,7 +14,8 @@ import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDia
 
 function TemplateConfigurationModal (props) {
 
-  const { templateDetailsList, template, dialogStyle, setRecommendationType } = props;
+  const { dialogsContent, dialogStyle, setRecommendationType } = props;
+  const { templateDetailsList, template } = dialogsContent;
 
   const TemplateIcon1 = FaSolarPanel;
   const TemplateIcon2 = GoCalendar;

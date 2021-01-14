@@ -20,21 +20,11 @@ import {
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
-export function DetailsConfigurationModal (props) {
-  const {
-    basicConfiguration,
-    template,
-    setTitle,
-    updateAsset,
-    setPreferredScenario,
-    setGranularity,
-    setRepeatDay,
-    setRepeatDate,
-    setRepeatTime,
-    apiAssets,
-    isEditing,
-    templateDetailsList
-  } = props;
+export function DetailsConfigurationModal(props) {
+
+  const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
+  const { templateDetailsList, template, isEditing, basicConfiguration} = dialogsContent;
+
 
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
 
