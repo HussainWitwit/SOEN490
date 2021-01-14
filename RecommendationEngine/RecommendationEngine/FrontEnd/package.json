@@ -61,7 +61,7 @@
       "!**/src/api/models/TemplateDetails.ts",
       "!**/src/redux/store.js",
       "!**/src/redux/combined-reducers.js",
-      "!**/src/redux/ApiReducer/**"
+      "!**/src/redux/SharedReducer/**"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",
