@@ -53,7 +53,7 @@ export const contentInitialValues = {
     deleteRecommendationResponse: null
 }
 
-export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
+export const ManageRecommendationReducer = function (state = contentInitialValues, action) {
     
     switch (action.type) {
         case type.GET_TEMPLATE_DETAILS:

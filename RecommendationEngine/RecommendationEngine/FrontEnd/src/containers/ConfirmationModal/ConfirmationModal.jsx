@@ -3,7 +3,7 @@ import { animated } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import './ConfirmationModal.css';
 
 const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.

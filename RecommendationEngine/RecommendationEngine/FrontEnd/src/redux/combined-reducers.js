@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { AddConfiguredRecDialogReducer } from './AddRecDialogReducer/reducer';
+import { ManageRecommendationReducer } from './ManageRecommendationReducer/reducer';
 import { SharedReducer } from './SharedReducer/reducer';
 import { RightPanelReducer } from './RightPanelReducer/reducer'
 
@@ -8,7 +8,7 @@ import { RightPanelReducer } from './RightPanelReducer/reducer'
  * In each folder, you must have reducer actions, reducer and dispatch types files.
  */
 const rootReducer = combineReducers({
-  addRecommendation: AddConfiguredRecDialogReducer,
+  manageRecommendationReducer: ManageRecommendationReducer,
   sharedReducer: SharedReducer,
   rightPanelReducer: RightPanelReducer
 })

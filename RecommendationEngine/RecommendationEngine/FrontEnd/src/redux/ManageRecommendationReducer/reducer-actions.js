@@ -233,7 +233,7 @@ export const postConfiguredRecommendation = async (dispatch, configuredRecommend
 export const mapDialogStateToProps = (state) => {
     return {
         all: state,
-        dialogsContent: state.addRecommendation,
+        dialogsContent: state.manageRecommendationReducer,
         apiAssets: state.sharedReducer.flatListAssets,
     };
 };

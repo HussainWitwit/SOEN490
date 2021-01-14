@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import ConfiguredRecommendationTable from '../../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
-import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import './ManageRecommendationPage.css';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ManageRecommendationDrawer from '../components/ManageRecommendationDrawer/ManageRecommendationDrawer';
+import ManageRecommendationDrawer from '../containers/ManageRecommendationDrawer/ManageRecommendationDrawer';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { store } from '../redux/store';

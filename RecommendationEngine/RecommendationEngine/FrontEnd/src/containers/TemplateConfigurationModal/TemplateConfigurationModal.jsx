@@ -10,7 +10,7 @@ import { VscCircuitBoard } from 'react-icons/vsc';
 import { GoCalendar } from 'react-icons/go';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 
 function TemplateConfigurationModal (props) {
 

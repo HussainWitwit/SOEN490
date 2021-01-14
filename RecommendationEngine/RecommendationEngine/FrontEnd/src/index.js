@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { getNestedAssets, getFlatListAssets, getConfiguredRecommendationList} from './redux/SharedReducer/reducer-actions';
-import { getTemplateDetails } from './redux/AddRecDialogReducer/reducer-actions';
+import { getTemplateDetails } from './redux/ManageRecommendationReducer/reducer-actions';
 
 //Making api capps at first render at top most component of the app.
 store.dispatch(getNestedAssets);

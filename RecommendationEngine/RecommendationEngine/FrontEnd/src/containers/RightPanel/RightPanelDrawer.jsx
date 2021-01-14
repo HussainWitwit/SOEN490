@@ -5,7 +5,7 @@ import Close from '@material-ui/icons/Close';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import AssetTree from '../AssetTreeView/AssetTreeView';
 import PropTypes from 'prop-types';
-import ManageRecommendationDrawer from '../../components/ManageRecommendationDrawer/ManageRecommendationDrawer';
+import ManageRecommendationDrawer from '../../containers/ManageRecommendationDrawer/ManageRecommendationDrawer';
 import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
