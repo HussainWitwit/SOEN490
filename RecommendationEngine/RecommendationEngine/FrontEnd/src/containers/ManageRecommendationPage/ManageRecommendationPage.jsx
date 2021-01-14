@@ -58,7 +58,6 @@ export function ManageRecommendationPage(props) {
     setDefaultConfiguredRecList(configuredRecommendationList)
   }, [configuredRecommendationList])
 
-  console.log(recommendationList)
   return (
     <div id="main-container">
       <div></div>
