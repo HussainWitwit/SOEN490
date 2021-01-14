@@ -16,7 +16,7 @@ namespace RecommendationEngine.Controllers
             _assetService = assetService;
         }
 
-        [HttpGet("getAssetsNested")]
+        [HttpGet("assetsNested")]
         public IActionResult GetAssetsNested()
         {
             try
@@ -29,26 +29,12 @@ namespace RecommendationEngine.Controllers
             }
         }
 
-        [HttpGet("getAssetsList")]
+        [HttpGet("assetsList")]
         public IActionResult GetAssetsList()
         {
             try
             {
                 return Ok(_assetService.GetAssetsList());
-            }
-            catch (GlobalException e)
-            {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
-            }
-        }
-
-        [HttpGet("convert")]
-        public async Task<IActionResult> ConvertAsync()
-        {
-            try
-            {
-                await _assetService.Convert();
-                return Ok();
             }
             catch (GlobalException e)
             {

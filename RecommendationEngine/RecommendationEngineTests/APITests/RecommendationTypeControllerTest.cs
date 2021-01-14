@@ -39,7 +39,7 @@ namespace RecommendationEngineTests.APITests
         [Test]
         public async Task GetRecommendationTypes()
         {
-            var response = await _client.GetAsync("/RecommendationType/get");
+            var response = await _client.GetAsync("/recommendationType");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }

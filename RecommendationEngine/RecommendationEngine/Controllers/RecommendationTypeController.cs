@@ -16,7 +16,7 @@ namespace RecommendationEngine.Controllers
             _recommendationTypeService = recommendationTypeService;
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public IActionResult GetRecommendationTypes() {
             return Ok(_recommendationTypeService.GetRecommendationTypes());
         }

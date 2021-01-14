@@ -43,7 +43,7 @@ namespace RecommendationEngineTests.APITests
         [Test]
         public async Task GetRecommendations()
         {
-            var response = await _client.GetAsync("/configuredrecommendation/get");
+            var response = await _client.GetAsync("/configuredRecommendation");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -53,21 +53,21 @@ namespace RecommendationEngineTests.APITests
             var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
             string json = JsonConvert.SerializeObject(recommendation);
             var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("/configuredrecommendation/add", body);
+            var response = await _client.PostAsync("/configuredRecommendation", body);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
         public async Task GetRecommendationByIdTest()
         {
-            var response = await _client.GetAsync("/configuredrecommendation/configuredrecommendation/1");
+            var response = await _client.GetAsync("/configuredRecommendation/1");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
         public async Task DeleteRecommendationByIdTest()
         {
-            var response = await _client.DeleteAsync("/configuredrecommendation/delete/1");
+            var response = await _client.DeleteAsync("/configuredRecommendation/1");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -75,7 +75,7 @@ namespace RecommendationEngineTests.APITests
         public async Task EditRecommendations()
         {
             var payload = MockConfiguredRecommendations.EDITED_CONFIGURED_RECOMMENDATION;
-            var response = await _client.PostAsync("/configuredrecommendation/edit/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+            var response = await _client.PutAsync("/configuredRecommendation/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }

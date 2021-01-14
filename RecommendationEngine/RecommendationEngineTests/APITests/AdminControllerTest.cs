@@ -3,26 +3,23 @@ using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Models.Application.Asset;
 using Models.DB;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
-using RecommendationEngineTests.APITests;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace RecommendationEngineTests.UnitTests.ControllerTest
+namespace RecommendationEngineTests.APITests
 {
-    public class AssetControllerTest
+    public class AdminControllerTest
     {
         private readonly TestServer _server;
         private readonly HttpClient _client;
 
-        public AssetControllerTest()
+        public AdminControllerTest()
         {
             _server = new TestServer(new WebHostBuilder()
                 .UseStartup<Startup>()
@@ -38,28 +35,12 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         }
 
         [Test]
-        public async Task GetAssetsNested()
+        public async Task Convert()
         {
-            var response = await _client.GetAsync("/asset/assetsNested");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-            var asset = JsonConvert.DeserializeObject<AssetComposite>(await response.Content.ReadAsStringAsync());
-            Assert.NotNull(asset);
-            Assert.AreEqual(asset.Id, MockData.MockAssets.BasicDBAssetList[0].AssetId);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-        }
-
-        [Test]
-        public async Task GetAssetsList()
-        {
-            var response = await _client.GetAsync("/asset/assetsList");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-            List<AssetLeaf> assetList = JsonConvert.DeserializeObject<List<AssetLeaf>>(await response.Content.ReadAsStringAsync());
-            Assert.NotNull(assetList);
-            Assert.AreEqual(assetList[0].Name, MockData.MockAssets.BasicDBAssetList[0].Name);
+            var response = await _client.GetAsync("/admin/convert");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }
-
 
     public class TestRepositoryMock : IAssetRepository
     {
@@ -69,16 +50,16 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
 
         public List<DBAsset> GetAssetsList()
         {
-            return MockData.MockAssets.BasicDBAssetList;
+            return UnitTests.MockData.MockAssets.BasicDBAssetList;
         }
         public DBAsset GetAssetByName(string assetName)
         {
-            return MockData.MockAssets.BasicDBAsset;
+            return UnitTests.MockData.MockAssets.BasicDBAsset;
         }
 
         public DBAsset GetAssetById(int assetId)
         {
-            return MockData.MockAssets.BasicDBAsset;
+            return UnitTests.MockData.MockAssets.BasicDBAsset;
         }
     }
 
@@ -86,7 +67,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
     {
         public DBAssetType GetAssetTypeByName(string assetTypeName)
         {
-            return MockData.MockAssets.PortfolioAssetType;
+            return UnitTests.MockData.MockAssets.PortfolioAssetType;
         }
     }
 }

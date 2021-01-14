@@ -16,13 +16,13 @@ namespace RecommendationEngine.Controllers
             _configuredRecommendationService = configuredRecommendationService;
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public IActionResult getConfiguredRecommendationList()
         {
             return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
         }
 
-        [HttpGet("configuredRecommendation/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetConfiguredRecommendationById(int id)
         {
             try
@@ -36,7 +36,7 @@ namespace RecommendationEngine.Controllers
             }
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             try
@@ -50,7 +50,7 @@ namespace RecommendationEngine.Controllers
             return Ok();
         }
 
-        [HttpPost("edit/{id}")]
+        [HttpPut("{id}")]
         public IActionResult editConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             try
@@ -64,7 +64,7 @@ namespace RecommendationEngine.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult deleteConfiguredRecommendation(int id)
         {
             try
