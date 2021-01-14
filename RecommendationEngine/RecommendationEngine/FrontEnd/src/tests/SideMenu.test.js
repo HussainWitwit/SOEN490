@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SideMenu from '../containers/SideMenu/SideMenu.jsx';
+import { SideMenu } from '../containers/SideMenu/SideMenu.jsx';
 import '../containers/SideMenu/SideMenu.css';
 import Enzyme, { shallow } from '../enzyme';
 import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
-import { fireEvent, render, getAllByTestId } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import LogoSVGComponent from '../containers/SideMenu/LogoSVGComponent';
+import { withRouter, BrowserRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -17,13 +20,13 @@ describe('SideMenu component', () => {
     useStateSpy.mockImplementation((init) => [init, setState]);
 
     test('It renders correctly', () => {
-        const tree = renderer.create(<SideMenu />).toJSON();
+        const tree = renderer.create(withRouter(<SideMenu />)).toJSON();
         expect(tree).toMatchSnapshot();
     });
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<SideMenu />, div);
+        ReactDOM.render(withRouter(<SideMenu />), div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
@@ -65,21 +68,34 @@ describe('SideMenu component', () => {
         it('It finds all the list elements inside the drawer', () => {
             let wrapper = shallow(<SideMenu />);
             let listItems = wrapper.find(ListItem);
-            expect(listItems).toHaveLength(10);
+            expect(listItems).toHaveLength(9);
         });
     });
 
     describe('Test clicks', () => {
-        it("Simulates clicks on different options", () => {
-            const { container } = render(<SideMenu />);
+        it.only("Simulates clicks on different options", async () => {
+            const history = createMemoryHistory();
+            const renderWithRouter = (ui, { route = '/' } = {}) => {
+                window.history.pushState({}, 'Test page', route)
 
-            const outerOption = getAllByTestId(container, 'listitem1');
+                return render(ui, { wrapper: BrowserRouter })
+            }
+            renderWithRouter(<SideMenu history={history} />);
 
-            fireEvent.click(outerOption[0]);
-            fireEvent.click(outerOption[1]);
-            fireEvent.click(outerOption[2]);
-            fireEvent.click(outerOption[3]);
-            fireEvent.click(outerOption[4]);
+            expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
+            expect(screen.getByText(/Recommendations/i)).toBeInTheDocument();
+            expect(screen.getByText(/Main Settings/i)).toBeInTheDocument();
+            expect(screen.getByText(/Notifications/i)).toBeInTheDocument();
+
+
+            fireEvent.click(screen.getByText(/Dashboard/i));
+            fireEvent.click(screen.getByText(/Recommendations/i));
+            fireEvent.click(screen.getByTestId("listitemRecommendations"));
+            fireEvent.click(screen.getByTestId("listitemManage"));
+            fireEvent.click(screen.getByTestId("listitemJobs"));
+            fireEvent.click(screen.getByTestId("listitemResults"));
+            fireEvent.click(screen.getByText(/Main Settings/i));
+            fireEvent.click(screen.getByText(/Notifications/i));
         });
     })
 });
