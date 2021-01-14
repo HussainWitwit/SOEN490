@@ -25,8 +25,8 @@ export function SideMenu (props) {
         if (object.children.length !== 0) {
             setSelectedItemIndex(index);
             setIsNestedItemSelected(true);
-            props.history.push(object.path);
             setOpenNested(!openNested);
+            props.history.push(object.path);
         }
         else {
             setSelectedItemIndex(index);

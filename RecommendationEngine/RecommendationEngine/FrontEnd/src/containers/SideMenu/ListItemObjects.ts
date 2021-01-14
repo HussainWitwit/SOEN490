@@ -31,21 +31,21 @@ var manage: ListemItemObject = {
     name: 'Manage',
     children: [],
     listItemIcon: BuildRoundedIcon,
-    path: '/recommendations/manage'
+    path: '/recommendations-manage'
 }
 
 var results: ListemItemObject = {
     name: 'Results',
     children: [],
     listItemIcon: CheckCircleOutlineRoundedIcon,
-    path: '/recommendations/results'
+    path: '/recommendations-results'
 }
 
 var jobs: ListemItemObject = {
     name: 'Jobs',
     children: [],
     listItemIcon: TuneRoundedIcon,
-    path: '/recommendations/jobs'
+    path: '/recommendations-jobs'
 }
 
 var recommendations: ListemItemObject = {
