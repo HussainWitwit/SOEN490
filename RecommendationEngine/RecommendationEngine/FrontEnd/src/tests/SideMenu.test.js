@@ -6,9 +6,11 @@ import Enzyme, { shallow } from '../enzyme';
 import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
-import { render, queryAllByTestId } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import LogoSVGComponent from '../containers/SideMenu/LogoSVGComponent';
-import { withRouter } from 'react-router-dom';
+import { withRouter, BrowserRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -71,24 +73,29 @@ describe('SideMenu component', () => {
     });
 
     describe('Test clicks', () => {
-        it("Simulates clicks on different options", async () => {
-            const { container } = render(<SideMenu />);
-            const outerOption = await queryAllByTestId(container, 'listitem1');
-            expect(outerOption).toHaveLength(5);
+        it.only("Simulates clicks on different options", async () => {
+            const history = createMemoryHistory();
+            const renderWithRouter = (ui, { route = '/' } = {}) => {
+                window.history.pushState({}, 'Test page', route)
 
-            // const history = createMemoryHistory();
+                return render(ui, { wrapper: BrowserRouter })
+            }
+            renderWithRouter(<SideMenu history={history} />);
 
-            // const renderWithRouter = (ui, { route = '/' } = {}, props) => {
-            //     window.history.pushState({}, 'Test page', route)
+            expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
+            expect(screen.getByText(/Recommendations/i)).toBeInTheDocument();
+            expect(screen.getByText(/Main Settings/i)).toBeInTheDocument();
+            expect(screen.getByText(/Notifications/i)).toBeInTheDocument();
 
-            //     return render(ui, { wrapper: BrowserRouter })
-            // }
 
-            // fireEvent.click(outerOption);
-            // fireEvent.click(outerOption[1]);
-            // fireEvent.click(outerOption[2]);
-            // fireEvent.click(outerOption[3]);
-            // fireEvent.click(outerOption[4]);
+            fireEvent.click(screen.getByText(/Dashboard/i));
+            fireEvent.click(screen.getByText(/Recommendations/i));
+            fireEvent.click(screen.getByTestId("listitemRecommendations"));
+            fireEvent.click(screen.getByTestId("listitemManage"));
+            fireEvent.click(screen.getByTestId("listitemJobs"));
+            fireEvent.click(screen.getByTestId("listitemResults"));
+            fireEvent.click(screen.getByText(/Main Settings/i));
+            fireEvent.click(screen.getByText(/Notifications/i));
         });
     })
 });
