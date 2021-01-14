@@ -13,7 +13,7 @@ type ListemItemObject = {
     name: string,
     children: ListemItemObject[],
     listItemIcon: OverridableComponent<SvgIconTypeMap>,
-    path: string
+    path?: string
 };
 
 type Separator = {
@@ -52,7 +52,6 @@ var recommendations: ListemItemObject = {
     name: 'Recommendations',
     children: [manage, jobs, results],
     listItemIcon: ListAltRoundedIcon,
-    path: '/recommendations/manage'
 }
 
 var workOrders: ListemItemObject = {

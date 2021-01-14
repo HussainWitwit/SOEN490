@@ -11,10 +11,11 @@ import { withRouter } from 'react-router-dom';
 //TODO: he is currently in without needing to drop-down. 
 export function SideMenu (props) {
 
-    const [openNested, setOpenNested] = React.useState(false);
+    const [openNested, setOpenNested] = React.useState(true);
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
     const [selectedNestedItemIndex, setSelectedNestedItemIndex] = React.useState(0);
     const [isNestedItemSelected, setIsNestedItemSelected] = React.useState(false);
+
     /**
      * Function that handles clicking on menu options
      * @param {*} object 
@@ -25,11 +26,14 @@ export function SideMenu (props) {
             setSelectedItemIndex(index);
             setIsNestedItemSelected(true);
             props.history.push(object.path);
+            setOpenNested(!openNested);
         }
         else {
             setSelectedItemIndex(index);
             setIsNestedItemSelected(false);
-            props.history.push(object.path);
+            if (object.path) {
+                props.history.push(object.path);
+            }
         }
     }
 
@@ -64,7 +68,7 @@ export function SideMenu (props) {
             <List key={index}>
 
                 <ListItem
-                    data-testid="listitem1"
+                    data-testid={'listitem' + listObject.name}
                     style={{ backgroundColor: (selectedItemIndex === index) ? '#4DD3EF' : '#212529' }}
                     button
                     onClick={() => handleClick(listObject, index)}
@@ -86,7 +90,7 @@ export function SideMenu (props) {
                             {
                                 listObject.children.map((child, indexNested) => (
                                     <ListItem
-                                        data-testid="listitem2"
+                                        data-testid={"listitem" + child.name}
                                         button
                                         onClick={() => handleClickNested(child, indexNested)}
                                         className="nested"

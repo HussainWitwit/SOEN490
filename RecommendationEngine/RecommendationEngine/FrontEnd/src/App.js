@@ -17,9 +17,9 @@ function App (props) {
       <Layout>
         <div id="pageLayout">
           <Route exact path='/' component={Dashboard} />
-          <Route path='/recommendations/manage' component={ManageRecommendationPage} />
-          <Route path='/recommendations/jobs' component={JobsPage} />
-          <Route path='/recommendations/results' component={ResultsPage} />
+          <Route path='/recommendations-manage' component={ManageRecommendationPage} />
+          <Route path='/recommendations-jobs' component={JobsPage} />
+          <Route path='/recommendations-results' component={ResultsPage} />
           <Route path='/work-orders' component={WorkOrders} />
           <Route path='/settings' component={Settings} />
           <Route path='/notifications' component={Notifications} />
