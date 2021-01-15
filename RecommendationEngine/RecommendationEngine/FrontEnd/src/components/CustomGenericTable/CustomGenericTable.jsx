@@ -1,28 +1,20 @@
 import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader'
+import { EnhancedTableHead } from '../RecommendationTableHeader/RecommendationTableHeader'
 import Switch from '@material-ui/core/Switch';
-import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
-import { connect } from 'react-redux';
-import './ConfiguredRecommendationTable.css';
+import './CustomGenericTable.css';
 import 'date-fns';
 
-const headCells = [
-  { id: 'title', label: 'Title' },
-  { id: 'type', label: 'Type' },
-  { id: 'granularity', label: 'Granularity' },
-  { id: 'createdOn', label: 'Created On' },
-];
 
-export function ConfiguredRecommendationTable(props) {
+
+export default function CustomGenericTable (props) {
 
   const [dense, setDense] = React.useState(false);
   const [order, setOrder] = React.useState('asc');
@@ -50,11 +42,12 @@ export function ConfiguredRecommendationTable(props) {
     setPage(0);
   };
 
+
   return (
     <div id="root">
       <Paper id="paper">
         <Toolbar id="toolbar">
-          <h6 className="toolBarTitle" variant="h6" id="tableTitle" component="div"> Configured Recommendations</h6>
+          <h6 className="toolBarTitle" variant="h6" data-testid="tableTitle" component="div">{props.TableTitle}</h6>
           <FormControlLabel
             id="liteSwitch"
             control={
@@ -69,7 +62,7 @@ export function ConfiguredRecommendationTable(props) {
           >
             <EnhancedTableHead id="handleSort" order={order} orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              headers={headCells}
+              headers={props.columnTitles}
               rowCount={props.data ? props.data.length : 1}
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
@@ -81,23 +74,11 @@ export function ConfiguredRecommendationTable(props) {
                     key={element.id}
                     className="custom"
                     onClick={() => {
-                      props.openScheduleDrilldown(element.id)
+                      props.onClick(element.id)
                       setIsSelected(element.id)
                     }}
                   >
-                    <TableCell className="custom">
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      padding="default"
-                      className="primaryKey"
-                      id="tableBody">
-                      {element.name}
-                    </TableCell>
-                    <TableCell className="custom" id="tableBody">{element.type}</TableCell>
-                    <TableCell className="custom" id="tableBody">{element.granularity}</TableCell>
-                    <TableCell className="custom" id="tableBody">{element.createdOn}</TableCell>
+                    {props.rowsValue(element)}
                   </TableRow>
                 )
               })}
@@ -118,5 +99,3 @@ export function ConfiguredRecommendationTable(props) {
     </div>
   );
 }
-
-export default connect(null, mapDispatchToProps)(ConfiguredRecommendationTable);

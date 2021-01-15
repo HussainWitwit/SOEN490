@@ -2,12 +2,11 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList, Search } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import ConfiguredRecommendationTable from '../../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
+import { TextField, Grid, TableCell } from '@material-ui/core';
+import CustomGenericTable from '../../components/CustomGenericTable/CustomGenericTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
-import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import './ManageRecommendationPage.css';
 
@@ -38,10 +37,28 @@ export const CssTextField = withStyles({
   },
 })(TextField);
 
+/* istanbul ignore next */
+export const RowsToDisplay = (element) => (
+  <React.Fragment>
+    <TableCell />
+    <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.name}</TableCell>
+    <TableCell id="tableBody">{element.type}</TableCell>
+    <TableCell id="tableBody">{element.granularity}</TableCell>
+    <TableCell id="tableBody">{element.createdOn}</TableCell>
+  </React.Fragment>
+);
 
-export function ManageRecommendationPage(props) {
+export function ManageRecommendationPage (props) {
 
-  const { toggleDialog, configuredRecommendationList } = props;
+  const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
+
+  /* istanbul ignore next */
+  const headCells = [
+    { id: 'title', label: 'Title' },
+    { id: 'type', label: 'Type' },
+    { id: 'granularity', label: 'Granularity' },
+    { id: 'createdOn', label: 'Created On' },
+  ];
 
   return (
     <div id="main-container">
@@ -60,7 +77,7 @@ export function ManageRecommendationPage(props) {
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
-              <AddRecommendationDialog {...props}/>
+              <AddRecommendationDialog {...props} />
             </div>
           </Grid>
         </Grid>
@@ -73,7 +90,7 @@ export function ManageRecommendationPage(props) {
               <Search id="search" />
             </Grid>
             <Grid item>
-              <CssTextField id="custom-css-standard-input" label="Search"
+              <CssTextField data-testid="custom-css-standard-input" label="Search"
                 inputProps={{
                   style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), },
                 }}
@@ -89,9 +106,15 @@ export function ManageRecommendationPage(props) {
         </div>
       </div>
       <br></br>
-      <ConfiguredRecommendationTable data = {configuredRecommendationList} />
+      <CustomGenericTable
+        rowsValue={RowsToDisplay}
+        data={configuredRecommendationList}
+        TableTitle={"Configured Recommendations"}
+        onClick={openScheduleDrilldown}
+        columnTitles={headCells}
+      />
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageRecommendationPage);
+export default connect(mapStateToProps, mapDispatchManageRecommendationPageToProps)(ManageRecommendationPage);
