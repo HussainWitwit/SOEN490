@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NotificationBell from '../components/Notification/NotificationBell.jsx';
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow } from '../../../enzyme';
 import Notifications from "react-notifications-menu";
 import Adapter from 'enzyme-adapter-react-16';
+import NotificationBell from '../NotificationBell';
 
 Enzyme.configure({ adapter: new Adapter() });
 

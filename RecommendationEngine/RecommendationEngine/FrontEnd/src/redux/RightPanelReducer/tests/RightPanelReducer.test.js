@@ -1,5 +1,6 @@
-import * as dispatchActionType from '../redux/RightPanelReducer/dispatch-types';
-import { RightPanelReducer } from '../redux/RightPanelReducer/reducer';
+import * as dispatchActionType from '../dispatch-types';
+
+import { RightPanelReducer } from '../reducer';
 
 const DRILLDOWN_NAME = 'Details';
 const ASSET_TREEVIEW_NAME = 'AssetTreeview';

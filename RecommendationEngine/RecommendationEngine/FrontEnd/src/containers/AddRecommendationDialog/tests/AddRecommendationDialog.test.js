@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {
     AddRecommendationDialog, PaperComponent, Transition
-} from '../containers/AddRecommendationDialog/AddRecommendationDialog';
+} from '../AddRecommendationDialog';
 import {
     Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Slide
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { store } from '../redux/store';
+import { store } from '../../../redux/store';
 import Draggable from 'react-draggable';
 
 Enzyme.configure({ adapter: new Adapter() });

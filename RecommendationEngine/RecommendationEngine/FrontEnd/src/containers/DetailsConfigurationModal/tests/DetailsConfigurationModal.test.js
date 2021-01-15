@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { DetailsConfigurationModal } from '../containers/DetailsConfigurationModal/DetailsConfigurationModal';
-import MultiSelectAutocomplete from '../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import { DetailsConfigurationModal } from '../DetailsConfigurationModal';
+import MultiSelectAutocomplete
+    from '../../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';

@@ -1,5 +1,5 @@
-import * as dispatchType from '../redux/ManageRecommendationReducer/dispatch-types';
-import * as action from '../redux/ManageRecommendationReducer/reducer-actions';
+import * as dispatchType from '../dispatch-types';
+import * as action from '../reducer-actions';
 
 describe('Verifying actions', () => {
 

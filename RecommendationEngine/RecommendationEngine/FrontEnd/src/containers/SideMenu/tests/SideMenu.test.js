@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { SideMenu } from '../containers/SideMenu/SideMenu.jsx';
-import '../containers/SideMenu/SideMenu.css';
-import Enzyme, { shallow } from '../enzyme';
+import { SideMenu } from '../SideMenu.jsx';
+import Enzyme, { shallow } from '../../../enzyme';
 import { Drawer, ListItem, Avatar } from '@material-ui/core';
 import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import LogoSVGComponent from '../containers/SideMenu/LogoSVGComponent';
+import LogoSVGComponent from '../LogoSVGComponent';
 import { withRouter, BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 

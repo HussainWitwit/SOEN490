@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BreadcrumbsComponent from '../components/BreadcrumbsComponent/BreadcrumbsComponent'
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Link from '@material-ui/core/Link';
 import { GiWindTurbine } from "react-icons/gi";
 import { BiCube } from "react-icons/bi";
 import { Typography } from '@material-ui/core';
+import BreadcrumbsComponent from '../BreadcrumbsComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 

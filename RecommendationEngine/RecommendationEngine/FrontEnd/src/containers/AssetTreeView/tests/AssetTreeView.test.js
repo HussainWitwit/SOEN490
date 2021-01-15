@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { AssetTree }  from '../containers/AssetTreeView/AssetTreeView';
-import { MinusSquare, PlusSquare, TransitionComponent, AssetTreeItem, SearchComboBox } from '../containers/AssetTreeView/AssetTreeView';
+import { MinusSquare, PlusSquare, TransitionComponent, AssetTreeItem, SearchComboBox, AssetTree } from '../AssetTreeView';
 import Collapse from '@material-ui/core/Collapse';
 import TreeItem from '@material-ui/lab/TreeItem';
 import TreeView from '@material-ui/lab/TreeView';
@@ -54,13 +53,13 @@ describe('AssetTreeView component', () => {
         expect(component).toHaveLength(1);
     })
 
-+
+        +
 
-    it("It finds the AssetTree component", () => {
-        const output = shallow(<AssetTree />);
-        let component1 = output.find(SearchComboBox);
-        let component2 = output.find(TreeView);
-        expect(component1).toHaveLength(1);
-        expect(component2).toHaveLength(1);
-    })
+        it("It finds the AssetTree component", () => {
+            const output = shallow(<AssetTree />);
+            let component1 = output.find(SearchComboBox);
+            let component2 = output.find(TreeView);
+            expect(component1).toHaveLength(1);
+            expect(component2).toHaveLength(1);
+        })
 });

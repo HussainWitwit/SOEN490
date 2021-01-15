@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import CustomGenericTable from '../components/CustomGenericTable/CustomGenericTable';
+import CustomGenericTable from '../CustomGenericTable';
+import { EnhancedTableHead } from '../../RecommendationTableHeader/RecommendationTableHeader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -10,8 +11,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { EnhancedTableHead } from '../components/RecommendationTableHeader/RecommendationTableHeader';
-import { store } from '../redux/store';
 
 Enzyme.configure({ adapter: new Adapter() });
 

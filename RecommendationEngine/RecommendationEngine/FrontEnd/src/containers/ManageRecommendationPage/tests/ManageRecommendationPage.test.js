@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ManageRecommendationPage from '../containers/ManageRecommendationPage/ManageRecommendationPage';
-import Enzyme, { shallow } from '../enzyme';
+import ManageRecommendationPage from '../ManageRecommendationPage';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { store } from '../redux/store';
+import { store } from '../../../redux/store';
 import { Provider } from 'react-redux';
 
 Enzyme.configure({ adapter: new Adapter() });

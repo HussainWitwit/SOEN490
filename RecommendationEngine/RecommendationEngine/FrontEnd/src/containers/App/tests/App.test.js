@@ -1,8 +1,8 @@
 import React from 'react';
-import App from '../containers/App/App';
+import App from '../App';
 import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { store } from '../redux/store';
+import { store } from '../../../redux/store';
 
 it.skip('renders without crashing', async () => {
     const div = document.createElement('div');

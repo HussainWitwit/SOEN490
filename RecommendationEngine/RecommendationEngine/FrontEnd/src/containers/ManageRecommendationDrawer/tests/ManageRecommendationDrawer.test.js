@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ManageRecommendationDrawer from '../containers/ManageRecommendationDrawer/ManageRecommendationDrawer';
-import Enzyme, { shallow } from '../enzyme';
+import ManageRecommendationDrawer from '../ManageRecommendationDrawer';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { store } from '../redux/store';
+import { store } from '../../../redux/store';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Provider } from 'react-redux';

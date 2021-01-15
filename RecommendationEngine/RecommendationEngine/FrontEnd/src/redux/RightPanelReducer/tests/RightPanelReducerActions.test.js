@@ -1,5 +1,5 @@
-import * as dispatchActionType from '../redux/RightPanelReducer/dispatch-types';
-import * as action from '../redux/RightPanelReducer/reducer-actions';
+import * as dispatchActionType from '../dispatch-types';
+import * as action from '../reducer-actions';
 
 describe('Verifying actions', () => {
   it('fires an open asset treeview action', () => {

@@ -1,5 +1,5 @@
-import * as dispatchType from '../redux/ManageRecommendationReducer/dispatch-types';
-import { ManageRecommendationReducer } from '../redux/ManageRecommendationReducer/reducer';
+import * as dispatchType from '../dispatch-types';
+import { ManageRecommendationReducer } from '../reducer';
 
 const detailsConfigInitialValues = {
   title: '',

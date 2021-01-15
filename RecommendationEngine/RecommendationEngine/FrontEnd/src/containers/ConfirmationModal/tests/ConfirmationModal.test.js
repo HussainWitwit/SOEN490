@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow } from '../enzyme';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import ConfirmationModal from '../containers/ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from '../ConfirmationModal';
 import TextField from '@material-ui/core/TextField';
-import MultiSelectAutocomplete from '../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
-import { store } from '../redux/store';
+import MultiSelectAutocomplete from '../../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import { store } from '../../../redux/store';
 
 Enzyme.configure({ adapter: new Adapter() });
 

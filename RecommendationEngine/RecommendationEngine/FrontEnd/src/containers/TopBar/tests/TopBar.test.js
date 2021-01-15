@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TopBar from '../containers/TopBar/TopBar.jsx';
-import NotificationBell from '../components/Notification/NotificationBell.jsx';
-import Enzyme, { shallow } from '../enzyme';
+import TopBar from '../TopBar.jsx';
+import NotificationBell from '../../../components/Notification/NotificationBell.jsx';
+import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { store } from '../redux/store';
-import BreadcrumbsComponent from '../components/BreadcrumbsComponent/BreadcrumbsComponent';
+import { store } from '../../../redux/store';
+import BreadcrumbsComponent from '../../../components/BreadcrumbsComponent/BreadcrumbsComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
