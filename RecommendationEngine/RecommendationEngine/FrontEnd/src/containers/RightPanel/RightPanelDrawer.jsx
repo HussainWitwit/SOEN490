@@ -10,7 +10,7 @@ import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/Right
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 
-export function RightPanelDrawer({
+export function RightPanelDrawer ({
   isOpen,
   tabs,
   selectedTabIndex,
@@ -32,7 +32,7 @@ export function RightPanelDrawer({
       component: (<ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     },
   }
-  
+
   return (
     <div>
       <link
@@ -43,7 +43,7 @@ export function RightPanelDrawer({
       <SwipeableDrawer
         anchor="right"
         open={isOpen}
-        onOpen={()=> {}}
+        onOpen={() => { }}
         onClose={closeAll}
         BackdropProps={{ invisible: true }}
         variant={'persistent'}

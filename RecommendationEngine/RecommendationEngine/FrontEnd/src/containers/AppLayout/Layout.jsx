@@ -10,18 +10,18 @@ import { connect } from 'react-redux';
 function Layout (props) {
   return (
     <div>
-      <div className = 'app-context'>
+      <div className='app-context'>
         <SideMenu />
-        <div className = 'right-main-context'>
+        <div className='right-main-context'>
           <TopBar />
-          <div className = {props.isOpen?'route-context-drawer':'route-context'}>
-            <Container fluid = {true}>
-              {props.children} 
-            </Container>         
+          <div className={props.isOpen ? 'route-context-drawer' : 'route-context'}>
+            <Container fluid={true}>
+              {props.children}
+            </Container>
           </div>
         </div>
       </div>
-          <RightPanelDrawer />
+      <RightPanelDrawer />
     </div>
   );
 }

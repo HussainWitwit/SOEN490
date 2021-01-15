@@ -18,10 +18,10 @@ describe('AddRecommendationDialog component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<AddRecommendationDialog store={store} template={{ name: '' }} setBackToInitialValues={jest.fn} basicConfiguration={{}}/>);
+    const output = shallow(<AddRecommendationDialog store={store} dialogsContent={{ template: { name: '' }, basicConfiguration: {} }} setBackToInitialValues={jest.fn} />);
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<AddRecommendationDialog store={store} template={{ name: '' }} />, div);
+        ReactDOM.render(<AddRecommendationDialog store={store} dialogsContent={{ template: { name: '' } }} />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 

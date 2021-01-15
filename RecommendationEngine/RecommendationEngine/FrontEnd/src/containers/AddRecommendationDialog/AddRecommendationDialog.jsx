@@ -46,7 +46,7 @@ export function PaperComponent (props) {
   );
 }
 
-export const Transition = React.forwardRef(function Transition(props, ref) {
+export const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
@@ -85,26 +85,26 @@ export function AddRecommendationDialog (props) {
   }
   //Post method
   const confirmDialogEvent = async () => {
-      await postConfiguredRecommendation({
-          type: template.name,
-          name: basicConfiguration.title,
-          granularity: basicConfiguration.granularity,
-          createdBy: basicConfiguration.createdBy,
-          createdOn: new Date(),
-          preferredScenario: basicConfiguration.preferredScenario,
-          recurrenceDayOfWeek: basicConfiguration.repeatDay,
-          modifiedBy: '',
-          recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
-          assetIdList: basicConfiguration.asset.map((e) => {
-              return e.id;
-          })
-      }, { isEditing: isEditing, iD: iD })
+    await postConfiguredRecommendation({
+      type: template.name,
+      name: basicConfiguration.title,
+      granularity: basicConfiguration.granularity,
+      createdBy: basicConfiguration.createdBy,
+      createdOn: new Date(),
+      preferredScenario: basicConfiguration.preferredScenario,
+      recurrenceDayOfWeek: basicConfiguration.repeatDay,
+      modifiedBy: '',
+      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+      assetIdList: basicConfiguration.asset.map((e) => {
+        return e.id;
+      })
+    }, { isEditing: isEditing, iD: iD })
     closeDialog();
   }
 
   useEffect(() => {
-   if(isEditing) {
-     setIndex(1);
+    if (isEditing) {
+      setIndex(1);
     }
   }, [isEditing])
 
@@ -150,7 +150,7 @@ export function AddRecommendationDialog (props) {
           Cancel
         </Button>
         {(index === 1 && !isEditing) && (
-            <Button
+          <Button
             data-testid="previous-button"
             id="previous-btn"
             onClick={onClickPrevious}
@@ -158,7 +158,7 @@ export function AddRecommendationDialog (props) {
           >
             Previous
           </Button>
-        )   
+        )
         }
         {index > 1 && (
           <Button
@@ -169,14 +169,14 @@ export function AddRecommendationDialog (props) {
           >
             Previous
           </Button>
-              )}
+        )}
         {index === 0 && (
           <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!template.name}>
             Next
           </Button>
         )}
-              {(index <= 2 && index > 0) && (
-                  <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
+        {(index <= 2 && index > 0) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
             Next
           </Button>
         )}

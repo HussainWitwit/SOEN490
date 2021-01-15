@@ -17,17 +17,19 @@ describe('DetailsConfigurationModal component', () => {
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
     const wrapper = shallow(<DetailsConfigurationModal
-        template={{ name: 'Unit test' }}
-        templateDetailsList={[]}
-        basicConfiguration={{
-            title: '',
-            asset: [],
-            createdBy: 'Alain',
-            preferredScenario: '',
-            granularity: 'Monthly',
-            repeatDay: '',
-            repeatDate: '',
-            repeatTime: ''
+        dialogsContent={{
+            template: { name: 'Unit test' },
+            templateDetailsList: [],
+            basicConfiguration: {
+                title: '',
+                asset: [],
+                createdBy: 'Alain',
+                preferredScenario: '',
+                granularity: 'Monthly',
+                repeatDay: '',
+                repeatDate: '',
+                repeatTime: ''
+            }
         }}
         setTitle={(value) => { }}
         updateAsset={(value) => { }}

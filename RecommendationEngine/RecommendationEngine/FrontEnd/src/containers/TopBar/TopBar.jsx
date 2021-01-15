@@ -5,7 +5,7 @@ import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-action
 import { connect } from 'react-redux';
 import './TopBar.css';
 
-function TopBar({openAssetTreeview}) {
+function TopBar ({ openAssetTreeview }) {
 
   const [locationDetails, setLocationDetails] = React.useState(null);
   const [weatherDetails, setWeatherDetails] = React.useState(null);
@@ -33,8 +33,8 @@ function TopBar({openAssetTreeview}) {
   return (
     <div className="main-container">
       <nav>
-        <BreadcrumbsComponent id="breadcrumb"/>
-        <p id="change_button"className="change_button" onClick = {openAssetTreeview}>Change</p>
+        <BreadcrumbsComponent id="breadcrumb" />
+        <p id="change_button" className="change_button" onClick={openAssetTreeview}>Change</p>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>

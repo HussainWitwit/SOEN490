@@ -20,10 +20,10 @@ import {
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
-export function DetailsConfigurationModal(props) {
+export function DetailsConfigurationModal (props) {
 
   const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
-  const { templateDetailsList, template, isEditing, basicConfiguration} = dialogsContent;
+  const { templateDetailsList, template, isEditing, basicConfiguration } = dialogsContent;
 
 
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
@@ -147,7 +147,7 @@ export function DetailsConfigurationModal(props) {
                   autoOk
                   inputVariant="outlined"
                   label="Date & Time"
-                  minDate = {isEditing ? null : new Date()}
+                  minDate={isEditing ? null : new Date()}
                   // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}

@@ -53,7 +53,7 @@ function AssetIcon ({ type }) {
       return <FontAwesomeIcon className='label-icon' icon={faCubes} />;
     case 'plant':
       return <FontAwesomeIcon className='label-icon' icon={faCube} />;
-    case 'asset': 
+    case 'asset':
       return <FontAwesomeIcon className='label-icon' icon={faSun} />;
     default:
       return <FontAwesomeIcon className='label-icon' icon={faQuestion} />;
@@ -95,7 +95,7 @@ AssetTreeItem.propTypes = {
   nodeId: PropTypes.string,
   labelText: PropTypes.string,
   assetType: PropTypes.string,
-  labelInfo: PropTypes.string, 
+  labelInfo: PropTypes.string,
 };
 
 export const SearchComboBox = () => {
@@ -122,7 +122,7 @@ const mockList = [
   { title: 'Asset Title 4' },
 ];
 
-export function AssetTree ({nestedAssets}) {
+export function AssetTree ({ nestedAssets }) {
   const DisplayAssetNodeTree = (displayData) => (
     <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (

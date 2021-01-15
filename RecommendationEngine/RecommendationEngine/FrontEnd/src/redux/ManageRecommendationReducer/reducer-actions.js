@@ -9,7 +9,6 @@ import { getConfiguredRecommendationList } from '../SharedReducer/reducer-action
 import { GetTemplateDetailsInfo } from '../../api/endpoints/TemplateDetailsEndpoints';
 import { AddConfiguredRecommendation, EditConfiguredRecommendation, DeleteRecommendationById } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 
-
 //**Actions --> Useful for unit testing the reducer.
 export const setTemplateName = (value) => {
   return {
@@ -101,15 +100,15 @@ export const setRepeatDate = (value) => {
   };
 };
 
-  export const setId = (value) => {
-    return {
-      type: dispatchActionType.UPDATE_ID,
-      payload: {
-        id: value,
-      },
-    };
+export const setId = (value) => {
+  return {
+    type: dispatchActionType.UPDATE_ID,
+    payload: {
+      id: value,
+    },
   };
-  
+};
+
 export const setRepeatTime = (value) => {
   return {
     type: dispatchActionType.UPDATE_REPEAT_TIME,
@@ -131,7 +130,7 @@ export const setBackToInitialValues = () => {
   }
 };
 
-  /* istanbul ignore next */
+/* istanbul ignore next */
 export const setRecommendationType = (dispatch, value) => {
   dispatch(setTemplateName(value.templateName));
   dispatch(setTemplateDescription(value.templateDescription));
@@ -140,9 +139,9 @@ export const setRecommendationType = (dispatch, value) => {
 };
 
 export const setEditable = () => {
-    return {
-        type: dispatchActionType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
-    };
+  return {
+    type: dispatchActionType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
+  };
 };
 
 /* istanbul ignore next */
@@ -157,109 +156,117 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
-  /* istanbul ignore next */
+/* istanbul ignore next */
 export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
-    dispatch(setTemplateName(value.type));
-    dispatch(updateAsset(value.assetList));
-    dispatch(setTitle(value.name));
-    dispatch(setPreferredScenario(value.preferredScenario));
-    dispatch(setGranularity(value.granularity));
-    dispatch(setRepeatDay(value.recurrenceDayOfWeek));
-    dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
-    dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
-    dispatch(setId(id));
-    dispatch(setEditable());
+  dispatch(setTemplateName(value.type));
+  dispatch(updateAsset(value.assetList));
+  dispatch(setTitle(value.name));
+  dispatch(setPreferredScenario(value.preferredScenario));
+  dispatch(setGranularity(value.granularity));
+  dispatch(setRepeatDay(value.recurrenceDayOfWeek));
+  dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
+  dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
+  dispatch(setId(id));
+  dispatch(setEditable());
 }
 
 /* istanbul ignore next */
 export const addConfiguredRecommendation = async (dispatch, configuredRecommendation) => {
-    const response = await AddConfiguredRecommendation(configuredRecommendation);
-    dispatch({
-        type: dispatchActionType.ADD_CONFIGURED_RECOMMENDATION,
-        payload: response,
-    });
-    if (response.status === 200) {
-        await getConfiguredRecommendationList(dispatch);
-    }
-    else {
-        alert("An error occured when trying to add this recommendation into our server.");
-    }
+  const response = await AddConfiguredRecommendation(configuredRecommendation);
+  dispatch({
+    type: dispatchActionType.ADD_CONFIGURED_RECOMMENDATION,
+    payload: response,
+  });
+  if (response.status === 200) {
+    await getConfiguredRecommendationList(dispatch);
+  }
+  else {
+    alert("An error occured when trying to add this recommendation into our server.");
+  }
 }
 
 /* istanbul ignore next */
 export const editConfiguredRecommendation = async (dispatch, configuredRecommendation, id) => {
-    const response = await EditConfiguredRecommendation(configuredRecommendation, id);
-    dispatch({
-        type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
-        payload: response,
-    });
-    if (response.status === 200) {
-        await getConfiguredRecommendationList(dispatch);
-        openScheduleDrilldown(dispatch, id);
-    }
-    else {
-        alert("An error occured when trying to modify this recommendation from our server.");
-    }
+  const response = await EditConfiguredRecommendation(configuredRecommendation, id);
+  dispatch({
+    type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
+    payload: response,
+  });
+  if (response.status === 200) {
+    await getConfiguredRecommendationList(dispatch);
+    openScheduleDrilldown(dispatch, id);
+  }
+  else {
+    alert("An error occured when trying to modify this recommendation from our server.");
+  }
 }
 
 /* istanbul ignore next */
 export const deleteConfiguredRecommendation = async (dispatch, id) => {
-    const response = await DeleteRecommendationById(id);
-    dispatch({
-        type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
-        payload: response
-    });
-    if (response.status === 200) {
-        await getConfiguredRecommendationList(dispatch);
-    }
-    else {
-        alert("An error occured when trying to delete this recommendation from our server.");
-    }
+  const response = await DeleteRecommendationById(id);
+  dispatch({
+    type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
+    payload: response
+  });
+  if (response.status === 200) {
+    await getConfiguredRecommendationList(dispatch);
+  }
+  else {
+    alert("An error occured when trying to delete this recommendation from our server.");
+  }
 }
 
 
 /* istanbul ignore next */
 export const postConfiguredRecommendation = async (dispatch, configuredRecommendation, editingState) => {
-    if (editingState.isEditing) {
-        await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.iD);
-    }
-    else {
-        await addConfiguredRecommendation(dispatch, configuredRecommendation);
-    }
+  if (editingState.isEditing) {
+    await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.iD);
+  }
+  else {
+    await addConfiguredRecommendation(dispatch, configuredRecommendation);
+  }
 }
 
 //**GETTER** This method will allow you to have direct access to all the states (the ones you wish to) value from the store
 /* istanbul ignore next */
 export const mapDialogStateToProps = (state) => {
-    return {
-        all: state,
-        dialogsContent: state.manageRecommendationReducer,
-        apiAssets: state.sharedReducer.flatListAssets,
-    };
+  return {
+    all: state,
+    dialogsContent: state.manageRecommendationReducer,
+    apiAssets: state.sharedReducer.flatListAssets,
+  };
 };
 
-  
-  //This method will allow you to pass the actions as a prop to the connected component in
-  //order to modify the value in the store
-  /* istanbul ignore next */
-  export const mapDispatchToProps = (dispatch) => {
-    return {
-      setTemplateName: (value) =>  dispatch(setTemplateName(value)),
-      setTemplateDescription: (value) => dispatch(setTemplateDescription(value)),
-      setInputList: (value) => dispatch(setInputList(value)),
-      setAlgorithmName: (value) => dispatch(setAlgorithmName(value)),
-      setTitle: (value) => dispatch(setTitle(value)),
-      updateAsset: (value) => dispatch(updateAsset(value)),
-      setPreferredScenario: (value) => dispatch(setPreferredScenario(value)),
-      setGranularity: (value) => dispatch(setGranularity(value)),
-      setRepeatDay: (value) => dispatch(setRepeatDay(value)),
-      setRepeatDate: (value) => dispatch(setRepeatDate(value)),
-      setRepeatTime: (value) => dispatch(setRepeatTime(value)),
-      setEditableConfiguredRecommendation: (value, id) => setEditableConfiguredRecommendation(dispatch, value, id),
-      toggleDialog: () => dispatch(toggleDialog()),
-      setBackToInitialValues: () => dispatch(setBackToInitialValues()),
-      getTemplateDetails: () => getTemplateDetails(dispatch),
-      setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
-      postConfiguredRecommendation: (configuredRecommendation, editingState) => postConfiguredRecommendation(dispatch, configuredRecommendation, editingState),
-    };
+
+//This method will allow you to pass the actions as a prop to the connected component in
+//order to modify the value in the store
+/* istanbul ignore next */
+export const mapDispatchToProps = (dispatch) => {
+  return {
+    setTemplateName: (value) => dispatch(setTemplateName(value)),
+    setTemplateDescription: (value) => dispatch(setTemplateDescription(value)),
+    setInputList: (value) => dispatch(setInputList(value)),
+    setAlgorithmName: (value) => dispatch(setAlgorithmName(value)),
+    setTitle: (value) => dispatch(setTitle(value)),
+    updateAsset: (value) => dispatch(updateAsset(value)),
+    setPreferredScenario: (value) => dispatch(setPreferredScenario(value)),
+    setGranularity: (value) => dispatch(setGranularity(value)),
+    setRepeatDay: (value) => dispatch(setRepeatDay(value)),
+    setRepeatDate: (value) => dispatch(setRepeatDate(value)),
+    setRepeatTime: (value) => dispatch(setRepeatTime(value)),
+    setEditableConfiguredRecommendation: (value, id) => setEditableConfiguredRecommendation(dispatch, value, id),
+    toggleDialog: () => dispatch(toggleDialog()),
+    setBackToInitialValues: () => dispatch(setBackToInitialValues()),
+    getTemplateDetails: () => getTemplateDetails(dispatch),
+    setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
+    postConfiguredRecommendation: (configuredRecommendation, editingState) => postConfiguredRecommendation(dispatch, configuredRecommendation, editingState),
+  };
+}
+
+/* istanbul ignore next */
+export const mapDispatchManageRecommendationPageToProps = (dispatch) => {
+  return {
+    toggleDialog: () => dispatch(toggleDialog()),
+    openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id)
   }
+}

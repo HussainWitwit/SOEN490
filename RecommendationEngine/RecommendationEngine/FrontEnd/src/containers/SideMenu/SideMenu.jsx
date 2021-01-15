@@ -7,7 +7,7 @@ import { SideMenuItems } from './ListItemObjects.ts';
 import LogoSVGComponent from './LogoSVGComponent.jsx';
 import { withRouter } from 'react-router-dom';
 
-export default function SideMenu (props) {
+export function SideMenu (props) {
 
     const [openNested, setOpenNested] = React.useState(true);
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);

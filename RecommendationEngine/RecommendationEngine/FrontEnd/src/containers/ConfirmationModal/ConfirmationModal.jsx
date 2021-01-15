@@ -9,7 +9,7 @@ import './ConfirmationModal.css';
 const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.
 var formatYear = { month: 'long', day: 'numeric' };
 var formatMonth = { day: 'numeric' };
-var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true};
+var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true };
 var dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export function ConfirmationModal (props) {
@@ -19,11 +19,11 @@ export function ConfirmationModal (props) {
   const stringRecurrenceFormatting = () => {
     let date = dialogsContent.basicConfiguration.repeatDate;
     let time = dialogsContent.basicConfiguration.repeatTime;
-    switch(dialogsContent.basicConfiguration.granularity) {
+    switch (dialogsContent.basicConfiguration.granularity) {
       case 'Yearly':
-        return(`Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
+        return (`Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
       case 'Monthly':
-        return(`Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]}th of the month at ${time.toLocaleTimeString('en-us', formatTime)}`);
+        return (`Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]}th of the month at ${time.toLocaleTimeString('en-us', formatTime)}`);
       case 'Weekly':
         let intDayOfWeek = dialogsContent.basicConfiguration.repeatDay;
         return (`Every ${dayOfWeek[intDayOfWeek - 1]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
@@ -38,8 +38,8 @@ export function ConfirmationModal (props) {
         <div id="confirmation-sub-header">Summary</div>
         <div id="confirmation-content-body">
           <TextField
-            multiline = {true}
-            error = {!dialogsContent.basicConfiguration.title}
+            multiline={true}
+            error={!dialogsContent.basicConfiguration.title}
             id="outlined-read-only-title"
             label="Recommendation Title"
             defaultValue={dialogsContent.basicConfiguration.title ? dialogsContent.basicConfiguration.title : "No Title"}
@@ -77,8 +77,8 @@ export function ConfirmationModal (props) {
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."
-            id = 'multiple-select-asset-container'
-            error = {dialogsContent.basicConfiguration.asset.length === 0}
+            id='multiple-select-asset-container'
+            error={dialogsContent.basicConfiguration.asset.length === 0}
             items={dialogsContent.basicConfiguration.asset}
             defaultValue={dialogsContent.basicConfiguration.asset}
             boxLabelName={'Selected Assets'}

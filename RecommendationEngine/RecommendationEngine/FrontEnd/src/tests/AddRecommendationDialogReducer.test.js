@@ -1,5 +1,5 @@
-import * as dispatchType from '../redux/AddRecDialogReducer/dispatch-types';
-import { AddConfiguredRecDialogReducer } from '../redux/AddRecDialogReducer/reducer';
+import * as dispatchType from '../redux/ManageRecommendationReducer/dispatch-types';
+import { ManageRecommendationReducer } from '../redux/ManageRecommendationReducer/reducer';
 
 const detailsConfigInitialValues = {
   title: '',
@@ -14,28 +14,31 @@ const detailsConfigInitialValues = {
 
 let state = {
   isDialogOpen: false,
-  id: null,
+  iD: null,
   isEditing: false,
   template: {
-      name: "",
-      description: "",
-      inputList: [],
-      algorithmName: ""
+    name: "",
+    description: "",
+    inputList: [],
+    algorithmName: ""
   },
   basicConfiguration: detailsConfigInitialValues,
   parameters: {},
   templateDetailsList: [],
+  addRecommenendationResponse: null,
+  deleteRecommendationResponse: null,
+  editRecommendationReponse: null,
 }
 
 describe('Add Recommendation Dialog reducer', () => {
   // This test fails because of new Date()
   // it('should return the initial state', () => {
-  //   expect(AddConfiguredRecDialogReducer(undefined, {})).toEqual(state)
+  //   expect(ManageRecommendationReducer(undefined, {})).toEqual(state)
   // })
 
   it('should handle GET_TEMPLATE_DETAILS', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.GET_TEMPLATE_DETAILS,
         payload: []
       })
@@ -47,7 +50,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_RECOMMENDATION_TEMPLATE_NAME', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_NAME,
         payload: {
           name: 'Run the tests',
@@ -66,7 +69,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_RECOMMENDATION_TEMPLATE_DESCRIPTION', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_DESCRIPTION,
         payload: {
           description: 'Run the tests',
@@ -85,7 +88,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST,
         payload: {
           inputList: 'Run the tests',
@@ -104,7 +107,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM,
         payload: {
 
@@ -118,13 +121,13 @@ describe('Add Recommendation Dialog reducer', () => {
         description: "",
         inputList: [],
         algorithmName: 'Run the tests',
-       },
+      },
     });
   });
 
   it('should handle UPDATE_TITLE', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_TITLE,
         payload: {
           title: 'Run the tests',
@@ -141,7 +144,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_ASSET', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_ASSET,
         payload: {
           asset: [{ name: "Asset 3", id: 0 }, { name: "Asset test", id: 1 }],
@@ -158,7 +161,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_PREFERRED_SCENARIO', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_PREFERRED_SCENARIO,
         payload: {
           preferredScenario: 'Net Saving',
@@ -175,7 +178,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_GRANULARITY', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_GRANULARITY,
         payload: {
           granularity: 'Weekly',
@@ -192,7 +195,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_REPEAT_DAY', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_REPEAT_DAY,
         payload: {
           repeatDay: 0,
@@ -209,7 +212,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_REPEAT_DATE', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_REPEAT_DATE,
         payload: {
           repeatDate: '2020/01/01',
@@ -226,7 +229,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle UPDATE_REPEAT_TIME', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_REPEAT_TIME,
         payload: {
           repeatTime: '09:31 AM',
@@ -243,7 +246,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle TOGGLE Dialog', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.TOGGLE_DIALOG,
         payload: {
           isDialogOpen: true,
@@ -257,7 +260,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle the setting of the edited recommendation id: 1', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_ID,
         payload: {
           id: 1,
@@ -271,7 +274,7 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should handle the update of recommendation pop state to editing', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.EDITING_EXISTING_CONFIGURED_RECOMMENDATION,
       })
     ).toEqual({
@@ -282,18 +285,18 @@ describe('Add Recommendation Dialog reducer', () => {
 
   it('should correctly handle setting back the recommendation pop-up default values.  ', () => {
     expect(
-      AddConfiguredRecDialogReducer(state, {
+      ManageRecommendationReducer(state, {
         type: dispatchType.SET_BACK_TO_INITIAL_VALUES,
       })
     ).toEqual({
       ...state,
       templateDetailsList: state.templateDetailsList,
       template: {
-          ...state.template,
-          name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName: '',
-          description:  state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription: '',
-          inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
-          algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
+        ...state.template,
+        name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName : '',
+        description: state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription : '',
+        inputList: state.templateDetailsList.length ? state.templateDetailsList[0].inputList : [],
+        algorithmName: state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName : ''
       }
     });
   });
@@ -304,7 +307,7 @@ describe('Add Recommendation Dialog reducer', () => {
   // This test fails because of new Date()
   // it('should handle CLEAR Dialog', () => {
   //   expect(
-  //     AddConfiguredRecDialogReducer(state, {
+  //     ManageRecommendationReducer(state, {
   //       type: dispatchType.CLEAR
   //     })
   //   ).toEqual({

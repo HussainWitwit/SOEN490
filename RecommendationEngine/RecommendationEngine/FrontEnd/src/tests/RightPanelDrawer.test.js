@@ -19,13 +19,13 @@ describe('RightPanel component', () => {
   let wrapper;
 
   let mockTabs = [{
-      name: "AssetTreeview"
+    name: "AssetTreeview"
   }];
 
   beforeEach(() => {
     wrapper = mount(
       <Provider store={store}>
-        <RightPanelDrawer tabs={mockTabs} changeTabIndex={(id)=> void 0} closeAssetTreeview={()=> void 0} isOpen={true} closeAll={()=> void 0} />
+        <RightPanelDrawer tabs={mockTabs} changeTabIndex={(id) => void 0} closeAssetTreeview={() => void 0} isOpen={true} closeAll={() => void 0} />
       </Provider>
     );
   });
@@ -34,7 +34,7 @@ describe('RightPanel component', () => {
     const div = document.createElement('div');
     ReactDOM.render(
       <Provider store={store}>
-        <RightPanelDrawer tabs={mockTabs} changeTabIndex={(id)=> void 0} closeAssetTreeview={()=> void 0} isOpen={true} closeAll={()=> void 0} />
+        <RightPanelDrawer tabs={mockTabs} changeTabIndex={(id) => void 0} closeAssetTreeview={() => void 0} isOpen={true} closeAll={() => void 0} />
       </Provider>,
       div
     );

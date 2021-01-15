@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Layout from './containers/AppLayout/Layout';
-import ManageRecommendationPage from './containers/ManageRecommendationPage/ManageRecommendationPage';
+import Layout from '../AppLayout/Layout';
+import ManageRecommendationPage from '../ManageRecommendationPage/ManageRecommendationPage';
 import { hot } from 'react-hot-loader/root';
-import './stylesheet.css';
-import Dashboard from './containers/Dashboard/Dashboard';
-import JobsPage from './containers/JobsPage/JobsPage';
-import ResultsPage from './containers/ResultsPage/ResultsPage';
-import WorkOrders from './containers/WorkOrders/WorkOrders';
-import Settings from './containers/Settings/Settings';
-import Notifications from './containers/Notifications/Notifications';
+import './App.css';
+import Dashboard from '../Dashboard/Dashboard';
+import JobsPage from '../JobsPage/JobsPage';
+import ResultsPage from '../ResultsPage/ResultsPage';
+import WorkOrders from '../WorkOrders/WorkOrders';
+import Settings from '../Settings/Settings';
+import Notifications from '../Notifications/Notifications';
 
 function App (props) {
   return (
