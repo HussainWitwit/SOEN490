@@ -84,7 +84,7 @@ export function ManageRecommendationPage(props) {
       <div>
         <div>
           <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item>
+            <Grid item id = "recommendation-search-bar" >
               <SearchBar
                 placeholder = "Search for a recommendation..."
                 onChangeFun = {updateSearch}

@@ -13,7 +13,6 @@ const SearchBar = ({value, onChangeFun, placeholder}) => {
         onChange={(e) => onChangeFun(e.target.value)}
       />
     </div>
-    
   );
 }
 

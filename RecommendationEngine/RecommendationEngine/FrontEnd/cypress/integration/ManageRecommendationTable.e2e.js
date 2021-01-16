@@ -18,7 +18,15 @@ describe("Manage Recommendation Table", () => {
 
     it("Finds the searchbar", () => {
         cy.wait(500)
-        cy.get('#custom-css-standard-input').should('be.visible')
+        cy.get('#recommendation-search-bar').should('be.visible')
+    })
+
+    it("Search bar can take queries", () => {
+        cy.wait(500)
+        cy.get("#recommendation-search-bar").click()
+        cy.get("#recommendation-search-bar").type("Recommendation 23")
+        cy.get('#recommendation-search-bar').should('be.visible')
+        cy.wait(500)
     })
 
     it("Finds the filter button", () => {
@@ -28,7 +36,7 @@ describe("Manage Recommendation Table", () => {
     it('Finds the table', () => {
         cy.get('#toolbar').should('exist')
         cy.get('#tableTitle').should('be.visible')
-        cy.get('#custom-css-standard-input').should('be.visible')
+        cy.get('#recommendation-search-bar').should('be.visible')
         cy.get('#table-row > :nth-child(2)').should('be.visible')
         cy.get('#table-row > :nth-child(3)').should('be.visible')
         cy.get('#table-row > :nth-child(4)').should('be.visible')
