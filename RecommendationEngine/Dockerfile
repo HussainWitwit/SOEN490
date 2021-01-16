@@ -14,6 +14,10 @@ COPY ["Models/Models.csproj", "Models/"]
 RUN dotnet restore "RecommendationEngine/RecommendationEngine.csproj"
 COPY . .
 WORKDIR "/src/RecommendationEngine"
+# Fetch and install Node 14. Make sure to include the --yes parameter 
+# to automatically accept prompts during install, or it'll fail.
+RUN curl --silent --location https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install --yes nodejs
 RUN dotnet build "RecommendationEngine.csproj" -c Release -o /app/build
 
 FROM build AS publish
