@@ -9,7 +9,7 @@ namespace RecommendationEngine.Controllers
     public class RecommendationTypeController : ControllerBase
     {
 
-        private IRecommendationTypeService _recommendationTypeService;
+        private readonly IRecommendationTypeService _recommendationTypeService;
 
         public RecommendationTypeController(IRecommendationTypeService recommendationTypeService)
         {

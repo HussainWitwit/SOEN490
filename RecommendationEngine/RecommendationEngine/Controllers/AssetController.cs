@@ -9,7 +9,7 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class AssetController : ControllerBase
     {
-        private IAssetService _assetService;
+        private readonly IAssetService _assetService;
 
         public AssetController(IAssetService assetService)
         {

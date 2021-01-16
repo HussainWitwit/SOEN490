@@ -9,7 +9,7 @@ namespace RecommendationEngine.Controllers
     [Route("[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private IConfiguredRecommendationService _configuredRecommendationService;
+        private readonly IConfiguredRecommendationService _configuredRecommendationService;
 
         public ConfiguredRecommendationController(IConfiguredRecommendationService configuredRecommendationService)
         {
@@ -17,7 +17,7 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpGet]
-        public IActionResult getConfiguredRecommendationList()
+        public IActionResult GetConfiguredRecommendationList()
         {
             return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
         }
