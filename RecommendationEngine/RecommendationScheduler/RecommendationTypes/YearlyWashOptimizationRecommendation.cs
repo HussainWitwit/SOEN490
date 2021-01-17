@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace RecommendationScheduler.RecommendationTypes
 {
 
-    public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashAPIValues>
+    public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashApiValues>
         {
             //Dependency Injection variables
             private IRecommendationJobLogger _jobLogger;
@@ -27,7 +27,7 @@ namespace RecommendationScheduler.RecommendationTypes
 
             //Execute method params passed by _job sheduler
             private YearlyWashParameters _userParameters = new YearlyWashParameters();
-            private YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
+            private YearlyWashApiValues _apiValues = new YearlyWashApiValues();
 
             private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
 
@@ -37,7 +37,7 @@ namespace RecommendationScheduler.RecommendationTypes
                 _job = job;
             }
 
-            public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
+            public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
             {
                 _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
 
