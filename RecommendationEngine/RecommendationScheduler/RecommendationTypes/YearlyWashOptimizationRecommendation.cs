@@ -10,25 +10,25 @@ namespace RecommendationScheduler.RecommendationTypes
     public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashApiValues>
         {
             //Dependency Injection variables
-            private IRecommendationJobLogger _jobLogger;
-            private DBRecommendationJob _job;
+            private readonly IRecommendationJobLogger _jobLogger;
+            private readonly DBRecommendationJob _job;
 
             //Variable declarations
-            private SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
-            private SoilingCalculations _soilingWithAction = new SoilingCalculations();// object for Soiling Calculation , with action , aka the impact of soiling with cleaning schedule  
-            private List<DateTime> _cleaningDates = new List<DateTime>(); //List of Cleaning days for a specific centerPoint and span combination
+            private readonly SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
+            private readonly SoilingCalculations _soilingWithAction = new SoilingCalculations();// object for Soiling Calculation , with action , aka the impact of soiling with cleaning schedule  
+            private readonly List<DateTime> _cleaningDates = new List<DateTime>(); //List of Cleaning days for a specific centerPoint and span combination
             private int _cumulativeCleaning = 0;
             private int _dayCount = 1;
             private Boolean _isWashDay = false;
 
             //Temporary output variables for Result soilingScenarioect
-            private DBRecommendationJobResult _result = new DBRecommendationJobResult();
-            private DBRecommendationJobResult _tempResult = new DBRecommendationJobResult();
+            private readonly DBRecommendationJobResult _result = new DBRecommendationJobResult();
+            private readonly DBRecommendationJobResult _tempResult = new DBRecommendationJobResult();
 
             //Execute method params passed by _job sheduler
             private YearlyWashParameters _userParameters = new YearlyWashParameters();
 
-            private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
+            private readonly List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
 
             public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger, DBRecommendationJob job)
             {
