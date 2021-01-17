@@ -22,8 +22,8 @@ services:
       - '50024:3306'
       # Where our data will be persisted
     volumes:
-      - recommendation-engine:/var/lib/mysql
+      - ./mysql-dump:/docker-entrypoint-initdb.d
     
 # Names our volume
-volumes:
-  recommendation-engine:
+#volumes:
+#  recommendation-engine:
