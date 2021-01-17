@@ -27,7 +27,6 @@ namespace RecommendationScheduler.RecommendationTypes
 
             //Execute method params passed by _job sheduler
             private YearlyWashParameters _userParameters = new YearlyWashParameters();
-            private YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
 
             private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
 
@@ -41,7 +40,6 @@ namespace RecommendationScheduler.RecommendationTypes
             {
                 _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
 
-                _apiValues = apiValues;
                 _userParameters = parameters;
 
                 //Initializing scenario parameters
@@ -74,18 +72,18 @@ namespace RecommendationScheduler.RecommendationTypes
                         {
                             //NoAction
                             CalculateSoilingDerateNoAction();
-                            CalculateSoilingImpact(_soilingNoAction, _apiValues.PredictEnergyList, _apiValues.EnergyPricesList);
+                            CalculateSoilingImpact(_soilingNoAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
 
                             CheckIfWashDay(currentDate, centerPoint, span);
 
                             //WithAction
                             CalculateSoilingDerateWithAction(currentDate, _isWashDay, _cumulativeCleaning);
-                            CalculateSoilingImpact(_soilingWithAction, _apiValues.PredictEnergyList, _apiValues.EnergyPricesList);
+                            CalculateSoilingImpact(_soilingWithAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
 
                             _dayCount += 1;
                         }
 
-                        UpdateTempOutput(_cumulativeCleaning, _apiValues.PlantDCCapacity);
+                        UpdateTempOutput(_cumulativeCleaning, apiValues.PlantDCCapacity);
 
                         if ((_userParameters.PreferredScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
                             || (_userParameters.PreferredScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving
