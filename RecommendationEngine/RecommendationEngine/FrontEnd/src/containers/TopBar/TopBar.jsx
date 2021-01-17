@@ -24,6 +24,7 @@ function TopBar({openAssetTreeview}) {
     setWeatherDetails({ temp: data.main.temp, description: data.weather[0].main, icon: data.weather[0].icon });
   }
 
+  /* istanbul ignore next */
   useEffect(() => {
     if(process.env.REACT_APP_GEOLOCATION_KEY && process.env.REACT_APP_WEATHER_KEY){
       getCurrentLocation(); 
