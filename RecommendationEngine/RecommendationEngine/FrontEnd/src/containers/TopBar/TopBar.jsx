@@ -24,10 +24,12 @@ function TopBar({openAssetTreeview}) {
     setWeatherDetails({ temp: data.main.temp, description: data.weather[0].main, icon: data.weather[0].icon });
   }
 
+  /* istanbul ignore next */
   useEffect(() => {
-    //Uncomment these 2 lines to enable api calls
-    // getCurrentLocation(); 
-    // getCurrentWeather();
+    if(process.env.REACT_APP_GEOLOCATION_KEY && process.env.REACT_APP_WEATHER_KEY){
+      getCurrentLocation(); 
+      getCurrentWeather();
+    }
   }, []);
 
   return (
