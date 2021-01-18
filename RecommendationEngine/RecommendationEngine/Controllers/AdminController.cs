@@ -6,7 +6,7 @@ using Interfaces.Services;
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AdminController: ControllerBase
     {
         private readonly IAssetService _assetService;

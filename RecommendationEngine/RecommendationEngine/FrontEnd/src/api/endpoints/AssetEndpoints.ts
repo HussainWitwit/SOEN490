@@ -14,8 +14,7 @@ import { Asset } from "../models/Asset";
 export const GetNestedAssetList = async () => {
     let assetResult: Asset;
     try {
-        // let response = await fetch('asset/assetsNested'); //Do not make a typing mistake in the api call
-        let response = await fetch('asset/assetsNested'); //Do not make a typing mistake in the api call
+        let response = await fetch('api/asset/nested'); //Do not make a typing mistake in the api call
         const jsonResponse = await response.json();
         if(jsonResponse) {
             //Make sure the returned value is exactly equal to entity attribute
@@ -34,8 +33,7 @@ export const GetNestedAssetList = async () => {
 export const GetFlatAssetList = async () => {
     let assetResult: Asset;
     try {
-        // let response = await fetch('asset/assetsNested'); //Do not make a typing mistake in the api call
-        let response = await fetch('asset/assetsList'); //Do not make a typing mistake in the api call
+        let response = await fetch('api/asset'); //Do not make a typing mistake in the api call
         const jsonResponse = await response.json();
         if(jsonResponse) {
             //Make sure the returned value is exactly equal to entity attribute

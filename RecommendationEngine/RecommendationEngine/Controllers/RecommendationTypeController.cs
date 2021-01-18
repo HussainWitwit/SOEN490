@@ -5,7 +5,7 @@ using Interfaces.Services;
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RecommendationTypeController : ControllerBase
     {
 

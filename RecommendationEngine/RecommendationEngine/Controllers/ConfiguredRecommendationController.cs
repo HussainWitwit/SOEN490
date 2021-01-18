@@ -6,7 +6,7 @@ using RecommendationEngine.ExceptionHandler;
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
         private readonly IConfiguredRecommendationService _configuredRecommendationService;

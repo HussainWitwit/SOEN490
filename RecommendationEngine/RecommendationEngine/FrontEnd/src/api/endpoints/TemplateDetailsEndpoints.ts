@@ -5,7 +5,7 @@ export const GetTemplateDetailsInfo = async () => {
     let templates: TemplateDetails[];
 
     try{
-        let response = await fetch ('RecommendationType');
+        let response = await fetch ('api/RecommendationType');
 
         const jsonResponse = await response.json();
         if(jsonResponse)

@@ -5,7 +5,7 @@ using RecommendationEngine.ExceptionHandler;
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AssetController : ControllerBase
     {
         private readonly IAssetService _assetService;
@@ -15,12 +15,12 @@ namespace RecommendationEngine.Controllers
             _assetService = assetService;
         }
 
-        [HttpGet("assetsNested")]
-        public IActionResult GetAssetsNested()
+        [HttpGet()]
+        public IActionResult GetAssetsList()
         {
             try
             {
-                return Ok(_assetService.GetAssetsTreeview());
+                return Ok(_assetService.GetAssetsList());
             }
             catch (GlobalException e)
             {
@@ -28,12 +28,12 @@ namespace RecommendationEngine.Controllers
             }
         }
 
-        [HttpGet("assetsList")]
-        public IActionResult GetAssetsList()
+        [HttpGet("nested")]
+        public IActionResult GetAssetsNested()
         {
             try
             {
-                return Ok(_assetService.GetAssetsList());
+                return Ok(_assetService.GetAssetsTreeview());
             }
             catch (GlobalException e)
             {
