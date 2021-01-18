@@ -50,7 +50,7 @@
 }
 
 .drawer-title {
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
 }
 
@@ -112,10 +112,9 @@
 }
 
 .day {
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     float: left;
     margin-left: 6px;
-    font-family: 'Mulish';
     letter-spacing: 5px;
     border-radius: 20px;
     text-indent: 5px;
