@@ -37,7 +37,7 @@ namespace RecommendationEngineTests.APITests
         [Test]
         public async Task Convert()
         {
-            var response = await _client.GetAsync("/admin/convert");
+            var response = await _client.GetAsync("api/admin/convert");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }

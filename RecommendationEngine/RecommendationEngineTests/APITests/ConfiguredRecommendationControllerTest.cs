@@ -58,7 +58,7 @@ namespace RecommendationEngineTests.APITests
         [Test]
         public async Task GetRecommendations()
         {
-            var response = await _client.GetAsync("/configuredRecommendation");
+            var response = await _client.GetAsync("api/configuredRecommendation");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -68,21 +68,21 @@ namespace RecommendationEngineTests.APITests
             var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
             string json = JsonConvert.SerializeObject(recommendation);
             var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("/configuredRecommendation", body);
+            var response = await _client.PostAsync("api/configuredRecommendation", body);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
         public async Task GetRecommendationByIdTest()
         {
-            var response = await _client.GetAsync("/configuredRecommendation/1");
+            var response = await _client.GetAsync("api/configuredRecommendation/1");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
         public async Task DeleteRecommendationByIdTest()
         {
-            var response = await _client.DeleteAsync("/configuredRecommendation/1");
+            var response = await _client.DeleteAsync("api/configuredRecommendation/1");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -90,14 +90,14 @@ namespace RecommendationEngineTests.APITests
         public async Task EditRecommendations()
         {
             var payload = MockConfiguredRecommendations.EDITED_CONFIGURED_RECOMMENDATION;
-            var response = await _client.PutAsync("/configuredRecommendation/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+            var response = await _client.PutAsync("api/configuredRecommendation/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
         public async Task GetRecommendationByIdTestBad()
         {
-            var response = await _clientBad.GetAsync("/configuredRecommendation/1");
+            var response = await _clientBad.GetAsync("api/configuredRecommendation/1");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 
@@ -107,7 +107,7 @@ namespace RecommendationEngineTests.APITests
             var recommendation = MockConfiguredRecommendations.BAD_CONFIGURED_RECOMMENDATION;
             string json = JsonConvert.SerializeObject(recommendation);
             var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("/configuredRecommendation", body);
+            var response = await _client.PostAsync("api/configuredRecommendation", body);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 
@@ -115,7 +115,7 @@ namespace RecommendationEngineTests.APITests
         public async Task EditRecommendationBad()
         {
             var payload = MockConfiguredRecommendations.BAD_CONFIGURED_RECOMMENDATION;
-            var response = await _client.PutAsync("/configuredRecommendation/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+            var response = await _client.PutAsync("api/configuredRecommendation/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 

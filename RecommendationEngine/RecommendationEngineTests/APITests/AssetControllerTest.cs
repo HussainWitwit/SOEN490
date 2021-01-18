@@ -54,14 +54,14 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         [Test]
         public async Task GetAssetsListBad()
         {
-            var response = await _clientBad.GetAsync("/asset");
+            var response = await _clientBad.GetAsync("api/asset");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 
         [Test]
         public async Task GetAssetsNested()
         {
-            var response = await _client.GetAsync("/asset/nested");
+            var response = await _client.GetAsync("api/asset/nested");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             var asset = JsonConvert.DeserializeObject<AssetComposite>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(asset);
@@ -72,7 +72,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         [Test]
         public async Task GetAssetsList()
         {
-            var response = await _client.GetAsync("/asset");
+            var response = await _client.GetAsync("api/asset");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             List<AssetLeaf> assetList = JsonConvert.DeserializeObject<List<AssetLeaf>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(assetList);
