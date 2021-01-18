@@ -50,7 +50,7 @@ export const contentInitialValues = {
     id: null
 }
 
-export const AddConfiguredRecDialogReducer = function (action, state = contentInitialValues) {
+export const AddConfiguredRecDialogReducer = function (state = contentInitialValues, action) {
     
     switch (action.type) {
         case type.GET_TEMPLATE_DETAILS:

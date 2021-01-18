@@ -32,8 +32,8 @@ const ASSET_TREEVIEW_NAME = 'AssetTreeview';
  * It is important to note that we have to return states as immutable objects in redux, and so the main functions used are map, filter and spread operator
  */
 export const RightPanelReducer = function (
-  action,
-  state = rightPanelInitialState
+  state = rightPanelInitialState,
+  action
 ) {
   switch (action.type) {
     case type.OPEN_ASSET_TREEVIEW: {
