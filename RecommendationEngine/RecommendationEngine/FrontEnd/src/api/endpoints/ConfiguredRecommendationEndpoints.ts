@@ -9,7 +9,7 @@ export const GetConfiguredRecommendationList = async () => {
 
     let configuredRecommendations: ConfiguredRecommendation[];
     try {
-        let response = await fetch('ConfiguredRecommendation/get');
+        let response = await fetch('api/ConfiguredRecommendation');
         // let response = await fetch(endpoint);
         const jsonResponse = await response.json();
         if (jsonResponse) {
@@ -28,7 +28,7 @@ export const GetConfiguredRecommendationList = async () => {
 export const GetConfiguredRecommendationById = async (id:number) => {
     let configuredRecommendations: ConfiguredRecommendation;
     try {
-        let response = await fetch('ConfiguredRecommendation/configuredRecommendation/' + id);
+        let response = await fetch('api/ConfiguredRecommendation/' + id);
         const jsonResponse = await response.json();
         if (jsonResponse) {
             configuredRecommendations = mapConfiguredRecommendation(jsonResponse);
@@ -46,7 +46,7 @@ export const GetConfiguredRecommendationById = async (id:number) => {
 export const DeleteRecommendationById = async (id: number ) => {
     let response;
     try {
-        response = await fetch('ConfiguredRecommendation/delete/'+ id, {
+        response = await fetch('api/ConfiguredRecommendation/'+ id, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })
@@ -60,7 +60,7 @@ export const DeleteRecommendationById = async (id: number ) => {
 export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
     let response;
     try {
-        response = await fetch('ConfiguredRecommendation/add/', {
+        response = await fetch('api/ConfiguredRecommendation/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(recommendation)
@@ -77,8 +77,8 @@ export const EditConfiguredRecommendation = async (recommendation: ConfiguredRec
     console.log(id);
     let response;
     try {
-        response = await fetch('ConfiguredRecommendation/edit/' + id, {
-            method: 'POST',
+        response = await fetch('api/ConfiguredRecommendation/' + id, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(recommendation)
         })

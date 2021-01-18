@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models.DB;
 
-namespace RecommendationEngine.Migrations
+namespace Models.Migrations
 {
     [DbContext(typeof(RecommendationEngineDBContext))]
     partial class RecommendationEngineDBContextModelSnapshot : ModelSnapshot
