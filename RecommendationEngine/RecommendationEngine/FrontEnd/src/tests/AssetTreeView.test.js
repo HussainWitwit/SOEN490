@@ -54,8 +54,6 @@ describe('AssetTreeView component', () => {
         expect(component).toHaveLength(1);
     })
 
-+
-
     it("It finds the AssetTree component", () => {
         const output = shallow(<AssetTree />);
         let component1 = output.find(SearchComboBox);
