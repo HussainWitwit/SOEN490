@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { FilterList, Search } from '@material-ui/icons';
+import { FilterList } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Grid, TableCell } from '@material-ui/core';
 import CustomGenericTable from '../../components/CustomGenericTable/CustomGenericTable';
@@ -8,8 +8,8 @@ import AddRecommendationDialog from '../../containers/AddRecommendationDialog/Ad
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
+import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
-
 
 export const CssTextField = withStyles({
   root: {
@@ -51,6 +51,8 @@ export const RowsToDisplay = (element) => (
 export function ManageRecommendationPage (props) {
 
   const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
+  const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
+  const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
   /* istanbul ignore next */
   const headCells = [
@@ -59,6 +61,19 @@ export function ManageRecommendationPage (props) {
     { id: 'granularity', label: 'Granularity' },
     { id: 'createdOn', label: 'Created On' },
   ];
+
+  /* istanbul ignore next */
+  const updateSearch = async (input) => {
+    const filtered = defaultConfiguredRecList.filter(recommendation => {
+      return recommendation.name.toLowerCase().includes(input.toLowerCase())
+    })
+    setRecommendationList(filtered);
+  }
+
+  useEffect(() => {
+    setRecommendationList(configuredRecommendationList)
+    setDefaultConfiguredRecList(configuredRecommendationList)
+  }, [configuredRecommendationList])
 
   return (
     <div id="main-container">
@@ -86,16 +101,11 @@ export function ManageRecommendationPage (props) {
       <div>
         <div>
           <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id="grid2">
-              <Search id="search" />
-            </Grid>
-            <Grid item>
-              <CssTextField data-testid="custom-css-standard-input" label="Search"
-                inputProps={{
-                  style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), },
-                }}
-                InputLabelProps={{ style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), }, }}>
-              </CssTextField>
+            <Grid item id="data-testid" >
+              <SearchBar
+                placeholder="Search for a recommendation..."
+                onSearchUpdate={updateSearch}
+              />
             </Grid>
             <Grid item>
               <Button size="small" id="filterBtn" endIcon={<FilterList />}>

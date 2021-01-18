@@ -6,37 +6,36 @@ using RecommendationEngine.ExceptionHandler;
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private IConfiguredRecommendationService _configuredRecommendationService;
+        private readonly IConfiguredRecommendationService _configuredRecommendationService;
 
         public ConfiguredRecommendationController(IConfiguredRecommendationService configuredRecommendationService)
         {
             _configuredRecommendationService = configuredRecommendationService;
         }
 
-        [HttpGet("get")]
-        public IActionResult getConfiguredRecommendationList()
+        [HttpGet]
+        public IActionResult GetConfiguredRecommendationList()
         {
             return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
         }
 
-        [HttpGet("configuredRecommendation/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetConfiguredRecommendationById(int id)
         {
             try
             {
                 return Ok(_configuredRecommendationService.GetConfiguredRecommendationById(id));
-
             }
             catch (GlobalException e)
             {
-                return BadRequest(e);
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             try
@@ -45,13 +44,13 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(e);
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
             return Ok();
         }
 
-        [HttpPost("edit/{id}")]
-        public IActionResult editConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        [HttpPut("{id}")]
+        public IActionResult EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             try
             {
@@ -64,8 +63,8 @@ namespace RecommendationEngine.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete/{id}")]
-        public IActionResult deleteConfiguredRecommendation(int id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteConfiguredRecommendation(int id)
         {
             try
             {

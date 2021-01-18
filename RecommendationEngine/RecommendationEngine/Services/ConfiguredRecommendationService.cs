@@ -8,6 +8,8 @@ using RecommendationEngine.ConfiguredRecommendationValidator;
 using System.Collections.Generic;
 using System.Linq;
 using RecommendationEngine.ExceptionHandler;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace RecommendationEngine.ConfiguredRecommendationServices
 {
