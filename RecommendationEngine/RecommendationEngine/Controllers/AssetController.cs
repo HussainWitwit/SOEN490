@@ -1,35 +1,21 @@
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
-using System.Threading.Tasks;
 
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AssetController : ControllerBase
     {
-        private IAssetService _assetService;
+        private readonly IAssetService _assetService;
 
         public AssetController(IAssetService assetService)
         {
             _assetService = assetService;
         }
 
-        [HttpGet("getAssetsNested")]
-        public IActionResult GetAssetsNested()
-        {
-            try
-            {
-                return Ok(_assetService.GetAssetsTreeview());
-            }
-            catch (GlobalException e)
-            {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
-            }
-        }
-
-        [HttpGet("getAssetsList")]
+        [HttpGet()]
         public IActionResult GetAssetsList()
         {
             try
@@ -42,13 +28,12 @@ namespace RecommendationEngine.Controllers
             }
         }
 
-        [HttpGet("convert")]
-        public async Task<IActionResult> ConvertAsync()
+        [HttpGet("nested")]
+        public IActionResult GetAssetsNested()
         {
             try
             {
-                await _assetService.Convert();
-                return Ok();
+                return Ok(_assetService.GetAssetsTreeview());
             }
             catch (GlobalException e)
             {

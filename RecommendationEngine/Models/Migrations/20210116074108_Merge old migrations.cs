@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace Models.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Mergeoldmigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,7 +30,9 @@ namespace Models.Migrations
                     RecommendationTypeId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Type = table.Column<string>(nullable: true),
-                    DisplayText = table.Column<string>(nullable: true)
+                    DisplayText = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    EnergyType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,7 +120,9 @@ namespace Models.Migrations
                     DisplayText = table.Column<string>(nullable: true),
                     Granularity = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    OccurenceDatetime = table.Column<DateTime>(nullable: false),
+                    RecurrenceDayOfWeek = table.Column<int>(nullable: false),
+                    PreferedScenario = table.Column<string>(nullable: true),
+                    RecurrenceDatetime = table.Column<DateTime>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     RecommendationTypeId = table.Column<int>(nullable: true)
                 },
@@ -164,9 +168,8 @@ namespace Models.Migrations
                     RecommendationJobId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Status = table.Column<string>(nullable: true),
-                    Result = table.Column<string>(nullable: true),
                     TriggeredBy = table.Column<string>(nullable: true),
-                    JobDuration = table.Column<DateTime>(nullable: false),
+                    JobDuration = table.Column<int>(nullable: false),
                     Timestamp = table.Column<DateTime>(nullable: false),
                     AssetId = table.Column<int>(nullable: true),
                     ScheduleRecommendationScheduleId = table.Column<int>(nullable: true)
@@ -185,7 +188,7 @@ namespace Models.Migrations
                         column: x => x.ScheduleRecommendationScheduleId,
                         principalTable: "RecommendationSchedule",
                         principalColumn: "RecommendationScheduleId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,7 +219,7 @@ namespace Models.Migrations
                         column: x => x.ScheduleRecommendationScheduleId,
                         principalTable: "RecommendationSchedule",
                         principalColumn: "RecommendationScheduleId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,23 +241,23 @@ namespace Models.Migrations
                         column: x => x.RecommendationJobId,
                         principalTable: "RecommendationJob",
                         principalColumn: "RecommendationJobId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "RecommendationJobResult",
                 columns: table => new
                 {
-                    RecommendationJobResultId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RecommendationJobResultId = table.Column<int>(nullable: false),
                     DisplayText = table.Column<string>(nullable: true),
                     Result = table.Column<string>(nullable: true),
-                    Cost = table.Column<double>(nullable: false),
+                    CostOfAction = table.Column<double>(nullable: false),
                     CostOfInaction = table.Column<double>(nullable: false),
-                    BenefitOfResult = table.Column<double>(nullable: false),
+                    Benefit = table.Column<double>(nullable: false),
                     ConfidencePercentage = table.Column<double>(nullable: false),
-                    AssetId = table.Column<int>(nullable: true),
-                    JobRecommendationJobId = table.Column<int>(nullable: true)
+                    ReturnOnInvestment = table.Column<double>(nullable: false),
+                    NetSaving = table.Column<double>(nullable: false),
+                    AssetId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -266,11 +269,11 @@ namespace Models.Migrations
                         principalColumn: "AssetId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RecommendationJobResult_RecommendationJob_JobRecommendationJ~",
-                        column: x => x.JobRecommendationJobId,
+                        name: "FK_RecommendationJobResult_RecommendationJob_RecommendationJobR~",
+                        column: x => x.RecommendationJobResultId,
                         principalTable: "RecommendationJob",
                         principalColumn: "RecommendationJobId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -300,7 +303,7 @@ namespace Models.Migrations
                         column: x => x.RecommendationJobResultId,
                         principalTable: "RecommendationJobResult",
                         principalColumn: "RecommendationJobResultId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Action_WorkOrder_WorkOrderOpenedWorkOrderId",
                         column: x => x.WorkOrderOpenedWorkOrderId,
@@ -358,11 +361,6 @@ namespace Models.Migrations
                 name: "IX_RecommendationJobResult_AssetId",
                 table: "RecommendationJobResult",
                 column: "AssetId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RecommendationJobResult_JobRecommendationJobId",
-                table: "RecommendationJobResult",
-                column: "JobRecommendationJobId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecommendationParameter_ForRecommendationTypeRecommendationT~",
