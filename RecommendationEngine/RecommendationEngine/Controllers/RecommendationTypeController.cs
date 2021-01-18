@@ -5,18 +5,18 @@ using Interfaces.Services;
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RecommendationTypeController : ControllerBase
     {
 
-        private IRecommendationTypeService _recommendationTypeService;
+        private readonly IRecommendationTypeService _recommendationTypeService;
 
         public RecommendationTypeController(IRecommendationTypeService recommendationTypeService)
         {
             _recommendationTypeService = recommendationTypeService;
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public IActionResult GetRecommendationTypes() {
             return Ok(_recommendationTypeService.GetRecommendationTypes());
         }
