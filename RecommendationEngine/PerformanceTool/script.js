@@ -24,7 +24,7 @@ export let options = {
 
 export default function () {
   let urlAssets = 'http://localhost:5000/Asset/get';
-  let urlConfiguredRecommendationList = 'http://localhost:5000/ConfiguredRecommendation/get'
+  let urlConfiguredRecommendationList = 'http://localhost:5000/ConfiguredRecommendation'
   let params = {
     headers: {
       'Content-Type': 'application/json',
