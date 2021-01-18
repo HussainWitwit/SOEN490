@@ -11,6 +11,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
+    "@testing-library/jest-dom": "^5.11.9",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
@@ -61,7 +62,13 @@
       "!**/src/api/models/TemplateDetails.ts",
       "!**/src/redux/store.js",
       "!**/src/redux/combined-reducers.js",
-      "!**/src/redux/ApiReducer/**"
+      "!**/src/redux/ApiReducer/**",
+      "!**/src/containers/Dashboard/**",
+      "!**/src/containers/JobsPage/**",
+      "!**/src/containers/ResultsPage/**",
+      "!**/src/containers/Notifications/**",
+      "!**/src/containers/Settings/**",
+      "!**/src/containers/WorkOrders/**"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",
