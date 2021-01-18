@@ -12,34 +12,6 @@ import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
 
-
-export const CssTextField = withStyles({
-  root: {
-    width: '360px',
-    color: '252733',
-    fontSize: 100,
-
-    '& label.Mui-focused': {
-      color: '#868282',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#252733',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#252733',
-      },
-      '&:hover fieldset': {
-        borderColor: '#252733',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#252733',
-      },
-    },
-  },
-})(TextField);
-
-
 export function ManageRecommendationPage(props) {
 
   const { toggleDialog, configuredRecommendationList } = props;
@@ -88,7 +60,7 @@ export function ManageRecommendationPage(props) {
             <Grid item id = "data-testid" >
               <SearchBar
                 placeholder = "Search for a recommendation..."
-                onChangeFun = {updateSearch}
+                onSearchUpdate = {updateSearch}
               />
             </Grid>
             <Grid item>

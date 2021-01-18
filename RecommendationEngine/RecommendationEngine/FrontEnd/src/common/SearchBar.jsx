@@ -2,7 +2,7 @@ import React from 'react';
 import { Search } from '@material-ui/icons';
 import './SearchBar.css';
 
-const SearchBar = ({value, onChangeFun, placeholder}) => {
+const SearchBar = ({value, onSearchUpdate, placeholder}) => {
   return (
     <div>
       <Search id="search" />
@@ -10,7 +10,7 @@ const SearchBar = ({value, onChangeFun, placeholder}) => {
         id="searchBar"
         value={value}
         placeholder={placeholder}
-        onChange={(e) => onChangeFun(e.target.value)}
+        onChange={(e) => onSearchUpdate(e.target.value)}
       />
     </div>
   );
