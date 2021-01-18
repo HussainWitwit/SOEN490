@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { RightPanelDrawer } from '../containers/RightPanel/RightPanelDrawer.jsx';
-import Enzyme, { mount, shallow } from '../enzyme';
+import Enzyme, { mount } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import IconButton from '@material-ui/core/IconButton';
