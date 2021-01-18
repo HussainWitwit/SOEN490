@@ -34,7 +34,7 @@ describe.only('ManageRecommendationPage component', () => {
 
     it('It finds the grids', () => {
         let component = output.find(Grid);
-        expect(component).toHaveLength(7);
+        expect(component).toHaveLength(6);
     });
 
     it('It finds the 2 buttons', () => {
