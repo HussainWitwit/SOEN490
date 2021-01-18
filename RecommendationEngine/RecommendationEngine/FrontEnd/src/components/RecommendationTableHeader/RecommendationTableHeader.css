@@ -11,6 +11,12 @@
     font-size: 15px;
 }
 
+.sortLabel.MuiTableSortLabel-active{
+color:  #687480; 
+}
+
+
+
 
 #visuallyHidden {
     border: 0;
