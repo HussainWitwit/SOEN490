@@ -24,6 +24,9 @@ namespace RecommendationEngineTests.APITests
         private readonly TestServer _server;
         private readonly HttpClient _client;
 
+        private readonly TestServer _serverBad;
+        private readonly HttpClient _clientBad;
+
         public ConfiguredRecommendationControllerTest()
         {
             // Arrange
@@ -38,6 +41,18 @@ namespace RecommendationEngineTests.APITests
                     builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
+
+            _serverBad = new TestServer(new WebHostBuilder()
+                .UseStartup<Startup>()
+                .ConfigureServices(services => services.AddAutofac())
+                .ConfigureTestContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterType<MockBadTestRepository>().AsImplementedInterfaces();
+                    builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockAssetRepository>().AsImplementedInterfaces();
+                    builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
+                }));
+            _clientBad = _serverBad.CreateClient();
         }
 
         [Test]
@@ -78,6 +93,32 @@ namespace RecommendationEngineTests.APITests
             var response = await _client.PutAsync("/configuredRecommendation/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
+
+        [Test]
+        public async Task GetRecommendationByIdTestBad()
+        {
+            var response = await _clientBad.GetAsync("/configuredRecommendation/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public async Task AddRecommendationBad()
+        {
+            var recommendation = MockConfiguredRecommendations.BAD_CONFIGURED_RECOMMENDATION;
+            string json = JsonConvert.SerializeObject(recommendation);
+            var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("/configuredRecommendation", body);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public async Task EditRecommendationBad()
+        {
+            var payload = MockConfiguredRecommendations.BAD_CONFIGURED_RECOMMENDATION;
+            var response = await _client.PutAsync("/configuredRecommendation/1", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+        }
+
     }
 
     public class MockTestRepository : IConfiguredRecommendationRepository
@@ -106,6 +147,38 @@ namespace RecommendationEngineTests.APITests
         }
 
         public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id) {
+            return MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
+        }
+        public void Delete(int id) { }
+    }
+
+    public class MockBadTestRepository : IConfiguredRecommendationRepository
+    {
+        public DBRecommendationSchedule Add(DBRecommendationSchedule configuredRecommendation)
+        {
+            return new DBRecommendationSchedule
+            {
+                RecommendationScheduleId = 1
+            };
+        }
+
+        public List<DBRecommendationSchedule> GetRecommendationScheduleList()
+        {
+            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+        }
+
+        public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
+        {
+            return MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+        }
+
+        public DBRecommendationSchedule GetRecommendationScheduleById(int id)
+        {
+            return null;
+        }
+
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id)
+        {
             return UnitTests.MockData.MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
         }
         public void Delete(int id) { }

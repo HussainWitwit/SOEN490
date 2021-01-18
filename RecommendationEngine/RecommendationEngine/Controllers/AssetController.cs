@@ -1,7 +1,6 @@
 using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
-using System.Threading.Tasks;
 
 namespace RecommendationEngine.Controllers
 {

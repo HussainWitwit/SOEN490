@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
 using System.Threading.Tasks;
 using Interfaces.Services;

@@ -50,7 +50,7 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult editConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        public IActionResult EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult deleteConfiguredRecommendation(int id)
+        public IActionResult DeleteConfiguredRecommendation(int id)
         {
             try
             {

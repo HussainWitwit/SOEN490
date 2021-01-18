@@ -21,6 +21,8 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
     {
         private readonly TestServer _server;
         private readonly HttpClient _client;
+        private readonly TestServer _serverBad;
+        private readonly HttpClient _clientBad;
 
         public AssetControllerTest()
         {
@@ -35,6 +37,25 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
                     builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
+
+            _serverBad = new TestServer(new WebHostBuilder()
+                .UseStartup<Startup>()
+                .ConfigureServices(services => services.AddAutofac())
+                .ConfigureTestContainer<ContainerBuilder>(builder =>
+                {
+                    builder.RegisterType<TestBadRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<AssetService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockTestDrive>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetTypeRepositoryMock>().AsImplementedInterfaces();
+                }));
+            _clientBad = _serverBad.CreateClient();
+        }
+
+        [Test]
+        public async Task GetAssetsListBad()
+        {
+            var response = await _clientBad.GetAsync("/asset/assetsList");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 
         [Test]
@@ -87,6 +108,27 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         public DBAssetType GetAssetTypeByName(string assetTypeName)
         {
             return MockData.MockAssets.PortfolioAssetType;
+        }
+    }
+
+    public class TestBadRepositoryMock : IAssetRepository
+    {
+        public void AddAsset(DBAsset asset) { }
+
+        public void AddAssetList(List<DBAsset> asset) { }
+
+        public List<DBAsset> GetAssetsList()
+        {
+            return null;
+        }
+        public DBAsset GetAssetByName(string assetName)
+        {
+            return MockData.MockAssets.BasicDBAsset;
+        }
+
+        public DBAsset GetAssetById(int assetId)
+        {
+            return MockData.MockAssets.BasicDBAsset;
         }
     }
 }
