@@ -7,9 +7,9 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import './RecommendationTableHeader.css';
 export function EnhancedTableHead(props) {
 
-  const { order, orderBy, headCells, onRequestSort } = props;
+  const { order, orderBy, headCells, handleSortingChange } = props;
 
-  const createSortHandler = (property) => (event) => { onRequestSort(event, property) };
+  const sortingHandler = (property) => (event) => { handleSortingChange(event, property) };
 
   return (
     <TableHead id="table-head" className="custom">
@@ -27,7 +27,7 @@ export function EnhancedTableHead(props) {
               active={true}
               classes={{ active: 'sortLabel' }}
               direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+              onClick={sortingHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
