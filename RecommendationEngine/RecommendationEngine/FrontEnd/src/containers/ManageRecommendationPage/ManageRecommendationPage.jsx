@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { FilterList, Search } from '@material-ui/icons';
+import { FilterList } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -46,6 +46,7 @@ export function ManageRecommendationPage(props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
+  /* istanbul ignore next */
   const updateSearch = async (input) => {
     const filtered = defaultConfiguredRecList.filter(recommendation => {
       return recommendation.name.toLowerCase().includes(input.toLowerCase())
@@ -84,7 +85,7 @@ export function ManageRecommendationPage(props) {
       <div>
         <div>
           <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id = "recommendation-search-bar" >
+            <Grid item id = "data-testid" >
               <SearchBar
                 placeholder = "Search for a recommendation..."
                 onChangeFun = {updateSearch}
