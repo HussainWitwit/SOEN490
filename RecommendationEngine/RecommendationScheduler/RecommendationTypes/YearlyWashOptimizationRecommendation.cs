@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace RecommendationScheduler.RecommendationTypes
 {
 
-    public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashAPIValues>
+    public class YearlyWashOptimizationRecommendation : IRecommendationType <YearlyWashParameters, YearlyWashApiValues>
         {
             //Dependency Injection variables
             private IRecommendationJobLogger _jobLogger;
@@ -36,7 +36,7 @@ namespace RecommendationScheduler.RecommendationTypes
                 _job = job;
             }
 
-            public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
+            public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
             {
                 _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
 
