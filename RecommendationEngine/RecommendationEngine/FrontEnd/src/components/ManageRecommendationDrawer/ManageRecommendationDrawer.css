@@ -35,7 +35,7 @@
     align-content: center;
     height: 55px;
     font-size: 14px;
-    font-family: 'Mulish', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding-left: 5px;
     color: black
 }
@@ -50,13 +50,13 @@
 }
 
 .drawer-title {
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
 }
 
 .drawer-subtitle {
     letter-spacing: 0.3px;
-    font-family: Mulish;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
 }
 
@@ -78,8 +78,6 @@
 
 .assets {
     float: left;
-    /* margin-top: 20px;
-    margin-right: 50px; */
 }
 
 .recommendationType {
@@ -109,17 +107,14 @@
 
 .value-title {
     padding-top: 20px;
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 12px;
 }
 
 .day {
-    float: left;
-    margin-left: 12px;
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     float: left;
     margin-left: 6px;
-    font-family: 'Mulish';
     letter-spacing: 5px;
     border-radius: 20px;
     text-indent: 5px;
@@ -167,7 +162,7 @@
 }
 
 .delete-button .MuiButton-label{
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
 }
 
@@ -188,7 +183,7 @@
 }
 
 .edit-recommendation-button .MuiButton-label{
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
 }
 
@@ -209,7 +204,7 @@
 }
 
 .force-run-button .MuiButton-label{
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
 }
 
@@ -219,13 +214,13 @@
 }
 
 .created-by{
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     float: left;
     font-size: 12px;
 }
 
 .edited-by{
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     float: left;
     font-size: 12px;
 }
@@ -240,7 +235,7 @@
 }
 
 .frequency {
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
     padding-top: 20px;
 }
@@ -270,7 +265,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
     outline: none;
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
 }
 
@@ -288,7 +283,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
     outline: none;
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
 }
 
@@ -306,7 +301,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
     outline: none;
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
 }
 
@@ -324,7 +319,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
     outline: none;
-    font-family: 'Mulish';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
 }
 
@@ -343,7 +338,7 @@
     border-radius: 30%;
     margin-right: 7px;
     display: inline-block;
-    margin: 5 auto;
+    margin-top: 5px;
 }
 .Failed{
     height: 22px;
@@ -352,7 +347,7 @@
     border-radius: 30%;
     margin-right: 7px;
     display: inline-block;
-    margin: 5 auto;
+    margin-top: 5px;
 }
 .Success{
     height: 22px;
@@ -361,7 +356,7 @@
     border-radius: 30%;
     margin-right: 7px;
     display: inline-block;
-    margin: 5 auto;
+    margin-top: 5px;
 }
 .Empty{
     height: 22px;
@@ -370,7 +365,7 @@
     border-radius: 30%;
     margin-right: 7px;
     display: inline-block;
-    margin: 5 auto;
+    margin-top: 5px;
 }
 
 .execution-bar-tooltip.MuiTooltip-tooltip {

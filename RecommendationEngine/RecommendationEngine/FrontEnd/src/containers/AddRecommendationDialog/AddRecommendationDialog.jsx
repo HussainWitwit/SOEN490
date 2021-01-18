@@ -157,9 +157,9 @@ export function AddRecommendationDialog (props) {
         }}
       >
         <div id="mocked-content">
-          {onNextPreviousTransition.map(({ item, styleProps, key }) => {
+          {onNextPreviousTransition.map(({ item, props, key }) => {
             const Page = pages[item];
-            return (<Page key={key} style={styleProps} />);
+            return (<Page key={key} style={props} />);
           })}
         </div>
       </DialogContent>
