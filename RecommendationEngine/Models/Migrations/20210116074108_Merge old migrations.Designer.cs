@@ -9,8 +9,8 @@ using Models.DB;
 namespace Models.Migrations
 {
     [DbContext(typeof(RecommendationEngineDBContext))]
-    [Migration("20201225000321_Add cascade-delete of weak entites")]
-    partial class Addcascadedeleteofweakentites
+    [Migration("20210116074108_Merge old migrations")]
+    partial class Mergeoldmigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

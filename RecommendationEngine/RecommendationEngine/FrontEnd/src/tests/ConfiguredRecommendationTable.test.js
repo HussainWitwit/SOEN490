@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import ConfiguredRecommendationTable from '../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';

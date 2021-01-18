@@ -15,7 +15,7 @@ namespace RecommendationScheduler.RecommendationJob
     public class YearlyWashOptimizationRecommendationJob : RecommendationJob
     {
         //Values from APIs
-        private YearlyWashApiValues _apiValues = new YearlyWashApiValues();
+        private readonly YearlyWashApiValues _apiValues = new YearlyWashApiValues();
 
         //configured recommendation parameters from db
         private readonly YearlyWashParameters _parameters = new YearlyWashParameters();
