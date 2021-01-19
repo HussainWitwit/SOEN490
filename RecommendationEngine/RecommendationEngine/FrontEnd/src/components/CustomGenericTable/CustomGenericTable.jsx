@@ -9,10 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { EnhancedTableHead } from '../RecommendationTableHeader/RecommendationTableHeader'
 import Switch from '@material-ui/core/Switch';
+import PropTypes from 'prop-types';
 import './CustomGenericTable.css';
 import 'date-fns';
-
-
 
 export default function CustomGenericTable (props) {
 
@@ -99,3 +98,11 @@ export default function CustomGenericTable (props) {
     </div>
   );
 }
+  /* istanbul ignore next */
+CustomGenericTable.propTypes = {
+  rowsValue: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  TableTitle: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  columnTitles: PropTypes.array.isRequired,
+};

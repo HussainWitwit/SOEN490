@@ -11,7 +11,7 @@ import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
 
 
-/* istanbul ignore next */
+/* istanbul ignore next */ //Should be tested 
 export const RowsToDisplay = (element) => (
   <React.Fragment>
     <TableCell />
@@ -28,7 +28,7 @@ export function ManageRecommendationPage (props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
-  /* istanbul ignore next */
+  /* istanbul ignore next */ //Should be tested 
   const headCells = [
     { id: 'title', label: 'Title' },
     { id: 'type', label: 'Type' },
