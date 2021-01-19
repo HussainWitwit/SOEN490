@@ -61,15 +61,15 @@ describe('AddRecommendationDialog component', () => {
     });
 
     it('Finds the paper component', () => {
-        const output = shallow(<PaperComponent />);
-        expect(output).toHaveLength(1);
-        let component = output.find(Draggable);
+        const result = shallow(<PaperComponent />);
+        expect(result).toHaveLength(1);
+        let component = result.find(Draggable);
         expect(component).toHaveLength(1);
     });
 
     it('Finds the transition component', () => {
-        const output = shallow(<Transition />);
-        let component = output.find(Slide);
+        const result = shallow(<Transition />);
+        let component = result.find(Slide);
         expect(component).toHaveLength(1);
     });
 
