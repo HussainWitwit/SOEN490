@@ -4,8 +4,6 @@ import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import CustomGenericTable from '../CustomGenericTable';
 import { EnhancedTableHead } from '../../RecommendationTableHeader/RecommendationTableHeader';
-import TableCell from '@material-ui/core/TableCell';
-import TableCell from '@material-ui/core/TableCell';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
