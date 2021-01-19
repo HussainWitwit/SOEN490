@@ -8,6 +8,8 @@ using RecommendationScheduler.RecommendationJob;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Interfaces.Services.ExternalApi;
+using Models.Application.Asset;
+using System.Data.Common;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 {
@@ -40,13 +42,40 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
             _recommendationSchedulerRepoMock.Setup(x => x.GetDbRecommendationScheduleById(It.IsAny<int>())).Returns(
                 new DBRecommendationSchedule
                 {
-                    RecommendationScheduleId = 1,
+                    RecommendationScheduleId = 2,
                     AssetsList = new List<DBAssetRecommendationSchedule>(),
                 }
             );
+
+            DBAsset asset = new DBAsset
+            {
+                AssetId = 9,
+                Name = "testAsset"
+            };
+
+            List<DBRecommendationScheduleParameter> dbParameterList = new List<DBRecommendationScheduleParameter> {
+
+                new DBRecommendationScheduleParameter { DisplayText = "center point increment", ParamValue = 3},
+                new DBRecommendationScheduleParameter { DisplayText = "span increment", ParamValue = 3},
+                new DBRecommendationScheduleParameter { DisplayText = "soiling season buffer", ParamValue = 3},
+                new DBRecommendationScheduleParameter { DisplayText = "accelerator", ParamValue = 3},
+
+            };
+
             _recommendationSchedulerRepoMock.Setup(x => x.AddRecommendationJob(It.IsAny<DBRecommendationJob>())).Returns(new DBRecommendationJob
             {
-                RecommendationJobId = 1
+                RecommendationJobId = 3,
+                Asset = asset,
+                Schedule = new DBRecommendationSchedule
+                {
+                    RecommendationScheduleId = 13,
+                    AssetsList = new List<DBAssetRecommendationSchedule> {
+                        new DBAssetRecommendationSchedule {
+                            AssetId = 99,
+                            Asset = asset
+                            } },
+                    ParametersList = dbParameterList
+                }
             });
 
             //Act

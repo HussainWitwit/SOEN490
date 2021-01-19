@@ -26,18 +26,18 @@ function TemplateConfigurationModal (props) {
 
   const iconsList = [TemplateIcon1, TemplateIcon2, TemplateIcon3, TemplateIcon4, TemplateIcon5, TemplateIcon6];
 
-  const TemplateCard = (props) => {
+  const TemplateCard = (innerProps) => {
     return (
       <div
         id={
-          props.isPressed ? 'item-template-selected' : 'item-template-default'
+          innerProps.isPressed ? 'item-template-selected' : 'item-template-default'
         }
-        onClick={props.onClick}
+        onClick={innerProps.onClick}
       >
         <div data-testid="template-label">
-          <props.icon id="template-icon" />
+          <innerProps.icon id="template-icon" />
         </div>
-        <Typography id="template-label">{props.name}</Typography>
+        <Typography id="template-label">{innerProps.name}</Typography>
       </div>
     );
   };

@@ -2,7 +2,7 @@
 
 namespace Models.Recommendation.YearlyWashOptimization
 {
-    public class YearlyWashAPIValues : RecommendationApiValues
+    public class YearlyWashApiValues : RecommendationApiValues
     {
         public List<double> PredictEnergyList { get; set; }// stores predicted energy from API
         public List<double> EnergyPricesList { get; set; }

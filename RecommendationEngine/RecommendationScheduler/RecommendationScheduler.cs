@@ -67,8 +67,6 @@ namespace RecommendationScheduler
                 case "Yearly":
                     return CronScheduleBuilder.CronSchedule(
                         $"{schedule.RecurrenceDatetime.Second} {schedule.RecurrenceDatetime.Minute} {schedule.RecurrenceDatetime.Hour} {schedule.RecurrenceDatetime.Day} {schedule.RecurrenceDatetime.Month} ? *");
-                /*case "Yearly":
-                    return CronScheduleBuilder.CronSchedule("1 * * * * ? *");*/
                 default:
                     throw new NotImplementedException();
             }

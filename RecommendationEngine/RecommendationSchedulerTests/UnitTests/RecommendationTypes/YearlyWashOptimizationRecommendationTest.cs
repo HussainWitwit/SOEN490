@@ -33,7 +33,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             //Act
 
             YearlyWashParameters userParameters = new YearlyWashParameters();
-            YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
+            YearlyWashApiValues apiValues = new YearlyWashApiValues();
             GetDummy1(userParameters, apiValues);
             DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(userParameters, apiValues);
 
@@ -59,7 +59,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
             //Act
             YearlyWashParameters userParameters = new YearlyWashParameters();
-            YearlyWashAPIValues apiValues = new YearlyWashAPIValues();
+            YearlyWashApiValues apiValues = new YearlyWashApiValues();
             GetDummy2(userParameters, apiValues);
             DBRecommendationJobResult testResult = _yearlyWashOptimizationRecommendation.ExecuteAlgorithm(userParameters, apiValues);
 
@@ -78,7 +78,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
         }
 
 
-        public void GetDummy1(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
+        public void GetDummy1(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
         {
 
             apiValues.PlantDCCapacity = 25;
@@ -156,7 +156,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             parameters.PlantIds.Add("RENEW01_2070.93.001");
             parameters.Asset = new DBAsset();
         }
-        public void GetDummy2(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
+        public void GetDummy2(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
         {
 
             apiValues.PlantDCCapacity = 25;
