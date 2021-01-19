@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import { TextField, Grid, TableCell } from '@material-ui/core';
+import { Grid, TableCell } from '@material-ui/core';
 import CustomGenericTable from '../../components/CustomGenericTable/CustomGenericTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
@@ -11,31 +10,6 @@ import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
 
-export const CssTextField = withStyles({
-  root: {
-    width: '360px',
-    color: '252733',
-    fontSize: 100,
-
-    '& label.Mui-focused': {
-      color: '#868282',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#252733',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#252733',
-      },
-      '&:hover fieldset': {
-        borderColor: '#252733',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#252733',
-      },
-    },
-  },
-})(TextField);
 
 /* istanbul ignore next */
 export const RowsToDisplay = (element) => (
@@ -118,7 +92,7 @@ export function ManageRecommendationPage (props) {
       <br></br>
       <CustomGenericTable
         rowsValue={RowsToDisplay}
-        data={configuredRecommendationList}
+        data={recommendationList}
         TableTitle={"Configured Recommendations"}
         onClick={openScheduleDrilldown}
         columnTitles={headCells}
