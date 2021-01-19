@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import CustomGenericTable from '../CustomGenericTable';
+import RecommendationEngineTable from '../RecommendationEngineTable';
 import { EnhancedTableHead } from '../../RecommendationTableHeader/RecommendationTableHeader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
@@ -14,16 +14,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe.only('CustomGenericTable component', () => {
+describe.only('RecommendationEngineTable component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<CustomGenericTable />);
+    const output = shallow(<RecommendationEngineTable />);
     const mockedEvent = { target: {} }
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<CustomGenericTable />, div);
+        ReactDOM.render(<RecommendationEngineTable />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 

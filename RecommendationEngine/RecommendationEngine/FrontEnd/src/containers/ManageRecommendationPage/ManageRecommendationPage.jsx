@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
-import CustomGenericTable from '../../components/CustomGenericTable/CustomGenericTable';
+import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
@@ -90,7 +90,7 @@ export function ManageRecommendationPage (props) {
         </div>
       </div>
       <br></br>
-      <CustomGenericTable
+      <RecommendationEngineTable
         rowsValue={RowsToDisplay}
         data={recommendationList}
         TableTitle={"Configured Recommendations"}

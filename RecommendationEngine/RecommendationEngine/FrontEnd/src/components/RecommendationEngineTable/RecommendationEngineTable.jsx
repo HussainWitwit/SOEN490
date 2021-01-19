@@ -10,10 +10,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { EnhancedTableHead } from '../RecommendationTableHeader/RecommendationTableHeader'
 import Switch from '@material-ui/core/Switch';
 import PropTypes from 'prop-types';
-import './CustomGenericTable.css';
+import './RecommendationEngineTable.css';
 import 'date-fns';
 
-export default function CustomGenericTable (props) {
+export default function RecommendationEngineTable (props) {
 
   const [dense, setDense] = React.useState(false);
   const [order, setOrder] = React.useState('asc');
@@ -99,7 +99,7 @@ export default function CustomGenericTable (props) {
   );
 }
   /* istanbul ignore next */
-CustomGenericTable.propTypes = {
+RecommendationEngineTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   TableTitle: PropTypes.string.isRequired,

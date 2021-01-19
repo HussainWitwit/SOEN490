@@ -220,7 +220,7 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
 /* istanbul ignore next */
 export const postConfiguredRecommendation = async (dispatch, configuredRecommendation, editingState) => {
   if (editingState.isEditing) {
-    await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.iD);
+    await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.id);
   }
   else {
     await addConfiguredRecommendation(dispatch, configuredRecommendation);
