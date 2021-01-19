@@ -47,7 +47,7 @@ export const contentInitialValues = {
     parameters: {},
     templateDetailsList: [],
     isEditing: false,
-    iD: null,
+    id: null,
     addRecommenendationResponse: null,
     editRecommendationReponse: null,
     deleteRecommendationResponse: null

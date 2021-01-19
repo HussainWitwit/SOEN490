@@ -14,7 +14,7 @@ const detailsConfigInitialValues = {
 
 let state = {
   isDialogOpen: false,
-  iD: null,
+  id: null,
   isEditing: false,
   template: {
     name: "",

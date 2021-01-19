@@ -35,7 +35,7 @@ describe("Manage Recommendation Table", () => {
 
     it('Finds the table', () => {
         cy.get('#toolbar').should('exist')
-        cy.get('#tableTitle').should('be.visible')
+        cy.get('[data-testid=tableTitle]').should('be.visible')
         cy.get('#data-testid').should('be.visible')
         cy.get('#table-row > :nth-child(2)').should('be.visible')
         cy.get('#table-row > :nth-child(3)').should('be.visible')
