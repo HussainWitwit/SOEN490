@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import { TextField, Grid, TableCell } from '@material-ui/core';
-import CustomGenericTable from '../../components/CustomGenericTable/CustomGenericTable';
+import { Grid, TableCell } from '@material-ui/core';
+import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
@@ -64,7 +63,7 @@ export function JobsPage () {
                 </div>
             </div>
             <br></br>
-            <CustomGenericTable
+            <RecommendationEngineTable
                 rowsValue={RowsToDisplay}
                 // data={configuredRecommendationList}
                 TableTitle={"Recommendation Jobs"}
