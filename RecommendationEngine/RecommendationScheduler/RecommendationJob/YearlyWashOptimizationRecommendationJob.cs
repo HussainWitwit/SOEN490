@@ -15,7 +15,7 @@ namespace RecommendationScheduler.RecommendationJob
     public class YearlyWashOptimizationRecommendationJob : RecommendationJob
     {
         //Values from APIs
-        private readonly YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
+        private readonly YearlyWashApiValues _apiValues = new YearlyWashApiValues();
 
         //configured recommendation parameters from db
         private readonly YearlyWashParameters _parameters = new YearlyWashParameters();
@@ -65,7 +65,7 @@ namespace RecommendationScheduler.RecommendationJob
             var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
             _apiValues.PlantDCCapacity = plantMetadata["DC_Capacity"] / 1000;
 
-            List<PFPPAPrice> energyPrices = Task.Run(async () => await _metadataDriveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
+            List<PFPpaPrice> energyPrices = Task.Run(async () => await _metadataDriveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
             double avgPrice;
 
             energyPrices = energyPrices.Where(energyPrice => energyPrice.EffectiveStartTime >= _parameters.StartSoiling && energyPrice.EffectiveEndTime <= _parameters.EndSoiling).ToList();
