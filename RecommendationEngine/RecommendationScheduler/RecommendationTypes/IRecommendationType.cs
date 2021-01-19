@@ -3,7 +3,7 @@ using Models.Recommendation;
 
 namespace RecommendationScheduler.RecommendationTypes
 {
-    public interface IRecommendationType<TParameters, TApiValues>
+    public interface IRecommendationType<in TParameters, in TApiValues>
         where TParameters : RecommendationParameters
         where TApiValues : RecommendationApiValues
     {
