@@ -26,7 +26,7 @@ export function JobsPage () {
 
     /* istanbul ignore next */
     const headCells = [
-        { id: 'title', label: 'Title' },
+        { id: 'jobId', label: 'Job ID' },
         { id: 'status', label: 'Status' },
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'jobDuration', label: 'Job Duration' },
