@@ -8,6 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import { mapDispatchDeletePopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
+import WarningTwoTone from '@material-ui/icons/WarningTwoTone';
 
 
 export function DeletePopUp (props) {
@@ -31,7 +32,8 @@ export function DeletePopUp (props) {
             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <DialogTitle classes={{ root: 'alertMessage' }}>Are you sure you want to DELETE {props.title}?</DialogTitle>
+            
+            <DialogTitle classes={{ root: 'alertMessage' }}><WarningTwoTone id="warning"></WarningTwoTone> Are you sure you want to DELETE {props.title}? All exisiting information about this Configured Recommendation will be lost and this action cannot be undone.</DialogTitle>
             <DialogActions>
                 <div id="buttons">
                     <Button onClick={handleClose} id="cancelButton" variant="outlined">
