@@ -5,7 +5,7 @@ export const initialValues = {
     flatListAssets: [],
     configuredRecommendationList: [],
     templateDetailsList: [],
-    recommendationJobList: [], //Need a RightPanel view
+    recommendationJobList: [], 
     recommendationResultList: []
 }
 
