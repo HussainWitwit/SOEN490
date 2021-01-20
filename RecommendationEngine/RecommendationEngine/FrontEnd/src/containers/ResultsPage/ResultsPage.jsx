@@ -23,7 +23,9 @@ export const RowsToDisplay = (element) => (
 
 export function ResultsPage (props) {
 
-    const { openScheduleDrilldown } = props;
+    const { recommendationResultList } = props;
+    const [resultList, setResultList] = useState(recommendationResultList);
+    const [defaultResultList, setDefaultResultList] = useState(recommendationResultList);
 
     /* istanbul ignore next */
     const headCells = [
@@ -34,6 +36,19 @@ export function ResultsPage (props) {
         { id: 'costOfInaction', label: 'Cost of Inaction' },
         { id: 'configuredRecommendation', label: 'Configured Recommendation' },
     ];
+
+    /* istanbul ignore next */
+    const updateSearch = async (input) => {
+        const filtered = defaultResultList.filter(result => {
+            return result.id.includes(input)
+        })
+        setResultList(filtered);
+    }
+
+    useEffect(() => {
+        setResultList(recommendationResultList)
+        setDefaultResultList(recommendationResultList)
+    }, [recommendationResultList])
 
     return (
         <div id="main-container">
@@ -54,7 +69,7 @@ export function ResultsPage (props) {
                         <Grid item id="data-testid" >
                             <SearchBar
                                 placeholder="Search for a recommendation..."
-                            // onSearchUpdate={updateSearch}
+                                onSearchUpdate={updateSearch}
                             />
                         </Grid>
                         <Grid item>
@@ -68,7 +83,7 @@ export function ResultsPage (props) {
             <br></br>
             <RecommendationEngineTable
                 rowsValue={RowsToDisplay}
-                // data={configuredRecommendationList}
+                data={resultList}
                 TableTitle={"Recommendation Job Results"}
                 // onClick={openScheduleDrilldown}
                 columnTitles={headCells}

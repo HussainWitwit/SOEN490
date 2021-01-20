@@ -12,16 +12,19 @@ import SearchBar from '../../common/SearchBar';
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
-        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.name}</TableCell>
+        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.id}</TableCell>
         <TableCell id="tableBody">{element.status}</TableCell>
         <TableCell id="tableBody">{element.timestamp}</TableCell>
-        <TableCell id="tableBody">{element.jobDuration}</TableCell>
-        <TableCell id="tableBody">{element.configuredRecommendation}</TableCell>
+        <TableCell id="tableBody">{element.duration}</TableCell>
+        <TableCell id="tableBody">{element.configuredRecommendationId}</TableCell>
     </React.Fragment>
 );
 
+export function JobsPage (props) {
 
-export function JobsPage () {
+    const { recommendationJobList } = props;
+    const [jobList, setJobList] = useState(recommendationJobList);
+    const [defaultJobList, setDefaultJobList] = useState(recommendationJobList);
 
     /* istanbul ignore next */
     const headCells = [
@@ -31,6 +34,19 @@ export function JobsPage () {
         { id: 'jobDuration', label: 'Job Duration' },
         { id: 'configuredRecommendation', label: 'Configured Recommendation' },
     ];
+
+    /* istanbul ignore next */
+    const updateSearch = async (input) => {
+        const filtered = defaultJobList.filter(job => {
+            return job.id.includes(input)
+        })
+        setJobList(filtered);
+    }
+
+    useEffect(() => {
+        setJobList(recommendationJobList)
+        setDefaultJobList(recommendationJobList)
+    }, [recommendationJobList])
 
     return (
         <div id="main-container">
@@ -50,8 +66,8 @@ export function JobsPage () {
                     <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
                         <Grid item id="data-testid" >
                             <SearchBar
-                                placeholder="Search for a recommendation..."
-                            // onSearchUpdate={updateSearch}
+                                placeholder="Search for a job..."
+                                onSearchUpdate={updateSearch}
                             />
                         </Grid>
                         <Grid item>
@@ -65,7 +81,7 @@ export function JobsPage () {
             <br></br>
             <RecommendationEngineTable
                 rowsValue={RowsToDisplay}
-                // data={configuredRecommendationList}
+                data={jobList}
                 TableTitle={"Recommendation Jobs"}
                 // onClick={openScheduleDrilldown}
                 columnTitles={headCells}
