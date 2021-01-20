@@ -6,7 +6,6 @@
  * Note: Follow this structure for every controller from the 
  * back-end. Also, it needs to be strongly typed, i.e typescript.
  * A.J.U.U
- * TODO: unit test the fetch method (jest)
  */
 
 import { Asset } from "../models/Asset";

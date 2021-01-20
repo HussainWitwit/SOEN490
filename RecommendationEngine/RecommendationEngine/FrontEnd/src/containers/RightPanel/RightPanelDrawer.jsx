@@ -4,12 +4,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import AssetTree from '../AssetTreeView/AssetTreeView';
-import ManageRecommendationDrawer from '../../components/ManageRecommendationDrawer/ManageRecommendationDrawer';
+import PropTypes from 'prop-types';
+import ManageRecommendationDrawer from '../../containers/ManageRecommendationDrawer/ManageRecommendationDrawer';
 import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 
-export function RightPanelDrawer({
+export function RightPanelDrawer ({
   isOpen,
   tabs,
   selectedTabIndex,
@@ -31,7 +32,7 @@ export function RightPanelDrawer({
       component: (<ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     },
   }
-  
+
   return (
     <div>
       <link
@@ -42,7 +43,7 @@ export function RightPanelDrawer({
       <SwipeableDrawer
         anchor="right"
         open={isOpen}
-        onOpen={()=> {}}
+        onOpen={() => { }}
         onClose={closeAll}
         BackdropProps={{ invisible: true }}
         variant={'persistent'}

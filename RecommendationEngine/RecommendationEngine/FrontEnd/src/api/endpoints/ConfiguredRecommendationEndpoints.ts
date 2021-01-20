@@ -1,4 +1,3 @@
-//TODO: unit test the fetch method (jest)
 /**
  * I tried to implement a similar logic as the AssetEndpoints, but it was quite annoying. 
  * I believe we have to figure out the typescript issue first.
@@ -57,8 +56,8 @@ export const DeleteRecommendationById = async (id: number ) => {
     return response;
   };
 
-  //FIXME: Syntax Errror here
-  export const PostConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
+  
+export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
     let response;
     try {
         response = await fetch('api/ConfiguredRecommendation/', {
@@ -72,7 +71,7 @@ export const DeleteRecommendationById = async (id: number ) => {
     return response;
 };
 
-//FIXME: Syntax Errror here
+
 export const EditConfiguredRecommendation = async (recommendation: ConfiguredRecommendation, id: number) => {
     console.log(recommendation);
     console.log(id);

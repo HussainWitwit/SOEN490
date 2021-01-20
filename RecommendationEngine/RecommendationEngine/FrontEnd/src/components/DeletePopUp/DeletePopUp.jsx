@@ -10,7 +10,7 @@ import { mapDispatchDeletePopUpActions } from '../../redux/RightPanelReducer/red
 import { connect } from 'react-redux';
 
 
-export function DeletePopUp(props) {
+export function DeletePopUp (props) {
     const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown } = props;
 
     const handleClose = () => {
@@ -50,4 +50,4 @@ export function DeletePopUp(props) {
     );
 }
 
-export default connect( null, mapDispatchDeletePopUpActions)(DeletePopUp)
+export default connect(null, mapDispatchDeletePopUpActions)(DeletePopUp)

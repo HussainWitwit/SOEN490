@@ -4,8 +4,8 @@
  * your logic.
  */
 import * as dispatchActionType from './dispatch-types';
-import {GetConfiguredRecommendationById} from '../../api/endpoints/ConfiguredRecommendationEndpoints';
-import { deleteConfiguredRecommendation } from '../ApiReducer/reducer-actions';
+import { GetConfiguredRecommendationById } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { deleteConfiguredRecommendation } from '../ManageRecommendationReducer/reducer-actions';
 
 //**Actions --> Useful for unit testing the reducer.
 export const openAssetTreeview = () => {
@@ -14,7 +14,7 @@ export const openAssetTreeview = () => {
   };
 };
 
-/* istanbul ignore next */ //TODO: Should be testable
+/* istanbul ignore next */ 
 export const openScheduleDrilldown = async (dispatch, id) => {
   const response = await GetConfiguredRecommendationById(id);
   dispatch({
