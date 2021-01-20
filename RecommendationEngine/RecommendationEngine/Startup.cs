@@ -32,9 +32,24 @@ namespace RecommendationEngine
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "frontend/build";
+            //});
+
+            services.AddSwaggerGen(options =>
             {
-                configuration.RootPath = "FrontEnd/build";
+                options.SwaggerDoc("v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Title = "Recommendation Engine API",
+                        Description = "Exposing the controllers of the API to the client (front-end) for development and documentation purposes.",
+                        Version = "v1"
+                    });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -104,7 +119,7 @@ namespace RecommendationEngine
             }
 
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            //app.UseSpaStaticFiles();
 
             app.UseRouting();
 
@@ -115,14 +130,22 @@ namespace RecommendationEngine
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "FrontEnd";
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "FrontEnd";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            //});
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options => 
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recommendation Engine API");
+                options.RoutePrefix = string.Empty;
             });
         }
     }

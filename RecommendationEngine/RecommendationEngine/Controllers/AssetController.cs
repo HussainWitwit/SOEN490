@@ -15,6 +15,10 @@ namespace RecommendationEngine.Controllers
             _assetService = assetService;
         }
 
+        /// <summary>
+        /// Some endpoint description
+        /// </summary>
+        /// <returns> Return something</returns>
         [HttpGet()]
         public IActionResult GetAssetsList()
         {

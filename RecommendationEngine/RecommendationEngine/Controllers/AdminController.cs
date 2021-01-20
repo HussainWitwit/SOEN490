@@ -2,9 +2,11 @@
 using RecommendationEngine.ExceptionHandler;
 using System.Threading.Tasks;
 using Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RecommendationEngine.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController: ControllerBase
