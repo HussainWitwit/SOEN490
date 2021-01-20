@@ -5,11 +5,13 @@ export const initialValues = {
     flatListAssets: [],
     configuredRecommendationList: [],
     templateDetailsList: [],
-  };
+    recommendationJobList: [], //Need a RightPanel view
+    recommendationResultList: []
+}
 
-  export const SharedReducer = function (state = initialValues, action) {
-    switch(action.type) {
-        case type.GET_NESTED_ASSETS: 
+export const SharedReducer = function (state = initialValues, action) {
+    switch (action.type) {
+        case type.GET_NESTED_ASSETS:
             return {
                 ...state,
                 nestedAssets: action.payload
@@ -24,7 +26,17 @@ export const initialValues = {
                 ...state,
                 configuredRecommendationList: action.payload
             };
-            default:
-                return state
+        case type.GET_RECOMMENDATION_JOB_LIST:
+            return {
+                ...state,
+                recommendationJobList: action.payload
+            }
+        case type.GET_RECOMMENDATION_RESULT_LIST:
+            return {
+                ...state,
+                recommendationResultList: action.payload
+            }
+        default:
+            return state
     }
 }
