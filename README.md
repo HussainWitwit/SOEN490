@@ -36,3 +36,5 @@ We are building a generic Recommendation Engine that can be applied to systems s
 2. Slack
 3. Zoom
 
+### API documentation
+https://app.swaggerhub.com/apis/UTF-9/recommendation-engine_power_factors/v1#/
