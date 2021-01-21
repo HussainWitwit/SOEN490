@@ -1,47 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { FilterList, Search } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import ConfiguredRecommendationTable from '../../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
+import { FilterList } from '@material-ui/icons';
+import { Grid, TableCell } from '@material-ui/core';
+import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
-import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
-import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
+import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
+import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
 
+/* istanbul ignore next */ //Should be tested 
+export const RowsToDisplay = (element) => (
+  <React.Fragment>
+    <TableCell />
+    <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.name}</TableCell>
+    <TableCell id="tableBody">{element.type}</TableCell>
+    <TableCell id="tableBody">{element.granularity}</TableCell>
+    <TableCell id="tableBody">{element.createdOn}</TableCell>
+  </React.Fragment>
+);
 
-export const CssTextField = withStyles({
-  root: {
-    width: '360px',
-    color: '252733',
-    fontSize: 100,
+export function ManageRecommendationPage (props) {
 
-    '& label.Mui-focused': {
-      color: '#868282',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#252733',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#252733',
-      },
-      '&:hover fieldset': {
-        borderColor: '#252733',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#252733',
-      },
-    },
-  },
-})(TextField);
+  const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
+  const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
+  const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
+  /* istanbul ignore next */ //Should be tested 
+  const headCells = [
+    { id: "name", numeric: false, disablePadding: true, label: "Title"},
+    { id: "type", numeric: false, disablePadding: false, label: "Type" },
+    { id: "granularity", numeric: false, disablePadding: false, label: "Granularity" },
+    { id: "createdOn", numeric: false, disablePadding: false, label: "Created On" },
+  ];
 
-export function ManageRecommendationPage(props) {
+  /* istanbul ignore next */
+  const updateSearch = async (input) => {
+    const filtered = defaultConfiguredRecList.filter(recommendation => {
+      return recommendation.name.toLowerCase().includes(input.toLowerCase())
+    })
+    setRecommendationList(filtered);
+  }
 
-  const { toggleDialog, configuredRecommendationList } = props;
+  useEffect(() => {
+    setRecommendationList(configuredRecommendationList)
+    setDefaultConfiguredRecList(configuredRecommendationList)
+  }, [configuredRecommendationList])
 
   return (
     <div id="main-container">
@@ -60,7 +65,7 @@ export function ManageRecommendationPage(props) {
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
-              <AddRecommendationDialog {...props}/>
+              <AddRecommendationDialog {...props} />
             </div>
           </Grid>
         </Grid>
@@ -69,16 +74,11 @@ export function ManageRecommendationPage(props) {
       <div>
         <div>
           <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id="grid2">
-              <Search id="search" />
-            </Grid>
-            <Grid item>
-              <CssTextField id="custom-css-standard-input" label="Search"
-                inputProps={{
-                  style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), },
-                }}
-                InputLabelProps={{ style: { fontSize: 15, fontFamily: ['Segoe UI', ' Tahoma', '"Geneva"', 'Verdana', '"sans-serif"',].join(','), }, }}>
-              </CssTextField>
+            <Grid item id="data-testid" >
+              <SearchBar
+                placeholder="Search for a recommendation..."
+                onSearchUpdate={updateSearch}
+              />
             </Grid>
             <Grid item>
               <Button size="small" id="filterBtn" endIcon={<FilterList />}>
@@ -89,9 +89,15 @@ export function ManageRecommendationPage(props) {
         </div>
       </div>
       <br></br>
-      <ConfiguredRecommendationTable data = {configuredRecommendationList} />
+      <RecommendationEngineTable
+        rowsValue={RowsToDisplay}
+        data={recommendationList}
+        TableTitle={"Configured Recommendations"}
+        openScheduleDrilldown={openScheduleDrilldown}
+        columnTitles={headCells}
+      />
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageRecommendationPage);
+export default connect(mapStateToProps, mapDispatchManageRecommendationPageToProps)(ManageRecommendationPage);

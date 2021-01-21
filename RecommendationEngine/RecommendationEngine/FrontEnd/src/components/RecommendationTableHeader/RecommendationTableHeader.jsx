@@ -15,7 +15,7 @@ export function EnhancedTableHead(props) {
     <TableHead id="table-head" className="custom">
       <TableRow id="table-row">
         <TableCell></TableCell>
-        {headCells.map((headCell) => (
+        {headCells? headCells.map((headCell) => (
           <TableCell
             id="tableHeader"  
             key={headCell.id}
@@ -37,15 +37,15 @@ export function EnhancedTableHead(props) {
               ) : null}
             </TableSortLabel>
           </TableCell>
-        ))}
+        )):null}
       </TableRow>
     </TableHead>
   );
 }
+ /* istanbul ignore next */
    EnhancedTableHead.propTypes = {
-   classes: PropTypes.object.isRequired,
    headCell: PropTypes.object.isRequired,
-   onRequestSort: PropTypes.func.isRequired,
+   handleSortingChange: PropTypes.func.isRequired,
    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
    orderBy: PropTypes.string.isRequired,
  };

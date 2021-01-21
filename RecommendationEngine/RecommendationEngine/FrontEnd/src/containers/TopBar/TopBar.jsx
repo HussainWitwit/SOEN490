@@ -5,7 +5,7 @@ import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-action
 import { connect } from 'react-redux';
 import './TopBar.css';
 
-function TopBar({openAssetTreeview}) {
+function TopBar ({ openAssetTreeview }) {
 
   const [locationDetails, setLocationDetails] = React.useState(null);
   const [weatherDetails, setWeatherDetails] = React.useState(null);
@@ -24,17 +24,19 @@ function TopBar({openAssetTreeview}) {
     setWeatherDetails({ temp: data.main.temp, description: data.weather[0].main, icon: data.weather[0].icon });
   }
 
+  /* istanbul ignore next */
   useEffect(() => {
-    //Uncomment these 2 lines to enable api calls
-    // getCurrentLocation(); 
-    // getCurrentWeather();
+    if(process.env.REACT_APP_GEOLOCATION_KEY && process.env.REACT_APP_WEATHER_KEY){
+      getCurrentLocation(); 
+      getCurrentWeather();
+    }
   }, []);
 
   return (
     <div className="main-container">
       <nav>
-        <BreadcrumbsComponent id="breadcrumb"/>
-        <p id="change_button"className="change_button" onClick = {openAssetTreeview}>Change</p>
+        <BreadcrumbsComponent id="breadcrumb" />
+        <p id="change_button" className="change_button" onClick={openAssetTreeview}>Change</p>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>

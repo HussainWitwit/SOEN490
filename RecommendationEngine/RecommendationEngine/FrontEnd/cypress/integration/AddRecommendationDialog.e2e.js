@@ -2,7 +2,7 @@ describe('Add Recommendation Dialog', () => {
 
 
     beforeEach(() => {
-        cy.visit('/');
+        cy.visit('/recommendations-manage');
         cy.get('#recBtn').click();
     })
 
@@ -37,7 +37,7 @@ describe('Add Recommendation Dialog', () => {
 
     it('Next button is disabled when recommendation types are not received from API ', () => {
         cy.wait(500);
-        cy.get('#next-btn').should('be.disabled');;
+        cy.get('#next-btn').should('be.disabled');
     });
 
     // it('Next button is disabled when required inputs are empty ', () => {
