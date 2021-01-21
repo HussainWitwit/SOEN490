@@ -18,11 +18,6 @@ namespace RecommendationEngine.Controllers
             _assetService = assetService;
         }
 
-        /// <summary>
-        /// Get assets from Power Factors database
-        /// </summary>
-        /// <returns></returns>
-        /// <response code="200">Sucess Response</response>
         [HttpGet("convert")]
         public async Task<IActionResult> ConvertAsync()
         {

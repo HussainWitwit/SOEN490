@@ -16,9 +16,9 @@ namespace RecommendationEngine.Controllers
         }
 
         /// <summary>
-        /// Get the flat asset list
+        /// Get all the assets in a flat list representation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An array of asset objects (with no children attribute)</returns>
         /// <remarks>
         /// Sample response:
         ///
@@ -46,7 +46,7 @@ namespace RecommendationEngine.Controllers
         ///     ]
         ///
         /// </remarks>
-        /// <response code="200">Sucess Response</response>
+        /// <response code="200">Success Response</response>
         [HttpGet()]
         public IActionResult GetAssetsList()
         {
@@ -61,7 +61,7 @@ namespace RecommendationEngine.Controllers
         }
 
         /// <summary>
-        /// Get the nested asset list
+        /// Get the all the assets in a parent-child object representation.
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -93,8 +93,8 @@ namespace RecommendationEngine.Controllers
         ///     ]
         ///
         /// </remarks>
-        /// <returns></returns>
-        /// <response code="200">Sucess Response</response>
+        /// <returns>An Asset object (top most) with its children.</returns>
+        /// <response code="200">Success Response</response>
         /// [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("nested")]
         public IActionResult GetAssetsNested()

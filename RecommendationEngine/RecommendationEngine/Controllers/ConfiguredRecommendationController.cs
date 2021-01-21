@@ -17,7 +17,7 @@ namespace RecommendationEngine.Controllers
         }
 
         /// <summary>
-        /// Get the configured recommendation list
+        /// Get all the configured recommendation
         /// </summary>
         /// <remarks>
         /// Sample response:
@@ -25,14 +25,14 @@ namespace RecommendationEngine.Controllers
         ///     [
         ///         {
         ///         "id": 7,
-        ///                 "name": "RENEW01_2070.92.005",
-        ///                 "type": "Yearly Wash Optimization",
-        ///                 "description": "Example description",
-        ///                 "granularity": "Yearly",
-        ///                 "createdBy": "kenzo",
-        ///                 "preferredScenario": "netSaving",
-        ///                 "recurrenceDayOfWeek": 1,
-        ///                 "recurrenceDatetime": {},
+        ///         "name": "RENEW01_2070.92.005",
+        ///         "type": "Yearly Wash Optimization",
+        ///         "description": "Example description",
+        ///         "granularity": "Yearly",
+        ///         "createdBy": "kenzo",
+        ///         "preferredScenario": "netSaving",
+        ///         "recurrenceDayOfWeek": 1,
+        ///         "recurrenceDatetime": {},
         ///         "createdOn": {},
         ///         "assetIdList": [
         ///           1,
@@ -46,24 +46,24 @@ namespace RecommendationEngine.Controllers
         ///         "assetList": [
         ///           [
         ///             {
-        ///               "id": 1,
-        ///               "name": "RENEW01_2070.92.005",
-        ///               "displayText": "Bizzell Church 2",
-        ///               "energyType": "PV",
-        ///               "timeZone": "Eastern Standard Time",
-        ///               "elementPath": "RENEW01_2070.95.001",
-        ///               "assetType": "Plant",
-        ///               "acPower": 4950
+        ///              "id": 1,
+        ///              "name": "RENEW01_2070.92.005",
+        ///              "displayText": "Bizzell Church 2",
+        ///              "energyType": "PV",
+        ///              "timeZone": "Eastern Standard Time",
+        ///              "elementPath": "RENEW01_2070.95.001",
+        ///              "assetType": "Plant",
+        ///              "acPower": 4950
         ///             },
         ///             {
-        ///         "id": 2,
-        ///               "name": "RENEW01_2070.94.013",
-        ///               "displayText": "RPU",
-        ///               "energyType": "PV",
-        ///               "timeZone": "Pacific Standard Time",
-        ///               "elementPath": "RENEW01_2070.94.013",
-        ///               "assetType": "Plant",
-        ///               "acPower": 7500
+        ///              "id": 2,
+        ///              "name": "RENEW01_2070.94.013",
+        ///              "displayText": "RPU",
+        ///              "energyType": "PV",
+        ///              "timeZone": "Pacific Standard Time",
+        ///              "elementPath": "RENEW01_2070.94.013",
+        ///              "assetType": "Plant",
+        ///              "acPower": 7500
         ///             }
         ///           ]
         ///         ],
@@ -72,59 +72,12 @@ namespace RecommendationEngine.Controllers
         ///           "param2"
         ///         ]
         ///       },
-        ///       {
-        ///         "id": 7,
-        ///         "name": "RENEW01_2070.92.005",
-        ///         "type": "Yearly Wash Optimization",
-        ///         "description": "Example description",
-        ///         "granularity": "Yearly",
-        ///         "createdBy": "kenzo",
-        ///         "preferredScenario": "netSaving",
-        ///         "recurrenceDayOfWeek": 1,
-        ///         "recurrenceDatetime": { },
-        ///         "createdOn": { },
-        ///         "assetIdList": [
-        ///           1,
-        ///           2
-        ///         ],
-        ///         "lastJobs": [
-        ///           { },
-        ///           { },
-        ///           { }
-        ///         ],
-        ///         "assetList": [
-        ///           [
-        ///             {
-        ///             "id": 1,
-        ///               "name": "RENEW01_2070.92.005",
-        ///               "displayText": "Bizzell Church 2",
-        ///               "energyType": "PV",
-        ///               "timeZone": "Eastern Standard Time",
-        ///               "elementPath": "RENEW01_2070.95.001",
-        ///               "assetType": "Plant",
-        ///               "acPower": 4950
-        ///             },
-        ///             {
-        ///             "id": 2,
-        ///               "name": "RENEW01_2070.94.013",
-        ///               "displayText": "RPU",
-        ///               "energyType": "PV",
-        ///               "timeZone": "Pacific Standard Time",
-        ///               "elementPath": "RENEW01_2070.94.013",
-        ///               "assetType": "Plant",
-        ///               "acPower": 7500
-        ///             }
-        ///           ]
-        ///         ],
-        ///         "parameters": [
-        ///           "param1",
-        ///           "param2"
-        ///         ]
-        ///       }
+        ///       {...},
+        ///       {...}
         ///     ]
         ///
         /// </remarks>
-        /// <returns></returns>
+        /// <returns>An array of configured recommendation objects</returns>
         /// <response code="200">Sucess Response</response>
         [HttpGet]
         public IActionResult GetConfiguredRecommendationList()
@@ -133,7 +86,7 @@ namespace RecommendationEngine.Controllers
         }
 
         /// <summary>
-        /// Get the configured recommendation by id
+        /// Get the configured recommendation corresponding to a specific id
         /// </summary>
         /// <remarks>
         /// Sample response:
@@ -171,7 +124,7 @@ namespace RecommendationEngine.Controllers
         ///             "acPower": 4950
         ///           },
         ///           {
-        ///         "id": 2,
+        ///             "id": 2,
         ///             "name": "RENEW01_2070.94.013",
         ///             "displayText": "RPU",
         ///             "energyType": "PV",
@@ -190,8 +143,8 @@ namespace RecommendationEngine.Controllers
         ///
         /// </remarks>
         /// <param name="id"></param>
-        /// <returns></returns>
-        /// <response code="200">Sucess Response</response>
+        /// <returns>A configured recommendation object</returns>
+        /// <response code="200">Success Response</response>
         [HttpGet("{id}")]
         public IActionResult GetConfiguredRecommendationById(int id)
         {
@@ -206,11 +159,11 @@ namespace RecommendationEngine.Controllers
         }
 
         /// <summary>
-        /// Add a recommendation
+        /// Add a configured recommendation
         /// </summary>
         /// <param name="configuredRecommendation"></param>
-        /// <returns></returns>
-        /// <response code="200">Sucess Response</response>
+        /// <returns>response object (with status code)</returns>
+        /// <response code="200">Success Response</response>
         [HttpPost]
         public IActionResult AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
@@ -230,8 +183,8 @@ namespace RecommendationEngine.Controllers
         /// </summary>
         /// <param name="configuredRecommendation"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        /// <response code="200">Sucess Response</response>
+        /// <returns>response object (with status code)</returns>
+        /// <response code="200">Success Response</response>
         [HttpPut("{id}")]
         public IActionResult EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
@@ -250,8 +203,8 @@ namespace RecommendationEngine.Controllers
         /// Delete a recommendation
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        /// <response code="200">Sucess Response</response>
+        /// <returns>response object (with status code)</returns>
+        /// <response code="200">Success Response</response>
         [HttpDelete("{id}")]
         public IActionResult DeleteConfiguredRecommendation(int id)
         {
