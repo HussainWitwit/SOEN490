@@ -6,6 +6,8 @@ export const getRecommendationJobList = async () => {
     try {
         let response = await fetch('api/job');
         const jsonResponse = await response.json();
+        console.log(jsonResponse);
+
         if (jsonResponse) {
             result = AssignResponse(jsonResponse)
             return result;
@@ -14,6 +16,7 @@ export const getRecommendationJobList = async () => {
             return []
         }
     } catch (e) {
+        console.log('Error fetching jobs!')
         console.log(e);
     }
 }
@@ -29,6 +32,5 @@ const AssignResponse = function (response: any): ConfiguredRecommendationJob[] {
             timestamp: element.timestamp
         };
     });
-
     return result;
 }

@@ -4,7 +4,6 @@ import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import { connect } from 'react-redux';
-import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
 
@@ -15,7 +14,7 @@ export const RowsToDisplay = (element) => (
         <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.id}</TableCell>
         <TableCell id="tableBody">{element.status}</TableCell>
         <TableCell id="tableBody">{element.timestamp}</TableCell>
-        <TableCell id="tableBody">{element.duration}</TableCell>
+        <TableCell id="tableBody">{element.duration} seconds</TableCell>
         <TableCell id="tableBody">{element.configuredRecommendationId}</TableCell>
     </React.Fragment>
 );
@@ -38,7 +37,7 @@ export function JobsPage (props) {
     /* istanbul ignore next */
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
-            return job.id.includes(input)
+            return job.id.toString().includes(input.toString())
         })
         setJobList(filtered);
     }
@@ -83,11 +82,11 @@ export function JobsPage (props) {
                 rowsValue={RowsToDisplay}
                 data={jobList}
                 TableTitle={"Recommendation Jobs"}
-                // onClick={openScheduleDrilldown}
+                onClick={() => { }}
                 columnTitles={headCells}
             />
         </div>
     );
 }
 
-export default connect(mapStateToProps, mapDispatchManageRecommendationPageToProps)(JobsPage);
+export default connect(mapStateToProps, null)(JobsPage);

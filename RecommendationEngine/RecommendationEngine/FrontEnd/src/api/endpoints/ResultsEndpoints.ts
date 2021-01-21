@@ -14,12 +14,13 @@ export const getRecommendationResultList = async () => {
             return []
         }
     } catch (e) {
+        console.log('Error fetching results!')
         console.log(e);
     }
 }
 
 const AssignResponse = function (response: any): ConfiguredRecommendationResult[] {
-    
+
     let result = response.map((element: any) => {
         return {
             id: element.id,
@@ -30,6 +31,5 @@ const AssignResponse = function (response: any): ConfiguredRecommendationResult[
             costOfInaction: element.costOfInaction
         };
     });
-
     return result;
 }

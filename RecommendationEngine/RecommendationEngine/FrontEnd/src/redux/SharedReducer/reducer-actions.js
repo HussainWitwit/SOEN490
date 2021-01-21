@@ -56,7 +56,9 @@ export const getResults = async (dispatch) => {
 export const mapStateToProps = ({ sharedReducer }) => {
   return {
     nestedAssets: sharedReducer.nestedAssets,
-    configuredRecommendationList: sharedReducer.configuredRecommendationList
+    configuredRecommendationList: sharedReducer.configuredRecommendationList,
+    recommendationJobList: sharedReducer.recommendationJobList,
+    recommendationResultList: sharedReducer.recommendationResultList
   };
 };
 
@@ -66,6 +68,8 @@ export const mapDispatchSharedToProps = (dispatch) => {
   return {
     getNestedAssets: () => getNestedAssets(dispatch),
     getFlatListAssets: () => getFlatListAssets(dispatch),
-    getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch)
+    getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
+    getJobs: () => getJobs(dispatch),
+    getResults: () => getResults(dispatch)
   };
 };

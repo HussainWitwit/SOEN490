@@ -4,7 +4,6 @@ import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import { connect } from 'react-redux';
-import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
 
@@ -12,25 +11,26 @@ import SearchBar from '../../common/SearchBar';
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
-        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.name}</TableCell>
-        <TableCell id="tableBody">{element.netIncome}</TableCell>
-        <TableCell id="tableBody">{element.returnOnInvestment}</TableCell>
-        <TableCell id="tableBody">{element.costOfAction}</TableCell>
-        <TableCell id="tableBody">{element.costOfInaction}</TableCell>
-        <TableCell id="tableBody">{element.configuredRecommendation}</TableCell>
+        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.id}</TableCell>
+        <TableCell id="tableBody">{element.netSaving.toFixed(2)}</TableCell>
+        <TableCell id="tableBody">{element.returnOnInvestment.toFixed(2)}</TableCell>
+        <TableCell id="tableBody">{element.costOfAction.toFixed(2)}</TableCell>
+        <TableCell id="tableBody">{element.costOfInaction.toFixed(2)}</TableCell>
+        <TableCell id="tableBody">{element.configuredRecommendationId}</TableCell>
     </React.Fragment>
 );
 
 export function ResultsPage (props) {
 
     const { recommendationResultList } = props;
+    console.log(recommendationResultList);
     const [resultList, setResultList] = useState(recommendationResultList);
     const [defaultResultList, setDefaultResultList] = useState(recommendationResultList);
 
     /* istanbul ignore next */
     const headCells = [
-        { id: 'title', label: 'Title' },
-        { id: 'netIncome', label: 'Net Income' },
+        { id: 'id', label: 'Result ID' },
+        { id: 'netSaving', label: 'Net Saving' },
         { id: 'returnOnInvestment', label: 'Return on Investment' },
         { id: 'costOfAction', label: 'Cost of Action' },
         { id: 'costOfInaction', label: 'Cost of Inaction' },
@@ -40,7 +40,7 @@ export function ResultsPage (props) {
     /* istanbul ignore next */
     const updateSearch = async (input) => {
         const filtered = defaultResultList.filter(result => {
-            return result.id.includes(input)
+            return result.id.toString().includes(input.toString())
         })
         setResultList(filtered);
     }
@@ -85,11 +85,11 @@ export function ResultsPage (props) {
                 rowsValue={RowsToDisplay}
                 data={resultList}
                 TableTitle={"Recommendation Job Results"}
-                // onClick={openScheduleDrilldown}
+                onClick={() => { }}
                 columnTitles={headCells}
             />
         </div>
     );
 }
 
-export default connect(mapStateToProps, mapDispatchManageRecommendationPageToProps)(ResultsPage);
+export default connect(mapStateToProps, null)(ResultsPage);
