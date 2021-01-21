@@ -10,6 +10,7 @@ import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
 
+
 /* istanbul ignore next */ //Should be tested 
 export const RowsToDisplay = (element) => (
   <React.Fragment>
@@ -29,10 +30,10 @@ export function ManageRecommendationPage (props) {
 
   /* istanbul ignore next */ //Should be tested 
   const headCells = [
-    { id: "name", numeric: false, disablePadding: true, label: "Title"},
-    { id: "type", numeric: false, disablePadding: false, label: "Type" },
-    { id: "granularity", numeric: false, disablePadding: false, label: "Granularity" },
-    { id: "createdOn", numeric: false, disablePadding: false, label: "Created On" },
+    { id: "name", label: "Title"},
+    { id: "type", label: "Type" },
+    { id: "granularity", label: "Granularity" },
+    { id: "createdOn", label: "Created On" },
   ];
 
   /* istanbul ignore next */

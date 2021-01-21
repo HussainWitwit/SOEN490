@@ -15,7 +15,7 @@ import 'date-fns';
 
 export default function RecommendationEngineTable (props) {
 
-  const {rowsValue, data, openScheduleDrilldown, columnTitles } = props;
+  const {rowsValue, data, TableTitle, openScheduleDrilldown, columnTitles } = props;
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("createdOn");
@@ -74,7 +74,7 @@ export default function RecommendationEngineTable (props) {
     <div id="root">
       <Paper id="paper">
         <Toolbar id="toolbar">
-          <h6 className="toolBarTitle" variant="h6" data-testid="tableTitle" component="div">{props.TableTitle}</h6>
+          <h6 className="toolBarTitle" variant="h6" data-testid="tableTitle" component="div">{TableTitle}</h6>
           <FormControlLabel
             id="liteSwitch"
             control={
