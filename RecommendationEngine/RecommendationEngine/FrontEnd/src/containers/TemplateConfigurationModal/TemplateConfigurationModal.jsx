@@ -10,11 +10,12 @@ import { VscCircuitBoard } from 'react-icons/vsc';
 import { GoCalendar } from 'react-icons/go';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 
 function TemplateConfigurationModal (props) {
 
-  const { templateDetailsList, template, dialogStyle, setRecommendationType } = props;
+  const { dialogsContent, dialogStyle, setRecommendationType } = props;
+  const { templateDetailsList, template } = dialogsContent;
 
   const TemplateIcon1 = FaSolarPanel;
   const TemplateIcon2 = GoCalendar;
@@ -25,18 +26,18 @@ function TemplateConfigurationModal (props) {
 
   const iconsList = [TemplateIcon1, TemplateIcon2, TemplateIcon3, TemplateIcon4, TemplateIcon5, TemplateIcon6];
 
-  const TemplateCard = (props) => {
+  const TemplateCard = (innerProps) => {
     return (
       <div
         id={
-          props.isPressed ? 'item-template-selected' : 'item-template-default'
+          innerProps.isPressed ? 'item-template-selected' : 'item-template-default'
         }
-        onClick={props.onClick}
+        onClick={innerProps.onClick}
       >
         <div data-testid="template-label">
-          <props.icon id="template-icon" />
+          <innerProps.icon id="template-icon" />
         </div>
-        <Typography id="template-label">{props.name}</Typography>
+        <Typography id="template-label">{innerProps.name}</Typography>
       </div>
     );
   };

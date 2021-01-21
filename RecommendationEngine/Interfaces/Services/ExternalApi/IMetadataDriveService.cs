@@ -7,7 +7,7 @@ namespace Interfaces.Services.ExternalApi
 {
     public interface IMetadataDriveService
     {
-        public Task<List<PFPPAPrice>> GetPPAPriceByPlantId(string plantId);
+        public Task<List<PFPpaPrice>> GetPPAPriceByPlantId(string plantId);
         public Task<List<PFMetadata>> GetAssetsMetadataByPlantIds(List<string> plantIds);
         public Task<Dictionary<string, List<PFPredictedEnergy>>> GetDailyPredictedEnergyByPlantIds(DateTime startTime, DateTime endTime, List<string> plantIds);
     }

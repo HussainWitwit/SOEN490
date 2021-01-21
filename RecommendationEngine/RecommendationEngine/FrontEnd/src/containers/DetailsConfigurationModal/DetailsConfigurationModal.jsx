@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
-import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -21,20 +21,10 @@ import {
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
 export function DetailsConfigurationModal (props) {
-  const {
-    basicConfiguration,
-    template,
-    setTitle,
-    updateAsset,
-    setPreferredScenario,
-    setGranularity,
-    setRepeatDay,
-    setRepeatDate,
-    setRepeatTime,
-    apiAssets,
-    isEditing,
-    templateDetailsList
-  } = props;
+
+  const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
+  const { templateDetailsList, template, isEditing, basicConfiguration } = dialogsContent;
+
 
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
 
@@ -157,7 +147,7 @@ export function DetailsConfigurationModal (props) {
                   autoOk
                   inputVariant="outlined"
                   label="Date & Time"
-                  minDate = {isEditing ? null : new Date()}
+                  minDate={isEditing ? null : new Date()}
                   // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}

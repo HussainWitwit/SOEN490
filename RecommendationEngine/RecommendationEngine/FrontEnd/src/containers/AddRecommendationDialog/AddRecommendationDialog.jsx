@@ -5,7 +5,7 @@ import {
   Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Slide
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import CloseIcon from '@material-ui/icons/Close';
 import TemplateConfigurationModal from '../../containers/TemplateConfigurationModal/TemplateConfigurationModal';
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
@@ -14,15 +14,13 @@ import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationMo
 import './AddRecommendationDialog.css';
 
 const pages = [
-  ({ style, updateDialogContent }) => (
+  ({ style }) => (
     <TemplateConfigurationModal
-      updateContent={updateDialogContent}
       dialogStyle={style}
     />
   ),
-  ({ style, updateDialogContent }) => (
+  ({ style }) => (
     <DetailsConfigurationModal
-      updateContent={updateDialogContent}
       dialogStyle={style}
     />
   ),
@@ -48,12 +46,14 @@ export function PaperComponent (props) {
   );
 }
 
-export const Transition = React.forwardRef(function Transition(props, ref) {
+export const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export function AddRecommendationDialog (props) {
-  const { setBackToInitialValues, isDialogOpen, basicConfiguration, template, postConfiguredRecommendation, isEditing, editConfiguredRecommendation, configurationId } = props;
+  const { dialogsContent, setBackToInitialValues, postConfiguredRecommendation } = props;
+  const { isDialogOpen, basicConfiguration, template, isEditing, id } = dialogsContent;
+
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -85,45 +85,27 @@ export function AddRecommendationDialog (props) {
   }
   //Post method
   const confirmDialogEvent = async () => {
-    if (isEditing) {
-      editConfiguredRecommendation({
-        type: template.name,
-        name: basicConfiguration.title,
-        granularity: basicConfiguration.granularity,
-        createdBy: basicConfiguration.createdBy,
-        createdOn: new Date(),
-        preferredScenario: basicConfiguration.preferredScenario,
-        recurrenceDayOfWeek: basicConfiguration.repeatDay,
-        modifiedBy: '',
-        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
-        assetIdList: basicConfiguration.asset.map((e) => {
-          return e.id;
-        })
-      }, configurationId);
-    }
-    else {
-      postConfiguredRecommendation({
-        type: template.name,
-        name: basicConfiguration.title,
-        granularity: basicConfiguration.granularity,
-        createdBy: basicConfiguration.createdBy,
-        createdOn: new Date(),
-        preferredScenario: basicConfiguration.preferredScenario,
-        recurrenceDayOfWeek: basicConfiguration.repeatDay,
-        modifiedBy: '',
-        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
-        assetIdList: basicConfiguration.asset.map((e) => {
-          return e.id;
-        })
-      });
-    }
+    await postConfiguredRecommendation({
+      type: template.name,
+      name: basicConfiguration.title,
+      granularity: basicConfiguration.granularity,
+      createdBy: basicConfiguration.createdBy,
+      createdOn: new Date(),
+      preferredScenario: basicConfiguration.preferredScenario,
+      recurrenceDayOfWeek: basicConfiguration.repeatDay,
+      modifiedBy: '',
+      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+      assetIdList: basicConfiguration.asset.map((e) => {
+        return e.id;
+      })
+    }, { isEditing: isEditing, id: id })
     closeDialog();
   }
 
   useEffect(() => {
-   if(isEditing) {
-     setIndex(1);
-   }
+    if (isEditing) {
+      setIndex(1);
+    }
   }, [isEditing])
 
   return (
@@ -168,7 +150,7 @@ export function AddRecommendationDialog (props) {
           Cancel
         </Button>
         {(index === 1 && !isEditing) && (
-            <Button
+          <Button
             data-testid="previous-button"
             id="previous-btn"
             onClick={onClickPrevious}
@@ -176,7 +158,7 @@ export function AddRecommendationDialog (props) {
           >
             Previous
           </Button>
-        )   
+        )
         }
         {index > 1 && (
           <Button
@@ -187,14 +169,14 @@ export function AddRecommendationDialog (props) {
           >
             Previous
           </Button>
-              )}
+        )}
         {index === 0 && (
           <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!template.name}>
             Next
           </Button>
         )}
-              {(index <= 2 && index > 0) && (
-                  <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
+        {(index <= 2 && index > 0) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
             Next
           </Button>
         )}
@@ -208,4 +190,4 @@ export function AddRecommendationDialog (props) {
   );
 }
 
-export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(AddRecommendationDialog)
+export default connect(mapDialogStateToProps, mapDispatchToProps)(AddRecommendationDialog)
