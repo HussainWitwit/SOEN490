@@ -3,7 +3,7 @@ const { cy } = require("date-fns/locale")
 describe("Manage Recommendation Table", () => {
 
     beforeEach(() => {
-        cy.visit('/recommendations-manage')
+        cy.visit('/')
     })
 
     it("Finds the page title & subtitle", () => {
