@@ -34,9 +34,8 @@ export function DeletePopUp (props) {
             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-
-        <div id="deleteWarning"><div id="warning"><WarningRoundedIcon id="WarningRoundedIcon"></WarningRoundedIcon></div>
-        <div id="warningMessage">
+        <div className="deleteWarning"><div className="warning"><WarningRoundedIcon id="WarningRoundedIcon"></WarningRoundedIcon></div>
+        <div className="warningMessage">
             <DialogTitle classes={{ root: 'alertMessage' }}><b>Delete Configured Recommendation</b></DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -45,7 +44,6 @@ export function DeletePopUp (props) {
             </DialogContent>
         </div>
         </div>
-        
             <DialogActions>
                 <div id="buttons">
                     <Button onClick={handleClose} id="cancelButton" variant="outlined">
