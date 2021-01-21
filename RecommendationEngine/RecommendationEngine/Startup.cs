@@ -12,10 +12,12 @@ using Models.DB;
 using RecommendationEngine.Utilities;
 using RecommendationScheduler.RecommendationJob;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace RecommendationEngine
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -47,6 +49,16 @@ namespace RecommendationEngine
                     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                     var xmlPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, xmlFile);
                     options.IncludeXmlComments(xmlPath);
+                });
+                //Allowing the decoupled front-end app to make calls to the backend (locally)
+                services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
                 });
             }
             else
@@ -145,6 +157,7 @@ namespace RecommendationEngine
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recommendation Engine API");
                     options.RoutePrefix = string.Empty;
                 });
+                app.UseCors();
             }
             else
             {
