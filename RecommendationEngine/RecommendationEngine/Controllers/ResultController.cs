@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
-using System.Threading.Tasks;
 using Interfaces.Services;
 
 namespace RecommendationEngine.Controllers
@@ -19,7 +18,14 @@ namespace RecommendationEngine.Controllers
         [HttpGet()]
         public IActionResult GetResultList()
         {
-            return Ok(_resultService.GetResultList());
+            try
+            {
+                return Ok(_resultService.GetResultList());
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
         }
     }
 }
