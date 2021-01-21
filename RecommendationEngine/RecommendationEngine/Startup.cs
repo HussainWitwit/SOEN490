@@ -31,26 +31,33 @@ namespace RecommendationEngine
 
             services.AddControllersWithViews();
 
-            // In production, the React files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "frontend/build";
-            //});
 
-            services.AddSwaggerGen(options =>
+            if (System.Convert.ToBoolean(Configuration["NoFrontEnd:Swagger"]))
             {
-                options.SwaggerDoc("v1",
-                    new Microsoft.OpenApi.Models.OpenApiInfo
-                    {
-                        Title = "Recommendation Engine API",
-                        Description = "Generic Recommendation Engine that can be applied to systems such as a optimization",
-                        Version = "v1"
-                    });
+                services.AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v1",
+                        new Microsoft.OpenApi.Models.OpenApiInfo
+                        {
+                            Title = "Recommendation Engine API",
+                            Description = "Generic Recommendation Engine endpoints avalaible to client app (front-end).",
+                            Version = "v1"
+                        });
 
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, xmlFile);
-                options.IncludeXmlComments(xmlPath);
-            });
+                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    var xmlPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, xmlFile);
+                    options.IncludeXmlComments(xmlPath);
+                });
+            }
+            else
+            {
+                //in production, the react files will be served from this directory
+                services.AddSpaStaticFiles(configuration =>
+                {
+                    configuration.RootPath = "frontend/build";
+                });
+            }
+
         }
 
         // ConfigureContainer is where you can register things directly
@@ -119,7 +126,7 @@ namespace RecommendationEngine
             }
 
             app.UseStaticFiles();
-            //app.UseSpaStaticFiles();
+            
 
             app.UseRouting();
 
@@ -130,23 +137,28 @@ namespace RecommendationEngine
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "FrontEnd";
+            if (System.Convert.ToBoolean(Configuration["NoFrontEnd:Swagger"])){
+                app.UseSwagger();
 
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseReactDevelopmentServer(npmScript: "start");
-            //    }
-            //});
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(options => 
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recommendation Engine API");
+                    options.RoutePrefix = string.Empty;
+                });
+            }
+            else
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recommendation Engine API");
-                options.RoutePrefix = string.Empty;
-            });
+                app.UseSpaStaticFiles();
+                app.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "FrontEnd";
+
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseReactDevelopmentServer(npmScript: "start");
+                    }
+                });
+            }
         }
     }
 }
