@@ -16,6 +16,41 @@ namespace RecommendationEngine.Controllers
             _recommendationTypeService = recommendationTypeService;
         }
 
+        /// <summary>
+        /// Get the recommendation type list
+        /// </summary>
+        /// <remarks>
+        /// Sample response:
+        ///
+        ///     [
+        ///       [
+        ///         {
+        ///           "templateName": "Yearly Wash Optimization",
+        ///                   "templateDescription": "Description example",
+        ///                   "algorithmName": "Yearly Wash Optimization",
+        ///                   "inputList": [
+        ///                     {
+        ///               "parameterName": "Span Increment",
+        ///                       "defaultValue": 1
+        ///             },
+        ///             {
+        ///               "parameterName": "Span Increment",
+        ///               "defaultValue": 1
+        ///             }
+        ///           ]
+        ///         },
+        ///         {
+        ///         "templateName": "Yearly Wash Optimization",
+        ///           "templateDescription": "Description example",
+        ///           "algorithmName": "Yearly Wash Optimization",
+        ///           "inputList": []
+        ///         }
+        ///       ]
+        ///     ] 
+        ///
+        /// </remarks>
+        /// <returns></returns>
+        /// <response code="200">Sucess Response</response>
         [HttpGet]
         public IActionResult GetRecommendationTypes() {
             return Ok(_recommendationTypeService.GetRecommendationTypes());

@@ -43,7 +43,7 @@ namespace RecommendationEngine
                     new Microsoft.OpenApi.Models.OpenApiInfo
                     {
                         Title = "Recommendation Engine API",
-                        Description = "Exposing the controllers of the API to the client (front-end) for development and documentation purposes.",
+                        Description = "Generic Recommendation Engine that can be applied to systems such as a optimization",
                         Version = "v1"
                     });
 
