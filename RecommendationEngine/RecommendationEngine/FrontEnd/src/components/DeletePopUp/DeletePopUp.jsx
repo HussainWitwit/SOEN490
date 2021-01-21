@@ -3,11 +3,14 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import "./DeletePopUp.css"
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import { mapDispatchDeletePopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
+import WarningRoundedIcon from '@material-ui/icons/WarningRounded';;
 
 
 export function DeletePopUp (props) {
@@ -31,7 +34,16 @@ export function DeletePopUp (props) {
             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <DialogTitle classes={{ root: 'alertMessage' }}>Are you sure you want to DELETE {props.title}?</DialogTitle>
+        <div className="deleteWarning"><div className="warning"><WarningRoundedIcon id="WarningRoundedIcon"></WarningRoundedIcon></div>
+        <div className="warningMessage">
+            <DialogTitle classes={{ root: 'alertMessage' }}><b>Delete Configured Recommendation</b></DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Are you sure you want to delete <b>{props.title}</b>? This configured recommendation and any of its related jobs, results or actions will be deleted. This process cannot be undone.
+                </DialogContentText>
+            </DialogContent>
+        </div>
+        </div>
             <DialogActions>
                 <div id="buttons">
                     <Button onClick={handleClose} id="cancelButton" variant="outlined">
