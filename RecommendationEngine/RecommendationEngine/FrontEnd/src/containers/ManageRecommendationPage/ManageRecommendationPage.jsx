@@ -94,7 +94,7 @@ export function ManageRecommendationPage (props) {
         rowsValue={RowsToDisplay}
         data={recommendationList}
         TableTitle={"Configured Recommendations"}
-        openScheduleDrilldown={openScheduleDrilldown}
+        onClickRow={openScheduleDrilldown}
         columnTitles={headCells}
       />
     </div>

@@ -25,7 +25,6 @@ export function EnhancedTableHead(props) {
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              classes={{ active: 'sortLabel' }}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={sortingHandler(headCell.id)}
             >

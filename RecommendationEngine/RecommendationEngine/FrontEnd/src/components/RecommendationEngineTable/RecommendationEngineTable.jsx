@@ -11,11 +11,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader';
 import './RecommendationEngineTable.css';
-import 'date-fns';
 
 export default function RecommendationEngineTable (props) {
 
-  const {rowsValue, data, TableTitle, openScheduleDrilldown, columnTitles } = props;
+  const {rowsValue, data, TableTitle, onClickRow, columnTitles } = props;
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("createdOn");
@@ -111,7 +110,7 @@ export default function RecommendationEngineTable (props) {
                     key={element.id}
                     className="custom"
                     onClick={() => {
-                      openScheduleDrilldown(element.id)
+                      onClickRow(element.id)
                       setIsSelected(element.id)
                     }}
                   >
@@ -142,6 +141,6 @@ RecommendationEngineTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   TableTitle: PropTypes.string.isRequired,
-  openScheduleDrilldown: PropTypes.func.isRequired,
+  onClickRow: PropTypes.func.isRequired,
   columnTitles: PropTypes.array.isRequired,
 };

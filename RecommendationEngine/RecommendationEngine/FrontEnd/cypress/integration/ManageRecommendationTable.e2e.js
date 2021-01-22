@@ -1,9 +1,8 @@
-const { cy } = require("date-fns/locale")
-
+ 
 describe("Manage Recommendation Table", () => {
 
     beforeEach(() => {
-        cy.visit('/')
+        cy.visit('/recommendations-manage')
     })
 
     it("Finds the page title & subtitle", () => {
@@ -21,7 +20,7 @@ describe("Manage Recommendation Table", () => {
         cy.wait(500)
         cy.get('#data-testid').should('be.visible')
     })
-    
+
     it("Search bar can take queries", () => {
         cy.wait(500)
         cy.get("#data-testid").click()
