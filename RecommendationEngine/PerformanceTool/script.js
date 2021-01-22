@@ -1,6 +1,11 @@
 //https://k6.io/blog/load-testing-restful-apis-with-k6   refer to this
 // You must be 1. Connected to DB and 2.Build , then 
 // open terminal in folder and use command: k6 run script.js
+
+/**
+ * To make it work, replace the dump file on the mysql-dump folder by the sql dump file on the PerformanceTool folder
+ * Then run the docker-compose up command on the directory to start an isolated fresh instance of the project on port 5000
+ */
 import http from 'k6/http';
 import { Rate, Trend} from 'k6/metrics';
 import { check, sleep } from "k6";
@@ -31,33 +36,37 @@ let recommendationTypeErrorRate = new Rate('Recommendation Type errors');
 let RecommendationTypeTrend = new Trend('Recommendation Type Users');
 
 
-//to a threshold of 800ms for POST methods
+
 export let options = {
+  scenarios: {
+    contacts: {
+      executor: 'shared-iterations',
+      vus: 20,
+      iterations: 500,
+      maxDuration: '90s',
+    },
+  },
     thresholds: {
-      'Assets Nested Users': ['p(95)<500'],
-      'Assets Users': ['p(95)<500'],
-      'Configured Recommendation Users': ['p(95)<500'],
-      'Configured Recommendation By Id Users': ['p(95)<500'],
-      'Configured Recommendation Add Users': ['p(95)<800'],
-      'Configured Recommendation Edit Users': ['p(95)<800'],
-      'Configured Recommendation Delete Users': ['p(95)<800'],
-      'Convert Users': ['p(95)<500'],
-      'Recommendation Type Users': ['p(95)<500'],
+      'Assets Nested Users': ['p(95)<650'],
+      'Assets Users': ['p(95)<650'],
+      'Configured Recommendation Users': ['p(95)<650'],
+      'Configured Recommendation By Id Users': ['p(95)<650'],
+      'Configured Recommendation Add Users': ['p(95)<650'],
+      'Configured Recommendation Edit Users': ['p(95)<650'],
+      'Configured Recommendation Delete Users': ['p(95)<650'],
+      'Recommendation Type Users': ['p(95)<650'],
 
     },
-    //You MAY change these two variables values to test 
-    vus: 20, 
-    duration: '90s',
   };
 
 export default function () {
   let urlAssetsNested = 'http://localhost:5000/api/Asset/nested';
   let urlAssets = 'http://localhost:5000/api/Asset';
   let urlConfiguredRecommendationList = 'http://localhost:5000/api/ConfiguredRecommendation';
-  let urlConfiguredRecommendationById = 'http://localhost:5000/api/ConfiguredRecommendation/1';
+  let urlConfiguredRecommendationById = `http://localhost:5000/api/ConfiguredRecommendation/${__ITER}`;
   let urlConfiguredRecommendationAdd = 'http://localhost:5000/api/ConfiguredRecommendation'; 
-  let urlConfiguredRecommendationEdit = 'http://localhost:5000/api/ConfiguredRecommendation/1'; 
-  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${__ITER}`;
+  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${__VU*25+__ITER}`;
+  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${__VU*25+__ITER}`;
   let urlRecommendationType = 'http://localhost:5000/api/RecommendationType';
 
   let params = {
@@ -171,16 +180,18 @@ export default function () {
     'status is 200': (r) => r.status === 200,
   }) || configuredRecommendationListErrorRate.add(1);
   ConfiguredRecommendationListTrend.add(configuredRecommendationListResp.timings.duration);
-
-  check( configuredRecommendationByIdResp, {
-    'status is 200': (r) => r.status === 200,
-  }) || configuredRecommendationByIdErrorRate.add(1);
-  ConfiguredRecommendationByIdTrend.add(configuredRecommendationByIdResp.timings.duration);
  
   check( configuredRecommendationAddResp, {
     'status is 200': (r) => r.status === 200,
   }) || configuredRecommendationAddErrorRate.add(1);
   ConfiguredRecommendationAddTrend.add(configuredRecommendationAddResp.timings.duration);
+
+  sleep(1);
+
+  check( configuredRecommendationByIdResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || configuredRecommendationByIdErrorRate.add(1);
+  ConfiguredRecommendationByIdTrend.add(configuredRecommendationByIdResp.timings.duration);
 
   check( configuredRecommendationEditResp, {
     'status is 200': (r) => r.status === 200,
