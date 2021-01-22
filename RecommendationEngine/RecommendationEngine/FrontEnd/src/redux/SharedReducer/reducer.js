@@ -5,8 +5,6 @@ export const initialValues = {
     flatListAssets: [],
     configuredRecommendationList: [],
     templateDetailsList: [],
-    recommendationJobList: [],
-    recommendationResultList: []
 }
 
 export const SharedReducer = function (state = initialValues, action) {
@@ -26,16 +24,6 @@ export const SharedReducer = function (state = initialValues, action) {
                 ...state,
                 configuredRecommendationList: action.payload
             };
-        case type.GET_RECOMMENDATION_JOB_LIST:
-            return {
-                ...state,
-                recommendationJobList: action.payload
-            }
-        case type.GET_RECOMMENDATION_RESULT_LIST:
-            return {
-                ...state,
-                recommendationResultList: action.payload
-            }
         default:
             return state
     }

@@ -6,8 +6,6 @@ export const getRecommendationJobList = async () => {
     try {
         let response = await fetch('api/job');
         const jsonResponse = await response.json();
-        console.log(jsonResponse);
-
         if (jsonResponse) {
             result = AssignResponse(jsonResponse)
             return result;

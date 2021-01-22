@@ -7,9 +7,6 @@
 import * as dispatchActionType from './dispatch-types';
 import { GetConfiguredRecommendationList } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 import { GetNestedAssetList, GetFlatAssetList } from '../../api/endpoints/AssetEndpoints';
-import { getRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
-import { getRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
-
 
 //**Actions --> Useful for unit testing the reducer.
 export const getNestedAssets = async (dispatch) => {
@@ -36,29 +33,11 @@ export const getConfiguredRecommendationList = async (dispatch) => {
   });
 }
 
-export const getJobs = async (dispatch) => {
-  const response = await getRecommendationJobList();
-  dispatch({
-    type: dispatchActionType.GET_RECOMMENDATION_JOB_LIST,
-    payload: response,
-  });
-}
-
-export const getResults = async (dispatch) => {
-  const response = await getRecommendationResultList();
-  dispatch({
-    type: dispatchActionType.GET_RECOMMENDATION_RESULT_LIST,
-    payload: response,
-  });
-}
-
 //**GETTER** This method will allow you to direct access to all the states value from the store
 export const mapStateToProps = ({ sharedReducer }) => {
   return {
     nestedAssets: sharedReducer.nestedAssets,
     configuredRecommendationList: sharedReducer.configuredRecommendationList,
-    recommendationJobList: sharedReducer.recommendationJobList,
-    recommendationResultList: sharedReducer.recommendationResultList
   };
 };
 
@@ -69,7 +48,5 @@ export const mapDispatchSharedToProps = (dispatch) => {
     getNestedAssets: () => getNestedAssets(dispatch),
     getFlatListAssets: () => getFlatListAssets(dispatch),
     getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
-    getJobs: () => getJobs(dispatch),
-    getResults: () => getResults(dispatch)
   };
 };

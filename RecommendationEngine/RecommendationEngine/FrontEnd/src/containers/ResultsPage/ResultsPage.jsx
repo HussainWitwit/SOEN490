@@ -3,27 +3,25 @@ import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
+import { getRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 
 /* istanbul ignore next */
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
         <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.id}</TableCell>
-        <TableCell id="tableBody">{element.netSaving.toFixed(2)}</TableCell>
-        <TableCell id="tableBody">{element.returnOnInvestment.toFixed(2)}</TableCell>
-        <TableCell id="tableBody">{element.costOfAction.toFixed(2)}</TableCell>
-        <TableCell id="tableBody">{element.costOfInaction.toFixed(2)}</TableCell>
+        <TableCell id="tableBody" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.netSaving.toFixed(2)}$</TableCell>
+        <TableCell id="tableBody" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.returnOnInvestment.toFixed(2)}%</TableCell>
+        <TableCell id="tableBody" style={{ color: 'red' }}>{element.costOfAction.toFixed(2)}$</TableCell>
+        <TableCell id="tableBody" style={{ color: 'red' }}>{element.costOfInaction.toFixed(2)}$</TableCell>
         <TableCell id="tableBody">{element.configuredRecommendationId}</TableCell>
     </React.Fragment>
 );
 
-export function ResultsPage (props) {
+export default function ResultsPage () {
 
-    const { recommendationResultList } = props;
-    console.log(recommendationResultList);
+    const [recommendationResultList, setRecommendationResultList] = useState([])
     const [resultList, setResultList] = useState(recommendationResultList);
     const [defaultResultList, setDefaultResultList] = useState(recommendationResultList);
 
@@ -38,6 +36,14 @@ export function ResultsPage (props) {
     ];
 
     /* istanbul ignore next */
+    const getResultList = async () => {
+        let response = await getRecommendationResultList();
+        setRecommendationResultList(response);
+        setDefaultResultList(response);
+        setResultList(response);
+    }
+
+    /* istanbul ignore next */
     const updateSearch = async (input) => {
         const filtered = defaultResultList.filter(result => {
             return result.id.toString().includes(input.toString())
@@ -46,9 +52,8 @@ export function ResultsPage (props) {
     }
 
     useEffect(() => {
-        setResultList(recommendationResultList)
-        setDefaultResultList(recommendationResultList)
-    }, [recommendationResultList])
+        getResultList();
+    }, [])
 
     return (
         <div id="main-container">
@@ -91,5 +96,3 @@ export function ResultsPage (props) {
         </div>
     );
 }
-
-export default connect(mapStateToProps, null)(ResultsPage);
