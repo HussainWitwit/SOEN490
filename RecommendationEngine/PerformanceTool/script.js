@@ -39,11 +39,37 @@ let RecommendationTypeTrend = new Trend('Recommendation Type Users');
 
 export let options = {
   scenarios: {
-    contacts: {
-      executor: 'shared-iterations',
+    postRequests: {
+      executor: 'per-vu-iterations',
       vus: 20,
-      iterations: 500,
-      maxDuration: '90s',
+      iterations: 25,
+      maxDuration: '50s',
+      exec: 'postRequests',
+      startTime: '0s'
+    },
+    getRequests: {
+      executor: 'per-vu-iterations',
+      vus: 20,
+      iterations: 25,
+      maxDuration: '50s',
+      exec: 'getRequests',
+      startTime: '50s'
+    },
+    putRequests: {
+      executor: 'per-vu-iterations',
+      vus: 20,
+      iterations: 25,
+      maxDuration: '50s',
+      exec: 'putRequests',
+      startTime: '50s'
+    },
+    deleteRequests: {
+      executor: 'per-vu-iterations',
+      vus: 20,
+      iterations: 25,
+      maxDuration: '50s',
+      exec: 'deleteRequests',
+      startTime: '100s'
     },
   },
     thresholds: {
@@ -59,15 +85,8 @@ export let options = {
     },
   };
 
-export default function () {
-  let urlAssetsNested = 'http://localhost:5000/api/Asset/nested';
-  let urlAssets = 'http://localhost:5000/api/Asset';
-  let urlConfiguredRecommendationList = 'http://localhost:5000/api/ConfiguredRecommendation';
-  let urlConfiguredRecommendationById = `http://localhost:5000/api/ConfiguredRecommendation/${__ITER}`;
+export function postRequests() {
   let urlConfiguredRecommendationAdd = 'http://localhost:5000/api/ConfiguredRecommendation'; 
-  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${__VU*25+__ITER}`;
-  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${__VU*25+__ITER}`;
-  let urlRecommendationType = 'http://localhost:5000/api/RecommendationType';
 
   let params = {
     headers: {
@@ -93,6 +112,34 @@ export default function () {
      {"ParameterName": "SoilingSeasonBuffer", "ParameterValue": "3"}],*/
   });
 
+  let requests = {
+    'Configured Recommendation Add Users': {
+      method: 'POST',
+      url: urlConfiguredRecommendationAdd,
+      params: params,
+      body: addConfiguredRecommendationData ,
+    }
+  };
+  
+  let responses = http.batch(requests);
+  let configuredRecommendationAddResp = responses['Configured Recommendation Add Users'];
+
+  check( configuredRecommendationAddResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || configuredRecommendationAddErrorRate.add(1);
+  ConfiguredRecommendationAddTrend.add(configuredRecommendationAddResp.timings.duration);
+
+  sleep(1);
+}
+export function putRequests() {
+  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER+1}`;
+
+  let params = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
    //body for put request
    let editConfiguredRecommendationData = JSON.stringify({
      name: `Edited Recommendation Name ${__VU}: ${__ITER}`, 
@@ -110,6 +157,38 @@ export default function () {
      {"ParameterName": "Accelerator", "ParameterValue": "0.35"},
      {"ParameterName": "SoilingSeasonBuffer", "ParameterValue": "3"}],*/
   });
+
+  let requests = {
+     'Configured Recommendation Edit Users': {
+      method: 'PUT',
+      url: urlConfiguredRecommendationEdit,
+      params: params,
+      body: editConfiguredRecommendationData ,
+    },
+  };
+  
+  let responses = http.batch(requests);
+  let configuredRecommendationEditResp = responses['Configured Recommendation Edit Users'];
+
+  check( configuredRecommendationEditResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || configuredRecommendationEditErrorRate.add(1);
+  ConfiguredRecommendationEditTrend.add(configuredRecommendationEditResp.timings.duration);
+
+  sleep(1);
+}
+export function getRequests() {
+  let urlAssetsNested = 'http://localhost:5000/api/Asset/nested';
+  let urlAssets = 'http://localhost:5000/api/Asset';
+  let urlConfiguredRecommendationList = 'http://localhost:5000/api/ConfiguredRecommendation';
+  let urlConfiguredRecommendationById = `http://localhost:5000/api/ConfiguredRecommendation/${__ITER}`;
+  let urlRecommendationType = 'http://localhost:5000/api/RecommendationType';
+
+  let params = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
   let requests = {
     'Assets Nested Users': {
@@ -132,23 +211,6 @@ export default function () {
       url: urlConfiguredRecommendationById,
       params: params,
     },
-    'Configured Recommendation Add Users': {
-      method: 'POST',
-      url: urlConfiguredRecommendationAdd,
-      params: params,
-      body: addConfiguredRecommendationData ,
-    },
-     'Configured Recommendation Edit Users': {
-      method: 'PUT',
-      url: urlConfiguredRecommendationEdit,
-      params: params,
-      body: editConfiguredRecommendationData ,
-    },
-     'Configured Recommendation Delete Users': {
-      method: 'DELETE',
-      url: urlConfiguredRecommendationDelete,
-      params: params,
-    },
     'Recommendation Type Users': {
       method: 'GET',
       url:  urlRecommendationType,
@@ -161,9 +223,6 @@ export default function () {
   let assetsResp = responses['Assets Users'];
   let configuredRecommendationListResp = responses['Configured Recommendation Users'];
   let configuredRecommendationByIdResp = responses['Configured Recommendation By Id Users'];
-  let configuredRecommendationAddResp = responses['Configured Recommendation Add Users'];
-  let configuredRecommendationEditResp = responses['Configured Recommendation Edit Users'];
-  let configuredRecommendationDeleteResp = responses['Configured Recommendation Delete Users'];
   let recommendationTypeResp = responses['Recommendation Type Users'];
 
   check(assetsNestedResp, {
@@ -180,33 +239,43 @@ export default function () {
     'status is 200': (r) => r.status === 200,
   }) || configuredRecommendationListErrorRate.add(1);
   ConfiguredRecommendationListTrend.add(configuredRecommendationListResp.timings.duration);
- 
-  check( configuredRecommendationAddResp, {
-    'status is 200': (r) => r.status === 200,
-  }) || configuredRecommendationAddErrorRate.add(1);
-  ConfiguredRecommendationAddTrend.add(configuredRecommendationAddResp.timings.duration);
-
-  sleep(1);
 
   check( configuredRecommendationByIdResp, {
     'status is 200': (r) => r.status === 200,
   }) || configuredRecommendationByIdErrorRate.add(1);
   ConfiguredRecommendationByIdTrend.add(configuredRecommendationByIdResp.timings.duration);
 
-  check( configuredRecommendationEditResp, {
+  check(recommendationTypeResp, {
     'status is 200': (r) => r.status === 200,
-  }) || configuredRecommendationEditErrorRate.add(1);
-  ConfiguredRecommendationEditTrend.add(configuredRecommendationEditResp.timings.duration);
+  }) || recommendationTypeErrorRate.add(1);
+  RecommendationTypeTrend.add(recommendationTypeResp.timings.duration);
+
+  sleep(1);
+}
+export function deleteRequests() {
+  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER+1}`;
+
+  let params = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  let requests = {
+     'Configured Recommendation Delete Users': {
+      method: 'DELETE',
+      url: urlConfiguredRecommendationDelete,
+      params: params,
+    },
+  };
+  
+  let responses = http.batch(requests);
+  let configuredRecommendationDeleteResp = responses['Configured Recommendation Delete Users'];
 
   check( configuredRecommendationDeleteResp, {
     'status is 200': (r) => r.status === 200,
   }) || configuredRecommendationDeleteErrorRate.add(1);
   ConfiguredRecommendationDeleteTrend.add(configuredRecommendationDeleteResp.timings.duration);
-
-  check(recommendationTypeResp, {
-    'status is 200': (r) => r.status === 200,
-  }) || recommendationTypeErrorRate.add(1);
-  RecommendationTypeTrend.add(recommendationTypeResp.timings.duration);
 
   sleep(1);
 }
