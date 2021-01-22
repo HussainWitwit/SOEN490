@@ -11,13 +11,13 @@ import './JobsPage.css';
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
-        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.id}</TableCell>
+        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody" style={{ width: ' 20% ' }}>{element.id}</TableCell>
         <TableCell style={{ width: ' 20% ', paddingRight: '80px' }} id="table-body-status"><div id='job-status'
             style={element.status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : element.status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
             {element.status}</div></TableCell>
         <TableCell id="tableBody" style={{ width: ' 30% ' }}>{element.timestamp}</TableCell>
-        <TableCell id="tableBody">{element.duration} seconds</TableCell>
-        <TableCell id="tableBody"><p>{element.configuredRecommendationId}</p></TableCell>
+        <TableCell id="tableBody" style={{ width: ' 20% ' }}>{element.duration} seconds</TableCell>
+        <TableCell id="tableBody" style={{ width: ' 20% ' }}><p>{element.configuredRecommendationId}</p></TableCell>
         <TableCell />
     </React.Fragment>
 );

@@ -1,9 +1,6 @@
 #job-status{
     text-align: center;
     border-radius: 1rem;
-    font-weight: bold;
+   font-weight: bold;
 }
 
-#table-body-status {
-    padding-right: 25px;
-}
