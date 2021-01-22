@@ -3,25 +3,28 @@ import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
+import { getRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
+import './JobsPage.css';
 
 /* istanbul ignore next */
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
         <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.id}</TableCell>
-        <TableCell id="tableBody">{element.status}</TableCell>
-        <TableCell id="tableBody">{element.timestamp}</TableCell>
+        <TableCell style={{ width: ' 20% ', paddingRight: '80px' }} id="table-body-status"><div id='job-status'
+            style={element.status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : element.status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
+            {element.status}</div></TableCell>
+        <TableCell id="tableBody" style={{ width: ' 30% ' }}>{element.timestamp}</TableCell>
         <TableCell id="tableBody">{element.duration} seconds</TableCell>
-        <TableCell id="tableBody">{element.configuredRecommendationId}</TableCell>
+        <TableCell id="tableBody"><p>{element.configuredRecommendationId}</p></TableCell>
+        <TableCell />
     </React.Fragment>
 );
 
-export function JobsPage (props) {
+export default function JobsPage () {
 
-    const { recommendationJobList } = props;
+    const [recommendationJobList, setRecommendationJobList] = useState();
     const [jobList, setJobList] = useState(recommendationJobList);
     const [defaultJobList, setDefaultJobList] = useState(recommendationJobList);
 
@@ -35,6 +38,14 @@ export function JobsPage (props) {
     ];
 
     /* istanbul ignore next */
+    const getJobList = async () => {
+        let response = await getRecommendationJobList();
+        setRecommendationJobList(response);
+        setJobList(response);
+        setDefaultJobList(response);
+    }
+
+    /* istanbul ignore next */
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
             return job.id.toString().includes(input.toString())
@@ -43,9 +54,8 @@ export function JobsPage (props) {
     }
 
     useEffect(() => {
-        setJobList(recommendationJobList)
-        setDefaultJobList(recommendationJobList)
-    }, [recommendationJobList])
+        getJobList([]);
+    }, [])
 
     return (
         <div id="main-container">
@@ -88,5 +98,3 @@ export function JobsPage (props) {
         </div>
     );
 }
-
-export default connect(mapStateToProps, null)(JobsPage);

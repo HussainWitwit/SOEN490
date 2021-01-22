@@ -14,8 +14,6 @@ store.dispatch(getNestedAssets);
 store.dispatch(getFlatListAssets);
 store.dispatch(getConfiguredRecommendationList);
 store.dispatch(getTemplateDetails);
-store.dispatch(getJobs);
-store.dispatch(getResults);
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
