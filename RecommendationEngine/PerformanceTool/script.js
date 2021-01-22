@@ -43,7 +43,7 @@ export let options = {
       executor: 'per-vu-iterations',
       vus: 20,
       iterations: 25,
-      maxDuration: '50s',
+      maxDuration: '35s',
       exec: 'postRequests',
       startTime: '0s'
     },
@@ -53,15 +53,15 @@ export let options = {
       iterations: 25,
       maxDuration: '50s',
       exec: 'getRequests',
-      startTime: '50s'
+      startTime: '30s'
     },
     putRequests: {
       executor: 'per-vu-iterations',
       vus: 20,
       iterations: 25,
-      maxDuration: '50s',
+      maxDuration: '40s',
       exec: 'putRequests',
-      startTime: '50s'
+      startTime: '80s'
     },
     deleteRequests: {
       executor: 'per-vu-iterations',
@@ -69,7 +69,7 @@ export let options = {
       iterations: 25,
       maxDuration: '50s',
       exec: 'deleteRequests',
-      startTime: '100s'
+      startTime: '120s'
     },
   },
     thresholds: {
@@ -132,7 +132,7 @@ export function postRequests() {
   sleep(1);
 }
 export function putRequests() {
-  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER+1}`;
+  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER-25}`;
 
   let params = {
     headers: {
@@ -181,7 +181,7 @@ export function getRequests() {
   let urlAssetsNested = 'http://localhost:5000/api/Asset/nested';
   let urlAssets = 'http://localhost:5000/api/Asset';
   let urlConfiguredRecommendationList = 'http://localhost:5000/api/ConfiguredRecommendation';
-  let urlConfiguredRecommendationById = `http://localhost:5000/api/ConfiguredRecommendation/${__ITER}`;
+  let urlConfiguredRecommendationById = `http://localhost:5000/api/ConfiguredRecommendation/10`;
   let urlRecommendationType = 'http://localhost:5000/api/RecommendationType';
 
   let params = {
@@ -253,7 +253,7 @@ export function getRequests() {
   sleep(1);
 }
 export function deleteRequests() {
-  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER+1}`;
+  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-21)*25+__ITER-25}`;
 
   let params = {
     headers: {
