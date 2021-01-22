@@ -73,14 +73,14 @@ export let options = {
     },
   },
     thresholds: {
-      'Assets Nested Users': ['p(95)<650'],
-      'Assets Users': ['p(95)<650'],
-      'Configured Recommendation Users': ['p(95)<650'],
-      'Configured Recommendation By Id Users': ['p(95)<650'],
-      'Configured Recommendation Add Users': ['p(95)<650'],
-      'Configured Recommendation Edit Users': ['p(95)<650'],
-      'Configured Recommendation Delete Users': ['p(95)<650'],
-      'Recommendation Type Users': ['p(95)<650'],
+      'Assets Nested Users': ['p(95)<1000'],
+      'Assets Users': ['p(95)<1000'],
+      'Configured Recommendation Users': ['p(95)<3000'],
+      'Configured Recommendation By Id Users': ['p(95)<1000'],
+      'Configured Recommendation Add Users': ['p(95)<500'],
+      'Configured Recommendation Edit Users': ['p(95)<500'],
+      'Configured Recommendation Delete Users': ['p(95)<300'],
+      'Recommendation Type Users': ['p(95)<1000'],
 
     },
   };
@@ -132,7 +132,7 @@ export function postRequests() {
   sleep(1);
 }
 export function putRequests() {
-  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER-25}`;
+  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER-24}`;
 
   let params = {
     headers: {
@@ -253,7 +253,7 @@ export function getRequests() {
   sleep(1);
 }
 export function deleteRequests() {
-  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-21)*25+__ITER-25}`;
+  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-21)*25+__ITER-24}`;
 
   let params = {
     headers: {
