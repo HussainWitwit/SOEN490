@@ -9,12 +9,14 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
 import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
+import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
 
 export function ManageRecommendationDrawer({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
 }) {
-  const [open, setOpen] = React.useState(false);
+  const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
+  const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
   // Animation style
   const props = useSpring({
     opacity: 1,
@@ -22,8 +24,12 @@ export function ManageRecommendationDrawer({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
 
-  const handleClickOpen = () => {
-    setOpen(!open);
+  const handleForceRunPopUpOpen = () => {
+    setOpenForceRunPopUp(!openForceRunPopUp);
+  };
+
+  const handleDeletePopUpOpen = () => {
+    setOpenDeletePopUp(!openDeletePopUp);
   };
 
   const formatDateTime = (date) => {
@@ -61,7 +67,7 @@ export function ManageRecommendationDrawer({
             <div className="inputs">
               <p className="value-title">Parameters</p>
               <div className="values">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
-                (configuredRecommendation.parameters.map((parameter) => {
+                (configuredRecommendation.parameters.map((parameter, key) => {
                   return parameter.parameterName;
                 })) : 'N/A'}</div>
             </div>
@@ -70,7 +76,7 @@ export function ManageRecommendationDrawer({
             <div className="outputs">
               <p className="value-title">Value</p>
               <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
-                (configuredRecommendation.parameters.map((parameter) => {
+                (configuredRecommendation.parameters.map((parameter, key) => {
                   return parameter.value;
                 })) : 'N/A'}</div>
             </div>
@@ -102,7 +108,7 @@ export function ManageRecommendationDrawer({
             <p className="value-title">Last Five Executions</p>
             <div className="last-five-status">
               {configuredRecommendation.lastJobs &&
-                configuredRecommendation.lastJobs.map((value) => (
+                configuredRecommendation.lastJobs.map((value, key) => (
                   <Tooltip
                     id='execution-bar'
                     classes={{
@@ -158,13 +164,14 @@ export function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="force-run-button">
-              <Button variant="outlined">Force run</Button>
+              <Button variant="outlined" onClick={handleForceRunPopUpOpen}>Force run</Button>
+              <ForceRunPopUp title={configuredRecommendation.name} handleForceRunPopUpOpen={handleForceRunPopUpOpen} open={openForceRunPopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
           <Grid item xs={12}>
             <div className="delete-button">
-              <Button variant="outlined" id="deleteRecButton" onClick={handleClickOpen}>Delete</Button>
-              <DeletePopUp title={configuredRecommendation.name} handleClickOpen={handleClickOpen} open={open} recommendationId={configuredRecommendation.id} />
+              <Button variant="outlined" id="deleteRecButton" onClick={handleDeletePopUpOpen}>Delete</Button>
+              <DeletePopUp title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
         </Grid>
