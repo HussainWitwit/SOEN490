@@ -18,15 +18,14 @@ export function ConfirmationModal (props) {
 
   const stringRecurrenceFormatting = () => {
     let date = dialogsContent.basicConfiguration.repeatDate;
-    let time = dialogsContent.basicConfiguration.repeatTime;
     switch (dialogsContent.basicConfiguration.granularity) {
       case 'Yearly':
-        return (`Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
+        return (`Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]} at ${date.toLocaleTimeString('en-us', formatTime)}`);
       case 'Monthly':
-        return (`Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]}th of the month at ${time.toLocaleTimeString('en-us', formatTime)}`);
+        return (`Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]}th of the month at ${date.toLocaleTimeString('en-us', formatTime)}`);
       case 'Weekly':
         let intDayOfWeek = dialogsContent.basicConfiguration.repeatDay;
-        return (`Every ${dayOfWeek[intDayOfWeek - 1]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
+        return (`Every ${dayOfWeek[intDayOfWeek - 1]} at ${date.toLocaleTimeString('en-us', formatTime)}`);
       default:
         return "Invalid";
     }
