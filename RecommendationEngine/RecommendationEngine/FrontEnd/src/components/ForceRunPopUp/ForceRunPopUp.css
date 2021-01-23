@@ -12,15 +12,15 @@
 }
 
 #cancelButton2:hover {
-    background-color: #FDB62F;
+    background-color: #F7F7F5;
     box-shadow: none;
     transition: all 500ms;
     border-color: transparent;
-    color: white;
+    color: #C4C4C4;
 }
 
 #deleteButton2 {
-    width: 100px;
+    width: 150px;
     background-color: #FFFFFF;
     color: #FDB62F;
     padding: 7px 25px 7px 25px;

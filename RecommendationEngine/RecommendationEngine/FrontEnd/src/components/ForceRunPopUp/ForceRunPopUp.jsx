@@ -49,7 +49,7 @@ export function ForceRunPopUp(props) {
                         //deleteRecommendationEvent();
                         closeScheduleDrilldown();
                     }} id="deleteButton2" variant="outlined">
-                        Delete
+                        Force Run
           </Button>
                 </div>
             </DialogActions>
