@@ -6,6 +6,7 @@ using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Services
 {
@@ -42,6 +43,27 @@ namespace RecommendationEngine.Services
                 return jobs;
             }
             catch(Exception e)
+            {
+                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+            }
+        }
+
+        public List<JobLog> GetJobLogsById(int id)
+        {
+            try
+            {
+                List<JobLog> logs = _jobRepository.GetJobLogById(id)
+                    .Select(log => new JobLog
+                    {
+                        Id = log.RecommendationJobLogId,
+                        Description = log.Description,
+                        Level = log.Level,
+                        Time = log.Time,
+                    }).ToList();
+                
+                return logs;
+            }
+            catch (Exception e)
             {
                 throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
             }
