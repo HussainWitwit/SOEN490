@@ -52,6 +52,7 @@ namespace RecommendationEngine.Services
         {
             try
             {
+
                 List<JobLog> logs = _jobRepository.GetJobLogById(id)
                     .Select(log => new JobLog
                     {
@@ -60,7 +61,18 @@ namespace RecommendationEngine.Services
                         Level = log.Level,
                         Time = log.Time,
                     }).ToList();
-                
+
+
+                if (logs.Count < 1)
+                {
+                    throw new GlobalException
+                    {
+                        ApplicationName = "RecommendationEngine",
+                        ErrorMessage = "Could not logs for selected job",
+                        Code = 404,
+                        Type = "Not Found"
+                    };
+                }
                 return logs;
             }
             catch (Exception e)
