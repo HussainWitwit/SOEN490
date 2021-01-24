@@ -5,6 +5,7 @@ import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { getRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
+import JobLogPopUp from '../../components/JobLogPopUp/JobLogPopUp'
 import './JobsPage.css';
 
 /* istanbul ignore next */
@@ -59,6 +60,7 @@ export default function JobsPage () {
 
     return (
         <div id="main-container">
+            <JobLogPopUp />
             <div></div>
             <div>
                 <br></br>
