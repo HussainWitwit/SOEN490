@@ -17,7 +17,7 @@ export default function RecommendationEngineTable (props) {
   const {rowsValue, data, TableTitle, onClickRow, columnTitles } = props;
 
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("createdOn");
+  const [orderBy, setOrderBy] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -101,7 +101,6 @@ export default function RecommendationEngineTable (props) {
               {data ? tableSort(data, getSortingComparison(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((element, index) => {
-
                   return (
                     <TableRow
                     hover
