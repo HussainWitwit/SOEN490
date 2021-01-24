@@ -1,19 +1,12 @@
- 
-describe("Manage Recommendation Table", () => {
+describe("Job Page", () => {
 
     beforeEach(() => {
-        cy.visit('/recommendations-manage')
+        cy.visit('/recommendations-jobs')
     })
 
     it("Finds the page title & subtitle", () => {
         cy.get('#title').should('be.visible')
         cy.get('#subtitle').should('be.visible')
-    })
-
-    it("Finds the create recommendation button", () => {
-        cy.wait(500)
-        cy.get('#recBtn').should('be.visible')
-        cy.wait(500)
     })
 
     it("Finds the searchbar", () => {

@@ -97,7 +97,7 @@ export function ManageRecommendationPage (props) {
         onClickRow={openScheduleDrilldown}
         columnTitles={headCells}
       />
-    </div>
+    </div >
   );
 }
 
