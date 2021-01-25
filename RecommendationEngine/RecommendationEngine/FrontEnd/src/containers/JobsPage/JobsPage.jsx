@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
-import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
+import { GetRecommendationJobList, GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
+import JobLogPopUp from '../../components/JobLogPopUp/JobLogPopUp';
+import Assignment from '@material-ui/icons/Assignment';
 
 export const RowsToDisplay = (element) => (
     <React.Fragment>
@@ -15,6 +17,7 @@ export const RowsToDisplay = (element) => (
         <TableCell id="tableBody">{element.timestamp}</TableCell>
         <TableCell id="tableBody">{element.duration} seconds</TableCell>
         <TableCell id="tableBody"><p>{element.configuredRecommendationTitle}</p></TableCell>
+        <TableCell id= "tableBody"><Button><Assignment /></Button></TableCell>
     </React.Fragment>
 );
 
@@ -36,6 +39,7 @@ export default function JobsPage () {
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'jobDuration', label: 'Job Duration' },
         { id: 'configuredRecommendationTitle', label: 'Configured Recommendation Title' },
+        {id: '', label: ''}
     ];
 
     const getJobList = async () => {
