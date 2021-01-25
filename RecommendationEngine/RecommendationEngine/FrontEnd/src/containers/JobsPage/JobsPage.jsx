@@ -16,7 +16,7 @@ const RowsToDisplay = (element) => (
         <TableCell id="tableBody">{element.timestamp}</TableCell>
         <TableCell id="tableBody">{element.duration} seconds</TableCell>
         <TableCell id="tableBody"><p>{element.configuredRecommendationTitle}</p></TableCell>
-        <TableCell id= "tableBody"><JobLogPopUp /></TableCell>
+        <TableCell id= "tableBody"><JobLogPopUp jobId={element.id} /></TableCell>
     </React.Fragment>
 );
 
@@ -28,9 +28,8 @@ const StatusComponent = (status) => (
 
 export default function JobsPage () {
 
-    const [recommendationJobList, setRecommendationJobList] = useState();
-    const [jobList, setJobList] = useState(recommendationJobList);
-    const [defaultJobList, setDefaultJobList] = useState(recommendationJobList);
+    const [jobList, setJobList] = useState([]);
+    const [defaultJobList, setDefaultJobList] = useState([]);
 
     const headCells = [
         { id: 'jobId', label: 'Job ID' },
@@ -43,7 +42,6 @@ export default function JobsPage () {
 
     const getJobList = async () => {
         let response = await GetRecommendationJobList();
-        setRecommendationJobList(response);
         setJobList(response);
         setDefaultJobList(response);
     }

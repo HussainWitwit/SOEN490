@@ -66,7 +66,7 @@ export default function RecommendationEngineTable (props) {
               rowCount={props.data ? props.data.length : 1}
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
-              {props.data && (props.disablePaginator? props.data : props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((element) => {
+              {props.data && props.data.length && (props.disablePaginator? props.data : props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((element) => {
                 return (
                   <TableRow
                     hover
@@ -102,7 +102,7 @@ export default function RecommendationEngineTable (props) {
   /* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   TableTitle: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   columnTitles: PropTypes.array.isRequired,
