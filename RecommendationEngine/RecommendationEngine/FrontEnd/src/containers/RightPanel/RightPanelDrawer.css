@@ -63,7 +63,7 @@
 }
 
 .react-tabs__tab-list {
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid transparent;
   margin: 0 0 10px;
   padding: 0;
   display: flex;
@@ -76,7 +76,6 @@
   display: inline-block;
   border: 1px solid transparent;
   border-bottom: none;
-  bottom: -1px;
   position: relative;
   list-style: none;
   padding: 6px 12px;
