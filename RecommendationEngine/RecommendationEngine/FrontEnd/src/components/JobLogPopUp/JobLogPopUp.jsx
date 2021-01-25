@@ -23,30 +23,6 @@ export default function JobLogPopUp(props) {
   {date: '01/02/2021', time: "17:24:10", level: "Information", description:"This is a description"},
   {date: '01/10/2021', time: "20:24:10", level: "Error", description:"This is a description"},
   {date: '01/23/2021', time: "1:24:10", level: "Fatal", description:"This is a description"},
-  /*{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"}];*/
 ];
   const [open, setOpen] = React.useState(false);
 
@@ -67,7 +43,6 @@ export default function JobLogPopUp(props) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen()}>scroll=paper</Button>
       <Dialog
         open={open}
         onClose={handleClose}

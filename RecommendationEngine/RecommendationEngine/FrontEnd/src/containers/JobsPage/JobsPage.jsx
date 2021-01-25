@@ -60,7 +60,6 @@ export default function JobsPage () {
 
     return (
         <div id="main-container">
-            <JobLogPopUp />
             <div></div>
             <div>
                 <br></br>
