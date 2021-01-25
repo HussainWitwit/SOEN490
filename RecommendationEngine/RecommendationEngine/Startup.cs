@@ -31,42 +31,27 @@ namespace RecommendationEngine
 
             services.AddControllersWithViews();
 
-
-            if (System.Convert.ToBoolean(Configuration["NoFrontEnd:Swagger"]))
+            services.AddSwaggerGen(options =>
             {
-                services.AddSwaggerGen(options =>
-                {
-                    options.SwaggerDoc("v1",
-                        new Microsoft.OpenApi.Models.OpenApiInfo
-                        {
-                            Title = "Recommendation Engine API",
-                            Description = "Generic Recommendation Engine endpoints avalaible to client app (front-end).",
-                            Version = "v1"
-                        });
-
-                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                    var xmlPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, xmlFile);
-                    options.IncludeXmlComments(xmlPath);
-                });
-                //Allowing the decoupled front-end app to make calls to the backend (locally)
-                services.AddCors(options =>
-                {
-                    options.AddDefaultPolicy(builder =>
+                options.SwaggerDoc("v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo
                     {
-                        builder.WithOrigins("http://localhost:3000")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
+                        Title = "Recommendation Engine API",
+                        Description = "Generic Recommendation Engine endpoints avalaible to client app (front-end).",
+                        Version = "v1"
                     });
-                });
-            }
-            else
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = System.IO.Path.Combine(System.AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+            });
+            
+            //in production, the react files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
             {
-                //in production, the react files will be served from this directory
-                services.AddSpaStaticFiles(configuration =>
-                {
-                    configuration.RootPath = "frontend/build";
-                });
-            }
+                configuration.RootPath = "frontend/build";
+            });
+            
 
         }
 
@@ -126,18 +111,25 @@ namespace RecommendationEngine
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecommendationScheduler scheduler)
         {
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStaticFiles();
+                app.UseSwagger();
+
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recommendation Engine API");
+                    options.RoutePrefix = "docs";
+                });
             }
             else
             {
                 app.UseExceptionHandler("/Error");
             }
-
-            app.UseStaticFiles();
-            
-
+        
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
@@ -147,29 +139,18 @@ namespace RecommendationEngine
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            if (System.Convert.ToBoolean(Configuration["NoFrontEnd:Swagger"])){
-                app.UseSwagger();
-
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recommendation Engine API");
-                    options.RoutePrefix = string.Empty;
-                });
-                app.UseCors();
-            }
-            else
+              
+            app.UseSpaStaticFiles();
+            app.UseSpa(spa =>
             {
-                app.UseSpaStaticFiles();
-                app.UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "FrontEnd";
+                spa.Options.SourcePath = "FrontEnd";
 
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseReactDevelopmentServer(npmScript: "start");
-                    }
-                });
-            }
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
+            
         }
     }
 }
