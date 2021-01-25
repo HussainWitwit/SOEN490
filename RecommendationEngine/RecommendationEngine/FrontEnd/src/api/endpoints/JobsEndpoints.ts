@@ -20,18 +20,14 @@ export const GetRecommendationJobList = async () => {
 }
 
 export const GetJobLogList = async (id: number) => {
-    let result: JobLog[];
+    let result: JobLog[] = [];
     try {
-        let response = await fetch('api/job/log/'+id);
-        const jsonResponse = await response.json();
-        if (jsonResponse) {
-            //result = AssignJobLogResponse(jsonResponse)
-            result = jsonResponse;
-            return result;
-        }
-        else {
-            return []
-        }
+        let response = await fetch('api/job/log/'+id)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            result = responseJSON;
+        });
+        return result;
     } catch (e) {
         console.log('Error fetching job logs!')
         console.log(e);
