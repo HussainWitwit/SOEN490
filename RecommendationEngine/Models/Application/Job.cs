@@ -6,7 +6,7 @@ namespace Models.Application
     {
         public int Id { get; set; }
         public int Duration { get; set; }
-        public int configuredRecommendationId { get; set; } 
+        public string configuredRecommendationTitle { get; set; } 
         public string Status { get; set; }
         public DateTime Timestamp { get; set; }
     }

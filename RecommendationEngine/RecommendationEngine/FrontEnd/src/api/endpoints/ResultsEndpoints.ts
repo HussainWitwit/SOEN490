@@ -1,7 +1,7 @@
 
 import { ConfiguredRecommendationResult } from '../models/JobResult';
 
-export const getRecommendationResultList = async () => {
+export const GetRecommendationResultList = async () => {
     let result;
     try {
         let response = await fetch('api/result');

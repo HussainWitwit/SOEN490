@@ -11,7 +11,6 @@
     font-size: 15px;
 }
 
-
 #visuallyHidden {
     border: 0;
     clip: rect(0 0 0 0);
@@ -21,4 +20,8 @@
     position: absolute;
     top: 20px;
     width: 1px,
+}
+
+.custom-status-header.MuiTableCell-root {
+    text-align: center;
 }

@@ -4,23 +4,24 @@ import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
-import { getRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
-import JobLogPopUp from '../../components/JobLogPopUp/JobLogPopUp'
+import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 
-/* istanbul ignore next */
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
-        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody" style={{ width: ' 20% ' }}>{element.id}</TableCell>
-        <TableCell style={{ width: ' 20% ', paddingRight: '80px' }} id="table-body-status"><div id='job-status'
-            style={element.status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : element.status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
-            {element.status}</div></TableCell>
-        <TableCell id="tableBody" style={{ width: ' 30% ' }}>{element.timestamp}</TableCell>
-        <TableCell id="tableBody" style={{ width: ' 20% ' }}>{element.duration} seconds</TableCell>
-        <TableCell id="tableBody" style={{ width: ' 20% ' }}><p>{element.configuredRecommendationId}</p></TableCell>
-        <TableCell />
+        <TableCell id="tableBody">{element.id}</TableCell>
+        <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
+        <TableCell id="tableBody">{element.timestamp}</TableCell>
+        <TableCell id="tableBody">{element.duration} seconds</TableCell>
+        <TableCell id="tableBody"><p>{element.configuredRecommendationTitle}</p></TableCell>
     </React.Fragment>
+);
+
+const StatusComponent = (status) => (
+    <div id='job-status'
+        style={status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
+    {status}</div>
 );
 
 export default function JobsPage () {
@@ -29,24 +30,21 @@ export default function JobsPage () {
     const [jobList, setJobList] = useState(recommendationJobList);
     const [defaultJobList, setDefaultJobList] = useState(recommendationJobList);
 
-    /* istanbul ignore next */
     const headCells = [
         { id: 'jobId', label: 'Job ID' },
         { id: 'status', label: 'Status' },
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'jobDuration', label: 'Job Duration' },
-        { id: 'configuredRecommendation', label: 'Configured Recommendation' },
+        { id: 'configuredRecommendationTitle', label: 'Configured Recommendation Title' },
     ];
 
-    /* istanbul ignore next */
     const getJobList = async () => {
-        let response = await getRecommendationJobList();
+        let response = await GetRecommendationJobList();
         setRecommendationJobList(response);
         setJobList(response);
         setDefaultJobList(response);
     }
 
-    /* istanbul ignore next */
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
             return job.id.toString().includes(input.toString())
