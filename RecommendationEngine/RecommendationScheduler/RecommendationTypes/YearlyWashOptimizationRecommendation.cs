@@ -7,29 +7,28 @@ using System.Collections.Generic;
 namespace RecommendationScheduler.RecommendationTypes
 {
 
-    public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashAPIValues>
+    public class YearlyWashOptimizationRecommendation : IRecommendationType<YearlyWashParameters, YearlyWashApiValues>
         {
             //Dependency Injection variables
-            private IRecommendationJobLogger _jobLogger;
-            private DBRecommendationJob _job;
+            private readonly IRecommendationJobLogger _jobLogger;
+            private readonly DBRecommendationJob _job;
 
             //Variable declarations
-            private SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
-            private SoilingCalculations _soilingWithAction = new SoilingCalculations();// object for Soiling Calculation , with action , aka the impact of soiling with cleaning schedule  
-            private List<DateTime> _cleaningDates = new List<DateTime>(); //List of Cleaning days for a specific centerPoint and span combination
+            private readonly SoilingCalculations _soilingNoAction = new SoilingCalculations(); // object for Soiling Calculation , based on no action , aka the impact of soiling without any cleaning 
+            private readonly SoilingCalculations _soilingWithAction = new SoilingCalculations();// object for Soiling Calculation , with action , aka the impact of soiling with cleaning schedule  
+            private readonly List<DateTime> _cleaningDates = new List<DateTime>(); //List of Cleaning days for a specific centerPoint and span combination
             private int _cumulativeCleaning = 0;
             private int _dayCount = 1;
             private Boolean _isWashDay = false;
 
             //Temporary output variables for Result soilingScenarioect
-            private DBRecommendationJobResult _result = new DBRecommendationJobResult();
-            private DBRecommendationJobResult _tempResult = new DBRecommendationJobResult();
+            private readonly DBRecommendationJobResult _result = new DBRecommendationJobResult();
+            private readonly DBRecommendationJobResult _tempResult = new DBRecommendationJobResult();
 
             //Execute method params passed by _job sheduler
             private YearlyWashParameters _userParameters = new YearlyWashParameters();
-            private YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
 
-            private List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
+            private readonly List<DBAction> _actions = new List<DBAction>(); //list of actions after finding the best center point + span
 
             public YearlyWashOptimizationRecommendation(IRecommendationJobLogger jobLogger, DBRecommendationJob job)
             {
@@ -37,11 +36,10 @@ namespace RecommendationScheduler.RecommendationTypes
                 _job = job;
             }
 
-            public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashAPIValues apiValues)
+            public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
             {
                 _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
 
-                _apiValues = apiValues;
                 _userParameters = parameters;
 
                 //Initializing scenario parameters
@@ -74,18 +72,18 @@ namespace RecommendationScheduler.RecommendationTypes
                         {
                             //NoAction
                             CalculateSoilingDerateNoAction();
-                            CalculateSoilingImpact(_soilingNoAction, _apiValues.PredictEnergyList, _apiValues.EnergyPricesList);
+                            CalculateSoilingImpact(_soilingNoAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
 
                             CheckIfWashDay(currentDate, centerPoint, span);
 
                             //WithAction
                             CalculateSoilingDerateWithAction(currentDate, _isWashDay, _cumulativeCleaning);
-                            CalculateSoilingImpact(_soilingWithAction, _apiValues.PredictEnergyList, _apiValues.EnergyPricesList);
+                            CalculateSoilingImpact(_soilingWithAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
 
                             _dayCount += 1;
                         }
 
-                        UpdateTempOutput(_cumulativeCleaning, _apiValues.PlantDCCapacity);
+                        UpdateTempOutput(_cumulativeCleaning, apiValues.PlantDCCapacity);
 
                         if ((_userParameters.PreferredScenario == "ROI" && _tempResult.ReturnOnInvestment >= _result.ReturnOnInvestment)
                             || (_userParameters.PreferredScenario == "netSaving" && _tempResult.NetSaving >= _result.NetSaving)) //check if scenario gives better ROI or netSaving

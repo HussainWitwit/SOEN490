@@ -25,10 +25,10 @@ namespace RecommendationEngineTests.APITests
             return UnitTests.MockData.MockAssets.BasicPlant;
         }
 
-        public async Task<List<PFPPAPrice>> GetPPAPriceByPlantId(string plantId)
+        public async Task<List<PFPpaPrice>> GetPPAPriceByPlantId(string plantId)
         {
             await Task.Delay(1);
-            return new List<PFPPAPrice>();
+            return new List<PFPpaPrice>();
         }
         public async Task<List<PFMetadata>> GetAssetsMetadataByPlantIds(List<string> plantIds)
         {

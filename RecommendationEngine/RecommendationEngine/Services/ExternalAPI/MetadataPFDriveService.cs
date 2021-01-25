@@ -55,7 +55,7 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
         }
 
-        public async Task<List<PFPPAPrice>> GetPPAPriceByPlantId(string plantId)
+        public async Task<List<PFPpaPrice>> GetPPAPriceByPlantId(string plantId)
         {
             string baseURL = "https://drive-dev-apim01.azure-api.net/renew01/v2/plant-ppa-prices/" + plantId;
 
@@ -70,7 +70,7 @@ namespace RecommendationEngine.Services.ExternalAPI
                         using (HttpContent content = res.Content)
                         {
                             var data = await content.ReadAsStringAsync();
-                            List<PFPPAPrice> ppaList = (List<PFPPAPrice>)JsonConvert.DeserializeObject((data), typeof(List<PFPPAPrice>));
+                            List<PFPpaPrice> ppaList = (List<PFPpaPrice>)JsonConvert.DeserializeObject((data), typeof(List<PFPpaPrice>));
                             return ppaList;
                         }
                     }
