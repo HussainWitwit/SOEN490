@@ -15,7 +15,7 @@ import 'date-fns';
 
 export default function RecommendationEngineTable (props) {
 
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(props.dense);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -47,13 +47,13 @@ export default function RecommendationEngineTable (props) {
       <Paper id="paper">
         <Toolbar id="toolbar">
           <h6 className="toolBarTitle" variant="h6" data-testid="tableTitle" component="div">{props.TableTitle}</h6>
-          <FormControlLabel
+          {props.dense?'':<FormControlLabel
             id="liteSwitch"
             control={
               <Switch checked={dense} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }} />
             }
             label={<h6 id="controlLabel">Lite</h6>}
-          />
+          />}
         </Toolbar>
         <TableContainer>
           <Table
