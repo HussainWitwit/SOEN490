@@ -17,10 +17,9 @@ export function EnhancedTableHead(props) {
         <TableCell></TableCell>
         {headCells? headCells.map((headCell) => (
           <TableCell
-            id="tableHeader"  
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "default"}
+          className= {headCell.id === "status" ? "custom-status-header": "custom" }
+          key={headCell.id}
+            // align={headCell.numeric ? 'left' : 'center'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel

@@ -21,3 +21,7 @@ c.custom{
     top: 20px;
     width: 1px,
 }
+
+.custom-status-header.MuiTableCell-root {
+    text-align: center;
+}
