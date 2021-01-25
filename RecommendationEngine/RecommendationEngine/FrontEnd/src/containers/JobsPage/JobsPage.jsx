@@ -7,9 +7,8 @@ import SearchBar from '../../common/SearchBar';
 import { GetRecommendationJobList, GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import JobLogPopUp from '../../components/JobLogPopUp/JobLogPopUp';
-import Assignment from '@material-ui/icons/Assignment';
 
-export const RowsToDisplay = (element) => (
+const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
         <TableCell id="tableBody">{element.id}</TableCell>
@@ -17,7 +16,7 @@ export const RowsToDisplay = (element) => (
         <TableCell id="tableBody">{element.timestamp}</TableCell>
         <TableCell id="tableBody">{element.duration} seconds</TableCell>
         <TableCell id="tableBody"><p>{element.configuredRecommendationTitle}</p></TableCell>
-        <TableCell id= "tableBody"><Button><Assignment /></Button></TableCell>
+        <TableCell id= "tableBody"><JobLogPopUp /></TableCell>
     </React.Fragment>
 );
 

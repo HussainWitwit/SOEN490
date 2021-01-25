@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import { Grid, TableCell } from '@material-ui/core';
 import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
+import Assignment from '@material-ui/icons/Assignment';
 
 export const RowsToDisplay = (element) => (
   <React.Fragment key={element.time}>
@@ -48,12 +49,16 @@ export default function JobLogPopUp(props) {
   const [jobLogs, setJobLogs] = React.useState([]);
   const [open, setOpen] = React.useState(false);
 
-  useEffect(async () => {
-    let response = await GetJobLogList(184);
-    setJobLogs(response);
+  useEffect(() => {
+    fetchLogsList();
   }, []);
 
-  const handleClickOpen = () => () => {
+  const fetchLogsList  = async (id) => {
+    let response = await GetJobLogList(184);
+    setJobLogs(response);
+  }
+
+  const handleClickOpen  = () => {
     setOpen(true);
   };
 
@@ -70,6 +75,7 @@ export default function JobLogPopUp(props) {
 
   return (
     <div>
+      <Button onClick={handleClickOpen}><Assignment /></Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -88,10 +94,11 @@ export default function JobLogPopUp(props) {
             columnTitles={headCells}
             dense={true}
             disablePaginator={true}
+            TableTitle = ''
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="black">
             Close
           </Button>
         </DialogActions>
