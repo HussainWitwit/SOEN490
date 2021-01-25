@@ -5,11 +5,11 @@ export const initialValues = {
     flatListAssets: [],
     configuredRecommendationList: [],
     templateDetailsList: [],
-  };
+}
 
-  export const SharedReducer = function (state = initialValues, action) {
-    switch(action.type) {
-        case type.GET_NESTED_ASSETS: 
+export const SharedReducer = function (state = initialValues, action) {
+    switch (action.type) {
+        case type.GET_NESTED_ASSETS:
             return {
                 ...state,
                 nestedAssets: action.payload
@@ -24,7 +24,7 @@ export const initialValues = {
                 ...state,
                 configuredRecommendationList: action.payload
             };
-            default:
-                return state
+        default:
+            return state
     }
 }
