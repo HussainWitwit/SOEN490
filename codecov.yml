@@ -12,3 +12,4 @@ ignore:
   - "RecommendationEngine/RecommendationEngine/Repositories" #ignore repositories
   - "RecommendationEngine/RecommendationEngine/Services/ExternalAPI"
   - "RecommendationEngine/RecommendationSchedulerTests"
+  - "RecommendationEngine/RecommendationEngine/Startup.cs"

@@ -12,12 +12,10 @@ using Models.DB;
 using RecommendationEngine.Utilities;
 using RecommendationScheduler.RecommendationJob;
 using System.Collections.Specialized;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace RecommendationEngine
 {
-    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
