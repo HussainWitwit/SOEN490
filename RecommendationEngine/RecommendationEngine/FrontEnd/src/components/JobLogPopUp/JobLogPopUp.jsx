@@ -8,38 +8,46 @@ import RecommendationEngineTable from '../../components/RecommendationEngineTabl
 import { Grid, TableCell } from '@material-ui/core';
 
 export const RowsToDisplay = (element) => (
-    <React.Fragment>
+    <React.Fragment key= {element.time}>
       <TableCell />
-      <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.date}</TableCell>
+      <TableCell component="th" scope="row" padding="default" id="tableBody" style={{ width: ' 15% ' }}>{element.date}</TableCell>
       <TableCell id="tableBody">{element.time}</TableCell>
-      <TableCell id="tableBody">{element.level}</TableCell>
-      <TableCell id="tableBody">{element.description}</TableCell>
-    </React.Fragment>
-  );
+      <TableCell id="tableBody" style={{ width: ' 15% ', fontWeight: 'bold'}} style={ element.level === "Information" ? {color: 'blue'} : element.level === "Warning" ? {color: 'darkgoldenrod'} : element.level === "Error" ? {color: 'red'} : element.level === "Fatal" ? {color: 'darkred'}:'' }>{element.level}</TableCell>
+      <TableCell id="tableBody" color="red" style={{ width: ' 60% ' }}>{element.description}</TableCell> 
+    </React.Fragment>    
+  );  
 
 export default function JobLogPopUp(props) {
   const jobLogList = 
-  [{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
+  [{date: '01/01/2021', time: "17:24:11", level: "Warning", description:"This is a description"}, 
+  {date: '01/02/2021', time: "17:24:10", level: "Information", description:"This is a description"},
+  {date: '01/10/2021', time: "20:24:10", level: "Error", description:"This is a description"},
+  {date: '01/23/2021', time: "1:24:10", level: "Fatal", description:"This is a description"},
+  /*{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
   {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
-  {date: '01/23/2021', time: "1:24:10", level: "Error", description:"This is a description"},
   {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
+  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
+  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
+  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
+  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
+  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
+  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
+  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
+  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
+  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
+  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
+  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},
+  {date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
   {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"},{date: '01/01/2021', time: "17:24:10", level: "Debug", description:"This is a description"}, 
-  {date: '01/02/2021', time: "17:24:10", level: "Debug", description:"This is a description"},
-  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"}];
+  {date: '01/10/2021', time: "20:24:10", level: "INFO", description:"This is a description"}];*/
+];
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => () => {
