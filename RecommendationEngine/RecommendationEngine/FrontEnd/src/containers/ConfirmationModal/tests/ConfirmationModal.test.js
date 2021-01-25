@@ -13,7 +13,9 @@ describe('ConfirmationModal component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const wrapper = shallow(<ConfirmationModal store={store} />).dive().dive();
+    const wrapperYearly = shallow(<ConfirmationModal store={store} dialogsContent={{basicConfiguration: {repeatDate: "Yearly" } }}/>).dive().dive();
+    const wrapperMonthly = shallow(<ConfirmationModal store={store} dialogsContent={{basicConfiguration: {repeatDate: "Monthly" } }}/>).dive().dive();
+    const wrapperWeekly = shallow(<ConfirmationModal store={store} dialogsContent={{basicConfiguration: {repeatDate: "Weekly" } }}/>).dive().dive();
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
@@ -22,17 +24,27 @@ describe('ConfirmationModal component', () => {
     });
 
     it('It finds the divs in the component', () => {
-        let divs = wrapper.find('div');
+        let divs = wrapperYearly.find('div');
         expect(divs).toHaveLength(3);
     });
 
-    it('It finds the textfield', () => {
-        let text = wrapper.find(TextField);
+    it('It finds the textfield with yearly recurrence', () => {
+        let text = wrapperYearly.find(TextField);
+        expect(text).toHaveLength(4);
+    });
+
+    it('It finds the textfield with monthly recurrence', () => {
+        let text = wrapperMonthly.find(TextField);
+        expect(text).toHaveLength(4);
+    });
+
+    it('It finds the textfield with weekly recurrence', () => {
+        let text = wrapperWeekly.find(TextField);
         expect(text).toHaveLength(4);
     });
 
     it('It finds the MultiSelectAutocomplete', () => {
-        let select = wrapper.find(MultiSelectAutocomplete);
+        let select = wrapperYearly.find(MultiSelectAutocomplete);
         expect(select).toHaveLength(2);
     });
 });
