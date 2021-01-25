@@ -77,7 +77,7 @@ describe.only('RecommendationEngineTable component', () => {
         pagination.props().onChangeRowsPerPage(mockedEvent);
         expect(pagination).toHaveLength(1);
     });
-        output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
+    output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
     it('Simulate onChange lite switch event', () => {
         output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
     });
