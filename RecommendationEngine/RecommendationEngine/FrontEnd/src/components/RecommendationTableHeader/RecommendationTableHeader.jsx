@@ -19,8 +19,8 @@ export function EnhancedTableHead (props) {
         <TableCell id="table-cell" className="custom"></TableCell>
         {props.headers && props.headers.map((headCell) => (
           <TableCell
-            className="custom"
-            key={headCell.id}
+          className= {headCell.id === "status" ? "custom-status-header": "custom" }
+          key={headCell.id}
             // align={headCell.numeric ? 'left' : 'center'}
             sortDirection={orderBy === headCell.id ? order : false}
             id="tableHeader"

@@ -1,7 +1,7 @@
 
 import { ConfiguredRecommendationJob } from '../models/Job'
 
-export const getRecommendationJobList = async () => {
+export const GetRecommendationJobList = async () => {
     let result;
     try {
         let response = await fetch('api/job');
@@ -25,7 +25,7 @@ const AssignResponse = function (response: any): ConfiguredRecommendationJob[] {
         return {
             id: element.id,
             duration: element.duration,
-            configuredRecommendationId: element.configuredRecommendationId,
+            configuredRecommendationTitle: element.configuredRecommendationTitle,
             status: element.status,
             timestamp: element.timestamp
         };

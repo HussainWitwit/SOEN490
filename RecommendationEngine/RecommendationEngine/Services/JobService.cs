@@ -34,7 +34,7 @@ namespace RecommendationEngine.Services
                         {
                             Id = dbJob.RecommendationJobId,
                             Status = dbJob.Status,
-                            configuredRecommendationId = dbJob.Schedule.RecommendationScheduleId,
+                            configuredRecommendationTitle = dbJob.Schedule.Name,
                             Duration = dbJob.JobDuration,
                             Timestamp = dbJob.Timestamp,
                         });

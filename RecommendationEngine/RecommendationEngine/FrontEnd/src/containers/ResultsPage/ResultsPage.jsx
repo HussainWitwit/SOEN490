@@ -4,7 +4,7 @@ import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
-import { getRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
+import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 
 /* istanbul ignore next */
 export const RowsToDisplay = (element) => (
@@ -15,7 +15,6 @@ export const RowsToDisplay = (element) => (
         <TableCell id="tableBody" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.returnOnInvestment.toFixed(2)}%</TableCell>
         <TableCell id="tableBody" style={{ color: 'red' }}>{element.costOfAction.toFixed(2)}$</TableCell>
         <TableCell id="tableBody" style={{ color: 'red' }}>{element.costOfInaction.toFixed(2)}$</TableCell>
-        <TableCell id="tableBody">{element.configuredRecommendationId}</TableCell>
     </React.Fragment>
 );
 
@@ -32,12 +31,11 @@ export default function ResultsPage () {
         { id: 'returnOnInvestment', label: 'Return on Investment' },
         { id: 'costOfAction', label: 'Cost of Action' },
         { id: 'costOfInaction', label: 'Cost of Inaction' },
-        { id: 'configuredRecommendation', label: 'Configured Recommendation' },
     ];
 
     /* istanbul ignore next */
     const getResultList = async () => {
-        let response = await getRecommendationResultList();
+        let response = await GetRecommendationResultList();
         setRecommendationResultList(response);
         setDefaultResultList(response);
         setResultList(response);
