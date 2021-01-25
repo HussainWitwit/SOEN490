@@ -77,6 +77,7 @@ export default function JobLogPopUp(props) {
                 onClick={() => { }}
                 columnTitles={headCells}
                 dense={true}
+                disablePaginator={true}
             />
         </DialogContent>
         <DialogActions>

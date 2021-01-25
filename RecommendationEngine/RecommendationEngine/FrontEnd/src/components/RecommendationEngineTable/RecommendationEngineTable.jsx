@@ -45,7 +45,8 @@ export default function RecommendationEngineTable (props) {
   return (
     <div id="root">
       <Paper id="paper">
-        <Toolbar id="toolbar">
+        
+        {(!props.tableTittle && props.dense)? '': <Toolbar id="toolbar">
           <h6 className="toolBarTitle" variant="h6" data-testid="tableTitle" component="div">{props.TableTitle}</h6>
           {props.dense?'':<FormControlLabel
             id="liteSwitch"
@@ -54,7 +55,7 @@ export default function RecommendationEngineTable (props) {
             }
             label={<h6 id="controlLabel">Lite</h6>}
           />}
-        </Toolbar>
+        </Toolbar>}
         <TableContainer>
           <Table
             id="table" aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'} aria-label="enhanced table"
@@ -65,7 +66,7 @@ export default function RecommendationEngineTable (props) {
               rowCount={props.data ? props.data.length : 1}
             />
             <TableBody id="table-body" data-testid="table-body-cypress">
-              {props.data && props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element) => {
+              {props.data && (props.disablePaginator? props.data : props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((element) => {
                 return (
                   <TableRow
                     hover
@@ -84,7 +85,7 @@ export default function RecommendationEngineTable (props) {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+        {props.disablePaginator?'':<TablePagination
           id="pagination"
           component="div"
           rowsPerPageOptions={[10, 25, 50, 100]}
@@ -93,7 +94,7 @@ export default function RecommendationEngineTable (props) {
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        />}
       </Paper>
     </div>
   );
