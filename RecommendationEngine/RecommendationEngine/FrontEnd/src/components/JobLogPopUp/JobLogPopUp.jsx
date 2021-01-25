@@ -5,41 +5,25 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import { Grid, TableCell } from '@material-ui/core';
+import { TableCell } from '@material-ui/core';
 import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 import Assignment from '@material-ui/icons/Assignment';
+import {dateFormat, timeFormat} from '../../utilities/DateTimeUtilities'
 
 export const RowsToDisplay = (element) => (
-  <React.Fragment key={element.time}>
+  <React.Fragment key={element.id}>
     <TableCell />
-    <TableCell
-      component="th"
-      scope="row"
-      padding="default"
-      id="tableBody"
-      style={{ width: ' 15% ' }}
-    >
-      {element.date}
+    <TableCell component="th" scope="row" padding="default" id="col-date">
+      {dateFormat(element.time)}
     </TableCell>
-    <TableCell id="tableBody">{element.time}</TableCell>
+    <TableCell id="col-time">{timeFormat(element.time)}</TableCell>
     <TableCell
-      id="tableBody"
-      style={{ width: ' 15% ', fontWeight: 'bold' }}
-      style={
-        element.level === 'Information'
-          ? { color: 'blue' }
-          : element.level === 'Warning'
-          ? { color: 'darkgoldenrod' }
-          : element.level === 'Error'
-          ? { color: 'red' }
-          : element.level === 'Fatal'
-          ? { color: 'darkred' }
-          : ''
-      }
+      id="col-level"
+      style={element.level === 'Information'? { color: 'blue' }: element.level === 'Warning'? { color: 'darkgoldenrod' }: element.level === 'Error'? { color: 'red' }: element.level === 'Fatal'? { color: 'darkred' }: ''}
     >
       {element.level}
     </TableCell>
-    <TableCell id="tableBody" color="red" style={{ width: ' 60% ' }}>
+    <TableCell id="col-description" color="red" style={{ width: ' 60% ' }}>
       {element.description}
     </TableCell>
   </React.Fragment>
@@ -49,16 +33,13 @@ export default function JobLogPopUp(props) {
   const [jobLogs, setJobLogs] = React.useState([]);
   const [open, setOpen] = React.useState(false);
 
-  useEffect(() => {
-    fetchLogsList();
-  }, []);
-
-  const fetchLogsList  = async (id) => {
-    let response = await GetJobLogList(184);
+  const fetchLogsList  = async () => {
+    let response = await GetJobLogList(props.jobId);
     setJobLogs(response);
   }
 
   const handleClickOpen  = () => {
+    fetchLogsList();
     setOpen(true);
   };
 
@@ -98,7 +79,7 @@ export default function JobLogPopUp(props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="black">
+          <Button onClick={handleClose} color="default">
             Close
           </Button>
         </DialogActions>
