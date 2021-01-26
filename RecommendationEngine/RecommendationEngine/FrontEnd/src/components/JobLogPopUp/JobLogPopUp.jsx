@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -34,6 +34,7 @@ export default function JobLogPopUp(props) {
   const [jobLogs, setJobLogs] = React.useState([]);
   const [open, setOpen] = React.useState(false);
 
+  /* istanbul ignore next */
   const fetchLogsList  = async () => {
     let response = await GetJobLogList(props.jobId);
     setJobLogs(response);
