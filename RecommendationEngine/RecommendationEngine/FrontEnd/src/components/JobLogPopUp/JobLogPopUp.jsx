@@ -19,7 +19,7 @@ export const RowsToDisplay = (element) => (
     <TableCell id="col-time">{timeFormat(element.time)}</TableCell>
     <TableCell
       id="col-level"
-      style={element.level === 'Information'? { color: 'blue' }: element.level === 'Warning'? { color: 'darkgoldenrod' }: element.level === 'Error'? { color: 'red' }: element.level === 'Fatal'? { color: 'darkred' }: ''}
+      style={ {fontWeight: 'bold', color: (element.level === 'Information'? 'blue': element.level === 'Warning'? 'darkgoldenrod': element.level === 'Error'? 'red': element.level === 'Fatal'? 'darkred': '')}}
     >
       {element.level}
     </TableCell>
