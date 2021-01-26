@@ -4,7 +4,7 @@ import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
-import { GetRecommendationJobList, GetJobLogList } from '../../api/endpoints/JobsEndpoints';
+import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import JobLogPopUp from '../../components/JobLogPopUp/JobLogPopUp';
 
