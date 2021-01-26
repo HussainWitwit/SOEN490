@@ -65,14 +65,14 @@ export default function RecommendationEngineTable (props) {
               headers={props.columnTitles}
               rowCount={props.data ? props.data.length : 1}
             />
-            <TableBody id="table-body" data-testid="table-body-cypress">
+            <TableBody id={props.isClickable?"tableBody-clickable":"tableBody"} data-testid="table-body-cypress">
               {props.data && props.data.length && (props.disablePaginator? props.data : props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((element) => {
                 return (
                   <TableRow
-                    hover
-                    selected={isSelected === element.id}
                     key={element.id}
                     className="custom"
+                    hover = {props.isClickable}
+                    selected={props.isClickable && isSelected === element.id}
                     onClick={() => {
                       props.onClick(element.id)
                       setIsSelected(element.id)
@@ -105,5 +105,5 @@ RecommendationEngineTable.propTypes = {
   data: PropTypes.array.isRequired,
   TableTitle: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  columnTitles: PropTypes.array.isRequired,
+  columnTitles: PropTypes.array.isRequired
 };

@@ -16,7 +16,7 @@ const RowsToDisplay = (element) => (
         <TableCell id="tableBody">{element.timestamp}</TableCell>
         <TableCell id="tableBody">{element.duration} seconds</TableCell>
         <TableCell id="tableBody"><p>{element.configuredRecommendationTitle}</p></TableCell>
-        <TableCell id= "tableBody"><JobLogPopUp jobId={element.id} /></TableCell>
+        <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
     </React.Fragment>
 );
 
