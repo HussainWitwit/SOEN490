@@ -12,12 +12,43 @@ import Switch from "@material-ui/core/Switch";
 import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader';
 import './RecommendationEngineTable.css';
 
+
+export function getSortingComparison(orderType, orderColumnTitle){
+  return orderType === "desc"? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
+}
+
+
+export function sortingComparison (firstObj, secondObj, orderColumnTitle){
+  if (secondObj[orderColumnTitle] < firstObj[orderColumnTitle]) {
+    return -1;
+  }
+  if (secondObj[orderColumnTitle] > firstObj[orderColumnTitle]) {
+    return 1;
+  }
+  return 0;
+}
+
+
+export function tableSort (array, comparator){
+  if(array != null || array != undefined){
+  const rowElements = array.map((element, index) => [element, index]);
+  rowElements.sort((firstObj, secondObj) => {
+    const order = comparator(firstObj[0], secondObj[0]);
+    if (order !== 0){
+     return order;
+    }else{
+    return firstObj[1] - secondObj[1];
+    }
+  });
+  return rowElements.map((element) => element[0]);
+}}
+
 export default function RecommendationEngineTable (props) {
 
   const {rowsValue, data, TableTitle, onClickRow, columnTitles } = props;
 
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("");
+  const [orderType, setOrderType] = React.useState("asc");
+  const [orderColumnTitle, setOrderColumnTitle] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -28,9 +59,9 @@ export default function RecommendationEngineTable (props) {
   };
 
   const handleSortingChange = (event, property) => {
-    const isAscending = orderBy === property && order === "asc";
-    setOrder(isAscending ? "desc" : "asc");
-    setOrderBy(property);
+    const isAscending = orderColumnTitle === property && orderType === "asc";
+    setOrderType(isAscending ? "desc" : "asc");
+    setOrderColumnTitle(property);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -41,33 +72,6 @@ export default function RecommendationEngineTable (props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  function getSortingComparison(order, orderBy) {
-    return order === "desc"? (a, b) => sortingComparison(a, b, orderBy) : (a, b) => -sortingComparison(a, b, orderBy);
-  }
-  
-  function sortingComparison(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-  
-  function tableSort(array, comparator) {
-    if(array != null){
-    const rowElements = array.map((element, index) => [element, index]);
-    rowElements.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0){
-       return order;
-      }
-      return a[1] - b[1];
-    });
-    return rowElements.map((element) => element[0]);
-  }}
 
   return (
     <div id="root">
@@ -92,18 +96,21 @@ export default function RecommendationEngineTable (props) {
           >
             <EnhancedTableHead
               id="handleSort"
-              order={order}
-              orderBy={orderBy}
+              data-testid="tablehead-title"
+              order={orderType}
+              orderColumnTitle={orderColumnTitle}
               headCells={columnTitles}
               handleSortingChange={handleSortingChange}
             />
             <TableBody>
-              {data ? tableSort(data, getSortingComparison(order, orderBy))
+              {data ? tableSort(data, getSortingComparison(orderType, orderColumnTitle))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((element, index) => {
                   return (
                     <TableRow
                     hover
+                    id="tableRow"
+                    data= "table-row"
                     tabIndex={-1}
                     selected={isSelected === element.id}
                     key={element.id}

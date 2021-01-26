@@ -7,7 +7,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import './RecommendationTableHeader.css';
 export function EnhancedTableHead(props) {
 
-  const { order, orderBy, headCells, handleSortingChange } = props;
+  const { orderType, orderColumnTitle, headCells, handleSortingChange } = props;
 
   const sortingHandler = (property) => (event) => { handleSortingChange(event, property) };
 
@@ -19,18 +19,17 @@ export function EnhancedTableHead(props) {
           <TableCell
           className= {headCell.id === "status" ? "custom-status-header": "custom" }
           key={headCell.id}
-            // align={headCell.numeric ? 'left' : 'center'}
-            sortDirection={orderBy === headCell.id ? order : false}
+            sortDirection={orderColumnTitle === headCell.id ? orderType : false}
           >
             <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
+              active={orderColumnTitle === headCell.id}
+              direction={orderColumnTitle === headCell.id ? orderType : "asc"}
               onClick={sortingHandler(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
+              {orderColumnTitle === headCell.id ? (
                 <span id="visuallyHidden">
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                  {orderType === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
             </TableSortLabel>
@@ -44,6 +43,6 @@ export function EnhancedTableHead(props) {
    EnhancedTableHead.propTypes = {
    headCell: PropTypes.object.isRequired,
    handleSortingChange: PropTypes.func.isRequired,
-   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-   orderBy: PropTypes.string.isRequired,
+   orderType: PropTypes.oneOf(["asc", "desc"]).isRequired,
+   orderColumnTitle: PropTypes.string.isRequired,
  };
