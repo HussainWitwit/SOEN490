@@ -25,7 +25,7 @@ export const GetConfiguredRecommendationList = async () => {
     }
 }
 
-export const GetConfiguredRecommendationById = async (id:number) => {
+export const GetConfiguredRecommendationById = async (id: number) => {
     let configuredRecommendations: ConfiguredRecommendation;
     try {
         let response = await fetch('api/ConfiguredRecommendation/' + id);
@@ -43,20 +43,20 @@ export const GetConfiguredRecommendationById = async (id:number) => {
     }
 }
 
-export const DeleteRecommendationById = async (id: number ) => {
+export const DeleteRecommendationById = async (id: number) => {
     let response;
     try {
-        response = await fetch('api/ConfiguredRecommendation/'+ id, {
+        response = await fetch('api/ConfiguredRecommendation/' + id, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })
-    }catch(error) {
+    } catch (error) {
         console.log(error);
     }
     return response;
-  };
+};
 
-  
+
 export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
     let response;
     try {
@@ -137,5 +137,4 @@ const mapConfiguredRecommendations = function (response: any): ConfiguredRecomme
         };
     })
     return result;
-
 }
