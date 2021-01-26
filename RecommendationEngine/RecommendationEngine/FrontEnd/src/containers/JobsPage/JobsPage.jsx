@@ -35,7 +35,7 @@ export default function JobsPage () {
         { id: 'status', label: 'Status' },
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'jobDuration', label: 'Job Duration' },
-        { id: 'configuredRecommendationTitle', label: 'Configured Recommendation Title' },
+        { id: 'configuredRecommendationTitle', label: 'Configured Recommendation' },
     ];
 
     const getJobList = async () => {
@@ -91,7 +91,7 @@ export default function JobsPage () {
                 rowsValue={RowsToDisplay}
                 data={jobList}
                 TableTitle={"Recommendation Jobs"}
-                onClick={() => { }}
+                onClickRow={() => { }}
                 columnTitles={headCells}
             />
         </div>

@@ -88,7 +88,7 @@ export default function ResultsPage () {
                 rowsValue={RowsToDisplay}
                 data={resultList}
                 TableTitle={"Recommendation Job Results"}
-                onClick={() => { }}
+                onClickRow={() => { }}
                 columnTitles={headCells}
             />
         </div>
