@@ -68,7 +68,7 @@ namespace RecommendationEngine.Services
                     throw new GlobalException
                     {
                         ApplicationName = "RecommendationEngine",
-                        ErrorMessage = "Could not logs for selected job",
+                        ErrorMessage = "Could not find logs for selected job",
                         Code = 404,
                         Type = "Not Found"
                     };
