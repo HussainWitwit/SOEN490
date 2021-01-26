@@ -6,6 +6,7 @@ jobs:
   buildBackend:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:3.1
+    resource_class: small
     steps:
       - checkout
       - node/install: 
@@ -29,6 +30,7 @@ jobs:
   buildFrontend:
     docker:
       - image: cypress/base:13.8.0
+    resource_class: small
     steps:
       - checkout
       - run:
