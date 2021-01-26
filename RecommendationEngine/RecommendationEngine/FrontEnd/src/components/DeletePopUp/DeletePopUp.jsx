@@ -1,4 +1,5 @@
 import React from 'react';
+import "./DeletePopUp.css"
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -10,7 +11,6 @@ import { IconButton } from '@material-ui/core';
 import { mapDispatchDeletePopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded';;
-import "./DeletePopUp.css"
 
 
 export function DeletePopUp (props) {
@@ -33,7 +33,7 @@ export function DeletePopUp (props) {
             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <div id="deleteWarning"><div id="warning"><WarningRoundedIcon id="WarningRoundedIcon" id="WarningRoundedIcon"></WarningRoundedIcon></div>
+            <div id="deleteWarning"><div id="warning"><WarningRoundedIcon id="WarningRoundedIcon"></WarningRoundedIcon></div>
         <div id="warningMessage">
             <DialogTitle classes={{ root: 'alertMessage' }}><b>Delete Configured Recommendation</b></DialogTitle>
             <DialogContent>
