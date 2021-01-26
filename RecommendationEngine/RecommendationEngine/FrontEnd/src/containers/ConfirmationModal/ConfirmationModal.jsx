@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import './ConfirmationModal.css';
 
 const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.
@@ -15,22 +16,6 @@ var dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday
 export function ConfirmationModal (props) {
 
   const { dialogStyle, dialogsContent } = props;
-
-  const stringRecurrenceFormatting = () => {
-    let date = dialogsContent.basicConfiguration.repeatDate;
-    let time = dialogsContent.basicConfiguration.repeatTime;
-    switch (dialogsContent.basicConfiguration.granularity) {
-      case 'Yearly':
-        return (`Every year on ${date.toLocaleTimeString('en-us', formatYear).split(',')[0]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
-      case 'Monthly':
-        return (`Every ${date.toLocaleTimeString('en-us', formatMonth).split(',')[0]}th of the month at ${time.toLocaleTimeString('en-us', formatTime)}`);
-      case 'Weekly':
-        let intDayOfWeek = dialogsContent.basicConfiguration.repeatDay;
-        return (`Every ${dayOfWeek[intDayOfWeek - 1]} at ${time.toLocaleTimeString('en-us', formatTime)}`);
-      default:
-        return "Invalid";
-    }
-  }
 
   return (
     <animated.div id="confirmation-modal-container" style={dialogStyle}>
@@ -89,7 +74,7 @@ export function ConfirmationModal (props) {
           <TextField
             id="outlined-read-only-recurrence"
             label="Recurrence"
-            defaultValue={stringRecurrenceFormatting()}
+            defaultValue={stringRecurrenceFormatting(dialogsContent.basicConfiguration.granularity, dialogsContent.basicConfiguration.repeatDate, dialogsContent.basicConfiguration.repeatDay)}
             InputProps={{
               readOnly: true,
               disableUnderline: true,
