@@ -9,6 +9,7 @@ import { TableCell } from '@material-ui/core';
 import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 import Assignment from '@material-ui/icons/Assignment';
 import {dateFormat, timeFormat} from '../../utilities/DateTimeUtilities'
+import './JobLogPopUp.css'
 
 export const RowsToDisplay = (element) => (
   <React.Fragment key={element.id}>
