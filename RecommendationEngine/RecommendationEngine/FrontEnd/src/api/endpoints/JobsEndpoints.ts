@@ -1,5 +1,5 @@
 
-import { ConfiguredRecommendationJob } from '../models/Job'
+import { ConfiguredRecommendationJob, JobLog } from '../models/Job'
 
 export const GetRecommendationJobList = async () => {
     let result;
@@ -7,7 +7,7 @@ export const GetRecommendationJobList = async () => {
         let response = await fetch('api/job');
         const jsonResponse = await response.json();
         if (jsonResponse) {
-            result = AssignResponse(jsonResponse)
+            result = AssignJobResponse(jsonResponse)
             return result;
         }
         else {
@@ -19,7 +19,22 @@ export const GetRecommendationJobList = async () => {
     }
 }
 
-const AssignResponse = function (response: any): ConfiguredRecommendationJob[] {
+export const GetJobLogList = async (id: number) => {
+    let result: JobLog[] = [];
+    try {
+        await fetch('api/job/log/'+id)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            result = responseJSON;
+        });
+        return result;
+    } catch (e) {
+        console.log('Error fetching job logs!')
+        console.log(e);
+    }
+}
+
+const AssignJobResponse = function (response: any): ConfiguredRecommendationJob[] {
 
     let result = response.map((element: any) => {
         return {

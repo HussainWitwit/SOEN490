@@ -27,5 +27,17 @@ namespace RecommendationEngine.Controllers
                 return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
         }
+        [HttpGet("log/{id}")]
+        public IActionResult GetJobLogById(int id)
+        {
+            try
+            {
+                return Ok(_jobService.GetJobLogsById(id));
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+        }
     }
 }
