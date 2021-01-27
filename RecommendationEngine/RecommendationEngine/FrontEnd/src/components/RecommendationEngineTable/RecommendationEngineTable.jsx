@@ -15,7 +15,7 @@ import 'date-fns';
 
 export default function RecommendationEngineTable (props) {
 
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(props.dense);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('');
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -45,16 +45,17 @@ export default function RecommendationEngineTable (props) {
   return (
     <div id="root">
       <Paper id="paper">
-        <Toolbar id="toolbar">
+        
+        {(!props.tableTittle && props.dense)? '': <Toolbar id="toolbar">
           <h6 className="toolBarTitle" variant="h6" data-testid="tableTitle" component="div">{props.TableTitle}</h6>
-          <FormControlLabel
+          {props.dense?'':<FormControlLabel
             id="liteSwitch"
             control={
               <Switch checked={dense} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }} />
             }
             label={<h6 id="controlLabel">Lite</h6>}
-          />
-        </Toolbar>
+          />}
+        </Toolbar>}
         <TableContainer>
           <Table
             id="table" aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'} aria-label="enhanced table"
@@ -64,14 +65,14 @@ export default function RecommendationEngineTable (props) {
               headers={props.columnTitles}
               rowCount={props.data ? props.data.length : 1}
             />
-            <TableBody id="table-body" data-testid="table-body-cypress">
-              {props.data && props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((element) => {
+            <TableBody class={props.isClickable?"tableBody clickable":"tableBody"} data-testid="table-body-cypress">
+              {props.data && props.data.length>0 && (props.disablePaginator? props.data : props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((element) => {
                 return (
                   <TableRow
-                    hover
-                    selected={isSelected === element.id}
                     key={element.id}
                     className="custom"
+                    hover = {props.isClickable}
+                    selected={props.isClickable && isSelected === element.id}
                     onClick={() => {
                       props.onClick(element.id)
                       setIsSelected(element.id)
@@ -84,7 +85,7 @@ export default function RecommendationEngineTable (props) {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+        {props.disablePaginator?'':<TablePagination
           id="pagination"
           component="div"
           rowsPerPageOptions={[10, 25, 50, 100]}
@@ -93,7 +94,7 @@ export default function RecommendationEngineTable (props) {
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        />}
       </Paper>
     </div>
   );
@@ -101,8 +102,8 @@ export default function RecommendationEngineTable (props) {
   /* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   TableTitle: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  columnTitles: PropTypes.array.isRequired,
+  columnTitles: PropTypes.array.isRequired
 };

@@ -6,5 +6,6 @@ namespace Interfaces.Repositories
     public interface IJobRepository
     {
         public List<DBRecommendationJob> GetJobList();
+        public List<DBRecommendationJobLog> GetJobLogById(int id);
     }
 }

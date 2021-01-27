@@ -25,7 +25,7 @@ export function EnhancedTableHead (props) {
             sortDirection={orderBy === headCell.id ? order : false}
             id="tableHeader"
           >
-            <TableSortLabel
+            {headCell.label?<TableSortLabel
               id="sort-label"
               className="custom"
               active={orderBy === headCell.id}
@@ -38,7 +38,7 @@ export function EnhancedTableHead (props) {
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </span>
               ) : null}
-            </TableSortLabel>
+            </TableSortLabel>:''}
           </TableCell>
         ))}
       </TableRow>

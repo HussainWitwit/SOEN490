@@ -96,6 +96,7 @@ export function ManageRecommendationPage (props) {
         TableTitle={"Configured Recommendations"}
         onClick={openScheduleDrilldown}
         columnTitles={headCells}
+        isClickable= {true}
       />
     </div >
   );

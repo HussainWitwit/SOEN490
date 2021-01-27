@@ -1,5 +1,6 @@
 var formatYear = { month: 'long', day: 'numeric' };
 var formatMonth = { day: 'numeric' };
+var formatDate = {year: 'numeric', month: 'long', day: 'numeric'}
 var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true };
 var dayOfWeek = [
   'Sunday',
@@ -34,4 +35,14 @@ export const stringRecurrenceFormatting = (
     default:
       return 'Invalid';
   }
+};
+
+export const dateFormat = (dateInput: Date): string => {
+  let date = new Date(dateInput);
+  return date.toLocaleDateString('en-us', formatDate)
+};
+
+export const timeFormat = (dateInput: Date): string => {
+  let date = new Date(dateInput);
+  return date.toLocaleTimeString('en-us', formatTime)
 };
