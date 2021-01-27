@@ -22,7 +22,7 @@ export const GetRecommendationJobList = async () => {
 export const GetJobLogList = async (id: number) => {
     let result: JobLog[] = [];
     try {
-        let response = await fetch('api/job/log/'+id)
+        await fetch('api/job/log/'+id)
         .then((response) => response.json())
         .then((responseJSON) => {
             result = responseJSON;

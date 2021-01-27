@@ -65,7 +65,7 @@ export default function RecommendationEngineTable (props) {
               headers={props.columnTitles}
               rowCount={props.data ? props.data.length : 1}
             />
-            <TableBody id={props.isClickable?"tableBody-clickable":"tableBody"} data-testid="table-body-cypress">
+            <TableBody class={props.isClickable?"tableBody clickable":"tableBody"} data-testid="table-body-cypress">
               {props.data && props.data.length>0 && (props.disablePaginator? props.data : props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)).map((element) => {
                 return (
                   <TableRow

@@ -52,7 +52,6 @@ namespace RecommendationEngine.Services
         {
             try
             {
-
                 List<JobLog> logs = _jobRepository.GetJobLogById(id)
                     .Select(log => new JobLog
                     {
@@ -73,7 +72,12 @@ namespace RecommendationEngine.Services
                         Type = "Not Found"
                     };
                 }
+
                 return logs;
+            }
+            catch (GlobalException e)
+            {
+                throw e;
             }
             catch (Exception e)
             {

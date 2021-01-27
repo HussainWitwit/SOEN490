@@ -12,7 +12,7 @@ import RecommendationEngineTable from '../../RecommendationEngineTable/Recommend
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe.only('JobLogPopUp component', () => {
+describe('JobLogPopUp component', () => {
     const myInitialState = [{id: 23 , time: "17:24:10", level: "Information", description:"This is a description"},
     {id: 24 , time: "17:24:10", level: "Warning", description:"This is a description"},
     ,{id: 25 , time: "17:24:10", level: "Error", description:"This is a description"}

@@ -33,19 +33,15 @@
     width: 20px;
 }
 
-#tableBody-clickable{
+.tableBody{
     color: #252733;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 12px;
-    cursor: pointer;
     min-width: 15%;
 }
 
-#tableBody{
-    color: #252733;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 12px;
-    min-width: 15%;
+.clickable{
+    cursor: pointer;
 }
 
 .center{
