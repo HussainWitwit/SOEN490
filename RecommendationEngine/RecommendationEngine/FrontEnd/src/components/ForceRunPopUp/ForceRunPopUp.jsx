@@ -9,6 +9,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
+import {ForceRunConfiguredRecommendation} from '../../api/endpoints/ConfiguredRecommendationEndpoints'
 import "./ForceRunPopUp.css"
 
 export function ForceRunPopUp(props) {
@@ -44,6 +45,7 @@ export function ForceRunPopUp(props) {
                     <Button onClick={() => {
                         handleClose();
                         props.updateScheduleDrilldown('forceRun');
+                        ForceRunConfiguredRecommendation(props.recommendationId);
                     }} id="deleteButton2" variant="outlined">
                         Force Run
           </Button>

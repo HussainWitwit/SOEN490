@@ -88,6 +88,19 @@ export const EditConfiguredRecommendation = async (recommendation: ConfiguredRec
     return response;
 };
 
+export const ForceRunConfiguredRecommendation = (id: number) => {
+    try {
+        fetch('api/scheduler/'+id, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+        });
+    } catch (e) {
+        console.log('Error manually triggering configured recommendation!')
+        console.log(e);
+    }
+}
+
+
 /**
  * Maps a response to a configured recommendation
  * @param {*} response 
