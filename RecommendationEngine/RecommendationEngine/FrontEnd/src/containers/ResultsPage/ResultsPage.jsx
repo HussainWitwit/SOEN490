@@ -5,6 +5,8 @@ import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
+import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
+import { connect } from 'react-redux';
 
 /* istanbul ignore next */
 export const RowsToDisplay = (element) => (
@@ -18,7 +20,8 @@ export const RowsToDisplay = (element) => (
     </React.Fragment>
 );
 
-export default function ResultsPage () {
+export function ResultsPage (props) {
+    const { openResultDrilldown } = props;
 
     const [recommendationResultList, setRecommendationResultList] = useState([])
     const [resultList, setResultList] = useState(recommendationResultList);
@@ -88,9 +91,11 @@ export default function ResultsPage () {
                 rowsValue={RowsToDisplay}
                 data={resultList}
                 TableTitle={"Recommendation Job Results"}
-                onClick={() => { }}
+                onClick={openResultDrilldown}
                 columnTitles={headCells}
             />
         </div>
     );
 }
+
+export default connect(null, mapDispatchToProps)(ResultsPage);
