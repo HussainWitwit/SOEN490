@@ -30,6 +30,16 @@ describe('Verifying actions', () => {
     expect(action.closeAll()).toEqual(expectedAction);
   });
 
+  it('fires an update schedule drilldown action', () => {
+    const expectedAction = {
+      type: dispatchActionType.UPDATE_SCHEDULE_DRILLDOWN,
+      payload: {
+        action: 'forceRun'
+      }
+    };
+    expect(action.updateScheduleDrilldown('forceRun')).toEqual(expectedAction);
+  });
+
   it('fires a change tab index action', () => {
     const value = 1;
     const expectedAction = {
