@@ -69,9 +69,9 @@ namespace RecommendationEngine.Services
                 DisplayText = recommendationType.DisplayText,
                 Granularity = configuredRecommendation.Granularity,
                 PreferedScenario = configuredRecommendation.PreferredScenario,
-                CreatedOn = configuredRecommendation.CreatedOn,
+                CreatedOn = (configuredRecommendation.CreatedOn).ToLocalTime(),
                 ModifiedBy = configuredRecommendation.CreatedBy,
-                RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
+                RecurrenceDatetime = (configuredRecommendation.RecurrenceDatetime).ToLocalTime(),
                 RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
                 RecommendationType = recommendationType
             };
