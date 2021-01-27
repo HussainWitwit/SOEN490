@@ -13,6 +13,7 @@ import {ForceRunConfiguredRecommendation} from '../../api/endpoints/ConfiguredRe
 import "./ForceRunPopUp.css"
 
 export function ForceRunPopUp(props) {
+    const { recommendationId, updateScheduleDrilldown } = props;
 
     const handleClose = () => {
         props.handleForceRunPopUpOpen();
@@ -24,11 +25,11 @@ export function ForceRunPopUp(props) {
             open={props.open}
             onClose={handleClose}
         >
-            <IconButton aria-label="close" id="closeButton2" onClick={handleClose}>
+            <IconButton aria-label="close" id="forceRunCloseButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <div id="deleteWarning2">
-                <div id="warningMessage2">
+            <div id="forceRunDeleteWarning">
+                <div id="forceRunWarningMessage">
                     <DialogTitle classes={{ root: 'alertMessage' }}><b>Force Run Configured Recommendation</b></DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -38,15 +39,15 @@ export function ForceRunPopUp(props) {
                 </div>
             </div>
             <DialogActions>
-                <div id="buttons2">
-                    <Button onClick={handleClose} id="cancelButton2" variant="outlined">
+                <div id="forceRunbuttons">
+                    <Button onClick={handleClose} id="forceRunCancelButton" variant="outlined">
                         Cancel
           </Button>
                     <Button onClick={() => {
                         handleClose();
-                        props.updateScheduleDrilldown('forceRun');
-                        ForceRunConfiguredRecommendation(props.recommendationId);
-                    }} id="deleteButton2" variant="outlined">
+                        updateScheduleDrilldown('forceRun');
+                        ForceRunConfiguredRecommendation(recommendationId);
+                    }} id="forceRunButton" variant="outlined">
                         Force Run
           </Button>
                 </div>

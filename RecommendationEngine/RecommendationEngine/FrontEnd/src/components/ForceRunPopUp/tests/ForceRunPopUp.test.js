@@ -13,7 +13,7 @@ describe('ForceRunPopUp component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<ForceRunPopUp store={store} title={''} handleForceRunPopUpOpen={jest.fn} open={jest.fn} recommendationId={1} closeScheduleDrilldown={jest.fn} />);
+    const output = shallow(<ForceRunPopUp store={store} title={''} handleForceRunPopUpOpen={jest.fn} open={jest.fn} recommendationId={1} closeScheduleDrilldown={jest.fn} updateScheduleDrilldown={jest.fn}/>);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
@@ -52,6 +52,6 @@ describe('ForceRunPopUp component', () => {
     });
 
     it('Simulate delete button onClick event', () => {
-        output.find('#deleteButton2').simulate('click');
+        output.find('#forceRunButton').simulate('click');
     });
 });
