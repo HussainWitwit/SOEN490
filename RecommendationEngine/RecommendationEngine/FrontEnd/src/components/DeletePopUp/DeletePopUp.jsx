@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
-import { mapDispatchDeletePopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
+import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded';;
 
@@ -61,4 +61,4 @@ export function DeletePopUp (props) {
     );
 }
 
-export default connect(null, mapDispatchDeletePopUpActions)(DeletePopUp)
+export default connect(null, mapDispatchPopUpActions)(DeletePopUp)
