@@ -79,7 +79,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
     openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
-    updateScheduleDrilldown: (value) => dispatch(updateScheduleDrilldown(value)),
+    updateScheduleDrilldown: (action) => dispatch(updateScheduleDrilldown(action)),
     closeAssetTreeview: () => dispatch(closeAssetTreeview()),
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
     closeAll: () => dispatch(closeAll()),
@@ -91,7 +91,7 @@ export const mapDispatchToProps = (dispatch) => {
 export const mapDispatchPopUpActions = (dispatch) => {
   return {
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
-    updateScheduleDrilldown: (value) => dispatch(updateScheduleDrilldown(value)),
+    updateScheduleDrilldown: (action) => dispatch(updateScheduleDrilldown(action)),
     deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id)
   }
 }
