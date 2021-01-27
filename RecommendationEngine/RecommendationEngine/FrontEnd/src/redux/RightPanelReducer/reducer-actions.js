@@ -79,7 +79,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
     openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
-    updateScheduleDrilldown: (value) => updateScheduleDrilldown(value),
+    updateScheduleDrilldown: (value) => dispatch(updateScheduleDrilldown(value)),
     closeAssetTreeview: () => dispatch(closeAssetTreeview()),
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
     closeAll: () => dispatch(closeAll()),
