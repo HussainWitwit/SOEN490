@@ -40,7 +40,9 @@ export const RightPanelReducer = function (
       if (state.tabs.some((e) => e.name === ASSET_TREEVIEW_NAME))
         return {
           ...state,
-          selectedTabIndex: state.tabs.findIndex(tab => tab.name === ASSET_TREEVIEW_NAME),
+          selectedTabIndex: state.tabs.findIndex(
+            (tab) => tab.name === ASSET_TREEVIEW_NAME
+          ),
         };
       return {
         ...state,
@@ -53,7 +55,9 @@ export const RightPanelReducer = function (
       if (state.tabs.some((e) => e.name === DRILLDOWN_NAME))
         return {
           ...state,
-          selectedTabIndex: state.tabs.findIndex(tab => tab.name === DRILLDOWN_NAME),
+          selectedTabIndex: state.tabs.findIndex(
+            (tab) => tab.name === DRILLDOWN_NAME
+          ),
           tabs: state.tabs.map((e) =>
             e.name === DRILLDOWN_NAME
               ? { ...e, response: action.payload.response }
@@ -70,6 +74,30 @@ export const RightPanelReducer = function (
         ],
       };
     }
+
+    case type.UPDATE_SCHEDULE_DRILLDOWN:
+      if (action.payload.action == 'forceRun')
+        return {
+          ...state,
+          tabs: state.tabs.map((e) =>
+            e.name === DRILLDOWN_NAME
+              ? {
+                  ...e,
+                  response: {
+                    ...e.response,
+                    lastJobs: [
+                      ...e.response.lastJobs,
+                      {
+                        id: 'N/A',
+                        status: 'Running',
+                        timestamp: Date.now(),
+                      },
+                    ].slice(1, 6),
+                  },
+                }
+              : e
+          ),
+        };
 
     // So far we only handle two tabs at the same time, which then explains why we move the selectedTabIndex to 0 once we close any tab
     case type.CLOSE_ASSET_TREEVIEW:
@@ -90,13 +118,14 @@ export const RightPanelReducer = function (
     case type.CLOSE_ALL:
       return rightPanelInitialState;
 
-    // Special case: the ChangeTabIndex gets called after a Close since we're closing the item. 
+    // Special case: the ChangeTabIndex gets called after a Close since we're closing the item.
     // We then need to handle the ground case when we have 2 tabs and closing the second
     case type.CHANGE_TAB_INDEX:
-      return{
+      return {
         ...state,
-        selectedTabIndex: state.tabs.length>1?action.payload.selectedTabIndex:0
-      }
+        selectedTabIndex:
+          state.tabs.length > 1 ? action.payload.selectedTabIndex : 0,
+      };
     default:
       return state;
   }
