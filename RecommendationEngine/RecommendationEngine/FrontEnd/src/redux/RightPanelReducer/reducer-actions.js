@@ -5,6 +5,7 @@
  */
 import * as dispatchActionType from './dispatch-types';
 import { GetConfiguredRecommendationById } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
+import { GetActionsByResultId } from '../../api/endpoints/ResultsEndpoints';
 import { deleteConfiguredRecommendation } from '../ManageRecommendationReducer/reducer-actions';
 
 //**Actions --> Useful for unit testing the reducer.
@@ -14,7 +15,7 @@ export const openAssetTreeview = () => {
   };
 };
 
-/* istanbul ignore next */ 
+/* istanbul ignore next */
 export const openScheduleDrilldown = async (dispatch, id) => {
   const response = await GetConfiguredRecommendationById(id);
   dispatch({
@@ -25,6 +26,16 @@ export const openScheduleDrilldown = async (dispatch, id) => {
   });
 };
 
+export const openResultDrilldown = async (dispatch, id) => {
+  const response = await GetActionsByResultId(id);
+  dispatch({
+    type: dispatchActionType.OPEN_RESULT_DRILLDOWN,
+    payload: {
+      response: response
+    }
+  })
+}
+
 export const closeAssetTreeview = () => {
   return {
     type: dispatchActionType.CLOSE_ASSET_TREEVIEW,
@@ -34,6 +45,12 @@ export const closeAssetTreeview = () => {
 export const closeScheduleDrilldown = () => {
   return {
     type: dispatchActionType.CLOSE_SCHEDULE_DRILLDOWN,
+  };
+};
+
+export const closeResultDrilldown = () => {
+  return {
+    type: dispatchActionType.CLOSE_RESULT_DRILLDOWN,
   };
 };
 
@@ -70,8 +87,10 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
     openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
+    openResultDrilldown: (id) => openResultDrilldown(dispatch, id),
     closeAssetTreeview: () => dispatch(closeAssetTreeview()),
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
+    closeResultDrilldown: () => dispatch(closeResultDrilldown()),
     closeAll: () => dispatch(closeAll()),
     changeTabIndex: (value) => dispatch(changeTabIndex(value))
   };
