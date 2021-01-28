@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { stringRecurrenceFormatting } from '../../utilities/ConfiguredRecommendationUtilities';
+import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';

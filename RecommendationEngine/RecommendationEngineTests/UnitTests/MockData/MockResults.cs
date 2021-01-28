@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Models.DB;
 
 namespace RecommendationEngineTests.UnitTests.MockData
