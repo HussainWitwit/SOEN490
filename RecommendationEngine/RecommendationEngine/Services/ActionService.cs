@@ -39,7 +39,17 @@ namespace RecommendationEngine.Services
                      }).ToList();
 
                 DBRecommendationSchedule schedule = dbActions.First().RecommendationJobResult.Job.Schedule;
-                //TODO: except handling is not linked to a schedule
+
+                if(schedule ==  null)
+                {
+                    throw new GlobalException
+                    {
+                        ApplicationName = "Recommendation Engine",
+                        Code = 204,
+                        ErrorMessage = "Actions are not linked to a configured recommendation",
+                        Type = "No Content"
+                    };
+                }
 
                 ActionGrouping actions = new ActionGrouping
                 {
@@ -50,6 +60,10 @@ namespace RecommendationEngine.Services
 
                 return actions;
 
+            }
+            catch (GlobalException e)
+            {
+                throw e;
             }
             catch (Exception e)
             {

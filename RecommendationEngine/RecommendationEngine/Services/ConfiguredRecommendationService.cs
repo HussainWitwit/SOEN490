@@ -32,13 +32,7 @@ namespace RecommendationEngine.Services
 
         public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
         {
-            List<DBRecommendationSchedule> dbconfiguredRecommendations = _recommendationRepository.GetRecommendationScheduleList();
-
-            List<ConfiguredRecommendation> recommendations = new List<ConfiguredRecommendation>();
-
-            foreach (DBRecommendationSchedule dbConfigRecommendation in dbconfiguredRecommendations)
-            {
-                recommendations.Add(
+            return _recommendationRepository.GetRecommendationScheduleList().Select(dbConfigRecommendation =>
                     new ConfiguredRecommendation
                     {
                         Id = dbConfigRecommendation.RecommendationScheduleId,
@@ -53,9 +47,7 @@ namespace RecommendationEngine.Services
                         RecurrenceDatetime = dbConfigRecommendation.RecurrenceDatetime,
                         CreatedOn = dbConfigRecommendation.CreatedOn,
                         Parameters = null
-                    });
-            }
-            return recommendations;
+                    }).ToList();
         }
 
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
