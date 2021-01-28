@@ -9,14 +9,14 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
-import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
-import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
+import ConfirmationPopUp from '../../components/ConfirmationPopUp/ConfirmationPopUp';
 
 export function ManageRecommendationDrawer({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
+
   // Animation style
   const props = useSpring({
     opacity: 1,
@@ -165,13 +165,13 @@ export function ManageRecommendationDrawer({
           <Grid item xs={12}>
             <div className="force-run-button">
               <Button variant="outlined" onClick={handleForceRunPopUpOpen}>Force run</Button>
-              <ForceRunPopUp title={configuredRecommendation.name} handleForceRunPopUpOpen={handleForceRunPopUpOpen} open={openForceRunPopUp} recommendationId={configuredRecommendation.id} />
+              <ConfirmationPopUp type={"Force Run"} title={configuredRecommendation.name} handleForceRunPopUpOpen={handleForceRunPopUpOpen} open={openForceRunPopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
           <Grid item xs={12}>
             <div className="delete-button">
               <Button variant="outlined" id="deleteRecButton" onClick={handleDeletePopUpOpen}>Delete</Button>
-              <DeletePopUp title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
+              <ConfirmationPopUp type={"Delete"} title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
         </Grid>
