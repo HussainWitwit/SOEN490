@@ -1,49 +1,41 @@
-/**
- * I tried to implement a similar logic as the AssetEndpoints, but it was quite annoying. 
- * I believe we have to figure out the typescript issue first.
- */
-
 import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
 
-export const GetConfiguredRecommendationList = async () => {
+export async function GetConfiguredRecommendationList() : Promise<ConfiguredRecommendation[]> {
 
-    let configuredRecommendations: ConfiguredRecommendation[];
+    let configuredRecommendations: ConfiguredRecommendation[] = [];
     try {
         let response = await fetch('api/ConfiguredRecommendation');
-        // let response = await fetch(endpoint);
         const jsonResponse = await response.json();
         if (jsonResponse) {
-            configuredRecommendations = mapConfiguredRecommendations(jsonResponse);
+            configuredRecommendations = jsonResponse;
             return configuredRecommendations;
-        }
-        else {
-            return [];
         }
     }
     catch (error) {
-        return [];
+        console.log('Error while fetching configured recommendations!');
+        console.log(error);
     }
+    return configuredRecommendations;
 }
 
-export const GetConfiguredRecommendationById = async (id: number) => {
+export async function GetConfiguredRecommendationById(id: number) : Promise<ConfiguredRecommendation | null> {
     let configuredRecommendations: ConfiguredRecommendation;
     try {
         let response = await fetch('api/ConfiguredRecommendation/' + id);
         const jsonResponse = await response.json();
         if (jsonResponse) {
-            configuredRecommendations = mapConfiguredRecommendation(jsonResponse);
+            configuredRecommendations = jsonResponse;
             return configuredRecommendations;
-        }
-        else {
-            return {};
         }
     }
     catch (error) {
-        return {};
+        console.log('Error while fetching a specific (id) configured recommendation!');
+        console.log(error);
     }
+    return null;
 }
 
-export const DeleteRecommendationById = async (id: number) => {
+export async function DeleteRecommendationById(id: number) : Promise<any> {
     let response;
     try {
         response = await fetch('api/ConfiguredRecommendation/' + id, {
@@ -51,13 +43,14 @@ export const DeleteRecommendationById = async (id: number) => {
             headers: { 'Content-Type': 'application/json' },
         })
     } catch (error) {
+        console.log('Error while deleting a configured recommendation!');
         console.log(error);
     }
     return response;
 };
 
 
-export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
+export async function AddConfiguredRecommendation(recommendation: ConfiguredRecommendation) : Promise<any> {
     let response;
     try {
         response = await fetch('api/ConfiguredRecommendation/', {
@@ -66,15 +59,14 @@ export const AddConfiguredRecommendation = async (recommendation: ConfiguredReco
             body: JSON.stringify(recommendation)
         })
     } catch (error) {
+        console.log('Error while fetching adding a configured recommendation!');
         console.log(error);
     }
     return response;
 };
 
 
-export const EditConfiguredRecommendation = async (recommendation: ConfiguredRecommendation, id: number) => {
-    console.log(recommendation);
-    console.log(id);
+export async function EditConfiguredRecommendation(recommendation: ConfiguredRecommendation, id: number) : Promise<any> {
     let response;
     try {
         response = await fetch('api/ConfiguredRecommendation/' + id, {
@@ -83,58 +75,9 @@ export const EditConfiguredRecommendation = async (recommendation: ConfiguredRec
             body: JSON.stringify(recommendation)
         })
     } catch (error) {
+        console.log('Error while fetching editing a configured recommendation!');
         console.log(error);
     }
     return response;
 };
 
-/**
- * Maps a response to a configured recommendation
- * @param {*} response 
- */
-const mapConfiguredRecommendation = function (response: any): ConfiguredRecommendation {
-    //Make sure the returned value is exactly equal to entity attribute for the entity in question
-    return {
-        id: response.id,
-        name: response.name,
-        description: response.description,
-        type: response.type,
-        granularity: response.granularity,
-        createdBy: response.createdBy,
-        preferredScenario: response.preferredScenario,
-        recurrenceDayOfWeek: response.recurrenceDayOfWeek,
-        recurrenceDatetime: response.recurrenceDatetime,
-        createdOn: response.createdOn,
-        assetList: response.assetList,
-        lastJobs: response.lastJobs,
-        parameters: response.parameters
-    };
-}
-
-/**
- * Maps a response to a list of configured recommendation
- * @param {*} response 
- */
-const mapConfiguredRecommendations = function (response: any): ConfiguredRecommendation[] {
-    //Make sure the returned value is exactly equal to entity attribute for the entity in question
-    let result = response.map((element: any) => {
-        return {
-            id: element.id,
-            name: element.name,
-            type: element.type,
-            granularity: element.granularity,
-            createdBy: element.createdBy,
-            recurrenceDayOfWeek: element.recurrenceDayOfWeek,
-            recurrenceDatetime: element.recurrenceDatetime,
-            createdOn: element.createdOn,
-            assetList: element.assetList,
-            parameters: element.parameters ? element.parameters.map((parameter: any) => {
-                return {
-                    parameterName: parameter.parameterName,
-                    parameterValue: parameter.parameterValue,
-                }
-            }) : []
-        };
-    })
-    return result;
-}
