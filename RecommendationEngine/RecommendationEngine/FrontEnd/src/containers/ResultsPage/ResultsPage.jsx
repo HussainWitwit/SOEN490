@@ -10,11 +10,11 @@ import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoint
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
-        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.id}</TableCell>
-        <TableCell id="tableBody" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.netSaving.toFixed(2)}$</TableCell>
-        <TableCell id="tableBody" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.returnOnInvestment.toFixed(2)}%</TableCell>
-        <TableCell id="tableBody" style={{ color: 'red' }}>{element.costOfAction.toFixed(2)}$</TableCell>
-        <TableCell id="tableBody" style={{ color: 'red' }}>{element.costOfInaction.toFixed(2)}$</TableCell>
+        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.id}</TableCell>
+        <TableCell id="table-body" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.netSaving.toFixed(2)}$</TableCell>
+        <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.returnOnInvestment.toFixed(2)}%</TableCell>
+        <TableCell id="table-body" style={{ color: 'red' }}>{element.costOfAction.toFixed(2)}$</TableCell>
+        <TableCell id="table-body" style={{ color: 'red' }}>{element.costOfInaction.toFixed(2)}$</TableCell>
     </React.Fragment>
 );
 
@@ -87,8 +87,8 @@ export default function ResultsPage () {
             <RecommendationEngineTable
                 rowsValue={RowsToDisplay}
                 data={resultList}
-                TableTitle={"Recommendation Job Results"}
-                onClick={() => { }}
+                tableTitle={"Recommendation Job Results"}
+                onClickRow={() => { }}
                 columnTitles={headCells}
             />
         </div>
