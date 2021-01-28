@@ -6,6 +6,7 @@ using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Services
 {
@@ -19,26 +20,21 @@ namespace RecommendationEngine.Services
         {
             _jobRepository = jobRepository;
         }
+
         public List<Job> GetJobList()
         {
             try
             {
-                List<DBRecommendationJob> dbJobs = _jobRepository.GetJobList();
-
-                List<Job> jobs = new List<Job>();
-
-                foreach (DBRecommendationJob dbJob in dbJobs)
-                {
-                    jobs.Add(
-                        new Job
-                        {
-                            Id = dbJob.RecommendationJobId,
-                            Status = dbJob.Status,
-                            configuredRecommendationTitle = dbJob.Schedule.Name,
-                            Duration = dbJob.JobDuration,
-                            Timestamp = dbJob.Timestamp,
-                        });
-                }
+                List<Job> jobs = _jobRepository.GetJobList()
+                    .Select(job => new Job
+                    {
+                        Id = job.RecommendationJobId,
+                        Status = job.Status,
+                        configuredRecommendationTitle = job.Schedule.Name,
+                        Duration = job.JobDuration,
+                        Timestamp = job.Timestamp,
+                    }).ToList();
+                
                 return jobs;
             }
             catch(Exception e)
