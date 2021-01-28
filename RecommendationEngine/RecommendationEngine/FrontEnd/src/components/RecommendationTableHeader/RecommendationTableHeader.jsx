@@ -19,20 +19,21 @@ export function EnhancedTableHead(props) {
           <TableCell
           className= {headCell.id === "status" ? "custom-status-header": "custom" }
           key={headCell.id}
-            sortDirection={orderColumnTitle === headCell.id ? orderType : false}
+          sortDirection={orderColumnTitle === headCell.id ? orderType : false}
           >
-            <TableSortLabel
+            {headCell.label?<TableSortLabel
+              id="table-header"
               active={orderColumnTitle === headCell.id}
               direction={orderColumnTitle === headCell.id ? orderType : "asc"}
               onClick={sortingHandler(headCell.id)}
             >
               {headCell.label}
               {orderColumnTitle === headCell.id ? (
-                <span id="visuallyHidden">
+                <span id="visually-hidden">
                   {orderType === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
-            </TableSortLabel>
+            </TableSortLabel>:''}
           </TableCell>
         )):null}
       </TableRow>

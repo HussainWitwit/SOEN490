@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
@@ -6,15 +6,17 @@ import RecommendationEngineTable from '../../components/RecommendationEngineTabl
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
+import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 
-export const RowsToDisplay = (element) => (
+const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
-        <TableCell id="tableBody">{element.id}</TableCell>
+        <TableCell id="table-body">{element.id}</TableCell>
         <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
-        <TableCell id="tableBody">{element.timestamp}</TableCell>
-        <TableCell id="tableBody">{element.duration} seconds</TableCell>
-        <TableCell id="tableBody"><p>{element.configuredRecommendationTitle}</p></TableCell>
+        <TableCell id="table-body">{element.timestamp}</TableCell>
+        <TableCell id="table-body">{element.duration} seconds</TableCell>
+        <TableCell id="table-body"><p>{element.configuredRecommendationTitle}</p></TableCell>
+        <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
     </React.Fragment>
 );
 
@@ -26,9 +28,8 @@ const StatusComponent = (status) => (
 
 export default function JobsPage () {
 
-    const [recommendationJobList, setRecommendationJobList] = useState();
-    const [jobList, setJobList] = useState(recommendationJobList);
-    const [defaultJobList, setDefaultJobList] = useState(recommendationJobList);
+    const [jobList, setJobList] = useState([]);
+    const [defaultJobList, setDefaultJobList] = useState([]);
 
     const headCells = [
         { id: 'jobId', label: 'Job ID' },
@@ -36,11 +37,11 @@ export default function JobsPage () {
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'jobDuration', label: 'Job Duration' },
         { id: 'configuredRecommendationTitle', label: 'Configured Recommendation' },
+        {id: '', label: ''}
     ];
 
     const getJobList = async () => {
         let response = await GetRecommendationJobList();
-        setRecommendationJobList(response);
         setJobList(response);
         setDefaultJobList(response);
     }
@@ -90,7 +91,7 @@ export default function JobsPage () {
             <RecommendationEngineTable
                 rowsValue={RowsToDisplay}
                 data={jobList}
-                TableTitle={"Recommendation Jobs"}
+                tableTitle={"Recommendation Jobs"}
                 onClickRow={() => { }}
                 columnTitles={headCells}
             />

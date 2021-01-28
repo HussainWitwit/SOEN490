@@ -17,7 +17,6 @@ export function getSortingComparison(orderType, orderColumnTitle){
   return orderType === "desc"? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
 }
 
-
 export function sortingComparison (firstObj, secondObj, orderColumnTitle){
   if (secondObj[orderColumnTitle] < firstObj[orderColumnTitle]) {
     return -1;
@@ -27,7 +26,6 @@ export function sortingComparison (firstObj, secondObj, orderColumnTitle){
   }
   return 0;
 }
-
 
 export function tableSort (array, comparator){
   if(array != null || array != undefined){
@@ -43,19 +41,19 @@ export function tableSort (array, comparator){
   return rowElements.map((element) => element[0]);
 }}
 
-export default function RecommendationEngineTable (props) {
+  export default function RecommendationEngineTable (props) {
 
-  const {rowsValue, data, TableTitle, onClickRow, columnTitles } = props;
+  const {rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
 
   const [orderType, setOrderType] = React.useState("asc");
   const [orderColumnTitle, setOrderColumnTitle] = React.useState("");
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [denseAttribute, setDenseAttribute] = React.useState(dense);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [isSelected, setIsSelected] = React.useState(null);
 
   const handleChangeDense = (event) => {
-    setDense(event.target.checked);
+    setDenseAttribute(event.target.checked);
   };
 
   const handleSortingChange = (event, property) => {
@@ -76,45 +74,48 @@ export default function RecommendationEngineTable (props) {
   return (
     <div id="root">
       <Paper id="paper">
-        <Toolbar id="toolbar">
-          <h6 className="toolBarTitle" variant="h6" data-testid="tableTitle" component="div">{TableTitle}</h6>
-          <FormControlLabel
+        
+        {(!tableTitle && denseAttribute)? '': <Toolbar id="toolbar">
+          <h6 className="tool-bar-title" variant="h6" data-testid="tableTitle" component="div">{tableTitle}</h6>
+          {props.dense?'':<FormControlLabel
             id="liteSwitch"
             control={
-              <Switch checked={dense} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }} />
+              <Switch checked={denseAttribute} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }} />
             }
-            label={<h6 id="controlLabel">Lite</h6>}
-          />
-        </Toolbar>
-
+            label={<h6 id="control-label">Lite</h6>}
+          />}
+        </Toolbar>}
         <TableContainer>
           <Table
             id="table"
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
+            size={denseAttribute ? "small" : "medium"}
             aria-label="enhanced table"
           >
             <EnhancedTableHead
               id="handleSort"
               data-testid="tablehead-title"
-              order={orderType}
+              orderType={orderType}
               orderColumnTitle={orderColumnTitle}
               headCells={columnTitles}
               handleSortingChange={handleSortingChange}
             />
-            <TableBody>
-              {data ? tableSort(data, getSortingComparison(orderType, orderColumnTitle))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((element, index) => {
-                  return (
-                    <TableRow
-                    hover
-                    id="tableRow"
-                    data= "table-row"
-                    tabIndex={-1}
-                    selected={isSelected === element.id}
+
+            <TableBody 
+            id={isClickable?"table-body clickable":"table-body"}
+             data-testid="table-body-cypress">
+
+              {data && data.length>0 &&
+              (disablePaginator? tableSort(data, getSortingComparison(orderType, orderColumnTitle)) 
+              :tableSort(data, getSortingComparison(orderType, orderColumnTitle))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
+              .map((element) => {
+                return (
+                  <TableRow
                     key={element.id}
-                    className="custom"
+                    id="table-body"
+                    hover = {isClickable}
+                    selected={isClickable && isSelected === element.id}
                     onClick={() => {
                       onClickRow(element.id)
                       setIsSelected(element.id)
@@ -123,11 +124,11 @@ export default function RecommendationEngineTable (props) {
                     {rowsValue(element)}
                   </TableRow>
                 )
-              }):null}
+              })}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+        {disablePaginator?'':<TablePagination
           id="pagination"
           component="div"
           rowsPerPageOptions={[10, 25, 50, 100]}
@@ -137,7 +138,7 @@ export default function RecommendationEngineTable (props) {
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        />}
       </Paper>
     </div>
   );
@@ -145,8 +146,8 @@ export default function RecommendationEngineTable (props) {
   /* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
-  TableTitle: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired,
+  tableTitle: PropTypes.string.isRequired,
   onClickRow: PropTypes.func.isRequired,
   columnTitles: PropTypes.array.isRequired,
 };
