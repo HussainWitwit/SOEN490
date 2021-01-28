@@ -11,7 +11,7 @@ import {
 } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
-import ActionDrawer from '../ActionsDrawer/ActionsDrawer';
+import ActionDrawer from '../ActionDrawer/ActionDrawer';
 
 export function RightPanelDrawer ({
   isOpen,

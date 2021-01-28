@@ -4,7 +4,6 @@ export interface Action {
     displayText: string,
     recommendedOnDate: Date
 }
-
 export interface ActionGrouping {
     recommendationName: string,
     assetNameList: String[],

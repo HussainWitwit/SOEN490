@@ -23,9 +23,8 @@ export const RowsToDisplay = (element) => (
 export function ResultsPage (props) {
     const { openResultDrilldown } = props;
 
-    const [recommendationResultList, setRecommendationResultList] = useState([])
-    const [resultList, setResultList] = useState(recommendationResultList);
-    const [defaultResultList, setDefaultResultList] = useState(recommendationResultList);
+    const [resultList, setResultList] = useState([]);
+    const [defaultResultList, setDefaultResultList] = useState([]);
 
     /* istanbul ignore next */
     const headCells = [
@@ -39,7 +38,6 @@ export function ResultsPage (props) {
     /* istanbul ignore next */
     const getResultList = async () => {
         let response = await GetRecommendationResultList();
-        setRecommendationResultList(response);
         setDefaultResultList(response);
         setResultList(response);
     }
@@ -93,7 +91,7 @@ export function ResultsPage (props) {
                 tableTitle={"Recommendation Job Results"}
                 onClickRow={openResultDrilldown}
                 columnTitles={headCells}
-                isClickable= {true}
+                isClickable={true}
             />
         </div>
     );

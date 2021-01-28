@@ -1,10 +1,9 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import './ActionsDrawer.css';
-import { connect } from 'react-redux';
+import './ActionDrawer.css';
 import Grid from '@material-ui/core/Grid';
 
-export function ActionDrawer (props) {
+export default function ActionDrawer (props) {
 
     const { actionGrouping } = props;
     const assets = actionGrouping ? actionGrouping.assetNameList : [];
@@ -22,7 +21,7 @@ export function ActionDrawer (props) {
             <div className='actions-drawer-content-container'>
                 <Grid className='actions-drawer-content' container>
                     <Grid id='info-container' item small={12}>
-                        <p id='recommendation-title'>Recommendation Title</p>
+                        <p id='recommendation-title'>{actionGrouping ? actionGrouping.recommendationName : ''}</p>
                         <p id='assets-title'>Asset(s)</p>
                         {assets.map((asset, index) => (
                             <p key={index}>{asset}</p>
@@ -49,5 +48,3 @@ export function ActionDrawer (props) {
         </animated.div>
     )
 }
-
-export default connect()(ActionDrawer)

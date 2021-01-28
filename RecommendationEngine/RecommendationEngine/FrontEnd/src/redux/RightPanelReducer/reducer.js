@@ -22,9 +22,9 @@ const rightPanelInitialState = {
   selectedTabIndex: 0,
 };
 
-const DRILLDOWN_NAME = 'Details';
+const SCHEDULE_DRILLDOWN_NAME = 'Details';
 const ASSET_TREEVIEW_NAME = 'AssetTreeview';
-const RESULT_NAME = 'Actions';
+const RESULT_DRILLDOWN_NAME = 'Actions';
 
 /**
  * The right panel reducer's main business logic is surrounds the idea that there should only be a maximum of 2 tabs open to avoid crowding;
@@ -51,12 +51,12 @@ export const RightPanelReducer = function (
       };
     }
     case type.OPEN_SCHEDULE_DRILLDOWN: {
-      if (state.tabs.some((e) => e.name === DRILLDOWN_NAME))
+      if (state.tabs.some((e) => e.name === SCHEDULE_DRILLDOWN_NAME))
         return {
           ...state,
-          selectedTabIndex: state.tabs.findIndex(tab => tab.name === DRILLDOWN_NAME),
+          selectedTabIndex: state.tabs.findIndex(tab => tab.name === SCHEDULE_DRILLDOWN_NAME),
           tabs: state.tabs.map((e) =>
-            e.name === DRILLDOWN_NAME
+            e.name === SCHEDULE_DRILLDOWN_NAME
               ? { ...e, response: action.payload.response }
               : e
           ),
@@ -67,17 +67,17 @@ export const RightPanelReducer = function (
         selectedTabIndex: state.tabs.length,
         tabs: [
           ...state.tabs,
-          { name: DRILLDOWN_NAME, response: action.payload.response },
+          { name: SCHEDULE_DRILLDOWN_NAME, response: action.payload.response },
         ],
       };
     }
     case type.OPEN_RESULT_DRILLDOWN: {
-      if (state.tabs.some((e) => e.name === RESULT_NAME))
+      if (state.tabs.some((e) => e.name === RESULT_DRILLDOWN_NAME))
         return {
           ...state,
-          selectedTabIndex: state.tabs.findIndex(tab => tab.name === RESULT_NAME),
+          selectedTabIndex: state.tabs.findIndex(tab => tab.name === RESULT_DRILLDOWN_NAME),
           tabs: state.tabs.map((e) =>
-            e.name === RESULT_NAME
+            e.name === RESULT_DRILLDOWN_NAME
               ? { ...e, response: action.payload.response }
               : e
           ),
@@ -88,7 +88,7 @@ export const RightPanelReducer = function (
         selectedTabIndex: state.tabs.length,
         tabs: [
           ...state.tabs,
-          { name: RESULT_NAME, response: action.payload.response },
+          { name: RESULT_DRILLDOWN_NAME, response: action.payload.response },
         ],
       };
     }
@@ -97,7 +97,7 @@ export const RightPanelReducer = function (
     case type.CLOSE_ASSET_TREEVIEW:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => (e.name === DRILLDOWN_NAME || e.name === RESULT_NAME)),
+        isOpen: state.tabs.some((e) => (e.name === SCHEDULE_DRILLDOWN_NAME || e.name === RESULT_DRILLDOWN_NAME)),
         selectedTabIndex: state.tabs.length - 1,
         tabs: state.tabs.filter((tab) => tab.name !== ASSET_TREEVIEW_NAME),
       };
@@ -105,17 +105,17 @@ export const RightPanelReducer = function (
     case type.CLOSE_SCHEDULE_DRILLDOWN:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === RESULT_NAME)),
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === RESULT_DRILLDOWN_NAME)),
         selectedTabIndex: state.tabs.length - 1,
-        tabs: state.tabs.filter((tab) => tab.name !== DRILLDOWN_NAME),
+        tabs: state.tabs.filter((tab) => tab.name !== SCHEDULE_DRILLDOWN_NAME),
       };
 
     case type.CLOSE_RESULT_DRILLDOWN:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === DRILLDOWN_NAME)),
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === SCHEDULE_DRILLDOWN_NAME)),
         selectedTabIndex: state.tabs.length - 1,
-        tabs: state.tabs.filter((tab) => tab.name !== RESULT_NAME),
+        tabs: state.tabs.filter((tab) => tab.name !== RESULT_DRILLDOWN_NAME),
       };
 
     case type.CLOSE_ALL:
@@ -126,8 +126,7 @@ export const RightPanelReducer = function (
     case type.CHANGE_TAB_INDEX:
       return {
         ...state,
-        selectedTabIndex: state.tabs.length === 3 ? action.payload.selectedTabIndex : state.tabs.length === 2 ? (action.payload.selectedTabIndex - 1) : 0 // kinda works
-        // selectedTabIndex: state.tabs.length > 1 ? action.payload.selectedTabIndex : 0
+        selectedTabIndex: (action.payload.selectedTabIndex) % state.tabs.length
       }
     default:
       return state;

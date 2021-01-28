@@ -1,10 +1,9 @@
 
 import { ConfiguredRecommendationResult } from '../models/JobResult';
-import { Action, ActionGrouping } from '../models/Action';
-import { id } from 'date-fns/locale';
+import { ActionGrouping } from '../models/Action';
 
-export async function GetRecommendationResultList() : Promise<ConfiguredRecommendationResult[]> {
-    let result:ConfiguredRecommendationResult[] = [];
+export async function GetRecommendationResultList(): Promise<ConfiguredRecommendationResult[]> {
+    let result: ConfiguredRecommendationResult[] = [];
     try {
         let response = await fetch('api/result');
         const jsonResponse = await response.json();
@@ -19,10 +18,10 @@ export async function GetRecommendationResultList() : Promise<ConfiguredRecommen
     return result;
 }
 
-export async function GetActionsByResultId(id: number) : Promise<ActionGrouping | null> {
+export async function GetActionsByResultId(id: number): Promise<ActionGrouping | null> {
     let actions: ActionGrouping;
     try {
-        let response = await fetch('api/action/'+ id);
+        let response = await fetch(`api/action/${id}`);
         const jsonResponse = await response.json();
         if (jsonResponse) {
             actions = jsonResponse;
