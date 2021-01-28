@@ -164,7 +164,7 @@ export function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="force-run-button">
-              <Button variant="outlined" onClick={handleForceRunPopUpOpen}>Force run</Button>
+              <Button variant="outlined" id="forceRunRecButton"onClick={handleForceRunPopUpOpen}>Force run</Button>
               <ForceRunPopUp title={configuredRecommendation.name} handleForceRunPopUpOpen={handleForceRunPopUpOpen} open={openForceRunPopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
