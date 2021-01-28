@@ -5,9 +5,13 @@ import Close from '@material-ui/icons/Close';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import AssetTree from '../AssetTreeView/AssetTreeView';
 import ManageRecommendationDrawer from '../../containers/ManageRecommendationDrawer/ManageRecommendationDrawer';
-import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
+import {
+  mapRightPanelStateToProps,
+  mapDispatchToProps,
+} from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
+import ActionDrawer from '../ActionsDrawer/ActionsDrawer';
 
 export function RightPanelDrawer ({
   isOpen,
@@ -15,6 +19,7 @@ export function RightPanelDrawer ({
   selectedTabIndex,
   closeAssetTreeview,
   closeScheduleDrilldown,
+  closeResultDrilldown,
   closeAll,
   changeTabIndex
 }) {
@@ -30,6 +35,11 @@ export function RightPanelDrawer ({
       closeHandler: closeScheduleDrilldown,
       component: (<ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     },
+    Actions: {
+      title: 'Actions',
+      closeHandler: closeResultDrilldown,
+      component: (<ActionDrawer actions={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+    }
   }
 
   return (
@@ -53,7 +63,7 @@ export function RightPanelDrawer ({
             <div className="header-space"></div>
             <Tabs selectedIndex={selectedTabIndex} onSelect={index => changeTabIndex(index)}>
               <TabList>
-                {tabs && tabs.map(tab => (<Tab>
+                {tabs && tabs.map(tab => (<Tab key={tab.name}>
                   {tabOptions[tab.name].title}
                   <IconButton
                     className="drawer-icon-button"
@@ -63,7 +73,7 @@ export function RightPanelDrawer ({
                   </IconButton>
                 </Tab>))}
               </TabList>
-              {tabs && tabs.map(tab => (<TabPanel>
+              {tabs && tabs.map(tab => (<TabPanel key={tab.name}>
                 {tabOptions[tab.name].component}
               </TabPanel>))}
             </Tabs>

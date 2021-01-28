@@ -24,6 +24,7 @@ const rightPanelInitialState = {
 
 const DRILLDOWN_NAME = 'Details';
 const ASSET_TREEVIEW_NAME = 'AssetTreeview';
+const RESULT_NAME = 'Actions';
 
 /**
  * The right panel reducer's main business logic is surrounds the idea that there should only be a maximum of 2 tabs open to avoid crowding;
@@ -70,32 +71,63 @@ export const RightPanelReducer = function (
         ],
       };
     }
+    case type.OPEN_RESULT_DRILLDOWN: {
+      if (state.tabs.some((e) => e.name === RESULT_NAME))
+        return {
+          ...state,
+          selectedTabIndex: state.tabs.findIndex(tab => tab.name === RESULT_NAME),
+          tabs: state.tabs.map((e) =>
+            e.name === RESULT_NAME
+              ? { ...e, response: action.payload.response }
+              : e
+          ),
+        };
+      return {
+        ...state,
+        isOpen: true,
+        selectedTabIndex: state.tabs.length,
+        tabs: [
+          ...state.tabs,
+          { name: RESULT_NAME, response: action.payload.response },
+        ],
+      };
+    }
 
     // So far we only handle two tabs at the same time, which then explains why we move the selectedTabIndex to 0 once we close any tab
     case type.CLOSE_ASSET_TREEVIEW:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.name === DRILLDOWN_NAME),
-        selectedTabIndex: 0,
+        isOpen: state.tabs.some((e) => (e.name === DRILLDOWN_NAME || e.name === RESULT_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
         tabs: state.tabs.filter((tab) => tab.name !== ASSET_TREEVIEW_NAME),
       };
 
     case type.CLOSE_SCHEDULE_DRILLDOWN:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.name === ASSET_TREEVIEW_NAME),
-        selectedTabIndex: 0,
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === RESULT_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
         tabs: state.tabs.filter((tab) => tab.name !== DRILLDOWN_NAME),
       };
+
+    case type.CLOSE_RESULT_DRILLDOWN:
+      return {
+        ...state,
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === DRILLDOWN_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
+        tabs: state.tabs.filter((tab) => tab.name !== RESULT_NAME),
+      };
+
     case type.CLOSE_ALL:
       return rightPanelInitialState;
 
     // Special case: the ChangeTabIndex gets called after a Close since we're closing the item. 
-    // We then need to handle the ground case when we have 2 tabs and closing the second
+    // We then need to handle the ground case when we have 2/3 tabs and closing the second/third
     case type.CHANGE_TAB_INDEX:
-      return{
+      return {
         ...state,
-        selectedTabIndex: state.tabs.length>1?action.payload.selectedTabIndex:0
+        selectedTabIndex: state.tabs.length === 3 ? action.payload.selectedTabIndex : state.tabs.length === 2 ? (action.payload.selectedTabIndex - 1) : 0 // kinda works
+        // selectedTabIndex: state.tabs.length > 1 ? action.payload.selectedTabIndex : 0
       }
     default:
       return state;
