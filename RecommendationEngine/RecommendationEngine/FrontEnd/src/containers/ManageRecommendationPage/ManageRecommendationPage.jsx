@@ -15,10 +15,10 @@ import './ManageRecommendationPage.css';
 export const RowsToDisplay = (element) => (
   <React.Fragment>
     <TableCell />
-    <TableCell component="th" scope="row" padding="default" className="primaryKey" id="tableBody">{element.name}</TableCell>
-    <TableCell id="tableBody">{element.type}</TableCell>
-    <TableCell id="tableBody">{element.granularity}</TableCell>
-    <TableCell id="tableBody">{element.createdOn}</TableCell>
+    <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.name}</TableCell>
+    <TableCell id="table-body">{element.type}</TableCell>
+    <TableCell id="table-body">{element.granularity}</TableCell>
+    <TableCell id="table-body">{element.createdOn}</TableCell>
   </React.Fragment>
 );
 
@@ -30,10 +30,10 @@ export function ManageRecommendationPage (props) {
 
   /* istanbul ignore next */ //Should be tested 
   const headCells = [
-    { id: 'title', label: 'Title' },
-    { id: 'type', label: 'Type' },
-    { id: 'granularity', label: 'Granularity' },
-    { id: 'createdOn', label: 'Created On' },
+    { id: "name", label: "Title"},
+    { id: "type", label: "Type" },
+    { id: "granularity", label: "Granularity" },
+    { id: "createdOn", label: "Created On" },
   ];
 
   /* istanbul ignore next */
@@ -93,9 +93,10 @@ export function ManageRecommendationPage (props) {
       <RecommendationEngineTable
         rowsValue={RowsToDisplay}
         data={recommendationList}
-        TableTitle={"Configured Recommendations"}
-        onClick={openScheduleDrilldown}
+        tableTitle={"Configured Recommendations"}
+        onClickRow={openScheduleDrilldown}
         columnTitles={headCells}
+        isClickable= {true}
       />
     </div >
   );

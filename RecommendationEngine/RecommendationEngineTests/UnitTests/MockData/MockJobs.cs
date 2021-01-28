@@ -1,4 +1,5 @@
-﻿using Models.Application.APIModels;
+﻿using System;
+using Models.Application.APIModels;
 using Models.DB;
 using System.Collections.Generic;
 
@@ -9,6 +10,8 @@ namespace RecommendationEngineTests.UnitTests.MockData
 
         public static List<DBRecommendationJob> BasicDBJobList = Jobs.BasicDBJobList();
         public static List<DBRecommendationJob> BadDBJobList = Jobs.BadDBJobList();
+        public static List<DBRecommendationJobLog> BasicDBJobLogList = Jobs.BasicDBJobLogList();
+        public static List<DBRecommendationJobLog> BadDBJobLogList = Jobs.BadDBJobLogList();
 
         public static class Jobs
         {
@@ -43,6 +46,28 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 {
                     jobBad
                 };
+            }
+
+            public static List<DBRecommendationJobLog> BasicDBJobLogList()
+            {
+
+                List<DBRecommendationJobLog> jobList = new List<DBRecommendationJobLog>()
+                {
+                    new DBRecommendationJobLog
+                    {
+                        RecommendationJobLogId = 1,
+                        Description = "Test",
+                        Level = "Warning",
+                        Time = DateTime.Now
+                    }
+                };
+
+                return jobList;
+            }
+
+            public static List<DBRecommendationJobLog> BadDBJobLogList()
+            {
+                return new List<DBRecommendationJobLog>();
             }
         }
     }

@@ -64,8 +64,31 @@ namespace RecommendationEngineTests.APITests
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 
+        [Test]
+        public async Task GetJobLogList()
+        {
+            var response = await _client.GetAsync("api/job/log/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<JobLog> jobList = JsonConvert.DeserializeObject<List<JobLog>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(jobList);
+            Assert.AreEqual(jobList[0].Id, 1);
+            Assert.AreEqual(jobList[0].Description, "Test");
+        }
+
+        [Test]
+        public async Task GetBadJobLogList()
+        {
+            var response = await _clientBad.GetAsync("api/job/log/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+        }
+
         public class TestRepositoryMock : IJobRepository
         {
+            public List<DBRecommendationJobLog> GetJobLogById(int id)
+            {
+                return MockJobs.BasicDBJobLogList;
+            }
+
             List<DBRecommendationJob> IJobRepository.GetJobList()
             {
                 return MockJobs.BasicDBJobList;
@@ -74,6 +97,11 @@ namespace RecommendationEngineTests.APITests
 
         public class TestBadRepositoryMock : IJobRepository
         {
+            public List<DBRecommendationJobLog> GetJobLogById(int id)
+            {
+                return MockJobs.BadDBJobLogList;
+            }
+
             List<DBRecommendationJob> IJobRepository.GetJobList()
             {
                 return MockJobs.BadDBJobList;

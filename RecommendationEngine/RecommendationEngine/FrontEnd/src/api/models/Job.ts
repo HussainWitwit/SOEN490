@@ -7,3 +7,10 @@ export interface ConfiguredRecommendationJob {
     status: string,
     timestamp: Date;
 }
+
+export interface JobLog{
+    id: number,
+    time: Date,
+    level: string,
+    description: string;
+}

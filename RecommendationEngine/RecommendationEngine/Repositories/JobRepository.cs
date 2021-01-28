@@ -20,5 +20,11 @@ namespace RecommendationEngine.Repositories
         {
             return _recommendationEngineDb.RecommendationJobs.Include(recJob => recJob.Result).Include(recJob => recJob.Asset).Include(recJob => recJob.Schedule).Include(recJob => recJob.LogsList).ToList();
         }
+
+        public List<DBRecommendationJobLog> GetJobLogById(int id)
+        {
+            return _recommendationEngineDb.RecommendationJobLogs
+                .Where(x => x.RecommendationJob.RecommendationJobId == id).ToList();
+        }
     }
 }

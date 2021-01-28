@@ -1,34 +1,33 @@
 
-import { ConfiguredRecommendationJob } from '../models/Job'
+import { ConfiguredRecommendationJob, JobLog } from '../models/Job'
 
-export const GetRecommendationJobList = async () => {
-    let result;
+export async function GetRecommendationJobList() : Promise<ConfiguredRecommendationJob[]> {
+    let result: ConfiguredRecommendationJob[] = [];
     try {
         let response = await fetch('api/job');
         const jsonResponse = await response.json();
         if (jsonResponse) {
-            result = AssignResponse(jsonResponse)
+            result = jsonResponse;
             return result;
-        }
-        else {
-            return []
         }
     } catch (e) {
         console.log('Error fetching jobs!')
         console.log(e);
     }
+    return result;
 }
 
-const AssignResponse = function (response: any): ConfiguredRecommendationJob[] {
-
-    let result = response.map((element: any) => {
-        return {
-            id: element.id,
-            duration: element.duration,
-            configuredRecommendationTitle: element.configuredRecommendationTitle,
-            status: element.status,
-            timestamp: element.timestamp
-        };
-    });
+export async function GetJobLogList(id: number) : Promise<JobLog[]> {
+    let result: JobLog[] = [];
+    try {
+        await fetch('api/job/log/'+id)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            result = responseJSON;
+        });
+    } catch (e) {
+        console.log('Error fetching job logs!')
+        console.log(e);
+    }
     return result;
 }
