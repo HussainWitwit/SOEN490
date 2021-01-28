@@ -23,18 +23,18 @@ describe('Verifying actions', () => {
     expect(action.closeScheduleDrilldown()).toEqual(expectedAction);
   });
 
+  it('fires an open result drilldown action', () => {
+    const expectedAction = {
+      type: dispatchActionType.OPEN_RESULT_DRILLDOWN,
+    };
+    expect(action.openResultDrilldown()).toEqual(expectedAction);
+  });
+
   it('fires a close result drilldown action', () => {
     const expectedAction = {
       type: dispatchActionType.CLOSE_RESULT_DRILLDOWN,
     };
     expect(action.closeResultDrilldown()).toEqual(expectedAction);
-  });
-
-  it('fires an open result drilldown action', () => {
-    const expectedAction = {
-      type: dispatchActionType.OPEN_ASSET_TREEVIEW,
-    };
-    expect(action.openResultDrilldown()).toEqual(expectedAction);
   });
 
   it('fires a closeall action', () => {
