@@ -35,7 +35,6 @@ export function ConfirmationPopUp(props) {
             open={props.open}
             onClose={handleClose}
         >
-            {console.log(type)}
             <IconButton aria-label="close" id="closeButton" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
