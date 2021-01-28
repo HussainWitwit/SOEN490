@@ -8,8 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import JobLogPopUp from '../JobLogPopUp';
-import RecommendationEngineTable from '../../RecommendationEngineTable/RecommendationEngineTable';
-
+import RecommendationEngineTable from '../../../components/RecommendationEngineTable/RecommendationEngineTable';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('JobLogPopUp component', () => {
