@@ -1,49 +1,41 @@
-/**
- * I tried to implement a similar logic as the AssetEndpoints, but it was quite annoying. 
- * I believe we have to figure out the typescript issue first.
- */
-
 import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
 
-export const GetConfiguredRecommendationList = async () => {
+export async function GetConfiguredRecommendationList() : Promise<ConfiguredRecommendation[]> {
 
-    let configuredRecommendations: ConfiguredRecommendation[];
+    let configuredRecommendations: ConfiguredRecommendation[] = [];
     try {
         let response = await fetch('api/ConfiguredRecommendation');
-        // let response = await fetch(endpoint);
         const jsonResponse = await response.json();
         if (jsonResponse) {
-            configuredRecommendations = mapConfiguredRecommendations(jsonResponse);
+            configuredRecommendations = jsonResponse;
             return configuredRecommendations;
-        }
-        else {
-            return [];
         }
     }
     catch (error) {
-        return [];
+        console.log('Error while fetching configured recommendations!');
+        console.log(error);
     }
+    return configuredRecommendations;
 }
 
-export const GetConfiguredRecommendationById = async (id: number) => {
+export async function GetConfiguredRecommendationById(id: number) : Promise<ConfiguredRecommendation | null> {
     let configuredRecommendations: ConfiguredRecommendation;
     try {
         let response = await fetch('api/ConfiguredRecommendation/' + id);
         const jsonResponse = await response.json();
         if (jsonResponse) {
-            configuredRecommendations = mapConfiguredRecommendation(jsonResponse);
+            configuredRecommendations = jsonResponse;
             return configuredRecommendations;
-        }
-        else {
-            return {};
         }
     }
     catch (error) {
-        return {};
+        console.log('Error while fetching a specific (id) configured recommendation!');
+        console.log(error);
     }
+    return null;
 }
 
-export const DeleteRecommendationById = async (id: number) => {
+export async function DeleteRecommendationById(id: number) : Promise<any> {
     let response;
     try {
         response = await fetch('api/ConfiguredRecommendation/' + id, {
@@ -51,13 +43,14 @@ export const DeleteRecommendationById = async (id: number) => {
             headers: { 'Content-Type': 'application/json' },
         })
     } catch (error) {
+        console.log('Error while deleting a configured recommendation!');
         console.log(error);
     }
     return response;
 };
 
 
-export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
+export async function AddConfiguredRecommendation(recommendation: ConfiguredRecommendation) : Promise<any> {
     let response;
     try {
         response = await fetch('api/ConfiguredRecommendation/', {
@@ -66,15 +59,14 @@ export const AddConfiguredRecommendation = async (recommendation: ConfiguredReco
             body: JSON.stringify(recommendation)
         })
     } catch (error) {
+        console.log('Error while fetching adding a configured recommendation!');
         console.log(error);
     }
     return response;
 };
 
 
-export const EditConfiguredRecommendation = async (recommendation: ConfiguredRecommendation, id: number) => {
-    console.log(recommendation);
-    console.log(id);
+export async function EditConfiguredRecommendation(recommendation: ConfiguredRecommendation, id: number) : Promise<any> {
     let response;
     try {
         response = await fetch('api/ConfiguredRecommendation/' + id, {
@@ -83,6 +75,7 @@ export const EditConfiguredRecommendation = async (recommendation: ConfiguredRec
             body: JSON.stringify(recommendation)
         })
     } catch (error) {
+        console.log('Error while fetching editing a configured recommendation!');
         console.log(error);
     }
     return response;
