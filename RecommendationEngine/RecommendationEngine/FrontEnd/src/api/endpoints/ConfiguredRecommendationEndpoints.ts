@@ -1,5 +1,4 @@
 import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
-import { ErrorList } from "../models/Error";
 
 export async function GetConfiguredRecommendationList() : Promise<ConfiguredRecommendation[]> {
 
