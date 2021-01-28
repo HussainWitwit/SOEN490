@@ -67,11 +67,11 @@ export default function JobLogPopUp(props) {
           <RecommendationEngineTable
             rowsValue={RowsToDisplay}
             data={jobLogs}
-            onClick={() => {}}
+            onClickRow={() => {}}
             columnTitles={headCells}
             dense={true}
             disablePaginator={true}
-            TableTitle = ''
+            tableTitle = ''
           />
         </DialogContent>
         <DialogActions>

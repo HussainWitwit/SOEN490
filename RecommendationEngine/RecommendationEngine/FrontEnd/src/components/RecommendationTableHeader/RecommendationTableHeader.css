@@ -4,14 +4,14 @@
     align-items: left;
 }
 
-#tableHeader{
+#table-header{
     background-color: #FFFFFF;
     color:  #687480;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 15px;
 }
 
-#visuallyHidden {
+#visually-hidden {
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
