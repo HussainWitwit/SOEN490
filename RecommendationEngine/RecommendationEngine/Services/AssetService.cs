@@ -49,9 +49,15 @@ namespace RecommendationEngine.Services
                 AssetComposite clientComposite = GetAssetCompositeFromDBAsset(client);
                 return clientComposite;
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error" , e.Message, "Recommendation Engine");
+                Error error = new Error
+                {
+                    Type = ErrorType.BAD_REQUEST,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the assets."
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
             
         }
@@ -83,8 +89,14 @@ namespace RecommendationEngine.Services
                 List<DBAsset> childDBAssets = await BuildAssets(listOfPlants, false, client);
                 _assetRepository.AddAssetList(childDBAssets);
             }
-            catch(Exception e) {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+            catch(Exception) {
+                Error error = new Error
+                {
+                    Type = ErrorType.BAD_REQUEST,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the assets."
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
         }
 
@@ -230,9 +242,15 @@ namespace RecommendationEngine.Services
 
                 return assets;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                Error error = new Error
+                {
+                    Type = ErrorType.BAD_REQUEST,
+                    ErrorCode = 400,
+                    ErrorMessage = "There was an error fetching the assets."
+                };
+                throw new GlobalException(error, "Recommendation Engine");
             }
         }
     }

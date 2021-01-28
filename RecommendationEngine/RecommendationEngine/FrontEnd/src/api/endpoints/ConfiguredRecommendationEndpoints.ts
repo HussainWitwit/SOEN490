@@ -4,6 +4,7 @@
  */
 
 import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
+import { ErrorList } from "../models/Error";
 
 export const GetConfiguredRecommendationList = async () => {
 
@@ -58,17 +59,16 @@ export const DeleteRecommendationById = async (id: number ) => {
 
   
 export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation) => {
-    let response;
-    try {
-        response = await fetch('api/ConfiguredRecommendation/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(recommendation)
-        })
-    } catch (error) {
-        console.log(error);
+    let response = await fetch('api/ConfiguredRecommendation/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recommendation)
+    });
+    let error = await response.json();
+    if (response.status >= 400 && response.status < 600) {
+        throw mapErrorReponse(error)
     }
-    return response;
+    return response
 };
 
 
@@ -137,5 +137,17 @@ const mapConfiguredRecommendations = function (response: any): ConfiguredRecomme
         };
     })
     return result;
+}
 
+const mapErrorReponse = function (response: any) : ErrorList {
+    return {
+        appName: response.appName,
+        errorList: response.errorList ? response.errorList.map((err: any) => {
+            return {
+                code: err.errorCode,
+                message: err.errorMessage,
+                type: err.type
+            }
+        }) : []
+    };
 }

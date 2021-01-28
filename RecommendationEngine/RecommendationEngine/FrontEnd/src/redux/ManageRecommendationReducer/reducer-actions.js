@@ -172,16 +172,17 @@ export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
 
 /* istanbul ignore next */
 export const addConfiguredRecommendation = async (dispatch, configuredRecommendation) => {
-  const response = await AddConfiguredRecommendation(configuredRecommendation);
-  dispatch({
-    type: dispatchActionType.ADD_CONFIGURED_RECOMMENDATION,
-    payload: response,
-  });
-  if (response.status === 200) {
-    await getConfiguredRecommendationList(dispatch);
-  }
-  else {
-    alert("An error occured when trying to add this recommendation into our server.");
+  try {
+    const response = await AddConfiguredRecommendation(configuredRecommendation);
+    dispatch({
+      type: dispatchActionType.ADD_CONFIGURED_RECOMMENDATION,
+      payload: response,
+    });
+    if (response.status === 200) {
+      await getConfiguredRecommendationList(dispatch);
+    }
+  } catch(err) {
+    throw err
   }
 }
 
