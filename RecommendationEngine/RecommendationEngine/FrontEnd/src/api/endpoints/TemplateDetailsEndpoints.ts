@@ -1,41 +1,19 @@
 import { TemplateDetails } from "../models/TemplateDetails";
 
-export const GetTemplateDetailsInfo = async () => {
-
-    let templates: TemplateDetails[];
-
+export async function GetTemplateDetailsInfo() : Promise<TemplateDetails[]> {
+    let templates: TemplateDetails[] = [];
     try{
         let response = await fetch ('api/RecommendationType');
-
         const jsonResponse = await response.json();
         if(jsonResponse)
         {
-            templates  = setResponse(jsonResponse);
+            templates  = jsonResponse;
             return templates;
-        }
-        else{
-            return [];
         }
     }
     catch (error){
-        return [];
+        console.log("Error while fetchting recommendation types.")
+        console.log(error);
     }
+    return templates;
 }
-
-const setResponse = function(response: any): TemplateDetails[] { 
-
-let result = response.map((obj: any) => {
-    return {
-        templateName : obj.templateName,
-        templateDescription: obj.templateDescription,
-        algorithmName: obj.algorithmName,
-        inputList: obj.inputList ? obj.inputList.map((input: any) => {
-            return {
-                parameterName : input.parameterName,
-                defaultValue: input.defaultValue
-            }
-        }) : [] 
-        };
-})
-return result;
-}  
