@@ -26,6 +26,9 @@ We are building a generic Recommendation Engine that can be applied to systems s
 3. .NET Core 3.1,
 4. Node.js
 
+### API documentation
+https://app.swaggerhub.com/apis/UTF-9/recommendation-engine_power_factors/v1#/
+
 ### Agile Project management
 
 1. Jira
