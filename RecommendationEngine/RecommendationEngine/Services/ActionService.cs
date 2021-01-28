@@ -5,7 +5,6 @@ using Interfaces.Repositories;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Models.Application;
-using Models.Application.Asset;
 using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using Action = Models.Application.Action;
@@ -15,12 +14,10 @@ namespace RecommendationEngine.Services
     public class ActionService : IActionService
     {
         private IActionRepository _actionRepository;
-        private IResultRepository _resultRepository;
 
         public ActionService(IActionRepository actionRepository, IResultRepository resultRepository)
         {
             _actionRepository = actionRepository;
-            _resultRepository = resultRepository;
         }
 
         public ActionGrouping GetActionsByResultId(int id)
@@ -34,6 +31,7 @@ namespace RecommendationEngine.Services
                         Id = action.ActionId,
                         DisplayText = action.DisplayText,
                         Title = action.Title,
+                        recommendedDate = action.Date,
                         recommendedOnDate = action.RecommendationJobResult.Job.Timestamp
 
                      }).ToList();
