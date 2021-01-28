@@ -32,10 +32,10 @@ export default function JobsPage () {
     const [defaultJobList, setDefaultJobList] = useState([]);
 
     const headCells = [
-        { id: 'jobId', label: 'Job ID' },
+        { id: 'id', label: 'Job ID' },
         { id: 'status', label: 'Status' },
         { id: 'timestamp', label: 'Timestamp' },
-        { id: 'jobDuration', label: 'Job Duration' },
+        { id: 'duration', label: 'Job Duration' },
         { id: 'configuredRecommendationTitle', label: 'Configured Recommendation' },
         {id: '', label: ''}
     ];
