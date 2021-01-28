@@ -1,6 +1,6 @@
-#cancelButton{
+#forceRunCancelButton {
     width: 100px;
-    background-color:#FFFFFF;
+    background-color: #FFFFFF;
     color: #C4C4C4;
     padding: 7px 25px 7px 25px;
     text-transform: none;
@@ -11,7 +11,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-#cancelButton:hover{
+#forceRunCancelButton:hover {
     background-color: #F7F7F5;
     box-shadow: none;
     transition: all 500ms;
@@ -19,33 +19,33 @@
     color: #C4C4C4;
 }
 
-#deleteButton {
-    width: 100px;
-    background-color:#FFFFFF;
-    color: #FF0000;
+#forceRunButton {
+    width: 150px;
+    background-color: #FFFFFF;
+    color: #FDB62F;
     padding: 7px 25px 7px 25px;
     text-transform: none;
     margin: 5px 10px 5px 10px;
     box-shadow: none;
     font-size: 18px;
-    border-color: #FF0000;
+    border-color: #FDB62F;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-#deleteButton:hover {
+#forceRunButton:hover {
     box-shadow: none;
     transition: all 500ms;
     color: white;
-    background-color: #FF0000;
+    background-color: #FDB62F;
 }
 
-#buttons{
+#forceRunbuttons {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
 }
 
-.dialog.MuiDialog-paper{
+.dialog.MuiDialog-paper {
     max-height: 300px;
     height: 250px;
     width: 700px;
@@ -54,25 +54,14 @@
     justify-content: center;
 }
 
-#closeButton{
+#forceRunCloseButton {
     position: absolute;
     right: 4px;
     top: 4px;
     color: grey;
 }
 
-#WarningRoundedIcon{
-    color: #FF0000;
-    font-size: xxx-large;
-}
-
-#warning{
-    flex: 10%;
-    padding-left: 30px;
-    padding-top: 30px;
-}
-
-#warningMessage{
+#forceRunWarningMessage {
     flex: 90%;
     display: flex;
     flex-direction: column;
@@ -80,8 +69,7 @@
     align-items: flex-start;
 }
 
-#deleteWarning{
+#forceRunDeleteWarning {
     display: flex;
     flex-direction: row;
 }
-

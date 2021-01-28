@@ -54,6 +54,16 @@ namespace RecommendationScheduler
             }
         }
 
+        public async Task TriggerJobAsync(int scheduleId)
+        {
+            Dictionary<string, int> data = new Dictionary<string, int>
+            {
+                { "recommendationScheduleId", scheduleId }
+            };
+            JobDataMap jobData = new JobDataMap(data);
+            await _scheduler.TriggerJob(new JobKey(scheduleId.ToString()), jobData);
+        }
+
         private IScheduleBuilder ScheduleBuilder(DBRecommendationSchedule schedule)
         {
             switch (schedule.Granularity)
