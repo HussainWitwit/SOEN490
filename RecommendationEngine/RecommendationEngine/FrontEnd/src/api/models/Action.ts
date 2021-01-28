@@ -2,8 +2,11 @@ export interface Action {
     id: number,
     title: string,
     displayText: string,
-    resultTimestamp: string,
-    configuredRecommendationId: number,
-    resultId: number,
-    timestamp: Date
+    recommendedOnDate: Date
+}
+
+export interface ActionGrouping {
+    recommendationName: string,
+    assetNameList: String[],
+    actions: Action[]
 }

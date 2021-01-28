@@ -38,7 +38,7 @@ export function RightPanelDrawer ({
     Actions: {
       title: 'Actions',
       closeHandler: closeResultDrilldown,
-      component: (<ActionDrawer actions={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+      component: (<ActionDrawer actionGrouping={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
     }
   }
 

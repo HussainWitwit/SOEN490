@@ -34,7 +34,7 @@ namespace RecommendationEngine.Services
                         Id = action.ActionId,
                         DisplayText = action.DisplayText,
                         Title = action.Title,
-                        recommendedDate = action.RecommendationJobResult.Job.Timestamp
+                        recommendedOnDate = action.RecommendationJobResult.Job.Timestamp
 
                      }).ToList();
 

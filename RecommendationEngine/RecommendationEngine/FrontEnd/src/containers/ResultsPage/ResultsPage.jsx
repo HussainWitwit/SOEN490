@@ -91,8 +91,9 @@ export function ResultsPage (props) {
                 rowsValue={RowsToDisplay}
                 data={resultList}
                 tableTitle={"Recommendation Job Results"}
-                onClickRow={() => { }}
+                onClickRow={openResultDrilldown}
                 columnTitles={headCells}
+                isClickable= {true}
             />
         </div>
     );
