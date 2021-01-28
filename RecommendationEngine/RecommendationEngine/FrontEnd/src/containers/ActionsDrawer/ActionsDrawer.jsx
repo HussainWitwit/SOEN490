@@ -1,13 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import './ActionsDrawer.css';
 import Grid from '@material-ui/core/Grid';
 
-export function ActionDrawer () {
+export default function ActionDrawer (props) {
 
-    const [open, setOpen] = React.useState(false);
+    const { actionsObj } = props; //TODO: change this to actions
+
     // Animation style
     const animation = useSpring({
         opacity: 1,
@@ -15,22 +14,43 @@ export function ActionDrawer () {
         from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
     });
 
+    const assets = [
+        'Asset 1', 'Asset 2', 'Asset 3'
+    ]
 
     const actions = [
         {
-            title: 'Random Action',
+            title: 'Test 1',
             date: 'Monday, October 21st, 2020',
             displayText: 'Washing',
             published: '2 days ago'
         },
         {
-            title: 'Random Action',
+            title: 'test redux small refactor',
             date: 'Monday, October 21st, 2020',
             displayText: 'Washing',
             published: '2 days ago'
         },
         {
-            title: 'Random Action',
+            title: 'second redux refactor test',
+            date: 'Monday, October 21st, 2020',
+            displayText: 'Washing',
+            published: '2 days ago'
+        },
+        {
+            title: 'Second x refactor test',
+            date: 'Monday, October 21st, 2020',
+            displayText: 'Washing',
+            published: '2 days ago'
+        },
+        {
+            title: 'AlgoDemo',
+            date: 'Monday, October 21st, 2020',
+            displayText: 'Washing',
+            published: '2 days ago'
+        },
+        {
+            title: 'confirmation test',
             date: 'Monday, October 21st, 2020',
             displayText: 'Washing',
             published: '2 days ago'
@@ -50,7 +70,10 @@ export function ActionDrawer () {
                     <Grid id='info-container' item small={12}>
                         <p id='recommendation-title'>Recommendation Title</p>
                         <p id='assets-title'>Asset(s)</p>
-                        <p id='aseet-names'>Asset 1, Asset 2, etc</p>
+                        {assets.map((asset, index) => (
+                            <p key={index}>{asset}</p>
+                        ))}
+                        <p id='actions-title'>Action(s)</p>
                     </Grid>
                     <Grid className='actions-container' item>
                         {actions.map((action, index) => (
@@ -63,15 +86,14 @@ export function ActionDrawer () {
                                 <p id='suggestion-date'>Suggested 2 days ago</p>
                             </div>
                         ))}
-                        <p id='num-actions'>Total actions suggested: {actions.length}</p>
-
                     </Grid>
+                    <div id='num-actions'>
+                        <p>Total actions suggested: {actions.length}</p>
+                    </div>
                 </Grid>
-
             </div>
-
         </animated.div>
     )
 }
 
-export default connect(null, mapDispatchToProps)(ActionDrawer);
+// export default connect(null, mapDispatchToProps)(ActionDrawer);

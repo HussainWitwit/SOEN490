@@ -26,6 +26,7 @@ export const openScheduleDrilldown = async (dispatch, id) => {
   });
 };
 
+/* istanbul ignore next */
 export const openResultDrilldown = async (dispatch, id) => {
   const response = await GetActionsByResultId(id);
   dispatch({

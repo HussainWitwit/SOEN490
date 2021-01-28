@@ -1,7 +1,3 @@
-.actions-drawer-content {
-    /* background-color: red; */
-}
-
 #info-container {
     width: 100%;
     width:100%; 
@@ -18,6 +14,11 @@
     font-weight: bold;
 }
 
+#actions-title {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
 .actions-container {
     width:100%; 
     display: flex;
@@ -26,8 +27,12 @@
     align-items: center;
 }
 
-.actions-container#num-actions {
-    float: right;
+#num-actions {
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 5%;
 }
 
 #action-item-container {
@@ -35,6 +40,7 @@
     border-radius: 10px;
     padding: 5%;
     margin-bottom: 3%;
+    width:90%;
 }
 
 #action-title {
@@ -58,7 +64,6 @@
     font-size: 90%;
     margin-top: 2%;
     margin-bottom: 2%;
-
 }
 
 #suggestion-date {

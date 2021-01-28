@@ -97,24 +97,24 @@ export const RightPanelReducer = function (
     case type.CLOSE_ASSET_TREEVIEW:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.name === DRILLDOWN_NAME),
-        selectedTabIndex: 0,
+        isOpen: state.tabs.some((e) => (e.name === DRILLDOWN_NAME || e.name === RESULT_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
         tabs: state.tabs.filter((tab) => tab.name !== ASSET_TREEVIEW_NAME),
       };
 
     case type.CLOSE_SCHEDULE_DRILLDOWN:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.name === ASSET_TREEVIEW_NAME),
-        selectedTabIndex: 0,
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === RESULT_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
         tabs: state.tabs.filter((tab) => tab.name !== DRILLDOWN_NAME),
       };
 
     case type.CLOSE_RESULT_DRILLDOWN:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.name === ASSET_TREEVIEW_NAME),
-        selectedTabIndex: 0,
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === DRILLDOWN_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
         tabs: state.tabs.filter((tab) => tab.name !== RESULT_NAME),
       };
 
@@ -122,11 +122,12 @@ export const RightPanelReducer = function (
       return rightPanelInitialState;
 
     // Special case: the ChangeTabIndex gets called after a Close since we're closing the item. 
-    // We then need to handle the ground case when we have 2 tabs and closing the second
+    // We then need to handle the ground case when we have 2/3 tabs and closing the second/third
     case type.CHANGE_TAB_INDEX:
       return {
         ...state,
-        selectedTabIndex: state.tabs.length > 1 ? action.payload.selectedTabIndex : 0
+        selectedTabIndex: state.tabs.length === 3 ? action.payload.selectedTabIndex : state.tabs.length === 2 ? (action.payload.selectedTabIndex - 1) : 0 // kinda works
+        // selectedTabIndex: state.tabs.length > 1 ? action.payload.selectedTabIndex : 0
       }
     default:
       return state;

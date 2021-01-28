@@ -98,10 +98,10 @@ export default function RecommendationEngineTable (props) {
     </div>
   );
 }
-  /* istanbul ignore next */
+/* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   TableTitle: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   columnTitles: PropTypes.array.isRequired,
