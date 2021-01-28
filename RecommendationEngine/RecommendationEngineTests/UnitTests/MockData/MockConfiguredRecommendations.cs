@@ -196,7 +196,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
 
                 return new ConfiguredRecommendation
                 {
-                    Name = "This is bad",
+                    Name = "",
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
