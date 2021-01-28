@@ -7,8 +7,8 @@ using Models.Application;
 using Models.DB;
 using Moq;
 using NUnit.Framework;
-using RecommendationEngine.ConfiguredRecommendationServices;
 using RecommendationEngine.ExceptionHandler;
+using RecommendationEngine.Services;
 using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests.UnitTests

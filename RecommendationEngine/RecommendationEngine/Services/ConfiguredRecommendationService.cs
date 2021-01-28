@@ -11,7 +11,7 @@ using RecommendationEngine.ExceptionHandler;
 using System;
 using Microsoft.AspNetCore.Http;
 
-namespace RecommendationEngine.ConfiguredRecommendationServices
+namespace RecommendationEngine.Services
 {
     public class ConfiguredRecommendationService : IConfiguredRecommendationService
     {
@@ -68,9 +68,9 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 DisplayText = recommendationType.DisplayText,
                 Granularity = configuredRecommendation.Granularity,
                 PreferedScenario = configuredRecommendation.PreferredScenario,
-                CreatedOn = configuredRecommendation.CreatedOn,
+                CreatedOn = (configuredRecommendation.CreatedOn).ToLocalTime(),
                 ModifiedBy = configuredRecommendation.CreatedBy,
-                RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
+                RecurrenceDatetime = (configuredRecommendation.RecurrenceDatetime).ToLocalTime(),
                 RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
                 RecommendationType = recommendationType
             };
@@ -147,7 +147,7 @@ namespace RecommendationEngine.ConfiguredRecommendationServices
                 RecurrenceDatetime = schedule.RecurrenceDatetime,
                 RecurrenceDayOfWeek = schedule.RecurrenceDayOfWeek,
                 Granularity = schedule.Granularity,
-                LastJobs = schedule.JobsList.TakeLast(5).Select(x => new ConfiguredRecommendationJob
+                LastJobs = schedule.JobsList.TakeLast(5).Select(x => new Job
                 {
                     Id = x.RecommendationJobId,
                     Status = x.Status,

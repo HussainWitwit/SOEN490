@@ -11,5 +11,6 @@ namespace RecommendationEngine.ExceptionHandler
         public const string BAD_REQUEST = "BAD REQUEST";
         public const string VALIDATION = "VALIDATION";
         public const string API_ERROR = "API";
+        public const string INTERNAL_SERVER = "INTERNAL SERVER ERROR";
     }
 }

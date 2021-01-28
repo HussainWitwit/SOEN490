@@ -53,13 +53,11 @@ describe('AssetTreeView component', () => {
         expect(component).toHaveLength(1);
     })
 
-        +
-
-        it("It finds the AssetTree component", () => {
-            const output = shallow(<AssetTree />);
-            let component1 = output.find(SearchComboBox);
-            let component2 = output.find(TreeView);
-            expect(component1).toHaveLength(1);
-            expect(component2).toHaveLength(1);
-        })
+    it("It finds the AssetTree component", () => {
+        const output = shallow(<AssetTree />);
+        let component1 = output.find(SearchComboBox);
+        let component2 = output.find(TreeView);
+        expect(component1).toHaveLength(1);
+        expect(component2).toHaveLength(1);
+    })
 });

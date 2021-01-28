@@ -103,7 +103,7 @@ export function AddRecommendationDialog (props) {
       }, { isEditing: isEditing, id: id })
       closeDialog()
     } catch(err) {
-      console.error("The following errors have been found!\n" + err.errorList.map(error => {return ('- ' + error.message + '\n')}))
+      console.error("The following errors have been found!\n" + err.errorList.map(error => {return ('- ' + error.errorMessage + '\n')}))
     }
   }
 

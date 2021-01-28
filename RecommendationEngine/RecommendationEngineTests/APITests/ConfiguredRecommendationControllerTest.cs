@@ -13,7 +13,7 @@ using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using RecommendationEngine;
-using RecommendationEngine.ConfiguredRecommendationServices;
+using RecommendationEngine.Services;
 using RecommendationEngineTests.UnitTests.MockData;
 
 namespace RecommendationEngineTests.APITests

@@ -10,7 +10,7 @@ using Interfaces.Services.ExternalApi;
 
 namespace RecommendationEngineTests
 {
-    public class AssetUnitTests
+    public class AssetServiceTests
     {
         private Mock<IAssetRepository> _assetRepoMock;
         private Mock<IAssetTypeRepository> _assetTypeRepoMock;
