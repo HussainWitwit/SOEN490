@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import './ActionDrawer.css';
+import { dateFormat } from '../../utilities/DateTimeUtilities';
 import Grid from '@material-ui/core/Grid';
 
 export default function ActionDrawer (props) {
@@ -21,22 +22,23 @@ export default function ActionDrawer (props) {
             <div className='actions-drawer-content-container'>
                 <Grid className='actions-drawer-content' container>
                     <Grid id='info-container' item small={12}>
-                        <p id='recommendation-title'>{actionGrouping ? actionGrouping.recommendationName : ''}</p>
-                        <p id='assets-title'>Asset(s)</p>
+                        <p id='assets-title'>Recommendation:</p>
+                        <p >{actionGrouping ? actionGrouping.recommendationName : ''}</p>
+                        <p id='assets-title'>Asset(s):</p>
                         {assets.map((asset, index) => (
-                            <p key={index}>{asset}</p>
+                            <p id='asset-names' key={index}>{asset}</p>
                         ))}
-                        <p id='actions-title'>Action(s)</p>
+                        <p id='actions-title'>Action(s):</p>
                     </Grid>
                     <Grid className='actions-container' item>
                         {actions.map((action, index) => (
                             <div id='action-item-container' key={index}>
                                 <p id='action-title'>{action.title}</p>
-                                <p id='action-date'>{action.date}</p>
+                                <p id='action-date'>{dateFormat(action.recommendedDate)}</p>
                                 <div id='display-text-container'>
                                     {action.displayText}
                                 </div>
-                                <p id='suggestion-date'>Suggested on {action.recommendedOnDate}</p>
+                                <p id='suggestion-date'>Suggested on {dateFormat(action.recommendedOnDate)}</p>
                             </div>
                         ))}
                     </Grid>

@@ -14,6 +14,10 @@
     font-weight: bold;
 }
 
+#asset-names {
+    color: #8C8C8C;
+}
+
 #actions-title {
     font-weight: bold;
     margin-bottom: 0;
@@ -51,7 +55,7 @@
 #action-date {
     color: #8C8C8C;
     margin-bottom: 1%;
-    font-size: 70%;
+    font-size: 95%;
 }
 
 #display-text-container {
@@ -62,13 +66,13 @@
     padding: 1%;
     width:fit-content;
     font-size: 90%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
 }
 
 #suggestion-date {
     float: right;
     color: #8C8C8C;
     margin-bottom: 0;
-    font-size: 70%;
+    font-size: 80%;
 }

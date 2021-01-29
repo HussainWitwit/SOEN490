@@ -50,6 +50,7 @@ export const RightPanelReducer = function (
         tabs: [...state.tabs, { name: ASSET_TREEVIEW_NAME }],
       };
     }
+
     case type.OPEN_SCHEDULE_DRILLDOWN: {
       if (state.tabs.some((e) => e.name === SCHEDULE_DRILLDOWN_NAME))
         return {
@@ -71,6 +72,32 @@ export const RightPanelReducer = function (
         ],
       };
     }
+
+    case type.UPDATE_SCHEDULE_DRILLDOWN: {
+      if (action.payload.action === 'forceRun')
+        return {
+          ...state,
+          tabs: state.tabs.map((e) =>
+            e.name === SCHEDULE_DRILLDOWN_NAME
+              ? {
+                ...e,
+                response: {
+                  ...e.response,
+                  lastJobs: [
+                    ...e.response.lastJobs,
+                    {
+                      id: 'N/A',
+                      status: 'Running',
+                      timestamp: Date.now(),
+                    },
+                  ].slice(1, 6),
+                },
+              }
+              : e
+          ),
+        };
+    }
+
     case type.OPEN_RESULT_DRILLDOWN: {
       if (state.tabs.some((e) => e.name === RESULT_DRILLDOWN_NAME))
         return {
@@ -128,6 +155,7 @@ export const RightPanelReducer = function (
         ...state,
         selectedTabIndex: (action.payload.selectedTabIndex) % state.tabs.length
       }
+
     default:
       return state;
   }

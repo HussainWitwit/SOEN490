@@ -11,7 +11,7 @@ describe('ActionDrawer component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<ActionDrawer />);
+    const output = shallow(<ActionDrawer assets={[]} actions={[]} />);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
@@ -23,5 +23,10 @@ describe('ActionDrawer component', () => {
         let grids = output.find(Grid);
         expect(grids).toHaveLength(3);
     });
+
+    it('Finds all the paragraphs', () => {
+        let p = output.find('p');
+        expect(p).toHaveLength(5);
+    })
 
 })

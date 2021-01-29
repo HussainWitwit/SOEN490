@@ -198,4 +198,30 @@ describe('Right panel reducer', () => {
       selectedTabIndex: 1,
     });
   });
+
+  it('should handle UPDATE_SCHEDULE_DRILLDOWN', () => {
+    let innerState = RightPanelReducer(
+      {
+        ...state,
+        isOpen: true,
+        tabs: [
+          {
+            name: DRILLDOWN_NAME,
+            response: { lastJobs: [null, null, null, null, null] },
+          },
+          { name: ASSET_TREEVIEW_NAME },
+        ],
+      },
+      {
+        type: dispatchActionType.UPDATE_SCHEDULE_DRILLDOWN,
+        payload: {
+          action: 'forceRun',
+        },
+      }
+    )
+    expect(innerState.tabs[0].response.lastJobs[4].status
+    ).toEqual('Running');
+    expect(innerState.tabs[0].response.lastJobs[4].id
+      ).toEqual('N/A');
+  });
 });
