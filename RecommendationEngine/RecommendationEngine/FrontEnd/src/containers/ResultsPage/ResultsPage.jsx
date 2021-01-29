@@ -5,24 +5,26 @@ import { Grid, TableCell } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
+import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
+import { connect } from 'react-redux';
 
 /* istanbul ignore next */
 export const RowsToDisplay = (element) => (
     <React.Fragment>
         <TableCell />
         <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.id}</TableCell>
-        <TableCell id="table-body" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.netSaving.toFixed(2)}$</TableCell>
-        <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{element.returnOnInvestment.toFixed(2)}%</TableCell>
-        <TableCell id="table-body" style={{ color: 'red' }}>{element.costOfAction.toFixed(2)}$</TableCell>
-        <TableCell id="table-body" style={{ color: 'red' }}>{element.costOfInaction.toFixed(2)}$</TableCell>
+        <TableCell id="table-body" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.netSaving.toFixed(2)).toLocaleString()}$</TableCell>
+        <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.returnOnInvestment.toFixed(2)).toLocaleString()}%</TableCell>
+        <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfAction.toFixed(2)).toLocaleString()}$</TableCell>
+        <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfInaction.toFixed(2)).toLocaleString()}$</TableCell>
     </React.Fragment>
 );
 
-export default function ResultsPage () {
+export function ResultsPage (props) {
+    const { openResultDrilldown } = props;
 
-    const [recommendationResultList, setRecommendationResultList] = useState([])
-    const [resultList, setResultList] = useState(recommendationResultList);
-    const [defaultResultList, setDefaultResultList] = useState(recommendationResultList);
+    const [resultList, setResultList] = useState([]);
+    const [defaultResultList, setDefaultResultList] = useState([]);
 
     /* istanbul ignore next */
     const headCells = [
@@ -36,7 +38,6 @@ export default function ResultsPage () {
     /* istanbul ignore next */
     const getResultList = async () => {
         let response = await GetRecommendationResultList();
-        setRecommendationResultList(response);
         setDefaultResultList(response);
         setResultList(response);
     }
@@ -88,9 +89,12 @@ export default function ResultsPage () {
                 rowsValue={RowsToDisplay}
                 data={resultList}
                 tableTitle={"Recommendation Job Results"}
-                onClickRow={() => { }}
+                onClickRow={openResultDrilldown}
                 columnTitles={headCells}
+                isClickable={true}
             />
         </div>
     );
 }
+
+export default connect(null, mapDispatchToProps)(ResultsPage);

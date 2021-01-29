@@ -13,11 +13,11 @@ import { EnhancedTableHead } from '../../components/RecommendationTableHeader/Re
 import './RecommendationEngineTable.css';
 
 
-export function getSortingComparison(orderType, orderColumnTitle){
-  return orderType === "desc"? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
+export function getSortingComparison (orderType, orderColumnTitle) {
+  return orderType === "desc" ? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
 }
 
-export function sortingComparison (firstObj, secondObj, orderColumnTitle){
+export function sortingComparison (firstObj, secondObj, orderColumnTitle) {
   if (secondObj[orderColumnTitle] < firstObj[orderColumnTitle]) {
     return -1;
   }
@@ -27,23 +27,24 @@ export function sortingComparison (firstObj, secondObj, orderColumnTitle){
   return 0;
 }
 
-export function tableSort (array, comparator){
-  if(array != null || array != undefined){
-  const rowElements = array.map((element, index) => [element, index]);
-  rowElements.sort((firstObj, secondObj) => {
-    const order = comparator(firstObj[0], secondObj[0]);
-    if (order !== 0){
-     return order;
-    }else{
-    return firstObj[1] - secondObj[1];
-    }
-  });
-  return rowElements.map((element) => element[0]);
-}}
+export function tableSort (array, comparator) {
+  if (array != null || array != undefined) {
+    const rowElements = array.map((element, index) => [element, index]);
+    rowElements.sort((firstObj, secondObj) => {
+      const order = comparator(firstObj[0], secondObj[0]);
+      if (order !== 0) {
+        return order;
+      } else {
+        return firstObj[1] - secondObj[1];
+      }
+    });
+    return rowElements.map((element) => element[0]);
+  }
+}
 
-  export default function RecommendationEngineTable (props) {
+export default function RecommendationEngineTable (props) {
 
-  const {rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
+  const { rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
 
   const [orderType, setOrderType] = React.useState("asc");
   const [orderColumnTitle, setOrderColumnTitle] = React.useState("");
@@ -74,10 +75,10 @@ export function tableSort (array, comparator){
   return (
     <div id="root">
       <Paper id="paper">
-        
-        {(!tableTitle && denseAttribute)? '': <Toolbar id="toolbar">
+
+        {(!tableTitle && denseAttribute) ? '' : <Toolbar id="toolbar">
           <h6 className="tool-bar-title" variant="h6" data-testid="tableTitle" component="div">{tableTitle}</h6>
-          {props.dense?'':<FormControlLabel
+          {props.dense ? '' : <FormControlLabel
             id="liteSwitch"
             control={
               <Switch checked={denseAttribute} onChange={handleChangeDense} color="default" inputProps={{ 'aria-label': 'checkbox with default color' }} />
@@ -101,38 +102,37 @@ export function tableSort (array, comparator){
               handleSortingChange={handleSortingChange}
             />
 
-            <TableBody 
-            id={isClickable?"table-body clickable":"table-body"}
-             data-testid="table-body-cypress">
+            <TableBody
+              id={isClickable ? "table-body clickable" : "table-body"}
+              data-testid="table-body-cypress">
 
-              {data && data.length>0 &&
-              (disablePaginator? tableSort(data, getSortingComparison(orderType, orderColumnTitle)) 
-              :tableSort(data, getSortingComparison(orderType, orderColumnTitle))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
-              .map((element) => {
-                return (
-                  <TableRow
-                    key={element.id}
-                    id="table-body"
-                    hover = {isClickable}
-                    selected={isClickable && isSelected === element.id}
-                    onClick={() => {
-                      onClickRow(element.id)
-                      setIsSelected(element.id)
-                    }}
-                  >
-                    {rowsValue(element)}
-                  </TableRow>
-                )
-              })}
+              {data && data.length > 0 &&
+                (disablePaginator ? tableSort(data, getSortingComparison(orderType, orderColumnTitle))
+                  : tableSort(data, getSortingComparison(orderType, orderColumnTitle))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
+                  .map((element) => {
+                    return (
+                      <TableRow
+                        key={element.id}
+                        id="table-body"
+                        hover={isClickable}
+                        selected={isClickable && isSelected === element.id}
+                        onClick={() => {
+                          onClickRow(element.id)
+                          setIsSelected(element.id)
+                        }}
+                      >
+                        {rowsValue(element)}
+                      </TableRow>
+                    )
+                  })}
             </TableBody>
           </Table>
         </TableContainer>
-        {disablePaginator?'':<TablePagination
+        {disablePaginator ? '' : <TablePagination
           id="pagination"
           component="div"
           rowsPerPageOptions={[10, 25, 50, 100]}
-          component="div"
           count={data ? data.length : 1}
           rowsPerPage={rowsPerPage}
           page={page}
@@ -143,7 +143,7 @@ export function tableSort (array, comparator){
     </div>
   );
 }
-  /* istanbul ignore next */
+/* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,

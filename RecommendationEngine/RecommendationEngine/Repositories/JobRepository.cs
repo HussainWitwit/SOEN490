@@ -11,7 +11,7 @@ namespace RecommendationEngine.Repositories
     {
         private RecommendationEngineDBContext _recommendationEngineDb;
 
-    public JobRepository(RecommendationEngineDBContext recommendationEngineDb)
+        public JobRepository(RecommendationEngineDBContext recommendationEngineDb)
         {
             _recommendationEngineDb = recommendationEngineDb;
         }

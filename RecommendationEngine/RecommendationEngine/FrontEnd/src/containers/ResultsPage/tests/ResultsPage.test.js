@@ -4,7 +4,9 @@ import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import ResultsPage from '../ResultsPage';
+import { ResultsPage } from '../ResultsPage';
+import { store } from '../../../redux/store';
+import { Provider } from 'react-redux';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -12,11 +14,11 @@ describe.only('ResultsPage component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<ResultsPage />);
+    const output = shallow(<ResultsPage store={store} />);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<ResultsPage />, div);
+        ReactDOM.render(<Provider store={store}><ResultsPage store={store} /></Provider>, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 

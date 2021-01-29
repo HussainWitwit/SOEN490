@@ -6,6 +6,7 @@ using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RecommendationEngine.Services
 {
@@ -23,13 +24,7 @@ namespace RecommendationEngine.Services
         {
             try
             {
-                List<DBRecommendationJobResult> dbResults = _resultRepository.GetResultList();
-
-                List<Result> results = new List<Result>();
-
-                foreach (DBRecommendationJobResult dbResult in dbResults)
-                {
-                    results.Add(
+                return _resultRepository.GetResultList().Select(dbResult =>
                         new Result
                         {
                             Id = dbResult.RecommendationJobResultId,
@@ -39,9 +34,7 @@ namespace RecommendationEngine.Services
                             ReturnOnInvestment = dbResult.ReturnOnInvestment,
                             ConfiguredRecommendationId = dbResult.Job.Schedule.RecommendationScheduleId,
                             JobId = dbResult.Job.RecommendationJobId
-                        });
-                }
-                return results;
+                        }).ToList();
             }
             catch(Exception e)
             {
