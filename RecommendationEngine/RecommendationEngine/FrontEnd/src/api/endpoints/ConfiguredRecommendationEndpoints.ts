@@ -50,14 +50,19 @@ export async function DeleteRecommendationById(id: number) : Promise<any> {
 };
 
 export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation): Promise<any> => {
-    let response = await fetch('api/ConfiguredRecommendation/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(recommendation)
-    });
-    let error = await response.json();
-    if (response.status >= 400 && response.status < 600) {
-        throw {appName: error.appName, errorList: error.errorList}
+    let response;
+    try {
+        response = await fetch('api/ConfiguredRecommendation/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(recommendation)
+        })
+        if (response.status >= 400 && response.status < 600) {
+            let error = await response.json();
+            throw {appName: error.appName, errorList: error.errorList}
+        }
+    } catch(err) {
+        console.log(err)
     }
     return response
 };
