@@ -37,6 +37,15 @@ export const openResultDrilldown = async (dispatch, id) => {
   })
 }
 
+export const updateScheduleDrilldown = (action) => {
+  return {
+    type: dispatchActionType.UPDATE_SCHEDULE_DRILLDOWN,
+    payload: {
+      action: action
+    }
+  };
+};
+
 export const closeAssetTreeview = () => {
   return {
     type: dispatchActionType.CLOSE_ASSET_TREEVIEW,
@@ -89,6 +98,7 @@ export const mapDispatchToProps = (dispatch) => {
     openAssetTreeview: () => dispatch(openAssetTreeview()),
     openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
     openResultDrilldown: (id) => openResultDrilldown(dispatch, id),
+    updateScheduleDrilldown: (action) => dispatch(updateScheduleDrilldown(action)),
     closeAssetTreeview: () => dispatch(closeAssetTreeview()),
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
     closeResultDrilldown: () => dispatch(closeResultDrilldown()),
@@ -98,9 +108,10 @@ export const mapDispatchToProps = (dispatch) => {
 };
 
 /* istanbul ignore next */
-export const mapDispatchDeletePopUpActions = (dispatch) => {
+export const mapDispatchPopUpActions = (dispatch) => {
   return {
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
+    updateScheduleDrilldown: (action) => dispatch(updateScheduleDrilldown(action)),
     deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id)
   }
 }
