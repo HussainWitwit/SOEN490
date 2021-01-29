@@ -62,7 +62,7 @@ export const AddConfiguredRecommendation = async (recommendation: ConfiguredReco
             throw {appName: error.appName, errorList: error.errorList}
         }
     } catch(err) {
-        console.log(err)
+        throw err
     }
     return response
 };
