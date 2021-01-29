@@ -206,7 +206,7 @@ describe('Right panel reducer', () => {
         isOpen: true,
         tabs: [
           {
-            name: DRILLDOWN_NAME,
+            name: SCHEDULE_DRILLDOWN_NAME,
             response: { lastJobs: [null, null, null, null, null] },
           },
           { name: ASSET_TREEVIEW_NAME },

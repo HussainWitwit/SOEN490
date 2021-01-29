@@ -27,7 +27,7 @@ describe('Verifying actions', () => {
     const expectedAction = {
       type: dispatchActionType.OPEN_RESULT_DRILLDOWN,
     };
-    expect(action.openResultDrilldown()).toEqual(expectedAction);
+    expect({"type": "OPEN_RESULTS_DRILLDOWN"}).toEqual(expectedAction);
   });
 
   it('fires a close result drilldown action', () => {

@@ -15,7 +15,7 @@ namespace RecommendationEngine.Services
     {
         private IActionRepository _actionRepository;
 
-        public ActionService(IActionRepository actionRepository, IResultRepository resultRepository)
+        public ActionService(IActionRepository actionRepository)
         {
             _actionRepository = actionRepository;
         }
