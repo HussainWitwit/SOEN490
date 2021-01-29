@@ -40,6 +40,7 @@
 }
 
 #action-item-container {
+    background-color: #f8e5a8;
     border: solid 1px #D9D9D9;
     border-radius: 10px;
     padding: 5%;
@@ -59,7 +60,7 @@
 }
 
 #display-text-container {
-    background-color: #FFE38A;
+    background-color: #f8db7a;
     border: solid 2px #FFCE31;
     border-radius: 5px;
     display: flex;
