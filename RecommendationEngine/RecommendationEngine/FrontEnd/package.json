@@ -64,8 +64,6 @@
       "!**/src/redux/SharedReducer/**",
       "!**/src/redux/ApiReducer/**",
       "!**/src/containers/Dashboard/**",
-      "!**/src/containers/JobsPage/**",
-      "!**/src/containers/ResultsPage/**",
       "!**/src/containers/Notifications/**",
       "!**/src/containers/Settings/**",
       "!**/src/containers/WorkOrders/**",

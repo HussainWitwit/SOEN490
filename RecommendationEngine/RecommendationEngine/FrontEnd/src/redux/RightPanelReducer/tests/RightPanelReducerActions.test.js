@@ -23,6 +23,20 @@ describe('Verifying actions', () => {
     expect(action.closeScheduleDrilldown()).toEqual(expectedAction);
   });
 
+  it('fires an open result drilldown action', () => {
+    const expectedAction = {
+      type: dispatchActionType.OPEN_RESULT_DRILLDOWN,
+    };
+    expect({"type": "OPEN_RESULTS_DRILLDOWN"}).toEqual(expectedAction);
+  });
+
+  it('fires a close result drilldown action', () => {
+    const expectedAction = {
+      type: dispatchActionType.CLOSE_RESULT_DRILLDOWN,
+    };
+    expect(action.closeResultDrilldown()).toEqual(expectedAction);
+  });
+
   it('fires a closeall action', () => {
     const expectedAction = {
       type: dispatchActionType.CLOSE_ALL,
