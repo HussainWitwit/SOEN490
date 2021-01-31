@@ -109,7 +109,7 @@
     "build": "react-scripts build",
     "test": "jest -u",
     "test:cypress": "cypress open",
-    "cypress:ci": "cypress run --config video=false",
+    "cypress:ci": "cypress run --config video=true",
     "test:ci": "start-server-and-test start http://localhost:3000 cypress:ci",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/",
