@@ -1,7 +1,7 @@
 // describe('Manage Recommendation drawer Dialog', () => {
 
 //     beforeEach(() => {
-//         cy.visit('/');
+//         cy.visit('/recommendations-manage');
 //     })
 //     it("Checks if the manage recommendation table opens", () => {
 //         cy.get(':nth-child(1) > .primaryKey').click()
@@ -21,7 +21,7 @@
 //         cy.wait(500)
 //         cy.get('.recommendationType > .value-title').should('exist')
 //         cy.wait(500)
-//         cy.get('.assets > :nth-child(3)').should('exist')
+//         cy.get(':nth-child(3) > .assets').should('exist')
 //         cy.wait(500)
 //         cy.get('.inputs').should('exist')
 //         cy.wait(500)
@@ -95,11 +95,15 @@
 //         cy.wait(500)
 //         cy.get('.delete-button').click()
 //         cy.wait(500)
-//         cy.get('#dialogPopUp').should('exist')
+//         cy.get('.MuiDialog-container > .MuiPaper-root').should('exist')
 //         cy.wait(500)
 //         cy.get('#closeButton').should('exist')
 //         cy.wait(500)
-//         cy.get('#alertMessage').should('exist')
+//         cy.get('#WarningRoundedIcon > path').should('exist')
+//         cy.wait(500)
+//         cy.get('.MuiDialogTitle-root').should('exist')
+//         cy.wait(500)
+//         cy.get('.MuiDialogContent-root > .MuiTypography-root').should('exist')
 //         cy.wait(500)
 //         cy.get('#cancelButton').should('exist')
 //         cy.wait(500)
