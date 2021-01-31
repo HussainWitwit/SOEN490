@@ -33,4 +33,47 @@ describe("Job Page", () => {
         cy.get('#pagination > .MuiToolbar-root').should('be.visible')
         cy.get('.MuiTablePagination-actions').should('be.visible')
     })
+    
+    it('Sorts by jobid', () => {
+        cy.get(':nth-child(2) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(2) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by status', () => {
+        cy.get('.custom-status-header').should('exist')
+        cy.wait(500)
+        cy.get('.custom-status-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by timestamp', () => {
+        cy.get(':nth-child(4) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(4) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+    
+    it('Sorts by job duration', () => {
+        cy.get(':nth-child(5) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(5) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by configured recommendation', () => {
+        cy.get(':nth-child(6) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(6) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
 })

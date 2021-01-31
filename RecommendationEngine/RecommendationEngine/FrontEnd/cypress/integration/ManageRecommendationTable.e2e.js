@@ -40,4 +40,40 @@ describe("Manage Recommendation Table", () => {
         cy.get('#pagination > .MuiToolbar-root').should('be.visible')
         cy.get('.MuiTablePagination-actions').should('be.visible')
     })
+
+    it('Sorts by title', () => {
+        cy.get(':nth-child(2) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(2) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by type', () => {
+        cy.get(':nth-child(3) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(3) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by granularity', () => {
+        cy.get(':nth-child(4) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(4) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+    
+    it('Sorts by created on', () => {
+        cy.get(':nth-child(5) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(5) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
 })
