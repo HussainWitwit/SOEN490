@@ -103,10 +103,10 @@ export let options = {
       'Configured Recommendation Delete Users': ['p(95)<300'],
       'Recommendation Type Users': ['p(95)<1000'],
       'Action By Id Users': ['p(95)<500'],
-      'Job Users': ['p(95)<500'],
-      'Job Logs Users': ['p(95)<500'],
+      'Job Users': ['p(95)<800'],
+      'Job Logs Users': ['p(95)<800'],
       'Result Edit Users': ['p(95)<500'],
-      'Scheduler Edit Users': ['p(95)<500'], //threshold might be too high
+      'Scheduler Edit Users': ['p(95)<100'], //threshold might be too high
     },
   };
 
@@ -374,7 +374,7 @@ export function deleteRequests() {
   
   let responses = http.batch(requests);
   let configuredRecommendationDeleteResp = responses['Configured Recommendation Delete Users'];
-
+  
   check( configuredRecommendationDeleteResp, {
     'status is 200': (r) => r.status === 200,
   }) || configuredRecommendationDeleteErrorRate.add(1);
