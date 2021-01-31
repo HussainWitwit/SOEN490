@@ -3,12 +3,12 @@
 //     beforeEach(() => {
 //         cy.visit('/recommendations-manage');
 //     })
-//     it("Checks if the manage recommendation table opens", () => {
+//     it("Checks if the manage recommendation drawer opens", () => {
 //         cy.get(':nth-child(1) > .primaryKey').click()
 //         cy.wait(500)
 //     })
 
-//     it("Finds all elements in the manage Recommendation Table", () => {
+//     it("Finds all elements in the manage Recommendation drawer", () => {
 //         cy.get(':nth-child(1) > .primaryKey').click()
 //         cy.wait(500)
 //         cy.get('#react-tabs-0').should('exist')
@@ -54,7 +54,7 @@
 //         cy.get(':nth-child(9) > .value-title').click()
 //     })
 
-//     it("Checks if the manage recommendation table closes", () => {
+//     it("Checks if the manage recommendation drawer closes", () => {
 //         cy.get(':nth-child(1) > .primaryKey').click()
 //         cy.wait(500)
 //         cy.get('#react-tabs-0 > .MuiButtonBase-root > .MuiIconButton-label > .MuiSvgIcon-root').click()

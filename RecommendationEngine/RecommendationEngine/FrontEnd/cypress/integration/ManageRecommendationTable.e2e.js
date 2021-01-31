@@ -24,7 +24,7 @@ describe("Manage Recommendation Table", () => {
     it("Search bar can take queries", () => {
         cy.wait(500)
         cy.get("#data-testid").click()
-        cy.get("#data-testid").type("Recommendation 23")
+        cy.get("#data-testid").type("Hellow World")
         cy.get('#data-testid').should('be.visible')
         cy.wait(500)
     })

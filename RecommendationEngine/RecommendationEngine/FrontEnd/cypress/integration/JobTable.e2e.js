@@ -19,7 +19,7 @@ describe("Job Page", () => {
     it("Search bar can take queries", () => {
         cy.wait(500)
         cy.get("#data-testid").click()
-        cy.get("#data-testid").type("Recommendation 23")
+        cy.get("#data-testid").type("178")
         cy.get('#data-testid').should('be.visible')
         cy.wait(500)
     })
@@ -85,29 +85,36 @@ describe("Job Page", () => {
     })
 })
 
-/*describe("Job Log Popup", () => {
+// describe("Job Log Popup", () => {
 
-    beforeEach(() => {
-        cy.visit('/recommendations-jobs')
-        cy.get(':nth-child(1) > :nth-child(7) > div > .MuiButtonBase-root > .MuiButton-label > .MuiSvgIcon-root > path').click()
-    })
+//     beforeEach(() => {
+//         cy.visit('/recommendations-jobs')
+//         cy.get(':nth-child(1) > :nth-child(7) > div > .MuiButtonBase-root > .MuiButton-label > .MuiSvgIcon-root > path').click()
+//     })
 
-    it("Finds the popup", () => {
-        cy.get('.MuiDialog-container').should('be.visible')
+//     it("Finds the popup", () => {
+//         cy.wait(500)
+//         cy.get('.MuiDialog-container').should('be.visible')
 
-    })
+//     })
 
-    it("Finds the dialog title", () => {
-        cy.get('.MuiDialog-container').should('be.visible')
-        cy.get('#scroll-dialog-title > .MuiTypography-root').should('be.visible')
+//     it("Finds the dialog title", () => {
+//         cy.wait(500)
+//         cy.get('.MuiDialog-container').should('be.visible')
+//         cy.wait(500)
+//         cy.get('#scroll-dialog-title > .MuiTypography-root').should('be.visible')
 
-    })
+//     })
 
-    it("Finds the log table", () => {
-        cy.get('.MuiDialogContent-root')
-        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(2)').should('be.visible')
-        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(3)').should('be.visible')
-        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(4)').should('be.visible')
-        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(5)').should('be.visible')
-    })
-})*/
+//     it("Finds the log table", () => {
+//         cy.get('.MuiDialogContent-root')
+//         cy.wait(500)
+//         cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(2)').should('be.visible')
+//         cy.wait(500)
+//         cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(3)').should('be.visible')
+//         cy.wait(500)
+//         cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(4)').should('be.visible')
+//         cy.wait(500)
+//         cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(5)').should('be.visible')
+//     })
+// })
