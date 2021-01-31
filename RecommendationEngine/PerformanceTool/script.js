@@ -35,7 +35,20 @@ let ConfiguredRecommendationDeleteTrend = new Trend('Configured Recommendation D
 let recommendationTypeErrorRate = new Rate('Recommendation Type errors');
 let RecommendationTypeTrend = new Trend('Recommendation Type Users');
 
+let actionByIdErrorRate = new Rate('Action By Id errors');
+let ActionByIdTrend = new Trend('Action By Id Users');
 
+let jobErrorRate = new Rate('Job errors');
+let JobTrend = new Trend('Job Users');
+
+let jobLogsErrorRate = new Rate('Job Logs errors'); 
+let JobLogsTrend = new Trend('Job Logs Users');
+
+let resultErrorRate = new Rate('Result errors');
+let ResultTrend = new Trend('Result Users');
+
+let schedulerEditErrorRate = new Rate('Scheduler Edit errors');
+let SchedulerEditTrend = new Trend('Scheduler Edit Users');
 
 export let options = {
   scenarios: {
@@ -47,13 +60,21 @@ export let options = {
       exec: 'postRequests',
       startTime: '0s'
     },
+    schedulerRequests: {
+      executor: 'per-vu-iterations',
+      vus: 20,
+      iterations: 25,
+      maxDuration: '35s',
+      exec: 'schedulerRequests',
+      startTime: '30s'
+    },
     getRequests: {
       executor: 'per-vu-iterations',
       vus: 20,
       iterations: 25,
       maxDuration: '50s',
       exec: 'getRequests',
-      startTime: '30s'
+      startTime: '60s'
     },
     putRequests: {
       executor: 'per-vu-iterations',
@@ -61,7 +82,7 @@ export let options = {
       iterations: 25,
       maxDuration: '40s',
       exec: 'putRequests',
-      startTime: '80s'
+      startTime: '130s'
     },
     deleteRequests: {
       executor: 'per-vu-iterations',
@@ -69,7 +90,7 @@ export let options = {
       iterations: 25,
       maxDuration: '50s',
       exec: 'deleteRequests',
-      startTime: '120s'
+      startTime: '170s'
     },
   },
     thresholds: {
@@ -81,7 +102,11 @@ export let options = {
       'Configured Recommendation Edit Users': ['p(95)<500'],
       'Configured Recommendation Delete Users': ['p(95)<300'],
       'Recommendation Type Users': ['p(95)<1000'],
-
+      'Action By Id Users': ['p(95)<500'],
+      'Job Users': ['p(95)<500'],
+      'Job Logs Users': ['p(95)<500'],
+      'Result Edit Users': ['p(95)<500'],
+      'Scheduler Edit Users': ['p(95)<500'], //threshold might be too high
     },
   };
 
@@ -131,8 +156,37 @@ export function postRequests() {
 
   sleep(1);
 }
+
+export function schedulerRequests(){
+  let urlSchedulerEdit = `http://localhost:5000/api/scheduler/${((__VU-1)%20 )*25+__ITER%25 + 1}`;
+  let params = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+
+  let requests = {
+  
+    'Scheduler Edit Users': {
+      method: 'PUT',
+      url: urlSchedulerEdit,
+      params: params,
+    },
+  };
+
+  let responses = http.batch(requests);
+  let schedulerEditResp = responses['Scheduler Edit Users'];
+  
+  check( schedulerEditResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || schedulerEditErrorRate.add(1);
+  SchedulerEditTrend.add(schedulerEditResp.timings.duration);
+ sleep(1);
+}
+
 export function putRequests() {
-  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-1)*25+__ITER-24}`;
+  let urlConfiguredRecommendationEdit = `http://localhost:5000/api/ConfiguredRecommendation/${((__VU-1)%20 )*25+__ITER%25 + 1}`;
 
   let params = {
     headers: {
@@ -169,12 +223,12 @@ export function putRequests() {
   
   let responses = http.batch(requests);
   let configuredRecommendationEditResp = responses['Configured Recommendation Edit Users'];
-
+  
   check( configuredRecommendationEditResp, {
     'status is 200': (r) => r.status === 200,
   }) || configuredRecommendationEditErrorRate.add(1);
   ConfiguredRecommendationEditTrend.add(configuredRecommendationEditResp.timings.duration);
-
+ 
   sleep(1);
 }
 export function getRequests() {
@@ -183,6 +237,10 @@ export function getRequests() {
   let urlConfiguredRecommendationList = 'http://localhost:5000/api/ConfiguredRecommendation';
   let urlConfiguredRecommendationById = `http://localhost:5000/api/ConfiguredRecommendation/10`;
   let urlRecommendationType = 'http://localhost:5000/api/RecommendationType';
+  let urlActionById = `http://localhost:5000/api/Action/1`; 
+  let urlJob = `http://localhost:5000/api/Job`; 
+  let urlJobLogs = `http://localhost:5000/api/Job/log/1`; 
+  let urlResult = `http://localhost:5000/api/Result`; 
 
   let params = {
     headers: {
@@ -216,6 +274,26 @@ export function getRequests() {
       url:  urlRecommendationType,
       params: params,
     },
+    'Action By Id Users': {
+      method: 'GET',
+      url:  urlActionById,
+      params: params,
+    },
+    'Job Users': {
+      method: 'GET',
+      url:  urlJob,
+      params: params,
+    },
+    'Job Logs Users': {
+      method: 'GET',
+      url:  urlJobLogs,
+      params: params,
+    },
+    'Result Users': {
+      method: 'GET',
+      url:  urlResult,
+      params: params,
+    },
   };
   
   let responses = http.batch(requests);
@@ -224,6 +302,11 @@ export function getRequests() {
   let configuredRecommendationListResp = responses['Configured Recommendation Users'];
   let configuredRecommendationByIdResp = responses['Configured Recommendation By Id Users'];
   let recommendationTypeResp = responses['Recommendation Type Users'];
+  let actionByIdResp = response['Action By Id Users'];
+  let jobResp = response['Job Users'];
+  let jobLogsResp = response['Job Logs Users'];
+  let resultResp = response['Result Users'];
+
 
   check(assetsNestedResp, {
     'status is 200': (r) => r.status === 200,
@@ -250,10 +333,30 @@ export function getRequests() {
   }) || recommendationTypeErrorRate.add(1);
   RecommendationTypeTrend.add(recommendationTypeResp.timings.duration);
 
+  check(actionByIdResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || actionByIdErrorRate.add(1);
+  ActionByIdTrend.add(actionByIdResp.timings.duration);
+
+  check(jobResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || jobErrorRate.add(1);
+  JobTrend.add(jobResp.timings.duration);
+  
+  check(jobLogsResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || jobLogsErrorRate.add(1);
+  JobLogsTrend.add(jobLogsResp.timings.duration);
+  
+  check(resultResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || resultErrorRate.add(1);
+  ResultTrend.add(resultResp.timings.duration);
+
   sleep(1);
 }
 export function deleteRequests() {
-  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${(__VU-21)*25+__ITER-24}`;
+  let urlConfiguredRecommendationDelete =  `http://localhost:5000/api/ConfiguredRecommendation/${((__VU-1)%20 )*25+__ITER%25 + 1}`;
 
   let params = {
     headers: {
