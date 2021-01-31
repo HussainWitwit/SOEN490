@@ -61,58 +61,14 @@
 //         cy.wait(500)
 //     })
 
-//         // Delete Button
-//     it("Clicks on delete button", ()=>{
-//         cy.get(':nth-child(2) > .primaryKey').click()
-//         cy.wait(500)
-//         cy.get('.delete-button').click()
-//         cy.wait(500)
-//         cy.get('#deleteButton').click()
-//         cy.wait(500)
-//     })
+//         // Edit Button
+//         it("Clicks on edit button", ()=>{
+//             cy.get(':nth-child(2) > .primaryKey').click()
+//             cy.wait(1000)
+//             cy.get('.edit-recommendation-button').click()
+//             cy.wait(1000)
+//         })
 
-//     it("Clicks on cancel button", ()=>{
-//         cy.get(':nth-child(1) > .primaryKey').click()
-//         cy.wait(500)
-//         cy.get('.delete-button').click()
-//         cy.wait(500)
-//         cy.get('#cancelButton').click()
-//         cy.wait(500)
-//     })
-
-//     it("closes delete recommendation pop up", ()=>{
-//         cy.get(':nth-child(1) > .primaryKey').click()
-//         cy.wait(500)
-//         cy.get('.delete-button').click()
-//         cy.wait(500)
-//         cy.get('#closeButton').click()
-//         cy.wait(500)
-//     })
-
-//     it("Finds all elements in the delete recommendation pop up", () => {
-//         cy.get(':nth-child(1) > .primaryKey').click()
-//         cy.wait(500)
-//         cy.get('.delete-button').should('exist')
-//         cy.wait(500)
-//         cy.get('.delete-button').click()
-//         cy.wait(500)
-//         cy.get('.MuiDialog-container > .MuiPaper-root').should('exist')
-//         cy.wait(500)
-//         cy.get('#closeButton').should('exist')
-//         cy.wait(500)
-//         cy.get('#WarningRoundedIcon > path').should('exist')
-//         cy.wait(500)
-//         cy.get('.MuiDialogTitle-root').should('exist')
-//         cy.wait(500)
-//         cy.get('.MuiDialogContent-root > .MuiTypography-root').should('exist')
-//         cy.wait(500)
-//         cy.get('#cancelButton').should('exist')
-//         cy.wait(500)
-//         cy.get('#deleteButton').should('exist')
-//         cy.wait(500)
-//         cy.get('#closeButton').click()
-//         cy.wait(500)
-//     })
 
 //     // Force Run Button
 //     it("Clicks on force run button", ()=>{
@@ -165,13 +121,6 @@
 //         cy.wait(500)
 //     })
 
-//     // Edit Button
-//     it("Clicks on edit button", ()=>{
-//         cy.get(':nth-child(2) > .primaryKey').click()
-//         cy.wait(500)
-//         cy.get('.edit-recommendation-button').click()
-//         cy.wait(500)
-//     })
 
 //     // Delete Button
 //     it("Clicks on delete button", ()=>{
@@ -192,7 +141,7 @@
 //         cy.wait(500)
 //     })
 
-//     it("closes delete recommendation pop up", ()=>{
+//     it("Closes delete recommendation pop up", ()=>{
 //         cy.get(':nth-child(1) > .primaryKey').click()
 //         cy.wait(500)
 //         cy.get('.delete-button').click()
