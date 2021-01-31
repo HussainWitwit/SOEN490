@@ -36,4 +36,50 @@ describe("Result Page", () => {
         cy.get('#pagination > .MuiToolbar-root').should('be.visible')
         cy.get('.MuiTablePagination-actions').should('be.visible')
     })
+
+    
+    it('Sorts by result id', () => {
+        cy.get(':nth-child(2) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(2) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by net saving', () => {
+        cy.get(':nth-child(3) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(3) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by return on investment', () => {
+        cy.get(':nth-child(4) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(4) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+    
+    it('Sorts by cost of action', () => {
+        cy.get(':nth-child(5) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(5) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
+
+    it('Sorts by cost of inaction', () => {
+        cy.get(':nth-child(6) > #table-header').should('exist')
+        cy.wait(500)
+        cy.get(':nth-child(6) > #table-header').click({ force: true })
+        cy.wait(500)
+        cy.get('[aria-sort="ascending"] > #table-header').click()
+        cy.wait(500)
+    })
 })
