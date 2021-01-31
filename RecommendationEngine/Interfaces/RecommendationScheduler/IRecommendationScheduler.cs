@@ -7,5 +7,6 @@ namespace Interfaces.RecommendationScheduler
     {
         public Task Start();
         public Task ScheduleJobAsync(DBRecommendationSchedule schedule);
+        public Task TriggerJobAsync(int scheduleId);
     }
 }

@@ -1,4 +1,4 @@
-
+ 
 describe("Manage Recommendation Table", () => {
 
     beforeEach(() => {
@@ -21,12 +21,9 @@ describe("Manage Recommendation Table", () => {
         cy.get('#data-testid').should('be.visible')
     })
 
-    it("Search bar can take queries", () => {
+    it("Search bar is visible", () => {
         cy.wait(500)
-        cy.get("#data-testid").click()
-        cy.get("#data-testid").type("Recommendation 23")
         cy.get('#data-testid').should('be.visible')
-        cy.wait(500)
     })
 
     it("Finds the filter button", () => {

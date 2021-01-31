@@ -22,8 +22,9 @@ const rightPanelInitialState = {
   selectedTabIndex: 0,
 };
 
-const DRILLDOWN_NAME = 'Details';
+const SCHEDULE_DRILLDOWN_NAME = 'Details';
 const ASSET_TREEVIEW_NAME = 'AssetTreeview';
+const RESULT_DRILLDOWN_NAME = 'Actions';
 
 /**
  * The right panel reducer's main business logic is surrounds the idea that there should only be a maximum of 2 tabs open to avoid crowding;
@@ -49,13 +50,14 @@ export const RightPanelReducer = function (
         tabs: [...state.tabs, { name: ASSET_TREEVIEW_NAME }],
       };
     }
+
     case type.OPEN_SCHEDULE_DRILLDOWN: {
-      if (state.tabs.some((e) => e.name === DRILLDOWN_NAME))
+      if (state.tabs.some((e) => e.name === SCHEDULE_DRILLDOWN_NAME))
         return {
           ...state,
-          selectedTabIndex: state.tabs.findIndex(tab => tab.name === DRILLDOWN_NAME),
+          selectedTabIndex: state.tabs.findIndex(tab => tab.name === SCHEDULE_DRILLDOWN_NAME),
           tabs: state.tabs.map((e) =>
-            e.name === DRILLDOWN_NAME
+            e.name === SCHEDULE_DRILLDOWN_NAME
               ? { ...e, response: action.payload.response }
               : e
           ),
@@ -66,7 +68,54 @@ export const RightPanelReducer = function (
         selectedTabIndex: state.tabs.length,
         tabs: [
           ...state.tabs,
-          { name: DRILLDOWN_NAME, response: action.payload.response },
+          { name: SCHEDULE_DRILLDOWN_NAME, response: action.payload.response },
+        ],
+      };
+    }
+
+    case type.UPDATE_SCHEDULE_DRILLDOWN: {
+      if (action.payload.action === 'forceRun')
+        return {
+          ...state,
+          tabs: state.tabs.map((e) =>
+            e.name === SCHEDULE_DRILLDOWN_NAME
+              ? {
+                ...e,
+                response: {
+                  ...e.response,
+                  lastJobs: [
+                    ...e.response.lastJobs,
+                    {
+                      id: 'N/A',
+                      status: 'Running',
+                      timestamp: Date.now(),
+                    },
+                  ].slice(1, 6),
+                },
+              }
+              : e
+          ),
+        };
+    }
+
+    case type.OPEN_RESULT_DRILLDOWN: {
+      if (state.tabs.some((e) => e.name === RESULT_DRILLDOWN_NAME))
+        return {
+          ...state,
+          selectedTabIndex: state.tabs.findIndex(tab => tab.name === RESULT_DRILLDOWN_NAME),
+          tabs: state.tabs.map((e) =>
+            e.name === RESULT_DRILLDOWN_NAME
+              ? { ...e, response: action.payload.response }
+              : e
+          ),
+        };
+      return {
+        ...state,
+        isOpen: true,
+        selectedTabIndex: state.tabs.length,
+        tabs: [
+          ...state.tabs,
+          { name: RESULT_DRILLDOWN_NAME, response: action.payload.response },
         ],
       };
     }
@@ -75,28 +124,38 @@ export const RightPanelReducer = function (
     case type.CLOSE_ASSET_TREEVIEW:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.name === DRILLDOWN_NAME),
-        selectedTabIndex: 0,
+        isOpen: state.tabs.some((e) => (e.name === SCHEDULE_DRILLDOWN_NAME || e.name === RESULT_DRILLDOWN_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
         tabs: state.tabs.filter((tab) => tab.name !== ASSET_TREEVIEW_NAME),
       };
 
     case type.CLOSE_SCHEDULE_DRILLDOWN:
       return {
         ...state,
-        isOpen: state.tabs.some((e) => e.name === ASSET_TREEVIEW_NAME),
-        selectedTabIndex: 0,
-        tabs: state.tabs.filter((tab) => tab.name !== DRILLDOWN_NAME),
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === RESULT_DRILLDOWN_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
+        tabs: state.tabs.filter((tab) => tab.name !== SCHEDULE_DRILLDOWN_NAME),
       };
+
+    case type.CLOSE_RESULT_DRILLDOWN:
+      return {
+        ...state,
+        isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === SCHEDULE_DRILLDOWN_NAME)),
+        selectedTabIndex: state.tabs.length - 1,
+        tabs: state.tabs.filter((tab) => tab.name !== RESULT_DRILLDOWN_NAME),
+      };
+
     case type.CLOSE_ALL:
       return rightPanelInitialState;
 
     // Special case: the ChangeTabIndex gets called after a Close since we're closing the item. 
-    // We then need to handle the ground case when we have 2 tabs and closing the second
+    // We then need to handle the ground case when we have 2/3 tabs and closing the second/third
     case type.CHANGE_TAB_INDEX:
-      return{
+      return {
         ...state,
-        selectedTabIndex: state.tabs.length>1?action.payload.selectedTabIndex:0
+        selectedTabIndex: (action.payload.selectedTabIndex) % state.tabs.length
       }
+
     default:
       return state;
   }

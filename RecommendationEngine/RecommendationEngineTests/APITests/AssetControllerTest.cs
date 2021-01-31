@@ -66,7 +66,6 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
             var asset = JsonConvert.DeserializeObject<AssetComposite>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(asset);
             Assert.AreEqual(asset.Id, MockData.MockAssets.BasicDBAssetList[0].AssetId);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -77,7 +76,6 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
             List<AssetLeaf> assetList = JsonConvert.DeserializeObject<List<AssetLeaf>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(assetList);
             Assert.AreEqual(assetList[0].Name, MockData.MockAssets.BasicDBAssetList[0].Name);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }
 

@@ -1,9 +1,9 @@
 import * as dispatchActionType from '../dispatch-types';
-
 import { RightPanelReducer } from '../reducer';
 
-const DRILLDOWN_NAME = 'Details';
+const SCHEDULE_DRILLDOWN_NAME = 'Details';
 const ASSET_TREEVIEW_NAME = 'AssetTreeview';
+const RESULT_DRILLDOWN_NAME = 'Actions';
 
 let state = {
   isOpen: false,
@@ -58,7 +58,7 @@ describe('Right panel reducer', () => {
       isOpen: true,
       tabs: [
         ...state.tabs,
-        { name: DRILLDOWN_NAME, response: { test: 'test' } },
+        { name: SCHEDULE_DRILLDOWN_NAME, response: { test: 'test' } },
       ],
     });
   });
@@ -68,7 +68,7 @@ describe('Right panel reducer', () => {
       RightPanelReducer(
         {
           ...state,
-          tabs: [...state.tabs, { name: DRILLDOWN_NAME }],
+          tabs: [...state.tabs, { name: SCHEDULE_DRILLDOWN_NAME }],
         },
         {
           type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
@@ -81,7 +81,48 @@ describe('Right panel reducer', () => {
       ...state,
       tabs: [
         ...state.tabs,
-        { name: DRILLDOWN_NAME, response: { test: 'test' } },
+        { name: SCHEDULE_DRILLDOWN_NAME, response: { test: 'test' } },
+      ],
+    });
+  });
+
+  it('should handle OPEN_RESULT_DRILLDOWN with no tab', () => {
+    expect(
+      RightPanelReducer(state, {
+        type: dispatchActionType.OPEN_RESULT_DRILLDOWN,
+        payload: {
+          response: { test: 'test' },
+        },
+      })
+    ).toEqual({
+      ...state,
+      isOpen: true,
+      tabs: [
+        ...state.tabs,
+        { name: RESULT_DRILLDOWN_NAME, response: { test: 'test' } },
+      ],
+    });
+  });
+
+  it('should handle OPEN_RESULT_DRILLDOWN with a tab already', () => {
+    expect(
+      RightPanelReducer(
+        {
+          ...state,
+          tabs: [...state.tabs, { name: SCHEDULE_DRILLDOWN_NAME }],
+        },
+        {
+          type: dispatchActionType.OPEN_SCHEDULE_DRILLDOWN,
+          payload: {
+            response: { test: 'test' },
+          },
+        }
+      )
+    ).toEqual({
+      ...state,
+      tabs: [
+        ...state.tabs,
+        { name: SCHEDULE_DRILLDOWN_NAME, response: { test: 'test' } },
       ],
     });
   });
@@ -100,7 +141,7 @@ describe('Right panel reducer', () => {
   it('should handle CLOSE_SCHEDULE_DRILLDOWN', () => {
     expect(
       RightPanelReducer(
-        { ...state, isOpen: true, tabs: [{ name: DRILLDOWN_NAME }] },
+        { ...state, isOpen: true, tabs: [{ name: SCHEDULE_DRILLDOWN_NAME }] },
         {
           type: dispatchActionType.CLOSE_SCHEDULE_DRILLDOWN,
         }
@@ -108,13 +149,25 @@ describe('Right panel reducer', () => {
     ).toEqual(state);
   });
 
+  it('should handle CLOSE_RESULT_DRILLDOWN', () => {
+    expect(
+      RightPanelReducer(
+        { ...state, isOpen: true, tabs: [{ name: RESULT_DRILLDOWN_NAME }] },
+        {
+          type: dispatchActionType.CLOSE_RESULT_DRILLDOWN,
+        }
+      )
+    ).toEqual(state);
+  });
+
+
   it('should handle CLOSE_ALL', () => {
     expect(
       RightPanelReducer(
         {
           ...state,
           isOpen: true,
-          tabs: [{ name: DRILLDOWN_NAME }, { name: ASSET_TREEVIEW_NAME }],
+          tabs: [{ name: SCHEDULE_DRILLDOWN_NAME }, { name: ASSET_TREEVIEW_NAME }, { name: RESULT_DRILLDOWN_NAME }],
         },
         {
           type: dispatchActionType.CLOSE_ALL,
@@ -129,7 +182,7 @@ describe('Right panel reducer', () => {
         {
           ...state,
           isOpen: true,
-          tabs: [{ name: DRILLDOWN_NAME }, { name: ASSET_TREEVIEW_NAME }],
+          tabs: [{ name: SCHEDULE_DRILLDOWN_NAME }, { name: ASSET_TREEVIEW_NAME }, { name: RESULT_DRILLDOWN_NAME }],
         },
         {
           type: dispatchActionType.CHANGE_TAB_INDEX,
@@ -141,8 +194,34 @@ describe('Right panel reducer', () => {
     ).toEqual({
       ...state,
       isOpen: true,
-      tabs: [{ name: DRILLDOWN_NAME }, { name: ASSET_TREEVIEW_NAME }],
+      tabs: [{ name: SCHEDULE_DRILLDOWN_NAME }, { name: ASSET_TREEVIEW_NAME }, { name: RESULT_DRILLDOWN_NAME }],
       selectedTabIndex: 1,
     });
+  });
+
+  it('should handle UPDATE_SCHEDULE_DRILLDOWN', () => {
+    let innerState = RightPanelReducer(
+      {
+        ...state,
+        isOpen: true,
+        tabs: [
+          {
+            name: SCHEDULE_DRILLDOWN_NAME,
+            response: { lastJobs: [null, null, null, null, null] },
+          },
+          { name: ASSET_TREEVIEW_NAME },
+        ],
+      },
+      {
+        type: dispatchActionType.UPDATE_SCHEDULE_DRILLDOWN,
+        payload: {
+          action: 'forceRun',
+        },
+      }
+    )
+    expect(innerState.tabs[0].response.lastJobs[4].status
+    ).toEqual('Running');
+    expect(innerState.tabs[0].response.lastJobs[4].id
+      ).toEqual('N/A');
   });
 });

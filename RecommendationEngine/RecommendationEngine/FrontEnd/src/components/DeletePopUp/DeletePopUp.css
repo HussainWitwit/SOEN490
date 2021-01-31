@@ -12,11 +12,11 @@
 }
 
 #cancelButton:hover{
-    background-color: #ffc107;
+    background-color: #F7F7F5;
     box-shadow: none;
     transition: all 500ms;
     border-color: transparent;
-    color: white;
+    color: #C4C4C4;
 }
 
 #deleteButton {
@@ -66,13 +66,13 @@
     font-size: xxx-large;
 }
 
-.warning{
+#warning{
     flex: 10%;
     padding-left: 30px;
     padding-top: 30px;
 }
 
-.warningMessage{
+#warningMessage{
     flex: 90%;
     display: flex;
     flex-direction: column;
@@ -80,7 +80,7 @@
     align-items: flex-start;
 }
 
-.deleteWarning{
+#deleteWarning{
     display: flex;
     flex-direction: row;
 }

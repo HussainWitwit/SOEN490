@@ -13,7 +13,7 @@ describe('DeletePopUp component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<DeletePopUp store={store} title={''} handleClickOpen={jest.fn} open={jest.fn} recommendationId={1} closeScheduleDrilldown={jest.fn} />);
+    const output = shallow(<DeletePopUp store={store} title={''} handleDeletePopUpOpen={jest.fn} open={jest.fn} recommendationId={1} closeScheduleDrilldown={jest.fn} />);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');

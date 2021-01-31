@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import RecommendationEngineTable from '../RecommendationEngineTable';
+import  RecommendationEngineTable, {sortingComparison, tableSort, getSortingComparison} from '../RecommendationEngineTable';
 import { EnhancedTableHead } from '../../RecommendationTableHeader/RecommendationTableHeader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
@@ -11,10 +11,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import { fireEvent, render, getAllByTestId } from '@testing-library/react';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe.only('RecommendationEngineTable component', () => {
+describe('RecommendationEngineTable component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
@@ -77,12 +78,53 @@ describe.only('RecommendationEngineTable component', () => {
         pagination.props().onChangeRowsPerPage(mockedEvent);
         expect(pagination).toHaveLength(1);
     });
-        output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
+    output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
     it('Simulate onChange lite switch event', () => {
         output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
     });
 
     it('Simulate handleSort event', () => {
-        output.find('#handleSort').props().onRequestSort();
+        output.find('#handleSort').props().handleSortingChange();
     });
+    
 });
+
+describe('Testing the ascending/descending order of a function', () => {
+     it('order if equal', () => {
+        const obj1 = {name:"ab"};
+        const obj2 = {name:"ab"};
+        const sortResult = sortingComparison(obj1,obj2, 'name');
+        expect(sortResult).toEqual(0);
+    });
+
+    it('order by ascending', () => {
+        const obj1 = {name:"ab"};
+        const obj2 = {name:"xy"};
+        const sortResult = sortingComparison(obj1, obj2, 'name');
+        expect(sortResult).toEqual(1);
+    });
+
+    it('order by descending ', () => {
+        const obj1 = {name:"xy"};
+        const obj2 = {name:"ab"};
+        const sortResult = sortingComparison(obj1,obj2,'name');
+        expect(sortResult).toEqual(-1);
+    });
+
+    it('table ascending sorting ', ()=> {
+        const originalArr = [{name:"ab"},{name:"cd"},{name:"xy"}];
+        const expectedArr = [{name:"xy"},{name:"cd"},{name:"ab"}];
+        
+        const sortResult = tableSort(originalArr,getSortingComparison('desc', 'name'));
+        expect(sortResult).toEqual(expectedArr);
+    });
+
+    it('table equal sorting ', ()=> {
+        const originalArr = [{name:"ab", type:"monthly"},{name:"ab", type:"yearly"},{name:"xy", type:"yearly"}];
+        const expectedArr = [{name:"xy", type:"yearly"},{name:"ab", type:"monthly"},{name:"ab", type:"yearly"}];
+        
+        const sortResult = tableSort(originalArr,getSortingComparison('desc', 'name'));
+        expect(sortResult).toEqual(expectedArr);
+    });
+
+})
