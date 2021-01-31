@@ -1,0 +1,88 @@
+.root.MuiDrawer-root {
+    display: flex;
+    background-color: "#212529";
+}
+
+.drawer{
+    width: 250px;
+}
+
+.drawer-paper.MuiDrawer-paper{
+    width: 250px;
+    background-color: #212529;
+    display: flex;
+    flex-direction: column;
+    justify-content : space-between;
+}
+
+.top-header{
+    padding-bottom: 10% !important;
+    padding-top: 10% !important;
+}
+
+#username {
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 16px;
+}
+
+#jobPosition {
+    color: gray;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 14px;
+}
+
+.inline {
+    display: inline;
+    color: #fff !important;
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.outer {
+    background-color: #212529;
+}
+
+.nested {
+    padding-left: 30% !important; 
+    color: #fff;
+    background-color: #212529;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-titles {
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    font-size: '12px';
+
+
+
+}
+.icon-container{
+    padding-left: 3%;
+    color: #fff;
+}
+
+
+.icon {
+    color: #fff;
+    font-size: 130% !important;
+    padding-left: 3%;
+    width: 100%;
+}
+
+.settings {
+    color: #9E9E9E;
+    margin-top: 5%;
+    margin-left: 5%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hide {
+    display: none;
+}
+
+.logo{
+    align-self: flex-end;
+}
+
+
