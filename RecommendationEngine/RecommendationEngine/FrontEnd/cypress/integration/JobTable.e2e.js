@@ -41,3 +41,29 @@ describe("Job Page", () => {
         cy.get('.MuiTablePagination-actions').should('be.visible')
     })
 })
+/*describe("Job Log Popup", () => {
+
+    beforeEach(() => {
+        cy.visit('/recommendations-jobs')
+        cy.get(':nth-child(1) > :nth-child(7) > div > .MuiButtonBase-root > .MuiButton-label > .MuiSvgIcon-root > path').click()
+    })
+
+    it("Finds the popup", () => {
+        cy.get('.MuiDialog-container').should('be.visible')
+
+    })
+
+    it("Finds the dialog title", () => {
+        cy.get('.MuiDialog-container').should('be.visible')
+        cy.get('#scroll-dialog-title > .MuiTypography-root').should('be.visible')
+
+    })
+
+    it("Finds the log table", () => {
+        cy.get('.MuiDialogContent-root')
+        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(2)').should('be.visible')
+        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(3)').should('be.visible')
+        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(4)').should('be.visible')
+        cy.get('.MuiDialogContent-root > #root > #paper > .MuiTableContainer-root > #table > #table-head > #table-row > :nth-child(5)').should('be.visible')
+    })
+})*/
