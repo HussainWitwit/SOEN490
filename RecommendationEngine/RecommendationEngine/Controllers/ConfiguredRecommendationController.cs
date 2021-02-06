@@ -6,37 +6,36 @@ using RecommendationEngine.ExceptionHandler;
 namespace RecommendationEngine.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ConfiguredRecommendationController : ControllerBase
     {
-        private IConfiguredRecommendationService _configuredRecommendationService;
+        private readonly IConfiguredRecommendationService _configuredRecommendationService;
 
         public ConfiguredRecommendationController(IConfiguredRecommendationService configuredRecommendationService)
         {
             _configuredRecommendationService = configuredRecommendationService;
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public IActionResult GetConfiguredRecommendationList()
         {
             return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
         }
 
-        [HttpGet("configuredRecommendation/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetConfiguredRecommendationById(int id)
         {
             try
             {
                 return Ok(_configuredRecommendationService.GetConfiguredRecommendationById(id));
-
             }
             catch (GlobalException e)
             {
-                return BadRequest(e);
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             try
@@ -45,7 +44,35 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        {
+            try
+            {
+                _configuredRecommendationService.EditConfiguredRecommendation(configuredRecommendation, id);
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+            }
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteConfiguredRecommendation(int id)
+        {
+            try
+            {
+                _configuredRecommendationService.DeleteConfiguredRecommendation(id);
+            }
+            catch (GlobalException e)
+            {
+                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
             }
             return Ok();
         }

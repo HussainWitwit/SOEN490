@@ -54,6 +54,16 @@ namespace RecommendationScheduler
             }
         }
 
+        public async Task TriggerJobAsync(int scheduleId)
+        {
+            Dictionary<string, int> data = new Dictionary<string, int>
+            {
+                { "recommendationScheduleId", scheduleId }
+            };
+            JobDataMap jobData = new JobDataMap(data);
+            await _scheduler.TriggerJob(new JobKey(scheduleId.ToString()), jobData);
+        }
+
         private IScheduleBuilder ScheduleBuilder(DBRecommendationSchedule schedule)
         {
             switch (schedule.Granularity)
@@ -67,8 +77,6 @@ namespace RecommendationScheduler
                 case "Yearly":
                     return CronScheduleBuilder.CronSchedule(
                         $"{schedule.RecurrenceDatetime.Second} {schedule.RecurrenceDatetime.Minute} {schedule.RecurrenceDatetime.Hour} {schedule.RecurrenceDatetime.Day} {schedule.RecurrenceDatetime.Month} ? *");
-                /*case "Yearly":
-                    return CronScheduleBuilder.CronSchedule("1 * * * * ? *");*/
                 default:
                     throw new NotImplementedException();
             }

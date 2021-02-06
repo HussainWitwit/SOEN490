@@ -1,6 +1,5 @@
 ﻿using Interfaces.Repositories;
 using Interfaces.Services;
-using Interfaces.Services.ExternalAPI;
 using Models.Application.APIModels;
 using Models.Application.Asset;
 using Models.DB;
@@ -8,28 +7,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Interfaces.Services.ExternalApi;
+using RecommendationEngine.ExceptionHandler;
+using Microsoft.AspNetCore.Http;
 
 namespace RecommendationEngine.Services
 {
 
     public class AssetService : IAssetService
     {
-        private IDriveService _driveService;
+        private IAssetDriveService _assetDriveService;
         private IAssetRepository _assetRepository;
         private IAssetTypeRepository _assetTypeRepository;
+        private IMetadataDriveService _metadataDriveService;
         private List<DBAsset> _assets;
         private DBAssetType _portfolioAssetType;
         private DBAssetType _plantAssetType;
 
         public AssetService(
-                IDriveService driveService,
+                IAssetDriveService assetDriveService,
                 IAssetRepository assetRepository,
-                IAssetTypeRepository assetTypeRepository
+                IAssetTypeRepository assetTypeRepository,
+                IMetadataDriveService metadataDriveService
         )
         {
-            _driveService = driveService;
+            _assetDriveService = assetDriveService;
             _assetRepository = assetRepository;
             _assetTypeRepository = assetTypeRepository;
+            _metadataDriveService = metadataDriveService;
             GetDBAssets();
             _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
             _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
@@ -37,10 +42,18 @@ namespace RecommendationEngine.Services
 
         public Asset GetAssetsTreeview()
         {
-            GetDBAssets();
-            DBAsset client = _assets.FirstOrDefault(a => a.ParentAsset == null);
-            AssetComposite clientComposite = GetAssetCompositeFromDBAsset(client);
-            return clientComposite;
+            try
+            {
+                GetDBAssets();
+                DBAsset client = _assets.FirstOrDefault(a => a.ParentAsset == null);
+                AssetComposite clientComposite = GetAssetCompositeFromDBAsset(client);
+                return clientComposite;
+            }
+            catch(Exception e)
+            {
+                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error" , e.Message, "Recommendation Engine");
+            }
+            
         }
 
         public Asset GetAssetByName(string assetName)
@@ -52,21 +65,27 @@ namespace RecommendationEngine.Services
 
         public async Task Convert()
         {
-            var portfolios = await _driveService.GetPortfolios();
-            var plants = await _driveService.GetPlants();
+            try
+            {
+                var portfolios = await _assetDriveService.GetPortfolios();
+                var plants = await _assetDriveService.GetPlants();
 
-            List<PFPortfolio> listOfPortfolios = portfolios.ToList();
-            List<PFPortfolio> listOfPlants = plants.ToList();
+                List<PFPortfolio> listOfPortfolios = portfolios.ToList();
+                List<PFPortfolio> listOfPlants = plants.ToList();
 
-            DBAsset client = GetClient(listOfPortfolios);
+                DBAsset client = GetClient(listOfPortfolios);
 
-            _assetRepository.AddAsset(client);
+                _assetRepository.AddAsset(client);
 
-            List<DBAsset> parentDBAssets = await BuildAssets(listOfPortfolios, true, client);
-            _assetRepository.AddAssetList(parentDBAssets);
+                List<DBAsset> parentDBAssets = await BuildAssets(listOfPortfolios, true, client);
+                _assetRepository.AddAssetList(parentDBAssets);
 
-            List<DBAsset> childDBAssets = await BuildAssets(listOfPlants, false, client);
-            _assetRepository.AddAssetList(childDBAssets);
+                List<DBAsset> childDBAssets = await BuildAssets(listOfPlants, false, client);
+                _assetRepository.AddAssetList(childDBAssets);
+            }
+            catch(Exception e) {
+                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+            }
         }
 
         private List<DBAsset> GetDBAssets()
@@ -138,7 +157,7 @@ namespace RecommendationEngine.Services
             if (!isPortfolio)
             {
                 List<string> assetIds = assets.Select(asset => asset.Id).ToList();
-                List<PFMetadata> assetsMetadata = await _driveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
+                List<PFMetadata> assetsMetadata = await _metadataDriveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
                 assetsEnergyTypes = assetsMetadata.Select(assetMetadata =>
                     new { elementPath = assetMetadata.ElementPath, energyType = assetMetadata.Metadata["ENERGY_SOURCE"] })
                     .ToDictionary(asset => asset.elementPath, asset => asset.energyType);
@@ -173,7 +192,7 @@ namespace RecommendationEngine.Services
         private async Task<PFPlant> GetPlantById(string id)
         {
 
-            PFPlant plant = await _driveService.GetPlantById(id);
+            PFPlant plant = await _assetDriveService.GetPlantById(id);
             return plant;
         }
 
@@ -191,9 +210,11 @@ namespace RecommendationEngine.Services
 
         public List<AssetLeaf> GetAssetsList()
         {
-            List<DBAsset> dbAssets = GetDBAssets();
+            try
+            {
+                List<DBAsset> dbAssets = GetDBAssets();
 
-            List<AssetLeaf> assets = dbAssets.Distinct().Where(dbasset => dbasset.Type != null).Select(dbasset => new AssetLeaf()
+                List<AssetLeaf> assets = dbAssets.Distinct().Where(dbasset => dbasset.Type != null).Select(dbasset => new AssetLeaf()
                 {
                     Name = dbasset.Name,
                     Id = dbasset.AssetId,
@@ -203,11 +224,16 @@ namespace RecommendationEngine.Services
                     EnergyType = dbasset.EnergyType,
                     AssetType = dbasset.Type.Name,
                     TimeZone = dbasset.TimeZone,
-                    
-                }
-            ).ToList();
 
-            return assets;
+                }
+                ).ToList();
+
+                return assets;
+            }
+            catch (Exception e)
+            {
+                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+            }
         }
     }
 }

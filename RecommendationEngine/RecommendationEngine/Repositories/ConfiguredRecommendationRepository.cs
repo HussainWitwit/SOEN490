@@ -4,6 +4,7 @@ using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System.Collections.Generic;
 using System.Linq;
+using Models.Application;
 
 namespace RecommendationEngine.Repositories
 {
@@ -27,11 +28,41 @@ namespace RecommendationEngine.Repositories
             return schedule;
         }
 
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule schedule, int id) {
+            if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id)) {
+                throw new GlobalException(400, "Bad Request", "Recommendation ID " + schedule.RecommendationScheduleId + " does not exist.", "Recommendation Engine");
+            }
+
+            DBRecommendationSchedule recToEdit = _recommendationEngineDb.RecommendationSchedules
+                .Include(x => x.AssetsList)
+                .ThenInclude(x => x.Asset)
+                .Include(x => x.AssetsList)
+                .ThenInclude(x => x.Schedule)
+                .Where(x => x.RecommendationScheduleId == id)
+                .FirstOrDefault();
+            
+            _recommendationEngineDb.Entry(recToEdit).CurrentValues.SetValues(schedule);
+            recToEdit.AssetsList = schedule.AssetsList;
+            _recommendationEngineDb.SaveChanges();
+            return schedule;
+        }
+
         public List<DBRecommendationSchedule> GetRecommendationScheduleList()
         {
              return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList).ThenInclude(asset => asset.Asset).
                 ThenInclude(asset => asset.Type).ToList();
-            
+        }
+
+        public void Delete(int id)
+        {
+            if (!_recommendationEngineDb.RecommendationSchedules.Any(x => x.RecommendationScheduleId == id))
+            {
+                throw new GlobalException(400, "Bad Request", "Recommendation ID " + id + " does not exist!", "Recommendation Engine");
+            }
+            DBRecommendationSchedule configToRemove = _recommendationEngineDb.RecommendationSchedules
+                .FirstOrDefault(x => x.RecommendationScheduleId == id);
+            _recommendationEngineDb.RecommendationSchedules.Remove(configToRemove);
+            _recommendationEngineDb.SaveChanges();
         }
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)

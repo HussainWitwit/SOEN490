@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models.DB;
 
-namespace RecommendationEngine.Migrations
+namespace Models.Migrations
 {
     [DbContext(typeof(RecommendationEngineDBContext))]
     partial class RecommendationEngineDBContextModelSnapshot : ModelSnapshot
@@ -381,7 +381,8 @@ namespace RecommendationEngine.Migrations
 
                     b.HasOne("Models.DB.DBRecommendationJobResult", "RecommendationJobResult")
                         .WithMany("ActionsSuggestedList")
-                        .HasForeignKey("RecommendationJobResultId");
+                        .HasForeignKey("RecommendationJobResultId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Models.DB.DBWorkOrder", "WorkOrderOpened")
                         .WithMany("Actions")
@@ -422,14 +423,16 @@ namespace RecommendationEngine.Migrations
 
                     b.HasOne("Models.DB.DBRecommendationSchedule", "Schedule")
                         .WithMany("JobsList")
-                        .HasForeignKey("ScheduleRecommendationScheduleId");
+                        .HasForeignKey("ScheduleRecommendationScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Models.DB.DBRecommendationJobLog", b =>
                 {
                     b.HasOne("Models.DB.DBRecommendationJob", "RecommendationJob")
                         .WithMany("LogsList")
-                        .HasForeignKey("RecommendationJobId");
+                        .HasForeignKey("RecommendationJobId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Models.DB.DBRecommendationJobResult", b =>
@@ -467,7 +470,8 @@ namespace RecommendationEngine.Migrations
 
                     b.HasOne("Models.DB.DBRecommendationSchedule", "Schedule")
                         .WithMany("ParametersList")
-                        .HasForeignKey("ScheduleRecommendationScheduleId");
+                        .HasForeignKey("ScheduleRecommendationScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

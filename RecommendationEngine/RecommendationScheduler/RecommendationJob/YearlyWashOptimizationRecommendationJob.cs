@@ -1,5 +1,4 @@
 ﻿using Interfaces.Repositories;
-using Interfaces.Services.ExternalAPI;
 using Interfaces.Utilities;
 using Models.Application.APIModels;
 using Models.DB;
@@ -9,23 +8,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Interfaces.Services.ExternalApi;
 
 namespace RecommendationScheduler.RecommendationJob
 {
     public class YearlyWashOptimizationRecommendationJob : RecommendationJob
     {
         //Values from APIs
-        private YearlyWashAPIValues _apiValues = new YearlyWashAPIValues();
+        private readonly YearlyWashApiValues _apiValues = new YearlyWashApiValues();
 
         //configured recommendation parameters from db
-        private YearlyWashParameters _parameters = new YearlyWashParameters();
+        private readonly YearlyWashParameters _parameters = new YearlyWashParameters();
 
 
-        public YearlyWashOptimizationRecommendationJob(IRecommendationJobLogger jobLogger, IRecommendationSchedulerRepository schedulerRepository, IDriveService driveService)
+        public YearlyWashOptimizationRecommendationJob(IRecommendationJobLogger jobLogger, IRecommendationSchedulerRepository schedulerRepository, IMetadataDriveService metadataDriveService)
         {
             _jobLogger = jobLogger;
             _schedulerRepository = schedulerRepository;
-            _driveService = driveService;
+            _metadataDriveService = metadataDriveService;
         }
 
         protected override void ExecuteJob()
@@ -47,10 +47,10 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.CostCleaning = 2;
 
             //Parameters from recommendation schedule 
-            _parameters.CenterPointIncrement = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "center point increment").FirstOrDefault().ParamValue;
-            _parameters.SpanIncrement = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "span increment").FirstOrDefault().ParamValue;
-            _parameters.SoilingBuffer = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "soiling season buffer").FirstOrDefault().ParamValue;
-            _parameters.Accelerator = _recommendationJob.Schedule.ParametersList.Where(x => x.DisplayText == "accelerator").FirstOrDefault().ParamValue;
+            _parameters.CenterPointIncrement = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "center point increment").ParamValue;
+            _parameters.SpanIncrement = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "span increment").ParamValue;
+            _parameters.SoilingBuffer = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "soiling season buffer").ParamValue;
+            _parameters.Accelerator = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "accelerator").ParamValue;
             _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
             _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
             _parameters.Asset = _recommendationJob.Asset;
@@ -58,15 +58,14 @@ namespace RecommendationScheduler.RecommendationJob
 
         protected override void GetFromAPI()
         {
-            //TODO: APIs need to be fixed on PF's side, for now we are running the algorithm with the following values
-            Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _driveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, _parameters.PlantIds)).Result;
+            Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _metadataDriveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, _parameters.PlantIds)).Result;
             _apiValues.PredictEnergyList = predictedEnergyDict["assets"].FirstOrDefault().Attributes[0].Values.Select(pe => (pe / 100)).ToList();
 
-            List<PFMetadata> metadata = Task.Run(async () => await _driveService.GetAssetsMetadataByPlantIds(_parameters.PlantIds)).Result;
+            List<PFMetadata> metadata = Task.Run(async () => await _metadataDriveService.GetAssetsMetadataByPlantIds(_parameters.PlantIds)).Result;
             var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
             _apiValues.PlantDCCapacity = plantMetadata["DC_Capacity"] / 1000;
 
-            List<PFPPAPrice> energyPrices = Task.Run(async () => await _driveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
+            List<PFPpaPrice> energyPrices = Task.Run(async () => await _metadataDriveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
             double avgPrice;
 
             energyPrices = energyPrices.Where(energyPrice => energyPrice.EffectiveStartTime >= _parameters.StartSoiling && energyPrice.EffectiveEndTime <= _parameters.EndSoiling).ToList();

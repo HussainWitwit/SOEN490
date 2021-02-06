@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useTransition } from 'react-spring';
 import Draggable from 'react-draggable';
 import {
   Button, Dialog, DialogActions, DialogContent, Paper, DialogTitle, IconButton, Slide
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import CloseIcon from '@material-ui/icons/Close';
 import TemplateConfigurationModal from '../../containers/TemplateConfigurationModal/TemplateConfigurationModal';
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
@@ -14,15 +14,13 @@ import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationMo
 import './AddRecommendationDialog.css';
 
 const pages = [
-  ({ style, updateDialogContent }) => (
+  ({ style }) => (
     <TemplateConfigurationModal
-      updateContent={updateDialogContent}
       dialogStyle={style}
     />
   ),
-  ({ style, updateDialogContent }) => (
+  ({ style }) => (
     <DetailsConfigurationModal
-      updateContent={updateDialogContent}
       dialogStyle={style}
     />
   ),
@@ -36,7 +34,6 @@ const pageTitles = [
   'Parameters Configuration',
   'Confirmation',
 ];
-
 
 export function PaperComponent (props) {
   return (
@@ -54,7 +51,9 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 export function AddRecommendationDialog (props) {
-  const { clear, isDialogOpen, basicConfiguration, template, parameterConfiguration, postConfiguredRecommendation } = props;
+  const { dialogsContent, setBackToInitialValues, postConfiguredRecommendation, parameterConfiguration } = props;
+  const { isDialogOpen, basicConfiguration, template, isEditing, id } = dialogsContent;
+
   const [index, setIndex] = useState(0);
   const [next, setNext] = useState(true);
 
@@ -81,13 +80,13 @@ export function AddRecommendationDialog (props) {
   });
 
   const closeDialog = () => {
-    clear();
+    setBackToInitialValues();
     setIndex(0);
   }
 
   //Post method
   const confirmDialogEvent = async () => {
-    postConfiguredRecommendation({
+    await postConfiguredRecommendation({
       type: template.name,
       name: basicConfiguration.title,
       granularity: basicConfiguration.granularity,
@@ -104,10 +103,15 @@ export function AddRecommendationDialog (props) {
       spanIncrement: parameterConfiguration.spanIncrement,
       accelerator: parameterConfiguration.accelerator,
       soilingSeasonBuffer: parameterConfiguration.soilingSeasonBuffer,
-    });
-    clear();
-    setIndex(0);
+    }, { isEditing: isEditing, id: id });
+    closeDialog();
   }
+
+  useEffect(() => {
+    if (isEditing) {
+      setIndex(1);
+    }
+  }, [isEditing])
 
   return (
     <Dialog
@@ -150,7 +154,18 @@ export function AddRecommendationDialog (props) {
         <Button data-testid="cancel-button" id="cancel-btn" onClick={closeDialog} variant="outlined">
           Cancel
         </Button>
-        {index > 0 && (
+        {(index === 1 && !isEditing) && (
+          <Button
+            data-testid="previous-button"
+            id="previous-btn"
+            onClick={onClickPrevious}
+            variant="outlined"
+          >
+            Previous
+          </Button>
+        )
+        }
+        {index > 1 && (
           <Button
             data-testid="previous-button"
             id="previous-btn"
@@ -161,22 +176,23 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {index === 0 && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined">
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!template.name}>
             Next
           </Button>
         )}
         {(index <= 2 && index > 0) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
             Next
           </Button>
         )}
         {index === 3 && (
-          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length === 0}>
-            Confirm
+          <Button id="next-btn" data-testid="confirm-button" onClick={confirmDialogEvent} variant="outlined" disabled={!basicConfiguration.title || (basicConfiguration.asset != null && basicConfiguration.asset.length === 0)}>
+            {isEditing ? "Save" : "Confirm"}
           </Button>
         )}
       </DialogActions>
     </Dialog>
   );
 }
-export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(AddRecommendationDialog)
+
+export default connect(mapDialogStateToProps, mapDispatchToProps)(AddRecommendationDialog)

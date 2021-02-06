@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Models.Application;
 using Models.Application.Asset;
 using Models.DB;
+using ConfiguredRecommendationParameter = Models.Application.ConfiguredRecommendationParameter;
 using Moq;
 
 namespace RecommendationEngineTests.UnitTests.MockData
@@ -17,6 +18,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
         public static DBRecommendationType YEARLY_RECOMMENDATION_TYPE = RecommendationList.YearlyRecType();
         public static DBRecommendationSchedule CONVERTED_CONFIGURED_RECOMMENDATION = RecommendationList.BasicDBRecommendationSchedule();
         public static List<DBRecommendationScheduleParameter> BASIC_PARAMETER_LIST = RecommendationList.BasicParameters();
+        public static ConfiguredRecommendation UNEDITED_CONFIGURED_RECOMMENDATION = RecommendationList.UneditedConfiguredRecommendation();
+        public static ConfiguredRecommendation EDITED_CONFIGURED_RECOMMENDATION = RecommendationList.EditedConfiguredRecommendation();
+        public static DBRecommendationSchedule UNEDITED_DB_RECOMMENDATION = RecommendationList.UneditedDBRecommendationSchedule();
+        public static DBRecommendationSchedule EDITED_DB_RECOMMENDATION = RecommendationList.EditedDBRecommendationSchedule();
+        public static List<DBRecommendationType> RECOMMENDATION_TYPE = RecommendationList.RecommendationType();
 
         public static class RecommendationList
         {
@@ -78,6 +84,28 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 };
 
                 return list;
+            }
+
+            public static List<DBRecommendationType> RecommendationType()
+            {
+                List<DBRecommendationType> dbRecTypes = new List<DBRecommendationType>()
+                {
+                    new DBRecommendationType {
+                        RecommendationTypeId = 1,
+                        DisplayText = "Yearly Wash Optimzation",
+                        Description = "Description",
+                        EnergyType = "pv",
+                        Type = "Yearly Wash Optimzation",
+                        DefaultParametersList = new List<DBRecommendationParameter>() {
+                            new DBRecommendationParameter {
+                                DisplayText = "Center Point",
+                                DefaultValue = 3.25
+                            }
+                        }
+                    }
+                };
+
+                return dbRecTypes;
             }
 
             public static DBRecommendationType YearlyRecType()
@@ -150,7 +178,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         }
                     },
                     AssetIdList = new List<int>() { 44 },
-                    AssetList = new List<AssetLeaf>() { asset}
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
 
@@ -232,6 +260,98 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     RecommendationType = YEARLY_RECOMMENDATION_TYPE
+                };
+            }
+
+            public static DBRecommendationSchedule UneditedDBRecommendationSchedule()
+            {
+                return new DBRecommendationSchedule
+                {
+                    Name = "Wash Rec",
+                    DisplayText = YEARLY_RECOMMENDATION_TYPE.DisplayText,
+                    Granularity = "Yearly",
+                    Description = YEARLY_RECOMMENDATION_TYPE.Description,
+                    CreatedOn = new DateTime().Date,
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 2,
+                    RecommendationType = YEARLY_RECOMMENDATION_TYPE
+                };
+            }
+
+            public static DBRecommendationSchedule EditedDBRecommendationSchedule()
+            {
+                return new DBRecommendationSchedule
+                {
+                    Name = "Wash Rec W20",
+                    DisplayText = YEARLY_RECOMMENDATION_TYPE.DisplayText,
+                    Granularity = "Yearly",
+                    Description = YEARLY_RECOMMENDATION_TYPE.Description,
+                    CreatedOn = new DateTime().Date,
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 5,
+                    RecommendationType = YEARLY_RECOMMENDATION_TYPE
+                };
+            }
+
+            public static ConfiguredRecommendation UneditedConfiguredRecommendation()
+            {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "asset44",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "asset 44",
+                    ElementPath = "asset44.path",
+                    EnergyType = "pv"
+                };
+
+                return new ConfiguredRecommendation
+                {
+                    Id = 1,
+                    Name = "Wash Rec",
+                    CreatedBy = "Zohal",
+                    CreatedOn = new DateTime(),
+                    Granularity = "Yearly",
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 2,
+                    Type = "Yearly Wash Optimization",
+                    Description = "Description of algo",
+                    PreferredScenario = "ROI",
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
+                };
+            }
+
+            public static ConfiguredRecommendation EditedConfiguredRecommendation()
+            {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "asset44",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "asset 44",
+                    ElementPath = "asset44.path",
+                    EnergyType = "pv"
+                };
+
+                return new ConfiguredRecommendation
+                {
+                    Id = 1,
+                    Name = "Wash Rec W20",
+                    CreatedBy = "Zohal",
+                    CreatedOn = new DateTime(),
+                    Granularity = "Monthly",
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 5,
+                    Type = "Yearly Wash Optimization",
+                    Description = "Description of algo",
+                    PreferredScenario = "ROI",
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
         }

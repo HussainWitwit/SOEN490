@@ -12,7 +12,7 @@ export interface ConfiguredRecommendation {
     recurrenceDayOfWeek: number,
     recurrenceDatetime: string,
     createdOn: string,
-    lastJobs: ConfiguredRecommendationJob[],
+    lastJobs: Job[],
     assetIdList?: number[],
     assetList?: Asset[],
     parameters?: ConfiguredRecommendationParameter[]
@@ -23,7 +23,7 @@ export interface ConfiguredRecommendationParameter {
     parameterValue: number
 }
 
-export interface ConfiguredRecommendationJob {
+export interface Job {
     id: number,
     status: string
     timestamp: Date
