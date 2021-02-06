@@ -1,10 +1,5 @@
-.alertMessage.MuiDialogTitle-root{
-    text-align: center;
-}
-
 #cancelButton{
     width: 100px;
-    text-align: center;
     background-color:#FFFFFF;
     color: #C4C4C4;
     padding: 7px 25px 7px 25px;
@@ -17,16 +12,15 @@
 }
 
 #cancelButton:hover{
-    background-color: #ffc107;
+    background-color: #F7F7F5;
     box-shadow: none;
     transition: all 500ms;
     border-color: transparent;
-    color: white;
+    color: #C4C4C4;
 }
 
 #deleteButton {
     width: 100px;
-    text-align: center;
     background-color:#FFFFFF;
     color: #FF0000;
     padding: 7px 25px 7px 25px;
@@ -46,17 +40,18 @@
 }
 
 #buttons{
-    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 .dialog.MuiDialog-paper{
-    max-height: 250px;
-    height: 200px;
-    width: 600px;
-    max-width: 600px;
+    max-height: 300px;
+    height: 250px;
+    width: 700px;
+    max-width: 700px;
     display: flex;
     justify-content: center;
-    align-content: center;
 }
 
 #closeButton{
@@ -65,3 +60,28 @@
     top: 4px;
     color: grey;
 }
+
+#WarningRoundedIcon{
+    color: #FF0000;
+    font-size: xxx-large;
+}
+
+#warning{
+    flex: 10%;
+    padding-left: 30px;
+    padding-top: 30px;
+}
+
+#warningMessage{
+    flex: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#deleteWarning{
+    display: flex;
+    flex-direction: row;
+}
+

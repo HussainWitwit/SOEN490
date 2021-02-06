@@ -1,22 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import ConfiguredRecommendationTable from '../../components/ConfiguredRecommendationTable/ConfiguredRecommendationTable';
+import { Grid, TableCell } from '@material-ui/core';
+import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
-import { mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
-import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
+import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
 
-export function ManageRecommendationPage(props) {
 
-  const { toggleDialog, configuredRecommendationList } = props;
+/* istanbul ignore next */ //Should be tested 
+export const RowsToDisplay = (element) => (
+  <React.Fragment>
+    <TableCell />
+    <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.name}</TableCell>
+    <TableCell id="table-body">{element.type}</TableCell>
+    <TableCell id="table-body">{element.granularity}</TableCell>
+    <TableCell id="table-body">{element.createdOn}</TableCell>
+  </React.Fragment>
+);
+
+export function ManageRecommendationPage (props) {
+
+  const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
+
+  /* istanbul ignore next */ //Should be tested 
+  const headCells = [
+    { id: "name", label: "Title"},
+    { id: "type", label: "Type" },
+    { id: "granularity", label: "Granularity" },
+    { id: "createdOn", label: "Created On" },
+  ];
 
   /* istanbul ignore next */
   const updateSearch = async (input) => {
@@ -24,7 +42,7 @@ export function ManageRecommendationPage(props) {
       return recommendation.name.toLowerCase().includes(input.toLowerCase())
     })
     setRecommendationList(filtered);
- }
+  }
 
   useEffect(() => {
     setRecommendationList(configuredRecommendationList)
@@ -48,7 +66,7 @@ export function ManageRecommendationPage(props) {
               <Button id="recBtn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
-              <AddRecommendationDialog {...props}/>
+              <AddRecommendationDialog {...props} />
             </div>
           </Grid>
         </Grid>
@@ -57,10 +75,10 @@ export function ManageRecommendationPage(props) {
       <div>
         <div>
           <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id = "data-testid" >
+            <Grid item id="data-testid" >
               <SearchBar
-                placeholder = "Search for a recommendation..."
-                onSearchUpdate = {updateSearch}
+                placeholder="Search for a recommendation..."
+                onSearchUpdate={updateSearch}
               />
             </Grid>
             <Grid item>
@@ -72,9 +90,16 @@ export function ManageRecommendationPage(props) {
         </div>
       </div>
       <br></br>
-      <ConfiguredRecommendationTable data = {recommendationList} />
-    </div>
+      <RecommendationEngineTable
+        rowsValue={RowsToDisplay}
+        data={recommendationList}
+        tableTitle={"Configured Recommendations"}
+        onClickRow={openScheduleDrilldown}
+        columnTitles={headCells}
+        isClickable= {true}
+      />
+    </div >
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageRecommendationPage);
+export default connect(mapStateToProps, mapDispatchManageRecommendationPageToProps)(ManageRecommendationPage);

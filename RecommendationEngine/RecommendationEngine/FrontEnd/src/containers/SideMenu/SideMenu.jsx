@@ -7,8 +7,6 @@ import { SideMenuItems } from './ListItemObjects.ts';
 import LogoSVGComponent from './LogoSVGComponent.jsx';
 import { withRouter } from 'react-router-dom';
 
-//TODO: We should maybe modified the style of the Nested Recommendations to let the user know in which sub-context
-//TODO: he is currently in without needing to drop-down. 
 export function SideMenu (props) {
 
     const [openNested, setOpenNested] = React.useState(true);
@@ -48,7 +46,6 @@ export function SideMenu (props) {
         setIsNestedItemSelected(true);
     }
 
-    //TODO: NEED test 
     const expandButton = (Icon) => (
         <IconButton size="small" onClick={() => { setOpenNested(!openNested) }}>
             <Icon className="icon-container" />

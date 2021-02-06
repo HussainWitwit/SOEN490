@@ -10,11 +10,12 @@ import { VscCircuitBoard } from 'react-icons/vsc';
 import { GoCalendar } from 'react-icons/go';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
-import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 
 function TemplateConfigurationModal (props) {
 
-  const { templateDetailsList, template, dialogStyle, setRecommendationType } = props;
+  const { dialogsContent, dialogStyle, setRecommendationType } = props;
+  const { templateDetailsList, template } = dialogsContent;
 
   const TemplateIcon1 = FaSolarPanel;
   const TemplateIcon2 = GoCalendar;

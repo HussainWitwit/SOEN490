@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/ApiReducer/reducer-actions';
+import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -53,7 +53,7 @@ function AssetIcon ({ type }) {
       return <FontAwesomeIcon className='label-icon' icon={faCubes} />;
     case 'plant':
       return <FontAwesomeIcon className='label-icon' icon={faCube} />;
-    case 'asset': //TODO: Need extra logic for energy type
+    case 'asset':
       return <FontAwesomeIcon className='label-icon' icon={faSun} />;
     default:
       return <FontAwesomeIcon className='label-icon' icon={faQuestion} />;
@@ -95,10 +95,9 @@ AssetTreeItem.propTypes = {
   nodeId: PropTypes.string,
   labelText: PropTypes.string,
   assetType: PropTypes.string,
-  labelInfo: PropTypes.string, //TODO: Could be useful to display the number of Asset children
+  labelInfo: PropTypes.string,
 };
 
-//TODO: Need to be done 50% from scratch.
 export const SearchComboBox = () => {
   return (
     <Autocomplete
@@ -123,7 +122,7 @@ const mockList = [
   { title: 'Asset Title 4' },
 ];
 
-export function AssetTree ({nestedAssets}) {
+export function AssetTree ({ nestedAssets }) {
   const DisplayAssetNodeTree = (displayData) => (
     <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
