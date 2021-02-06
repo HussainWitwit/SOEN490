@@ -10,7 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
-import WarningRoundedIcon from '@material-ui/icons/WarningRounded';;
+import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
 
 
 export function DeletePopUp (props) {

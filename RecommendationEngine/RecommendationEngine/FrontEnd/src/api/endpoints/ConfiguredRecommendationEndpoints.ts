@@ -47,7 +47,7 @@ export async function DeleteRecommendationById(id: number) : Promise<any> {
         console.log(error);
     }
     return response;
-};
+}
 
 
 export async function AddConfiguredRecommendation(recommendation: ConfiguredRecommendation) : Promise<any> {
@@ -63,7 +63,7 @@ export async function AddConfiguredRecommendation(recommendation: ConfiguredReco
         console.log(error);
     }
     return response;
-};
+}
 
 
 export async function EditConfiguredRecommendation(recommendation: ConfiguredRecommendation, id: number) : Promise<any> {
@@ -79,7 +79,7 @@ export async function EditConfiguredRecommendation(recommendation: ConfiguredRec
         console.log(error);
     }
     return response;
-};
+}
 
 export const ForceRunConfiguredRecommendation = (id: number) => {
     try {
