@@ -54,7 +54,7 @@ export default function JobsPage () {
     }
 
     useEffect(() => {
-        getJobList([]);
+        getJobList();
     }, [])
 
     return (

@@ -81,16 +81,18 @@ export async function EditConfiguredRecommendation(recommendation: ConfiguredRec
     return response;
 }
 
-export const ForceRunConfiguredRecommendation = (id: number) => {
+export async function ForceRunConfiguredRecommendation(id: number) : Promise<any> {
+    let response;
     try {
-        fetch('api/scheduler/'+id, {
+        response = await fetch('api/scheduler/'+ id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
         });
-    } catch (e) {
+    } catch (error) {
         console.log('Error manually triggering configured recommendation!')
-        console.log(e);
+        console.log(error);
     }
+    return response;
 }
 
 
