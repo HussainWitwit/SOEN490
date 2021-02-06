@@ -47,7 +47,7 @@ export async function DeleteRecommendationById(id: number) : Promise<any> {
         console.log(error);
     }
     return response;
-};
+}
 
 
 export async function AddConfiguredRecommendation(recommendation: ConfiguredRecommendation) : Promise<any> {
@@ -63,7 +63,7 @@ export async function AddConfiguredRecommendation(recommendation: ConfiguredReco
         console.log(error);
     }
     return response;
-};
+}
 
 
 export async function EditConfiguredRecommendation(recommendation: ConfiguredRecommendation, id: number) : Promise<any> {
@@ -79,18 +79,20 @@ export async function EditConfiguredRecommendation(recommendation: ConfiguredRec
         console.log(error);
     }
     return response;
-};
+}
 
-export const ForceRunConfiguredRecommendation = (id: number) => {
+export async function ForceRunConfiguredRecommendation(id: number) : Promise<any> {
+    let response;
     try {
-        fetch('api/scheduler/'+id, {
+        response = await fetch('api/scheduler/'+ id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
         });
-    } catch (e) {
+    } catch (error) {
         console.log('Error manually triggering configured recommendation!')
-        console.log(e);
+        console.log(error);
     }
+    return response;
 }
 
 
