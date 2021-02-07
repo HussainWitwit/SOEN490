@@ -52,7 +52,7 @@ export const Transition = React.forwardRef(function Transition (props, ref) {
 });
 
 export function AddRecommendationDialog (props) {
-  const { dialogsContent, setBackToInitialValues, postConfiguredRecommendation, parameterConfiguration } = props;
+  const { dialogsContent, setBackToInitialValues, postConfiguredRecommendation } = props;
   const { isDialogOpen, basicConfiguration, template, isEditing, id } = dialogsContent;
 
   const [index, setIndex] = useState(0);
