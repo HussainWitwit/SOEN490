@@ -11,6 +11,7 @@ import TemplateConfigurationModal from '../../containers/TemplateConfigurationMo
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
 import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
+import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
 import './AddRecommendationDialog.css';
 
 const pages = [
@@ -94,15 +95,13 @@ export function AddRecommendationDialog (props) {
       createdOn: new Date(),
       preferredScenario: basicConfiguration.preferredScenario,
       recurrenceDayOfWeek: basicConfiguration.repeatDay,
+      parameters: transformParameterListPost(template.inputList),
       modifiedBy: '',
-      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate,
       assetIdList: basicConfiguration.asset.map((e) => {
         return e.id;
       }),
-      centerPointIncrement: parameterConfiguration.centerPointIncrement,
-      spanIncrement: parameterConfiguration.spanIncrement,
-      accelerator: parameterConfiguration.accelerator,
-      soilingSeasonBuffer: parameterConfiguration.soilingSeasonBuffer,
+
     }, { isEditing: isEditing, id: id });
     closeDialog();
   }
