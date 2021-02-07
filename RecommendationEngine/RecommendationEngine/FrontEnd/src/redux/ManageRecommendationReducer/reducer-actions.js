@@ -216,6 +216,13 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
   }
 }
 
+/* istanbul ignore next */
+export const setParamValue = (value, index) => {
+  return {
+    type: dispatchActionType.UPDATE_PARAM_VALUE,
+    payload: { value: value, paramIndex: index }
+  };
+}
 
 /* istanbul ignore next */
 export const postConfiguredRecommendation = async (dispatch, configuredRecommendation, editingState) => {
@@ -237,6 +244,11 @@ export const mapDialogStateToProps = (state) => {
   };
 };
 
+export const mapParamDialogStateToProps = (state) => {
+  return {
+    parameterList: state.manageRecommendationReducer.template.inputList
+  };
+}
 
 //This method will allow you to pass the actions as a prop to the connected component in
 //order to modify the value in the store
@@ -261,6 +273,13 @@ export const mapDispatchToProps = (dispatch) => {
     setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
     postConfiguredRecommendation: (configuredRecommendation, editingState) => postConfiguredRecommendation(dispatch, configuredRecommendation, editingState),
   };
+}
+
+/* istanbul ignore next */
+export const mapDispatchParametersPageToProps = (dispatch) => {
+  return {
+    setParamValue: (value, index) => dispatch(setParamValue(value, index))
+  }
 }
 
 /* istanbul ignore next */
