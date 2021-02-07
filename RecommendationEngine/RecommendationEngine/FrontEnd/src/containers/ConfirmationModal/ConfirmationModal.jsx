@@ -5,8 +5,8 @@ import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/Mu
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
+import { transformParameterList } from '../../utilities/ArrayManipulationUtilities';
 import './ConfirmationModal.css';
-import { convertObjectToArrayOfObjects } from '../../utilities/ConfiguredRecommendationUtilities';
 
 export function ConfirmationModal (props) {
 
@@ -48,8 +48,10 @@ export function ConfirmationModal (props) {
           />
           <MultiSelectAutocomplete
             contentLabel="Parameters..."
-            items={convertObjectToArrayOfObjects(dialogsContent.parameterConfiguration)}
-            defaultValue={convertObjectToArrayOfObjects(dialogsContent.parameterConfiguration).map((value) => { if (value !== 0) { return value } })}
+            id='multiple-select-asset-container'
+            error={dialogsContent.template.inputList === 0}
+            items={dialogsContent.template.inputList}
+            defaultValue={transformParameterList(dialogsContent.template.inputList)}
             boxLabelName={'Selected Parameters'}
             variant={'outlined'}
             isReadOnly={true}

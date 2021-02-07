@@ -8,38 +8,32 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import './ParametersConfigurationModal.css';
-import { mapDialogStateToProps, mapDispatchMergedToProps } from '../../redux/AddRecDialogReducer/reducer-actions';
+import { mapParamDialogStateToProps, mapDispatchParametersPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
 
 export function ParametersConfigurationModal (props) {
 
     const headerCells = ['Parameter name', 'Value'];
-    const { parameterConfiguration, setCenterPointIncrement, setSpanIncrement, setAccelerator, setSoilingSeasonBuffer } = props;
-
-    const rows = [
-        { parameterDisplayName: 'Centerpoint increment', parameterValue: parameterConfiguration.centerPointIncrement, setParamValue: (value) => setCenterPointIncrement(value) },
-        { parameterDisplayName: 'Span increment', parameterValue: parameterConfiguration.spanIncrement, setParamValue: (value) => setSpanIncrement(value) },
-        { parameterDisplayName: 'Accelerator', parameterValue: parameterConfiguration.accelerator, setParamValue: (value) => setAccelerator(value) },
-        { parameterDisplayName: 'Soiling season buffer', parameterValue: parameterConfiguration.soilingSeasonBuffer, setParamValue: (value) => setSoilingSeasonBuffer(value) }];
+    const { parameterList, setParamValue } = props;
 
     return (
         <animated.div id="confirmation-modal-container" style={props.dialogStyle}>
-            <div id='paramater-modal-content'>
+            <div id='parameter-modal-content'>
                 <div id="table-container">
                     <Table aria-label="collapsible table">
                         <TableHead>
                             <TableRow className='table-header-row'>
-                                {headerCells.map((cell) => (
-                                    <TableCell classeName="table-header-cell">{cell}</TableCell>
+                                {headerCells.map((cell, index) => (
+                                    <TableCell key={index} classeName="table-header-cell">{cell}</TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((cell) => (
-                                <TableRow>
-                                    <TableCell>{cell.parameterDisplayName}</TableCell>
+                            {parameterList && parameterList.map((cell, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>{cell.parameterName}</TableCell>
                                     <TableCell>
-                                        <TextField data-testID='parameter-value' value={cell.parameterValue} onChange={(e) => cell.setParamValue(e.target.value)} className="value" type="number" variant="outlined"></TextField>
+                                        <TextField data-testID='parameter-value' defaultValue={cell.defaultValue} value={cell.parameterValue} onChange={(e) => { setParamValue(e.target.value, index); }} className="value" type="number" variant="outlined"></TextField>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -51,4 +45,4 @@ export function ParametersConfigurationModal (props) {
     );
 }
 
-export default connect(mapDialogStateToProps, mapDispatchMergedToProps)(ParametersConfigurationModal)
+export default connect(mapParamDialogStateToProps, mapDispatchParametersPageToProps)(ParametersConfigurationModal);

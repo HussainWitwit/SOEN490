@@ -35,10 +35,6 @@ export const stringRecurrenceFormatting = (
   }
 };
 
-export const convertObjectToArrayOfObjects = (obj: any) => {
-  var result = Object.entries(obj).map((e) => ({ [e[0]]: e[1] }));
-  return result;
-}
 export const dateFormat = (dateInput: Date): string => {
   let date = new Date(dateInput);
   return date.toLocaleDateString('en-us', formatDate)

@@ -2,7 +2,7 @@
     display: grid;
   }
 
-#paramater-modal-content{
+#parameter-modal-content{
   display: flex;
   flex-direction: column;
   justify-content: center;
