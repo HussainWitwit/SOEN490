@@ -23,7 +23,6 @@ let state = {
     algorithmName: ""
   },
   basicConfiguration: detailsConfigInitialValues,
-  parameters: {},
   templateDetailsList: [],
   addRecommenendationResponse: null,
   deleteRecommendationResponse: null,
