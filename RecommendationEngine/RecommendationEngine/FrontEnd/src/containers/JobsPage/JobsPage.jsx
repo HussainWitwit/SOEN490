@@ -7,29 +7,33 @@ import SearchBar from '../../common/SearchBar';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import { useHistory } from "react-router-dom";
 
-const RowsToDisplay = (element) => (
-    <React.Fragment>
-        <TableCell />
-        <TableCell id="table-body">{element.id}</TableCell>
-        <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
-        <TableCell id="table-body">{element.timestamp}</TableCell>
-        <TableCell id="table-body">{element.duration} seconds</TableCell>
-        <TableCell id="table-body"><p>{element.configuredRecommendationTitle}</p></TableCell>
-        <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
-    </React.Fragment>
-);
 
 const StatusComponent = (status) => (
     <div id='job-status'
-        style={status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
+    style={status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
     {status}</div>
 );
 
 export default function JobsPage () {
-
+    
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
+
+    let history = useHistory();
+    
+    const RowsToDisplay = (element) => (
+        <React.Fragment>
+            <TableCell />
+            <TableCell id="table-body">{element.id}</TableCell>
+            <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
+            <TableCell id="table-body">{element.timestamp}</TableCell>
+            <TableCell id="table-body">{element.duration} seconds</TableCell>
+            <TableCell id="table-body"><p onClick={() => {history.push(`/recommendations-manage/${element.configuredRecommendationId}`)}}>{element.configuredRecommendationTitle}</p></TableCell>
+            <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
+        </React.Fragment>
+    );
 
     const headCells = [
         { id: 'id', label: 'Job ID' },
@@ -92,7 +96,7 @@ export default function JobsPage () {
                 rowsValue={RowsToDisplay}
                 data={jobList}
                 tableTitle={"Recommendation Jobs"}
-                onClickRow={() => { }}
+                onClickRow={()=>{}}
                 columnTitles={headCells}
             />
         </div>

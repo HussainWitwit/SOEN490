@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './ManageRecommendationDrawer.css';
 import Grid from '@material-ui/core/Grid';
 import 'date-fns';
@@ -17,6 +17,8 @@ export function ManageRecommendationDrawer({
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
+  
+
   // Animation style
   const props = useSpring({
     opacity: 1,
