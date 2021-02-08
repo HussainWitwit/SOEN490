@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models.DB;
 
 namespace Models.Migrations
 {
     [DbContext(typeof(RecommendationEngineDBContext))]
-    partial class RecommendationEngineDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210208053632_Update parameter models")]
+    partial class Updateparametermodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
