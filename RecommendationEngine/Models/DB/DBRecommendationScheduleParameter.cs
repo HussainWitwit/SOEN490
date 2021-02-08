@@ -9,11 +9,11 @@ namespace Models.DB
     {
         [Key]
         public int RecommendationScheduleParameterId { get; set; }
-        public string DisplayText { get; set; }
+        public string Name { get; set; }
         public string ModifiedBy { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public double ParamValue { get; set; }
+        public string ParamValue { get; set; }
         public virtual DBRecommendationParameter RecommendationParameter { get; set; }
         public virtual DBRecommendationSchedule Schedule { get; set; }
     }

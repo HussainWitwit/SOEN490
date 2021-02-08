@@ -55,10 +55,10 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 
             List<DBRecommendationScheduleParameter> dbParameterList = new List<DBRecommendationScheduleParameter> {
 
-                new DBRecommendationScheduleParameter { DisplayText = "center point increment", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "span increment", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "soiling season buffer", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "accelerator", ParamValue = 3},
+                new DBRecommendationScheduleParameter { Name = "CenterPointIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SpanIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SoilingSeasonBuffer", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "Accelerator", ParamValue = "3"},
 
             };
 

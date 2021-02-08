@@ -47,10 +47,10 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.CostCleaning = 2;
 
             //Parameters from recommendation schedule 
-            _parameters.CenterPointIncrement = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "center point increment").ParamValue;
-            _parameters.SpanIncrement = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "span increment").ParamValue;
-            _parameters.SoilingBuffer = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "soiling season buffer").ParamValue;
-            _parameters.Accelerator = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "accelerator").ParamValue;
+            _parameters.CenterPointIncrement = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CenterPointIncrement").ParamValue);
+            _parameters.SpanIncrement = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SpanIncrement").ParamValue);
+            _parameters.SoilingBuffer = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingSeasonBuffer").ParamValue);
+            _parameters.Accelerator = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "Accelerator").ParamValue);
             _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
             _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
             _parameters.Asset = _recommendationJob.Asset;

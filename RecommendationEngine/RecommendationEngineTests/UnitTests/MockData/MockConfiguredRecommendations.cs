@@ -99,7 +99,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         DefaultParametersList = new List<DBRecommendationParameter>() {
                             new DBRecommendationParameter {
                                 DisplayText = "Center Point",
-                                DefaultValue = 3.25
+                                DefaultValue = "3.25"
                             }
                         }
                     }
@@ -124,7 +124,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 {
                     new DBRecommendationScheduleParameter
                     {
-                        ParamValue = 1,
+                        ParamValue = "1",
                         RecommendationParameter = new DBRecommendationParameter
                         {
                             Name = "Soiling level"
@@ -132,7 +132,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     },
                     new DBRecommendationScheduleParameter
                     {
-                        ParamValue = 31,
+                        ParamValue = "31",
                         RecommendationParameter = new DBRecommendationParameter
                         {
                             Name = "Span increment"
@@ -169,12 +169,12 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         new ConfiguredRecommendationParameter
                         {
                             ParameterName = "Soiling level",
-                            ParameterValue = 1
+                            ParameterValue = "1"
                         },
                         new ConfiguredRecommendationParameter
                         {
                             ParameterName = "Span increment",
-                            ParameterValue = 31
+                            ParameterValue = "31"
                         }
                     },
                     AssetIdList = new List<int>() { 44 },
@@ -210,7 +210,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         new ConfiguredRecommendationParameter
                         {
                             ParameterName = "Soiling level",
-                            ParameterValue = 1
+                            ParameterValue = "1"
                         },
                     },
                     AssetIdList = new List<int>() { 44 },
