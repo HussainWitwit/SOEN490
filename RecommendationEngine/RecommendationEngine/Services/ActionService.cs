@@ -40,13 +40,12 @@ namespace RecommendationEngine.Services
 
                 if(schedule ==  null)
                 {
-                    throw new GlobalException
+                    Error error = new Error
                     {
-                        ApplicationName = "Recommendation Engine",
-                        Code = 204,
-                        ErrorMessage = "Actions are not linked to a configured recommendation",
-                        Type = "No Content"
+                        Type = ErrorType.BAD_REQUEST,
+                        ErrorMessage = "Actions are not linked to a configured recommendation"
                     };
+                    throw new RequestValidationException(error, "RecommendationEngine");
                 }
 
                 ActionGrouping actions = new ActionGrouping
@@ -59,13 +58,13 @@ namespace RecommendationEngine.Services
                 return actions;
 
             }
-            catch (GlobalException e)
+            catch (GlobalException)
             {
-                throw e;
+                throw;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }

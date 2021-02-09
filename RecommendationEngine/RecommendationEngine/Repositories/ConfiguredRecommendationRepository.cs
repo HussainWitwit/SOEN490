@@ -24,10 +24,9 @@ namespace RecommendationEngine.Repositories
                 Error error = new Error
                 {
                     Type = ErrorType.BAD_REQUEST,
-                    ErrorCode = 400,
                     ErrorMessage = "There are no assets associated to this recommendation."
                 };
-                throw new GlobalException(error, "RecommendationEngine");
+                throw new RequestValidationException(error, "RecommendationEngine");
             }
             _recommendationEngineDb.RecommendationSchedules.Add(schedule);
             _recommendationEngineDb.SaveChanges();
@@ -39,10 +38,9 @@ namespace RecommendationEngine.Repositories
                 Error error = new Error
                 {
                     Type = ErrorType.BAD_REQUEST,
-                    ErrorCode = 400,
                     ErrorMessage = "There are no assets associated to this recommendation."
                 };
-                throw new GlobalException(error, "RecommendationEngine");
+                throw new RequestValidationException(error, "RecommendationEngine");
             }
 
             DBRecommendationSchedule recToEdit = _recommendationEngineDb.RecommendationSchedules
@@ -72,10 +70,9 @@ namespace RecommendationEngine.Repositories
                 Error error = new Error
                 {
                     Type = ErrorType.BAD_REQUEST,
-                    ErrorCode = 400,
                     ErrorMessage = "Recommendation ID " + id + " does not exist!"
                 };
-                throw new GlobalException(error, "RecommendationEngine");
+                throw new RequestValidationException(error, "RecommendationEngine");
             }
             DBRecommendationSchedule configToRemove = _recommendationEngineDb.RecommendationSchedules
                 .FirstOrDefault(x => x.RecommendationScheduleId == id);

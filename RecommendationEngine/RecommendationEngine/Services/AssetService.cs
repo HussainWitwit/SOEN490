@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Interfaces.Services.ExternalApi;
 using RecommendationEngine.ExceptionHandler;
-using Microsoft.AspNetCore.Http;
 
 namespace RecommendationEngine.Services
 {
@@ -49,15 +48,13 @@ namespace RecommendationEngine.Services
                 AssetComposite clientComposite = GetAssetCompositeFromDBAsset(client);
                 return clientComposite;
             }
+            catch (GlobalException)
+            {
+                throw;
+            }
             catch(Exception)
             {
-                Error error = new Error
-                {
-                    Type = ErrorType.BAD_REQUEST,
-                    ErrorCode = 400,
-                    ErrorMessage = "There was an error fetching the assets."
-                };
-                throw new GlobalException(error, "Recommendation Engine");
+                throw new InternalServerException();
             }
             
         }
@@ -89,14 +86,12 @@ namespace RecommendationEngine.Services
                 List<DBAsset> childDBAssets = await BuildAssets(listOfPlants, false, client);
                 _assetRepository.AddAssetList(childDBAssets);
             }
+            catch (GlobalException)
+            {
+                throw;
+            }
             catch(Exception) {
-                Error error = new Error
-                {
-                    Type = ErrorType.BAD_REQUEST,
-                    ErrorCode = 400,
-                    ErrorMessage = "There was an error fetching the assets."
-                };
-                throw new GlobalException(error, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
 
@@ -242,15 +237,13 @@ namespace RecommendationEngine.Services
 
                 return assets;
             }
+            catch (GlobalException)
+            {
+                throw;
+            }
             catch (Exception)
             {
-                Error error = new Error
-                {
-                    Type = ErrorType.BAD_REQUEST,
-                    ErrorCode = 400,
-                    ErrorMessage = "There was an error fetching the assets."
-                };
-                throw new GlobalException(error, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }
