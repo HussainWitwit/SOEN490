@@ -20,7 +20,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             {
                 List<Error> copyList = new List<Error>(ErrorList);
                 ErrorList.Clear();
-                throw new GlobalException(copyList, APP_NAME);
+                throw new RequestValidationException(copyList, APP_NAME);
             }
         }
 
@@ -34,9 +34,9 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             ValidAssetsList(assetsList);
         }
 
-        private static void AddToErrors(string errorType, int errorCode, string message)
+        private static void AddToErrors(string errorType, string message)
         {
-            ErrorList.Add(new Error(errorType, errorCode, message));
+            ErrorList.Add(new Error(errorType, message));
         }
 
         private static void EmptyOrNullField(ConfiguredRecommendation configuredRecommendation) {
@@ -55,7 +55,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             {
                 if (string.IsNullOrEmpty(field))
                 {
-                    AddToErrors(ErrorType.VALIDATION, 400, "The field " + fieldNames.ElementAt(fieldIndex) + " is empty or null.");
+                    AddToErrors(ErrorType.VALIDATION, "The field " + fieldNames.ElementAt(fieldIndex) + " is empty or null.");
                 }
                 fieldIndex++;
             });
@@ -75,7 +75,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
 
             if (Array.IndexOf(validRecommendationTypes, recommendationType) < 0)
             {
-                AddToErrors(ErrorType.VALIDATION, 400, "The recommendation type " + recommendationType  + " is not valid.");
+                AddToErrors(ErrorType.VALIDATION, "The recommendation type " + recommendationType  + " is not valid.");
             }
         }
 
@@ -84,13 +84,13 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
 
             if (!Enumerable.Range(1, 7).Contains(dayOfWeek))
             {
-                AddToErrors(ErrorType.VALIDATION, 400, "The reccurence day of week "  + dayOfWeek  + " is not valid. Day of week must be between 1 and 7.");
+                AddToErrors(ErrorType.VALIDATION, "The reccurence day of week "  + dayOfWeek  + " is not valid. Day of week must be between 1 and 7.");
             }
         }
 
         private static void ValidDateRange(ConfiguredRecommendation configuredRecommendation) {
             if (configuredRecommendation.RecurrenceDatetime < DateTime.Today) {
-                AddToErrors(ErrorType.VALIDATION, 400, "The date must be later or equal to today.");
+                AddToErrors(ErrorType.VALIDATION, "The date must be later or equal to today.");
             }
         }
 
@@ -98,21 +98,21 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             string scenario = configuredRecommendation.PreferredScenario;
 
             if (!scenario.Equals("ROI") && !scenario.Equals("NetSaving")) {
-                AddToErrors(ErrorType.VALIDATION, 400, "The scenario " + scenario + " is not a valid scenario.");
+                AddToErrors(ErrorType.VALIDATION, "The scenario " + scenario + " is not a valid scenario.");
             }
         }
 
         private static void ValidAssetsList(List<DBAssetRecommendationSchedule> assetsList)
         {
             if (assetsList.Count() == 0) {
-                AddToErrors(ErrorType.VALIDATION, 400, "The assets list is empty.");
+                AddToErrors(ErrorType.VALIDATION, "The assets list is empty.");
                 return;
             }
 
             List<int> assetListIds = assetsList.Select(asset => asset.AssetId).ToList();
             if (assetListIds.Count != assetListIds.Distinct().Count())
             {
-                AddToErrors(ErrorType.VALIDATION, 400, "The assets list contains one or more duplicates.");
+                AddToErrors(ErrorType.VALIDATION, "The assets list contains one or more duplicates.");
             }
 
             assetsList.ForEach(asset =>
@@ -123,7 +123,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
                 // We would like to check if the asset in question is plant by ensuring the number of decimals is more than 2.
                 if (assetType.Count(pattern => pattern == '.') < 2)
                 {
-                    AddToErrors(ErrorType.VALIDATION, 400, "The asset ID " + assetId + " is not a plant.");
+                    AddToErrors(ErrorType.VALIDATION, "The asset ID " + assetId + " is not a plant.");
                 }
             });
         }
