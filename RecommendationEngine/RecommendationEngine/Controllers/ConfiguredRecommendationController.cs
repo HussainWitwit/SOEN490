@@ -31,7 +31,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.ErrorList, e.AppName });
+                return e.GetActionResult();
             }
         }
 
@@ -44,7 +44,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.ErrorList, e.AppName });
+                return e.GetActionResult();
             }
             return Ok();
         }
@@ -58,7 +58,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.ErrorList, e.AppName });
+                return e.GetActionResult();
             }
             return Ok();
         }
@@ -72,7 +72,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.ErrorList, e.AppName });
+                return e.GetActionResult();
             }
             return Ok();
         }
