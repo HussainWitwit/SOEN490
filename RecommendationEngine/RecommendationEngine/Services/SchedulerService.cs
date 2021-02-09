@@ -19,9 +19,9 @@ namespace RecommendationEngine.Services
             {
                 _scheduler.TriggerJobAsync(id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }

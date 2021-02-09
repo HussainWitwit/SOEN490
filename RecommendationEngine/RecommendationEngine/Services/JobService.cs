@@ -37,15 +37,9 @@ namespace RecommendationEngine.Services
                 
                 return jobs;
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                Error error = new Error
-                {
-                    Type = ErrorType.INTERNAL_SERVER,
-                    ErrorCode = 500,
-                    ErrorMessage = e.Message
-                };
-                throw new GlobalException(error, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
 
@@ -62,33 +56,15 @@ namespace RecommendationEngine.Services
                         Time = log.Time,
                     }).ToList();
 
-
-                if (logs.Count < 1)
-                {
-                    Error error = new Error
-                    {
-                        Type = ErrorType.BAD_REQUEST,
-                        ErrorCode = 404,
-                        ErrorMessage = "Could not find logs for job ID " + id
-                    };
-                    throw new GlobalException(error, "Recommendation Engine");
-                }
-
                 return logs;
             }
-            catch (GlobalException e)
+            catch (GlobalException)
             {
-                throw e;
+                throw;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Error error = new Error
-                {
-                    Type = ErrorType.INTERNAL_SERVER,
-                    ErrorCode = 500,
-                    ErrorMessage = e.Message
-                };
-                throw new GlobalException(error, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }

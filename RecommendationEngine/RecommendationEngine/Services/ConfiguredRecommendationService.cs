@@ -121,10 +121,9 @@ namespace RecommendationEngine.Services
                 Error error = new Error
                 {
                     Type = ErrorType.BAD_REQUEST,
-                    ErrorCode = 400,
-                    ErrorMessage = "There is no configured recommendation with recommendaion ID " + id
+                    ErrorMessage = "There is no configured recommendation with recommendation ID " + id
                 };
-                throw new GlobalException(error, "Recommendaiton Engine");
+                throw new RequestValidationException(error, "RecommendationEngine");
             }
 
             ConfiguredRecommendation configuredRecommendation = new ConfiguredRecommendation

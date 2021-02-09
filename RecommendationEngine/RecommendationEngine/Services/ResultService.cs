@@ -36,15 +36,9 @@ namespace RecommendationEngine.Services
                             JobId = dbResult.Job.RecommendationJobId
                         }).ToList();
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                Error error = new Error
-                {
-                    Type = ErrorType.API_ERROR,
-                    ErrorCode = 400,
-                    ErrorMessage = e.Message
-                };
-                throw new GlobalException(error, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }
