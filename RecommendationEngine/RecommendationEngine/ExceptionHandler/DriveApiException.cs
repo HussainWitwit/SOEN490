@@ -5,21 +5,14 @@ namespace RecommendationEngine.ExceptionHandler
 {
     public class DriveApiException: GlobalException
     {
-        public DriveApiException(List<Error> ErrorList, string AppName)
-        {
-            this.ErrorList = ErrorList;
-            this.AppName = AppName;
-        }
-
-        public DriveApiException(Error error, string AppName)
-        {
-            this.ErrorList = new List<Error> { error };
-            this.AppName = AppName;
-        }
-
         public override IActionResult GetActionResult()
         {
-            throw new System.NotImplementedException();
+            return new ContentResult
+            {
+                StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status503ServiceUnavailable,
+                Content = "PFDrive API is currently unavailable",
+                ContentType = "application/json"
+            };
         }
     }
 }

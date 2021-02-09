@@ -7,7 +7,7 @@
 
         public Error() { }
 
-        public Error(string Type, int ErrorCode, string ErrorMessage)
+        public Error(string Type, string ErrorMessage)
         {
             this.Type = Type;
             this.ErrorMessage = ErrorMessage;

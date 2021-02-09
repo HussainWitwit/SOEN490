@@ -5,21 +5,21 @@ namespace RecommendationEngine.ExceptionHandler
 {
     public class RequestValidationException: GlobalException
     {
-        public RequestValidationException(List<Error> ErrorList, string AppName)
+        public RequestValidationException(List<Error> errorList, string appName)
         {
-            this.ErrorList = ErrorList;
-            this.AppName = AppName;
+            this.ErrorList = errorList;
+            this.AppName = appName;
         }
 
-        public RequestValidationException(Error error, string AppName)
+        public RequestValidationException(Error error, string appName)
         {
             this.ErrorList = new List<Error> { error };
-            this.AppName = AppName;
+            this.AppName = appName;
         }
 
         public override IActionResult GetActionResult()
         {
-            throw new System.NotImplementedException();
+            return new BadRequestObjectResult(new { ErrorList, AppName });
         }
     }
 }

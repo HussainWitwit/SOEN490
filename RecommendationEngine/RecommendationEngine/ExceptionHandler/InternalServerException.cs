@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RecommendationEngine.ExceptionHandler
 {
-    public class DbException: GlobalException
+    public class InternalServerException: GlobalException
     {
         public override IActionResult GetActionResult()
         {
             return new ContentResult
             {
-                StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status503ServiceUnavailable,
-                Content = "There has been an error fetching from the database",
+                StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError,
+                Content = "There has been an internal server error",
                 ContentType = "application/json"
             };
         }
