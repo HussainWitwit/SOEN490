@@ -12,9 +12,8 @@ import {
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 import ActionDrawer from '../ActionDrawer/ActionDrawer';
-import { Route, useRouteMatch } from 'react-router-dom';
 
-export function RightPanelDrawer({
+export function RightPanelDrawer ({
   isOpen,
   tabs,
   selectedTabIndex,
@@ -34,11 +33,8 @@ export function RightPanelDrawer({
     Details: {
       title: 'Details',
       closeHandler: closeScheduleDrilldown,
-      component: (
-        <Route path="/recommendations-manage/new">
-          <ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />
-        </Route>
-      )},
+      component: (<ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+    },
     Actions: {
       title: 'Actions',
       closeHandler: closeResultDrilldown,

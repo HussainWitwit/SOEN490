@@ -9,7 +9,7 @@ import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRe
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import SearchBar from '../../common/SearchBar';
 import './ManageRecommendationPage.css';
-import { useParams } from "react-router-dom";
+
 
 /* istanbul ignore next */ //Should be tested 
 export const RowsToDisplay = (element) => (
@@ -27,8 +27,6 @@ export function ManageRecommendationPage (props) {
   const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
-
-  const {configuredRecomendationId} = useParams();
 
   /* istanbul ignore next */ //Should be tested 
   const headCells = [
@@ -50,12 +48,6 @@ export function ManageRecommendationPage (props) {
     setRecommendationList(configuredRecommendationList)
     setDefaultConfiguredRecList(configuredRecommendationList)
   }, [configuredRecommendationList])
-
-  useEffect(() => {
-    if (configuredRecomendationId || configuredRecomendationId === 0){
-      openScheduleDrilldown(configuredRecomendationId);
-    }
-  }, [configuredRecomendationId])
 
   return (
     <div id="main-container">
