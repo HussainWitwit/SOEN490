@@ -53,7 +53,7 @@ namespace RecommendationEngine.Services
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate(recommendationType);
+            configuredRecommendation.Validate();
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {
@@ -185,7 +185,7 @@ namespace RecommendationEngine.Services
         public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate(recommendationType);
+            configuredRecommendation.Validate();
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {

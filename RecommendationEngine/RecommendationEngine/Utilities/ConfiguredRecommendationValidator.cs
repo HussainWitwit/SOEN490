@@ -10,7 +10,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
     public static class ConfiguredRecommendationValidator
     {
 
-        public static void Validate(this ConfiguredRecommendation configuredRecommendation, DBRecommendationType recommendationType)
+        public static void Validate(this ConfiguredRecommendation configuredRecommendation)
         {
             string[] strs = new string[] { configuredRecommendation.Name, configuredRecommendation.CreatedBy, configuredRecommendation.Granularity, configuredRecommendation.Type };
 
@@ -34,6 +34,11 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             if (Array.Exists(dates, date => date < DateTime.Today))
             {
                 throw new GlobalException(400, "Bad Request", "date must be later or equal to today", "Recommendation Engine");
+            }
+
+            if (Array.Exists(configuredRecommendation.Parameters.ToArray(), param => param.ParameterValue is null))
+            {
+                throw new GlobalException(400, "Bad Request", "parameters cannot be empty", "Recommendation Engine");
             }
         }
     }

@@ -26,7 +26,8 @@ namespace RecommendationEngine.Services
                     InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
                     {
                         ParameterName = param.DisplayText,
-                        DefaultValue = param.DefaultValue
+                        DefaultValue = param.DefaultValue,
+                        ParameterType = param.Type
                     }).ToList()
                 }).ToList();
 
