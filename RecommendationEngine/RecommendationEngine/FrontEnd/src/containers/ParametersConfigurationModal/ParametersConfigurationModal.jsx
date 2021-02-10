@@ -10,11 +10,64 @@ import TextField from '@material-ui/core/TextField';
 import './ParametersConfigurationModal.css';
 import { mapParamDialogStateToProps, mapDispatchParametersPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker
+} from '@material-ui/pickers';
 
 export function ParametersConfigurationModal (props) {
 
     const headerCells = ['Parameter name', 'Value'];
     const { parameterList, setParamValue } = props;
+
+    console.log()
+
+    const parameters = [
+        {
+            parameterName: 'parameter 1',
+            parameterValue: null,
+            defaultValue: 4,
+            type: 'POSITIVE_INT'
+        },
+        {
+            parameterName: 'parameter 1',
+            parameterValue: null,
+            defaultValue: new Date(),
+            type: 'date'
+
+        },
+        {
+            parameterName: 'parameter 1',
+            parameterValue: null,
+            defaultValue: new Date(),
+            type: 'date'
+        },
+        {
+            parameterName: 'parameter 1',
+            parameterValue: null,
+            defaultValue: 5,
+            type: 'POSITIVE_FLOAT'
+        },
+        {
+            parameterName: 'parameter 1',
+            parameterValue: null,
+            defaultValue: 5,
+            type: 'NEGATIVE_INT'
+        },
+        {
+            parameterName: 'parameter 1',
+            parameterValue: new Date(),
+            defaultValue: 5,
+            type: 'date'
+        },
+        {
+            parameterName: 'parameter 1',
+            parameterValue: null,
+            defaultValue: 5,
+            type: 'NEGATIVE_FLOAT'
+        }
+    ]
 
     return (
         <animated.div id="confirmation-modal-container" style={props.dialogStyle}>
@@ -31,9 +84,39 @@ export function ParametersConfigurationModal (props) {
                         <TableBody>
                             {parameterList && parameterList.map((cell, index) => (
                                 <TableRow key={index}>
-                                    <TableCell>{cell.parameterName}</TableCell>
+                                    <TableCell id='parameter-name-table-cell'>{cell.parameterName}</TableCell>
                                     <TableCell>
-                                        <TextField data-testID='parameter-value' defaultValue={cell.defaultValue} value={cell.parameterValue} onChange={(e) => { setParamValue(e.target.value, index); }} className="value" type="number" variant="outlined"></TextField>
+                                        {((cell.parameterType.includes('NUMBER')) && (<TextField
+                                            InputProps={cell.parameterType.includes('POSITIVE') ? {
+                                                inputProps: { min: 0 },
+                                            } : { inputProps: { max: 0 }, }}
+                                            data-testID='parameter-value'
+                                            defaultValue={cell.defaultValue}
+                                            value={cell.parameterValue}
+                                            onChange={(e) => { setParamValue(e.target.value, index); }}
+                                            className="value"
+                                            type="number"
+                                            variant="outlined">
+
+                                        </TextField>))}
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            {cell.parameterType === 'DATE' && (
+                                                <KeyboardDatePicker
+                                                    id="parameter-date-picker"
+                                                    data-testid='date'
+                                                    autoOk
+                                                    inputVariant="outlined"
+                                                    defaultValue={cell.defaultValue}
+                                                    label="Date"
+                                                    // minDate={new Date()} //uncomment this if you wanna disable past dates
+                                                    value={cell.parameterValue}
+                                                    onChange={(date) => setParamValue(date, index)}
+                                                    KeyboardButtonProps={{
+                                                        'aria-label': 'change date',
+                                                    }}
+                                                />
+                                            )}
+                                        </MuiPickersUtilsProvider>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -41,7 +124,7 @@ export function ParametersConfigurationModal (props) {
                     </Table>
                 </div>
             </div>
-        </animated.div>
+        </animated.div >
     );
 }
 
