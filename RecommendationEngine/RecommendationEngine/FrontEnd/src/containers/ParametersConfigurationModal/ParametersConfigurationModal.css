@@ -1,6 +1,11 @@
+#confirmation-modal-container {
+  overflow: scroll;
+}
+
 #parameter-modal-container{
-    display: grid;
-  }
+  display: grid;
+  overflow: scroll;
+}
 
 #parameter-modal-content{
   display: flex;
@@ -26,7 +31,7 @@
   width: 95%;
   border-radius: 10px;
   max-height: 100%;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .MuiTable-root {
@@ -35,10 +40,15 @@
 }
 
 .value .MuiInputBase-root {
-  height: 40px;
-  width: 100px;
+  height: 50px;
+  width: 185px;
 }
 
-.value {
+#parameter-date-picker {
   width: 100px;
+  height: 10px;
+}
+
+#parameter-name-table-cell {
+  max-width: 300px;
 }
