@@ -6,7 +6,7 @@ export const convertObjectToArrayOfObjects = (obj: any) => {
 }
 
 export const transformParameterList = (array: Parameter[]): any[] => {
-    let value: number | null | undefined;
+    let value: number | Date | null | undefined;
     return array.map((parameter: Parameter) => {
         parameter.parameterValue ? value = parameter.parameterValue : value = parameter.defaultValue;
         return { displayText: `${parameter.parameterName}: ${value}` };
@@ -14,12 +14,12 @@ export const transformParameterList = (array: Parameter[]): any[] => {
 }
 
 export const transformParameterListPost = (array: Parameter[]): any[] => {
-    let value: number | null | undefined;
+    let value: number | Date | null | undefined;
     return array.map((parameter: Parameter) => {
         parameter.parameterValue ? value = parameter.parameterValue : value = parameter.defaultValue;
         return {
-            parameterName: parameter.parameterName,
-            parameteValue: value
+            parameterName: parameter.parameterName.toString(),
+            parameteValue: value?.toString()
         };
     })
 }

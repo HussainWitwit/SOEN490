@@ -6,7 +6,7 @@ export interface TemplateDetails {
 }
 export interface Parameter {
     parameterName: string,
-    parameterType: string,
-    defaultValue?: number,
-    parameterValue: null
+    defaultValue?: number | Date,
+    parameterValue: null,
+    parameterType: string
 }
