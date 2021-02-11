@@ -169,6 +169,14 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                     )
                 }
             }
+        case type.SET_PARAM_VALUE_FROM_EDIT:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    inputList: action.payload
+                }
+            }
 
         case type.UPDATE_ID:
             return {

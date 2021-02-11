@@ -156,6 +156,13 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
+const setParamValuesFromEdit = (params) => {
+  return {
+    type: dispatchActionType.SET_PARAM_VALUE_FROM_EDIT,
+    payload: params
+  }
+}
+
 /* istanbul ignore next */
 export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
   dispatch(setTemplateName(value.type));
@@ -167,6 +174,7 @@ export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
   dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
   dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
   dispatch(setId(id));
+  dispatch(setParamValuesFromEdit(value.parameters));
   dispatch(setEditable());
 }
 
