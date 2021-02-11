@@ -35,7 +35,7 @@ export const stringRecurrenceFormatting = (
   }
 };
 
-export const dateFormat = (dateInput: Date): string => {
+export const dateFormat = (dateInput: Date | string): string => {
   let date = new Date(dateInput);
   return date.toLocaleDateString('en-us', formatDate)
 };

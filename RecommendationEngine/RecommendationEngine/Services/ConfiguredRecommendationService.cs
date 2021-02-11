@@ -174,7 +174,8 @@ namespace RecommendationEngine.Services
                 }).ToList(),
                 Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
                 {
-                    ParameterName = x.RecommendationParameter.DisplayText,
+                    ParameterName = x.RecommendationParameter.Name,
+                    DisplayText = x.RecommendationParameter.DisplayText,
                     ParameterType = x.RecommendationParameter.Type,
                     ParameterValue = x.ParamValue,
                     DefaultValue = x.RecommendationParameter.DefaultValue

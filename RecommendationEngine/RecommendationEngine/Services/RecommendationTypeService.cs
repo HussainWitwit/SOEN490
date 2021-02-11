@@ -25,9 +25,11 @@ namespace RecommendationEngine.Services
                     AlgorithmName = recommendationType.Type,
                     InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
                     {
-                        ParameterName = param.DisplayText,
+                        ParameterName = param.Name,
+                        DisplayText = param.DisplayText,
                         DefaultValue = param.DefaultValue,
-                        ParameterType = param.Type
+                        ParameterType = param.Type,
+                        ParameterValue = null
                     }).ToList()
                 }).ToList();
 
