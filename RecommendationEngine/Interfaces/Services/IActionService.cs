@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Models.Application;
-using Action = Models.Application.Action;
+﻿using Models.Application;
 
 namespace Interfaces.Services
 {

@@ -7,6 +7,6 @@ export interface Action {
 }
 export interface ActionGrouping {
     recommendationName: string,
-    assetNameList: String[],
+    assetNameList: string[],
     actions: Action[]
 }

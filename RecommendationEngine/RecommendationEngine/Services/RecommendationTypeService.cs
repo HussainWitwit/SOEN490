@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Interfaces.Services;
 using Models.Recommendation;
 using Interfaces.Repositories;
 using System.Linq;
-using Models.DB;
 
 namespace RecommendationEngine.Services
 {

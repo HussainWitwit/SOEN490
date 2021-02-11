@@ -1,3 +1,4 @@
+using System;
 using Autofac;
 using Autofac.Extras.Quartz;
 using Interfaces.RecommendationScheduler;
@@ -124,6 +125,6 @@ namespace RecommendationEngine
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-        }
+            }
     }
 }
