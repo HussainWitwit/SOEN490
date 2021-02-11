@@ -79,7 +79,7 @@ namespace RecommendationEngineTests.APITests
             var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_2;
             string json = JsonConvert.SerializeObject(recommendation);
             var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("/configuredrecommendation/add", body);
+            var response = await _client.PostAsync("api/configuredrecommendation", body);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 

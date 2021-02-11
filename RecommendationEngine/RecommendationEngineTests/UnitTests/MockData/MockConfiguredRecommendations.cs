@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Models.Application;
 using Models.Application.Asset;
 using Models.DB;
-using ConfiguredRecommendationParameter = Models.Application.ConfiguredRecommendationParameter;
-using Moq;
+using Models.Recommendation;
 
 namespace RecommendationEngineTests.UnitTests.MockData
 {
@@ -325,7 +324,19 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     Type = "Yearly Wash Optimization",
                     Description = "Description of algo",
                     PreferredScenario = "ROI",
-                    Parameters = null,
+                    Parameters = new List<ConfiguredRecommendationParameter>
+                    {
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "CenterPointIncrement",
+                            ParameterValue = "1"
+                        },
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "SpanIncrement",
+                            ParameterValue = "31"
+                        }
+                    },
                     AssetIdList = new List<int>() { 44 },
                     AssetList = new List<AssetLeaf>() { asset }
                 };
@@ -356,7 +367,19 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     Type = "Yearly Wash Optimization",
                     Description = "Description of algo",
                     PreferredScenario = "ROI",
-                    Parameters = null,
+                    Parameters = new List<ConfiguredRecommendationParameter>
+                    {
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "CenterPointIncrement",
+                            ParameterValue = "1"
+                        },
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "SpanIncrement",
+                            ParameterValue = "1"
+                        }
+                    },
                     AssetIdList = new List<int>() { 44 },
                     AssetList = new List<AssetLeaf>() { asset }
                 };

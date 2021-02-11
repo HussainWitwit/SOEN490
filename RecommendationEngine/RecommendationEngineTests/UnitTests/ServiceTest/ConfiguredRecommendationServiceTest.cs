@@ -136,7 +136,7 @@ namespace RecommendationEngineTests.UnitTests
             Assert.AreEqual("Yearly Wash Optimization", expected.Type);
             Assert.AreEqual(2, expected.RecurrenceDayOfWeek);
             Assert.AreEqual(5, expected.LastJobs.Count);
-            Assert.AreEqual(2, expected.Parameters.Count);
+            Assert.AreEqual(1, expected.Parameters.Count);
             Assert.AreEqual(1, expected.AssetList.Count);
             Assert.NotNull(expected.AssetList);
         }
