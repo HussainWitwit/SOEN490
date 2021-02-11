@@ -47,7 +47,6 @@ export function ConfirmationModal (props) {
             }}
           />
           <MultiSelectAutocomplete
-            contentLabel="Parameters..."
             id='multiple-select-asset-container'
             error={dialogsContent.template.inputList === 0}
             items={dialogsContent.template.inputList}
@@ -55,7 +54,6 @@ export function ConfirmationModal (props) {
             boxLabelName={'Selected Parameters'}
             variant={'outlined'}
             isReadOnly={true}
-            maxElement={1}
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."

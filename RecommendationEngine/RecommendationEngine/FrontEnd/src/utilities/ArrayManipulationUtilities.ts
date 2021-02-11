@@ -19,7 +19,7 @@ export const transformParameterListPost = (array: Parameter[]): any[] => {
         parameter.parameterValue ? value = parameter.parameterValue : value = parameter.defaultValue;
         return {
             parameterName: parameter.parameterName.toString(),
-            parameteValue: value?.toString()
+            parameterValue: value?.toString()
         };
     })
 }

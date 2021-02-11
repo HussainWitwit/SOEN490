@@ -21,54 +21,6 @@ export function ParametersConfigurationModal (props) {
     const headerCells = ['Parameter name', 'Value'];
     const { parameterList, setParamValue } = props;
 
-    console.log()
-
-    const parameters = [
-        {
-            parameterName: 'parameter 1',
-            parameterValue: null,
-            defaultValue: 4,
-            type: 'POSITIVE_INT'
-        },
-        {
-            parameterName: 'parameter 1',
-            parameterValue: null,
-            defaultValue: new Date(),
-            type: 'date'
-
-        },
-        {
-            parameterName: 'parameter 1',
-            parameterValue: null,
-            defaultValue: new Date(),
-            type: 'date'
-        },
-        {
-            parameterName: 'parameter 1',
-            parameterValue: null,
-            defaultValue: 5,
-            type: 'POSITIVE_FLOAT'
-        },
-        {
-            parameterName: 'parameter 1',
-            parameterValue: null,
-            defaultValue: 5,
-            type: 'NEGATIVE_INT'
-        },
-        {
-            parameterName: 'parameter 1',
-            parameterValue: new Date(),
-            defaultValue: 5,
-            type: 'date'
-        },
-        {
-            parameterName: 'parameter 1',
-            parameterValue: null,
-            defaultValue: 5,
-            type: 'NEGATIVE_FLOAT'
-        }
-    ]
-
     return (
         <animated.div id="confirmation-modal-container" style={props.dialogStyle}>
             <div id='parameter-modal-content'>
@@ -96,8 +48,8 @@ export function ParametersConfigurationModal (props) {
                                             onChange={(e) => { setParamValue(e.target.value, index); }}
                                             className="value"
                                             type="number"
+                                            placeholder={cell.defaultValue}
                                             variant="outlined">
-
                                         </TextField>))}
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                             {cell.parameterType === 'DATE' && (
@@ -106,10 +58,11 @@ export function ParametersConfigurationModal (props) {
                                                     data-testid='date'
                                                     autoOk
                                                     inputVariant="outlined"
-                                                    defaultValue={cell.defaultValue}
+                                                    clearable
+                                                    placeholder={cell.defaultValue}
                                                     label="Date"
                                                     // minDate={new Date()} //uncomment this if you wanna disable past dates
-                                                    value={cell.parameterValue}
+                                                    value={cell.parameterValue ? cell.parameterValue : cell.defaultValue}
                                                     onChange={(date) => setParamValue(date, index)}
                                                     KeyboardButtonProps={{
                                                         'aria-label': 'change date',
