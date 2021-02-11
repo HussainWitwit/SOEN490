@@ -36,7 +36,7 @@ export function ParametersConfigurationModal (props) {
                         <TableBody>
                             {parameterList && parameterList.map((cell, index) => (
                                 <TableRow key={index}>
-                                    <TableCell id='parameter-name-table-cell'>{cell.parameterName}</TableCell>
+                                    <TableCell id='parameter-name-table-cell'>{cell.displayText}</TableCell>
                                     <TableCell>
                                         {((cell.parameterType.includes('NUMBER')) && (<TextField
                                             InputProps={cell.parameterType.includes('POSITIVE') ? {
