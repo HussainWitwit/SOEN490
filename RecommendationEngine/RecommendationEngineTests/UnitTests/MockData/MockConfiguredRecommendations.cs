@@ -104,7 +104,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         DefaultParametersList = new List<DBRecommendationParameter>() {
                             new DBRecommendationParameter {
                                 DisplayText = "Center Point",
-                                DefaultValue = 3.25
+                                DefaultValue = "3.25"
                             }
                         }
                     }
