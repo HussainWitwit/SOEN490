@@ -2,6 +2,7 @@
 using Interfaces.Repositories;
 using Interfaces.Services;
 using Models.Application;
+using Models.Recommendation;
 using Models.Application.Asset;
 using Models.DB;
 using RecommendationEngine.ConfiguredRecommendationValidator;
@@ -174,7 +175,9 @@ namespace RecommendationEngine.Services
                 Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
                 {
                     ParameterName = x.RecommendationParameter.DisplayText,
-                    ParameterValue = x.ParamValue
+                    ParameterType = x.RecommendationParameter.Type,
+                    ParameterValue = x.ParamValue,
+                    DefaultValue = null
                 }).ToList()
             };
             // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
