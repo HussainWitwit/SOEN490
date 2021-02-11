@@ -8,9 +8,11 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
     "@material-ui/core": "^4.11.0",
+    "@material-ui/data-grid": "^4.0.0-alpha.19",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
+    "@material-ui/x-grid-data-generator": "^4.0.0-alpha.19",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
@@ -98,7 +100,7 @@
     "husky": "^4.3.0",
     "nan": "^2.14.1",
     "prettier": "^2.1.2",
-    "start-server-and-test": "^1.11.5",
+    "start-server-and-test": "^1.12.0",
     "typescript": "^3.7.5"
   },
   "eslintConfig": {
