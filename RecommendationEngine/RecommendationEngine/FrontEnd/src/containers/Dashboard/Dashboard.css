@@ -1,0 +1,28 @@
+
+.table-style{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table-positive-numbers{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #49C71F;
+}
+
+.table-negative-numbers{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#F26060;
+}
+
+.MuiDataGrid-colCellTitle{
+    color:  #687480;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+
+
+
+/* .MuiGridToolbar-root{
+    color:  #687480;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+} */
+
