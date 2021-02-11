@@ -61,7 +61,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
                         ParametersList = new List<DBRecommendationScheduleParameter>{ new DBRecommendationScheduleParameter
                         {
-                            ParamValue = 1,
+                            ParamValue = "1",
                             RecommendationParameter = new DBRecommendationParameter
                             {
                                 Name = "TestParam"
@@ -104,7 +104,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         DefaultParametersList = new List<DBRecommendationParameter>() {
                             new DBRecommendationParameter {
                                 DisplayText = "Center Point",
-                                DefaultValue = 3.25
+                                DefaultValue = "3.25"
                             }
                         }
                     }

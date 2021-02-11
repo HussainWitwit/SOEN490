@@ -8,10 +8,6 @@ import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import './ConfirmationModal.css';
 
 const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.
-var formatYear = { month: 'long', day: 'numeric' };
-var formatMonth = { day: 'numeric' };
-var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true };
-var dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export function ConfirmationModal (props) {
 
