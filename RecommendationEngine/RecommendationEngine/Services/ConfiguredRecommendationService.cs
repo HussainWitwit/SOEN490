@@ -177,7 +177,7 @@ namespace RecommendationEngine.Services
                     ParameterName = x.RecommendationParameter.DisplayText,
                     ParameterType = x.RecommendationParameter.Type,
                     ParameterValue = x.ParamValue,
-                    DefaultValue = null
+                    DefaultValue = x.RecommendationParameter.DefaultValue
                 }).ToList()
             };
             // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
