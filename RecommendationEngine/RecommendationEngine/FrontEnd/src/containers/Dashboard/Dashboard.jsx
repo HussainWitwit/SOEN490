@@ -59,7 +59,7 @@ function Dashboard() {
                 />
             </div> */}
 
-            <div style={{ height: 400, width: '100%' }}>
+            {/* <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     columns={[
                         {field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style'},
@@ -111,9 +111,33 @@ function Dashboard() {
                         Toolbar: GridToolbar, 
                     }}
                 />
-            </div>
+            </div> */}
 
-           
+            <div style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    columns={[
+                        {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style'},
+                        {field: 'name', headerName: 'Title', flex: 0.25, type: 'string', cellClassName: 'table-style'},
+                        {field: 'type', headerName: 'Type', flex: 0.25, type: 'string', cellClassName: 'table-style'},
+                        {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.25, cellClassName: 'table-style'},
+                        {field: 'createdOn', headerName: 'Created On', type: 'dateTime', flex: 0.25, cellClassName: 'table-style'},
+                    ]}
+
+                    rows={[
+                        {id: '1', name: 'time', type: 'Yearly Wash Optimization', granularity: 'Yearly', createdOn: '2021-01-15T16:36:55'},
+                        {id: '2', name: 'ywo6', type: 'Yearly Wash Optimization', granularity: 'Yearly', createdOn: '2021-01-15T16:41:05'}
+                    ]}
+                    // onCellClick={}
+                    // onCellHover={}
+                    // onRowClick={}
+                    // onRowSelected={}
+                    // filterModel={riceFilterModel}
+                    showToolbar
+                    components={{
+                        Toolbar: GridToolbar, 
+                    }}
+                />
+            </div>
 
         </div>
 
