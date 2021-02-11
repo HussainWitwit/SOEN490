@@ -11,6 +11,7 @@ import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/redu
 import { connect } from 'react-redux';
 import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
+import { dateFormat } from '../../utilities/DateTimeUtilities';
 
 export function ManageRecommendationDrawer({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
@@ -70,7 +71,7 @@ export function ManageRecommendationDrawer({
               </div>
               <div className="values-param">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter, key) => {
-                  return <div className = "parameter-tile"><div>{parameter.parameterName}</div><div>{parameter.parameterValue}</div></div>;
+                  return <div className = "parameter-tile"><div>{parameter.parameterName}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue): parameter.parameterValue}</div></div>;
                 })) : 'N/A'}</div>
           </Grid>
           <Grid item xs={12}>
