@@ -1,3 +1,4 @@
+using System;
 using Autofac;
 using Autofac.Extras.Quartz;
 using Interfaces.RecommendationScheduler;
@@ -104,7 +105,10 @@ namespace RecommendationEngine
             }
 
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            if (!Convert.ToBoolean(Configuration["DisableFrontendBuild"]))
+            {
+                app.UseSpaStaticFiles();
+            }
 
             app.UseRouting();
 
@@ -115,15 +119,18 @@ namespace RecommendationEngine
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
+            if (!Convert.ToBoolean(Configuration["DisableFrontendBuild"]))
             {
-                spa.Options.SourcePath = "FrontEnd";
-
-                if (env.IsDevelopment())
+                app.UseSpa(spa =>
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+                    spa.Options.SourcePath = "FrontEnd";
+
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseReactDevelopmentServer(npmScript: "start");
+                    }
+                });
+            }
         }
     }
 }
