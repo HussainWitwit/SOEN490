@@ -73,7 +73,6 @@
 
 .inputs {
     float: left;
-    margin-right: 50px;
 }
 
 .assets {
@@ -86,6 +85,27 @@
 
 .parameters {
     margin-top: 20px;
+}
+
+.value-title-param {
+    padding-top: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+}
+
+
+.parameter-tile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.values-param {
+    margin: 0;
+    padding: 0;
+    color: #687480;
+    font-size: 12px;
+    word-wrap: break-word;
+    flex-direction: row;
 }
 
 .values {
