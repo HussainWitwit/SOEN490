@@ -97,6 +97,7 @@ namespace RecommendationEngine.Services
             config.ParametersList = configuredRecommendation.Parameters.Select(parameter =>
                 new DBRecommendationScheduleParameter
                 {
+                    Name = parameter.ParameterName,
                     ParamValue = parameter.ParameterValue,
                     ModifiedBy = configuredRecommendation.CreatedBy,
                     RecommendationParameter =
