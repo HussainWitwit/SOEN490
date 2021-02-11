@@ -105,10 +105,7 @@ namespace RecommendationEngine
             }
 
             app.UseStaticFiles();
-            if (!Convert.ToBoolean(Configuration["DisableFrontendBuild"]))
-            {
-                app.UseSpaStaticFiles();
-            }
+            app.UseSpaStaticFiles();
 
             app.UseRouting();
 
@@ -119,18 +116,15 @@ namespace RecommendationEngine
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            if (!Convert.ToBoolean(Configuration["DisableFrontendBuild"]))
+            app.UseSpa(spa =>
             {
-                app.UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "FrontEnd";
+                spa.Options.SourcePath = "FrontEnd";
 
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseReactDevelopmentServer(npmScript: "start");
-                    }
-                });
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
             }
-        }
     }
 }
