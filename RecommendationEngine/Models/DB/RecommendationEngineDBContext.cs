@@ -21,7 +21,7 @@ namespace Models.DB
         public DbSet<DBWorkOrder> WorkOrders { get; set; }
         public DbSet<DBAssetRecommendationSchedule> AssetRecommendationSchedules { get; set; }
 
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public RecommendationEngineDBContext(IConfiguration configuration)
         {

@@ -61,7 +61,14 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         RecurrenceDatetime = new DateTime().Date,
                         RecurrenceDayOfWeek = 2,
                         RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
-                        ParametersList = BasicParameters(),
+                        ParametersList = new List<DBRecommendationScheduleParameter>{ new DBRecommendationScheduleParameter
+                        {
+                            ParamValue = "1",
+                            RecommendationParameter = new DBRecommendationParameter
+                            {
+                                Name = "TestParam"
+                            }
+                        }},
                         AssetsList = new List<DBAssetRecommendationSchedule>() { dbAssetRecSchedule },
                         JobsList = new List<DBRecommendationJob>{new DBRecommendationJob{RecommendationJobId = 1, Status = "Success", Timestamp = DateTime.Now}},
 

@@ -8,8 +8,6 @@ using RecommendationScheduler.RecommendationJob;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Interfaces.Services.ExternalApi;
-using Models.Application.Asset;
-using System.Data.Common;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 {
@@ -55,10 +53,10 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 
             List<DBRecommendationScheduleParameter> dbParameterList = new List<DBRecommendationScheduleParameter> {
 
-                new DBRecommendationScheduleParameter { DisplayText = "CenterPointIncrement", ParamValue = "3"},
-                new DBRecommendationScheduleParameter { DisplayText = "SpanIncrement", ParamValue = "3"},
-                new DBRecommendationScheduleParameter { DisplayText = "SoilingSeasonBuffer", ParamValue = "3"},
-                new DBRecommendationScheduleParameter { DisplayText = "Accelerator", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "CenterPointIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SpanIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SoilingSeasonBuffer", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "Accelerator", ParamValue = "3"},
 
             };
 

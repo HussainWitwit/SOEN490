@@ -1,5 +1,3 @@
-using System;
-
 namespace Models.Application
 {
     public class Result

@@ -96,6 +96,9 @@ export const RightPanelReducer = function (
               : e
           ),
         };
+        else {
+          break;
+        }
     }
 
     case type.OPEN_RESULT_DRILLDOWN: {
