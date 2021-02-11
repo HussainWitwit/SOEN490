@@ -61,7 +61,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
                         ParametersList = new List<DBRecommendationScheduleParameter>{ new DBRecommendationScheduleParameter
                         {
-                            ParamValue = 1,
+                            ParamValue = "1",
                             RecommendationParameter = new DBRecommendationParameter
                             {
                                 Name = "TestParam"
