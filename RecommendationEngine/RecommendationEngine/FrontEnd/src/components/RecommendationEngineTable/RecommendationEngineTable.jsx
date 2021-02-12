@@ -10,71 +10,78 @@ import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader';
+import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import './RecommendationEngineTable.css';
 
 
-export function getSortingComparison (orderType, orderColumnTitle) {
-  return orderType === "desc" ? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
-}
+// export function getSortingComparison (orderType, orderColumnTitle) {
+//   return orderType === "desc" ? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
+// }
 
-export function sortingComparison (firstObj, secondObj, orderColumnTitle) {
-  if (secondObj[orderColumnTitle] < firstObj[orderColumnTitle]) {
-    return -1;
-  }
-  if (secondObj[orderColumnTitle] > firstObj[orderColumnTitle]) {
-    return 1;
-  }
-  return 0;
-}
+// export function sortingComparison (firstObj, secondObj, orderColumnTitle) {
+//   if (secondObj[orderColumnTitle] < firstObj[orderColumnTitle]) {
+//     return -1;
+//   }
+//   if (secondObj[orderColumnTitle] > firstObj[orderColumnTitle]) {
+//     return 1;
+//   }
+//   return 0;
+// }
 
-export function tableSort (array, comparator) {
-  if (array != null || array != undefined) {
-    const rowElements = array.map((element, index) => [element, index]);
-    rowElements.sort((firstObj, secondObj) => {
-      const order = comparator(firstObj[0], secondObj[0]);
-      if (order !== 0) {
-        return order;
-      } else {
-        return firstObj[1] - secondObj[1];
-      }
-    });
-    return rowElements.map((element) => element[0]);
-  }
-}
+// export function tableSort (array, comparator) {
+//   if (array != null || array != undefined) {
+//     const rowElements = array.map((element, index) => [element, index]);
+//     rowElements.sort((firstObj, secondObj) => {
+//       const order = comparator(firstObj[0], secondObj[0]);
+//       if (order !== 0) {
+//         return order;
+//       } else {
+//         return firstObj[1] - secondObj[1];
+//       }
+//     });
+//     return rowElements.map((element) => element[0]);
+//   }
+// }
 
-export default function RecommendationEngineTable (props) {
+export default function RecommendationEngineTable(props) {
 
-  const { rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
+  // const { rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
 
-  const [orderType, setOrderType] = React.useState("asc");
-  const [orderColumnTitle, setOrderColumnTitle] = React.useState("");
-  const [page, setPage] = React.useState(0);
-  const [denseAttribute, setDenseAttribute] = React.useState(dense);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [isSelected, setIsSelected] = React.useState(null);
+  const { data, columnValues, dataGridSize, tableTitle, onClickRow } = props
 
-  const handleChangeDense = (event) => {
-    setDenseAttribute(event.target.checked);
-  };
 
-  const handleSortingChange = (event, property) => {
-    const isAscending = orderColumnTitle === property && orderType === "asc";
-    setOrderType(isAscending ? "desc" : "asc");
-    setOrderColumnTitle(property);
-  };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+
+  // const [orderType, setOrderType] = React.useState("asc");
+  // const [orderColumnTitle, setOrderColumnTitle] = React.useState("");
+  // const [page, setPage] = React.useState(0);
+  // const [denseAttribute, setDenseAttribute] = React.useState(dense);
+  // const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  // const [isSelected, setIsSelected] = React.useState(null);
+
+  // const handleChangeDense = (event) => {
+  //   setDenseAttribute(event.target.checked);
+  // };
+
+  // const handleSortingChange = (event, property) => {
+  //   const isAscending = orderColumnTitle === property && orderType === "asc";
+  //   setOrderType(isAscending ? "desc" : "asc");
+  //   setOrderColumnTitle(property);
+  // };
+
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
+
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
 
   return (
     <div id="root">
-      <Paper id="paper">
+      {/* <Paper id="paper">
 
         {(!tableTitle && denseAttribute) ? '' : <Toolbar id="toolbar">
           <h6 className="tool-bar-title" variant="h6" data-testid="tableTitle" component="div">{tableTitle}</h6>
@@ -100,9 +107,9 @@ export default function RecommendationEngineTable (props) {
               orderColumnTitle={orderColumnTitle}
               headCells={columnTitles}
               handleSortingChange={handleSortingChange}
-            />
+            /> */}
 
-            <TableBody
+      {/* <TableBody
               id={isClickable ? "table-body clickable" : "table-body"}
               data-testid="table-body-cypress">
 
@@ -126,8 +133,10 @@ export default function RecommendationEngineTable (props) {
                       </TableRow>
                     )
                   })}
-            </TableBody>
-          </Table>
+            </TableBody> */}
+
+
+      {/* </Table>
         </TableContainer>
         {disablePaginator ? '' : <TablePagination
           id="pagination"
@@ -139,15 +148,38 @@ export default function RecommendationEngineTable (props) {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />}
-      </Paper>
+      </Paper> */}
+
+      <div style={dataGridSize}>
+        <DataGrid
+          columns={columnValues}
+        //   columns={[
+        //     {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style'},
+        //     {field: 'name', headerName: 'Title', flex: 0.25, type: 'string', cellClassName: 'table-style'},
+        //     {field: 'type', headerName: 'Type', flex: 0.25, type: 'string', cellClassName: 'table-style'},
+        //     {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.25, cellClassName: 'table-style'},
+        //     {field: 'createdOn', headerName: 'Created On', type: 'dateTime', flex: 0.25, cellClassName: 'table-style'},
+        // ]}
+          rows={data}
+        //   rows={[
+        //     {id: '1', name: 'time', type: 'Yearly Wash Optimization', granularity: 'Yearly', createdOn: '2021-01-15T16:36:55'},
+        //     {id: '2', name: 'ywo6', type: 'Yearly Wash Optimization', granularity: 'Yearly', createdOn: '2021-01-15T16:41:05'}
+        // ]}
+          showToolbar
+          components={{ Toolbar: GridToolbar }}
+          onRowClick={onClickRow}
+        >
+        </DataGrid>
+      </div>
     </div>
   );
 }
 /* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
-  rowsValue: PropTypes.func.isRequired,
+  columnsValues: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   tableTitle: PropTypes.string.isRequired,
   onClickRow: PropTypes.func.isRequired,
-  columnTitles: PropTypes.array.isRequired,
+  dataGridSize: PropTypes.func.isRequired,
+  // columnTitles: PropTypes.array.isRequired,
 };
