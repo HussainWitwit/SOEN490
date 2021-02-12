@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Interfaces.Services;
 using Models.Recommendation;
 using Interfaces.Repositories;

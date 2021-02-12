@@ -47,7 +47,7 @@ export async function DeleteRecommendationById(id: number) : Promise<any> {
         console.log(error);
     }
     return response;
-};
+}
 
 export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation): Promise<any> => {
     let response;
@@ -80,68 +80,18 @@ export async function EditConfiguredRecommendation(recommendation: ConfiguredRec
         console.log(error);
     }
     return response;
-};
+}
 
-export const ForceRunConfiguredRecommendation = (id: number) => {
+export async function ForceRunConfiguredRecommendation(id: number) : Promise<any> {
+    let response;
     try {
-        fetch('api/scheduler/'+id, {
+        response = await fetch('api/scheduler/'+ id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
         });
-    } catch (e) {
+    } catch (error) {
         console.log('Error manually triggering configured recommendation!')
-        console.log(e);
+        console.log(error);
     }
-}
-
-
-/**
- * Maps a response to a configured recommendation
- * @param {*} response 
- */
-const mapConfiguredRecommendation = function (response: any): ConfiguredRecommendation {
-    //Make sure the returned value is exactly equal to entity attribute for the entity in question
-    return {
-        id: response.id,
-        name: response.name,
-        description: response.description,
-        type: response.type,
-        granularity: response.granularity,
-        createdBy: response.createdBy,
-        preferredScenario: response.preferredScenario,
-        recurrenceDayOfWeek: response.recurrenceDayOfWeek,
-        recurrenceDatetime: response.recurrenceDatetime,
-        createdOn: response.createdOn,
-        assetList: response.assetList,
-        lastJobs: response.lastJobs,
-        parameters: response.parameters
-    };
-}
-
-/**
- * Maps a response to a list of configured recommendation
- * @param {*} response 
- */
-const mapConfiguredRecommendations = function (response: any): ConfiguredRecommendation[] {
-    //Make sure the returned value is exactly equal to entity attribute for the entity in question
-    let result = response.map((element: any) => {
-        return {
-            id: element.id,
-            name: element.name,
-            type: element.type,
-            granularity: element.granularity,
-            createdBy: element.createdBy,
-            recurrenceDayOfWeek: element.recurrenceDayOfWeek,
-            recurrenceDatetime: element.recurrenceDatetime,
-            createdOn: element.createdOn,
-            assetList: element.assetList,
-            parameters: element.parameters ? element.parameters.map((parameter: any) => {
-                return {
-                    parameterName: parameter.parameterName,
-                    parameterValue: parameter.parameterValue,
-                }
-            }) : []
-        };
-    })
-    return result;
+    return response;
 }
