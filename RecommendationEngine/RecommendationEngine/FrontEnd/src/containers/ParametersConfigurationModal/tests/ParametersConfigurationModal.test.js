@@ -17,12 +17,12 @@ describe('ParametersConfigurationModal component', () => {
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
     const wrapper = shallow(<ParametersConfigurationModal store={store}
-        // parameterList={
-        //     { parameterName: '', defaultValue: null, parameterValue: null },
-        //     { parameterName: '', defaultValue: null, parameterValue: null },
-        //     { parameterName: '', defaultValue: null, parameterValue: null },
-        //     { parameterName: '', defaultValue: null, parameterValue: null }
-        // }
+        parameterList={[
+            { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'NUMBER' },
+            { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'NUMBER' },
+            { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'DATE'  },
+            { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'DATE' }
+        ]}
         setParamValue={(value) => { }}
     />);
 
@@ -49,7 +49,7 @@ describe('ParametersConfigurationModal component', () => {
 
     it('Finds the table rows ', () => {
         let tableRow = wrapper.find(TableRow);
-        expect(tableRow).toHaveLength(1);
+        expect(tableRow).toHaveLength(5);
     });
 
     it('Finds the table body ', () => {
