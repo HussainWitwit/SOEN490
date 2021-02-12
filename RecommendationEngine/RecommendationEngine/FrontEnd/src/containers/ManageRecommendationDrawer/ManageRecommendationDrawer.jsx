@@ -71,7 +71,7 @@ export function ManageRecommendationDrawer({
               </div>
               <div className="values-param">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
                 (configuredRecommendation.parameters.map((parameter, key) => {
-                  return <div className = "parameter-tile"><div>{parameter.parameterName}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue): parameter.parameterValue}</div></div>;
+                  return <div className = "parameter-tile"><div>{parameter.displayText}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue): parameter.parameterValue}</div></div>;
                 })) : 'N/A'}</div>
           </Grid>
           <Grid item xs={12}>
