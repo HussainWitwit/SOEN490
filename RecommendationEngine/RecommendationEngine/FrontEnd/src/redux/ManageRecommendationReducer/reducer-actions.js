@@ -156,11 +156,18 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
-const setParamValuesFromEdit = (params) => {
+export const setParamValuesFromEdit = (params) => {
   return {
     type: dispatchActionType.SET_PARAM_VALUE_FROM_EDIT,
     payload: params
   }
+}
+
+export const setParamValue = (value, index) => {
+  return {
+    type: dispatchActionType.UPDATE_PARAM_VALUE,
+    payload: { value: value, paramIndex: index }
+  };
 }
 
 /* istanbul ignore next */
@@ -222,14 +229,6 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
   else {
     alert("An error occured when trying to delete this recommendation from our server.");
   }
-}
-
-/* istanbul ignore next */
-export const setParamValue = (value, index) => {
-  return {
-    type: dispatchActionType.UPDATE_PARAM_VALUE,
-    payload: { value: value, paramIndex: index }
-  };
 }
 
 /* istanbul ignore next */

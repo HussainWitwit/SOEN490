@@ -1,11 +1,11 @@
 #confirmation-modal-container {
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
-#parameter-modal-container{
+/* #parameter-modal-container{
   display: grid;
   overflow: scroll;
-}
+} */
 
 #parameter-modal-content{
   display: flex;
@@ -21,9 +21,8 @@
   font-weight: normal;
 }
 
-.table-header-cell {
-  align-items: right;
-  background-color: teal;
+#table-header-cell {
+font-weight: bold;
 }
 
 #table-container {

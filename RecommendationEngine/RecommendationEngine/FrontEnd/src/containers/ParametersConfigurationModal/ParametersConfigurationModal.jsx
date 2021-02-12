@@ -1,35 +1,26 @@
 import React from 'react'
 import { animated } from 'react-spring';
 import './ParametersConfigurationModal.css';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
+import  { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
 import './ParametersConfigurationModal.css';
 import { mapParamDialogStateToProps, mapDispatchParametersPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 export function ParametersConfigurationModal (props) {
 
-    const headerCells = ['Parameter name', 'Value'];
     const { parameterList, setParamValue } = props;
 
     return (
         <animated.div id="confirmation-modal-container" style={props.dialogStyle}>
             <div id='parameter-modal-content'>
                 <div id="table-container">
-                    <Table aria-label="collapsible table">
+                    <Table stickyHeader aria-label="collapsible table">
                         <TableHead>
                             <TableRow className='table-header-row'>
-                                {headerCells.map((cell, index) => (
-                                    <TableCell key={index} classeName="table-header-cell">{cell}</TableCell>
+                                {['Parameter name', 'Value'].map((cell, index) => (
+                                    <TableCell key={index} id="table-header-cell">{cell}</TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
@@ -51,25 +42,24 @@ export function ParametersConfigurationModal (props) {
                                             placeholder={cell.defaultValue}
                                             variant="outlined">
                                         </TextField>))}
+                                        {cell.parameterType === 'DATE' && (
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            {cell.parameterType === 'DATE' && (
-                                                <KeyboardDatePicker
-                                                    id="parameter-date-picker"
-                                                    data-testid='date'
-                                                    autoOk
-                                                    inputVariant="outlined"
-                                                    clearable
-                                                    placeholder={cell.defaultValue}
-                                                    label="Date"
-                                                    // minDate={new Date()} //uncomment this if you wanna disable past dates
-                                                    value={cell.parameterValue ? cell.parameterValue : cell.defaultValue}
-                                                    onChange={(date) => setParamValue(date, index)}
-                                                    KeyboardButtonProps={{
-                                                        'aria-label': 'change date',
-                                                    }}
-                                                />
-                                            )}
+                                            <KeyboardDatePicker
+                                                id="parameter-date-picker"
+                                                data-testid='date'
+                                                autoOk
+                                                inputVariant="outlined"
+                                                clearable
+                                                placeholder={cell.defaultValue}
+                                                label="Date"
+                                                value={cell.parameterValue ? cell.parameterValue : cell.defaultValue}
+                                                onChange={(date) => setParamValue(date, index)}
+                                                KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                }}
+                                            />
                                         </MuiPickersUtilsProvider>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}
