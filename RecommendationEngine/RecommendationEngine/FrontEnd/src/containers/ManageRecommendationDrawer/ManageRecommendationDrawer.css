@@ -351,7 +351,8 @@
     text-align: center;
     width: 100%;
 }
-.Running{
+
+.Running {
     height: 22px;
     width: 6px;
     background-color: #FFCE31;
@@ -360,7 +361,7 @@
     display: inline-block;
     margin-top: 5px;
 }
-.Failed{
+.Failed {
     height: 22px;
     width: 6px;
     background-color: #FF0000;
@@ -369,7 +370,7 @@
     display: inline-block;
     margin-top: 5px;
 }
-.Success{
+.Success {
     height: 22px;
     width: 6px;
     background-color: #49C71F;
@@ -378,7 +379,7 @@
     display: inline-block;
     margin-top: 5px;
 }
-.Empty{
+.Empty {
     height: 22px;
     width: 6px;
     background-color: #bec0c1;
@@ -422,5 +423,4 @@
     color: #49C71F;
     font-weight: bolder;
     margin-left: 10px;
-
 }

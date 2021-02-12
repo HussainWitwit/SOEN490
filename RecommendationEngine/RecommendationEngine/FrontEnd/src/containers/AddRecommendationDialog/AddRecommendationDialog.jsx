@@ -126,7 +126,7 @@ export function AddRecommendationDialog (props) {
         paper: 'dialog-container',
       }}
     >
-      <IconButton aria-label="close" id="closeButton" onClick={closeDialog}>
+      <IconButton aria-label="close" id="close-button" onClick={closeDialog}>
         <CloseIcon />
       </IconButton>
       <DialogTitle
