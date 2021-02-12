@@ -7,19 +7,6 @@ import './Dashboard.css';
 //     items: [{ columnField: 'commodity', operatorValue: 'contains', value: 'rice' }],
 // };
 
-const currencyFormatter = new Intl.NumberFormat('en-CA', {
-    style: 'currency',
-    currency: 'CAD',
-  });
-  
-  const CADPrice = {
-    type: 'number',
-    width: 200,
-    valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
-  };
-
-
-
 //   const positiveNumbers = {
 //       cellClassName = "table-positive-numbers"
 //   }

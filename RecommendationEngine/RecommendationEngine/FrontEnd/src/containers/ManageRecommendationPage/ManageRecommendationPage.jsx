@@ -12,15 +12,15 @@ import './ManageRecommendationPage.css';
 
 
 /* istanbul ignore next */ //Should be tested 
-export const RowsToDisplay = (element) => (
-  <React.Fragment>
-    <TableCell />
-    <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.name}</TableCell>
-    <TableCell id="table-body">{element.type}</TableCell>
-    <TableCell id="table-body">{element.granularity}</TableCell>
-    <TableCell id="table-body">{element.createdOn}</TableCell>
-  </React.Fragment>
-);
+// export const RowsToDisplay = (element) => (
+//   <React.Fragment>
+//     <TableCell />
+//     <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.name}</TableCell>
+//     <TableCell id="table-body">{element.type}</TableCell>
+//     <TableCell id="table-body">{element.granularity}</TableCell>
+//     <TableCell id="table-body">{element.createdOn}</TableCell>
+//   </React.Fragment>
+// );
 
 export function ManageRecommendationPage (props) {
 
@@ -29,12 +29,23 @@ export function ManageRecommendationPage (props) {
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
   /* istanbul ignore next */ //Should be tested 
-  const headCells = [
-    { id: "name", label: "Title"},
-    { id: "type", label: "Type" },
-    { id: "granularity", label: "Granularity" },
-    { id: "createdOn", label: "Created On" },
-  ];
+  // const headCells = [
+  //   { id: "name", label: "Title"},
+  //   { id: "type", label: "Type" },
+  //   { id: "granularity", label: "Granularity" },
+  //   { id: "createdOn", label: "Created On" },
+  // ];
+
+  const columns = [
+    {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style'},
+    {field: 'name', headerName: 'Title', flex: 0.25, type: 'string', cellClassName: 'table-style'},
+    {field: 'type', headerName: 'Type', flex: 0.25, type: 'string', cellClassName: 'table-style'},
+    {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.25, cellClassName: 'table-style'},
+    {field: 'createdOn', headerName: 'Created On', type: 'dateTime', flex: 0.25, cellClassName: 'table-style'},
+]
+
+   const dataGridSize = { height: 400, width: '100%' };
+   
 
   /* istanbul ignore next */
   const updateSearch = async (input) => {
@@ -91,12 +102,17 @@ export function ManageRecommendationPage (props) {
       </div>
       <br></br>
       <RecommendationEngineTable
-        rowsValue={RowsToDisplay}
-        data={recommendationList}
-        tableTitle={"Configured Recommendations"}
-        onClickRow={openScheduleDrilldown}
-        columnTitles={headCells}
-        isClickable= {true}
+        // rowsValue={RowsToDisplay}
+        // data={recommendationList}
+        // tableTitle={"Configured Recommendations"}
+        // onClickRow={openScheduleDrilldown}
+        // columnTitles={headCells}
+        // isClickable= {true}
+        data = {recommendationList}
+        columnValues = {columns}
+        dataGridSize = {dataGridSize}
+        tableTitle = {"Configured Recommendation"}
+        onClickRow = {openScheduleDrilldown}
       />
     </div >
   );
