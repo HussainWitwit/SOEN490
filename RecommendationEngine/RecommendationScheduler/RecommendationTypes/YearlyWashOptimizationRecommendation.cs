@@ -73,7 +73,7 @@ namespace RecommendationScheduler.RecommendationTypes
                         // start at day 2, since first day values are given by ResetValues() -> there is no soiling yet...
                         for (currentDate = _userParameters.StartSoiling.AddDays(1); _userParameters.EndSoiling.CompareTo(currentDate) > 0; currentDate = currentDate.AddDays(1))// iterate through all days within soiling season
                         {
-                        _jobLogger.LogInformation(_job, "Iterating next day", currentDate);
+                            _jobLogger.LogInformation(_job, "Iterating next day", currentDate);
                             //NoAction
                             CalculateSoilingDerateNoAction();
                             CalculateSoilingImpact(_soilingNoAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);

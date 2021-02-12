@@ -38,6 +38,7 @@ namespace RecommendationScheduler.RecommendationJob
                 watch.Stop();
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Success",
                     watch.Elapsed.Seconds);
+                _jobLogger.LogInformation(_recommendationJob, "This job has succeeded", null);
                 return Task.CompletedTask;
             }
             catch (Exception e)
@@ -45,7 +46,7 @@ namespace RecommendationScheduler.RecommendationJob
                 // Handle exception
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
                     watch.Elapsed.Seconds);
-                _jobLogger.LogFatal(_recommendationJob, "This job has failed",  e );
+                _jobLogger.LogError(_recommendationJob, "This job has failed",  e );
                 return Task.CompletedTask;
             }
         }
