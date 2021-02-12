@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { FilterList } from '@material-ui/icons';
-import { Grid, TableCell } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
@@ -9,32 +7,11 @@ import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-action
 import { connect } from 'react-redux';
 import './ResultsPage.css'
 
-/* istanbul ignore next */
-// export const RowsToDisplay = (element) => (
-//     <React.Fragment>
-//         <TableCell />
-//         <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.id}</TableCell>
-//         <TableCell id="table-body" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.netSaving.toFixed(2)).toLocaleString()}$</TableCell>
-//         <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.returnOnInvestment.toFixed(2)).toLocaleString()}%</TableCell>
-//         <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfAction.toFixed(2)).toLocaleString()}$</TableCell>
-//         <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfInaction.toFixed(2)).toLocaleString()}$</TableCell>
-//     </React.Fragment>
-// );
-
 export function ResultsPage (props) {
     const { openResultDrilldown } = props;
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
-
-    /* istanbul ignore next */
-    // const headCells = [
-    //     { id: 'id', label: 'Result ID' },
-    //     { id: 'netSaving', label: 'Net Saving' },
-    //     { id: 'returnOnInvestment', label: 'Return on Investment' },
-    //     { id: 'costOfAction', label: 'Cost of Action' },
-    //     { id: 'costOfInaction', label: 'Cost of Inaction' },
-    // ];
 
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
@@ -98,26 +75,14 @@ export function ResultsPage (props) {
                                 onSearchUpdate={updateSearch}
                             />
                         </Grid>
-                        <Grid item>
-                            <Button size="small" id="filterBtn" endIcon={<FilterList />}>
-                                Add Filter
-              </Button>
-                        </Grid>
                     </Grid>
                 </div>
             </div>
             <br></br>
             <RecommendationEngineTable
-                // rowsValue={RowsToDisplay}
-                // data={resultList}
-                // tableTitle={"Recommendation Job Results"}
-                // onClickRow={openResultDrilldown}
-                // columnTitles={headCells}
-                // isClickable={true}
                 data = {resultList}
                 columnValues = {columns}
                 dataGridSize = {dataGridSize}
-                tableTitle = {"Recommendation Job Results"}
                 onClickRow = {openResultDrilldown}
             />
         </div>
