@@ -101,7 +101,7 @@ namespace RecommendationEngineTests.UnitTests
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
-            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(emptyRecommendationType));
+            Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(emptyRecommendationType));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace RecommendationEngineTests.UnitTests
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
-            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+            Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace RecommendationEngineTests.UnitTests
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
-            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+            Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace RecommendationEngineTests.UnitTests
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
-            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+            Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace RecommendationEngineTests.UnitTests
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
-            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+            Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace RecommendationEngineTests.UnitTests
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
-            Assert.Throws<GlobalException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+            Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
 
         [Test]
