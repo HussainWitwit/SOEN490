@@ -13,7 +13,7 @@ namespace RecommendationEngine.Utilities
         }
         private void Log(DBRecommendationJob job, string message, string level, object obj)
         {
-            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            string jsonString = obj!=null ? Newtonsoft.Json.JsonConvert.SerializeObject(obj): "";
             _jobLogRepository.Log(job, message + " " + jsonString, level);
         }
         public void LogWarn(DBRecommendationJob job, string message, object obj)
