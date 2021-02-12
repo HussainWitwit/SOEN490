@@ -14,7 +14,7 @@ export default function JobsPage () {
   /* istanbul ignore next */
     const columns = [
     
-        {field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style'},
+        {field: 'id', headerName: 'Job ID', width: 150, type: 'number', cellClassName: 'table-style'},
         {field: 'status',
          headerName: 'Status', 
          type: 'string',
@@ -30,7 +30,7 @@ export default function JobsPage () {
            </div>
          )},
         {field: 'timestamp', headerName: 'Timestamp', type: 'dateTime', flex: 0.20, cellClassName: 'table-style'},
-        {field: 'duration', headerName: 'Job Duration', flex: 0.20, cellClassName: 'table-style'},
+        {field: 'duration', headerName: 'Job Duration', type:'number', flex: 0.20, cellClassName: 'table-style'},
         {field: 'configuredRecommendationTitle', headerName: 'Configured Recommendation', type: 'string', flex: 0.20, cellClassName: 'table-style'},
         {field: 'jobLog',
          headerName: 'Job Log',

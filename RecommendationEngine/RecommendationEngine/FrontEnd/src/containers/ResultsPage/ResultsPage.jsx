@@ -25,7 +25,7 @@ export function ResultsPage (props) {
       };  
 
       const columns = [
-        {field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style'},
+        {field: 'id', headerName: 'Result ID', width: 150, type: 'number', cellClassName: 'table-style'},
         {field: 'netSaving', headerName: 'Net Saving', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-positive-numbers'},
         {field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number', flex: 0.25, cellClassName: 'table-positive-numbers'},
         {field: 'costOfAction', headerName: 'Cost of Action', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'},
