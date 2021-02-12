@@ -44,7 +44,7 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.StartSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "StartSoilingSeason").ParamValue);
             _parameters.EndSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "EndSoilingSeason").ParamValue);
             _parameters.SoilingRate = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingRate").ParamValue);
-            _parameters.CostCleaning = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "ClostCleaning").ParamValue);
+            _parameters.CostCleaning = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CostCleaning").ParamValue);
 
             //Parameters from recommendation schedule 
             _parameters.CenterPointIncrement = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CenterPointIncrement").ParamValue);

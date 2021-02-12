@@ -101,7 +101,7 @@ namespace RecommendationEngine.Services
                     ParamValue = parameter.ParameterValue,
                     ModifiedBy = configuredRecommendation.CreatedBy,
                     RecommendationParameter =
-                        recommendationParameters.FirstOrDefault(x => x.DisplayText == parameter.ParameterName)
+                        recommendationParameters.FirstOrDefault(x => x.Name == parameter.ParameterName)
                 }).ToList();
 
             var schedule = _recommendationRepository.Add(config);
