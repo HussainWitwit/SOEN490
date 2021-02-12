@@ -56,8 +56,6 @@ namespace RecommendationScheduler.RecommendationTypes
                 _result.NetSaving = 0;
                 _result.Asset = _userParameters.Asset;
 
-                _jobLogger.LogInformation(_job, "Looking for best cleaning dates...", _result);
-
                 while (centerPoint < _userParameters.EndSoiling)
                 {
                     span = _userParameters.SpanIncrement;
@@ -176,7 +174,7 @@ namespace RecommendationScheduler.RecommendationTypes
                 _result.NetSaving = _tempResult.NetSaving;
                 _result.Benefit = _tempResult.Benefit;
                 _result.ReturnOnInvestment = _tempResult.ReturnOnInvestment;
-            _jobLogger.LogInformation(_job, "Updated Best Results for Yealry Wash Optimazation", _result);
+            _jobLogger.LogInformation(_job, "Updated Best Results for Yearly Wash Optimization", _result);
             }
         }
     }

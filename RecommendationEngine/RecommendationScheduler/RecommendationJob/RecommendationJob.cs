@@ -46,7 +46,7 @@ namespace RecommendationScheduler.RecommendationJob
                 // Handle exception
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
                     watch.Elapsed.Seconds);
-                _jobLogger.LogError(_recommendationJob, "This job has failed",  e );
+                _jobLogger.LogError(_recommendationJob, "This job has failed",  e.Message );
                 return Task.CompletedTask;
             }
         }
