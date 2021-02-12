@@ -40,11 +40,12 @@ namespace RecommendationScheduler.RecommendationJob
                     watch.Elapsed.Seconds);
                 return Task.CompletedTask;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Handle exception
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
                     watch.Elapsed.Seconds);
+                _jobLogger.LogFatal(_recommendationJob, "This job has failed",  e );
                 return Task.CompletedTask;
             }
         }
