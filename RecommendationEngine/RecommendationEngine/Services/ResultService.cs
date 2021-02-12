@@ -36,7 +36,10 @@ namespace RecommendationEngine.Services
                             JobId = dbResult.Job.RecommendationJobId
                         }).ToList();
             }
-            catch(Exception)
+            catch (GlobalException) {
+                throw;
+            }
+            catch (Exception)
             {
                 throw new InternalServerException();
             }

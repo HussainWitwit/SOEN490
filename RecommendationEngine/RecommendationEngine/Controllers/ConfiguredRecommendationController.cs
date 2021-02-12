@@ -19,7 +19,14 @@ namespace RecommendationEngine.Controllers
         [HttpGet]
         public IActionResult GetConfiguredRecommendationList()
         {
-            return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
+            try
+            {
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
+            }
+            catch (GlobalException e) {
+                return e.GetActionResult();
+            }
+            
         }
 
         [HttpGet("{id}")]

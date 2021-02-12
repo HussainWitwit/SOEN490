@@ -5,6 +5,7 @@ using Models.Recommendation;
 using Interfaces.Repositories;
 using System.Linq;
 using Models.DB;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Services
 {
@@ -19,20 +20,29 @@ namespace RecommendationEngine.Services
         }
 
         public List<ConfiguredRecommendationType> GetRecommendationTypes() {
-            List<ConfiguredRecommendationType> recommendationTypes = _recommendationTypeRepository.GetRecommendationTypes()
-                .Select(recommendationType => new ConfiguredRecommendationType
-                {
-                    TemplateName = recommendationType.DisplayText,
-                    TemplateDescription = recommendationType.Description,
-                    AlgorithmName = recommendationType.Type,
-                    InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
+            try
+            {
+                List<ConfiguredRecommendationType> recommendationTypes = _recommendationTypeRepository.GetRecommendationTypes()
+                    .Select(recommendationType => new ConfiguredRecommendationType
                     {
-                        ParameterName = param.DisplayText,
-                        DefaultValue = param.DefaultValue
-                    }).ToList()
-                }).ToList();
+                        TemplateName = recommendationType.DisplayText,
+                        TemplateDescription = recommendationType.Description,
+                        AlgorithmName = recommendationType.Type,
+                        InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = param.DisplayText,
+                            DefaultValue = param.DefaultValue
+                        }).ToList()
+                    }).ToList();
 
-            return recommendationTypes;
+                return recommendationTypes;
+            }
+            catch (GlobalException) {
+                throw;
+            }
+            catch (Exception) {
+                throw new InternalServerException();
+            }
         }
     }
 }

@@ -7,14 +7,14 @@ namespace RecommendationEngine.ExceptionHandler
     {
         public RequestValidationException(List<Error> errorList, string appName)
         {
-            this.ErrorList = errorList;
-            this.AppName = appName;
+            ErrorList = errorList;
+            AppName = appName;
         }
 
         public RequestValidationException(Error error, string appName)
         {
-            this.ErrorList = new List<Error> { error };
-            this.AppName = appName;
+            ErrorList = new List<Error> { error };
+            AppName = appName;
         }
 
         public override IActionResult GetActionResult()

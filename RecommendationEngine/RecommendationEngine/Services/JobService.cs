@@ -34,10 +34,14 @@ namespace RecommendationEngine.Services
                         Duration = job.JobDuration,
                         Timestamp = job.Timestamp,
                     }).ToList();
-                
+
                 return jobs;
             }
-            catch(Exception)
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
             {
                 throw new InternalServerException();
             }

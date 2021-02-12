@@ -61,9 +61,18 @@ namespace RecommendationEngine.Services
 
         public Asset GetAssetByName(string assetName)
         {
-            GetDBAssets();
-            DBAsset asset = _assetRepository.GetAssetByName(assetName);
-            return GetAssetCompositeFromDBAsset(asset);
+            try {
+                GetDBAssets();
+                DBAsset asset = _assetRepository.GetAssetByName(assetName);
+                return GetAssetCompositeFromDBAsset(asset);
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception) {
+                throw new InternalServerException();
+            }
         }
 
         public async Task Convert()
@@ -97,11 +106,22 @@ namespace RecommendationEngine.Services
 
         private List<DBAsset> GetDBAssets()
         {
-            if (_assets != null)
+            try
             {
-                return _assets;
+                if (_assets != null)
+                {
+                    return _assets;
+                }
+                return _assets = _assetRepository.GetAssetsList();
             }
-            return _assets = _assetRepository.GetAssetsList();
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         private List<AssetComposite> GetChildren(int assetId)
@@ -205,8 +225,19 @@ namespace RecommendationEngine.Services
 
         private DBAsset GetParentAsset(string id)
         {
-            var parentId = Task.Run(() => { return GetParentId(id); }).Result;
-            return _assetRepository.GetAssetByName(parentId);
+            try
+            {
+                var parentId = Task.Run(() => { return GetParentId(id); }).Result;
+                return _assetRepository.GetAssetByName(parentId);
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         private string GetParentId(string id)
