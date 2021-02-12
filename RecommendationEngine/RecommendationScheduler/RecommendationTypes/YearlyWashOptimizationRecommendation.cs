@@ -59,30 +59,26 @@ namespace RecommendationScheduler.RecommendationTypes
                 while (centerPoint < _userParameters.EndSoiling)
                 {
                     span = _userParameters.SpanIncrement;
-                    _jobLogger.LogInformation(_job, "Calculating for new center point with new span:", centerPoint);
+                    _jobLogger.LogInformation(_job, "Calculating for new center point with new span:", centerPoint.Date);
 
                     while (centerPoint.AddDays(span) < _userParameters.EndSoiling || centerPoint.AddDays(-span) > _userParameters.StartSoiling)
                     {
 
-                        _jobLogger.LogInformation(_job, "Calculating for new center point within the same span:", centerPoint);
                         ResetValues();
 
                         // computes various outputs for a all day within soiling season with a specific combination of center point + span
                         // start at day 2, since first day values are given by ResetValues() -> there is no soiling yet...
                         for (currentDate = _userParameters.StartSoiling.AddDays(1); _userParameters.EndSoiling.CompareTo(currentDate) > 0; currentDate = currentDate.AddDays(1))// iterate through all days within soiling season
                         {
-                            _jobLogger.LogInformation(_job, "Iterating next day", currentDate);
                             //NoAction
                             CalculateSoilingDerateNoAction();
                             CalculateSoilingImpact(_soilingNoAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
-                            _jobLogger.LogInformation(_job, "Calculating soiling with no action ", _soilingNoAction);
                             
                         CheckIfWashDay(currentDate, centerPoint, span);
 
                             //WithAction
                             CalculateSoilingDerateWithAction(currentDate, _isWashDay, _cumulativeCleaning);
                             CalculateSoilingImpact(_soilingWithAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
-                            _jobLogger.LogInformation(_job, "Calculating soiling with action ", _soilingWithAction);
                             _dayCount += 1;
                         }
 
@@ -141,7 +137,6 @@ namespace RecommendationScheduler.RecommendationTypes
                     _soilingWithAction.SoilingDerate = 1.0;// reset to 1 because cleaning will be done
                     _cumulativeCleaning += 1;
                     _isWashDay = true;
-                    _jobLogger.LogInformation(_job, "Calculated wash day on", currentDate);
                 }
             }
             private void CalculateSoilingDerateWithAction(DateTime currentDate, Boolean _isWashDay, int _cumulativeCleaning)
