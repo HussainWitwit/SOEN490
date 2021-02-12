@@ -1,6 +1,7 @@
 ﻿using Interfaces.Repositories;
 using Interfaces.Utilities;
 using Models.DB;
+using Newtonsoft.Json;
 
 namespace RecommendationEngine.Utilities
 {
@@ -13,7 +14,11 @@ namespace RecommendationEngine.Utilities
         }
         private void Log(DBRecommendationJob job, string message, string level, object obj)
         {
-            string jsonString = obj!=null ? Newtonsoft.Json.JsonConvert.SerializeObject(obj): "";
+            string jsonString = obj!=null ? JsonConvert.SerializeObject(obj,Formatting.None,
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }): "";
             _jobLogRepository.Log(job, message + " " + jsonString, level);
         }
         public void LogWarn(DBRecommendationJob job, string message, object obj)
