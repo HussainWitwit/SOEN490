@@ -10,3 +10,39 @@
     
 }
 
+.table-style{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.job-status-running{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #FFCE31;
+    text-align: center;
+    border: 2px solid #FFCE31;
+
+    border-radius: 15px;
+    width: 90%;
+    height: 70%;
+}
+
+.job-status-failed{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #F26060;
+    text-align: center;
+    border: 2px solid #F26060;
+    border-radius: 15px;
+    width: 90%;
+    height: 70%;
+}
+
+.job-status-success{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #4AC71F;
+    border: 2px solid #4AC71F;
+    border-radius: 15px;
+    width: 90%;
+    height: 70%;
+    text-align: center;
+    vertical-align: baseline;
+}
+
