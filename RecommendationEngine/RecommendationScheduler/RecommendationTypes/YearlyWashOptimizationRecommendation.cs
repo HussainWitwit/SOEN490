@@ -38,7 +38,7 @@ namespace RecommendationScheduler.RecommendationTypes
 
             public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
             {
-                _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
+                _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation", null);
 
                 _userParameters = parameters;
 
@@ -56,7 +56,7 @@ namespace RecommendationScheduler.RecommendationTypes
                 _result.NetSaving = 0;
                 _result.Asset = _userParameters.Asset;
 
-                _jobLogger.LogInformation(_job, "Looking for best cleaning dates...");
+                _jobLogger.LogInformation(_job, "Looking for best cleaning dates...", null);
 
                 while (centerPoint < _userParameters.EndSoiling)
                 {
@@ -97,7 +97,7 @@ namespace RecommendationScheduler.RecommendationTypes
                     centerPoint = centerPoint.AddDays(_userParameters.CenterPointIncrement);
                 }
 
-                _jobLogger.LogInformation(_job, "Best combination found!");
+                _jobLogger.LogInformation(_job, "Best combination found!", null);
 
                 return _result;
             }

@@ -28,13 +28,13 @@ namespace RecommendationScheduler.RecommendationJob
                 if (dataMap != null) RecommendationScheduleId = dataMap.GetIntValue("recommendationScheduleId");
                 CreateRecommendationJob();
                 watch.Start();
-                _jobLogger.LogInformation(_recommendationJob, "Job started!");
+                _jobLogger.LogInformation(_recommendationJob, "Job started!", null);
 
                 // Execute
                 ExecuteJob();
 
                 // Finish execution
-                _jobLogger.LogInformation(_recommendationJob, "Job finished!");
+                _jobLogger.LogInformation(_recommendationJob, "Job finished!", null);
                 watch.Stop();
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Success",
                     watch.Elapsed.Seconds);
