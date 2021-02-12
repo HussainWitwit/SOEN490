@@ -7,18 +7,19 @@ import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
+import './ResultsPage.css'
 
 /* istanbul ignore next */
-export const RowsToDisplay = (element) => (
-    <React.Fragment>
-        <TableCell />
-        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.id}</TableCell>
-        <TableCell id="table-body" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.netSaving.toFixed(2)).toLocaleString()}$</TableCell>
-        <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.returnOnInvestment.toFixed(2)).toLocaleString()}%</TableCell>
-        <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfAction.toFixed(2)).toLocaleString()}$</TableCell>
-        <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfInaction.toFixed(2)).toLocaleString()}$</TableCell>
-    </React.Fragment>
-);
+// export const RowsToDisplay = (element) => (
+//     <React.Fragment>
+//         <TableCell />
+//         <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.id}</TableCell>
+//         <TableCell id="table-body" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.netSaving.toFixed(2)).toLocaleString()}$</TableCell>
+//         <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.returnOnInvestment.toFixed(2)).toLocaleString()}%</TableCell>
+//         <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfAction.toFixed(2)).toLocaleString()}$</TableCell>
+//         <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfInaction.toFixed(2)).toLocaleString()}$</TableCell>
+//     </React.Fragment>
+// );
 
 export function ResultsPage (props) {
     const { openResultDrilldown } = props;
@@ -27,13 +28,34 @@ export function ResultsPage (props) {
     const [defaultResultList, setDefaultResultList] = useState([]);
 
     /* istanbul ignore next */
-    const headCells = [
-        { id: 'id', label: 'Result ID' },
-        { id: 'netSaving', label: 'Net Saving' },
-        { id: 'returnOnInvestment', label: 'Return on Investment' },
-        { id: 'costOfAction', label: 'Cost of Action' },
-        { id: 'costOfInaction', label: 'Cost of Inaction' },
-    ];
+    // const headCells = [
+    //     { id: 'id', label: 'Result ID' },
+    //     { id: 'netSaving', label: 'Net Saving' },
+    //     { id: 'returnOnInvestment', label: 'Return on Investment' },
+    //     { id: 'costOfAction', label: 'Cost of Action' },
+    //     { id: 'costOfInaction', label: 'Cost of Inaction' },
+    // ];
+
+    const currencyFormatter = new Intl.NumberFormat('en-CA', {
+        style: 'currency',
+        currency: 'CAD',
+      });
+      
+      const CADPrice = {
+        type: 'number',
+        width: 200,
+        valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
+      };  
+
+      const columns = [
+        {field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style'},
+        {field: 'netSaving', headerName: 'Net Saving', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-positive-numbers'},
+        {field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number', flex: 0.25, cellClassName: 'table-positive-numbers'},
+        {field: 'costOfAction', headerName: 'Cost of Action', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'},
+        {field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'}
+    ]
+
+    const dataGridSize = { height: 400, width: '100%' };
 
     /* istanbul ignore next */
     const getResultList = async () => {
@@ -86,12 +108,17 @@ export function ResultsPage (props) {
             </div>
             <br></br>
             <RecommendationEngineTable
-                rowsValue={RowsToDisplay}
-                data={resultList}
-                tableTitle={"Recommendation Job Results"}
-                onClickRow={openResultDrilldown}
-                columnTitles={headCells}
-                isClickable={true}
+                // rowsValue={RowsToDisplay}
+                // data={resultList}
+                // tableTitle={"Recommendation Job Results"}
+                // onClickRow={openResultDrilldown}
+                // columnTitles={headCells}
+                // isClickable={true}
+                data = {resultList}
+                columnValues = {columns}
+                dataGridSize = {dataGridSize}
+                tableTitle = {"Recommendation Job Results"}
+                onClickRow = {openResultDrilldown}
             />
         </div>
     );
