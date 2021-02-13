@@ -3,12 +3,15 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import './ActionDrawer.css';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import Grid from '@material-ui/core/Grid';
+import { useHistory } from "react-router-dom";
 
 export default function ActionDrawer (props) {
 
     const { actionGrouping } = props;
     const assets = actionGrouping ? actionGrouping.assetNameList : [];
     const actions = actionGrouping ? actionGrouping.actions : [];
+
+    let history = useHistory();
 
     // Animation style
     const animation = useSpring({
@@ -23,7 +26,7 @@ export default function ActionDrawer (props) {
                 <Grid className='actions-drawer-content' container>
                     <Grid id='info-container' item small={12}>
                         <p id='assets-title'>Recommendation:</p>
-                        <p >{actionGrouping ? actionGrouping.recommendationName : ''}</p>
+                        <p onClick={()=>{history.push(`/recommendations-manage`)}}>{actionGrouping ? actionGrouping.recommendationName : ''}</p>
                         <p id='assets-title'>Asset(s):</p>
                         {assets.map((asset, index) => (
                             <p id='asset-names' key={index}>{asset}</p>
