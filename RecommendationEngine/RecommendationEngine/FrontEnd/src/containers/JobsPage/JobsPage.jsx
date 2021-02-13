@@ -29,7 +29,7 @@ export default function JobsPage() {
             <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
             <TableCell id="table-body">{element.timestamp}</TableCell>
             <TableCell id="table-body">{element.duration} seconds</TableCell>
-            <TableCell id="table-body"><p onClick={() => { history.push(`/recommendations-manage/${element.configuredRecommendationId}`) }}>{element.configuredRecommendationTitle}</p></TableCell>
+            <TableCell id="table-body"><a onClick={() => { history.push(`/recommendations-manage/${element.configuredRecommendationId}`) }}>{element.configuredRecommendationTitle}</a></TableCell>
             <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
         </React.Fragment>
     );

@@ -26,7 +26,7 @@ export default function ActionDrawer (props) {
                 <Grid className='actions-drawer-content' container>
                     <Grid id='info-container' item small={12}>
                         <p id='assets-title'>Recommendation:</p>
-                        <p onClick={()=>{history.push(`/recommendations-manage/${actionGrouping.configuredRecommendationId}`)}}>{actionGrouping ? actionGrouping.recommendationName : ''}</p>
+                        <a onClick={()=>{history.push(`/recommendations-manage/${actionGrouping.configuredRecommendationId}`)}}>{actionGrouping ? actionGrouping.recommendationName : ''}</a>
                         <p id='assets-title'>Asset(s):</p>
                         {assets.map((asset, index) => (
                             <p id='asset-names' key={index}>{asset}</p>
