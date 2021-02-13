@@ -30,7 +30,8 @@ namespace RecommendationEngine.Services
                     {
                         Id = job.RecommendationJobId,
                         Status = job.Status,
-                        configuredRecommendationTitle = job.Schedule.Name,
+                        ConfiguredRecommendationId = job.Schedule.RecommendationScheduleId,
+                        ConfiguredRecommendationTitle = job.Schedule.Name,
                         Duration = job.JobDuration,
                         Timestamp = job.Timestamp,
                     }).ToList();
