@@ -18,7 +18,8 @@ namespace RecommendationEngine.Repositories
 
         public List<DBRecommendationJobResult> GetResultList()
         {
-            return _recommendationEngineDb.RecommendationJobResults.Include(result => result.Job).ThenInclude(job => job.Schedule).ToList();
+            return _recommendationEngineDb.RecommendationJobResults.Include(result => result.Job).ThenInclude(job => job.Schedule)
+                .Include(x => x.Asset).ToList();
         }
     }
 }

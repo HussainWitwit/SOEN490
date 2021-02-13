@@ -17,6 +17,9 @@ export const RowsToDisplay = (element) => (
         <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.returnOnInvestment.toFixed(2)).toLocaleString()}%</TableCell>
         <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfAction.toFixed(2)).toLocaleString()}$</TableCell>
         <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfInaction.toFixed(2)).toLocaleString()}$</TableCell>
+        <TableCell id="table-body" >{element.assetName}</TableCell>
+        <TableCell id="table-body" >{element.resultOutputDate}</TableCell>
+        <TableCell id="table-body" >{element.configuredRecommendationTitle}</TableCell>
     </React.Fragment>
 );
 
@@ -33,6 +36,9 @@ export function ResultsPage (props) {
         { id: 'returnOnInvestment', label: 'Return on Investment' },
         { id: 'costOfAction', label: 'Cost of Action' },
         { id: 'costOfInaction', label: 'Cost of Inaction' },
+        { id: 'assetName', label: 'Asset'},
+        { id: 'resultOutputDate', label: 'Output Date'},
+        { id: 'configuredRecommendationName', label: 'Recommendation'}
     ];
 
     /* istanbul ignore next */

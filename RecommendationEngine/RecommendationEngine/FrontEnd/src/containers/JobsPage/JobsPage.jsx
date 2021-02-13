@@ -36,7 +36,7 @@ export default function JobsPage () {
         { id: 'status', label: 'Status' },
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'duration', label: 'Job Duration' },
-        { id: 'configuredRecommendationTitle', label: 'Configured Recommendation' },
+        { id: 'configuredRecommendationTitle', label: 'Recommendation' },
         {id: '', label: ''}
     ];
 

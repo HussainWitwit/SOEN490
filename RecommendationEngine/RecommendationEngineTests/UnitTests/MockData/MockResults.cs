@@ -20,7 +20,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     CostOfInaction = 78,
                     NetSaving = 45,
                     ReturnOnInvestment = 899,
-                    Job = MockJobs.BasicDBJobList[0]
+                    Job = MockJobs.BasicDBJobList[0],
+                    Asset =  new DBAsset
+                    {
+                        DisplayText = "Test Asset"
+                    }
                 };
 
                 List<DBRecommendationJobResult> resultList = new List<DBRecommendationJobResult>()
