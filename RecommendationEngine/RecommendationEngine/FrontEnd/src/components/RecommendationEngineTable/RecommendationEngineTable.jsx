@@ -11,7 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader';
 import './RecommendationEngineTable.css';
-
+import { useHistory } from "react-router-dom";
 
 export function getSortingComparison (orderType, orderColumnTitle) {
   return orderType === "desc" ? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
@@ -52,6 +52,8 @@ export default function RecommendationEngineTable (props) {
   const [denseAttribute, setDenseAttribute] = React.useState(dense);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [isSelected, setIsSelected] = React.useState(null);
+
+  let history = useHistory();
 
   const handleChangeDense = (event) => {
     setDenseAttribute(event.target.checked);

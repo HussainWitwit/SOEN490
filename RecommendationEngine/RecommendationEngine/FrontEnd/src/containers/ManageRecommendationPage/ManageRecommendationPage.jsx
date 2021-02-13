@@ -28,7 +28,8 @@ export function ManageRecommendationPage (props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
-  const {configuredRecomendationId} = useParams();
+  // let {configuredRecomendationId} = useParams();
+  const configuredRecomendationId = props.match.params.configuredRecommendationId
 
   /* istanbul ignore next */ //Should be tested 
   const headCells = [
@@ -52,8 +53,9 @@ export function ManageRecommendationPage (props) {
   }, [configuredRecommendationList])
 
   useEffect(() => {
+    console.log(configuredRecomendationId);
     if (configuredRecomendationId || configuredRecomendationId === 0){
-      openScheduleDrilldown(configuredRecomendationId);
+      openScheduleDrilldown(Number(configuredRecomendationId));
     }
   }, [configuredRecomendationId])
 

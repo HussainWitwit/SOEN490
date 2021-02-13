@@ -23,7 +23,7 @@ function App (props) {
           <Route path='/work-orders' component={WorkOrders} />
           <Route path='/settings' component={Settings} />
           <Route path='/notifications' component={Notifications} />
-          <Route exact path="/recommendations-manage/:configuredRecommendationId" component={ManageRecommendationPage}/>
+          <Route path='/recommendations-manage/:configuredRecommendationId' component={ManageRecommendationPage}/>
         </div>
       </Layout>
     </div>
