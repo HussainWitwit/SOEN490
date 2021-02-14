@@ -40,6 +40,7 @@ font-weight: bold;
 .value .MuiInputBase-root {
   height: 50px;
   width: 185px;
+  color: black;
 }
 
 #parameter-date-picker {
@@ -49,4 +50,9 @@ font-weight: bold;
 
 #parameter-name-table-cell {
   max-width: 300px;
+}
+
+#parameter-row {
+  background-color: white;
+  height: 100%;
 }

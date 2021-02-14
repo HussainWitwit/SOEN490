@@ -12,6 +12,7 @@ import DetailsConfigurationModal from '../../containers/DetailsConfigurationModa
 import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
 import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
+import { checkDateRange } from '../../utilities/GeneralUtilities';
 import './AddRecommendationDialog.css';
 
 const pages = [
@@ -106,6 +107,7 @@ export function AddRecommendationDialog (props) {
     closeDialog();
   }
 
+
   useEffect(() => {
     if (isEditing) {
       setIndex(1);
@@ -179,8 +181,13 @@ export function AddRecommendationDialog (props) {
             Next
           </Button>
         )}
-        {(index <= 2 && index > 0) && (
+        {(index === 1) && (
           <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length < 1 || basicConfiguration.preferredScenario === null}>
+            Next
+          </Button>
+        )}
+        {(index === 2) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={checkDateRange(template.inputList)}>
             Next
           </Button>
         )}
