@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import { animated } from 'react-spring';
 import './ParametersConfigurationModal.css';
 import  { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@material-ui/core';
@@ -8,41 +8,51 @@ import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { isCorrectType } from '../../utilities/GeneralUtilities';
+
+export  function ParamTextField({paramObject, index, onChangeEvent}) {
+  const [error, setError] = useState(false);
+  let paramTypeAttributes = paramObject.parameterType.split('_');
+  let numberType = paramTypeAttributes[1].toLowerCase();
+  let isNegative = paramTypeAttributes[0] === 'NEGATIVE';
+  let helperText =
+      paramTypeAttributes ? 
+      <div>
+          {`The value must be a ${paramTypeAttributes[0].toLowerCase()} ${numberType} with a minimum value of ${paramTypeAttributes[2]}`}
+      </div> : '';
+
+    const validation = () => {
+      setError(paramObject.parameterValue && (paramObject.parameterValue < paramTypeAttributes[2] || (isNegative && (paramObject.parameterValue < paramTypeAttributes[2] | paramObject.parameterValue >= 0)) || !isCorrectType(paramTypeAttributes[1], paramObject.parameterValue)));
+    }
+
+    useEffect(() => {
+      validation();
+    }, [paramObject.parameterValue])
+
+  return(
+      <TextField
+          InputProps={{ 
+              inputProps: { 
+                  min: paramTypeAttributes[2],
+                  max: isNegative ? 0 : null
+              }
+          }}
+          data-testID='parameter-value'
+          defaultValue={paramObject.defaultValue}
+          value={paramObject.parameterValue}
+          onChange={(e) => { onChangeEvent(e.target.value, index); }}
+          className="value"
+          type="number"
+          placeholder={paramObject.defaultValue}
+          variant="outlined"
+          error = {error}
+          helperText = {helperText}
+      />
+  );
+}
+
 export function ParametersConfigurationModal (props) {
 
     const { parameterList, setParamValue } = props;
-
-    const ParamTextField = (paramObject, index) => {
-        let paramTypeAttributes = paramObject.parameterType.split('_');
-        let numberType = paramTypeAttributes[1].toLowerCase();
-        let isNegative = paramTypeAttributes[0] === 'NEGATIVE';
-        let helperText =
-            paramTypeAttributes ? 
-            <div>
-                {`The value must be a ${paramTypeAttributes[0].toLowerCase()} ${numberType} with a minimum value of ${paramTypeAttributes[2]}`}
-            </div> : '';
-
-        return(
-            <TextField
-                InputProps={{ 
-                    inputProps: { 
-                        min: paramTypeAttributes[2],
-                        max: isNegative ? 0 : null
-                    }
-                }}
-                data-testID='parameter-value'
-                defaultValue={paramObject.defaultValue}
-                value={paramObject.parameterValue}
-                onChange={(e) => { setParamValue(e.target.value, index); }}
-                className="value"
-                type="number"
-                placeholder={paramObject.defaultValue}
-                variant="outlined"
-                error = {paramObject.parameterValue && (paramObject.parameterValue < paramTypeAttributes[2] || (isNegative && (paramObject.parameterValue < paramTypeAttributes[2] | paramObject.parameterValue >= 0)) || !isCorrectType(paramTypeAttributes[1], paramObject.parameterValue))}
-                helperText = {helperText}
-            />
-        );
-    }
 
     return (
       <animated.div id="confirmation-modal-container" style={props.dialogStyle}>
@@ -67,7 +77,7 @@ export function ParametersConfigurationModal (props) {
                       </TableCell>
                       <TableCell>
                         {(cell.parameterType.includes('INT') ||
-                          cell.parameterType.includes('FLOAT')) && ParamTextField(cell, index)}
+                          cell.parameterType.includes('FLOAT')) && <ParamTextField paramObject = {cell} index={index} onChangeEvent ={setParamValue}/>}
                         {cell.parameterType === 'DATE' && (
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <KeyboardDatePicker
