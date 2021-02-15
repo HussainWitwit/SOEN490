@@ -2,10 +2,12 @@ export interface TemplateDetails {
     templateName: string,
     templateDescription: string,
     algorithmName: string,
-    inputList: TemplateDetailsInput []
+    inputList: Parameter[]
 }
-
-export interface TemplateDetailsInput {
+export interface Parameter {
     parameterName: string,
-    defaultValue: number
+    defaultValue: string,
+    parameterValue: string,
+    parameterType: string,
+    displayText: string,
 }

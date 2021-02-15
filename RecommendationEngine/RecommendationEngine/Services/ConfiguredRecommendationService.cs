@@ -2,6 +2,7 @@
 using Interfaces.Repositories;
 using Interfaces.Services;
 using Models.Application;
+using Models.Recommendation;
 using Models.Application.Asset;
 using Models.DB;
 using RecommendationEngine.ConfiguredRecommendationValidator;
@@ -53,7 +54,7 @@ namespace RecommendationEngine.Services
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate(recommendationType);
+            configuredRecommendation.Validate();
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {
@@ -84,6 +85,24 @@ namespace RecommendationEngine.Services
             });
 
             config.AssetsList = dbAssets;
+
+            // Add user defined parameters
+            List<DBRecommendationParameter> recommendationParameters =
+                _recommendationRepository.GetParametersForSchedule(config);
+            if (configuredRecommendation.Parameters != null && recommendationParameters.Count > configuredRecommendation.Parameters.Count)
+            {
+                throw new GlobalException(400, "Bad Request", "There are some missing parameters", "RecommendationEngine");
+            }
+
+            config.ParametersList = configuredRecommendation.Parameters.Select(parameter =>
+                new DBRecommendationScheduleParameter
+                {
+                    Name = parameter.ParameterName,
+                    ParamValue = parameter.ParameterValue,
+                    ModifiedBy = configuredRecommendation.CreatedBy,
+                    RecommendationParameter =
+                        recommendationParameters.FirstOrDefault(x => x.Name == parameter.ParameterName)
+                }).ToList();
 
             var schedule = _recommendationRepository.Add(config);
 
@@ -156,8 +175,11 @@ namespace RecommendationEngine.Services
                 }).ToList(),
                 Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
                 {
-                    ParameterName = x.RecommendationParameter.DisplayText,
-                    ParameterValue = x.ParamValue
+                    ParameterName = x.RecommendationParameter.Name,
+                    DisplayText = x.RecommendationParameter.DisplayText,
+                    ParameterType = x.RecommendationParameter.Type,
+                    ParameterValue = x.ParamValue,
+                    DefaultValue = x.RecommendationParameter.DefaultValue
                 }).ToList()
             };
             // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
@@ -168,7 +190,7 @@ namespace RecommendationEngine.Services
         public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
             var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate(recommendationType);
+            configuredRecommendation.Validate();
 
             DBRecommendationSchedule config = new DBRecommendationSchedule
             {

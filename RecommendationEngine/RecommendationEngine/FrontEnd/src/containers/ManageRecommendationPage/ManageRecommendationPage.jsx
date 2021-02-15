@@ -33,7 +33,7 @@ export function ManageRecommendationPage (props) {
 
   /* istanbul ignore next */ //Should be tested 
   const headCells = [
-    { id: "name", label: "Title"},
+    { id: "name", label: "Title" },
     { id: "type", label: "Type" },
     { id: "granularity", label: "Granularity" },
     { id: "createdOn", label: "Created On" },
@@ -73,7 +73,7 @@ export function ManageRecommendationPage (props) {
           </Grid>
           <Grid item>
             <div>
-              <Button id="recBtn" onClick={toggleDialog}>
+              <Button id="rec-btn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
               <AddRecommendationDialog {...props} />
@@ -92,7 +92,7 @@ export function ManageRecommendationPage (props) {
               />
             </Grid>
             <Grid item>
-              <Button size="small" id="filterBtn" endIcon={<FilterList />}>
+              <Button size="small" id="filter-btn" endIcon={<FilterList />}>
                 Add Filter
               </Button>
             </Grid>
@@ -106,7 +106,7 @@ export function ManageRecommendationPage (props) {
         tableTitle={"Configured Recommendations"}
         onClickRow={openScheduleDrilldown}
         columnTitles={headCells}
-        isClickable= {true}
+        isClickable={true}
       />
     </div >
   );
