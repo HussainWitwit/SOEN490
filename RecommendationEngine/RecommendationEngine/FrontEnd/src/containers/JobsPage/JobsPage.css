@@ -7,7 +7,6 @@
 #table-body-status {
     width: 30%;
     padding: 0 5% 0 5%;
-    
 }
 
 .table-style{
@@ -15,34 +14,40 @@
 }
 
 .job-status-running{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #FFCE31;
-    text-align: center;
     border: 2px solid #FFCE31;
-
-    border-radius: 15px;
+    text-align: center;
     width: 90%;
-    height: 70%;
+    height: 95%;
+    border-radius: 15px;
 }
 
 .job-status-failed{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #F26060;
-    text-align: center;
     border: 2px solid #F26060;
-    border-radius: 15px;
+    text-align: center;
     width: 90%;
-    height: 70%;
+    height: 95%;
+    border-radius: 15px;
 }
 
 .job-status-success{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #4AC71F;
-    border: 2px solid #4AC71F;
-    border-radius: 15px;
-    width: 90%;
-    height: 70%;
+    color: #49C71F;
+    border: 2px solid #49C71F;
     text-align: center;
-    vertical-align: baseline;
+    width: 90%;
+    height: 95%;
+    border-radius: 15px;
 }
+
+.styling{
+    color: #FFCE31;
+    border: 2px solid #FFCE31;
+    text-align: center;
+    width: 90%;
+    height: 95%;
+    border-radius: 15px;
+}
+
+
 

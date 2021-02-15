@@ -21,7 +21,7 @@ export function ManageRecommendationPage (props) {
     {field: 'name', headerName: 'Title', flex:0.25, type: 'string', cellClassName: 'table-style'},
     {field: 'type', headerName: 'Type', flex: 0.25, type: 'string', cellClassName: 'table-style'},
     {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.25, cellClassName: 'table-style'},
-    {field: 'createdOn', headerName: 'Created On', type: 'dateTime', flex: 0.25, cellClassName: 'table-style'},
+    {field: 'createdOn', headerName: 'Created On', type: 'date', flex: 0.25, cellClassName: 'table-style'},
 ]
    
   /* istanbul ignore next */

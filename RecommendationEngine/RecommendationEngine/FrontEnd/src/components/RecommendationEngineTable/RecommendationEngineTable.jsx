@@ -12,6 +12,7 @@ export default function RecommendationEngineTable(props) {
       <div style={{height: 800, width: 1230}}>
         <DataGrid
           pageSize={25}
+          density={'compact'}
           columns={columnValues}
           rows={data}
           showToolbar

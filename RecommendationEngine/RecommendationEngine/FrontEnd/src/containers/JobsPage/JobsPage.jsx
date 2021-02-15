@@ -36,7 +36,7 @@ export default function JobsPage () {
                {params.getValue('status')}
            </div>
          )},
-        {field: 'timestamp', headerName: 'Timestamp', type: 'dateTime', flex: 0.20, cellClassName: 'table-style'},
+        {field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.20, cellClassName: 'table-style'},
         {field: 'duration', headerName: 'Job Duration', type:'number', ...durationOption, flex: 0.20, cellClassName: 'table-style'},
         {field: 'configuredRecommendationTitle', headerName: 'Configured Recommendation', type: 'string', flex: 0.30, cellClassName: 'table-style'},
         {field: 'jobLog',
