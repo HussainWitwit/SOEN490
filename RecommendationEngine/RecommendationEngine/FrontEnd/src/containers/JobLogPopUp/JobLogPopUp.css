@@ -1,13 +1,30 @@
-#col-date {
-    width:  15% ;
+.col-date.MuiTableCell-root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#col-time {
-    width:  15% ;
+
+.col-time.MuiTableCell-root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#col-level {
-    width:  10% ;
-    font-weight: bold;
+
+.col-description.MuiTableCell-root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#col-description {
-    width: 60%;
+
+.job-log-status-information.MuiTableCell-root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #76A9FF;
+}
+
+.job-log-status-warning.MuiTableCell-root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#FFCE31;
+}
+
+.job-log-status-error.MuiTableCell-root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#F26060;
+}
+
+.job-log-status-fatal.MuiTableCell-root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
