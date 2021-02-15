@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import  RecommendationEngineTable, {sortingComparison, tableSort, getSortingComparison} from '../RecommendationEngineTable';
-import { EnhancedTableHead } from '../../RecommendationTableHeader/RecommendationTableHeader';
+import { EnhancedTableHead } from '../../JobLogTableHeader/JobLogTableHeader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';

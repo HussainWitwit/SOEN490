@@ -11,10 +11,17 @@ export default function JobsPage () {
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
 
+     /* istanbul ignore next */
+    const durationOption = {
+        number: 'number',
+        width: 200,
+        valueFormatter: ({value}) => (value+' seconds')
+    };
+
   /* istanbul ignore next */
     const columns = [
     
-        {field: 'id', headerName: 'Job ID', width: 150, type: 'number', cellClassName: 'table-style'},
+        {field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style'},
         {field: 'status',
          headerName: 'Status', 
          type: 'string',
@@ -30,11 +37,11 @@ export default function JobsPage () {
            </div>
          )},
         {field: 'timestamp', headerName: 'Timestamp', type: 'dateTime', flex: 0.20, cellClassName: 'table-style'},
-        {field: 'duration', headerName: 'Job Duration', type:'number', flex: 0.20, cellClassName: 'table-style'},
-        {field: 'configuredRecommendationTitle', headerName: 'Configured Recommendation', type: 'string', flex: 0.20, cellClassName: 'table-style'},
+        {field: 'duration', headerName: 'Job Duration', type:'number', ...durationOption, flex: 0.20, cellClassName: 'table-style'},
+        {field: 'configuredRecommendationTitle', headerName: 'Configured Recommendation', type: 'string', flex: 0.30, cellClassName: 'table-style'},
         {field: 'jobLog',
-         headerName: 'Job Log',
-         flex: 0.20,
+         headerName:  'Log',
+         flex: 0.1,
          headerAlign: 'center',
          renderCell: (params) => (
         <JobLogPopUp 
@@ -44,8 +51,6 @@ export default function JobsPage () {
         </JobLogPopUp>
          )}
     ];
-
-    const dataGridSize = { height: 400, width: '100%' };
 
     /* istanbul ignore next */
     const getJobList = async () => {
@@ -95,7 +100,6 @@ export default function JobsPage () {
             <RecommendationEngineTable
                 data = {jobList}
                 columnValues = {columns}
-                dataGridSize = {dataGridSize}
                 onClickRow = {() => { }}
             />
         </div>

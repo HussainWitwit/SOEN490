@@ -17,14 +17,12 @@ export function ManageRecommendationPage (props) {
 
   /* istanbul ignore next */ 
   const columns = [
-    {field: 'id', headerName: 'ID', width: 150, type: 'number', cellClassName: 'table-style', hide: true},
-    {field: 'name', headerName: 'Title', flex: 0.25, type: 'string', cellClassName: 'table-style'},
+    {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style', hide: false},
+    {field: 'name', headerName: 'Title', flex:0.25, type: 'string', cellClassName: 'table-style'},
     {field: 'type', headerName: 'Type', flex: 0.25, type: 'string', cellClassName: 'table-style'},
     {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.25, cellClassName: 'table-style'},
     {field: 'createdOn', headerName: 'Created On', type: 'dateTime', flex: 0.25, cellClassName: 'table-style'},
 ]
-
-   const dataGridSize = { height: 400, width: '100%' };
    
   /* istanbul ignore next */
   const updateSearch = async (input) => {
@@ -78,7 +76,6 @@ export function ManageRecommendationPage (props) {
       <RecommendationEngineTable
         data = {recommendationList}
         columnValues = {columns}
-        dataGridSize = {dataGridSize}
         onClickRow = {openScheduleDrilldown}
       />
     </div >

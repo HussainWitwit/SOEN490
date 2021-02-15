@@ -5,12 +5,13 @@ import './RecommendationEngineTable.css';
 
 export default function RecommendationEngineTable(props) {
 
-  const { data, columnValues, dataGridSize, onClickRow } = props
+  const { data, columnValues, onClickRow } = props
 
   return (
     <div id="root">
-      <div style={dataGridSize}>
+      <div style={{height: 800, width: 1230}}>
         <DataGrid
+          pageSize={25}
           columns={columnValues}
           rows={data}
           showToolbar
