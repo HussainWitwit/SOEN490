@@ -5,9 +5,8 @@ import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/Mu
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
+import { transformParameterList } from '../../utilities/ArrayManipulationUtilities';
 import './ConfirmationModal.css';
-
-const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.
 
 export function ConfirmationModal (props) {
 
@@ -48,13 +47,13 @@ export function ConfirmationModal (props) {
             }}
           />
           <MultiSelectAutocomplete
-            contentLabel="Parameters..."
-            items={parameters}
-            defaultValue={parameters}
+            id='multiple-select-asset-container'
+            error={dialogsContent.template.inputList === 0}
+            items={dialogsContent.template.inputList}
+            defaultValue={transformParameterList(dialogsContent.template.inputList)}
             boxLabelName={'Selected Parameters'}
             variant={'outlined'}
             isReadOnly={true}
-            maxElement={1}
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."

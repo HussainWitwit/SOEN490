@@ -77,7 +77,7 @@ export function ResultsPage (props) {
                             />
                         </Grid>
                         <Grid item>
-                            <Button size="small" id="filterBtn" endIcon={<FilterList />}>
+                            <Button size="small" id="filter-btn" endIcon={<FilterList />}>
                                 Add Filter
               </Button>
                         </Grid>

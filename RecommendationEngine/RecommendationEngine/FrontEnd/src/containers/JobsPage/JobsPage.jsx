@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FilterList } from '@material-ui/icons';
 import { Grid, TableCell } from '@material-ui/core';
@@ -23,7 +23,7 @@ const RowsToDisplay = (element) => (
 const StatusComponent = (status) => (
     <div id='job-status'
         style={status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
-    {status}</div>
+        {status}</div>
 );
 
 export default function JobsPage () {
@@ -37,7 +37,7 @@ export default function JobsPage () {
         { id: 'timestamp', label: 'Timestamp' },
         { id: 'duration', label: 'Job Duration' },
         { id: 'configuredRecommendationTitle', label: 'Configured Recommendation' },
-        {id: '', label: ''}
+        { id: '', label: '' }
     ];
 
     const getJobList = async () => {
@@ -80,7 +80,7 @@ export default function JobsPage () {
                             />
                         </Grid>
                         <Grid item>
-                            <Button size="small" id="filterBtn" endIcon={<FilterList />}>
+                            <Button size="small" id="filter-btn" endIcon={<FilterList />}>
                                 Add Filter
               </Button>
                         </Grid>

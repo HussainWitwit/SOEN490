@@ -52,6 +52,6 @@ describe('DeletePopUp component', () => {
     });
 
     it('Simulate delete button onClick event', () => {
-        output.find('#deleteButton').simulate('click');
+        output.find('#delete-button').simulate('click');
     });
 });

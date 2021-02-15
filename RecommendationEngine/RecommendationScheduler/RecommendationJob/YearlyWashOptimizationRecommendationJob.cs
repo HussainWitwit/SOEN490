@@ -41,10 +41,10 @@ namespace RecommendationScheduler.RecommendationJob
         protected override void GetFromDB()
         {
             //Parameters TODO: switch Start of soiling season, End of soiling season, Soiling rate, Cost of cleaning into API once we get the access 
-            _parameters.StartSoiling = new DateTime(2020, 08, 1);
-            _parameters.EndSoiling = new DateTime(2020, 11, 1);
-            _parameters.SoilingRate = -0.0025;
-            _parameters.CostCleaning = 2;
+            _parameters.StartSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "StartSoilingSeason").ParamValue);
+            _parameters.EndSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "EndSoilingSeason").ParamValue);
+            _parameters.SoilingRate = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingRate").ParamValue);
+            _parameters.CostCleaning = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CostCleaning").ParamValue);
 
             //Parameters from recommendation schedule 
             _parameters.CenterPointIncrement = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CenterPointIncrement").ParamValue);

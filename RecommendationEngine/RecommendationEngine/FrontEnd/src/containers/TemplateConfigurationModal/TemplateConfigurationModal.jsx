@@ -82,7 +82,7 @@ function TemplateConfigurationModal (props) {
             <ol id="list-align">
               <Typography classes={{ root: 'list-dialog-1' }}>
                 {template.inputList && template.inputList.map((item, index) => (
-                  <li id="list-item" key={index}>{item.parameterName}</li>
+                  <li id="list-item" key={index}>{item.displayText}</li>
                 ))}
               </Typography>
             </ol>

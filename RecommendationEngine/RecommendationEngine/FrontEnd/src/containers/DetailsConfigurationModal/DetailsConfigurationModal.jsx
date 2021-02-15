@@ -147,7 +147,7 @@ export function DetailsConfigurationModal (props) {
                   autoOk
                   inputVariant="outlined"
                   label="Date & Time"
-                  minDate={isEditing ? null : new Date()}
+                  minDate={isEditing ? new Date(1900,1,1) : new Date()}
                   // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
