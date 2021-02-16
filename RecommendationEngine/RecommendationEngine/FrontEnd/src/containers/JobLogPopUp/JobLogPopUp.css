@@ -10,4 +10,5 @@
 }
 #col-description {
     width: 60%;
+    word-break: break-word;
 }
