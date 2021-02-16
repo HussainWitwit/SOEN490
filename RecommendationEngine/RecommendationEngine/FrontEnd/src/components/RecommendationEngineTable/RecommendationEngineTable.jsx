@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "@material-ui/core/Table";
 import PropTypes from 'prop-types';
 import TableBody from "@material-ui/core/TableBody";
@@ -11,7 +11,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import { EnhancedTableHead } from '../../components/RecommendationTableHeader/RecommendationTableHeader';
 import './RecommendationEngineTable.css';
-import { useHistory } from "react-router-dom";
+// import { useHistory, useRouteMatch, Link } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 export function getSortingComparison (orderType, orderColumnTitle) {
   return orderType === "desc" ? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
@@ -44,7 +45,7 @@ export function tableSort (array, comparator) {
 
 export default function RecommendationEngineTable (props) {
 
-  const { rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
+  const { urlId, rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
 
   const [orderType, setOrderType] = React.useState("asc");
   const [orderColumnTitle, setOrderColumnTitle] = React.useState("");
@@ -52,8 +53,12 @@ export default function RecommendationEngineTable (props) {
   const [denseAttribute, setDenseAttribute] = React.useState(dense);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [isSelected, setIsSelected] = React.useState(null);
+  
+  // const configuredRecomendationId = props.match.params.id;
+  // let {id} ;
 
-  let history = useHistory();
+  // let history = useHistory();
+  // let { url } = useRouteMatch();
 
   const handleChangeDense = (event) => {
     setDenseAttribute(event.target.checked);
@@ -73,6 +78,12 @@ export default function RecommendationEngineTable (props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  useEffect(() => {
+    if (urlId || urlId === 0){
+      onClickRow(Number(urlId));
+    }
+  }, [urlId])
 
   return (
     <div id="root">
@@ -118,10 +129,11 @@ export default function RecommendationEngineTable (props) {
                         key={element.id}
                         id="table-body"
                         hover={isClickable}
-                        selected={isClickable && isSelected === element.id}
+                        selected={isClickable && (isSelected === element.id)}
                         onClick={() => {
                           onClickRow(element.id)
                           setIsSelected(element.id)
+                          // history.push({pathname: `${url}`, search: `?id=${element.id}`})
                         }}
                       >
                         {rowsValue(element)}

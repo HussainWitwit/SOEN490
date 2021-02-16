@@ -4,14 +4,16 @@ import './ActionDrawer.css';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from "react-router-dom";
+import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { connect } from 'react-redux';
 
-export default function ActionDrawer (props) {
+export function ActionDrawer (props) {
 
-    const { actionGrouping } = props;
+    const { actionGrouping, openScheduleDrilldown } = props;
     const assets = actionGrouping ? actionGrouping.assetNameList : [];
     const actions = actionGrouping ? actionGrouping.actions : [];
 
-    let history = useHistory();
+    // let history = useHistory();
 
     // Animation style
     const animation = useSpring({
@@ -26,7 +28,7 @@ export default function ActionDrawer (props) {
                 <Grid className='actions-drawer-content' container>
                     <Grid id='info-container' item small={12}>
                         <p id='assets-title'>Recommendation:</p>
-                        <a onClick={()=>{history.push(`/recommendations-manage/${actionGrouping.configuredRecommendationId}`)}}>{actionGrouping ? actionGrouping.recommendationName : ''}</a>
+                        <a onClick={()=>{openScheduleDrilldown(actionGrouping.configuredRecommendationId)}}>{actionGrouping ? actionGrouping.recommendationName : ''}</a>
                         <p id='assets-title'>Asset(s):</p>
                         {assets.map((asset, index) => (
                             <p id='asset-names' key={index}>{asset}</p>
@@ -52,3 +54,4 @@ export default function ActionDrawer (props) {
         </animated.div>
     )
 }
+export default connect(null, mapDispatchDrillDownToProps)(ActionDrawer);

@@ -7,7 +7,9 @@ import SearchBar from '../../common/SearchBar';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
-import { useHistory } from "react-router-dom";
+import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { connect } from 'react-redux';
+// import { useHistory, Link } from "react-router-dom";
 
 
 const StatusComponent = (status) => (
@@ -16,11 +18,12 @@ const StatusComponent = (status) => (
         {status}</div>
 );
 
-export default function JobsPage() {
+export function JobsPage(props) {
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
 
-    let history = useHistory();
+    // let history = useHistory();
+    const { openScheduleDrilldown } = props;
 
     const RowsToDisplay = (element) => (
         <React.Fragment>
@@ -29,7 +32,7 @@ export default function JobsPage() {
             <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
             <TableCell id="table-body">{element.timestamp}</TableCell>
             <TableCell id="table-body">{element.duration} seconds</TableCell>
-            <TableCell id="table-body"><a onClick={() => { history.push(`/recommendations-manage/${element.configuredRecommendationId}`) }}>{element.configuredRecommendationTitle}</a></TableCell>
+            <TableCell id="table-body"><a onClick={() => openScheduleDrilldown(element.configuredRecommendationId)}>{element.configuredRecommendationTitle}</a></TableCell>
             <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
         </React.Fragment>
     );
@@ -59,6 +62,7 @@ export default function JobsPage() {
     useEffect(() => {
         getJobList();
     }, [])
+
 
     return (
         <div id="main-container">
@@ -101,3 +105,6 @@ export default function JobsPage() {
         </div>
     );
 }
+
+export default connect(null, mapDispatchDrillDownToProps)(JobsPage);
+

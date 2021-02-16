@@ -29,8 +29,7 @@ export function ManageRecommendationPage (props) {
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
   // let {configuredRecomendationId} = useParams();
-  const configuredRecomendationId = props.match.params.configuredRecommendationId
-
+  // const urlId = props.match.params.id;
   /* istanbul ignore next */ //Should be tested 
   const headCells = [
     { id: "name", label: "Title" },
@@ -52,12 +51,11 @@ export function ManageRecommendationPage (props) {
     setDefaultConfiguredRecList(configuredRecommendationList)
   }, [configuredRecommendationList])
 
-  useEffect(() => {
-    console.log(configuredRecomendationId);
-    if (configuredRecomendationId || configuredRecomendationId === 0){
-      openScheduleDrilldown(Number(configuredRecomendationId));
-    }
-  }, [configuredRecomendationId])
+  // useEffect(() => {
+  //   if (configuredRecomendationId || configuredRecomendationId === 0){
+  //     openScheduleDrilldown(Number(configuredRecomendationId));
+  //   }
+  // }, [configuredRecomendationId])
 
   return (
     <div id="main-container">
@@ -107,6 +105,7 @@ export function ManageRecommendationPage (props) {
         onClickRow={openScheduleDrilldown}
         columnTitles={headCells}
         isClickable={true}
+        // urlId = {urlId}
       />
     </div >
   );

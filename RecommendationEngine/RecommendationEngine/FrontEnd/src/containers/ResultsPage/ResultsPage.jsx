@@ -26,6 +26,9 @@ export function ResultsPage (props) {
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
 
+    // const urlId = props.match.params.id;
+
+    
     /* istanbul ignore next */
     const headCells = [
         { id: 'id', label: 'Result ID' },
@@ -92,6 +95,7 @@ export function ResultsPage (props) {
                 onClickRow={openResultDrilldown}
                 columnTitles={headCells}
                 isClickable={true}
+                // urlId = {urlId}
             />
         </div>
     );

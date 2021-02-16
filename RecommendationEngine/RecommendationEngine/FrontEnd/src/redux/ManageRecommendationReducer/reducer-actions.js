@@ -296,3 +296,10 @@ export const mapDispatchManageRecommendationPageToProps = (dispatch) => {
     openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id)
   }
 }
+
+/* istanbul ignore next */
+export const mapDispatchDrillDownToProps = (dispatch) => {
+  return {
+    openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id)
+  }
+}
