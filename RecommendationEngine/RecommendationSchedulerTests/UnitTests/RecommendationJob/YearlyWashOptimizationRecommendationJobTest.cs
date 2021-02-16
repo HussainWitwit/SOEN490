@@ -8,8 +8,6 @@ using RecommendationScheduler.RecommendationJob;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Interfaces.Services.ExternalApi;
-using Models.Application.Asset;
-using System.Data.Common;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 {
@@ -55,10 +53,14 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 
             List<DBRecommendationScheduleParameter> dbParameterList = new List<DBRecommendationScheduleParameter> {
 
-                new DBRecommendationScheduleParameter { DisplayText = "center point increment", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "span increment", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "soiling season buffer", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "accelerator", ParamValue = 3},
+                new DBRecommendationScheduleParameter { Name = "StartSoilingSeason", ParamValue = "03/01/2020 00:00:00"},
+                new DBRecommendationScheduleParameter { Name = "EndSoilingSeason", ParamValue = "11/01/2020 00:00:00"},
+                new DBRecommendationScheduleParameter { Name = "SoilingRate", ParamValue = "-0.0003"},
+                new DBRecommendationScheduleParameter { Name = "CostCleaning", ParamValue = "300"},
+                new DBRecommendationScheduleParameter { Name = "CenterPointIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SpanIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SoilingSeasonBuffer", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "Accelerator", ParamValue = "0.25"},
 
             };
 

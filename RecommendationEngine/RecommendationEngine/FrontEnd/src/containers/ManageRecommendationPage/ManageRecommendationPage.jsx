@@ -51,7 +51,7 @@ export function ManageRecommendationPage (props) {
           </Grid>
           <Grid item>
             <div>
-              <Button id="recBtn" onClick={toggleDialog}>
+              <Button id="rec-btn" onClick={toggleDialog}>
                 Create Recommendation
               </Button>
               <AddRecommendationDialog {...props} />

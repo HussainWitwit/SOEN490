@@ -3,6 +3,9 @@
     public class ConfiguredRecommendationParameter
     {
         public string ParameterName { get; set; }
-        public double DefaultValue { get; set; }
+        public string ParameterType { get; set; }
+        public string DefaultValue { get; set; }
+        public string ParameterValue { get; set; }
+        public string DisplayText { get; set; }
     }
 }

@@ -40,7 +40,7 @@
     min-width: 15%;
 }
 
-.clickable{
+#clickable{
     cursor: pointer;
 }
 

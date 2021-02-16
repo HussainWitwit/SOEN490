@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Interfaces.Services;
 using Models.Recommendation;
 using Interfaces.Repositories;
 using System.Linq;
-using Models.DB;
 
 namespace RecommendationEngine.Services
 {
@@ -27,8 +25,11 @@ namespace RecommendationEngine.Services
                     AlgorithmName = recommendationType.Type,
                     InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
                     {
-                        ParameterName = param.DisplayText,
-                        DefaultValue = param.DefaultValue
+                        ParameterName = param.Name,
+                        DisplayText = param.DisplayText,
+                        DefaultValue = param.DefaultValue,
+                        ParameterType = param.Type,
+                        ParameterValue = null
                     }).ToList()
                 }).ToList();
 

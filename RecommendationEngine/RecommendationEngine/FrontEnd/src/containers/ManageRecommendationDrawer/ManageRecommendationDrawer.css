@@ -73,7 +73,6 @@
 
 .inputs {
     float: left;
-    margin-right: 50px;
 }
 
 .assets {
@@ -86,6 +85,27 @@
 
 .parameters {
     margin-top: 20px;
+}
+
+.value-title-param {
+    padding-top: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+}
+
+
+.parameter-tile {
+    display: flex;
+    justify-content: space-between;
+}
+
+.values-param {
+    margin: 0;
+    padding: 0;
+    color: #687480;
+    font-size: 12px;
+    word-wrap: break-word;
+    flex-direction: row;
 }
 
 .values {
@@ -331,7 +351,8 @@
     text-align: center;
     width: 100%;
 }
-.Running{
+
+.Running {
     height: 22px;
     width: 6px;
     background-color: #FFCE31;
@@ -340,7 +361,7 @@
     display: inline-block;
     margin-top: 5px;
 }
-.Failed{
+.Failed {
     height: 22px;
     width: 6px;
     background-color: #FF0000;
@@ -349,7 +370,7 @@
     display: inline-block;
     margin-top: 5px;
 }
-.Success{
+.Success {
     height: 22px;
     width: 6px;
     background-color: #49C71F;
@@ -358,7 +379,7 @@
     display: inline-block;
     margin-top: 5px;
 }
-.Empty{
+.Empty {
     height: 22px;
     width: 6px;
     background-color: #bec0c1;
@@ -402,5 +423,4 @@
     color: #49C71F;
     font-weight: bolder;
     margin-left: 10px;
-
 }

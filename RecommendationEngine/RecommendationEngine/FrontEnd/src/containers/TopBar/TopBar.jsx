@@ -26,8 +26,8 @@ function TopBar ({ openAssetTreeview }) {
 
   /* istanbul ignore next */
   useEffect(() => {
-    if(process.env.REACT_APP_GEOLOCATION_KEY && process.env.REACT_APP_WEATHER_KEY){
-      getCurrentLocation(); 
+    if (process.env.REACT_APP_GEOLOCATION_KEY && process.env.REACT_APP_WEATHER_KEY) {
+      getCurrentLocation();
       getCurrentWeather();
     }
   }, []);
@@ -36,7 +36,7 @@ function TopBar ({ openAssetTreeview }) {
     <div className="main-container">
       <nav>
         <BreadcrumbsComponent id="breadcrumb" />
-        <p id="change_button" className="change_button" onClick={openAssetTreeview}>Change</p>
+        <p id="change-button" className="change-button" onClick={openAssetTreeview}>Change</p>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>

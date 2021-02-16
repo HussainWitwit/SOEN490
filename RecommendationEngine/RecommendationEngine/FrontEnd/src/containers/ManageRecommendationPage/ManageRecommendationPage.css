@@ -22,7 +22,7 @@
         font-size: 13px;
     }
 
-    #filterBtn{
+    #filter-btn{
         color: #252733;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         text-transform: none;
@@ -31,7 +31,7 @@
         width: 120px;
     }
     
-    #recBtn{
+    #rec-btn{
         background-color: #4DD3EF;
         float: right;
         color: #FFFFFF;
@@ -47,13 +47,13 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
     }
 
-    #recBtn:hover{
+    #rec-btn:hover{
             background-color: #3DB1C9;
             border-color: #3DB1C9;
             box-shadow: none;
     }
 
-    #recBtn:active{
+    #rec-btn:active{
         box-shadow: none;
         background-color: #3DB1C9;
         border-color: #3DB1C9;
