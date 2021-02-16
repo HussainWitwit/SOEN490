@@ -1,8 +1,7 @@
 import React from "react";
-import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import RecommendationEngineTable from '../RecommendationEngineTable';
 
 Enzyme.configure({adapter: new Adapter()});
