@@ -1,4 +1,4 @@
-import { TemplateDetails } from "../models/TemplateDetails";
+import { Parameter, TemplateDetails } from "../models/TemplateDetails";
 
 export async function GetTemplateDetailsInfo() : Promise<TemplateDetails[]> {
     let templates: TemplateDetails[] = [];
@@ -7,7 +7,12 @@ export async function GetTemplateDetailsInfo() : Promise<TemplateDetails[]> {
         const jsonResponse = await response.json();
         if(jsonResponse)
         {
-            templates  = jsonResponse;
+            templates = jsonResponse;
+            templates.forEach(function(template) {
+                template.inputList.forEach(function(param) {
+                    param.parameterValue = param.defaultValue;
+                })
+            })
             return templates;
         }
     }

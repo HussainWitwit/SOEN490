@@ -20,9 +20,9 @@ describe('TopBar component', () => {
         cy.wait(500)
         cy.get(':nth-child(5) > .MuiTypography-root').should('exist') // done
         cy.wait(500)
-        cy.get('#change_button').should('exist')
+        cy.get('#change-button').should('exist')
         cy.wait(500)
-        cy.get('#change_button').click()
+        cy.get('#change-button').click()
         cy.wait(500)
         cy.get('#img').should('exist')
         cy.wait(500)

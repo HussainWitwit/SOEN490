@@ -20,7 +20,7 @@ describe("Job Page", () => {
     })
 
     it("Finds the filter button", () => {
-        cy.get('#filterBtn > .MuiButton-label').should('be.visible')
+        cy.get('#filter-btn > .MuiButton-label').should('be.visible')
     })
 
     it('Finds the table', () => {
