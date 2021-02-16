@@ -74,7 +74,6 @@ export default function JobLogTable (props) {
   return (
     <div id="root">
       <Paper id="paper">
-
         {(!tableTitle && denseAttribute) ? '' : <Toolbar id="toolbar">
           <h6 className="tool-bar-title" variant="h6" data-testid="tableTitle" component="div">{tableTitle}</h6>
           {props.dense ? '' : <FormControlLabel

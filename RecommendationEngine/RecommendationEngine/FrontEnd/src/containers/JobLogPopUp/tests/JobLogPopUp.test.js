@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import JobLogPopUp from '../JobLogPopUp';
-import RecommendationEngineTable from '../../../components/RecommendationEngineTable/RecommendationEngineTable';
+import JobLogTable from '../../../components/JobLogTable/JobLogTable';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('JobLogPopUp component', () => {
@@ -73,7 +73,7 @@ describe('JobLogPopUp component', () => {
     });
 
     it('It finds the dialog actions', () => {
-        let button = output.find(RecommendationEngineTable);
+        let button = output.find(JobLogTable);
         expect(button).toHaveLength(1);
     });
 
