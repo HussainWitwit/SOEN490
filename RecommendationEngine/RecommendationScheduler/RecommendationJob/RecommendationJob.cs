@@ -13,6 +13,7 @@ namespace RecommendationScheduler.RecommendationJob
     public abstract class RecommendationJob : IJob
     {
         public int RecommendationScheduleId { get; set; }
+        public int AssetId { get; set; }
         protected DBRecommendationJob _recommendationJob;
         protected Stopwatch watch = new Stopwatch();
         protected IRecommendationJobLogger _jobLogger;
@@ -25,7 +26,11 @@ namespace RecommendationScheduler.RecommendationJob
             {
                 // Start execution
                 JobDataMap dataMap = context?.JobDetail.JobDataMap;
-                if (dataMap != null) RecommendationScheduleId = dataMap.GetIntValue("recommendationScheduleId");
+                if (dataMap != null)
+                {
+                    RecommendationScheduleId = dataMap.GetIntValue("recommendationScheduleId");
+                    AssetId = dataMap.GetIntValue("assetId");
+                }
                 CreateRecommendationJob();
                 watch.Start();
                 _jobLogger.LogInformation(_recommendationJob, "Job started!", null);
@@ -55,7 +60,7 @@ namespace RecommendationScheduler.RecommendationJob
             DBRecommendationSchedule schedule = _schedulerRepository.GetDbRecommendationScheduleById(RecommendationScheduleId);
             DBRecommendationJob job = new DBRecommendationJob
             {
-                Asset = schedule.AssetsList.FirstOrDefault()?.Asset,
+                Asset = schedule.AssetsList.Where(asset => asset.AssetId == AssetId).FirstOrDefault().Asset,
                 Status = "Running",
                 TriggeredBy = "Scheduler",
                 Timestamp = DateTime.Now,

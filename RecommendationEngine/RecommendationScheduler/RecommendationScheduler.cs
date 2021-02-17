@@ -6,6 +6,7 @@ using Quartz;
 using RecommendationScheduler.RecommendationJob;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecommendationScheduler
@@ -44,13 +45,18 @@ namespace RecommendationScheduler
         {
             if (schedule.AssetsList?.Count > 0)
             {
+                IJobDetail job;
+                ITrigger trigger;
                 RecommendationJobFactory factory = new RecommendationJobFactory(schedule);
-                IJobDetail job = factory.CreateRecommendationJob();
-                ITrigger trigger = TriggerBuilder.Create()
-                    .ForJob(job)
-                    .WithSchedule(ScheduleBuilder(schedule))
-                    .Build();
-                await _scheduler.ScheduleJob(job, trigger);
+                foreach (DBAssetRecommendationSchedule asset in schedule.AssetsList.ToList())
+                {
+                    job = factory.CreateRecommendationJob(asset.Asset);
+                    trigger = TriggerBuilder.Create()
+                        .ForJob(job)
+                        .WithSchedule(ScheduleBuilder(schedule))
+                        .Build();
+                    await _scheduler.ScheduleJob(job, trigger);
+                };
             }
         }
 
