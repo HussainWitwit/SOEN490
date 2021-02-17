@@ -14,6 +14,8 @@ using RecommendationEngine.Utilities;
 using RecommendationScheduler.RecommendationJob;
 using System.Collections.Specialized;
 using System.Reflection;
+using Interfaces.Hub;
+using RecommendationEngine.Hub;
 
 namespace RecommendationEngine
 {
@@ -31,6 +33,7 @@ namespace RecommendationEngine
         {
 
             services.AddControllersWithViews();
+            services.AddSignalR();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -64,6 +67,9 @@ namespace RecommendationEngine
             builder.RegisterType<RecommendationJobLogger>()
                 .As<IRecommendationJobLogger>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<NotificationHub>()
+                .As<INotificationHub>()
+                .SingleInstance();
 
             // Recommendation Scheduler
             RegisterScheduler(builder);
@@ -114,6 +120,7 @@ namespace RecommendationEngine
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapHub<NotificationHub>("/notificationhub");
             });
 
             app.UseSpa(spa =>
