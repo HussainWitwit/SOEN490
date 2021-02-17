@@ -5,6 +5,7 @@ using Interfaces.Repositories;
 using System.Linq;
 using Models.DB;
 using RecommendationEngine.ExceptionHandler;
+using System;
 
 namespace RecommendationEngine.Services
 {

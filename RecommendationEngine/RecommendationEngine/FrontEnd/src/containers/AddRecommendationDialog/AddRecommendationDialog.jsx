@@ -86,25 +86,24 @@ export function AddRecommendationDialog (props) {
 
   //Post method
   const confirmDialogEvent = async () => {
-    try {
-      await postConfiguredRecommendation({
-        type: template.name,
-        name: basicConfiguration.title,
-        granularity: basicConfiguration.granularity,
-        createdBy: basicConfiguration.createdBy,
-        createdOn: new Date(),
-        preferredScenario: basicConfiguration.preferredScenario,
-        recurrenceDayOfWeek: basicConfiguration.repeatDay,
-        modifiedBy: '',
-        recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
-        assetIdList: basicConfiguration.asset.map((e) => {
-          return e.id;
-        })
-      }, { isEditing: isEditing, id: id })
+    let response = await postConfiguredRecommendation({
+      type: template.name,
+      name: basicConfiguration.title,
+      granularity: basicConfiguration.granularity,
+      createdBy: basicConfiguration.createdBy,
+      createdOn: new Date(),
+      preferredScenario: basicConfiguration.preferredScenario,
+      recurrenceDayOfWeek: basicConfiguration.repeatDay,
+      modifiedBy: '',
+      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+      assetIdList: basicConfiguration.asset.map((e) => {
+        return e.id;
+      })
+    }, { isEditing: isEditing, id: id })
+
+    if (response) {
       closeDialog()
-    } catch(err) {
-      console.error("The following errors have been found!\n" + err.errorList.map(error => {return ('- ' + error.errorMessage + '\n')}))
-    }
+    } 
   }
 
   useEffect(() => {

@@ -24,6 +24,7 @@ export const openScheduleDrilldown = async (dispatch, id) => {
       response: response
     }
   });
+  return response;
 };
 
 /* istanbul ignore next */
