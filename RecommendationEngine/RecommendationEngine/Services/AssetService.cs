@@ -15,10 +15,10 @@ namespace RecommendationEngine.Services
 
     public class AssetService : IAssetService
     {
-        private IAssetDriveService _assetDriveService;
-        private IAssetRepository _assetRepository;
-        private IAssetTypeRepository _assetTypeRepository;
-        private IMetadataDriveService _metadataDriveService;
+        private readonly IAssetDriveService _assetDriveService;
+        private readonly IAssetRepository _assetRepository;
+        private readonly IAssetTypeRepository _assetTypeRepository;
+        private readonly IMetadataDriveService _metadataDriveService;
         private List<DBAsset> _assets;
         private DBAssetType _portfolioAssetType;
         private DBAssetType _plantAssetType;
@@ -34,9 +34,6 @@ namespace RecommendationEngine.Services
             _assetRepository = assetRepository;
             _assetTypeRepository = assetTypeRepository;
             _metadataDriveService = metadataDriveService;
-            GetDBAssets();
-            _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
-            _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
         }
 
         public Asset GetAssetsTreeview()
@@ -44,6 +41,8 @@ namespace RecommendationEngine.Services
             try
             {
                 GetDBAssets();
+                _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
+                _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
                 DBAsset client = _assets.FirstOrDefault(a => a.ParentAsset == null);
                 AssetComposite clientComposite = GetAssetCompositeFromDBAsset(client);
                 return clientComposite;
