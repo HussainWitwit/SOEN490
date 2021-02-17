@@ -14,8 +14,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color:#FFCE31;
 }
-
-.job-log-status-error.MuiTableCell-root{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:#F26060;
+#col-description {
+    width: 60%;
+    word-break: break-word;
 }
