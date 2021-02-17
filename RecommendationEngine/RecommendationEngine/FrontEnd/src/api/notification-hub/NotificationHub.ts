@@ -5,7 +5,9 @@ class NotificationHub {
 
   private constructor() {
     const hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl("/notificationhub")
+    .withUrl("/notificationhub", {
+      accessTokenFactory: () => 'Koooohoooookoooooo'
+    })
     .build();
  
     // Starts the SignalR connection
