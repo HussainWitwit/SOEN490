@@ -34,12 +34,12 @@ describe.only('ManageRecommendationPage component', () => {
 
     it('It finds the grids', () => {
         let component = output.find(Grid);
-        expect(component).toHaveLength(6);
+        expect(component).toHaveLength(5);
     });
 
     it('It finds the 2 buttons', () => {
         let button = output.find(Button);
-        expect(button).toHaveLength(2);
+        expect(button).toHaveLength(1);
     });
 
     it('It finds the title', () => {

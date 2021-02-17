@@ -1,3 +1,7 @@
+#force-run-cancel-button, #force-run-button{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
 #force-run-cancel-button {
     width: 100px;
     background-color: #FFFFFF;
@@ -8,7 +12,6 @@
     box-shadow: none;
     font-size: 18px;
     border-color: #C4C4C4;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
 #force-run-cancel-button:hover {
@@ -29,7 +32,6 @@
     box-shadow: none;
     font-size: 18px;
     border-color: #FDB62F;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
 #force-run-button:hover {

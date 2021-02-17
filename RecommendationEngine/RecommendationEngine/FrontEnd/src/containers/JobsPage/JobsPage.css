@@ -7,6 +7,32 @@
 #table-body-status {
     width: 30%;
     padding: 0 5% 0 5%;
-    
 }
+
+.table-style{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.job-status-running, .job-status-failed, .job-status-success{
+    text-align: center;
+    width: 90%;
+    height: 95%;
+    border-radius: 15px;
+}
+
+.job-status-running{
+    color: #FFCE31;
+    border: 2px solid #FFCE31;
+}
+
+.job-status-failed{
+    color: #F26060;
+    border: 2px solid #F26060;
+}
+
+.job-status-success{
+    color: #49C71F;
+    border: 2px solid #49C71F;
+}
+
 
