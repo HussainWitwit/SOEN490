@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import  JobLogTable, {sortingComparison, tableSort, getSortingComparison} from '../JobLogTable';
-import { EnhancedTableHead } from '../../JobLogTableHeader/JobLogTableHeader';
+import  BasicTable, {sortingComparison, tableSort, getSortingComparison} from '../BasicTable';
+import { EnhancedTableHead } from '../../BasicTableHeader/BasicTableHeader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -14,16 +14,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('JobLogTable component', () => {
+describe('BasicTable component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<JobLogTable />);
+    const output = shallow(<BasicTable />);
     const mockedEvent = { target: {} }
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<JobLogTable />, div);
+        ReactDOM.render(<BasicTable />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 

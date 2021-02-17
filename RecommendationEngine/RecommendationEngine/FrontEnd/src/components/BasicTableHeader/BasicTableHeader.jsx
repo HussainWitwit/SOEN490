@@ -4,7 +4,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import './JobLogTableHeader.css';
+import './BasicTableHeader.css';
 export function EnhancedTableHead(props) {
 
   const { orderType, orderColumnTitle, headCells, handleSortingChange } = props;

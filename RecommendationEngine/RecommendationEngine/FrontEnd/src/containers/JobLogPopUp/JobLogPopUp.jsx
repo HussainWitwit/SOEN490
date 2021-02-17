@@ -8,7 +8,7 @@ import { TableCell } from '@material-ui/core';
 import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 import Assignment from '@material-ui/icons/Assignment';
 import {dateFormat, timeFormat} from '../../utilities/DateTimeUtilities';
-import JobLogTable from '../../components/JobLogTable/JobLogTable';
+import BasicTable from '../../components/BasicTable/BasicTable';
 import './JobLogPopUp.css'
 
 
@@ -32,7 +32,6 @@ export default function JobLogPopUp(props) {
   const [jobLogs, setJobLogs] = React.useState([]);
   const [open, setOpen] = React.useState(false);
 
-  /* istanbul ignore next */
   const fetchLogsList  = async () => {
     let response = await GetJobLogList(props.jobId);
     setJobLogs(response);
@@ -68,7 +67,7 @@ export default function JobLogPopUp(props) {
       >
         <DialogTitle id="scroll-dialog-title">Job Logs Details</DialogTitle>
         <DialogContent dividers={true}>
-          <JobLogTable
+          <BasicTable
             rowsValue={RowsToDisplay}
             data={jobLogs}
             onClickRow={() => {}}

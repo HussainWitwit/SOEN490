@@ -9,8 +9,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import { EnhancedTableHead } from '../JobLogTableHeader/JobLogTableHeader';
-import './JobLogTable.css';
+import { EnhancedTableHead } from '../BasicTableHeader/BasicTableHeader';
+import './BasicTable.css';
 
 export function getSortingComparison (orderType, orderColumnTitle) {
   return orderType === "desc" ? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
@@ -41,7 +41,7 @@ export function tableSort (array, comparator) {
   }
 }
 
-export default function JobLogTable (props) {
+export default function BasicTable (props) {
 
   const { rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
 
@@ -142,7 +142,7 @@ export default function JobLogTable (props) {
   );
 }
 /* istanbul ignore next */
-JobLogTable.propTypes = {
+BasicTable.propTypes = {
   rowsValue: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   tableTitle: PropTypes.string.isRequired,

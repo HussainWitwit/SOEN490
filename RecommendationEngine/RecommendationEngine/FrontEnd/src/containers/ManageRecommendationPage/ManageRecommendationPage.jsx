@@ -15,7 +15,6 @@ export function ManageRecommendationPage (props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
-  /* istanbul ignore next */ 
   const columns = [
     {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style', hide: false},
     {field: 'name', headerName: 'Title', flex:0.25, type: 'string', cellClassName: 'table-style'},
@@ -24,7 +23,6 @@ export function ManageRecommendationPage (props) {
     {field: 'createdOn', headerName: 'Created On', type: 'date', flex: 0.25, cellClassName: 'table-style'},
 ]
    
-  /* istanbul ignore next */
   const updateSearch = async (input) => {
     const filtered = defaultConfiguredRecList.filter(recommendation => {
       return recommendation.name.toLowerCase().includes(input.toLowerCase())
@@ -74,9 +72,10 @@ export function ManageRecommendationPage (props) {
       </div>
       <br></br>
       <RecommendationEngineTable
-        data = {recommendationList}
-        columnValues = {columns}
-        onClickRow = {openScheduleDrilldown}
+        data={recommendationList}
+        columnValues={columns}
+        onClickRow={openScheduleDrilldown}
+        isClickable={true}
       />
     </div >
   );

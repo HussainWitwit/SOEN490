@@ -1,25 +1,29 @@
-import React from "react";
+import React, {useState}  from "react";
 import PropTypes from 'prop-types';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import './RecommendationEngineTable.css';
 
 export default function RecommendationEngineTable(props) {
 
-  const { data, columnValues, onClickRow } = props
+  const { data, columnValues, onClickRow, isClickable } = props
+
+  const [rowId, setRowId] = useState(0);
+
+  // const getRowId = row => setRowId(row.id);
 
   return (
     <div id="root">
-      <div style={{height: 800, width: 1230}}>
+      <div className={isClickable? 'table-style clickable ' : "table-style"}>
         <DataGrid
-          test-id='data-grid'
-          component="div"
           pageSize={25}
+          scrollbarSize={40}
           density={'compact'}
           columns={columnValues}
           rows={data}
           showToolbar
           components={{ Toolbar: GridToolbar }}
-          onRowClick={onClickRow}
+          onRowHover={isClickable}
+          onRowClick={()=>{onClickRow(97)}}
         >
         </DataGrid>
       </div>

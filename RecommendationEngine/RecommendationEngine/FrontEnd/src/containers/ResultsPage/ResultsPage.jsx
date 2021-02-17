@@ -13,33 +13,28 @@ export function ResultsPage (props) {
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
 
-    /* istanbul ignore next */
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
         currency: 'CAD',
       });
       
-    /* istanbul ignore next */
       const CADPrice = {
         type: 'number',
         width: 200,
         valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
       }; 
       
-    /* istanbul ignore next */
       const percentageFormatter = new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
       
-    /* istanbul ignore next */
       const PercentageOption = {
           number: 'number',
           width: 200,
           valueFormatter: ({value}) => (percentageFormatter.format(Number(value))+'%')
       };
-      
-    /* istanbul ignore next */
+ 
       const columns = [
         {field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style'},
         {field: 'netSaving', headerName: 'Net Saving', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-positive-numbers'},
@@ -48,14 +43,13 @@ export function ResultsPage (props) {
         {field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'}
     ]
 
-    /* istanbul ignore next */
     const getResultList = async () => {
         let response = await GetRecommendationResultList();
         setDefaultResultList(response);
         setResultList(response);
     }
 
-    /* istanbul ignore next */
+
     const updateSearch = async (input) => {
         const filtered = defaultResultList.filter(result => {
             return result.id.toString().includes(input.toString())
@@ -95,8 +89,9 @@ export function ResultsPage (props) {
             <br></br>
             <RecommendationEngineTable
                 data = {resultList}
-                columnValues = {columns}
-                onClickRow = {openResultDrilldown}
+                columnValues={columns}
+                isClickable={true}
+                onClickRow={openResultDrilldown}
             />
         </div>
     );

@@ -11,14 +11,12 @@ export default function JobsPage () {
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
 
-     /* istanbul ignore next */
     const durationOption = {
         number: 'number',
         width: 200,
         valueFormatter: ({value}) => (value+' seconds')
     };
 
-  /* istanbul ignore next */
     const columns = [
     
         {field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style'},
@@ -52,14 +50,12 @@ export default function JobsPage () {
          )}
     ];
 
-    /* istanbul ignore next */
     const getJobList = async () => {
         let response = await GetRecommendationJobList();
         setJobList(response);
         setDefaultJobList(response);
     }
 
-    /* istanbul ignore next */
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
             return job.id.toString().includes(input.toString())
@@ -98,9 +94,10 @@ export default function JobsPage () {
             </div>
             <br></br>
             <RecommendationEngineTable
-                data = {jobList}
-                columnValues = {columns}
-                onClickRow = {() => { }}
+                data={jobList}
+                columnValues={columns}
+                isClickable={true}
+                onClickRow={() => { }}
             />
         </div>
     );
