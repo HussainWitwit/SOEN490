@@ -11,7 +11,6 @@ export async function GetNestedAssetList() : Promise<Asset | null> {
             return assetResult
         })
         .catch(err => {
-            console.log(err)
             err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
         })
     return assetResult;

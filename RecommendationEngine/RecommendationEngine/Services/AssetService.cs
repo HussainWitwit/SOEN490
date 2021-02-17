@@ -12,7 +12,6 @@ using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Services
 {
-
     public class AssetService : IAssetService
     {
         private readonly IAssetDriveService _assetDriveService;
@@ -125,8 +124,10 @@ namespace RecommendationEngine.Services
 
         private List<AssetComposite> GetChildren(int assetId)
         {
-            GetDBAssets();
-            List<DBAsset> children = _assets.FindAll(a =>
+            try
+            {
+                GetDBAssets();
+                List<DBAsset> children = _assets.FindAll(a =>
                 {
                     if (a.ParentAsset != null)
                     {
@@ -134,92 +135,144 @@ namespace RecommendationEngine.Services
                     }
                     return false;
                 });
-            List<AssetComposite> childrenComposite = children
-                    .Select(dbasset => GetAssetCompositeFromDBAsset(dbasset)).ToList();
+                List<AssetComposite> childrenComposite = children
+                        .Select(dbasset => GetAssetCompositeFromDBAsset(dbasset)).ToList();
 
-            return childrenComposite;
+                return childrenComposite;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         private AssetComposite GetAssetCompositeFromDBAsset(DBAsset dbasset)
         {
-            var assetComposite = new AssetComposite()
+            try {
+                var assetComposite = new AssetComposite()
+                {
+                    Name = dbasset.Name,
+                    Id = dbasset.AssetId,
+                    AcPower = !Double.IsNaN(dbasset.AcPower) ? dbasset.AcPower : 0,
+                    DisplayText = dbasset.DisplayText,
+                    ElementPath = dbasset.ElementPath,
+                    EnergyType = dbasset.EnergyType,
+                    TimeZone = dbasset.TimeZone,
+                };
+
+                assetComposite.Children = GetChildren(assetComposite.Id);
+
+                return assetComposite;
+            }
+            catch (GlobalException)
             {
-                Name = dbasset.Name,
-                Id = dbasset.AssetId,
-                AcPower = !Double.IsNaN(dbasset.AcPower) ? dbasset.AcPower : 0,
-                DisplayText = dbasset.DisplayText,
-                ElementPath = dbasset.ElementPath,
-                EnergyType = dbasset.EnergyType,
-                TimeZone = dbasset.TimeZone,
-            };
-
-            assetComposite.Children = GetChildren(assetComposite.Id);
-
-            return assetComposite;
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         private DBAsset GetClient(List<PFPortfolio> listOfPortfolios)
         {
-            List<string> clientList = listOfPortfolios
-                .Select(x => x.Id.Split(".")[0])
-                .ToList();
+            try
+            {
+                List<string> clientList = listOfPortfolios
+                    .Select(x => x.Id.Split(".")[0])
+                    .ToList();
 
-            DBAsset client = clientList
-                .Distinct()
-                .Select(x => new DBAsset()
-                {
-                    Name = x,
-                    DisplayText = x
-                })
-                .FirstOrDefault();
+                DBAsset client = clientList
+                    .Distinct()
+                    .Select(x => new DBAsset()
+                    {
+                        Name = x,
+                        DisplayText = x
+                    })
+                    .FirstOrDefault();
 
-            return client;
+                return client;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         private async Task<List<DBAsset>> BuildAssets(List<PFPortfolio> assets, bool isPortfolio, DBAsset client)
         {
-            Dictionary<string, dynamic> assetsEnergyTypes = new Dictionary<string, dynamic>();
-
-            if (!isPortfolio)
+            try
             {
-                List<string> assetIds = assets.Select(asset => asset.Id).ToList();
-                List<PFMetadata> assetsMetadata = await _metadataDriveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
-                assetsEnergyTypes = assetsMetadata.Select(assetMetadata =>
-                    new { elementPath = assetMetadata.ElementPath, energyType = assetMetadata.Metadata["ENERGY_SOURCE"] })
-                    .ToDictionary(asset => asset.elementPath, asset => asset.energyType);
-            }
+                Dictionary<string, dynamic> assetsEnergyTypes = new Dictionary<string, dynamic>();
 
-            PFPlant plant = new PFPlant();
-            List<DBAsset> assetList = assets
-                .Select(x =>
+                if (!isPortfolio)
                 {
-                    if (!isPortfolio)
-                    {
-                        plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
-                    }
-
-                    return new DBAsset()
-                    {
-                        Name = x.Id,
-                        ElementPath = x.Id,
-                        DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
-                        EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
-                        Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
-                        TimeZone = isPortfolio ? null : plant.TimeZone,
-                        AcPower = isPortfolio ? 0 : plant.AcCapacity,
-                        ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
-                    };
+                    List<string> assetIds = assets.Select(asset => asset.Id).ToList();
+                    List<PFMetadata> assetsMetadata = await _metadataDriveService.GetAssetsMetadataByPlantIds(assetIds.ToList());
+                    assetsEnergyTypes = assetsMetadata.Select(assetMetadata =>
+                        new { elementPath = assetMetadata.ElementPath, energyType = assetMetadata.Metadata["ENERGY_SOURCE"] })
+                        .ToDictionary(asset => asset.elementPath, asset => asset.energyType);
                 }
-                ).ToList();
 
-            return assetList;
+                PFPlant plant = new PFPlant();
+                List<DBAsset> assetList = assets
+                    .Select(x =>
+                    {
+                        if (!isPortfolio)
+                        {
+                            plant = Task.Run(() => { return GetPlantById(x.Id); }).Result;
+                        }
+
+                        return new DBAsset()
+                        {
+                            Name = x.Id,
+                            ElementPath = x.Id,
+                            DisplayText = !String.IsNullOrEmpty(x.Name) ? x.Name : x.Id,
+                            EnergyType = isPortfolio ? null : assetsEnergyTypes.Where(asset => asset.Key == x.Id).FirstOrDefault().Value,
+                            Type = isPortfolio ? _portfolioAssetType : _plantAssetType,
+                            TimeZone = isPortfolio ? null : plant.TimeZone,
+                            AcPower = isPortfolio ? 0 : plant.AcCapacity,
+                            ParentAsset = isPortfolio ? client : GetParentAsset(x.Id)
+                        };
+                    }
+                    ).ToList();
+
+                return assetList;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         private async Task<PFPlant> GetPlantById(string id)
         {
-
-            PFPlant plant = await _assetDriveService.GetPlantById(id);
-            return plant;
+            try
+            {
+                PFPlant plant = await _assetDriveService.GetPlantById(id);
+                return plant;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+            
         }
 
         private DBAsset GetParentAsset(string id)

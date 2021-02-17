@@ -43,12 +43,7 @@ export async function DeleteRecommendationById(id: number) : Promise<any> {
         return response;
     })
     .catch(err => {
-        if (err.code === 400) {
-            alert("The following errors were found\n" + mapErrorToErrorList(err))
-        } 
-        else {
-            console.log(err)
-        }
+        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
     })
     return response;
 }
@@ -66,12 +61,7 @@ export const AddConfiguredRecommendation = async (recommendation: ConfiguredReco
         return response;
     })
     .catch(err => {
-        if (err.code === 400) {
-            alert("The following errors were found\n" + mapErrorToErrorList(err))
-        } 
-        else {
-            console.log(err)
-        }
+        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
     })
     return response
 };
@@ -89,12 +79,7 @@ export async function EditConfiguredRecommendation(recommendation: ConfiguredRec
         return response;
     })
     .catch(err => {
-        if (err.code === 400) {
-            alert("The following errors were found\n" + mapErrorToErrorList(err))
-        } 
-        else {
-            console.log(err)
-        }
+        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
     })
     return response
 }
@@ -111,12 +96,7 @@ export async function ForceRunConfiguredRecommendation(id: number) : Promise<any
         return response;
     })
     .catch(err => {
-        if (err.code === 400) {
-            alert("The following errors were found\n" + mapErrorToErrorList(err))
-        } 
-        else {
-            console.log(err)
-        }
+        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
     })
     return response;
 }
