@@ -1,14 +1,12 @@
 
-.table-style{
+.table-style, .table-positive-numbers, .table-negative-numbers{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .table-positive-numbers{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #49C71F;
 }
 
 .table-negative-numbers{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color:#F26060;
 }

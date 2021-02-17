@@ -1,12 +1,7 @@
-.col-date.MuiTableCell-root{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.col-time.MuiTableCell-root{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.col-description.MuiTableCell-root{
+.col-date.MuiTableCell-root,
+.col-time.MuiTableCell-root,
+.col-description.MuiTableCell-root,
+.job-log-status-fatal.MuiTableCell-root{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -23,8 +18,4 @@
 .job-log-status-error.MuiTableCell-root{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color:#F26060;
-}
-
-.job-log-status-fatal.MuiTableCell-root{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

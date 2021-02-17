@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import JobLogPopUp from '../JobLogPopUp';
-import JobLogTable from '../../../components/JobLogTable/JobLogTable';
+import BasicTable from '../../../components/BasicTable/BasicTable';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('JobLogPopUp component', () => {
@@ -70,11 +70,6 @@ describe('JobLogPopUp component', () => {
     it('It finds the close and open buttons', () => {
         let button = output.find(Button);
         expect(button).toHaveLength(2);
-    });
-
-    it('It finds the dialog actions', () => {
-        let button = output.find(JobLogTable);
-        expect(button).toHaveLength(1);
     });
 
     it('It finds the close button and presses it', () => {

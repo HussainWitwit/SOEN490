@@ -13,41 +13,26 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.job-status-running{
-    color: #FFCE31;
-    border: 2px solid #FFCE31;
+.job-status-running, .job-status-failed, .job-status-success{
     text-align: center;
     width: 90%;
     height: 95%;
     border-radius: 15px;
+}
+
+.job-status-running{
+    color: #FFCE31;
+    border: 2px solid #FFCE31;
 }
 
 .job-status-failed{
     color: #F26060;
     border: 2px solid #F26060;
-    text-align: center;
-    width: 90%;
-    height: 95%;
-    border-radius: 15px;
 }
 
 .job-status-success{
     color: #49C71F;
     border: 2px solid #49C71F;
-    text-align: center;
-    width: 90%;
-    height: 95%;
-    border-radius: 15px;
 }
-
-.styling{
-    color: #FFCE31;
-    border: 2px solid #FFCE31;
-    text-align: center;
-    width: 90%;
-    height: 95%;
-    border-radius: 15px;
-}
-
 
 
