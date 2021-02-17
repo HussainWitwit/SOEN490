@@ -23,13 +23,14 @@ export default function RecommendationEngineTable(props) {
           showToolbar
           components={{ Toolbar: GridToolbar }}
           onRowHover={isClickable}
-          onRowClick={()=>{onClickRow(97)}}
+          onRowClick={({row}) => onClickRow(row.id)}
         >
         </DataGrid>
       </div>
     </div>
   );
 }
+
 /* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
   columnsValues: PropTypes.func.isRequired,
