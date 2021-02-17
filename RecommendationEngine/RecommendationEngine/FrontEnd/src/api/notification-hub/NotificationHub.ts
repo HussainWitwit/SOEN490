@@ -1,6 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 
-class NotificationHub {
+export default class NotificationHub {
   private static instance: NotificationHub;
 
   private constructor() {
@@ -23,9 +23,3 @@ class NotificationHub {
   }
 
 }
-
-// useEffect(() => {
-//   hubConnection.on("setTime", message => {
-//     setTime(message);
-//   });
-// });
