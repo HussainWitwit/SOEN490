@@ -9,13 +9,12 @@ export default function RecommendationEngineTable(props) {
 
   const [rowId, setRowId] = useState(0);
 
-  // const getRowId = row => setRowId(row.id);
-
   return (
     <div id="root">
       <div className={isClickable? 'table-style clickable ' : "table-style"}>
         <DataGrid
-          pageSize={25}
+          pageSize={10}
+          rowsPerPageOptions={[10,25,50,100]}
           scrollbarSize={40}
           density={'compact'}
           columns={columnValues}
