@@ -1,4 +1,3 @@
-
 import { ConfiguredRecommendationJob, JobLog } from '../models/Job'
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
 

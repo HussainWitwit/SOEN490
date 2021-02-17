@@ -14,12 +14,6 @@ describe.only('JobsPage component', () => {
     useStateSpy.mockImplementation((init) => [init, setState]);
     const output = shallow(<JobsPage />);
 
-    it('It renders without crashing', async () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<JobsPage />, div);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-    });
-
     it('It finds the page in the component tree', () => {
         expect(output).toHaveLength(1);
     });
