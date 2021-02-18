@@ -8,5 +8,6 @@ export interface Asset {
     timeZone: string,
     elementPath: string,
     acPower: string,
-    children: Asset[]
+    children: Asset[],
+    parentId: number | null
 }

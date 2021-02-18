@@ -224,6 +224,7 @@ namespace RecommendationEngine.Services
                     EnergyType = dbasset.EnergyType,
                     AssetType = dbasset.Type.Name,
                     TimeZone = dbasset.TimeZone,
+                    parentId = dbasset.ParentAsset.AssetId
 
                 }
                 ).ToList();
