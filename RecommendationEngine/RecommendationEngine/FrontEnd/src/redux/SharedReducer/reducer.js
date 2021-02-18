@@ -2,6 +2,7 @@ import * as type from './dispatch-types';
 
 export const initialValues = {
     nestedAssets: [],
+    nestedAssetsArray: [],
     flatListAssets: [],
     configuredRecommendationList: [],
     templateDetailsList: [],
@@ -24,6 +25,11 @@ export const SharedReducer = function (state = initialValues, action) {
                 ...state,
                 configuredRecommendationList: action.payload
             };
+        case type.GET_NESTED_ASSETS_IN_ARRAY: //might have debugging
+            return {
+                ...state,
+                nestedAssetsArray: [...action.payload]
+            }
         default:
             return state
     }
