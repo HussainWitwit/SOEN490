@@ -7,7 +7,7 @@
 import * as dispatchActionType from './dispatch-types';
 import { GetConfiguredRecommendationList } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 import { GetNestedAssetList, GetFlatAssetList } from '../../api/endpoints/AssetEndpoints';
-
+import { convertAssetObject } from '../../utilities/ArrayManipulationUtilities';
 //**Actions --> Useful for unit testing the reducer.
 export const getNestedAssets = async (dispatch) => {
   const response = await GetNestedAssetList();
@@ -18,7 +18,8 @@ export const getNestedAssets = async (dispatch) => {
 };
 
 export const getNestedAssetInArray = async (dispatch) => {
-  const response = await GetNestedAssetList();
+  let tempResponse = await GetNestedAssetList();
+  const response = convertAssetObject([tempResponse]);
   dispatch({
     type: dispatchActionType.GET_NESTED_ASSETS_IN_ARRAY,
     payload: response,

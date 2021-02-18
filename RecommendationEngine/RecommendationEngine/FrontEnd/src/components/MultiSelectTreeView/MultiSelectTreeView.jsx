@@ -13,7 +13,7 @@ export default function MultiSelectTreeView (props) {
     const { SHOW_PARENT } = TreeSelect;
     const { assetList } = props;
 
-    console.log(renameAttributes(assetList));
+    // console.log(renameAttributes(assetList));
 
     // sample data, replace assetList with treeData to see what it looks like
     const treeData = [

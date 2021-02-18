@@ -1,5 +1,5 @@
-import { Asset } from "../models/Asset";
-
+import { Asset, MultiSelectTreeViewAsset } from "../models/Asset";
+import { convertAssetObject } from '../../utilities/ArrayManipulationUtilities';
 export async function GetNestedAssetList() : Promise<Asset | null> {
     let assetResult: Asset;
     try {
@@ -16,13 +16,13 @@ export async function GetNestedAssetList() : Promise<Asset | null> {
     return null;
 }
 
-export async function GetFlatAssetList() : Promise<Asset[]> {
-    let assetResult: Asset[] = [];
+export async function GetFlatAssetList() : Promise<MultiSelectTreeViewAsset[]> {
+    let assetResult: MultiSelectTreeViewAsset[] = [];
     try {
         let response = await fetch('api/asset'); 
         const jsonResponse = await response.json();
         if(jsonResponse) {
-            assetResult = jsonResponse;
+            assetResult = convertAssetObject(jsonResponse);
             return assetResult;
         }
     }catch(error) {
@@ -31,3 +31,4 @@ export async function GetFlatAssetList() : Promise<Asset[]> {
     }
     return assetResult;
 }
+

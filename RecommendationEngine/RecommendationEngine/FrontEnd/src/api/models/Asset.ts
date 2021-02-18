@@ -11,3 +11,10 @@ export interface Asset {
     children: Asset[],
     parentId: number | null
 }
+
+export interface MultiSelectTreeViewAsset {
+    key: number,
+    title: string,
+    value: Asset,
+    children: MultiSelectTreeViewAsset[],
+}
