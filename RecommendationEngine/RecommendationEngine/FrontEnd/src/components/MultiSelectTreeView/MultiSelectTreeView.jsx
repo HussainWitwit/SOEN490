@@ -8,43 +8,43 @@ import { TreeSelect } from 'antd';
 // 3. A treeView of the assets will then be displayed
 
 export default function MultiSelectTreeView (props) {
-    const { SHOW_ALL } = TreeSelect;
+    const { SHOW_ALL, SHOW_PARENT } = TreeSelect;
     const { assetList } = props;
     console.log(assetList);
 
     // sample data, replace assetList with treeData to see what it looks like
     const treeData = [
         {
-            title: 'Node1',
+            displayText: 'Node1',
             value: '0-0',
-            key: '0-0',
+            id: '0-0',
             children: [
                 {
-                    title: 'Child Node1',
+                    displayText: 'Child Node1',
                     value: '0-0-0',
-                    key: '0-0-0',
+                    id: '0-0-0',
                 },
             ],
         },
         {
-            title: 'Node2',
+            displayText: 'Node2',
             value: '0-1',
-            key: '0-1',
+            id: '0-1',
             children: [
                 {
-                    title: 'Child Node3',
+                    displayText: 'Child Node3',
                     value: '0-1-0',
-                    key: '0-1-0',
+                    id: '0-1-0',
                 },
                 {
-                    title: 'Child Node4',
+                    displayText: 'Child Node4',
                     value: '0-1-1',
-                    key: '0-1-1',
+                    id: '0-1-1',
                 },
                 {
-                    title: 'Child Node5',
+                    displayText: 'Child Node5',
                     value: '0-1-2',
-                    key: '0-1-2',
+                    id: '0-1-2',
                 },
             ],
         },
@@ -52,21 +52,24 @@ export default function MultiSelectTreeView (props) {
 
 
     const tProps = {
-        // treeData,
-        assetList,
+        treeData: assetList,
+        // assetList,
         value: props.value,
         onChange: props.onChange,
         treeCheckable: true,
-        showCheckedStrategy: SHOW_ALL,
+        showCheckedStrategy: SHOW_PARENT,
         placeholder: props.placeholder,
         style: {
-            width: '2000%',
+            width: '2000%'
         }
     }
 
     return (
         <div>
             <TreeSelect
+               dropdownStyle={{
+                zIndex: 100000
+              }}
                 {...tProps} />
         </div>
     )
