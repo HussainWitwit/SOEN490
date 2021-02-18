@@ -7,7 +7,7 @@ import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-action
 import { connect } from 'react-redux';
 import './ResultsPage.css'
 
-export function ResultsPage (props) {
+export function ResultsPage(props) {
     const { openResultDrilldown } = props;
 
     const [resultList, setResultList] = useState([]);
@@ -16,31 +16,34 @@ export function ResultsPage (props) {
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
         currency: 'CAD',
-      });
-      
-      const CADPrice = {
+    });
+
+    const CADPrice = {
         type: 'number',
         width: 200,
         valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
-      }; 
-      
-      const percentageFormatter = new Intl.NumberFormat('en-US', {
+    };
+
+    const percentageFormatter = new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
-      });
-      
-      const PercentageOption = {
-          number: 'number',
-          width: 200,
-          valueFormatter: ({value}) => (percentageFormatter.format(Number(value))+'%')
-      };
- 
-      const columns = [
-        {field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style'},
-        {field: 'netSaving', headerName: 'Net Saving', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-positive-numbers'},
-        {field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number',...PercentageOption, flex: 0.25, cellClassName: 'table-positive-numbers'},
-        {field: 'costOfAction', headerName: 'Cost of Action', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'},
-        {field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'}
+    });
+
+    const PercentageOption = {
+        number: 'number',
+        width: 200,
+        valueFormatter: ({ value }) => (percentageFormatter.format(Number(value)) + '%')
+    };
+
+    const columns = [
+        { field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style', hide: true },
+        { field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', flex: 0.14, cellClassName: 'table-style' },
+        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.14, cellClassName: 'table-style' },
+        { field: 'netSaving', headerName: 'Net Saving', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-positive-numbers' },
+        { field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number', ...PercentageOption, flex: 0.14, cellClassName: 'table-positive-numbers' },
+        { field: 'costOfAction', headerName: 'Cost of Action', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
+        { field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
+        { field: 'resultOutputDate', headerName: 'Timestamp', type: 'string', flex: 0.14, cellClassName: 'table-style' }
     ]
 
     const getResultList = async () => {
@@ -88,7 +91,7 @@ export function ResultsPage (props) {
             </div>
             <br></br>
             <RecommendationEngineTable
-                data = {resultList}
+                data={resultList}
                 columnValues={columns}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
