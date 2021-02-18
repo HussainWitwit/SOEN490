@@ -1,3 +1,8 @@
+
+.title-dialog-0.MuiTypography-root, .title-dialog-1.MuiTypography-root, .subtitle-dialog-1.MuiTypography-root, .list-dialog-1.MuiTypography-root ,#template-label{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 #template-modal-container > div{
     display: grid;
     width: 100%; 
@@ -64,7 +69,6 @@ height: 100%;
 #template-label{
   color: #687480;
   width: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 11px;
   margin-bottom: 10%;
   text-align: center;
@@ -80,7 +84,6 @@ height: 100%;
 
 .title-dialog-0.MuiTypography-root{
   color: #212529;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   font-size: 15px;
   min-width: 90%;
@@ -89,7 +92,6 @@ height: 100%;
 
 .title-dialog-1.MuiTypography-root{
   color: #212529;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   font-size: 12px;
   min-width: 90%;
@@ -98,7 +100,6 @@ height: 100%;
 
 .subtitle-dialog-1.MuiTypography-root{
   color:#868282;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
   width: 85%;
   padding-bottom: 2%;
@@ -106,7 +107,6 @@ height: 100%;
 
 .list-dialog-1.MuiTypography-root{
   color:#868282;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 12px;
   min-width: 90%;
   margin-bottom: 4%;

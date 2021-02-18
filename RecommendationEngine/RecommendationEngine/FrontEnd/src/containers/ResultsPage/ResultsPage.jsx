@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { FilterList } from '@material-ui/icons';
-import { Grid, TableCell } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
-
-/* istanbul ignore next */
-export const RowsToDisplay = (element) => (
-    <React.Fragment>
-        <TableCell />
-        <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.id}</TableCell>
-        <TableCell id="table-body" style={element.netSaving > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.netSaving.toFixed(2)).toLocaleString()}$</TableCell>
-        <TableCell id="table-body" style={element.returnOnInvestment > 0 ? { color: '#4AC71F' } : { color: 'red' }}>{parseFloat(element.returnOnInvestment.toFixed(2)).toLocaleString()}%</TableCell>
-        <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfAction.toFixed(2)).toLocaleString()}$</TableCell>
-        <TableCell id="table-body" style={{ color: 'red' }}>{parseFloat(element.costOfInaction.toFixed(2)).toLocaleString()}$</TableCell>
-    </React.Fragment>
-);
+import './ResultsPage.css'
 
 export function ResultsPage (props) {
     const { openResultDrilldown } = props;
@@ -26,23 +13,43 @@ export function ResultsPage (props) {
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
 
-    /* istanbul ignore next */
-    const headCells = [
-        { id: 'id', label: 'Result ID' },
-        { id: 'netSaving', label: 'Net Saving' },
-        { id: 'returnOnInvestment', label: 'Return on Investment' },
-        { id: 'costOfAction', label: 'Cost of Action' },
-        { id: 'costOfInaction', label: 'Cost of Inaction' },
-    ];
+    const currencyFormatter = new Intl.NumberFormat('en-CA', {
+        style: 'currency',
+        currency: 'CAD',
+      });
+      
+      const CADPrice = {
+        type: 'number',
+        width: 200,
+        valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
+      }; 
+      
+      const percentageFormatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      
+      const PercentageOption = {
+          number: 'number',
+          width: 200,
+          valueFormatter: ({value}) => (percentageFormatter.format(Number(value))+'%')
+      };
+ 
+      const columns = [
+        {field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style'},
+        {field: 'netSaving', headerName: 'Net Saving', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-positive-numbers'},
+        {field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number',...PercentageOption, flex: 0.25, cellClassName: 'table-positive-numbers'},
+        {field: 'costOfAction', headerName: 'Cost of Action', type: 'number',...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'},
+        {field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.25, cellClassName: 'table-negative-numbers'}
+    ]
 
-    /* istanbul ignore next */
     const getResultList = async () => {
         let response = await GetRecommendationResultList();
         setDefaultResultList(response);
         setResultList(response);
     }
 
-    /* istanbul ignore next */
+
     const updateSearch = async (input) => {
         const filtered = defaultResultList.filter(result => {
             return result.id.toString().includes(input.toString())
@@ -76,22 +83,15 @@ export function ResultsPage (props) {
                                 onSearchUpdate={updateSearch}
                             />
                         </Grid>
-                        <Grid item>
-                            <Button size="small" id="filter-btn" endIcon={<FilterList />}>
-                                Add Filter
-              </Button>
-                        </Grid>
                     </Grid>
                 </div>
             </div>
             <br></br>
             <RecommendationEngineTable
-                rowsValue={RowsToDisplay}
-                data={resultList}
-                tableTitle={"Recommendation Job Results"}
-                onClickRow={openResultDrilldown}
-                columnTitles={headCells}
+                data = {resultList}
+                columnValues={columns}
                 isClickable={true}
+                onClickRow={openResultDrilldown}
             />
         </div>
     );
