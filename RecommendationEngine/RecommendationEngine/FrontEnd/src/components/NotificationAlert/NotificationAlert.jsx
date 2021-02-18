@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import './NotificationAlert.css';
 
 export default function NotificationAlert() {
-  const notify = () => toast('Wow so easy!');
   const notificationHub = NotificationHub.getHubConnection();
   const handleNotification = (message) => toast.info(message, {
     position: "bottom-right",

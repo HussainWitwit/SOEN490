@@ -18,6 +18,7 @@ using System.Security.Claims;
 using Interfaces.Hub;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using RecommendationEngine.Authentication;
 using RecommendationEngine.Hub;
 
@@ -47,6 +48,10 @@ namespace RecommendationEngine
                     o.SecurityTokenValidators.Clear();
                     o.SecurityTokenValidators.Add(new SimpleTokenValidator());
                 });
+
+            // Maps name claim to userIds for SignalR
+            services.AddSingleton<IUserIdProvider, CustomNameProvider>();
+
 
             services.AddAuthorization(o =>
             {
