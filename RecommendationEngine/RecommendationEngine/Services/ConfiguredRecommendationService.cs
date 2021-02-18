@@ -103,8 +103,13 @@ namespace RecommendationEngine.Services
                 _recommendationRepository.GetParametersForSchedule(config);
             if (configuredRecommendation.Parameters != null && recommendationParameters.Count > configuredRecommendation.Parameters.Count)
             {
-                throw new GlobalException(400, "Bad Request", "There are some missing parameters", "RecommendationEngine");
-            }
+                    Error error = new Error
+                    {
+                        Type = ErrorType.BAD_REQUEST,
+                        ErrorMessage = "There are some missing parameters."
+                    };
+                    throw new RequestValidationException(error, "RecommendationEngine");
+                }
 
             config.ParametersList = configuredRecommendation.Parameters.Select(parameter =>
                 new DBRecommendationScheduleParameter
@@ -116,11 +121,13 @@ namespace RecommendationEngine.Services
                         recommendationParameters.FirstOrDefault(x => x.Name == parameter.ParameterName)
                 }).ToList();
 
-            var schedule = _recommendationRepository.Add(config);
-
                 var schedule = _recommendationRepository.Add(config);
 
                 _scheduler.ScheduleJobAsync(schedule);
+            }
+            catch (RequestValidationException)
+            {
+                throw;
             }
             catch (GlobalException)
             {
