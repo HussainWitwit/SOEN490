@@ -2,7 +2,6 @@ using Interfaces.Repositories;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Models.Application;
-using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;

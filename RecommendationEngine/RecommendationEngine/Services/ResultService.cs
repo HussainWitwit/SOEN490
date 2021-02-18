@@ -33,7 +33,10 @@ namespace RecommendationEngine.Services
                             NetSaving = dbResult.NetSaving,
                             ReturnOnInvestment = dbResult.ReturnOnInvestment,
                             ConfiguredRecommendationId = dbResult.Job.Schedule.RecommendationScheduleId,
-                            JobId = dbResult.Job.RecommendationJobId
+                            ConfiguredRecommendationTitle = dbResult.Job.Schedule.Name,
+                            JobId = dbResult.Job.RecommendationJobId,
+                            AssetName = dbResult.Asset.DisplayText,
+                            ResultOutputDate = dbResult.Job.Timestamp
                         }).ToList();
             }
             catch(Exception e)

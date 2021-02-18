@@ -1,5 +1,5 @@
-import React, {  useEffect, useState } from 'react';
-import { Grid} from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
@@ -9,7 +9,7 @@ import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationRed
 import { connect } from 'react-redux';
 // import { useHistory, Link } from "react-router-dom";
 
-function JobsPage () {
+function JobsPage() {
 
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
@@ -17,40 +17,44 @@ function JobsPage () {
     const durationOption = {
         number: 'number',
         width: 200,
-        valueFormatter: ({value}) => (value+' seconds')
+        valueFormatter: ({ value }) => (value + ' seconds')
     };
 
     const columns = [
-    
-        {field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style'},
-        {field: 'status',
-         headerName: 'Status', 
-         type: 'string',
-         flex: 0.20,
-         headerAlign: 'center',
-         renderCell: (params) => (
-           <div 
-           className={
-               params.getValue('status') === "Running"? 'job-status-running' :
-               params.getValue('status') === "Failed"? 'job-status-failed' : 'job-status-success'}
-            >
-               {params.getValue('status')}
-           </div>
-         )},
-        {field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.20, cellClassName: 'table-style'},
-        {field: 'duration', headerName: 'Job Duration', type:'number', ...durationOption, flex: 0.20, cellClassName: 'table-style'},
-        {field: 'configuredRecommendationTitle', headerName: 'Configured Recommendation', type: 'string', flex: 0.30, cellClassName: 'table-style'},
-        {field: 'jobLog',
-         headerName:  'Log',
-         flex: 0.1,
-         headerAlign: 'center',
-         renderCell: (params) => (
-        <JobLogPopUp 
-        className={"job-log-style"}
-        jobId={params.getValue('id')}
-        >
-        </JobLogPopUp>
-         )}
+        
+        { field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style' },
+        { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.25, cellClassName: 'table-style' },
+        {
+            field: 'status',
+            headerName: 'Status',
+            type: 'string',
+            flex: 0.25,
+            headerAlign: 'center',
+            renderCell: (params) => (
+                <div
+                className={
+                    params.getValue('status') === "Running" ? 'job-status-running' :
+                    params.getValue('status') === "Failed" ? 'job-status-failed' : 'job-status-success'}
+                    >
+                    {params.getValue('status')}
+                </div>
+            )
+        },
+        { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.25, cellClassName: 'table-style' },
+        { field: 'configuredRecommendationTitle', headerName: 'Associated Recommendation', type: 'string', width: 400, cellClassName: 'table-style'},
+        {
+            field: 'jobLog',
+            headerName: 'Log',
+            flex: 0.08,
+            headerAlign: 'center',
+            renderCell: (params) => (
+                <JobLogPopUp
+                    className={"job-log-style"}
+                    jobId={params.getValue('id')}
+                >
+                </JobLogPopUp>
+            )
+        }
     ];
 
     const getJobList = async () => {
