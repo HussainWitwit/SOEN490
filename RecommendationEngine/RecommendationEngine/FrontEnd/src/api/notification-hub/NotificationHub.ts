@@ -2,24 +2,25 @@ import * as signalR from "@microsoft/signalr";
 
 export default class NotificationHub {
   private static instance: NotificationHub;
+  private hubConnection: signalR.HubConnection;
 
   private constructor() {
-    const hubConnection = new signalR.HubConnectionBuilder()
+    this.hubConnection = new signalR.HubConnectionBuilder()
     .withUrl("/notificationhub", {
-      accessTokenFactory: () => 'Koooohoooookoooooo'
-    })
+       accessTokenFactory: () => 'Koooohoooookoooooo'
+     })
     .build();
  
     // Starts the SignalR connection
-    hubConnection.start();
+    this.hubConnection.start();
    }
 
-  public static getInstance(): NotificationHub {
+  public static getHubConnection(): signalR.HubConnection {
       if (!NotificationHub.instance) {
         NotificationHub.instance = new NotificationHub();
       }
 
-      return NotificationHub.instance;
+      return NotificationHub.instance.hubConnection;
   }
 
 }
