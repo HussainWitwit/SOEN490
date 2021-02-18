@@ -36,7 +36,7 @@ export function ActionDrawer (props) {
                         <p id='actions-title'>Action(s):</p>
                     </Grid>
                     <Grid className='actions-container' item>
-                        {actions.map((action, index) => (
+                        {actions && actions.map((action, index) => (
                             <div id='action-item-container' key={index}>
                                 <p id='action-title'>{dateFormat(action.recommendedDate)}</p>
                                 <div id='display-text-container'>

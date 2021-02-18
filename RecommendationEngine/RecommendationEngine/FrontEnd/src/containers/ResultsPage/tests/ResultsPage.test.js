@@ -33,13 +33,13 @@ describe.only('ResultsPage component', () => {
 
     it('It finds the grids', () => {
         let component = output.find(Grid);
-        expect(component).toHaveLength(5);
+        expect(component).toHaveLength(4);
     });
 
-    it('It finds the 2 buttons', () => {
-        let button = output.find(Button);
-        expect(button).toHaveLength(1);
-    });
+    // it('It finds the 2 buttons', () => {
+    //     let button = output.find(Button);
+    //     expect(button).toHaveLength(1);
+    // });
 
     it('It finds the title', () => {
         let title = output.find('h3');

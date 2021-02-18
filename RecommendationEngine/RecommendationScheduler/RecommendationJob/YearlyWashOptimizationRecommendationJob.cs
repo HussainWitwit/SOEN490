@@ -54,6 +54,7 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
             _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
             _parameters.Asset = _recommendationJob.Asset;
+            _jobLogger.LogInformation(_recommendationJob, "Fetched user-defined parameter values associated with job", _parameters);
         }
 
         protected override void GetFromAPI()
@@ -77,6 +78,7 @@ namespace RecommendationScheduler.RecommendationJob
                 avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => (x.Price / 100)).DefaultIfEmpty(37).Average();
                 _apiValues.EnergyPricesList.Add(avgPrice);
             }
+            _jobLogger.LogInformation(_recommendationJob, "Fetched API parameters from Drive", _apiValues);
         }
     }
 }

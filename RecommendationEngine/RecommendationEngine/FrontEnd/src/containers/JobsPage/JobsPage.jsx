@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { FilterList } from '@material-ui/icons';
-import { Grid, TableCell } from '@material-ui/core';
+import React, {  useEffect, useState } from 'react';
+import { Grid} from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
@@ -11,39 +9,48 @@ import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationRed
 import { connect } from 'react-redux';
 // import { useHistory, Link } from "react-router-dom";
 
+function JobsPage () {
 
-const StatusComponent = (status) => (
-    <div id='job-status'
-        style={status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
-        {status}</div>
-);
-
-export function JobsPage(props) {
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
 
-    // let history = useHistory();
-    const { openScheduleDrilldown } = props;
+    const durationOption = {
+        number: 'number',
+        width: 200,
+        valueFormatter: ({value}) => (value+' seconds')
+    };
 
-    const RowsToDisplay = (element) => (
-        <React.Fragment>
-            <TableCell />
-            <TableCell id="table-body">{element.id}</TableCell>
-            <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
-            <TableCell id="table-body">{element.timestamp}</TableCell>
-            <TableCell id="table-body">{element.duration} seconds</TableCell>
-            <TableCell id="table-body"><a onClick={() => openScheduleDrilldown(element.configuredRecommendationId)}>{element.configuredRecommendationTitle}</a></TableCell>
-            <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
-        </React.Fragment>
-    );
-
-    const headCells = [
-        { id: 'id', label: 'Job ID' },
-        { id: 'status', label: 'Status' },
-        { id: 'timestamp', label: 'Timestamp' },
-        { id: 'duration', label: 'Job Duration' },
-        { id: 'configuredRecommendationTitle', label: 'Configured Recommendation' },
-        { id: '', label: '' }
+    const columns = [
+    
+        {field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style'},
+        {field: 'status',
+         headerName: 'Status', 
+         type: 'string',
+         flex: 0.20,
+         headerAlign: 'center',
+         renderCell: (params) => (
+           <div 
+           className={
+               params.getValue('status') === "Running"? 'job-status-running' :
+               params.getValue('status') === "Failed"? 'job-status-failed' : 'job-status-success'}
+            >
+               {params.getValue('status')}
+           </div>
+         )},
+        {field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.20, cellClassName: 'table-style'},
+        {field: 'duration', headerName: 'Job Duration', type:'number', ...durationOption, flex: 0.20, cellClassName: 'table-style'},
+        {field: 'configuredRecommendationTitle', headerName: 'Configured Recommendation', type: 'string', flex: 0.30, cellClassName: 'table-style'},
+        {field: 'jobLog',
+         headerName:  'Log',
+         flex: 0.1,
+         headerAlign: 'center',
+         renderCell: (params) => (
+        <JobLogPopUp 
+        className={"job-log-style"}
+        jobId={params.getValue('id')}
+        >
+        </JobLogPopUp>
+         )}
     ];
 
     const getJobList = async () => {
@@ -86,21 +93,15 @@ export function JobsPage(props) {
                                 onSearchUpdate={updateSearch}
                             />
                         </Grid>
-                        <Grid item>
-                            <Button size="small" id="filter-btn" endIcon={<FilterList />}>
-                                Add Filter
-              </Button>
-                        </Grid>
                     </Grid>
                 </div>
             </div>
             <br></br>
             <RecommendationEngineTable
-                rowsValue={RowsToDisplay}
                 data={jobList}
-                tableTitle={"Recommendation Jobs"}
+                columnValues={columns}
+                isClickable={true}
                 onClickRow={() => { }}
-                columnTitles={headCells}
             />
         </div>
     );
