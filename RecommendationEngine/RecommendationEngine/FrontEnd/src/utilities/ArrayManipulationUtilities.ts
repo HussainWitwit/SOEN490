@@ -25,16 +25,33 @@ export const transformParameterListPost = (array: Parameter[]): any[] => {
     })
 }
 
-export const renameKeys = (array: Asset[]): any[] => {
-    let newArray: Asset[] = array;
-    let resultArray: any[];
-    resultArray = newArray.map(element => (
-        {
-            key: element.id,
-            title: element.displayText,
-            children: element.children,
-            value: element.id
+// NOTE: the input array can be changed to an object, depending on where this function is called
+// The reason the input is of type any[] and not Asset[] is because we need to recursively go through the children arrays as well
+
+const renameAttributes = (array: any[]): any[] => {
+    const oldKeys = ['displayText', 'id'];
+    const newKeys = ['title', 'key'];
+
+    let key, newKey, index, value;
+
+    let result: any[] = [];
+    for (key in array) {
+        // Get the new key
+        index = oldKeys.indexOf(key);
+        newKey = index === -1 ? key : newKeys[index];
+
+        // Get the value
+        value = array[key];
+
+        // If this is an object, recurse
+        if (typeof value === "object") {
+            value = renameAttributes(value);
         }
-    ))
-    return resultArray;
+
+        // Set it on the result using the new key
+
+        result[newKey] = value;
+    }
+    return result;
 }
+

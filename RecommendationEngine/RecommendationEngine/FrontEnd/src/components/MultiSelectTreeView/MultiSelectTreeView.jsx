@@ -1,6 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
+import { renameAttributes } from '../../utilities/ArrayManipulationUtilities';
 
 // TODO: 
 // 1. Return an ARRAY of objects with assets and ther children from the backend 
@@ -8,9 +9,11 @@ import { TreeSelect } from 'antd';
 // 3. A treeView of the assets will then be displayed
 
 export default function MultiSelectTreeView (props) {
-    const { SHOW_ALL, SHOW_PARENT } = TreeSelect;
+
+    const { SHOW_PARENT } = TreeSelect;
     const { assetList } = props;
-    console.log(assetList);
+
+    console.log(renameAttributes(assetList));
 
     // sample data, replace assetList with treeData to see what it looks like
     const treeData = [
@@ -67,9 +70,9 @@ export default function MultiSelectTreeView (props) {
     return (
         <div>
             <TreeSelect
-               dropdownStyle={{
-                zIndex: 100000
-              }}
+                dropdownStyle={{
+                    zIndex: 100000
+                }}
                 {...tProps} />
         </div>
     )
