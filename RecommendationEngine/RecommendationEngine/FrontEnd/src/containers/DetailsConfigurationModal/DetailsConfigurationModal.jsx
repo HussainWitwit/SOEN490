@@ -17,6 +17,8 @@ import {
   KeyboardTimePicker,
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
+import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
+
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
@@ -57,7 +59,7 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          <MultiSelectAutocomplete
+          {/* <MultiSelectAutocomplete
             contentLabel="Assets..."
             recommendationType={template.name}
             items={apiAssets}
@@ -66,6 +68,12 @@ export function DetailsConfigurationModal (props) {
             maxElement={1}
             variant={'outlined'}
             isReadOnly={false}
+          /> */}
+          <MultiSelectTreeView
+            placeholder='Assets ...'
+            assetList={apiAssets}
+            value={basicConfiguration.asset ? basicConfiguration.asset : []}
+            onChange={(event, value) => updateAsset(value)}
           />
         </div>
         <div id="scenario-container">
@@ -147,7 +155,7 @@ export function DetailsConfigurationModal (props) {
                   autoOk
                   inputVariant="outlined"
                   label="Date & Time"
-                  minDate={isEditing ? new Date(1900,1,1) : new Date()}
+                  minDate={isEditing ? new Date(1900, 1, 1) : new Date()}
                   // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
