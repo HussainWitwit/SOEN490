@@ -1,15 +1,13 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
-import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 
 // TODO: 
 // 1. Return an ARRAY of objects with assets and ther children from the backend 
 // 2. Pass the array in the DetailsConfigurationModal
 // 3. A treeView of the assets will then be displayed
 
-export function MultiSelectTreeView (props) {
+export default function MultiSelectTreeView (props) {
     const { SHOW_ALL } = TreeSelect;
     const { assetList } = props;
     console.log(assetList);
@@ -74,5 +72,3 @@ export function MultiSelectTreeView (props) {
     )
 
 }
-
-export default connect(mapStateToProps)(MultiSelectTreeView);
