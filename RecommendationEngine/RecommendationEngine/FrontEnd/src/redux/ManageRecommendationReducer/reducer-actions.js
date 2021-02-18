@@ -156,6 +156,20 @@ export const getTemplateDetails = async (dispatch) => {
   }
 };
 
+export const setParamValuesFromEdit = (params) => {
+  return {
+    type: dispatchActionType.SET_PARAM_VALUE_FROM_EDIT,
+    payload: params
+  }
+}
+
+export const setParamValue = (value, index) => {
+  return {
+    type: dispatchActionType.UPDATE_PARAM_VALUE,
+    payload: { value: value, paramIndex: index }
+  };
+}
+
 /* istanbul ignore next */
 export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
   dispatch(setTemplateName(value.type));
@@ -167,6 +181,7 @@ export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
   dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
   dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
   dispatch(setId(id));
+  dispatch(setParamValuesFromEdit(value.parameters));
   dispatch(setEditable());
 }
 
@@ -210,7 +225,6 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
   return response;
 }
 
-
 /* istanbul ignore next */
 export const postConfiguredRecommendation = async (dispatch, configuredRecommendation, editingState) => {
   if (editingState.isEditing) {
@@ -231,6 +245,11 @@ export const mapDialogStateToProps = (state) => {
   };
 };
 
+export const mapParamDialogStateToProps = (state) => {
+  return {
+    parameterList: state.manageRecommendationReducer.template.inputList
+  };
+}
 
 //This method will allow you to pass the actions as a prop to the connected component in
 //order to modify the value in the store
@@ -255,6 +274,13 @@ export const mapDispatchToProps = (dispatch) => {
     setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
     postConfiguredRecommendation: (configuredRecommendation, editingState) => postConfiguredRecommendation(dispatch, configuredRecommendation, editingState),
   };
+}
+
+/* istanbul ignore next */
+export const mapDispatchParametersPageToProps = (dispatch) => {
+  return {
+    setParamValue: (value, index) => dispatch(setParamValue(value, index))
+  }
 }
 
 /* istanbul ignore next */

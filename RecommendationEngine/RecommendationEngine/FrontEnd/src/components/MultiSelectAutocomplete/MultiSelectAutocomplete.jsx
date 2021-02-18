@@ -7,20 +7,19 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function MultiSelectAutocomplete(props) {
+function MultiSelectAutocomplete (props) {
   const [isFirstTyping, setIsFirstTyping] = useState(true);
-
   return (
     <Autocomplete
       id={props.id ? props.id : ''}
       limitTags={props.maxElement}
-      multiple 
+      multiple
       defaultValue={props.defaultValue ? props.defaultValue : [props.items[0]]}
       data-testid="autocomplete-component"
       value={props.value}
       options={props.items}
-      groupBy = {(option => option.assetType)}
-      getOptionDisabled = {option => props.recommendationType === "Yearly Wash Optimization" && option.assetType === "Portfolio"}
+      groupBy={(option => option.assetType)}
+      getOptionDisabled={option => props.recommendationType === "Yearly Wash Optimization" && option.assetType === "Portfolio"}
       disableCloseOnSelect
       getOptionLabel={(option) => option.displayText}
       onChange={props.onChange}
@@ -33,12 +32,12 @@ function MultiSelectAutocomplete(props) {
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          <div style = {{flexGrow: 1, display: "flex", justifyContent: "space-between", marginRight: 5}}>
+          <div style={{ flexGrow: 1, display: "flex", justifyContent: "space-between", marginRight: 5 }}>
             <div>
-                {option.displayText}
+              {option.displayText}
             </div>
-            <div style = {{opacity: 0.6}}>
-                {option.assetType}
+            <div style={{ opacity: 0.6 }}>
+              {option.assetType}
             </div>
           </div>
         </React.Fragment>
@@ -46,12 +45,12 @@ function MultiSelectAutocomplete(props) {
       style={{ width: '100%' }}
       renderInput={(params) => (
         <TextField
-          error = {props.value && props.value.length === 0 && !isFirstTyping} 
+          error={props.value && props.value.length === 0 && !isFirstTyping}
           {...params}
           variant={props.variant}
-          label={props.value ? props.value.length === 0 ? "Required. ": props.boxLabelName : props.boxLabelName ? props.boxLabelName : ''}
+          label={props.value ? props.value.length === 0 ? "Required. " : props.boxLabelName : props.boxLabelName ? props.boxLabelName : ''}
           placeholder={props.contentLabel}
-          onClick = {() => setIsFirstTyping(false)}
+          onClick={() => setIsFirstTyping(false)}
         />
       )}
     />

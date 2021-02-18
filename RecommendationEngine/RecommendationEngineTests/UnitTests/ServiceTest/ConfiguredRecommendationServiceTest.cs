@@ -47,12 +47,15 @@ namespace RecommendationEngineTests.UnitTests
             DBRecommendationType recommendationType = MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
             ConfiguredRecommendation beforeConversion = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
             DBRecommendationSchedule afterConversion = MockConfiguredRecommendations.CONVERTED_CONFIGURED_RECOMMENDATION;
+            List<DBRecommendationParameter> parameters = MockConfiguredRecommendations.BASIC_PARAMETER_LIST.Select(x=>x.RecommendationParameter).ToList();
 
             _repository.Setup(x => x.GetRecommendationTypeByType("Yearly Wash Optimization")).Returns(recommendationType);
+            _repository.Setup(x => x.GetParametersForSchedule(It.IsAny<DBRecommendationSchedule>()))
+                .Returns(parameters);
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
-            _configuredRecommendationService.AddConfiguredRecommendation(beforeConversion);
             _repository.Setup(x => x.Add(afterConversion));
+            _configuredRecommendationService.AddConfiguredRecommendation(beforeConversion);
         }
 
         [Test]

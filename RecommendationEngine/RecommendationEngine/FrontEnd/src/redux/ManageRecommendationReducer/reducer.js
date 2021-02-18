@@ -34,7 +34,6 @@ const detailsConfigInitialValues = {
     repeatTime: new Date()
 }
 
-
 export const contentInitialValues = {
     isDialogOpen: false,
     template: {
@@ -44,7 +43,6 @@ export const contentInitialValues = {
         algorithmName: ""
     },
     basicConfiguration: detailsConfigInitialValues,
-    parameters: {},
     templateDetailsList: [],
     isEditing: false,
     id: null,
@@ -54,14 +52,14 @@ export const contentInitialValues = {
 }
 
 export const ManageRecommendationReducer = function (state = contentInitialValues, action) {
-    
+
     switch (action.type) {
         case type.GET_TEMPLATE_DETAILS:
             return {
                 ...state,
                 templateDetailsList: action.payload
             }
-        
+
         case type.UPDATE_RECOMMENDATION_TEMPLATE_NAME:
             return {
                 ...state,
@@ -80,7 +78,7 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 }
             };
 
-            case type.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST:
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST:
             return {
                 ...state,
                 template: {
@@ -89,7 +87,7 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 }
             };
 
-            case type.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM:
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM:
             return {
                 ...state,
                 template: {
@@ -161,6 +159,25 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 }
             };
 
+        case type.UPDATE_PARAM_VALUE:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    inputList: state.template.inputList.map(
+                        (element, index) => index === action.payload.paramIndex ? { ...element, parameterValue: action.payload.value } : element
+                    )
+                }
+            }
+        case type.SET_PARAM_VALUE_FROM_EDIT:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    inputList: action.payload
+                }
+            }
+
         case type.UPDATE_ID:
             return {
                 ...state,
@@ -185,10 +202,10 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 templateDetailsList: state.templateDetailsList,
                 template: {
                     ...contentInitialValues.template,
-                    name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName: '',
-                    description:  state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription: '',
-                    inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
-                    algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
+                    name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName : '',
+                    description: state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription : '',
+                    inputList: state.templateDetailsList.length ? state.templateDetailsList[0].inputList : [],
+                    algorithmName: state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName : ''
                 }
             };
 

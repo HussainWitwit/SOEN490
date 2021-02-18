@@ -6,16 +6,16 @@ import { GiWindTurbine } from "react-icons/gi";
 import { BiCube } from "react-icons/bi";
 import './BreadcrumbsComponent.css';
 
-function BreadcrumbsComponent(props) {
+function BreadcrumbsComponent (props) {
     return (
         <div id="main-container">
             <Breadcrumbs aria-label="breadcrumb" separator="›" id="breadcrumbsComponent">
                 <Link color="inherit" id="link">
-                <BiCube id="BiCube"/>
+                    <BiCube id="bi-cube" />
                 All Portfolio
                 </Link>
                 <Link color="inherit" id="link">
-                <GiWindTurbine id="GiWindTurbine"/>
+                    <GiWindTurbine id="gi-wind-turbine" />
                 23-kahuku
                 </Link>
                 <Typography color="textPrimary" id="Typography">001-kahuku</Typography>

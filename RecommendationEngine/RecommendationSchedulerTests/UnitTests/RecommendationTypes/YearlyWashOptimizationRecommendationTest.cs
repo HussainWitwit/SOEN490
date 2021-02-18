@@ -29,7 +29,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
         public void TestStartNoScheduleOnStart()
         {
             //Arrange
-            _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
+            _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>(), It.IsAny<object>()));
             //Act
 
             YearlyWashParameters userParameters = new YearlyWashParameters();
@@ -48,7 +48,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 195);
             Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 97);
             Assert.AreEqual(cleaningDays, mockCleaningDays);
-            _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
+            _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>(), It.IsAny<object>()), Times.AtLeastOnce);
 
         }
 
@@ -56,7 +56,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
         public void TestStartNoScheduleOnStart2()
         {
             //Arrange
-            _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
+            _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>(), It.IsAny<object>()));
             //Act
             YearlyWashParameters userParameters = new YearlyWashParameters();
             YearlyWashApiValues apiValues = new YearlyWashApiValues();
@@ -74,7 +74,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             Assert.AreEqual(Convert.ToInt32(testResult.ReturnOnInvestment), 70);
             Assert.AreEqual(Convert.ToInt32(testResult.Benefit), 35);
             Assert.AreEqual(cleaningDays, mockCleaningDays);
-            _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
+            _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>(), It.IsAny<object>()), Times.AtLeastOnce);
         }
 
 

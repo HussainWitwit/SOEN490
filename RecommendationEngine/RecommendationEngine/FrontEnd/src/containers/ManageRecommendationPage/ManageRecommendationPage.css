@@ -1,37 +1,29 @@
-
+    #title, #subtitle, #filter-btn, #rec-btn, .table-style{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
     #grid1{
     width: 79%;
     }
-
-
+    
     .gridContainerStyle.MuiGrid-container{
         align-items: flex-end;
     }
 
     #title{
         margin-top: 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: #252733;
+        font-size: 25px;
     }
     
     #subtitle{
-        margin-top: 10px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-top: 5px;
         color: #868282;
         font-size: 13px;
-    }
-
-    #filterBtn{
-        color: #252733;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        text-transform: none;
-        margin-left: 0px;
-        margin-right: 0px;
-        width: 120px;
+        font-weight:normal
     }
     
-    #recBtn{
+    #rec-btn{
         background-color: #4DD3EF;
         float: right;
         color: #FFFFFF;
@@ -44,16 +36,15 @@
         border: 6px solid;
         line-height: 1.5;
         border-color: #4DD3EF;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
     }
 
-    #recBtn:hover{
+    #rec-btn:hover{
             background-color: #3DB1C9;
             border-color: #3DB1C9;
             box-shadow: none;
     }
 
-    #recBtn:active{
+    #rec-btn:active{
         box-shadow: none;
         background-color: #3DB1C9;
         border-color: #3DB1C9;

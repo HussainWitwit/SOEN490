@@ -30,11 +30,13 @@ namespace RecommendationEngine.Services
                         AlgorithmName = recommendationType.Type,
                         InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
                         {
-                            ParameterName = param.DisplayText,
-                            DefaultValue = param.DefaultValue
+                            ParameterName = param.Name,
+                            DisplayText = param.DisplayText,
+                            DefaultValue = param.DefaultValue,
+                            ParameterType = param.Type,
+                            ParameterValue = param.DefaultValue
                         }).ToList()
                     }).ToList();
-
                 return recommendationTypes;
             }
             catch (GlobalException) {

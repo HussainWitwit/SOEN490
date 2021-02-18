@@ -11,6 +11,8 @@ import TemplateConfigurationModal from '../../containers/TemplateConfigurationMo
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
 import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
+import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
+import { checkDateRange } from '../../utilities/GeneralUtilities';
 import './AddRecommendationDialog.css';
 
 const pages = [
@@ -94,8 +96,9 @@ export function AddRecommendationDialog (props) {
       createdOn: new Date(),
       preferredScenario: basicConfiguration.preferredScenario,
       recurrenceDayOfWeek: basicConfiguration.repeatDay,
+      parameters: transformParameterListPost(template.inputList),
       modifiedBy: '',
-      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate,
       assetIdList: basicConfiguration.asset.map((e) => {
         return e.id;
       })
@@ -105,6 +108,7 @@ export function AddRecommendationDialog (props) {
       closeDialog()
     } 
   }
+
 
   useEffect(() => {
     if (isEditing) {
@@ -126,7 +130,7 @@ export function AddRecommendationDialog (props) {
         paper: 'dialog-container',
       }}
     >
-      <IconButton aria-label="close" id="closeButton" onClick={closeDialog}>
+      <IconButton aria-label="close" id="close-button" onClick={closeDialog}>
         <CloseIcon />
       </IconButton>
       <DialogTitle
@@ -179,8 +183,13 @@ export function AddRecommendationDialog (props) {
             Next
           </Button>
         )}
-        {(index <= 2 && index > 0) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
+        {(index === 1) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length < 1 || basicConfiguration.preferredScenario === null}>
+            Next
+          </Button>
+        )}
+        {(index === 2) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={checkDateRange(template.inputList)}>
             Next
           </Button>
         )}

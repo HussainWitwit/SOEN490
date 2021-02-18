@@ -41,10 +41,10 @@ namespace RecommendationScheduler.RecommendationJob
         protected override void GetFromDB()
         {
             //Parameters TODO: switch Start of soiling season, End of soiling season, Soiling rate, Cost of cleaning into API once we get the access 
-            _parameters.StartSoiling = new DateTime(2020, 08, 1);
-            _parameters.EndSoiling = new DateTime(2020, 11, 1);
-            _parameters.SoilingRate = -0.0025;
-            _parameters.CostCleaning = 2;
+            _parameters.StartSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "StartSoilingSeason").ParamValue);
+            _parameters.EndSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "EndSoilingSeason").ParamValue);
+            _parameters.SoilingRate = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingRate").ParamValue);
+            _parameters.CostCleaning = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CostCleaning").ParamValue);
 
             //Parameters from recommendation schedule 
             _parameters.CenterPointIncrement = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CenterPointIncrement").ParamValue);
@@ -54,6 +54,7 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
             _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
             _parameters.Asset = _recommendationJob.Asset;
+            _jobLogger.LogInformation(_recommendationJob, "Fetched user-defined parameter values associated with job", _parameters);
         }
 
         protected override void GetFromAPI()
@@ -77,6 +78,7 @@ namespace RecommendationScheduler.RecommendationJob
                 avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => (x.Price / 100)).DefaultIfEmpty(37).Average();
                 _apiValues.EnergyPricesList.Add(avgPrice);
             }
+            _jobLogger.LogInformation(_recommendationJob, "Fetched API parameters from Drive", _apiValues);
         }
     }
 }

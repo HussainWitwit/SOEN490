@@ -145,5 +145,11 @@ namespace RecommendationEngine.Repositories
                 throw new DbException();
             }
         }
+
+        public List<DBRecommendationParameter> GetParametersForSchedule(DBRecommendationSchedule schedule)
+        {
+            return _recommendationEngineDb.RecommendationParameters
+                .Where(x => x.ForRecommendationType.RecommendationTypeId == schedule.RecommendationType.RecommendationTypeId).ToList();
+        }
     }
 }

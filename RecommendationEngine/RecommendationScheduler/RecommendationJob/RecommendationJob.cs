@@ -28,23 +28,25 @@ namespace RecommendationScheduler.RecommendationJob
                 if (dataMap != null) RecommendationScheduleId = dataMap.GetIntValue("recommendationScheduleId");
                 CreateRecommendationJob();
                 watch.Start();
-                _jobLogger.LogInformation(_recommendationJob, "Job started!");
+                _jobLogger.LogInformation(_recommendationJob, "Job started!", null);
 
                 // Execute
                 ExecuteJob();
 
                 // Finish execution
-                _jobLogger.LogInformation(_recommendationJob, "Job finished!");
+                _jobLogger.LogInformation(_recommendationJob, "Job finished!", null);
                 watch.Stop();
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Success",
                     watch.Elapsed.Seconds);
+                _jobLogger.LogInformation(_recommendationJob, "This job has succeeded", null);
                 return Task.CompletedTask;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Handle exception
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
                     watch.Elapsed.Seconds);
+                _jobLogger.LogError(_recommendationJob, "This job has failed",  e.Message );
                 return Task.CompletedTask;
             }
         }

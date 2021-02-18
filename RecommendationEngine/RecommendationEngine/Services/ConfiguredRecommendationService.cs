@@ -2,6 +2,7 @@
 using Interfaces.Repositories;
 using Interfaces.Services;
 using Models.Application;
+using Models.Recommendation;
 using Models.Application.Asset;
 using Models.DB;
 using RecommendationEngine.ConfiguredRecommendationValidator;
@@ -97,6 +98,25 @@ namespace RecommendationEngine.Services
                 config.AssetsList = dbAssets;
 
                 configuredRecommendation.ThrowPotentialException(dbAssets);
+            // Add user defined parameters
+            List<DBRecommendationParameter> recommendationParameters =
+                _recommendationRepository.GetParametersForSchedule(config);
+            if (configuredRecommendation.Parameters != null && recommendationParameters.Count > configuredRecommendation.Parameters.Count)
+            {
+                throw new GlobalException(400, "Bad Request", "There are some missing parameters", "RecommendationEngine");
+            }
+
+            config.ParametersList = configuredRecommendation.Parameters.Select(parameter =>
+                new DBRecommendationScheduleParameter
+                {
+                    Name = parameter.ParameterName,
+                    ParamValue = parameter.ParameterValue,
+                    ModifiedBy = configuredRecommendation.CreatedBy,
+                    RecommendationParameter =
+                        recommendationParameters.FirstOrDefault(x => x.Name == parameter.ParameterName)
+                }).ToList();
+
+            var schedule = _recommendationRepository.Add(config);
 
                 var schedule = _recommendationRepository.Add(config);
 
