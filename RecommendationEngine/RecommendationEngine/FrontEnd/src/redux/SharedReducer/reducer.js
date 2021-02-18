@@ -28,7 +28,7 @@ export const SharedReducer = function (state = initialValues, action) {
         case type.GET_NESTED_ASSETS_IN_ARRAY: //might have debugging
             return {
                 ...state,
-                nestedAssetsArray: [...action.payload]
+                nestedAssetsArray: [action.payload]
             }
         default:
             return state

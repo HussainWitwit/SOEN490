@@ -18,7 +18,7 @@ export const getNestedAssets = async (dispatch) => {
 };
 
 export const getNestedAssetInArray = async (dispatch) => {
-  const response = await GetFlatAssetList();
+  const response = await GetNestedAssetList();
   dispatch({
     type: dispatchActionType.GET_NESTED_ASSETS_IN_ARRAY,
     payload: response,

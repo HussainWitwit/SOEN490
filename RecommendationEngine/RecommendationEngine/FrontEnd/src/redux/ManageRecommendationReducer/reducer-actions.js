@@ -247,7 +247,7 @@ export const mapDialogStateToProps = (state) => {
   return {
     all: state,
     dialogsContent: state.manageRecommendationReducer,
-    apiAssets: state.sharedReducer.flatListAssets,
+    apiAssets: state.sharedReducer.nestedAssetsArray
   };
 };
 
