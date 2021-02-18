@@ -302,6 +302,8 @@ namespace RecommendationEngine.Services
         {
             try
             {
+                _portfolioAssetType = _assetTypeRepository.GetAssetTypeByName("Portfolio");
+                _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
                 List<DBAsset> dbAssets = GetDBAssets();
 
                 List<AssetLeaf> assets = dbAssets.Distinct().Where(dbasset => dbasset.Type != null).Select(dbasset => new AssetLeaf()

@@ -97,7 +97,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
         private static void ValidPreferredScenario(ConfiguredRecommendation configuredRecommendation) {
             string scenario = configuredRecommendation.PreferredScenario;
 
-            if (!scenario.Equals("ROI") && !scenario.Equals("NetSaving")) {
+            if (!scenario.Equals("ROI") && !scenario.Equals("netSaving")) {
                 AddToErrors(ErrorType.VALIDATION, "The scenario " + scenario + " is not a valid scenario.");
             }
         }
