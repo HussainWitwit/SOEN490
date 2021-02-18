@@ -2,11 +2,6 @@
   overflow-y: scroll;
 }
 
-/* #parameter-modal-container{
-  display: grid;
-  overflow: scroll;
-} */
-
 #parameter-modal-content{
   display: flex;
   flex-direction: column;
