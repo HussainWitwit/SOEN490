@@ -23,7 +23,7 @@ namespace RecommendationEngine.Services
                     TemplateName = recommendationType.DisplayText,
                     TemplateDescription = recommendationType.Description,
                     AlgorithmName = recommendationType.Type,
-                    AssetTypes = new List<string>(new string[] { "plant" }),
+                    AssetTypes = recommendationType.AssetTypes.Select(assetType => assetType.AssetType.Name).ToList(),
                     InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
                     {
                         ParameterName = param.Name,

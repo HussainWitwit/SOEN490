@@ -13,5 +13,6 @@ namespace Models.DB
         public string DisplayText { get; set; }
         public string EnergyType { get; set; }
         public virtual ICollection<DBAsset> AssetsList { get; set; }
+        public virtual ICollection<DBAssetTypeRecommendationType> RecommendationTypes { get; set; }
     }
 }
