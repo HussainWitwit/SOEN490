@@ -181,17 +181,17 @@ export const setParamValue = (value, index) => {
 }
 
 /* istanbul ignore next */
-export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
+export const setEditableConfiguredRecommendation = (dispatch, value, templateType) => {
   dispatch(setTemplateName(value.type));
   dispatch(updateAsset(value.assetList));
   dispatch(setTitle(value.name));
-  dispatch(updateAssetTypes(value.assetTypes));
+  dispatch(updateAssetTypes(templateType));
   dispatch(setPreferredScenario(value.preferredScenario));
   dispatch(setGranularity(value.granularity));
   dispatch(setRepeatDay(value.recurrenceDayOfWeek));
   dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
   dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
-  dispatch(setId(id));
+  dispatch(setId(value.id));
   dispatch(setParamValuesFromEdit(value.parameters));
   dispatch(setEditable());
 }
@@ -262,6 +262,13 @@ export const mapParamDialogStateToProps = (state) => {
   };
 }
 
+/* istanbul ignore next */
+export const mapTemplateStateToProps = (state) => {
+  return {
+    templateType: state.manageRecommendationReducer.template.assetTypes
+  }
+}
+
 //This method will allow you to pass the actions as a prop to the connected component in
 //order to modify the value in the store
 /* istanbul ignore next */
@@ -278,7 +285,7 @@ export const mapDispatchToProps = (dispatch) => {
     setRepeatDay: (value) => dispatch(setRepeatDay(value)),
     setRepeatDate: (value) => dispatch(setRepeatDate(value)),
     setRepeatTime: (value) => dispatch(setRepeatTime(value)),
-    setEditableConfiguredRecommendation: (value, id) => setEditableConfiguredRecommendation(dispatch, value, id),
+    setEditableConfiguredRecommendation: (value, templateType) => setEditableConfiguredRecommendation(dispatch, value, templateType),
     toggleDialog: () => dispatch(toggleDialog()),
     setBackToInitialValues: () => dispatch(setBackToInitialValues()),
     getTemplateDetails: () => getTemplateDetails(dispatch),
