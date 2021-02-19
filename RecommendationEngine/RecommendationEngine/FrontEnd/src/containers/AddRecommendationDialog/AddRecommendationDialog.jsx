@@ -99,10 +99,7 @@ export function AddRecommendationDialog (props) {
       parameters: transformParameterListPost(template.inputList),
       modifiedBy: '',
       recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate,
-      assetIdList: basicConfiguration.asset.map((e) => {
-        return e.id;
-      }),
-
+      assetIdList: basicConfiguration.asset
     }, { isEditing: isEditing, id: id });
     closeDialog();
   }

@@ -72,8 +72,8 @@ export function DetailsConfigurationModal (props) {
           <MultiSelectTreeView
             placeholder='Assets ...'
             assetList={apiAssets}
-            value={basicConfiguration.asset ? basicConfiguration.asset : []}
-            onChange={(event, value) => updateAsset(value)}
+            value={basicConfiguration.asset}
+            onChange={(event) => updateAsset(event)}
           />
         </div>
         <div id="scenario-container">

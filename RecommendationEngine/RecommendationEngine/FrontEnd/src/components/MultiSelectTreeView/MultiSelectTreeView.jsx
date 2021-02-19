@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
-import { renameAttributes } from '../../utilities/ArrayManipulationUtilities';
+// import { renameAttributes } from '../../utilities/ArrayManipulationUtilities';
 
 // TODO: 
 // 1. Return an ARRAY of objects with assets and ther children from the backend 
@@ -10,70 +10,28 @@ import { renameAttributes } from '../../utilities/ArrayManipulationUtilities';
 
 export default function MultiSelectTreeView (props) {
 
-    const { SHOW_PARENT } = TreeSelect;
-    const { assetList } = props;
+    //if we can get the level, we can make it more generic. 
+    const { SHOW_CHILD } = TreeSelect;
 
-    // console.log(renameAttributes(assetList));
-
-    // sample data, replace assetList with treeData to see what it looks like
-    const treeData = [
-        {
-            displayText: 'Node1',
-            value: '0-0',
-            id: '0-0',
-            children: [
-                {
-                    displayText: 'Child Node1',
-                    value: '0-0-0',
-                    id: '0-0-0',
-                },
-            ],
-        },
-        {
-            displayText: 'Node2',
-            value: '0-1',
-            id: '0-1',
-            children: [
-                {
-                    displayText: 'Child Node3',
-                    value: '0-1-0',
-                    id: '0-1-0',
-                },
-                {
-                    displayText: 'Child Node4',
-                    value: '0-1-1',
-                    id: '0-1-1',
-                },
-                {
-                    displayText: 'Child Node5',
-                    value: '0-1-2',
-                    id: '0-1-2',
-                },
-            ],
-        },
-    ];
-
-
-    const tProps = {
-        treeData: assetList,
-        // assetList,
-        value: props.value,
-        onChange: props.onChange,
-        treeCheckable: true,
-        showCheckedStrategy: SHOW_PARENT,
-        placeholder: props.placeholder,
-        style: {
-            width: '2000%'
-        }
-    }
+    const { assetList, value, placeholder, onChange } = props;
 
     return (
         <div>
             <TreeSelect
+                treeCheckable
+                treeData = {assetList}
+                value = {value}
+                showCheckedStrategy = {SHOW_CHILD}
+                placeholder = {placeholder}
+                onChange ={onChange}
+                filterTreeNode= {(search, item) => {
+                    return item.title.toLowerCase().indexOf(search.toLowerCase()) >=0;
+                }}
+                style ={{width: '2000%'}}
                 dropdownStyle={{
                     zIndex: 100000
                 }}
-                {...tProps} />
+                />
         </div>
     )
 
