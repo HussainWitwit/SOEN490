@@ -2,6 +2,6 @@
 {
     public class AssetLeaf : Asset
     {
-        public int parentId { get; set; }
+        public int? ParentId { get; set; }
     }
 }
