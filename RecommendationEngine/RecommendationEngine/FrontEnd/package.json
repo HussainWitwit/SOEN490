@@ -55,7 +55,8 @@
       "!**/src/containers/Settings/**",
       "!**/src/containers/WorkOrders/**",
       "!**/src/containers/AppLayout/**",
-      "!**/src/containers/App/**"
+      "!**/src/containers/App/**",
+      "!**/src/utilities/**"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",
