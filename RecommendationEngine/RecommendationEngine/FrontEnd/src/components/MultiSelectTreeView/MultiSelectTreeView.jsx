@@ -14,8 +14,9 @@ export default function MultiSelectTreeView (props) {
             <TreeSelect
                 id='treeview-dropdown'
                 maxTagCount='responsive'
-                treeCheckable
                 treeData={items}
+                treeCheckable
+                treeDefaultExpandedKeys = {items? [items[0].key] : ['']}
                 value={value}
                 showCheckedStrategy={SHOW_ALL}
                 placeholder={placeholder}
