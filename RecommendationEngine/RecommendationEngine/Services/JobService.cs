@@ -7,18 +7,21 @@ using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Interfaces.Hub;
 
 namespace RecommendationEngine.Services
 {
     public class JobService : IJobService
     {
         private IJobRepository _jobRepository;
+        private INotificationHub _notificationHub;
 
         public JobService(
-            IJobRepository jobRepository
+            IJobRepository jobRepository, INotificationHub notificationHub
         )
         {
             _jobRepository = jobRepository;
+            _notificationHub = notificationHub;
         }
 
         public List<Job> GetJobList()
@@ -34,7 +37,7 @@ namespace RecommendationEngine.Services
                         Duration = job.JobDuration,
                         Timestamp = job.Timestamp,
                     }).ToList();
-                
+
                 return jobs;
             }
             catch(Exception e)
@@ -67,7 +70,7 @@ namespace RecommendationEngine.Services
                         Type = "Not Found"
                     };
                 }
-
+                _notificationHub.SendNotification("Job logs have been loaded!");
                 return logs;
             }
             catch (GlobalException e)

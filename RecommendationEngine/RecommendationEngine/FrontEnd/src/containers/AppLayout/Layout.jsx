@@ -3,6 +3,7 @@ import { Container } from 'reactstrap';
 import TopBar from '../TopBar/TopBar';
 import SideMenu from '../SideMenu/SideMenu';
 import RightPanelDrawer from '../RightPanel/RightPanelDrawer';
+import NotificationAlert from '../../components/NotificationAlert/NotificationAlert'
 import './Layout.css';
 import { mapRightPanelStateToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
@@ -21,6 +22,7 @@ function Layout (props) {
           </div>
         </div>
       </div>
+      <NotificationAlert />
       <RightPanelDrawer />
     </div>
   );
