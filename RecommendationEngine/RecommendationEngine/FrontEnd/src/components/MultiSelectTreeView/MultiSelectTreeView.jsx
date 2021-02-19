@@ -1,6 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
+import './MultiSelectTreeView.css';
 
 export default function MultiSelectTreeView (props) {
 
@@ -9,8 +10,10 @@ export default function MultiSelectTreeView (props) {
     const { items, value, placeholder, onChange } = props;
 
     return (
-        <div>
+        <div className='treeview-container'>
             <TreeSelect
+                id='treeview-dropdown'
+                maxTagCount='responsive'
                 treeCheckable
                 treeData={items}
                 value={value}
@@ -20,7 +23,6 @@ export default function MultiSelectTreeView (props) {
                 filterTreeNode={(search, item) => {
                     return item.title.toLowerCase().indexOf(search.toLowerCase()) >= 0;
                 }}
-                style={{ width: '2000%' }}
                 dropdownStyle={{
                     zIndex: 100000
                 }}
