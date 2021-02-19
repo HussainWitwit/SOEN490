@@ -79,7 +79,7 @@ namespace RecommendationEngineTests.APITests
         public async Task GetBadJobLogList()
         {
             var response = await _clientBad.GetAsync("api/job/log/1");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 
         public class TestRepositoryMock : IJobRepository

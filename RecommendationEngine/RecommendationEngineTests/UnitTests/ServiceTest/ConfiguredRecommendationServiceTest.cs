@@ -189,7 +189,7 @@ namespace RecommendationEngineTests.UnitTests
             _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
-            Assert.Throws<InternalServerException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+            Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
 
         [Test]

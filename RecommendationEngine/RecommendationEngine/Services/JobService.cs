@@ -66,13 +66,12 @@ namespace RecommendationEngine.Services
 
                 if (logs.Count < 1)
                 {
-                    throw new GlobalException
+                    Error error = new Error()
                     {
-                        ApplicationName = "RecommendationEngine",
-                        ErrorMessage = "Could not find logs for selected job",
-                        Code = 404,
-                        Type = "Not Found"
+                        Type = ErrorType.BAD_REQUEST,
+                        ErrorMessage = "Could not find logs for selected job"
                     };
+                    throw new RequestValidationException(error, "Recommendation Engine");
                 }
                 _notificationHub.SendNotification("Job logs have been loaded!");
                 return logs;
