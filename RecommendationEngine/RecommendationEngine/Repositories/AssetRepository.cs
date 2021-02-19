@@ -1,4 +1,5 @@
 ﻿using Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
@@ -45,7 +46,7 @@ namespace RecommendationEngine.Repositories
         {
             try
             {
-                return _recommendationEngineDb.Assets.ToList();
+                return _recommendationEngineDb.Assets.Include(x => x.Type).Include(asset => asset.ParentAsset).ToList();
             }
             catch (Exception)
             {
@@ -57,7 +58,7 @@ namespace RecommendationEngine.Repositories
         {
             try
             {
-                return _recommendationEngineDb.Assets.FirstOrDefault(a => a.Name == assetName);
+                return _recommendationEngineDb.Assets.Include(asset => asset.Type).FirstOrDefault(a => a.Name == assetName);
             }
             catch (Exception)
             {
