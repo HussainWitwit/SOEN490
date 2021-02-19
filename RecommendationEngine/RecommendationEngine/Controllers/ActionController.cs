@@ -24,7 +24,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
             }
         }
     }

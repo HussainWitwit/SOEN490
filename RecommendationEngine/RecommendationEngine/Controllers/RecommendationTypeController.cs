@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Interfaces.Services;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Controllers
 {
@@ -18,7 +19,13 @@ namespace RecommendationEngine.Controllers
 
         [HttpGet]
         public IActionResult GetRecommendationTypes() {
-            return Ok(_recommendationTypeService.GetRecommendationTypes());
+            try
+            {
+                return Ok(_recommendationTypeService.GetRecommendationTypes());
+            }
+            catch (GlobalException e) {
+                return e.GetActionResult();
+            }
         }
     }
 }

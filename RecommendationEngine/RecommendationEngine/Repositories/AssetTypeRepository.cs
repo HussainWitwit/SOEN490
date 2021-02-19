@@ -1,5 +1,7 @@
 ﻿using Interfaces.Repositories;
 using Models.DB;
+using RecommendationEngine.ExceptionHandler;
+using System;
 using System.Linq;
 
 namespace RecommendationEngine.Repositories
@@ -15,7 +17,13 @@ namespace RecommendationEngine.Repositories
 
         public DBAssetType GetAssetTypeByName(string assetTypeName)
         {
-            return _recommendationEngineDb.AssetTypes.FirstOrDefault(a => a.Name == assetTypeName);
+            try
+            {
+                return _recommendationEngineDb.AssetTypes.FirstOrDefault(a => a.Name == assetTypeName);
+            }
+            catch (Exception) {
+                throw new DbException();
+            }
         }
     }
 }

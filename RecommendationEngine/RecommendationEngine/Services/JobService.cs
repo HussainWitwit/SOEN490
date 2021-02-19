@@ -40,9 +40,13 @@ namespace RecommendationEngine.Services
 
                 return jobs;
             }
-            catch(Exception e)
+            catch (GlobalException)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
             }
         }
 
@@ -62,24 +66,23 @@ namespace RecommendationEngine.Services
 
                 if (logs.Count < 1)
                 {
-                    throw new GlobalException
+                    Error error = new Error()
                     {
-                        ApplicationName = "RecommendationEngine",
-                        ErrorMessage = "Could not find logs for selected job",
-                        Code = 404,
-                        Type = "Not Found"
+                        Type = ErrorType.BAD_REQUEST,
+                        ErrorMessage = "Could not find logs for selected job"
                     };
+                    throw new RequestValidationException(error, "Recommendation Engine");
                 }
                 _notificationHub.SendNotification("Job logs have been loaded!");
                 return logs;
             }
-            catch (GlobalException e)
+            catch (GlobalException)
             {
-                throw e;
+                throw;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }
