@@ -9,7 +9,7 @@ export interface Asset {
     elementPath: string,
     acPower: string,
     children: Asset[],
-    parentId: number | null
+    assetType: string
 }
 
 export interface MultiSelectTreeViewAsset {
