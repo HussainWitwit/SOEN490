@@ -17,12 +17,12 @@ describe('AssetTreeView component', () => {
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<AssetTree nestedAssets={{id: 1}}/>, div);
+        ReactDOM.render(<AssetTree />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
     it('It is visible in the component tree', () => {
-        const output = shallow(<AssetTree nestedAssets={{id: 1}}/>);
+        const output = shallow(<AssetTree />);
         expect(output).toHaveLength(1);
     });
 
@@ -48,13 +48,13 @@ describe('AssetTreeView component', () => {
     })
 
     it("It finds the AssetTreeItem component", () => {
-        const output = shallow(<AssetTreeItem nestedAssets={{id: 1}}/>);
+        const output = shallow(<AssetTreeItem />);
         let component = output.find(TreeItem);
         expect(component).toHaveLength(1);
     })
 
     it("It finds the AssetTree component", () => {
-        const output = shallow(<AssetTree nestedAssets={{id: 1}}/>);
+        const output = shallow(<AssetTree />);
         let component1 = output.find(SearchComboBox);
         let component2 = output.find(TreeView);
         expect(component1).toHaveLength(1);
