@@ -228,7 +228,10 @@ namespace RecommendationEngine.Services
                     Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
                     {
                         ParameterName = x.RecommendationParameter.DisplayText,
-                        ParameterValue = x.ParamValue
+                        ParameterValue = x.ParamValue,
+                        DisplayText = x.RecommendationParameter.DisplayText,
+                        DefaultValue = x.RecommendationParameter.DefaultValue,
+                        ParameterType = x.RecommendationParameter.Type
                     }).ToList()
                 };
                 // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
