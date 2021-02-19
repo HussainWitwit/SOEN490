@@ -61,7 +61,7 @@ namespace RecommendationEngineTests.APITests
         public async Task GetBadResultList()
         {
             var response = await _clientBad.GetAsync("api/result");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
 
         public class TestRepositoryMock : IResultRepository

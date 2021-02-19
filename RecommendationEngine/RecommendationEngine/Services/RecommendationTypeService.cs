@@ -3,6 +3,9 @@ using Interfaces.Services;
 using Models.Recommendation;
 using Interfaces.Repositories;
 using System.Linq;
+using Models.DB;
+using RecommendationEngine.ExceptionHandler;
+using System;
 
 namespace RecommendationEngine.Services
 {
@@ -17,24 +20,31 @@ namespace RecommendationEngine.Services
         }
 
         public List<ConfiguredRecommendationType> GetRecommendationTypes() {
-            List<ConfiguredRecommendationType> recommendationTypes = _recommendationTypeRepository.GetRecommendationTypes()
-                .Select(recommendationType => new ConfiguredRecommendationType
-                {
-                    TemplateName = recommendationType.DisplayText,
-                    TemplateDescription = recommendationType.Description,
-                    AlgorithmName = recommendationType.Type,
-                    AssetTypes = recommendationType.AssetTypes.Select(assetType => assetType.AssetType.Name).ToList(),
-                    InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
+            try
+            {
+                List<ConfiguredRecommendationType> recommendationTypes = _recommendationTypeRepository.GetRecommendationTypes()
+                    .Select(recommendationType => new ConfiguredRecommendationType
                     {
-                        ParameterName = param.Name,
-                        DisplayText = param.DisplayText,
-                        DefaultValue = param.DefaultValue,
-                        ParameterType = param.Type,
-                        ParameterValue = null
-                    }).ToList()
-                }).ToList();
-
-            return recommendationTypes;
+                        TemplateName = recommendationType.DisplayText,
+                        TemplateDescription = recommendationType.Description,
+                        AlgorithmName = recommendationType.Type,
+                        InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = param.Name,
+                            DisplayText = param.DisplayText,
+                            DefaultValue = param.DefaultValue,
+                            ParameterType = param.Type,
+                            ParameterValue = param.DefaultValue
+                        }).ToList()
+                    }).ToList();
+                return recommendationTypes;
+            }
+            catch (GlobalException) {
+                throw;
+            }
+            catch (Exception) {
+                throw new InternalServerException();
+            }
         }
     }
 }

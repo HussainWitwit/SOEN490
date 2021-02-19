@@ -45,8 +45,7 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                throw new DriveApiException();
             }
         }
 
@@ -73,8 +72,7 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                throw new DriveApiException();
             }
         }
 
@@ -115,8 +113,7 @@ namespace RecommendationEngine.Services.ExternalAPI
             }
             catch (Exception)
             {
-                throw new GlobalException(400, "Bad Request", "There was an error with the PF API!", "Recommendation Engine");
-
+                throw new DriveApiException();
             }
 
         }

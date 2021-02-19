@@ -23,10 +23,10 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 DBAsset asset = new DBAsset()
                 {
                     AssetId = 44,
-                    Name = "asset44",
+                    Name = "RENEW01_2070.93.011",
                     AcPower = 5,
                     DisplayText = "displayText",
-                    ElementPath = "asset44.path",
+                    ElementPath = "RENEW01_2070.93.011",
                     EnergyType = "pv",
                     Type = BasicAssetType
                 };
@@ -84,6 +84,15 @@ namespace RecommendationEngineTests.UnitTests.MockData
                             AssetId = 1,
                             Name = "parentAsset2"
                         },
+                        Type = BasicDBAssetType()
+                    },
+                    new DBAsset()
+                    {
+                        AssetId = 44,
+                        Name = "RENEW01_2070.93.011",
+                        DisplayText = "RENEW01_2070.93.011",
+                        EnergyType = "pv",
+                        ParentAsset = null,
                         Type = BasicDBAssetType()
                     }
                 };

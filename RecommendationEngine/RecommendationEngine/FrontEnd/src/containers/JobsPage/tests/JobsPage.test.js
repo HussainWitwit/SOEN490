@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import JobsPage from '../JobsPage';
+import fetch from 'isomorphic-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
 

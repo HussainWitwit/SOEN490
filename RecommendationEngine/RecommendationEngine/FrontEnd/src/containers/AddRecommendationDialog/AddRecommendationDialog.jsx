@@ -88,7 +88,7 @@ export function AddRecommendationDialog (props) {
 
   //Post method
   const confirmDialogEvent = async () => {
-    await postConfiguredRecommendation({
+    let response = await postConfiguredRecommendation({
       type: template.name,
       name: basicConfiguration.title,
       granularity: basicConfiguration.granularity,
@@ -101,9 +101,12 @@ export function AddRecommendationDialog (props) {
       recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate,
       assetIdList: basicConfiguration.asset.map((e) => {
         return e.id;
-      }),
-    }, { isEditing: isEditing, id: id });
-    closeDialog();
+      })
+    }, { isEditing: isEditing, id: id })
+
+    if (response) {
+      closeDialog()
+    } 
   }
 
   useEffect(() => {

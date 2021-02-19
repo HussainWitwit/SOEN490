@@ -192,12 +192,10 @@ export const addConfiguredRecommendation = async (dispatch, configuredRecommenda
     type: dispatchActionType.ADD_CONFIGURED_RECOMMENDATION,
     payload: response,
   });
-  if (response.status === 200) {
+  if (response) {
     await getConfiguredRecommendationList(dispatch);
   }
-  else {
-    alert("An error occured when trying to add this recommendation into our server.");
-  }
+  return response;
 }
 
 /* istanbul ignore next */
@@ -207,13 +205,11 @@ export const editConfiguredRecommendation = async (dispatch, configuredRecommend
     type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
     payload: response,
   });
-  if (response.status === 200) {
+  if (response) {
     await getConfiguredRecommendationList(dispatch);
     openScheduleDrilldown(dispatch, id);
   }
-  else {
-    alert("An error occured when trying to modify this recommendation from our server.");
-  }
+  return response;
 }
 
 /* istanbul ignore next */
@@ -223,21 +219,19 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
     type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
     payload: response
   });
-  if (response.status === 200) {
+  if (response) {
     await getConfiguredRecommendationList(dispatch);
   }
-  else {
-    alert("An error occured when trying to delete this recommendation from our server.");
-  }
+  return response;
 }
 
 /* istanbul ignore next */
 export const postConfiguredRecommendation = async (dispatch, configuredRecommendation, editingState) => {
   if (editingState.isEditing) {
-    await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.id);
+    return await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.id);
   }
   else {
-    await addConfiguredRecommendation(dispatch, configuredRecommendation);
+    return await addConfiguredRecommendation(dispatch, configuredRecommendation);
   }
 }
 

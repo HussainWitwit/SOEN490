@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Models.DB;
 using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Repositories
 {
@@ -16,9 +17,15 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb = recommendationEngineDb;
         }
 
-        public List<DBRecommendationType> GetRecommendationTypes()
-        {
-            return _recommendationEngineDb.RecommendationTypes.Include(x => x.DefaultParametersList).Include(type => type.AssetTypes).ThenInclude(assetType => assetType.AssetType).ToList();
+        public List<DBRecommendationType> GetRecommendationTypes() {
+            try
+            {
+                return _recommendationEngineDb.RecommendationTypes.Include(x => x.DefaultParametersList).ToList();
+            }
+            catch (Exception)
+            {
+                throw new DbException();
+            }
         }
     }
 }

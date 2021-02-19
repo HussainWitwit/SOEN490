@@ -1,34 +1,32 @@
+import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
 import { Asset, MultiSelectTreeViewAsset } from "../models/Asset";
-import { convertAssetObject } from '../../utilities/ArrayManipulationUtilities';
 export async function GetNestedAssetList() : Promise<Asset | null> {
-    let assetResult: Asset;
-    try {
-        let response = await fetch('api/asset/nested'); 
-        const jsonResponse = await response.json();
-        if(jsonResponse) {
-            assetResult = jsonResponse;
-            return assetResult;
-        }
-    }catch(error) {
-        console.log('Error while fetching assets!')
-        console.log(error);
-    }
-    return null;
+    let assetResult = null;
+    await fetch('api/asset/nested')
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            assetResult = res;
+            return assetResult
+        })
+        .catch(err => {
+            err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+        })
+    return assetResult;
 }
 
-export async function GetFlatAssetList() : Promise<MultiSelectTreeViewAsset[]> {
-    let assetResult: MultiSelectTreeViewAsset[] = [];
-    try {
-        let response = await fetch('api/asset'); 
-        const jsonResponse = await response.json();
-        if(jsonResponse) {
-            assetResult = convertAssetObject(jsonResponse);
+export async function GetFlatAssetList() : Promise<Asset[]> {
+    let assetResult: Asset[] = [];
+    await fetch('api/asset')
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            assetResult = res;
             return assetResult;
-        }
-    }catch(error) {
-        console.log('Error while fetching assets!')
-        console.log(error);
-    }
+        })
+        .catch(err => {
+            err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+        })
     return assetResult;
 }
 
