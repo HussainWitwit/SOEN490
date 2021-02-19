@@ -215,6 +215,7 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                     name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName : '',
                     description: state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription : '',
                     inputList: state.templateDetailsList.length ? state.templateDetailsList[0].inputList : [],
+                    assetTypes: state.templateDetailsList.length ? state.templateDetailsList[0].assetTypes: [],
                     algorithmName: state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName : ''
                 }
             };

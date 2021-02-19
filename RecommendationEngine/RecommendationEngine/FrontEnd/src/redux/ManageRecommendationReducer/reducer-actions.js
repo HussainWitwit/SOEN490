@@ -185,6 +185,7 @@ export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
   dispatch(setTemplateName(value.type));
   dispatch(updateAsset(value.assetList));
   dispatch(setTitle(value.name));
+  dispatch(updateAssetTypes(value.assetTypes));
   dispatch(setPreferredScenario(value.preferredScenario));
   dispatch(setGranularity(value.granularity));
   dispatch(setRepeatDay(value.recurrenceDayOfWeek));
