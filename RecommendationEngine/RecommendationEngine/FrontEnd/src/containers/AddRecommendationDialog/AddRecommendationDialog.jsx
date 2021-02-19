@@ -106,7 +106,6 @@ export function AddRecommendationDialog (props) {
     closeDialog();
   }
 
-
   useEffect(() => {
     if (isEditing) {
       setIndex(1);

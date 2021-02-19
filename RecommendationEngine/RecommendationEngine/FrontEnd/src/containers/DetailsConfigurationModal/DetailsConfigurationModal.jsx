@@ -9,7 +9,6 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import DateFnsUtils from '@date-io/date-fns';
 import {
