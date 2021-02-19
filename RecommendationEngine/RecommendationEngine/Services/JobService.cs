@@ -7,18 +7,21 @@ using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Interfaces.Hub;
 
 namespace RecommendationEngine.Services
 {
     public class JobService : IJobService
     {
         private IJobRepository _jobRepository;
+        private INotificationHub _notificationHub;
 
         public JobService(
-            IJobRepository jobRepository
+            IJobRepository jobRepository, INotificationHub notificationHub
         )
         {
             _jobRepository = jobRepository;
+            _notificationHub = notificationHub;
         }
 
         public List<Job> GetJobList()
@@ -60,6 +63,18 @@ namespace RecommendationEngine.Services
                         Time = log.Time,
                     }).ToList();
 
+
+                if (logs.Count < 1)
+                {
+                    throw new GlobalException
+                    {
+                        ApplicationName = "RecommendationEngine",
+                        ErrorMessage = "Could not find logs for selected job",
+                        Code = 404,
+                        Type = "Not Found"
+                    };
+                }
+                _notificationHub.SendNotification("Job logs have been loaded!");
                 return logs;
             }
             catch (GlobalException)
