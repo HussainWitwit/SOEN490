@@ -64,7 +64,7 @@ export function ConfirmationModal (props) {
             boxLabelName={'Selected Assets'}
             variant={'outlined'}
             isReadOnly={true}
-            maxElement={10}
+            maxElement={8}
           />
           <TextField
             id="outlined-read-only-recurrence"
