@@ -64,6 +64,15 @@ export const updateAsset = (value) => {
   };
 }
 
+export const updateAssetTypes = (value) => {
+  return {
+    type: dispatchActionType.UPDATE_ASSET_TYPES,
+    payload: {
+      assetTypeList: value,
+    }
+  };
+}
+
 export const setPreferredScenario = (value) => {
   return {
     type: dispatchActionType.UPDATE_PREFERRED_SCENARIO,
@@ -136,6 +145,7 @@ export const setRecommendationType = (dispatch, value) => {
   dispatch(setTemplateDescription(value.templateDescription));
   dispatch(setInputList(value.inputList));
   dispatch(setAlgorithmName(value.algorithmName));
+  dispatch(updateAssetTypes(value.assetTypes));
 };
 
 export const setEditable = () => {

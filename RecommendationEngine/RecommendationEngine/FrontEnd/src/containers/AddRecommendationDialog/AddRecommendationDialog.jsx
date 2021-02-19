@@ -11,7 +11,7 @@ import TemplateConfigurationModal from '../../containers/TemplateConfigurationMo
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
 import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
-import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
+import { transformParameterListPost, extractAssetIds } from '../../utilities/ArrayManipulationUtilities';
 import { checkDateRange } from '../../utilities/GeneralUtilities';
 import './AddRecommendationDialog.css';
 
@@ -99,13 +99,11 @@ export function AddRecommendationDialog (props) {
       parameters: transformParameterListPost(template.inputList),
       modifiedBy: '',
       recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate,
-      assetIdList: basicConfiguration.asset.map((e) => {
-        return e.id;
-      })
+      assetIdList: extractAssetIds(basicConfiguration.asset, template.assetTypes)
     }, { isEditing: isEditing, id: id })
 
     if (response) {
-      closeDialog()
+      closeDialog();
     } 
   }
 
