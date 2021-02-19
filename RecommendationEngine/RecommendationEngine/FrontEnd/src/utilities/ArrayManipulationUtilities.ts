@@ -30,9 +30,9 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
     let renamedAssetAttributes: MultiSelectTreeViewAsset[] = [];
     renamedAssetAttributes = assets.map((element: Asset) => {
         return {
+            value: element,
             key: element.id,
             title: element.displayText,
-            value: element.id,
             children: element.children ? convertAssetObject(element.children) : []
         }
     })
