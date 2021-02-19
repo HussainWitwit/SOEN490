@@ -59,19 +59,9 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          {/* <MultiSelectAutocomplete
-            contentLabel="Assets..."
-            recommendationType={template.name}
-            items={apiAssets}
-            value={basicConfiguration.asset ? basicConfiguration.asset : []}
-            onChange={(event, value) => updateAsset(value)}
-            maxElement={1}
-            variant={'outlined'}
-            isReadOnly={false}
-          /> */}
           <MultiSelectTreeView
             placeholder='Assets ...'
-            assetList={apiAssets}
+            items={apiAssets}
             value={basicConfiguration.asset}
             onChange={(event) => updateAsset(event)}
           />
