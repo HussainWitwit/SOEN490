@@ -18,7 +18,7 @@ namespace RecommendationEngine.Repositories
 
         public List<DBRecommendationType> GetRecommendationTypes()
         {
-            return _recommendationEngineDb.RecommendationTypes.Include(x => x.DefaultParametersList).ToList();
+            return _recommendationEngineDb.RecommendationTypes.Include(x => x.DefaultParametersList).Include(type => type.AssetTypes).ThenInclude(assetType => assetType.AssetType).ToList();
         }
     }
 }

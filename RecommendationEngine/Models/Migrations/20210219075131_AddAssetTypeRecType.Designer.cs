@@ -9,8 +9,8 @@ using Models.DB;
 namespace Models.Migrations
 {
     [DbContext(typeof(RecommendationEngineDBContext))]
-    [Migration("20210219050238_AddKeyToAssetRecType")]
-    partial class AddKeyToAssetRecType
+    [Migration("20210219075131_AddAssetTypeRecType")]
+    partial class AddAssetTypeRecType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,9 +134,6 @@ namespace Models.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("RecommendationTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssetTypeRecommendationTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("AssetTypeId", "RecommendationTypeId");

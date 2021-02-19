@@ -30,8 +30,8 @@ namespace Models.DB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string host = _configuration["DBServer"]?? "localhost";
-            string port = _configuration["DBPort"]?? "50023";
+            string host = _configuration["DBServer"] ?? "localhost";
+            string port = _configuration["DBPort"] ?? "50023";
             optionsBuilder.UseMySql(
                     // Replace with your connection string.
                     $"server={host};user id=root;port={port};database=RecommendationEngine",
@@ -65,6 +65,18 @@ namespace Models.DB
                 .HasOne(x => x.Schedule)
                 .WithMany(e => e.AssetsList)
                 .HasForeignKey(x => x.ScheduleId);
+
+            modelBuilder.Entity<DBAssetTypeRecommendationType>()
+              .HasKey(c => new { c.AssetTypeId, c.RecommendationTypeId });
+
+            modelBuilder.Entity<DBAssetTypeRecommendationType>()
+                .HasOne(x => x.AssetType)
+                .WithMany(m => m.RecommendationTypes)
+                .HasForeignKey(x => x.AssetTypeId);
+            modelBuilder.Entity<DBAssetTypeRecommendationType>()
+                .HasOne(x => x.RecommendationType)
+                .WithMany(e => e.AssetTypes)
+                .HasForeignKey(x => x.RecommendationTypeId);
 
             // Force cascade delete of weak entities types
             modelBuilder.Entity<DBRecommendationSchedule>()

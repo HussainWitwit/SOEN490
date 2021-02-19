@@ -2,10 +2,19 @@
 
 namespace Models.Migrations
 {
-    public partial class AddAssetTypeToRecType : Migration
+    public partial class AddAssetTypeRecType : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "DisplayText",
+                table: "RecommendationScheduleParameter");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
+                table: "RecommendationScheduleParameter",
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "AssetTypeRecommendationType",
                 columns: table => new
@@ -40,6 +49,16 @@ namespace Models.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AssetTypeRecommendationType");
+
+            migrationBuilder.DropColumn(
+                name: "Name",
+                table: "RecommendationScheduleParameter");
+
+            migrationBuilder.AddColumn<string>(
+                name: "DisplayText",
+                table: "RecommendationScheduleParameter",
+                type: "longtext",
+                nullable: true);
         }
     }
 }
