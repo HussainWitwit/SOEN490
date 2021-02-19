@@ -39,7 +39,7 @@ describe('DetailsConfigurationModal component', () => {
         setRepeatDay={(value) => { }}
         setRepeatDate={(value) => { }}
         setRepeatTime={(value) => { }}
-        apiAssets={[]}
+        apiAssets={[{key: 0}]}
     />);
 
     it('It renders without crashing', async () => {
