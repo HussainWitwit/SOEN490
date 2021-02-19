@@ -1,7 +1,6 @@
 ﻿using System;
 using RecommendationEngine.ExceptionHandler;
 using System.Linq;
-using Models.DB;
 using Models.Application;
 
 namespace RecommendationEngine.ConfiguredRecommendationValidator
@@ -32,8 +31,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
 
             DateTime[] dates = new DateTime[] {configuredRecommendation.RecurrenceDatetime };
             if (Array.Exists(dates, date => date < DateTime.Today))
-            {
-                throw new GlobalException(400, "Bad Request", "date must be later or equal to today", "Recommendation Engine");
+            {                throw new GlobalException(400, "Bad Request", "date must be later or equal to today", "Recommendation Engine");
             }
 
             if (Array.Exists(configuredRecommendation.Parameters.ToArray(), param => param.ParameterValue is null))

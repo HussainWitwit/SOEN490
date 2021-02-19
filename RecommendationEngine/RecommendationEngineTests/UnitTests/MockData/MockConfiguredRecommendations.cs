@@ -107,6 +107,16 @@ namespace RecommendationEngineTests.UnitTests.MockData
                                 DisplayText = "Center Point",
                                 DefaultValue = "3.25"
                             }
+                        },
+                        AssetTypes = new List<DBAssetTypeRecommendationType>
+                        {
+                            new DBAssetTypeRecommendationType
+                            {
+                                AssetType = new DBAssetType
+                                {
+                                    Name = "Plant"
+                                }
+                            },
                         }
                     }
                 };
