@@ -75,7 +75,7 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
 
             if (Array.IndexOf(validRecommendationTypes, recommendationType) < 0)
             {
-                AddToErrors(ErrorType.VALIDATION, "The recommendation type " + recommendationType  + " is not valid.");
+                AddToErrors(ErrorType.VALIDATION, recommendationType  + " is not valid at the moment.");
             }
         }
 

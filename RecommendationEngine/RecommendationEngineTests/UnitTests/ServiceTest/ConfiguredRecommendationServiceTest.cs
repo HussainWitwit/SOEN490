@@ -170,7 +170,6 @@ namespace RecommendationEngineTests.UnitTests
         public void DuplicateAssetListTest() {
             DBRecommendationType recommendationType = MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
             ConfiguredRecommendation configuredRecommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
-            DBRecommendationSchedule afterConversion = MockConfiguredRecommendations.CONVERTED_CONFIGURED_RECOMMENDATION;
             configuredRecommendation.AssetIdList.Add(configuredRecommendation.AssetIdList[0]);
 
             _repository.Setup(x => x.GetRecommendationTypeByType("Yearly Wash Optimization")).Returns(recommendationType);
@@ -178,6 +177,19 @@ namespace RecommendationEngineTests.UnitTests
             _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
 
             Assert.Throws<RequestValidationException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
+        }
+
+        [Test]
+        public void ParameterRepositoryNotAvailableTest() {
+            DBRecommendationType recommendationType = MockConfiguredRecommendations.YEARLY_RECOMMENDATION_TYPE;
+            ConfiguredRecommendation configuredRecommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+            configuredRecommendation.Name = "RENEW01_2070";
+
+            _repository.Setup(x => x.GetRecommendationTypeByType("Yearly Wash Optimization")).Returns(recommendationType);
+            _assetRepository.Setup(x => x.GetAssetById(44)).Returns(MockAssets.DBAsset);
+            _scheduler.Setup(x => x.ScheduleJobAsync(It.IsAny<DBRecommendationSchedule>()));
+
+            Assert.Throws<InternalServerException>(() => _configuredRecommendationService.AddConfiguredRecommendation(configuredRecommendation));
         }
 
         [Test]

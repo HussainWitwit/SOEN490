@@ -10,7 +10,7 @@ namespace RecommendationEngine.ExceptionHandler
             return new ContentResult
             {
                 StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status503ServiceUnavailable,
-                Content = "There has been an error fetching from the database",
+                Content = "The connection with the database has been interrupted. Try again later!",
                 ContentType = "application/json"
             };
         }
