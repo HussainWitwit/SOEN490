@@ -7,10 +7,12 @@ import './JobsPage.css';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
+import { openScheduleDrilldown } from '../../redux/RightPanelReducer/reducer-actions';
 // import { useHistory, Link } from "react-router-dom";
 
-function JobsPage() {
+function JobsPage(props) {
 
+    const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
 
@@ -41,7 +43,10 @@ function JobsPage() {
             )
         },
         { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.12, cellClassName: 'table-style' },
-        { field: 'configuredRecommendationTitle', headerName: 'Associated Recommendation', type: 'string', width: 270, cellClassName: 'table-style'},
+        { field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
+        <a onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+            {params.getValue('configuredRecommendationTitle')}
+        </a>)},
         { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style'},
         {
             field: 'jobLog',
@@ -105,7 +110,7 @@ function JobsPage() {
             <RecommendationEngineTable
                 data={jobList}
                 columnValues={columns}
-                isClickable={true}
+                isClickable={false}
                 onClickRow={() => { }}
             />
         </div>

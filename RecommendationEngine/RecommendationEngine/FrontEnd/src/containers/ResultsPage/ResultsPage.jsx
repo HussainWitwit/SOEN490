@@ -5,10 +5,11 @@ import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
+import { openScheduleDrilldown } from '../../redux/RightPanelReducer/reducer-actions';
 import './ResultsPage.css'
 
 export function ResultsPage(props) {
-    const { openResultDrilldown } = props;
+    const { openResultDrilldown, openScheduleDrilldown } = props;
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
@@ -37,7 +38,10 @@ export function ResultsPage(props) {
 
     const columns = [
         { field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style', hide: true },
-        { field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', flex: 0.14, cellClassName: 'table-style' },
+        { field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', flex: 0.14, cellClassName: 'table-style', renderCell: (params) => (
+            <a onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                {params.getValue('configuredRecommendationTitle')}
+            </a>)},
         { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.14, cellClassName: 'table-style' },
         { field: 'netSaving', headerName: 'Net Saving', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-positive-numbers' },
         { field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number', ...PercentageOption, flex: 0.14, cellClassName: 'table-positive-numbers' },
