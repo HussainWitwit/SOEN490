@@ -33,6 +33,7 @@ namespace RecommendationEngine.Services
                         ConfiguredRecommendationTitle = job.Schedule.Name,
                         Duration = job.JobDuration,
                         Timestamp = job.Timestamp,
+                        AssetName = job.Asset.DisplayText
                     }).ToList();
                 
                 return jobs;

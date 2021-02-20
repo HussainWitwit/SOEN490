@@ -18,7 +18,9 @@ namespace RecommendationEngine.Repositories
 
         public List<DBRecommendationJob> GetJobList()
         {
-            return _recommendationEngineDb.RecommendationJobs.Include(recJob => recJob.Result).Include(recJob => recJob.Asset).Include(recJob => recJob.Schedule).Include(recJob => recJob.LogsList).ToList();
+            return _recommendationEngineDb.RecommendationJobs.Include(recJob => recJob.Result)
+                .Include(recJob => recJob.Asset).Include(recJob => recJob.Schedule)
+                .Include(recJob => recJob.LogsList).ToList();
         }
 
         public List<DBRecommendationJobLog> GetJobLogById(int id)
