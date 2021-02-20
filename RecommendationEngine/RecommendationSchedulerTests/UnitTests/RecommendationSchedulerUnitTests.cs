@@ -279,7 +279,7 @@ namespace RecommendationSchedulerTests.UnitTests
             _schedulerMock.Setup(x => x.TriggerJob(It.IsAny<JobKey>(),It.IsAny<JobDataMap>(),CancellationToken.None)).Returns(Task.CompletedTask);
 
             // Act
-            await _recommendationScheduler.TriggerJobAsync(1);
+            await _recommendationScheduler.TriggerJobAsync(1, 2);
 
             //Assert
             _schedulerMock.Verify(x => x.TriggerJob(It.IsAny<JobKey>(), It.IsAny<JobDataMap>(), CancellationToken.None), Times.AtLeastOnce);

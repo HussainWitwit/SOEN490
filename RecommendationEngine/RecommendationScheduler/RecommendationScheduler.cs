@@ -60,14 +60,16 @@ namespace RecommendationScheduler
             }
         }
 
-        public async Task TriggerJobAsync(int scheduleId)
+        public async Task TriggerJobAsync(int scheduleId, int assetId)
         {
             Dictionary<string, int> data = new Dictionary<string, int>
             {
-                { "recommendationScheduleId", scheduleId }
+                { "recommendationScheduleId", scheduleId },
+                { "assetId", assetId}
             };
             JobDataMap jobData = new JobDataMap(data);
-            await _scheduler.TriggerJob(new JobKey(scheduleId.ToString()), jobData);
+            String indentifier = scheduleId.ToString() + '/' + assetId.ToString();
+            await _scheduler.TriggerJob(new JobKey(indentifier), jobData);
         }
 
         private IScheduleBuilder ScheduleBuilder(DBRecommendationSchedule schedule)
