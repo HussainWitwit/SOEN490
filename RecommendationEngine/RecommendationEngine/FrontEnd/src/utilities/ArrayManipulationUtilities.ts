@@ -39,15 +39,4 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
     return renamedAssetAttributes;
 }
 
-export const extractAssetIds = (assets: Asset[], types: string[]): (number | undefined | void)[] => {
-    let assetsToSend: (number | undefined | void)[] = [];
-    assets.map((asset: Asset) => {
-        types.forEach((element) => {
-            if(asset.assetType === element) {
-                assetsToSend.push(asset.id);
-            }        
-        });
-    })
-    return assetsToSend;
-}
 
