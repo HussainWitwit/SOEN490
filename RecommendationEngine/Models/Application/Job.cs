@@ -9,6 +9,7 @@ namespace Models.Application
         public int ConfiguredRecommendationId { get; set; }
         public string ConfiguredRecommendationTitle { get; set; } 
         public string Status { get; set; }
+        public string AssetName { get; set; }
         public DateTime Timestamp { get; set; }
     }
 }
