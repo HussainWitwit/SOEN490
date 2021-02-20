@@ -14,6 +14,7 @@ import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationMo
 import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
 import { checkDateRange } from '../../utilities/GeneralUtilities';
 import './AddRecommendationDialog.css';
+import { toast } from 'react-toastify';
 
 const pages = [
   ({ style }) => (
@@ -106,6 +107,15 @@ export function AddRecommendationDialog (props) {
 
     if (response) {
       closeDialog()
+      toast.success('The recommendation ' + basicConfiguration.title + ' has been created!', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     } 
   }
 

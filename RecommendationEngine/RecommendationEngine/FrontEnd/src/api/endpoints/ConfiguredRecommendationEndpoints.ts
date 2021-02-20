@@ -1,5 +1,6 @@
 import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
+import { toast } from 'react-toastify';
 
 export async function GetConfiguredRecommendationList() : Promise<ConfiguredRecommendation[]> {
     let configuredRecommendations: ConfiguredRecommendation[] = [];
@@ -11,7 +12,18 @@ export async function GetConfiguredRecommendationList() : Promise<ConfiguredReco
             return configuredRecommendations;
         })
         .catch(err => {
-            err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+            if(!toast.isActive(1)){
+                var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
+                toast.error(message, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })
     return configuredRecommendations;
 }
@@ -26,7 +38,18 @@ export async function GetConfiguredRecommendationById(id: number) : Promise<Conf
             return configuredRecommendations
         })
         .catch(err => {
-            err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+            var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
+            if(!toast.isActive(1)){
+                toast.error(message, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });    
+            }
         })
     return configuredRecommendations;
 }
@@ -43,7 +66,16 @@ export async function DeleteRecommendationById(id: number) : Promise<any> {
         return response;
     })
     .catch(err => {
-        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
+        toast.error(message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     })
     return response;
 }
@@ -61,7 +93,16 @@ export const AddConfiguredRecommendation = async (recommendation: ConfiguredReco
         return response;
     })
     .catch(err => {
-        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
+        toast.error(message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     })
     return response
 };
@@ -79,7 +120,16 @@ export async function EditConfiguredRecommendation(recommendation: ConfiguredRec
         return response;
     })
     .catch(err => {
-        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
+        toast.error(message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     })
     return response
 }
@@ -96,7 +146,16 @@ export async function ForceRunConfiguredRecommendation(id: number) : Promise<any
         return response;
     })
     .catch(err => {
-        err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
+        toast.error(message, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     })
     return response;
 }
