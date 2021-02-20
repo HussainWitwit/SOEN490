@@ -22,13 +22,13 @@ function JobsPage() {
 
     const columns = [
         
-        { field: 'id', headerName: 'Job ID', width: 150, cellClassName: 'table-style' },
-        { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.25, cellClassName: 'table-style' },
+        { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style' },
+        { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.2, cellClassName: 'table-style' },
         {
             field: 'status',
             headerName: 'Status',
             type: 'string',
-            flex: 0.25,
+            flex: 0.17,
             headerAlign: 'center',
             renderCell: (params) => (
                 <div
@@ -40,8 +40,9 @@ function JobsPage() {
                 </div>
             )
         },
-        { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.25, cellClassName: 'table-style' },
-        { field: 'configuredRecommendationTitle', headerName: 'Associated Recommendation', type: 'string', width: 400, cellClassName: 'table-style'},
+        { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.12, cellClassName: 'table-style' },
+        { field: 'configuredRecommendationTitle', headerName: 'Associated Recommendation', type: 'string', width: 270, cellClassName: 'table-style'},
+        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style'},
         {
             field: 'jobLog',
             headerName: 'Log',

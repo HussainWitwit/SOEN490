@@ -6,6 +6,7 @@ export interface ConfiguredRecommendationJob {
     configuredRecommendationId: number,
     configuredRecommendationTitle: string,
     status: string,
+    assetName: string,
     timestamp: Date;
 }
 
