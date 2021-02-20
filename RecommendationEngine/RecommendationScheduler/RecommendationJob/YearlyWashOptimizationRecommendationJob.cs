@@ -52,7 +52,7 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.SoilingBuffer = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingSeasonBuffer").ParamValue);
             _parameters.Accelerator = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "Accelerator").ParamValue);
             _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
-            _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
+            _parameters.PlantIds = new List<string> { _recommendationJob.Asset.Name };
             _parameters.Asset = _recommendationJob.Asset;
             _jobLogger.LogInformation(_recommendationJob, "Fetched user-defined parameter values associated with job", _parameters);
         }

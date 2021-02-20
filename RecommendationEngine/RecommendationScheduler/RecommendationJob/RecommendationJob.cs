@@ -60,7 +60,7 @@ namespace RecommendationScheduler.RecommendationJob
             DBRecommendationSchedule schedule = _schedulerRepository.GetDbRecommendationScheduleById(RecommendationScheduleId);
             DBRecommendationJob job = new DBRecommendationJob
             {
-                Asset = schedule.AssetsList.Where(asset => asset.AssetId == AssetId).FirstOrDefault().Asset,
+                Asset = schedule.AssetsList.Where(asset => asset.AssetId == AssetId).FirstOrDefault()?.Asset,
                 Status = "Running",
                 TriggeredBy = "Scheduler",
                 Timestamp = DateTime.Now,

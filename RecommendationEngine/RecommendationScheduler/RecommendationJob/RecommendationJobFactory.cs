@@ -18,7 +18,7 @@ namespace RecommendationScheduler.RecommendationJob
             {
                 case "Yearly Wash Optimization":
                     return JobBuilder.Create<YearlyWashOptimizationRecommendationJob>()
-                        .WithIdentity(Schedule.RecommendationScheduleId.ToString() + asset.AssetId.ToString())
+                        .WithIdentity(Schedule.RecommendationScheduleId.ToString() + "/" + asset.AssetId.ToString())
                         .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
                         .UsingJobData("assetId", asset.AssetId)
                         .WithDescription(Schedule.Description)
