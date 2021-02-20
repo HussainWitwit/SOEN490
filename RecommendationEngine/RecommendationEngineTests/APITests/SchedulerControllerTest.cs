@@ -11,6 +11,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Interfaces.RecommendationScheduler;
+using RecommendationEngineTests.UnitTests.MockData;
+using System.Collections.Generic;
+using Interfaces.Services;
+using Models.Application;
 
 namespace RecommendationEngineTests.APITests
 {
@@ -30,6 +34,7 @@ namespace RecommendationEngineTests.APITests
                 {
                     builder.RegisterType<SchedulerService>().AsImplementedInterfaces();
                     builder.RegisterType<MockScheduler>().AsImplementedInterfaces();
+                    builder.RegisterType<MockConfiguredRecommendationService>().AsImplementedInterfaces();
                 }));
             _badServer = new TestServer(new WebHostBuilder()
                 .UseStartup<Startup>()
@@ -38,6 +43,7 @@ namespace RecommendationEngineTests.APITests
                 {
                     builder.RegisterType<SchedulerService>().AsImplementedInterfaces();
                     builder.RegisterType<BadMockScheduler>().AsImplementedInterfaces();
+                    builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
             _badClient = _badServer.CreateClient();
@@ -75,6 +81,7 @@ namespace RecommendationEngineTests.APITests
             return Task.CompletedTask;
         }
     }
+
     public class BadMockScheduler : IRecommendationScheduler
     {
         public Task Start()
@@ -92,4 +99,33 @@ namespace RecommendationEngineTests.APITests
             throw new NotImplementedException();
         }
     }
+
+    public class MockConfiguredRecommendationService : IConfiguredRecommendationService
+    {
+        public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteConfiguredRecommendation(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ConfiguredRecommendation GetConfiguredRecommendationById(int id)
+        {
+            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
+        }
+
+        public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

@@ -22,6 +22,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
         public static DBRecommendationSchedule UNEDITED_DB_RECOMMENDATION = RecommendationList.UneditedDBRecommendationSchedule();
         public static DBRecommendationSchedule EDITED_DB_RECOMMENDATION = RecommendationList.EditedDBRecommendationSchedule();
         public static List<DBRecommendationType> RECOMMENDATION_TYPE = RecommendationList.RecommendationType();
+        public static List<DBAssetTypeRecommendationType> ASSET_TYPE_REC_TYPE = RecommendationList.AssetTypeRecommendationType();
 
         public static class RecommendationList
         {
@@ -36,14 +37,14 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     DisplayText = "asset 9",
                     ElementPath = "path9",
                     EnergyType = "pv",
-                    TimeZone = "timezoneTest"
+                    TimeZone = "timezoneTest",
 
                 };
 
                 DBAssetRecommendationSchedule dbAssetRecSchedule = new DBAssetRecommendationSchedule()
                 {
                     Asset = asset,
-                    AssetId = 9
+                    AssetId = 9,
                 };
 
                 List<DBRecommendationSchedule> list = new List<DBRecommendationSchedule>() {
@@ -108,16 +109,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                                 DefaultValue = "3.25"
                             }
                         },
-                        AssetTypes = new List<DBAssetTypeRecommendationType>
-                        {
-                            new DBAssetTypeRecommendationType
-                            {
-                                AssetType = new DBAssetType
-                                {
-                                    Name = "Plant"
-                                }
-                            },
-                        }
+                        AssetTypes = AssetTypeRecommendationType()
                     }
                 };
 
@@ -131,6 +123,22 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     Type = "Yearly Wash Optimization",
                     DisplayText = "Yearly Wash Optimization (yearly)",
                     Description = "Runs the wash optimization on a yearly basis",
+                    AssetTypes = AssetTypeRecommendationType()
+                };
+            }
+
+            public static List<DBAssetTypeRecommendationType> AssetTypeRecommendationType()
+            {
+                return new List<DBAssetTypeRecommendationType>
+                {
+                    new DBAssetTypeRecommendationType
+                    {
+                        AssetType = new DBAssetType
+                        {
+                            AssetTypeId = 1,
+                            Name = "Plant"
+                        }
+                    }
                 };
             }
 
