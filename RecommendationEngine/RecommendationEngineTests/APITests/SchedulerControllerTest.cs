@@ -70,7 +70,7 @@ namespace RecommendationEngineTests.APITests
             return Task.CompletedTask;
         }
 
-        public Task TriggerJobAsync(int scheduleId)
+        public Task TriggerJobAsync(int scheduleId, int assetId)
         {
             return Task.CompletedTask;
         }
@@ -87,7 +87,7 @@ namespace RecommendationEngineTests.APITests
             throw new NotImplementedException();
         }
 
-        public Task TriggerJobAsync(int scheduleId)
+        public Task TriggerJobAsync(int scheduleId, int assetId)
         {
             throw new NotImplementedException();
         }

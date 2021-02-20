@@ -121,7 +121,7 @@ namespace RecommendationEngine.Repositories
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
             try {
-                return _recommendationEngineDb.RecommendationTypes
+                return _recommendationEngineDb.RecommendationTypes.Include(x => x.AssetTypes).ThenInclude(y => y.AssetType)
                         .Where(rec => rec.Type.Equals(recommendationType))
                         .FirstOrDefault();
             }

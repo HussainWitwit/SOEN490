@@ -70,7 +70,7 @@ namespace RecommendationEngine.Repositories
         {
             try
             {
-                return _recommendationEngineDb.Assets.FirstOrDefault(a => a.AssetId == assetId);
+                return _recommendationEngineDb.Assets.Include(asset => asset.Type).FirstOrDefault(a => a.AssetId == assetId);
             }
             catch (Exception)
             {
