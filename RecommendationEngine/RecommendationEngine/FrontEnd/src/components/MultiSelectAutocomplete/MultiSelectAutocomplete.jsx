@@ -18,7 +18,7 @@ function MultiSelectAutocomplete (props) {
       data-testid="autocomplete-component"
       value={props.value}
       options={props.items}
-      groupBy={(option => option.assetType)}
+      groupBy={(option => option.parentId)}
       getOptionDisabled={option => props.recommendationType === "Yearly Wash Optimization" && option.assetType === "Portfolio"}
       disableCloseOnSelect
       getOptionLabel={(option) => option.displayText}

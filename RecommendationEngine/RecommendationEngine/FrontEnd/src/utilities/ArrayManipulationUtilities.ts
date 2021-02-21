@@ -1,5 +1,7 @@
 import { Parameter } from "../api/models/TemplateDetails";
 import { dateFormat } from './DateTimeUtilities';
+import { Asset, MultiSelectTreeViewAsset } from '../api/models/Asset';
+
 export const convertObjectToArrayOfObjects = (obj: any) => {
     var result = Object.entries(obj).map((e) => ({ [e[0]]: e[1] }));
     return result;
@@ -23,3 +25,18 @@ export const transformParameterListPost = (array: Parameter[]): any[] => {
         };
     })
 }
+
+export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] => {
+    let renamedAssetAttributes: MultiSelectTreeViewAsset[] = [];
+    renamedAssetAttributes = assets.map((element: Asset) => {
+        return {
+            value: element,
+            key: element ? element.id : 0,
+            title: element ? element.displayText : 'N/A',
+            children: element ? (element.children ? convertAssetObject(element.children) : []) : []
+        }
+    })
+    return renamedAssetAttributes;
+}
+
+

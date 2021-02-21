@@ -6,6 +6,7 @@ using Quartz;
 using RecommendationScheduler.RecommendationJob;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecommendationScheduler
@@ -21,7 +22,7 @@ namespace RecommendationScheduler
             _recommendationSchedulerRepository = recommendationSchedulerRepository;
             _scheduler = scheduler;
             _configuration = configuration;
-            Task.Run(this.Start).Wait();
+            Task.Run(Start).Wait();
         }
         public async Task Start()
         {
@@ -44,24 +45,36 @@ namespace RecommendationScheduler
         {
             if (schedule.AssetsList?.Count > 0)
             {
+                IJobDetail job;
+                ITrigger trigger;
                 RecommendationJobFactory factory = new RecommendationJobFactory(schedule);
-                IJobDetail job = factory.CreateRecommendationJob();
-                ITrigger trigger = TriggerBuilder.Create()
-                    .ForJob(job)
-                    .WithSchedule(ScheduleBuilder(schedule))
-                    .Build();
-                await _scheduler.ScheduleJob(job, trigger);
+                foreach (DBAssetRecommendationSchedule asset in schedule.AssetsList.ToList())
+                {
+                    job = factory.CreateRecommendationJob(asset.Asset);
+                    trigger = TriggerBuilder.Create()
+                        .ForJob(job)
+                        .WithSchedule(ScheduleBuilder(schedule))
+                        .Build();
+                    await _scheduler.ScheduleJob(job, trigger);
+                };
             }
         }
 
-        public async Task TriggerJobAsync(int scheduleId)
+        public async Task TriggerScheduleAsync(int scheduleId)
         {
-            Dictionary<string, int> data = new Dictionary<string, int>
+            DBRecommendationSchedule schedule = _recommendationSchedulerRepository.GetDbRecommendationScheduleById(scheduleId);
+
+            foreach (DBAssetRecommendationSchedule asset in schedule.AssetsList.ToList())
             {
-                { "recommendationScheduleId", scheduleId }
-            };
-            JobDataMap jobData = new JobDataMap(data);
-            await _scheduler.TriggerJob(new JobKey(scheduleId.ToString()), jobData);
+                Dictionary<string, int> data = new Dictionary<string, int>
+                {
+                    { "recommendationScheduleId", scheduleId },
+                    { "assetId", asset.Asset.AssetId}
+                };
+                JobDataMap jobData = new JobDataMap(data);
+                string indentifier = scheduleId.ToString() + '/' + asset.Asset.AssetId.ToString();
+                await _scheduler.TriggerJob(new JobKey(indentifier), jobData);
+            }
         }
 
         private IScheduleBuilder ScheduleBuilder(DBRecommendationSchedule schedule)

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Interfaces.Repositories;
 using Interfaces.Services;
-using Microsoft.AspNetCore.Http;
 using Models.Application;
 using Models.DB;
 using RecommendationEngine.ExceptionHandler;
@@ -36,9 +35,11 @@ namespace RecommendationEngine.Services
 
                      }).ToList();
 
-                DBRecommendationSchedule schedule = dbActions.First().RecommendationJobResult.Job.Schedule;
+                DBRecommendationJob job = dbActions.First().RecommendationJobResult.Job;
+                DBRecommendationSchedule schedule = job.Schedule;
 
-                if(schedule ==  null)
+
+                if (schedule ==  null)
                 {
                     Error error = new Error
                     {
@@ -52,7 +53,7 @@ namespace RecommendationEngine.Services
                 {
                     ConfiguredRecommendationId = schedule.RecommendationScheduleId,
                     RecommendationName = schedule.Name,
-                    AssetNameList = schedule.AssetsList.Select(asset => asset.Asset.Name).ToList(),
+                    AssetNameList = new List<string> { job.Asset.DisplayText },
                     Actions = actionList
                 };
 

@@ -152,9 +152,10 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             parameters.SoilingBuffer = 3;
             parameters.Accelerator = 0.33;
             parameters.PreferredScenario = "ROI";
-            parameters.PlantIds = new List<string>();
-            parameters.PlantIds.Add("RENEW01_2070.93.001");
-            parameters.Asset = new DBAsset();
+            parameters.Asset = new DBAsset
+            {
+                Name = "RENEW01_2070.93.001"
+            };
         }
         public void GetDummy2(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
         {
@@ -176,9 +177,10 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationTypes
             parameters.SoilingBuffer = 3;
             parameters.Accelerator = 0.33;
             parameters.PreferredScenario = "ROI";
-            parameters.PlantIds = new List<string>();
-            parameters.PlantIds.Add("RENEW01_2070.93.001");
-            parameters.Asset = new DBAsset();
+            parameters.Asset = new DBAsset
+            {
+                Name = "RENEW01_2070.93.001"
+            };
         }
     }
 }

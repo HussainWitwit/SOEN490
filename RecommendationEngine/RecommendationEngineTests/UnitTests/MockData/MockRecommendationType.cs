@@ -23,6 +23,16 @@ namespace RecommendationEngineTests.UnitTests.MockData
                                 DefaultValue = "3.25",
                                 Name = "Center Point"
                             }
+                        },
+                        AssetTypes = new List<DBAssetTypeRecommendationType>
+                        {
+                            new DBAssetTypeRecommendationType
+                            {
+                                AssetType = new DBAssetType
+                                {
+                                    Name = "Plant"
+                                }
+                            },
                         }
                     },
                     new DBRecommendationType {
@@ -34,6 +44,16 @@ namespace RecommendationEngineTests.UnitTests.MockData
                                 DefaultValue = "1.23",
                                 Name = "Some param"
                             }
+                        },
+                        AssetTypes = new List<DBAssetTypeRecommendationType>
+                        {
+                            new DBAssetTypeRecommendationType
+                            {
+                                AssetType = new DBAssetType
+                                {
+                                    Name = "Plant"
+                                }
+                            },
                         }
                     }
                 };
