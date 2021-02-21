@@ -41,7 +41,13 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
                 new DBRecommendationSchedule
                 {
                     RecommendationScheduleId = 2,
-                    AssetsList = new List<DBAssetRecommendationSchedule>(),
+                    AssetsList = new List<DBAssetRecommendationSchedule>
+                    {
+                        new DBAssetRecommendationSchedule
+                        {
+                            AssetId = 0,
+                        }
+                    }
                 }
             );
 

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using RecommendationEngine.ExceptionHandler;
 using System;
-using Microsoft.AspNetCore.Http;
 
 namespace RecommendationEngine.Services
 {
@@ -80,24 +79,25 @@ namespace RecommendationEngine.Services
                     RecommendationType = recommendationType
                 };
 
-                List<DBAssetRecommendationSchedule> dbAssets = new List<DBAssetRecommendationSchedule>();
+                DBAsset asset = new DBAsset();
 
-                configuredRecommendation.AssetIdList.ForEach(id =>
-                {
-                    DBAsset asset = _assetRepository.GetAssetById(id);
-                    DBAssetRecommendationSchedule assetSchedule = new DBAssetRecommendationSchedule
+                List<DBAssetRecommendationSchedule> filteredAssets = configuredRecommendation.AssetIdList
+                    .Select(id =>
                     {
-                        Asset = asset,
-                        AssetId = asset.AssetId,
-                        Schedule = config,
-                    };
+                        asset = _assetRepository.GetAssetById(id);
+                        return new DBAssetRecommendationSchedule
+                        {
+                            Asset = asset,
+                            AssetId = asset.AssetId,
+                            Schedule = config,
+                        };
 
-                    dbAssets.Add(assetSchedule);
-                });
+                    })
+                    .Where(asset => recommendationType.AssetTypes.Select(type => type.AssetType.AssetTypeId).Contains(asset.Asset.Type.AssetTypeId)).ToList();
 
-                config.AssetsList = dbAssets;
+                config.AssetsList = filteredAssets;
 
-                configuredRecommendation.ThrowPotentialException(dbAssets);
+                configuredRecommendation.ThrowPotentialException(filteredAssets);
             // Add user defined parameters
             List<DBRecommendationParameter> recommendationParameters =
                 _recommendationRepository.GetParametersForSchedule(config);
@@ -228,7 +228,10 @@ namespace RecommendationEngine.Services
                     Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
                     {
                         ParameterName = x.RecommendationParameter.DisplayText,
-                        ParameterValue = x.ParamValue
+                        ParameterValue = x.ParamValue,
+                        DisplayText = x.RecommendationParameter.DisplayText,
+                        DefaultValue = x.RecommendationParameter.DefaultValue,
+                        ParameterType = x.RecommendationParameter.Type
                     }).ToList()
                 };
                 // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation

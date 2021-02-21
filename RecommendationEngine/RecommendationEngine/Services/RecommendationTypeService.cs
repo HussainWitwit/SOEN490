@@ -28,6 +28,7 @@ namespace RecommendationEngine.Services
                         TemplateName = recommendationType.DisplayText,
                         TemplateDescription = recommendationType.Description,
                         AlgorithmName = recommendationType.Type,
+                        AssetTypes = recommendationType.AssetTypes.Select(assetType => assetType.AssetType.Name).ToList(),
                         InputList = recommendationType.DefaultParametersList.Select(param => new ConfiguredRecommendationParameter
                         {
                             ParameterName = param.Name,

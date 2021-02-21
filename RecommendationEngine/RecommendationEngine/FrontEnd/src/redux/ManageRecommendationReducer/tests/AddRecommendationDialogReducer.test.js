@@ -19,6 +19,7 @@ let state = {
   template: {
     name: "",
     description: "",
+    assetTypes: [],
     inputList: [{ parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'NUMBER' }],
     algorithmName: ""
   },
@@ -147,7 +148,24 @@ describe('Add Recommendation Dialog reducer', () => {
         asset: [{ name: "Asset 3", id: 0 }, { name: "Asset test", id: 1 }],
       },
     });
-  })
+  });
+
+  it('should handle UPDATE_ASSET_TYPES', () => {
+    expect(
+      ManageRecommendationReducer(state, {
+        type: dispatchType.UPDATE_ASSET_TYPES,
+        payload: {
+          assetTypeList: ['Portfolio'],
+        },
+      })
+    ).toEqual({
+      ...state,
+      template: {
+        ...state.template,
+        assetTypes: ['Portfolio'],
+      },
+    });
+  });
 
   it('should handle UPDATE_PREFERRED_SCENARIO', () => {
     expect(

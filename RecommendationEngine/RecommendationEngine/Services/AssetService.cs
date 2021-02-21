@@ -162,6 +162,7 @@ namespace RecommendationEngine.Services
                     ElementPath = dbasset.ElementPath,
                     EnergyType = dbasset.EnergyType,
                     TimeZone = dbasset.TimeZone,
+                    AssetType = dbasset.Type?.Name
                 };
 
                 assetComposite.Children = GetChildren(assetComposite.Id);
@@ -316,6 +317,7 @@ namespace RecommendationEngine.Services
                     EnergyType = dbasset.EnergyType,
                     AssetType = dbasset.Type.Name,
                     TimeZone = dbasset.TimeZone,
+                    ParentId = dbasset.ParentAsset?.AssetId
 
                 }
                 ).ToList();

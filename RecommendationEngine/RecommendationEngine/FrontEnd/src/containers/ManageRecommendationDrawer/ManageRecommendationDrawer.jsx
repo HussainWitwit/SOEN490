@@ -7,14 +7,14 @@ import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
-import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { mapTemplateStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
 import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 
 export function ManageRecommendationDrawer({
-  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
+  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
@@ -152,7 +152,7 @@ export function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="edit-recommendation-button">
-              <Button variant="outlined" onClick={() => { toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, configuredRecommendation.id); }}>Edit</Button>
+              <Button variant="outlined" onClick={() => { toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, templateType); }}>Edit</Button>
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -172,4 +172,4 @@ export function ManageRecommendationDrawer({
     </animated.div>
   );
 }
-export default connect(null, mapDispatchToProps)(ManageRecommendationDrawer)
+export default connect(mapTemplateStateToProps, mapDispatchToProps)(ManageRecommendationDrawer)

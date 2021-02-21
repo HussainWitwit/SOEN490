@@ -114,18 +114,6 @@ namespace RecommendationEngine.ConfiguredRecommendationValidator
             {
                 AddToErrors(ErrorType.VALIDATION, "The assets list contains one or more duplicates.");
             }
-
-            assetsList.ForEach(asset =>
-            {
-                string assetType = asset.Asset.Name;
-                int assetId = asset.AssetId;
-
-                // We would like to check if the asset in question is plant by ensuring the number of decimals is more than 2.
-                if (assetType.Count(pattern => pattern == '.') < 2)
-                {
-                    AddToErrors(ErrorType.VALIDATION, "The asset ID " + assetId + " is not a plant.");
-                }
-            });
         }
     }
 }

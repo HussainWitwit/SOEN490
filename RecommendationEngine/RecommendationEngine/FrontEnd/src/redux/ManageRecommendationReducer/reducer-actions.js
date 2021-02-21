@@ -64,6 +64,15 @@ export const updateAsset = (value) => {
   };
 }
 
+export const updateAssetTypes = (value) => {
+  return {
+    type: dispatchActionType.UPDATE_ASSET_TYPES,
+    payload: {
+      assetTypeList: value,
+    }
+  };
+}
+
 export const setPreferredScenario = (value) => {
   return {
     type: dispatchActionType.UPDATE_PREFERRED_SCENARIO,
@@ -136,6 +145,7 @@ export const setRecommendationType = (dispatch, value) => {
   dispatch(setTemplateDescription(value.templateDescription));
   dispatch(setInputList(value.inputList));
   dispatch(setAlgorithmName(value.algorithmName));
+  dispatch(updateAssetTypes(value.assetTypes));
 };
 
 export const setEditable = () => {
@@ -171,16 +181,17 @@ export const setParamValue = (value, index) => {
 }
 
 /* istanbul ignore next */
-export const setEditableConfiguredRecommendation = (dispatch, value, id) => {
+export const setEditableConfiguredRecommendation = (dispatch, value, templateType) => {
   dispatch(setTemplateName(value.type));
   dispatch(updateAsset(value.assetList));
   dispatch(setTitle(value.name));
+  dispatch(updateAssetTypes(templateType));
   dispatch(setPreferredScenario(value.preferredScenario));
   dispatch(setGranularity(value.granularity));
   dispatch(setRepeatDay(value.recurrenceDayOfWeek));
   dispatch(setRepeatDate(new Date(value.recurrenceDatetime)));
   dispatch(setRepeatTime(new Date(value.recurrenceDatetime)));
-  dispatch(setId(id));
+  dispatch(setId(value.id));
   dispatch(setParamValuesFromEdit(value.parameters));
   dispatch(setEditable());
 }
@@ -241,7 +252,7 @@ export const mapDialogStateToProps = (state) => {
   return {
     all: state,
     dialogsContent: state.manageRecommendationReducer,
-    apiAssets: state.sharedReducer.flatListAssets,
+    apiAssets: state.sharedReducer.nestedAssetsArray
   };
 };
 
@@ -249,6 +260,13 @@ export const mapParamDialogStateToProps = (state) => {
   return {
     parameterList: state.manageRecommendationReducer.template.inputList
   };
+}
+
+/* istanbul ignore next */
+export const mapTemplateStateToProps = (state) => {
+  return {
+    templateType: state.manageRecommendationReducer.template.assetTypes
+  }
 }
 
 //This method will allow you to pass the actions as a prop to the connected component in
@@ -267,7 +285,7 @@ export const mapDispatchToProps = (dispatch) => {
     setRepeatDay: (value) => dispatch(setRepeatDay(value)),
     setRepeatDate: (value) => dispatch(setRepeatDate(value)),
     setRepeatTime: (value) => dispatch(setRepeatTime(value)),
-    setEditableConfiguredRecommendation: (value, id) => setEditableConfiguredRecommendation(dispatch, value, id),
+    setEditableConfiguredRecommendation: (value, templateType) => setEditableConfiguredRecommendation(dispatch, value, templateType),
     toggleDialog: () => dispatch(toggleDialog()),
     setBackToInitialValues: () => dispatch(setBackToInitialValues()),
     getTemplateDetails: () => getTemplateDetails(dispatch),
