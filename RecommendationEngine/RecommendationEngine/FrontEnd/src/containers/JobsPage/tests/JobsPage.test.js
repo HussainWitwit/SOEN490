@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
 import JobsPage from '../JobsPage';
 import { store } from '../../../redux/store';
+import fetch from 'isomorphic-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
 
