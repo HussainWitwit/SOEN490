@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Models.DB;
 using Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Repositories
 {
@@ -18,8 +19,13 @@ namespace RecommendationEngine.Repositories
 
         public List<DBRecommendationJobResult> GetResultList()
         {
-            return _recommendationEngineDb.RecommendationJobResults.Include(result => result.Job).ThenInclude(job => job.Schedule)
-                .Include(x => x.Asset).ToList();
+            try
+            {
+                return _recommendationEngineDb.RecommendationJobResults.Include(result => result.Job).ThenInclude(job => job.Schedule).ToList();
+            }
+            catch (Exception) {
+                throw new DbException();
+            }
         }
     }
 }

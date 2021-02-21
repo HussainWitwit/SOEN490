@@ -61,7 +61,7 @@ namespace RecommendationEngineTests.APITests
         public async Task GetBadJobList()
         {
             var response = await _clientBad.GetAsync("api/job");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
 
         [Test]

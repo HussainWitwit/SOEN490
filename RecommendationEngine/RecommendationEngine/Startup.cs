@@ -14,6 +14,13 @@ using RecommendationEngine.Utilities;
 using RecommendationScheduler.RecommendationJob;
 using System.Collections.Specialized;
 using System.Reflection;
+using System.Security.Claims;
+using Interfaces.Hub;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using RecommendationEngine.Authentication;
+using RecommendationEngine.Hub;
 
 namespace RecommendationEngine
 {
@@ -29,8 +36,31 @@ namespace RecommendationEngine
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // This is a simple JWT Token authentication. This setup by itself is bad, and eventually should be replaced
+            // by a real authentication process. However, this has not been made available yet.
+            services.AddAuthentication(o =>
+                {
+                    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(o =>
+                {
+                    o.SecurityTokenValidators.Clear();
+                    o.SecurityTokenValidators.Add(new SimpleTokenValidator());
+                });
 
+            // Maps name claim to userIds for SignalR
+            services.AddSingleton<IUserIdProvider, CustomNameProvider>();
+
+
+            services.AddAuthorization(o =>
+            {
+                o.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireClaim(ClaimTypes.Name)
+                    .Build();
+            });
             services.AddControllersWithViews();
+            services.AddSignalR();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -64,6 +94,9 @@ namespace RecommendationEngine
             builder.RegisterType<RecommendationJobLogger>()
                 .As<IRecommendationJobLogger>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<NotificationHub>()
+                .As<INotificationHub>()
+                .SingleInstance();
 
             // Recommendation Scheduler
             RegisterScheduler(builder);
@@ -109,11 +142,15 @@ namespace RecommendationEngine
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapHub<NotificationHub>("/notificationhub");
             });
 
             app.UseSpa(spa =>

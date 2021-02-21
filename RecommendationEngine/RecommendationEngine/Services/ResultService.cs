@@ -39,9 +39,12 @@ namespace RecommendationEngine.Services
                             ResultOutputDate = dbResult.Job.Timestamp
                         }).ToList();
             }
-            catch(Exception e)
+            catch (GlobalException) {
+                throw;
+            }
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }

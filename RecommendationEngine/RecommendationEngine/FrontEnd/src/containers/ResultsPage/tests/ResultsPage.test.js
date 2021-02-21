@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import { ResultsPage } from '../ResultsPage';
 import { store } from '../../../redux/store';
 import { Provider } from 'react-redux';
+import fetch from 'isomorphic-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
 

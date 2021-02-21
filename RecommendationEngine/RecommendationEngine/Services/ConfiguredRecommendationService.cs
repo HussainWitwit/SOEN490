@@ -33,7 +33,9 @@ namespace RecommendationEngine.Services
 
         public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
         {
-            return _recommendationRepository.GetRecommendationScheduleList().Select(dbConfigRecommendation =>
+            try
+            {
+                return _recommendationRepository.GetRecommendationScheduleList().Select(dbConfigRecommendation =>
                     new ConfiguredRecommendation
                     {
                         Id = dbConfigRecommendation.RecommendationScheduleId,
@@ -49,50 +51,65 @@ namespace RecommendationEngine.Services
                         CreatedOn = dbConfigRecommendation.CreatedOn,
                         Parameters = null
                     }).ToList();
+            }
+            catch (GlobalException) {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
         {
-            var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate();
-
-            DBRecommendationSchedule config = new DBRecommendationSchedule
+            try
             {
-                Name = configuredRecommendation.Name,
-                DisplayText = recommendationType.DisplayText,
-                Granularity = configuredRecommendation.Granularity,
-                PreferedScenario = configuredRecommendation.PreferredScenario,
-                CreatedOn = (configuredRecommendation.CreatedOn).ToLocalTime(),
-                ModifiedBy = configuredRecommendation.CreatedBy,
-                RecurrenceDatetime = (configuredRecommendation.RecurrenceDatetime).ToLocalTime(),
-                RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
-                RecommendationType = recommendationType
-            };
+                var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
 
-            List<DBAssetRecommendationSchedule> dbAssets = new List<DBAssetRecommendationSchedule>();
-
-            configuredRecommendation.AssetIdList.ForEach(id =>
-            {
-                DBAsset asset = _assetRepository.GetAssetById(id);
-                DBAssetRecommendationSchedule assetSchedule = new DBAssetRecommendationSchedule
+                DBRecommendationSchedule config = new DBRecommendationSchedule
                 {
-                    Asset = asset,
-                    AssetId = asset.AssetId,
-                    Schedule = config,
+                    Name = configuredRecommendation.Name,
+                    DisplayText = recommendationType.DisplayText,
+                    Granularity = configuredRecommendation.Granularity,
+                    PreferedScenario = configuredRecommendation.PreferredScenario,
+                    CreatedOn = (configuredRecommendation.CreatedOn).ToLocalTime(),
+                    ModifiedBy = configuredRecommendation.CreatedBy,
+                    RecurrenceDatetime = (configuredRecommendation.RecurrenceDatetime).ToLocalTime(),
+                    RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
+                    RecommendationType = recommendationType
                 };
 
-                dbAssets.Add(assetSchedule);
-            });
+                List<DBAssetRecommendationSchedule> dbAssets = new List<DBAssetRecommendationSchedule>();
 
-            config.AssetsList = dbAssets;
+                configuredRecommendation.AssetIdList.ForEach(id =>
+                {
+                    DBAsset asset = _assetRepository.GetAssetById(id);
+                    DBAssetRecommendationSchedule assetSchedule = new DBAssetRecommendationSchedule
+                    {
+                        Asset = asset,
+                        AssetId = asset.AssetId,
+                        Schedule = config,
+                    };
 
+                    dbAssets.Add(assetSchedule);
+                });
+
+                config.AssetsList = dbAssets;
+
+                configuredRecommendation.ThrowPotentialException(dbAssets);
             // Add user defined parameters
             List<DBRecommendationParameter> recommendationParameters =
                 _recommendationRepository.GetParametersForSchedule(config);
             if (configuredRecommendation.Parameters != null && recommendationParameters.Count > configuredRecommendation.Parameters.Count)
             {
-                throw new GlobalException(400, "Bad Request", "There are some missing parameters", "RecommendationEngine");
-            }
+                    Error error = new Error
+                    {
+                        Type = ErrorType.BAD_REQUEST,
+                        ErrorMessage = "There are some missing parameters."
+                    };
+                    throw new RequestValidationException(error, "RecommendationEngine");
+                }
 
             config.ParametersList = configuredRecommendation.Parameters.Select(parameter =>
                 new DBRecommendationScheduleParameter
@@ -104,128 +121,184 @@ namespace RecommendationEngine.Services
                         recommendationParameters.FirstOrDefault(x => x.Name == parameter.ParameterName)
                 }).ToList();
 
-            var schedule = _recommendationRepository.Add(config);
+                var schedule = _recommendationRepository.Add(config);
 
-            _scheduler.ScheduleJobAsync(schedule);
+                _scheduler.ScheduleJobAsync(schedule);
+            }
+            catch (RequestValidationException)
+            {
+                throw;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         public void DeleteConfiguredRecommendation(int id)
         {
-            _recommendationRepository.Delete(id);
+            try
+            {
+                _recommendationRepository.Delete(id);
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         public AssetLeaf ConvertDBAssetIntoAssetLeaf(DBAsset asset)
         {
-            return new AssetLeaf
+            try
             {
-                Id = asset.AssetId,
-                Name = asset.Name,
-                AcPower = asset.AcPower,
-                AssetType = asset.Type.Name,
-                DisplayText = asset.DisplayText,
-                ElementPath = asset.ElementPath,
-                EnergyType = asset.EnergyType,
-                TimeZone = asset.TimeZone,
-            };
+                return new AssetLeaf
+                {
+                    Id = asset.AssetId,
+                    Name = asset.Name,
+                    AcPower = asset.AcPower,
+                    AssetType = asset.Type.Name,
+                    DisplayText = asset.DisplayText,
+                    ElementPath = asset.ElementPath,
+                    EnergyType = asset.EnergyType,
+                    TimeZone = asset.TimeZone,
+                };
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         public ConfiguredRecommendation GetConfiguredRecommendationById(int id)
         {
-
-            DBRecommendationSchedule schedule = _recommendationRepository.GetRecommendationScheduleById(id);
-
-            if (schedule == null)
+            try
             {
-                throw new GlobalException
+                DBRecommendationSchedule schedule = _recommendationRepository.GetRecommendationScheduleById(id);
+
+                if (schedule == null)
                 {
-                    ApplicationName = "RecommendationEngine",
-                    ErrorMessage = "Could not find a configured recommendation",
-                    Code = 404,
-                    Type = "Not Found"
+                    Error error = new Error
+                    {
+                        Type = ErrorType.BAD_REQUEST,
+                        ErrorMessage = "There is no configured recommendation with recommendation ID " + id
+                    };
+                    throw new RequestValidationException(error, "RecommendationEngine");
+                }
+
+                ConfiguredRecommendation configuredRecommendation = new ConfiguredRecommendation
+                {
+                    Id = schedule.RecommendationScheduleId,
+                    Name = schedule.Name,
+                    Type = schedule.RecommendationType.Type,
+                    Description = schedule.Description,
+                    CreatedBy = schedule.ModifiedBy,
+                    CreatedOn = schedule.CreatedOn,
+                    PreferredScenario = schedule.PreferedScenario,
+                    RecurrenceDatetime = schedule.RecurrenceDatetime,
+                    RecurrenceDayOfWeek = schedule.RecurrenceDayOfWeek,
+                    Granularity = schedule.Granularity,
+                    LastJobs = schedule.JobsList.TakeLast(5).Select(x => new Job
+                    {
+                        Id = x.RecommendationJobId,
+                        Status = x.Status,
+                        Timestamp = x.Timestamp
+                    }).ToList(),
+                    AssetList = schedule.AssetsList.Select(x => new AssetLeaf
+                    {
+                        Id = x.AssetId,
+                        Name = x.Asset.Name,
+                        DisplayText = x.Asset.DisplayText,
+                        AcPower = x.Asset.AcPower,
+                        ElementPath = x.Asset.ElementPath,
+                        EnergyType = x.Asset.EnergyType,
+                        TimeZone = x.Asset.TimeZone
+                    }).ToList(),
+                    Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
+                    {
+                        ParameterName = x.RecommendationParameter.DisplayText,
+                        ParameterValue = x.ParamValue
+                    }).ToList()
                 };
+                // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
+                while (configuredRecommendation.LastJobs.Count < 5) configuredRecommendation.LastJobs.Insert(0, null);
+                return configuredRecommendation;
             }
-
-            ConfiguredRecommendation configuredRecommendation = new ConfiguredRecommendation
+            catch (RequestValidationException)
             {
-                Id = schedule.RecommendationScheduleId,
-                Name = schedule.Name,
-                Type = schedule.RecommendationType.Type,
-                Description = schedule.Description,
-                CreatedBy = schedule.ModifiedBy,
-                CreatedOn = schedule.CreatedOn,
-                PreferredScenario = schedule.PreferedScenario,
-                RecurrenceDatetime = schedule.RecurrenceDatetime,
-                RecurrenceDayOfWeek = schedule.RecurrenceDayOfWeek,
-                Granularity = schedule.Granularity,
-                LastJobs = schedule.JobsList.TakeLast(5).Select(x => new Job
-                {
-                    Id = x.RecommendationJobId,
-                    Status = x.Status,
-                    Timestamp = x.Timestamp
-                }).ToList(),
-                AssetList = schedule.AssetsList.Select(x => new AssetLeaf
-                {
-                    Id = x.AssetId,
-                    Name = x.Asset.Name,
-                    DisplayText = x.Asset.DisplayText,
-                    AcPower = x.Asset.AcPower,
-                    ElementPath = x.Asset.ElementPath,
-                    EnergyType = x.Asset.EnergyType,
-                    TimeZone = x.Asset.TimeZone
-                }).ToList(),
-                Parameters = schedule.ParametersList.Select(x => new ConfiguredRecommendationParameter
-                {
-                    ParameterName = x.RecommendationParameter.Name,
-                    DisplayText = x.RecommendationParameter.DisplayText,
-                    ParameterType = x.RecommendationParameter.Type,
-                    ParameterValue = x.ParamValue,
-                    DefaultValue = x.RecommendationParameter.DefaultValue
-                }).ToList()
-            };
-            // We need last 5 jobs status, and if we have less, we populate with null to simplify frontend manipulation
-            while (configuredRecommendation.LastJobs.Count < 5) configuredRecommendation.LastJobs.Insert(0, null);
-            return configuredRecommendation;
+                throw;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
 
         public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
         {
-            var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
-            configuredRecommendation.Validate();
-
-            DBRecommendationSchedule config = new DBRecommendationSchedule
+            try
             {
-                RecommendationScheduleId = id,
-                Name = configuredRecommendation.Name,
-                DisplayText = recommendationType.DisplayText,
-                Granularity = configuredRecommendation.Granularity,
-                Description = recommendationType.Description,
-                CreatedOn = configuredRecommendation.CreatedOn,
-                RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
-                RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
-                PreferedScenario = configuredRecommendation.PreferredScenario,
-                ModifiedBy = configuredRecommendation.CreatedBy,
-                RecommendationType = recommendationType
-            };
+                var recommendationType = _recommendationRepository.GetRecommendationTypeByType(configuredRecommendation.Type);
 
-            List<DBAssetRecommendationSchedule> dbAssets = new List<DBAssetRecommendationSchedule>();
-
-            configuredRecommendation.AssetIdList.ForEach(id =>
-            {
-                DBAsset asset = _assetRepository.GetAssetById(id);
-                DBAssetRecommendationSchedule assetSchedule = new DBAssetRecommendationSchedule
+                DBRecommendationSchedule config = new DBRecommendationSchedule
                 {
-                    Asset = asset,
-                    AssetId = asset.AssetId,
-                    Schedule = config,
+                    RecommendationScheduleId = id,
+                    Name = configuredRecommendation.Name,
+                    DisplayText = recommendationType.DisplayText,
+                    Granularity = configuredRecommendation.Granularity,
+                    Description = recommendationType.Description,
+                    CreatedOn = configuredRecommendation.CreatedOn,
+                    RecurrenceDatetime = configuredRecommendation.RecurrenceDatetime,
+                    RecurrenceDayOfWeek = configuredRecommendation.RecurrenceDayOfWeek,
+                    PreferedScenario = configuredRecommendation.PreferredScenario,
+                    ModifiedBy = configuredRecommendation.CreatedBy,
+                    RecommendationType = recommendationType
                 };
 
-                dbAssets.Add(assetSchedule);
-            });
+                List<DBAssetRecommendationSchedule> dbAssets = new List<DBAssetRecommendationSchedule>();
 
-            config.AssetsList = dbAssets;
-            var schedule = _recommendationRepository.Edit(config, id);
-            _scheduler.ScheduleJobAsync(config);
-            return configuredRecommendation;
+                configuredRecommendation.AssetIdList.ForEach(id =>
+                {
+                    DBAsset asset = _assetRepository.GetAssetById(id);
+                    DBAssetRecommendationSchedule assetSchedule = new DBAssetRecommendationSchedule
+                    {
+                        Asset = asset,
+                        AssetId = asset.AssetId,
+                        Schedule = config,
+                    };
+
+                    dbAssets.Add(assetSchedule);
+                });
+
+                config.AssetsList = dbAssets;
+                configuredRecommendation.ThrowPotentialException(dbAssets);
+                var schedule = _recommendationRepository.Edit(config, id);
+                _scheduler.ScheduleJobAsync(config);
+                return configuredRecommendation;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
     }
 }

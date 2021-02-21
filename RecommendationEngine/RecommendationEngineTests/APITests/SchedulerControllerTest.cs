@@ -54,7 +54,7 @@ namespace RecommendationEngineTests.APITests
         public async Task TriggerJobFailure()
         {
             var response = await _badClient.PutAsync("api/scheduler/1", null);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
     }
 

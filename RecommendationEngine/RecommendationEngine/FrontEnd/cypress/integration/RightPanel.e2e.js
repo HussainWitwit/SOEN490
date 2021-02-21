@@ -13,7 +13,7 @@ describe("RightPanel component", () => {
         cy.wait(500)
         cy.get('.MuiTreeView-root').should('exist')
         cy.wait(500)
-        cy.get(':nth-child(2) > .MuiDrawer-root > .MuiPaper-root').should('exist')
+        cy.get(':nth-child(3) > .MuiDrawer-root > .MuiPaper-root').should('exist')
         cy.wait(500)
     })
 
