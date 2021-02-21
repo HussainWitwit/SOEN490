@@ -21,7 +21,8 @@ namespace RecommendationEngine.Repositories
         {
             try
             {
-                return _recommendationEngineDb.RecommendationJobResults.Include(result => result.Job).ThenInclude(job => job.Schedule).ToList();
+                return _recommendationEngineDb.RecommendationJobResults.Include(result => result.Job).ThenInclude(job => job.Schedule)
+                    .Include(result => result.Asset).ToList();
             }
             catch (Exception) {
                 throw new DbException();
