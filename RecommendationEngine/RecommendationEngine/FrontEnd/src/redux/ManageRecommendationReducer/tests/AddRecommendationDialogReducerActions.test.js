@@ -58,6 +58,19 @@ describe('Verifying actions', () => {
     expect(action.setTitle(value)).toEqual(expectedAction);
   });
 
+  it('fires an update to asset types taken for a specific recommendation.', () => {
+    const value = ["Plant"];
+    const expectedAction = {
+      type: dispatchType.UPDATE_ASSET_TYPES,
+      payload: {
+        assetTypeList: value
+      }
+    }
+    expect(action.updateAssetTypes(value)).toEqual(expectedAction);
+  });
+
+
+
   it('fires an update to the assets selected', () => {
     const value = [{ name: "Asset 3", id: 0 }, { name: "Asset test", id: 1 }];
     const expectedAction = {

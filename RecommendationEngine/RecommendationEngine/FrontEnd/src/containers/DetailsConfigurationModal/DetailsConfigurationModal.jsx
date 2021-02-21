@@ -9,7 +9,6 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -17,6 +16,8 @@ import {
   KeyboardTimePicker,
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
+import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
+
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
@@ -57,15 +58,11 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          <MultiSelectAutocomplete
-            contentLabel="Assets..."
-            recommendationType={template.name}
-            items={apiAssets}
+          <MultiSelectTreeView
             value={basicConfiguration.asset ? basicConfiguration.asset : []}
-            onChange={(event, value) => updateAsset(value)}
-            maxElement={1}
-            variant={'outlined'}
-            isReadOnly={false}
+            onChange={(event, value) => updateAsset(event)}
+            placeholder='Assets ...'
+            items={apiAssets}
           />
         </div>
         <div id="scenario-container">
@@ -147,7 +144,7 @@ export function DetailsConfigurationModal (props) {
                   autoOk
                   inputVariant="outlined"
                   label="Date & Time"
-                  minDate={isEditing ? new Date(1900,1,1) : new Date()}
+                  minDate={isEditing ? new Date(1900, 1, 1) : new Date()}
                   // format={"dd/MM/yyyy"}
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
