@@ -14,7 +14,6 @@ export async function GetRecommendationResultList(): Promise<ConfiguredRecommend
             return result;
         })
         .catch(err => {
-            var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
             if (err.code == 400) {
                 mapErrorToErrorList(err).map((msg: any) => {
                     toast.error(msg, {

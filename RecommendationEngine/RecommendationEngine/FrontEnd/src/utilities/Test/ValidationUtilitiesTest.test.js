@@ -32,10 +32,10 @@ describe('', () => {
         };
         var errorList = mapErrorToErrorList(errorObj);
         var expectedResponse = [
-            '- The field Name is empty or null.\n',
-            '- The reccurence day of week 38 is not valid. Day of week must be between 1 and 7.\n',
-            '- The scenario ROIdw is not a valid scenario.\n',
-            '- The assets list contains one or more duplicates.\n'
+            'The field Name is empty or null.',
+            'The reccurence day of week 38 is not valid. Day of week must be between 1 and 7.',
+            'The scenario ROIdw is not a valid scenario.',
+            'The assets list contains one or more duplicates.'
         ]
         expect(errorList).toEqual(expectedResponse);
     })
