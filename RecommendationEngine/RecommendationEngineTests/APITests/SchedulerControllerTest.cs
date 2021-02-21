@@ -15,6 +15,7 @@ using RecommendationEngineTests.UnitTests.MockData;
 using System.Collections.Generic;
 using Interfaces.Services;
 using Models.Application;
+using Interfaces.Repositories;
 
 namespace RecommendationEngineTests.APITests
 {
@@ -34,7 +35,7 @@ namespace RecommendationEngineTests.APITests
                 {
                     builder.RegisterType<SchedulerService>().AsImplementedInterfaces();
                     builder.RegisterType<MockScheduler>().AsImplementedInterfaces();
-                    builder.RegisterType<MockConfiguredRecommendationService>().AsImplementedInterfaces();
+                    builder.RegisterType<SchedulerRepositoryMock>().AsImplementedInterfaces();
                 }));
             _badServer = new TestServer(new WebHostBuilder()
                 .UseStartup<Startup>()
@@ -43,7 +44,6 @@ namespace RecommendationEngineTests.APITests
                 {
                     builder.RegisterType<SchedulerService>().AsImplementedInterfaces();
                     builder.RegisterType<BadMockScheduler>().AsImplementedInterfaces();
-                    builder.RegisterType<ConfiguredRecommendationService>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
             _badClient = _badServer.CreateClient();
@@ -64,6 +64,44 @@ namespace RecommendationEngineTests.APITests
         }
     }
 
+    public class SchedulerRepositoryMock : IRecommendationSchedulerRepository
+    {
+        public DBRecommendationJob AddRecommendationJob(DBRecommendationJob job)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddResult(DBRecommendationJob recommendationJob, DBRecommendationJobResult result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DBRecommendationJob GetDbRecommendationJobById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DBRecommendationSchedule GetDbRecommendationScheduleById(int id)
+        {
+            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST[0];
+        }
+
+        public List<DBRecommendationSchedule> GetDbRecommendationSchedules()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRecommendationJobStatus(int jobId, string status)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRecommendationJobStatus(int jobId, string status, int jobDurationSeconds)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class MockScheduler: IRecommendationScheduler
     {
         public Task Start()
@@ -76,7 +114,7 @@ namespace RecommendationEngineTests.APITests
             return Task.CompletedTask;
         }
 
-        public Task TriggerJobAsync(int scheduleId, int assetId)
+        public Task TriggerScheduleAsync(int scheduleId)
         {
             return Task.CompletedTask;
         }
@@ -94,38 +132,9 @@ namespace RecommendationEngineTests.APITests
             throw new NotImplementedException();
         }
 
-        public Task TriggerJobAsync(int scheduleId, int assetId)
+        public Task TriggerScheduleAsync(int scheduleId)
         {
             throw new NotImplementedException();
         }
     }
-
-    public class MockConfiguredRecommendationService : IConfiguredRecommendationService
-    {
-        public void AddConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteConfiguredRecommendation(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ConfiguredRecommendation EditConfiguredRecommendation(ConfiguredRecommendation configuredRecommendation, int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ConfiguredRecommendation GetConfiguredRecommendationById(int id)
-        {
-            return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;
-        }
-
-        public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }

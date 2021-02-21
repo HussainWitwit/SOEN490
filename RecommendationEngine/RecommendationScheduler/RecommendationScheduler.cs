@@ -22,7 +22,7 @@ namespace RecommendationScheduler
             _recommendationSchedulerRepository = recommendationSchedulerRepository;
             _scheduler = scheduler;
             _configuration = configuration;
-            Task.Run(this.Start).Wait();
+            Task.Run(Start).Wait();
         }
         public async Task Start()
         {
@@ -60,16 +60,21 @@ namespace RecommendationScheduler
             }
         }
 
-        public async Task TriggerJobAsync(int scheduleId, int assetId)
+        public async Task TriggerScheduleAsync(int scheduleId)
         {
-            Dictionary<string, int> data = new Dictionary<string, int>
+            DBRecommendationSchedule schedule = _recommendationSchedulerRepository.GetDbRecommendationScheduleById(scheduleId);
+
+            foreach (DBAssetRecommendationSchedule asset in schedule.AssetsList.ToList())
             {
-                { "recommendationScheduleId", scheduleId },
-                { "assetId", assetId}
-            };
-            JobDataMap jobData = new JobDataMap(data);
-            String indentifier = scheduleId.ToString() + '/' + assetId.ToString();
-            await _scheduler.TriggerJob(new JobKey(indentifier), jobData);
+                Dictionary<string, int> data = new Dictionary<string, int>
+                {
+                    { "recommendationScheduleId", scheduleId },
+                    { "assetId", asset.Asset.AssetId}
+                };
+                JobDataMap jobData = new JobDataMap(data);
+                string indentifier = scheduleId.ToString() + '/' + asset.Asset.AssetId.ToString();
+                await _scheduler.TriggerJob(new JobKey(indentifier), jobData);
+            }
         }
 
         private IScheduleBuilder ScheduleBuilder(DBRecommendationSchedule schedule)
