@@ -12,16 +12,29 @@ export async function GetRecommendationJobList() : Promise<ConfiguredRecommendat
             return result;
         })
         .catch(err => {
-            var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-            toast.error(message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })
     return result;
 }
@@ -36,16 +49,29 @@ export async function GetJobLogList(id: number) : Promise<JobLog[]> {
             return result;
         })
         .catch(err => {
-            var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-            toast.error(message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })
     return result;
 }

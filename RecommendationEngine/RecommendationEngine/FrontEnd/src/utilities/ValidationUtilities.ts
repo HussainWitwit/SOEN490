@@ -15,6 +15,6 @@ export async function handleErrors(res:Response) {
 }
 
 export function mapErrorToErrorList(err: any) {
-    let errorList = err.content.errorList.map((error: any) => '- ' + error.errorMessage + '\n');
+    let errorList = err.content.errorList.map((error: any) => error.errorMessage);
     return errorList
 }

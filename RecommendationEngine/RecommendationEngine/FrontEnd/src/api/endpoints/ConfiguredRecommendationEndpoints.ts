@@ -12,10 +12,21 @@ export async function GetConfiguredRecommendationList() : Promise<ConfiguredReco
             return configuredRecommendations;
         })
         .catch(err => {
-            if(!toast.isActive(1)){
-                var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-                toast.error(message, {
-                    position: "bottom-center",
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -38,17 +49,28 @@ export async function GetConfiguredRecommendationById(id: number) : Promise<Conf
             return configuredRecommendations
         })
         .catch(err => {
-            var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-            if(!toast.isActive(1)){
-                toast.error(message, {
-                    position: "bottom-center",
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                });    
+                });
             }
         })
     return configuredRecommendations;
@@ -66,16 +88,29 @@ export async function DeleteRecommendationById(id: number) : Promise<any> {
         return response;
     })
     .catch(err => {
-        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-        toast.error(message, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     })
     return response;
 }
@@ -93,16 +128,29 @@ export const AddConfiguredRecommendation = async (recommendation: ConfiguredReco
         return response;
     })
     .catch(err => {
-        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-        toast.error(message, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     })
     return response
 };
@@ -120,16 +168,29 @@ export async function EditConfiguredRecommendation(recommendation: ConfiguredRec
         return response;
     })
     .catch(err => {
-        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-        toast.error(message, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     })
     return response
 }
@@ -146,16 +207,29 @@ export async function ForceRunConfiguredRecommendation(id: number) : Promise<any
         return response;
     })
     .catch(err => {
-        var message = err.code == 400 ? 'The following errors were found' + mapErrorToErrorList(err) : err.content;
-        toast.error(message, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     })
     return response;
 }

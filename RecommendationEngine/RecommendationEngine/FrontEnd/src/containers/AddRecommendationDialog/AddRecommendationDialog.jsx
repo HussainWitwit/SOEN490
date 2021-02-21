@@ -107,7 +107,7 @@ export function AddRecommendationDialog (props) {
 
     if (response) {
       closeDialog()
-      toast.success('The recommendation ' + basicConfiguration.title + ' has been created!', {
+      toast.success('The recommendation ' + basicConfiguration.title + ' has successfully been created!', {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
