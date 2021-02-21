@@ -35,12 +35,6 @@ export function ManageRecommendationPage (props) {
     setDefaultConfiguredRecList(configuredRecommendationList)
   }, [configuredRecommendationList])
 
-  // useEffect(() => {
-  //   if (configuredRecomendationId || configuredRecomendationId === 0){
-  //     openScheduleDrilldown(Number(configuredRecomendationId));
-  //   }
-  // }, [configuredRecomendationId])
-
   return (
     <div id="main-container">
       <div></div>
@@ -82,7 +76,6 @@ export function ManageRecommendationPage (props) {
         columnValues={columns}
         onClickRow={openScheduleDrilldown}
         isClickable={true}
-        // urlId = {urlId}
       />
     </div >
   );

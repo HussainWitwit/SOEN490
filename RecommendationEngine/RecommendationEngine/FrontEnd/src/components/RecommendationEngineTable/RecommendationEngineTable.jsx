@@ -5,13 +5,7 @@ import './RecommendationEngineTable.css';
 
 export default function RecommendationEngineTable(props) {
 
-  const { urlId, data, columnValues, onClickRow, isClickable } = props
-
-  useEffect(() => {
-    if (urlId || urlId === 0){
-      onClickRow(Number(urlId));
-    }
-  }, [urlId])
+  const { data, columnValues, onClickRow, isClickable } = props
 
   return (
     <div id="root">
