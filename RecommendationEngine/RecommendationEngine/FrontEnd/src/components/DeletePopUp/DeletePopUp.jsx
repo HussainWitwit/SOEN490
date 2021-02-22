@@ -11,7 +11,7 @@ import { IconButton } from '@material-ui/core';
 import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
-
+import { toast } from 'react-toastify';
 
 export function DeletePopUp (props) {
     const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown } = props;
@@ -52,6 +52,15 @@ export function DeletePopUp (props) {
                         handleClose();
                         deleteRecommendationEvent();
                         closeScheduleDrilldown();
+                        toast.success(props.title + ' has successfully been deleted!', {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        })
                     }} id="delete-button" variant="outlined">
                         Delete
           </Button>

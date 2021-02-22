@@ -2,6 +2,7 @@
 import { ConfiguredRecommendationResult } from '../models/JobResult';
 import { ActionGrouping } from '../models/Action';
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
+import { toast } from 'react-toastify';
 
 export async function GetRecommendationResultList(): Promise<ConfiguredRecommendationResult[]> {
     let result: ConfiguredRecommendationResult[] = [];
@@ -13,7 +14,29 @@ export async function GetRecommendationResultList(): Promise<ConfiguredRecommend
             return result;
         })
         .catch(err => {
-            err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })
     return result;
 }
@@ -28,7 +51,29 @@ export async function GetActionsByResultId(id: number): Promise<ActionGrouping |
             return actions
         })
         .catch(err => {
-            err.code === 400 ? alert("The following errors were found\n" + mapErrorToErrorList(err)) : alert(err.content)
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })
     return actions;
 }
