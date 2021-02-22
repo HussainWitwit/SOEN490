@@ -76,3 +76,8 @@
     margin-bottom: 0;
     font-size: 80%;
 }
+
+#configured-recommendation {
+    cursor: pointer;
+    text-decoration: underline;
+}

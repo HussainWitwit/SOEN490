@@ -2,7 +2,6 @@ using Interfaces.Repositories;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Models.Application;
-using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
@@ -33,9 +32,11 @@ namespace RecommendationEngine.Services
                     {
                         Id = job.RecommendationJobId,
                         Status = job.Status,
-                        configuredRecommendationTitle = job.Schedule.Name,
+                        ConfiguredRecommendationId = job.Schedule.RecommendationScheduleId,
+                        ConfiguredRecommendationTitle = job.Schedule.Name,
                         Duration = job.JobDuration,
                         Timestamp = job.Timestamp,
+                        AssetName = job.Asset.DisplayText
                     }).ToList();
 
                 return jobs;

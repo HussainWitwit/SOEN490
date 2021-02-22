@@ -8,5 +8,6 @@ export interface Action {
 export interface ActionGrouping {
     recommendationName: string,
     assetNameList: string[],
-    actions: Action[]
+    actions: Action[],
+    configuredRecommendationId: number
 }

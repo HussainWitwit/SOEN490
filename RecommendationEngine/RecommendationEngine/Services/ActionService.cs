@@ -51,6 +51,7 @@ namespace RecommendationEngine.Services
 
                 ActionGrouping actions = new ActionGrouping
                 {
+                    ConfiguredRecommendationId = schedule.RecommendationScheduleId,
                     RecommendationName = schedule.Name,
                     AssetNameList = new List<string> { job.Asset.DisplayText },
                     Actions = actionList
