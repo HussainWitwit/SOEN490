@@ -21,7 +21,7 @@ function JobsPage(props) {
     };
 
     const columns = [
-        
+
         { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
         { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.2, cellClassName: 'table-style' },
         {
@@ -32,20 +32,22 @@ function JobsPage(props) {
             headerAlign: 'center',
             renderCell: (params) => (
                 <div
-                className={
-                    params.getValue('status') === "Running" ? 'job-status-running' :
-                    params.getValue('status') === "Failed" ? 'job-status-failed' : 'job-status-success'}
-                    >
+                    className={
+                        params.getValue('status') === "Running" ? 'job-status-running' :
+                            params.getValue('status') === "Failed" ? 'job-status-failed' : 'job-status-success'}
+                >
                     {params.getValue('status')}
                 </div>
             )
         },
+        {
+            field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
+                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                    {params.getValue('configuredRecommendationTitle')}
+                </a>)
+        },
         { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.12, cellClassName: 'table-style' },
-        { field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
-        <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
-            {params.getValue('configuredRecommendationTitle')}
-        </a>)},
-        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style'},
+        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style' },
         {
             field: 'jobLog',
             headerName: 'Log',
