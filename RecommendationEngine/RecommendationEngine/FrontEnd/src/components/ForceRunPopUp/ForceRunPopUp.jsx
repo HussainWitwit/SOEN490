@@ -11,6 +11,7 @@ import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-a
 import { connect } from 'react-redux';
 import { ForceRunConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints'
 import "./ForceRunPopUp.css"
+import { toast } from 'react-toastify';
 
 export function ForceRunPopUp (props) {
     const { recommendationId, updateScheduleDrilldown } = props;
@@ -47,6 +48,15 @@ export function ForceRunPopUp (props) {
                         handleClose();
                         updateScheduleDrilldown('forceRun');
                         ForceRunConfiguredRecommendation(recommendationId);
+                        toast.success(props.title + ' has successfully been triggered!', {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        })
                     }} id="force-run-button" variant="outlined">
                         Force Run
           </Button>
