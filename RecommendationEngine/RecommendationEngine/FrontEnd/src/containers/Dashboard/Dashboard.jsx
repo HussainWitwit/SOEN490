@@ -12,11 +12,12 @@ function Dashboard() {
                 value={selectedDay}
                 onChange={setSelectedDay}
                 colorPrimary="#4dd3ef"
+                calendarClassName="responsive-calendar"
                 customDaysClassName={[
                     { year: 2021, month: 2, day: 23, className: 'washDay' },
                 ]}
                 shouldHighlightWeekends
-                />
+            />
         </div>
     )
 }

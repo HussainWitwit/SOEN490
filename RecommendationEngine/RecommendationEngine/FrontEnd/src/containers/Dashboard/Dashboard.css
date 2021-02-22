@@ -2,3 +2,33 @@
     border: 2px solid rgb(77, 211, 239, 0.77) !important;
     color: #4dd3ef !important;
 }
+
+.responsive-calendar {
+    /* by setting font-size, all the elements will correspond */
+    font-size: 16px !important; /* default to 10px */
+}
+  
+  @media (max-width: 1500px) {
+    .responsive-calendar {
+      font-size: 14px !important;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .responsive-calendar {
+      font-size: 12px !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .responsive-calendar {
+      font-size: 10px !important;
+    }
+  }
+  
+  /* Large screens */
+  @media (min-width: 2500px) {
+    .responsive-calendar {
+      font-size: 22px !important;
+    }
+  }
