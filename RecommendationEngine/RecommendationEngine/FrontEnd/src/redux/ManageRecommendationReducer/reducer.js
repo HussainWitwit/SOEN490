@@ -40,6 +40,7 @@ export const contentInitialValues = {
         name: "",
         description: "",
         inputList: [],
+        assetTypes: [],
         algorithmName: ""
     },
     basicConfiguration: detailsConfigInitialValues,
@@ -111,6 +112,15 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 basicConfiguration: {
                     ...state.basicConfiguration,
                     asset: action.payload.asset
+                }
+            };
+
+        case type.UPDATE_ASSET_TYPES:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    assetTypes: action.payload.assetTypeList
                 }
             };
 
@@ -205,6 +215,7 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                     name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName : '',
                     description: state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription : '',
                     inputList: state.templateDetailsList.length ? state.templateDetailsList[0].inputList : [],
+                    assetTypes: state.templateDetailsList.length ? state.templateDetailsList[0].assetTypes: [],
                     algorithmName: state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName : ''
                 }
             };

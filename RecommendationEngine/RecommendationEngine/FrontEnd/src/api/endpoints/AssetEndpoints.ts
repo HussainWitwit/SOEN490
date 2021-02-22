@@ -1,6 +1,5 @@
-import { Asset } from "../models/Asset";
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
-
+import { Asset, MultiSelectTreeViewAsset } from "../models/Asset";
 export async function GetNestedAssetList() : Promise<Asset | null> {
     let assetResult = null;
     await fetch('api/asset/nested')
@@ -30,3 +29,4 @@ export async function GetFlatAssetList() : Promise<Asset[]> {
         })
     return assetResult;
 }
+

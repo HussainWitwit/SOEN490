@@ -272,14 +272,25 @@ namespace RecommendationSchedulerTests.UnitTests
         }
 
         [Test]
-        public async Task TestTriggerJobAsync()
+        public async Task TestTriggerScheduleAsync()
         {
             //Arrange
             var mockConfSection = new Mock<IConfigurationSection>();
             _schedulerMock.Setup(x => x.TriggerJob(It.IsAny<JobKey>(),It.IsAny<JobDataMap>(),CancellationToken.None)).Returns(Task.CompletedTask);
-
+            _recommendationSchedulerRepoMock.Setup(x => x.GetDbRecommendationScheduleById(1)).Returns(
+                    new DBRecommendationSchedule
+                    {
+                        AssetsList = new List<DBAssetRecommendationSchedule> {
+                            new DBAssetRecommendationSchedule {
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 9
+                                }
+                            }
+                        }
+                    });
             // Act
-            await _recommendationScheduler.TriggerJobAsync(1);
+            await _recommendationScheduler.TriggerScheduleAsync(1);
 
             //Assert
             _schedulerMock.Verify(x => x.TriggerJob(It.IsAny<JobKey>(), It.IsAny<JobDataMap>(), CancellationToken.None), Times.AtLeastOnce);

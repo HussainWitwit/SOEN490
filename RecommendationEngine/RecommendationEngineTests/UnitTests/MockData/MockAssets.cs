@@ -72,7 +72,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         DisplayText = "asset1",
                         EnergyType = "pv",
                         ParentAsset = null,
-                        Type = BasicDBAssetType()
+                        Type = BasicDBAssetType(),
                     },
                     new DBAsset()
                     {
@@ -80,7 +80,10 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         Name = "asset2",
                         DisplayText = "asset2",
                         EnergyType = "pv",
-                        ParentAsset = null,
+                        ParentAsset = new DBAsset {
+                            AssetId = 1,
+                            Name = "parentAsset2"
+                        },
                         Type = BasicDBAssetType()
                     },
                     new DBAsset()

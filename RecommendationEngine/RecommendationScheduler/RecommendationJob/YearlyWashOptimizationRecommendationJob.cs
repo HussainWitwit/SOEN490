@@ -52,21 +52,22 @@ namespace RecommendationScheduler.RecommendationJob
             _parameters.SoilingBuffer = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingSeasonBuffer").ParamValue);
             _parameters.Accelerator = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "Accelerator").ParamValue);
             _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
-            _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
             _parameters.Asset = _recommendationJob.Asset;
             _jobLogger.LogInformation(_recommendationJob, "Fetched user-defined parameter values associated with job", _parameters);
         }
 
         protected override void GetFromAPI()
         {
-            Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _metadataDriveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, _parameters.PlantIds)).Result;
+            List<string> assetIds = new List<string> { _recommendationJob.Asset.Name };
+
+            Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _metadataDriveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, assetIds)).Result;
             _apiValues.PredictEnergyList = predictedEnergyDict["assets"].FirstOrDefault().Attributes[0].Values.Select(pe => (pe / 100)).ToList();
 
-            List<PFMetadata> metadata = Task.Run(async () => await _metadataDriveService.GetAssetsMetadataByPlantIds(_parameters.PlantIds)).Result;
+            List<PFMetadata> metadata = Task.Run(async () => await _metadataDriveService.GetAssetsMetadataByPlantIds(assetIds)).Result;
             var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
             _apiValues.PlantDCCapacity = plantMetadata["DC_Capacity"] / 1000;
 
-            List<PFPpaPrice> energyPrices = Task.Run(async () => await _metadataDriveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
+            List<PFPpaPrice> energyPrices = Task.Run(async () => await _metadataDriveService.GetPPAPriceByPlantId(_parameters.Asset.Name)).Result;
             double avgPrice;
 
             energyPrices = energyPrices.Where(energyPrice => energyPrice.EffectiveStartTime >= _parameters.StartSoiling && energyPrice.EffectiveEndTime <= _parameters.EndSoiling).ToList();

@@ -13,6 +13,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/pickers": "^3.2.10",
     "@microsoft/signalr": "^5.0.3",
+    "antd": "^4.12.3",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",
     "isomorphic-fetch": "^3.0.0",
@@ -57,7 +58,8 @@
       "!**/src/containers/Settings/**",
       "!**/src/containers/WorkOrders/**",
       "!**/src/containers/AppLayout/**",
-      "!**/src/containers/App/**"
+      "!**/src/containers/App/**",
+      "!**/src/utilities/**"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetTransformer.js",

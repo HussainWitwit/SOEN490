@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ManageRecommendationDrawer from '../ManageRecommendationDrawer';
-import Enzyme, { shallow } from '../../../enzyme';
+import Enzyme, { shallow, mount } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { store } from '../../../redux/store';
 import Button from '@material-ui/core/Button';
@@ -15,7 +15,9 @@ describe('ManageRecommendationDrawer component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<ManageRecommendationDrawer store={store}
+    const output = shallow(<ManageRecommendationDrawer
+        store={store} 
+        templateType = {['Plant']}
         configuredRecommendation={{
             name: '',
             description: '',
@@ -29,11 +31,11 @@ describe('ManageRecommendationDrawer component', () => {
             parameters: [(value) => { }],
             lastJobs: [(value) => { }]
         }}
-    />).dive();
+    />).dive().dive();
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<Provider store={store}><ManageRecommendationDrawer store={store}
+        ReactDOM.render(<Provider store={store}><ManageRecommendationDrawer
             configuredRecommendation={{
                 name: '',
                 description: '',

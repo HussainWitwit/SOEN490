@@ -101,14 +101,13 @@ export function AddRecommendationDialog (props) {
       recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate,
       assetIdList: basicConfiguration.asset.map((e) => {
         return e.id;
-      })
-    }, { isEditing: isEditing, id: id })
+      }),
+    }, { isEditing: isEditing, id: id });
 
     if (response) {
-      closeDialog()
-    } 
+      closeDialog();
+    }
   }
-
 
   useEffect(() => {
     if (isEditing) {
