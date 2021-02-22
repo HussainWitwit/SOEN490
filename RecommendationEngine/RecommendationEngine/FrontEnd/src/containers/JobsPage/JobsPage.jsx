@@ -22,7 +22,7 @@ function JobsPage(props) {
 
     const columns = [
         
-        { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style' },
+        { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
         { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.2, cellClassName: 'table-style' },
         {
             field: 'status',
@@ -42,7 +42,7 @@ function JobsPage(props) {
         },
         { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.12, cellClassName: 'table-style' },
         { field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
-        <a onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+        <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
             {params.getValue('configuredRecommendationTitle')}
         </a>)},
         { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style'},

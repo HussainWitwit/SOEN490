@@ -77,7 +77,7 @@
     font-size: 80%;
 }
 
-a {
+#configured-recommendation {
     cursor: pointer;
     text-decoration: underline;
 }

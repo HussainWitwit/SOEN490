@@ -34,3 +34,7 @@
     color: #49C71F;
     border: 2px solid #49C71F;
 }
+
+.configured-recommendation{
+    text-decoration: underline;
+}
