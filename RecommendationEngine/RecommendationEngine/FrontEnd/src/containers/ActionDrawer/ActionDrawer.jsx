@@ -3,7 +3,6 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import './ActionDrawer.css';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import Grid from '@material-ui/core/Grid';
-import { useHistory } from "react-router-dom";
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
 
@@ -12,8 +11,6 @@ export function ActionDrawer (props) {
     const { actionGrouping, openScheduleDrilldown } = props;
     const assets = actionGrouping ? actionGrouping.assetNameList : [];
     const actions = actionGrouping ? actionGrouping.actions : [];
-
-    // let history = useHistory();
 
     // Animation style
     const animation = useSpring({

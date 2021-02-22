@@ -7,8 +7,6 @@ import './JobsPage.css';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
-import { openScheduleDrilldown } from '../../redux/RightPanelReducer/reducer-actions';
-// import { useHistory, Link } from "react-router-dom";
 
 function JobsPage(props) {
 

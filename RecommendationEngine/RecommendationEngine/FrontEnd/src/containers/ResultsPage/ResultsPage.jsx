@@ -5,7 +5,6 @@ import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
-import { openScheduleDrilldown } from '../../redux/RightPanelReducer/reducer-actions';
 import './ResultsPage.css'
 
 export function ResultsPage(props) {

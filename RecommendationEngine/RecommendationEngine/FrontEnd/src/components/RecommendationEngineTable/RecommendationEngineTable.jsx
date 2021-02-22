@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import './RecommendationEngineTable.css';
