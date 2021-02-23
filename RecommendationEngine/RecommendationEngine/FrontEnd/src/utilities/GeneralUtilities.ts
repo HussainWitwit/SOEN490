@@ -1,6 +1,6 @@
 import { Parameter } from "../api/models/TemplateDetails";
 
-export const isCorrectType = (type: string, value: string) : Boolean => {
+export const isCorrectType = (type: string, value: string) : boolean => {
     let res = Number(value);
     switch(type) {
         case 'INT':

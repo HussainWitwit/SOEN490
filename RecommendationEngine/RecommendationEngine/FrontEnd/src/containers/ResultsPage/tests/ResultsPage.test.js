@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { ResultsPage } from '../ResultsPage';
 import { store } from '../../../redux/store';
 import { Provider } from 'react-redux';
