@@ -56,7 +56,7 @@ namespace RecommendationScheduler
                         .WithSchedule(ScheduleBuilder(schedule))
                         .Build();
                     await _scheduler.ScheduleJob(job, trigger);
-                };
+                }
             }
         }
 

@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
-using Models.Application.Asset;
 
 namespace Models.Application
 {

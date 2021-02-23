@@ -1,6 +1,5 @@
 ﻿using Models.DB;
 using System;
-using System.Collections.Generic;
 
 namespace Models.Recommendation.YearlyWashOptimization
 {
