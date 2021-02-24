@@ -1,5 +1,6 @@
 ﻿using Interfaces.Repositories;
 using Models.DB;
+using RecommendationEngine.ExceptionHandler;
 using System;
 
 namespace RecommendationEngine.Repositories
@@ -15,15 +16,21 @@ namespace RecommendationEngine.Repositories
 
         public void Log(DBRecommendationJob job, String message, String level)
         {
-            DBRecommendationJobLog log = new DBRecommendationJobLog
+            try
             {
-                RecommendationJob = job,
-                Description = message,
-                Level = level,
-                Time = DateTime.Now
-            };
-            _recommendationEngineDb.Add(log);
-            _recommendationEngineDb.SaveChanges();
+                DBRecommendationJobLog log = new DBRecommendationJobLog
+                {
+                    RecommendationJob = job,
+                    Description = message,
+                    Level = level,
+                    Time = DateTime.Now
+                };
+                _recommendationEngineDb.Add(log);
+                _recommendationEngineDb.SaveChanges();
+            }
+            catch (Exception) {
+                throw new DbException();
+            }
         }
     }
 }

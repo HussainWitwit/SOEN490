@@ -19,11 +19,11 @@ let state = {
   template: {
     name: "",
     description: "",
-    inputList: [],
+    assetTypes: [],
+    inputList: [{ parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'NUMBER' }],
     algorithmName: ""
   },
   basicConfiguration: detailsConfigInitialValues,
-  parameters: {},
   templateDetailsList: [],
   addRecommenendationResponse: null,
   deleteRecommendationResponse: null,
@@ -59,10 +59,8 @@ describe('Add Recommendation Dialog reducer', () => {
     ).toEqual({
       ...state,
       template: {
-        name: "Run the tests",
-        description: "",
-        inputList: [],
-        algorithmName: ""
+        ...state.template,
+        name: "Run the tests"
       },
     });
   });
@@ -78,10 +76,8 @@ describe('Add Recommendation Dialog reducer', () => {
     ).toEqual({
       ...state,
       template: {
-        name: "",
-        description: 'Run the tests',
-        inputList: [],
-        algorithmName: ""
+        ...state.template,
+        description: 'Run the tests'
       },
     });
   });
@@ -91,16 +87,14 @@ describe('Add Recommendation Dialog reducer', () => {
       ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST,
         payload: {
-          inputList: 'Run the tests',
+          inputList: ['param 1', 'param 2'],
         },
       })
     ).toEqual({
       ...state,
       template: {
-        name: "",
-        description: "",
-        inputList: 'Run the tests',
-        algorithmName: "",
+        ...state.template,
+        inputList: ['param 1', 'param 2']
       },
     });
   });
@@ -110,16 +104,13 @@ describe('Add Recommendation Dialog reducer', () => {
       ManageRecommendationReducer(state, {
         type: dispatchType.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM,
         payload: {
-
           algorithmName: 'Run the tests',
         },
       })
     ).toEqual({
       ...state,
       template: {
-        name: "",
-        description: "",
-        inputList: [],
+        ...state.template,
         algorithmName: 'Run the tests',
       },
     });
@@ -157,7 +148,24 @@ describe('Add Recommendation Dialog reducer', () => {
         asset: [{ name: "Asset 3", id: 0 }, { name: "Asset test", id: 1 }],
       },
     });
-  })
+  });
+
+  it('should handle UPDATE_ASSET_TYPES', () => {
+    expect(
+      ManageRecommendationReducer(state, {
+        type: dispatchType.UPDATE_ASSET_TYPES,
+        payload: {
+          assetTypeList: ['Portfolio'],
+        },
+      })
+    ).toEqual({
+      ...state,
+      template: {
+        ...state.template,
+        assetTypes: ['Portfolio'],
+      },
+    });
+  });
 
   it('should handle UPDATE_PREFERRED_SCENARIO', () => {
     expect(
@@ -297,6 +305,45 @@ describe('Add Recommendation Dialog reducer', () => {
         description: state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription : '',
         inputList: state.templateDetailsList.length ? state.templateDetailsList[0].inputList : [],
         algorithmName: state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName : ''
+      }
+    });
+  });
+
+  it('Setting the parameter list to a new list (edit rec context)', () => {
+    let parameterList=[
+      { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'NUMBER' },
+      { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'NUMBER' },
+      { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'DATE'  },
+      { parameterName: '', defaultValue: null, parameterValue: null, displayText: null, parameterType: 'DATE' }
+  ];
+    expect(
+      ManageRecommendationReducer(state, {
+        type: dispatchType.SET_PARAM_VALUE_FROM_EDIT,
+        payload: parameterList
+      })
+    ).toEqual({
+      ...state,
+      template: {
+          ...state.template,
+          inputList: parameterList
+      }
+    });
+  });
+
+
+
+  it('should handle the update of a recommendation parameter value', () => {
+    expect(
+      ManageRecommendationReducer(state, {
+        type: dispatchType.UPDATE_PARAM_VALUE,
+        payload: {value: "-200", paramIndex: 0}
+      })
+    ).toEqual({
+      ...state,
+      template: {
+          ...state.template,
+          inputList: [{ parameterName: '', defaultValue: null, parameterValue: "-200", displayText: null, parameterType: 'NUMBER' },
+        ] 
       }
     });
   });

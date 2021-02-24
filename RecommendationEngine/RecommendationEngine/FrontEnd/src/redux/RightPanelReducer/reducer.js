@@ -52,6 +52,9 @@ export const RightPanelReducer = function (
     }
 
     case type.OPEN_SCHEDULE_DRILLDOWN: {
+      if (!action.payload.response) {
+        return {...state};
+      }
       if (state.tabs.some((e) => e.name === SCHEDULE_DRILLDOWN_NAME))
         return {
           ...state,
@@ -96,6 +99,9 @@ export const RightPanelReducer = function (
               : e
           ),
         };
+        else {
+          break;
+        }
     }
 
     case type.OPEN_RESULT_DRILLDOWN: {

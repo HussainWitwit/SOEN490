@@ -11,7 +11,10 @@ import TemplateConfigurationModal from '../../containers/TemplateConfigurationMo
 import DetailsConfigurationModal from '../../containers/DetailsConfigurationModal/DetailsConfigurationModal';
 import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
+import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
+import { checkDateRange } from '../../utilities/GeneralUtilities';
 import './AddRecommendationDialog.css';
+import { toast } from 'react-toastify';
 
 const pages = [
   ({ style }) => (
@@ -83,9 +86,10 @@ export function AddRecommendationDialog (props) {
     setBackToInitialValues();
     setIndex(0);
   }
+
   //Post method
   const confirmDialogEvent = async () => {
-    await postConfiguredRecommendation({
+    let response = await postConfiguredRecommendation({
       type: template.name,
       name: basicConfiguration.title,
       granularity: basicConfiguration.granularity,
@@ -93,13 +97,26 @@ export function AddRecommendationDialog (props) {
       createdOn: new Date(),
       preferredScenario: basicConfiguration.preferredScenario,
       recurrenceDayOfWeek: basicConfiguration.repeatDay,
+      parameters: transformParameterListPost(template.inputList),
       modifiedBy: '',
-      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate, //Not correct format,
+      recurrenceDatetime: basicConfiguration.granularity === "Weekly" ? basicConfiguration.repeatTime : basicConfiguration.repeatDate,
       assetIdList: basicConfiguration.asset.map((e) => {
         return e.id;
+      }),
+    }, { isEditing: isEditing, id: id });
+
+    if (response) {
+      closeDialog()
+      toast.success('The recommendation ' + basicConfiguration.title + ' has successfully been created!', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       })
-    }, { isEditing: isEditing, id: id })
-    closeDialog();
+    } 
   }
 
   useEffect(() => {
@@ -122,7 +139,7 @@ export function AddRecommendationDialog (props) {
         paper: 'dialog-container',
       }}
     >
-      <IconButton aria-label="close" id="closeButton" onClick={closeDialog}>
+      <IconButton aria-label="close" id="close-button" onClick={closeDialog}>
         <CloseIcon />
       </IconButton>
       <DialogTitle
@@ -175,8 +192,13 @@ export function AddRecommendationDialog (props) {
             Next
           </Button>
         )}
-        {(index <= 2 && index > 0) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset === null || basicConfiguration.preferredScenario === null}>
+        {(index === 1) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={!basicConfiguration.title || basicConfiguration.asset.length < 1 || basicConfiguration.preferredScenario === null}>
+            Next
+          </Button>
+        )}
+        {(index === 2) && (
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={checkDateRange(template.inputList)}>
             Next
           </Button>
         )}

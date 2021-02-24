@@ -9,10 +9,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
-import {ForceRunConfiguredRecommendation} from '../../api/endpoints/ConfiguredRecommendationEndpoints'
+import { ForceRunConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints'
 import "./ForceRunPopUp.css"
+import { toast } from 'react-toastify';
 
-export function ForceRunPopUp(props) {
+export function ForceRunPopUp (props) {
     const { recommendationId, updateScheduleDrilldown } = props;
 
     const handleClose = () => {
@@ -25,11 +26,11 @@ export function ForceRunPopUp(props) {
             open={props.open}
             onClose={handleClose}
         >
-            <IconButton aria-label="close" id="forceRunCloseButton" onClick={handleClose}>
+            <IconButton aria-label="close" id="force-run-close-button" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <div id="forceRunDeleteWarning">
-                <div id="forceRunWarningMessage">
+            <div id="force-run-delete-warning">
+                <div id="force-run-warning-message">
                     <DialogTitle classes={{ root: 'alertMessage' }}><b>Force Run Configured Recommendation</b></DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -39,15 +40,24 @@ export function ForceRunPopUp(props) {
                 </div>
             </div>
             <DialogActions>
-                <div id="forceRunbuttons">
-                    <Button onClick={handleClose} id="forceRunCancelButton" variant="outlined">
+                <div id="force-run-buttons">
+                    <Button onClick={handleClose} id="force-run-cancel-button" variant="outlined">
                         Cancel
           </Button>
                     <Button onClick={() => {
                         handleClose();
                         updateScheduleDrilldown('forceRun');
                         ForceRunConfiguredRecommendation(recommendationId);
-                    }} id="forceRunButton" variant="outlined">
+                        toast.success(props.title + ' has successfully been triggered!', {
+                            position: "bottom-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        })
+                    }} id="force-run-button" variant="outlined">
                         Force Run
           </Button>
                 </div>

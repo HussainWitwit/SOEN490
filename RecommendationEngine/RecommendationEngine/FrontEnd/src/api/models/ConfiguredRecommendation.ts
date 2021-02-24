@@ -1,6 +1,7 @@
 //You have to make sure that the method that fetches this object
 //have exactly this attribute, or it will break and it will be hard to debug.
 import { Asset } from './Asset';
+import { Parameter } from './TemplateDetails';
 export interface ConfiguredRecommendation {
     id: number,
     name: string,
@@ -15,15 +16,8 @@ export interface ConfiguredRecommendation {
     lastJobs: Job[],
     assetIdList?: number[],
     assetList?: Asset[],
-    parameters?: ConfiguredRecommendationParameter[]
-    
+    parameters?: Parameter[]
 }
-
-export interface ConfiguredRecommendationParameter {
-    parameterName: string,
-    parameterValue: string
-}
-
 export interface Job {
     id: number,
     status: string

@@ -8,5 +8,13 @@ export interface Asset {
     timeZone: string,
     elementPath: string,
     acPower: string,
-    children: Asset[]
+    children: Asset[],
+    assetType: string
+}
+
+export interface MultiSelectTreeViewAsset {
+    key: number,
+    title: string,
+    value: Asset,
+    children: MultiSelectTreeViewAsset[],
 }

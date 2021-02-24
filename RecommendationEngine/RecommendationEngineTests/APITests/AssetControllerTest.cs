@@ -55,7 +55,7 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         public async Task GetAssetsListBad()
         {
             var response = await _clientBad.GetAsync("api/asset");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
 
         [Test]

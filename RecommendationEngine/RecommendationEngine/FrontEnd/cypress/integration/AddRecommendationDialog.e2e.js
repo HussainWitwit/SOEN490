@@ -3,7 +3,7 @@ describe('Add Recommendation Dialog', () => {
 
     beforeEach(() => {
         cy.visit('/recommendations-manage');
-        cy.get('#recBtn').click();
+        cy.get('#rec-btn').click();
     })
 
     it('Dialog is displayed.', () => {
@@ -19,9 +19,7 @@ describe('Add Recommendation Dialog', () => {
     });
 
     it('Dialog is closed with close icon button.', () => {
-        cy.wait(1000);
-        cy.get('#closeButton > .MuiIconButton-label > .MuiSvgIcon-root').click();
-        cy.wait(1000);
+        cy.get('#close-button > .MuiIconButton-label > .MuiSvgIcon-root').click();
         cy.get('[data-testid=dialog]').should('not.exist');
     });
 

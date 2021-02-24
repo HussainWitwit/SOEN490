@@ -41,31 +41,33 @@ namespace RecommendationScheduler.RecommendationJob
         protected override void GetFromDB()
         {
             //Parameters TODO: switch Start of soiling season, End of soiling season, Soiling rate, Cost of cleaning into API once we get the access 
-            _parameters.StartSoiling = new DateTime(2020, 08, 1);
-            _parameters.EndSoiling = new DateTime(2020, 11, 1);
-            _parameters.SoilingRate = -0.0025;
-            _parameters.CostCleaning = 2;
+            _parameters.StartSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "StartSoilingSeason").ParamValue);
+            _parameters.EndSoiling = Convert.ToDateTime(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "EndSoilingSeason").ParamValue);
+            _parameters.SoilingRate = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingRate").ParamValue);
+            _parameters.CostCleaning = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CostCleaning").ParamValue);
 
             //Parameters from recommendation schedule 
-            _parameters.CenterPointIncrement = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "center point increment").ParamValue;
-            _parameters.SpanIncrement = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "span increment").ParamValue;
-            _parameters.SoilingBuffer = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "soiling season buffer").ParamValue;
-            _parameters.Accelerator = _recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.DisplayText == "accelerator").ParamValue;
+            _parameters.CenterPointIncrement = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "CenterPointIncrement").ParamValue);
+            _parameters.SpanIncrement = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SpanIncrement").ParamValue);
+            _parameters.SoilingBuffer = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "SoilingSeasonBuffer").ParamValue);
+            _parameters.Accelerator = Convert.ToDouble(_recommendationJob.Schedule.ParametersList.FirstOrDefault(x => x.Name == "Accelerator").ParamValue);
             _parameters.PreferredScenario = _recommendationJob.Schedule.PreferedScenario;
-            _parameters.PlantIds = _recommendationJob.Schedule.AssetsList.Select(asset => asset.Asset.Name).ToList();
             _parameters.Asset = _recommendationJob.Asset;
+            _jobLogger.LogInformation(_recommendationJob, "Fetched user-defined parameter values associated with job", _parameters);
         }
 
         protected override void GetFromAPI()
         {
-            Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _metadataDriveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, _parameters.PlantIds)).Result;
+            List<string> assetIds = new List<string> { _recommendationJob.Asset.Name };
+
+            Dictionary<string, List<PFPredictedEnergy>> predictedEnergyDict = Task.Run(async () => await _metadataDriveService.GetDailyPredictedEnergyByPlantIds(_parameters.StartSoiling, _parameters.EndSoiling, assetIds)).Result;
             _apiValues.PredictEnergyList = predictedEnergyDict["assets"].FirstOrDefault().Attributes[0].Values.Select(pe => (pe / 100)).ToList();
 
-            List<PFMetadata> metadata = Task.Run(async () => await _metadataDriveService.GetAssetsMetadataByPlantIds(_parameters.PlantIds)).Result;
+            List<PFMetadata> metadata = Task.Run(async () => await _metadataDriveService.GetAssetsMetadataByPlantIds(assetIds)).Result;
             var plantMetadata = metadata.Select(plant => plant.Metadata).FirstOrDefault();
             _apiValues.PlantDCCapacity = plantMetadata["DC_Capacity"] / 1000;
 
-            List<PFPpaPrice> energyPrices = Task.Run(async () => await _metadataDriveService.GetPPAPriceByPlantId(_parameters.PlantIds.FirstOrDefault())).Result;
+            List<PFPpaPrice> energyPrices = Task.Run(async () => await _metadataDriveService.GetPPAPriceByPlantId(_parameters.Asset.Name)).Result;
             double avgPrice;
 
             energyPrices = energyPrices.Where(energyPrice => energyPrice.EffectiveStartTime >= _parameters.StartSoiling && energyPrice.EffectiveEndTime <= _parameters.EndSoiling).ToList();
@@ -77,6 +79,7 @@ namespace RecommendationScheduler.RecommendationJob
                 avgPrice = energyPrices.Where(ep => ep.EffectiveStartTime.Date == date || ep.EffectiveEndTime.Date == date).Select(x => (x.Price / 100)).DefaultIfEmpty(37).Average();
                 _apiValues.EnergyPricesList.Add(avgPrice);
             }
+            _jobLogger.LogInformation(_recommendationJob, "Fetched API parameters from Drive", _apiValues);
         }
     }
 }

@@ -1,4 +1,4 @@
- 
+
 describe("Manage Recommendation Table", () => {
 
     beforeEach(() => {
@@ -12,7 +12,7 @@ describe("Manage Recommendation Table", () => {
 
     it("Finds the create recommendation button", () => {
         cy.wait(500)
-        cy.get('#recBtn').should('be.visible')
+        cy.get('#rec-btn').should('be.visible')
         cy.wait(500)
     })
 

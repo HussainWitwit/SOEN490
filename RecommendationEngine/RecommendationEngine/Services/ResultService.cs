@@ -33,12 +33,18 @@ namespace RecommendationEngine.Services
                             NetSaving = dbResult.NetSaving,
                             ReturnOnInvestment = dbResult.ReturnOnInvestment,
                             ConfiguredRecommendationId = dbResult.Job.Schedule.RecommendationScheduleId,
-                            JobId = dbResult.Job.RecommendationJobId
+                            ConfiguredRecommendationTitle = dbResult.Job.Schedule.Name,
+                            JobId = dbResult.Job.RecommendationJobId,
+                            AssetName = dbResult.Asset.DisplayText,
+                            ResultOutputDate = dbResult.Job.Timestamp
                         }).ToList();
             }
-            catch(Exception e)
+            catch (GlobalException) {
+                throw;
+            }
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }

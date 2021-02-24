@@ -58,6 +58,19 @@ describe('Verifying actions', () => {
     expect(action.setTitle(value)).toEqual(expectedAction);
   });
 
+  it('fires an update to asset types taken for a specific recommendation.', () => {
+    const value = ["Plant"];
+    const expectedAction = {
+      type: dispatchType.UPDATE_ASSET_TYPES,
+      payload: {
+        assetTypeList: value
+      }
+    }
+    expect(action.updateAssetTypes(value)).toEqual(expectedAction);
+  });
+
+
+
   it('fires an update to the assets selected', () => {
     const value = [{ name: "Asset 3", id: 0 }, { name: "Asset test", id: 1 }];
     const expectedAction = {
@@ -153,6 +166,22 @@ describe('Verifying actions', () => {
       },
     }
     expect(action.setId(1)).toEqual(expectedAction);
+  });
+
+  it('fires an update that sets the parameter list of a recommendation to a new one. ', () => {
+    const expectedAction = {
+      type: dispatchType.SET_PARAM_VALUE_FROM_EDIT,
+      payload: ['params 1', 'params 2'],
+    }
+    expect(action.setParamValuesFromEdit(['params 1', 'params 2'])).toEqual(expectedAction);
+  });
+
+  it('fires an update that update the value of a specific parameter. ', () => {
+    const expectedAction = {
+      type: dispatchType.UPDATE_PARAM_VALUE,
+      payload: {value: "-200", paramIndex: 0}
+    }
+    expect(action.setParamValue("-200", 0)).toEqual(expectedAction);
   });
 
 });

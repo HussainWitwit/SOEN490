@@ -1,43 +1,66 @@
-import React, {  useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { FilterList } from '@material-ui/icons';
-import { Grid, TableCell } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { connect } from 'react-redux';
 
-const RowsToDisplay = (element) => (
-    <React.Fragment>
-        <TableCell />
-        <TableCell id="table-body">{element.id}</TableCell>
-        <TableCell id="table-body-status">{StatusComponent(element.status)}</TableCell>
-        <TableCell id="table-body">{element.timestamp}</TableCell>
-        <TableCell id="table-body">{element.duration} seconds</TableCell>
-        <TableCell id="table-body"><p>{element.configuredRecommendationTitle}</p></TableCell>
-        <TableCell ><JobLogPopUp jobId={element.id} /></TableCell>
-    </React.Fragment>
-);
+function JobsPage(props) {
 
-const StatusComponent = (status) => (
-    <div id='job-status'
-        style={status === 'Running' ? { color: '#FFCE31', border: '2px solid #FFCE31' } : status === 'Failed' ? { color: 'red', border: '2px solid red' } : { color: '#4AC71F', border: '2px solid #4AC71F' }}>
-    {status}</div>
-);
-
-export default function JobsPage () {
-
+    const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
 
-    const headCells = [
-        { id: 'id', label: 'Job ID' },
-        { id: 'status', label: 'Status' },
-        { id: 'timestamp', label: 'Timestamp' },
-        { id: 'duration', label: 'Job Duration' },
-        { id: 'configuredRecommendationTitle', label: 'Configured Recommendation' },
-        {id: '', label: ''}
+    const durationOption = {
+        number: 'number',
+        width: 200,
+        valueFormatter: ({ value }) => (value + ' seconds')
+    };
+
+    const columns = [
+
+        { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
+        { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.2, cellClassName: 'table-style' },
+        {
+            field: 'status',
+            headerName: 'Status',
+            type: 'string',
+            flex: 0.17,
+            headerAlign: 'center',
+            renderCell: (params) => (
+                <div
+                    className={
+                        params.getValue('status') === "Running" ? 'job-status-running' :
+                            params.getValue('status') === "Failed" ? 'job-status-failed' : 'job-status-success'}
+                >
+                    {params.getValue('status')}
+                </div>
+            )
+        },
+        {
+            field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
+                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                    {params.getValue('configuredRecommendationTitle')}
+                </a>)
+        },
+        { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.12, cellClassName: 'table-style' },
+        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style' },
+        {
+            field: 'jobLog',
+            headerName: 'Log',
+            flex: 0.08,
+            headerAlign: 'center',
+            renderCell: (params) => (
+                <JobLogPopUp
+                    className={"job-log-style"}
+                    jobId={params.getValue('id')}
+                >
+                </JobLogPopUp>
+            )
+        }
     ];
 
     const getJobList = async () => {
@@ -54,8 +77,9 @@ export default function JobsPage () {
     }
 
     useEffect(() => {
-        getJobList([]);
+        getJobList();
     }, [])
+
 
     return (
         <div id="main-container">
@@ -79,22 +103,19 @@ export default function JobsPage () {
                                 onSearchUpdate={updateSearch}
                             />
                         </Grid>
-                        <Grid item>
-                            <Button size="small" id="filterBtn" endIcon={<FilterList />}>
-                                Add Filter
-              </Button>
-                        </Grid>
                     </Grid>
                 </div>
             </div>
             <br></br>
             <RecommendationEngineTable
-                rowsValue={RowsToDisplay}
                 data={jobList}
-                tableTitle={"Recommendation Jobs"}
+                columnValues={columns}
+                isClickable={false}
                 onClickRow={() => { }}
-                columnTitles={headCells}
             />
         </div>
     );
 }
+
+export default connect(null, mapDispatchDrillDownToProps)(JobsPage);
+

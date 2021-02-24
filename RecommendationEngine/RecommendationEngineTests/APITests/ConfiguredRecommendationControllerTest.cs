@@ -9,6 +9,7 @@ using Autofac.Extensions.DependencyInjection;
 using Interfaces.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Models.Application;
 using Models.DB;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -70,6 +71,16 @@ namespace RecommendationEngineTests.APITests
             var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("api/configuredRecommendation", body);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
+        public async Task AddRecommendationBadRequest()
+        {
+            var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_2;
+            string json = JsonConvert.SerializeObject(recommendation);
+            var body = new StringContent(json.ToString(), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("api/configuredrecommendation", body);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
 
         [Test]
@@ -146,7 +157,12 @@ namespace RecommendationEngineTests.APITests
             return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST.First();
         }
 
-        public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id) {
+        public List<DBRecommendationParameter> GetParametersForSchedule(DBRecommendationSchedule schedule)
+        {
+            return MockConfiguredRecommendations.BASIC_PARAMETER_LIST.Select(x => x.RecommendationParameter).ToList();
+        }
+        public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id)
+        {
             return MockConfiguredRecommendations.EDITED_DB_RECOMMENDATION;
         }
         public void Delete(int id) { }
@@ -166,6 +182,12 @@ namespace RecommendationEngineTests.APITests
         {
             return MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
         }
+
+        public List<DBRecommendationParameter> GetParametersForSchedule(DBRecommendationSchedule schedule)
+        {
+            return null;
+        }
+
 
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType)
         {
@@ -196,17 +218,17 @@ namespace RecommendationEngineTests.APITests
 
         public List<DBAsset> GetAssetsList()
         {
-            return new List<DBAsset>();
+            return MockAssets.BasicDBAssetList;
         }
 
         public DBAsset GetAssetByName(string assetName)
         {
-            return new DBAsset();
+            return MockAssets.BasicDBAssetList[2];
         }
 
         public DBAsset GetAssetById(int assetId)
         {
-            return new DBAsset();
+            return MockAssets.BasicDBAssetList[2];
         }
     }
 }

@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { ResultsPage } from '../ResultsPage';
 import { store } from '../../../redux/store';
 import { Provider } from 'react-redux';
+import fetch from 'isomorphic-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -33,13 +33,13 @@ describe.only('ResultsPage component', () => {
 
     it('It finds the grids', () => {
         let component = output.find(Grid);
-        expect(component).toHaveLength(5);
+        expect(component).toHaveLength(4);
     });
 
-    it('It finds the 2 buttons', () => {
-        let button = output.find(Button);
-        expect(button).toHaveLength(1);
-    });
+    // it('It finds the 2 buttons', () => {
+    //     let button = output.find(Button);
+    //     expect(button).toHaveLength(1);
+    // });
 
     it('It finds the title', () => {
         let title = output.find('h3');

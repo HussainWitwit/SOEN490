@@ -20,9 +20,19 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         Description = "Description of YWO",
                         DefaultParametersList = new List<DBRecommendationParameter>{
                             new DBRecommendationParameter {
-                                DefaultValue = 3.25,
+                                DefaultValue = "3.25",
                                 Name = "Center Point"
                             }
+                        },
+                        AssetTypes = new List<DBAssetTypeRecommendationType>
+                        {
+                            new DBAssetTypeRecommendationType
+                            {
+                                AssetType = new DBAssetType
+                                {
+                                    Name = "Plant"
+                                }
+                            },
                         }
                     },
                     new DBRecommendationType {
@@ -31,9 +41,19 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         Description = "Description of GR",
                         DefaultParametersList = new List<DBRecommendationParameter>{
                             new DBRecommendationParameter {
-                                DefaultValue = 1.23,
+                                DefaultValue = "1.23",
                                 Name = "Some param"
                             }
+                        },
+                        AssetTypes = new List<DBAssetTypeRecommendationType>
+                        {
+                            new DBAssetTypeRecommendationType
+                            {
+                                AssetType = new DBAssetType
+                                {
+                                    Name = "Plant"
+                                }
+                            },
                         }
                     }
                 };

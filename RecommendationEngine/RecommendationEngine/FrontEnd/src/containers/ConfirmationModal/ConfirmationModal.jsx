@@ -5,13 +5,8 @@ import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/Mu
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
+import { transformParameterList } from '../../utilities/ArrayManipulationUtilities';
 import './ConfirmationModal.css';
-
-const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.
-var formatYear = { month: 'long', day: 'numeric' };
-var formatMonth = { day: 'numeric' };
-var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true };
-var dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export function ConfirmationModal (props) {
 
@@ -52,13 +47,13 @@ export function ConfirmationModal (props) {
             }}
           />
           <MultiSelectAutocomplete
-            contentLabel="Parameters..."
-            items={parameters}
-            defaultValue={parameters}
+            id='multiple-select-asset-container'
+            error={dialogsContent.template.inputList === 0}
+            items={dialogsContent.template.inputList}
+            defaultValue={transformParameterList(dialogsContent.template.inputList)}
             boxLabelName={'Selected Parameters'}
             variant={'outlined'}
             isReadOnly={true}
-            maxElement={1}
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."
@@ -69,7 +64,7 @@ export function ConfirmationModal (props) {
             boxLabelName={'Selected Assets'}
             variant={'outlined'}
             isReadOnly={true}
-            maxElement={10}
+            maxElement={8}
           />
           <TextField
             id="outlined-read-only-recurrence"

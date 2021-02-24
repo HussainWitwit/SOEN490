@@ -1,6 +1,5 @@
 ﻿using Models.DB;
 using System;
-using System.Collections.Generic;
 
 namespace Models.Recommendation.YearlyWashOptimization
 {
@@ -16,6 +15,5 @@ namespace Models.Recommendation.YearlyWashOptimization
         public double SoilingBuffer { get; set; }
         public double Accelerator { get; set; }
         public string PreferredScenario { get; set; }
-        public List<string> PlantIds { get; set; }
     }
 }

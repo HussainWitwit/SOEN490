@@ -1,146 +1,235 @@
 import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
+import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
+import { toast } from 'react-toastify';
 
 export async function GetConfiguredRecommendationList() : Promise<ConfiguredRecommendation[]> {
-
     let configuredRecommendations: ConfiguredRecommendation[] = [];
-    try {
-        let response = await fetch('api/ConfiguredRecommendation');
-        const jsonResponse = await response.json();
-        if (jsonResponse) {
-            configuredRecommendations = jsonResponse;
+    await fetch('api/ConfiguredRecommendation')
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            configuredRecommendations = res;
             return configuredRecommendations;
-        }
-    }
-    catch (error) {
-        console.log('Error while fetching configured recommendations!');
-        console.log(error);
-    }
+        })
+        .catch(err => {
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        })
     return configuredRecommendations;
 }
 
 export async function GetConfiguredRecommendationById(id: number) : Promise<ConfiguredRecommendation | null> {
-    let configuredRecommendations: ConfiguredRecommendation;
-    try {
-        let response = await fetch('api/ConfiguredRecommendation/' + id);
-        const jsonResponse = await response.json();
-        if (jsonResponse) {
-            configuredRecommendations = jsonResponse;
-            return configuredRecommendations;
-        }
-    }
-    catch (error) {
-        console.log('Error while fetching a specific (id) configured recommendation!');
-        console.log(error);
-    }
-    return null;
+    let configuredRecommendations = null;
+    await fetch('api/ConfiguredRecommendation/' + id)
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            configuredRecommendations = res;
+            return configuredRecommendations
+        })
+        .catch(err => {
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        })
+    return configuredRecommendations;
 }
 
 export async function DeleteRecommendationById(id: number) : Promise<any> {
     let response;
-    try {
-        response = await fetch('api/ConfiguredRecommendation/' + id, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-        })
-    } catch (error) {
-        console.log('Error while deleting a configured recommendation!');
-        console.log(error);
-    }
+    response = await fetch('api/ConfiguredRecommendation/' + id, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => handleErrors(res))
+    .then(res => {
+        response = res;
+        return response;
+    })
+    .catch(err => {
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    })
     return response;
-};
+}
 
-
-export async function AddConfiguredRecommendation(recommendation: ConfiguredRecommendation) : Promise<any> {
+export const AddConfiguredRecommendation = async (recommendation: ConfiguredRecommendation): Promise<any> => {
     let response;
-    try {
-        response = await fetch('api/ConfiguredRecommendation/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(recommendation)
-        })
-    } catch (error) {
-        console.log('Error while fetching adding a configured recommendation!');
-        console.log(error);
-    }
-    return response;
+    response = await fetch('api/ConfiguredRecommendation/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recommendation)
+    })
+    .then(res => handleErrors(res))
+    .then(res => {
+        response = res;
+        return response;
+    })
+    .catch(err => {
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    })
+    return response
 };
-
 
 export async function EditConfiguredRecommendation(recommendation: ConfiguredRecommendation, id: number) : Promise<any> {
     let response;
-    try {
-        response = await fetch('api/ConfiguredRecommendation/' + id, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(recommendation)
-        })
-    } catch (error) {
-        console.log('Error while fetching editing a configured recommendation!');
-        console.log(error);
-    }
-    return response;
-};
-
-export const ForceRunConfiguredRecommendation = (id: number) => {
-    try {
-        fetch('api/scheduler/'+id, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-        });
-    } catch (e) {
-        console.log('Error manually triggering configured recommendation!')
-        console.log(e);
-    }
-}
-
-
-/**
- * Maps a response to a configured recommendation
- * @param {*} response 
- */
-const mapConfiguredRecommendation = function (response: any): ConfiguredRecommendation {
-    //Make sure the returned value is exactly equal to entity attribute for the entity in question
-    return {
-        id: response.id,
-        name: response.name,
-        description: response.description,
-        type: response.type,
-        granularity: response.granularity,
-        createdBy: response.createdBy,
-        preferredScenario: response.preferredScenario,
-        recurrenceDayOfWeek: response.recurrenceDayOfWeek,
-        recurrenceDatetime: response.recurrenceDatetime,
-        createdOn: response.createdOn,
-        assetList: response.assetList,
-        lastJobs: response.lastJobs,
-        parameters: response.parameters
-    };
-}
-
-/**
- * Maps a response to a list of configured recommendation
- * @param {*} response 
- */
-const mapConfiguredRecommendations = function (response: any): ConfiguredRecommendation[] {
-    //Make sure the returned value is exactly equal to entity attribute for the entity in question
-    let result = response.map((element: any) => {
-        return {
-            id: element.id,
-            name: element.name,
-            type: element.type,
-            granularity: element.granularity,
-            createdBy: element.createdBy,
-            recurrenceDayOfWeek: element.recurrenceDayOfWeek,
-            recurrenceDatetime: element.recurrenceDatetime,
-            createdOn: element.createdOn,
-            assetList: element.assetList,
-            parameters: element.parameters ? element.parameters.map((parameter: any) => {
-                return {
-                    parameterName: parameter.parameterName,
-                    parameterValue: parameter.parameterValue,
-                }
-            }) : []
-        };
+    response = await fetch('api/ConfiguredRecommendation/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recommendation)
     })
-    return result;
+    .then(res => handleErrors(res))
+    .then(res => {
+        response = res;
+        return response;
+    })
+    .catch(err => {
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    })
+    return response
+}
+
+export async function ForceRunConfiguredRecommendation(id: number) : Promise<any> {
+    let response;
+    response = await fetch('api/scheduler/'+ id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => handleErrors(res))
+    .then(res => {
+        response = res;
+        return response;
+    })
+    .catch(err => {
+        if (err.code == 400) {
+            mapErrorToErrorList(err).map((msg: any) => {
+                toast.error(msg, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        } else {
+            toast.error(err.content, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    })
+    return response;
 }

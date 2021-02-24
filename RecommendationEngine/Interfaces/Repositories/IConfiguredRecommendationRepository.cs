@@ -10,6 +10,7 @@ namespace Interfaces.Repositories
         public void Delete(int id);
         public DBRecommendationType GetRecommendationTypeByType(string recommendationType);
         public DBRecommendationSchedule GetRecommendationScheduleById(int id);
+        public List<DBRecommendationParameter> GetParametersForSchedule(DBRecommendationSchedule schedule);
         public DBRecommendationSchedule Edit(DBRecommendationSchedule configuredRecommendation, int id);
     }
 }

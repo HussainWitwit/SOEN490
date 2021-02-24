@@ -30,6 +30,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                             {
                                 RecommendationJobId = 3,
                                 Timestamp = new DateTime(2020, 01, 18),
+                                Asset = new DBAsset
+                                {
+                                    AssetId = 5,
+                                    DisplayText = "Pikaboo"
+                                },
                                 Schedule = new DBRecommendationSchedule
                                 {
                                     RecommendationScheduleId = 67,

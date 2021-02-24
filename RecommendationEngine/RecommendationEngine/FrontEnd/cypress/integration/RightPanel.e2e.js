@@ -5,7 +5,7 @@ describe("RightPanel component", () => {
     })
 
     it("Finds all elements", () => {
-        cy.get('#change_button').click()
+        cy.get('#change-button').click()
         cy.wait(500)
         cy.get('.MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root').should('exist')
         cy.wait(500)
@@ -13,12 +13,12 @@ describe("RightPanel component", () => {
         cy.wait(500)
         cy.get('.MuiTreeView-root').should('exist')
         cy.wait(500)
-        cy.get(':nth-child(2) > .MuiDrawer-root > .MuiPaper-root').should('exist')
+        cy.get(':nth-child(3) > .MuiDrawer-root > .MuiPaper-root').should('exist')
         cy.wait(500)
     })
 
     it("Clicks  on all elements", () => {
-        cy.get('#change_button').click() // change button
+        cy.get('#change-button').click() // change button
         cy.wait(500)
         cy.get('.MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root').type('Asset Title 1') // automplete
         cy.wait(500)

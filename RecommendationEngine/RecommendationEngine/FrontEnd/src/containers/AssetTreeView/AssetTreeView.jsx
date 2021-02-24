@@ -136,7 +136,7 @@ export function AssetTree ({ nestedAssets }) {
       <SearchComboBox />
       <TreeView
         className='asset-tree-container '
-        defaultExpanded={['1']}
+        defaultExpanded={[nestedAssets ? nestedAssets.id: '1']}
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
       >

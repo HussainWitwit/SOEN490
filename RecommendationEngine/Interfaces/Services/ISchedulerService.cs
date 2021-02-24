@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Models.Application;
-
 namespace Interfaces.Services
 {
 

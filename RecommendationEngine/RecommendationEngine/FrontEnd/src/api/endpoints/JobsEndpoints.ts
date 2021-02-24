@@ -1,33 +1,77 @@
-
 import { ConfiguredRecommendationJob, JobLog } from '../models/Job'
+import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
+import { toast } from 'react-toastify';
 
 export async function GetRecommendationJobList() : Promise<ConfiguredRecommendationJob[]> {
     let result: ConfiguredRecommendationJob[] = [];
-    try {
-        let response = await fetch('api/job');
-        const jsonResponse = await response.json();
-        if (jsonResponse) {
-            result = jsonResponse;
+    await fetch('api/job')
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            result = res;
             return result;
-        }
-    } catch (e) {
-        console.log('Error fetching jobs!')
-        console.log(e);
-    }
+        })
+        .catch(err => {
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        })
     return result;
 }
 
 export async function GetJobLogList(id: number) : Promise<JobLog[]> {
     let result: JobLog[] = [];
-    try {
-        await fetch('api/job/log/'+id)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            result = responseJSON;
-        });
-    } catch (e) {
-        console.log('Error fetching job logs!')
-        console.log(e);
-    }
+    await fetch('api/job/log/'+id)
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            result = res;
+            return result;
+        })
+        .catch(err => {
+            if (err.code == 400) {
+                mapErrorToErrorList(err).map((msg: any) => {
+                    toast.error(msg, {
+                        position: "bottom-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    })
+                })
+            } else {
+                toast.error(err.content, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        })
     return result;
 }

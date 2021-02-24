@@ -4,7 +4,6 @@ using Models.Application;
 using Models.Application.Asset;
 using Models.DB;
 using Models.Recommendation;
-using Moq;
 
 namespace RecommendationEngineTests.UnitTests.MockData
 {
@@ -12,15 +11,18 @@ namespace RecommendationEngineTests.UnitTests.MockData
     {
         public static ConfiguredRecommendation BASIC_CONFIGURED_RECOMMENDATION = RecommendationList.BasicConfiguredRecommendation();
         public static ConfiguredRecommendation BAD_CONFIGURED_RECOMMENDATION = RecommendationList.BadConfiguredRecommendation();
+        public static ConfiguredRecommendation BASIC_CONFIGURED_RECOMMENDATION_2 = RecommendationList.BasicConfiguredRecommendation2();
         public static ConfiguredRecommendation EMPTY_CONFIGURED_RECOMMENDATION = RecommendationList.EmptyConfiguredRecommendation();
         public static List<DBRecommendationSchedule> BASIC_CONFIGURED_RECOMMENDATION_LIST = RecommendationList.BasicConfiguredRecommendationList();
         public static DBRecommendationType YEARLY_RECOMMENDATION_TYPE = RecommendationList.YearlyRecType();
         public static DBRecommendationSchedule CONVERTED_CONFIGURED_RECOMMENDATION = RecommendationList.BasicDBRecommendationSchedule();
+        public static List<DBRecommendationScheduleParameter> BASIC_PARAMETER_LIST = RecommendationList.BasicParameters();
         public static ConfiguredRecommendation UNEDITED_CONFIGURED_RECOMMENDATION = RecommendationList.UneditedConfiguredRecommendation();
         public static ConfiguredRecommendation EDITED_CONFIGURED_RECOMMENDATION = RecommendationList.EditedConfiguredRecommendation();
         public static DBRecommendationSchedule UNEDITED_DB_RECOMMENDATION = RecommendationList.UneditedDBRecommendationSchedule();
         public static DBRecommendationSchedule EDITED_DB_RECOMMENDATION = RecommendationList.EditedDBRecommendationSchedule();
         public static List<DBRecommendationType> RECOMMENDATION_TYPE = RecommendationList.RecommendationType();
+        public static List<DBAssetTypeRecommendationType> ASSET_TYPE_REC_TYPE = RecommendationList.AssetTypeRecommendationType();
 
         public static class RecommendationList
         {
@@ -35,14 +37,14 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     DisplayText = "asset 9",
                     ElementPath = "path9",
                     EnergyType = "pv",
-                    TimeZone = "timezoneTest"
+                    TimeZone = "timezoneTest",
 
                 };
 
                 DBAssetRecommendationSchedule dbAssetRecSchedule = new DBAssetRecommendationSchedule()
                 {
                     Asset = asset,
-                    AssetId = 9
+                    AssetId = 9,
                 };
 
                 List<DBRecommendationSchedule> list = new List<DBRecommendationSchedule>() {
@@ -61,7 +63,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         RecommendationType = new DBRecommendationType() { Type = "Yearly Wash Optimization" },
                         ParametersList = new List<DBRecommendationScheduleParameter>{ new DBRecommendationScheduleParameter
                         {
-                            ParamValue = 1,
+                            ParamValue = "1",
                             RecommendationParameter = new DBRecommendationParameter
                             {
                                 Name = "TestParam"
@@ -104,9 +106,10 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         DefaultParametersList = new List<DBRecommendationParameter>() {
                             new DBRecommendationParameter {
                                 DisplayText = "Center Point",
-                                DefaultValue = 3.25
+                                DefaultValue = "3.25"
                             }
-                        }
+                        },
+                        AssetTypes = AssetTypeRecommendationType()
                     }
                 };
 
@@ -120,10 +123,90 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     Type = "Yearly Wash Optimization",
                     DisplayText = "Yearly Wash Optimization (yearly)",
                     Description = "Runs the wash optimization on a yearly basis",
+                    AssetTypes = AssetTypeRecommendationType()
+                };
+            }
+
+            public static List<DBAssetTypeRecommendationType> AssetTypeRecommendationType()
+            {
+                return new List<DBAssetTypeRecommendationType>
+                {
+                    new DBAssetTypeRecommendationType
+                    {
+                        AssetType = new DBAssetType
+                        {
+                            AssetTypeId = 1,
+                            Name = "Plant"
+                        }
+                    }
+                };
+            }
+
+            public static List<DBRecommendationScheduleParameter> BasicParameters()
+            {
+                return new List<DBRecommendationScheduleParameter>
+                {
+                    new DBRecommendationScheduleParameter
+                    {
+                        ParamValue = "1",
+                        RecommendationParameter = new DBRecommendationParameter
+                        {
+                            Name = "Soiling level"
+                        }
+                    },
+                    new DBRecommendationScheduleParameter
+                    {
+                        ParamValue = "31",
+                        RecommendationParameter = new DBRecommendationParameter
+                        {
+                            Name = "Span increment"
+                        }
+                    }
                 };
             }
 
             public static ConfiguredRecommendation BasicConfiguredRecommendation()
+            {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "RENEW01_2070.93.011",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
+                    EnergyType = "pv"
+                };
+
+                return new ConfiguredRecommendation
+                {
+                    Name = "Wash Rec",
+                    CreatedBy = "Zohal",
+                    CreatedOn = new DateTime(),
+                    Granularity = "Yearly",
+                    PreferredScenario = "ROI",
+                    RecurrenceDatetime = new DateTime(2025, 10, 10),
+                    RecurrenceDayOfWeek = 2,
+                    Type = "Yearly Wash Optimization",
+                    Parameters = new List<ConfiguredRecommendationParameter>
+                    {
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "Soiling level",
+                            ParameterValue = "1"
+                        },
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "Span increment",
+                            ParameterValue = "31"
+                        }
+                    },
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
+                };
+            }
+
+            public static ConfiguredRecommendation BasicConfiguredRecommendation2()
             {
                 AssetLeaf asset = new AssetLeaf
                 {
@@ -146,39 +229,74 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     Type = "Yearly Wash Optimization",
-                    Parameters = null,
+                    Parameters = new List<ConfiguredRecommendationParameter>
+                    {
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "Soiling level",
+                            ParameterValue = "1"
+                        },
+                    },
                     AssetIdList = new List<int>() { 44 },
-                    AssetList = new List<AssetLeaf>() { asset}
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
 
             public static ConfiguredRecommendation EmptyConfiguredRecommendation()
             {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "RENEW01_2070.93.011",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
+                    EnergyType = "pv"
+                };
+
                 return new ConfiguredRecommendation
                 {
-                    Name = "Wash Rec",
-                    CreatedBy = "",
+                    Name = "",
+                    CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
+                    PreferredScenario = "",
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
                     Type = "Yearly Wash Optimization",
-                    Parameters = null
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
 
             public static ConfiguredRecommendation BadConfiguredRecommendation()
             {
+                AssetLeaf asset = new AssetLeaf
+                {
+                    Id = 44,
+                    Name = "RENEW01_2070",
+                    AcPower = 5,
+                    AssetType = YearlyRecType().Description,
+                    DisplayText = "Parent",
+                    ElementPath = "RENEW01_2070",
+                    EnergyType = "pv"
+                };
+
                 return new ConfiguredRecommendation
                 {
-                    Name = "Wash Rec",
+                    Name = "",
                     CreatedBy = "Zohal",
                     CreatedOn = new DateTime(),
                     Granularity = "Yearly",
                     RecurrenceDatetime = new DateTime(2025, 10, 10),
                     RecurrenceDayOfWeek = 2,
-                    Type = "Yearly Wash",
-                    Parameters = null
+                    Type = "Yearly Wash Optimization",
+                    PreferredScenario = "ROI",
+                    Parameters = null,
+                    AssetIdList = new List<int>() { 44 },
+                    AssetList = new List<AssetLeaf>() { asset }
                 };
             }
 
@@ -212,7 +330,8 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 };
             }
 
-            public static DBRecommendationSchedule EditedDBRecommendationSchedule() {
+            public static DBRecommendationSchedule EditedDBRecommendationSchedule()
+            {
                 return new DBRecommendationSchedule
                 {
                     Name = "Wash Rec W20",
@@ -231,11 +350,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 AssetLeaf asset = new AssetLeaf
                 {
                     Id = 44,
-                    Name = "asset44",
+                    Name = "RENEW01_2070.93.011",
                     AcPower = 5,
                     AssetType = YearlyRecType().Description,
-                    DisplayText = "asset 44",
-                    ElementPath = "asset44.path",
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
                     EnergyType = "pv"
                 };
 
@@ -251,7 +370,19 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     Type = "Yearly Wash Optimization",
                     Description = "Description of algo",
                     PreferredScenario = "ROI",
-                    Parameters = null,
+                    Parameters = new List<ConfiguredRecommendationParameter>
+                    {
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "CenterPointIncrement",
+                            ParameterValue = "1"
+                        },
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "SpanIncrement",
+                            ParameterValue = "31"
+                        }
+                    },
                     AssetIdList = new List<int>() { 44 },
                     AssetList = new List<AssetLeaf>() { asset }
                 };
@@ -262,11 +393,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                 AssetLeaf asset = new AssetLeaf
                 {
                     Id = 44,
-                    Name = "asset44",
+                    Name = "RENEW01_2070.93.011",
                     AcPower = 5,
                     AssetType = YearlyRecType().Description,
-                    DisplayText = "asset 44",
-                    ElementPath = "asset44.path",
+                    DisplayText = "Bearford II",
+                    ElementPath = "RENEW01_2070.93.011",
                     EnergyType = "pv"
                 };
 
@@ -282,7 +413,19 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     Type = "Yearly Wash Optimization",
                     Description = "Description of algo",
                     PreferredScenario = "ROI",
-                    Parameters = null,
+                    Parameters = new List<ConfiguredRecommendationParameter>
+                    {
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "CenterPointIncrement",
+                            ParameterValue = "1"
+                        },
+                        new ConfiguredRecommendationParameter
+                        {
+                            ParameterName = "SpanIncrement",
+                            ParameterValue = "1"
+                        }
+                    },
                     AssetIdList = new List<int>() { 44 },
                     AssetList = new List<AssetLeaf>() { asset }
                 };
