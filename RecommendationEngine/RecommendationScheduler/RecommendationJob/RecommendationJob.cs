@@ -6,7 +6,9 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Interfaces.Hub;
 using Interfaces.Services.ExternalApi;
+using Models.Application;
 
 namespace RecommendationScheduler.RecommendationJob
 {
@@ -19,6 +21,7 @@ namespace RecommendationScheduler.RecommendationJob
         protected IRecommendationJobLogger _jobLogger;
         protected IRecommendationSchedulerRepository _schedulerRepository;
         protected IMetadataDriveService _metadataDriveService;
+        protected INotificationHub _notificationHub;
 
         public Task Execute(IJobExecutionContext context)
         {
@@ -36,7 +39,7 @@ namespace RecommendationScheduler.RecommendationJob
                 _jobLogger.LogInformation(_recommendationJob, "Job started!", null);
 
                 // Execute
-                ExecuteJob();
+                DBRecommendationJobResult jobResult = ExecuteJob();
 
                 // Finish execution
                 _jobLogger.LogInformation(_recommendationJob, "Job finished!", null);
@@ -44,6 +47,13 @@ namespace RecommendationScheduler.RecommendationJob
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Success",
                     watch.Elapsed.Seconds);
                 _jobLogger.LogInformation(_recommendationJob, "This job has succeeded", null);
+
+                if(jobResult.ActionsSuggestedList.Count>0)
+                    _notificationHub.SendNotification(new NotificationMessage
+                    {
+                        Type = NotificationType.Information,
+                        Message = "New available actions on " + _recommendationJob.Asset.Name + " were found from " + _recommendationJob.Schedule.Name + "."
+                    });
                 return Task.CompletedTask;
             }
             catch (Exception e)
@@ -52,6 +62,11 @@ namespace RecommendationScheduler.RecommendationJob
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
                     watch.Elapsed.Seconds);
                 _jobLogger.LogError(_recommendationJob, "This job has failed",  e.Message );
+                _notificationHub.SendNotification(new NotificationMessage
+                {
+                    Type = NotificationType.Error,
+                    Message = "A job from " + _recommendationJob.Schedule.Name + " has failed and requires your attention!"
+                });
                 return Task.CompletedTask;
             }
         }
@@ -69,7 +84,7 @@ namespace RecommendationScheduler.RecommendationJob
             _recommendationJob = _schedulerRepository.AddRecommendationJob(job);
         }
 
-        protected abstract void ExecuteJob();
+        protected abstract DBRecommendationJobResult ExecuteJob();
 
         protected abstract void GetFromAPI();
 
