@@ -74,7 +74,8 @@ namespace RecommendationEngine.Services
                     };
                     throw new RequestValidationException(error, "Recommendation Engine");
                 }
-                _notificationHub.SendNotification("Job logs have been loaded!");
+                //_notificationHub.SendNotification(new NotificationMessage{Type = NotificationType.Information, Message = "Job logs have been posted!"});
+                //_notificationHub.SendNotification(new NotificationMessage{Type = NotificationType.Error, Message = "Failed!"});
                 return logs;
             }
             catch (GlobalException)
