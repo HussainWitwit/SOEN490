@@ -65,7 +65,7 @@ namespace RecommendationScheduler.RecommendationJob
                 _notificationHub.SendNotification(new NotificationMessage
                 {
                     Type = NotificationType.Error,
-                    Message = "A job from " + _recommendationJob.Schedule.Name + " has failed and requires your attention!"
+                    Message = "A job on " + _recommendationJob.Asset.DisplayText + " from " + _recommendationJob.Schedule.Name + " has failed and requires your attention!"
                 });
                 return Task.CompletedTask;
             }
