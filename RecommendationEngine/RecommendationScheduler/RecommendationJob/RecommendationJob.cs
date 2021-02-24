@@ -52,7 +52,7 @@ namespace RecommendationScheduler.RecommendationJob
                     _notificationHub.SendNotification(new NotificationMessage
                     {
                         Type = NotificationType.Information,
-                        Message = "New available actions on " + _recommendationJob.Asset.Name + " were found from " + _recommendationJob.Schedule.Name + "."
+                        Message = "New available actions on " + _recommendationJob.Asset.DisplayText + " were found from " + _recommendationJob.Schedule.Name + "."
                     });
                 return Task.CompletedTask;
             }
