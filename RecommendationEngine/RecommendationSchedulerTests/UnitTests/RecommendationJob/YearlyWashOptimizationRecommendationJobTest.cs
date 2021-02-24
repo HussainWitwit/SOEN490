@@ -7,6 +7,7 @@ using Quartz;
 using RecommendationScheduler.RecommendationJob;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Interfaces.Hub;
 using Interfaces.Services.ExternalApi;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
@@ -18,6 +19,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
         private Mock<IJobExecutionContext> _contextMock;
         private YearlyWashOptimizationRecommendationJob _yearlyWashOptimizationRecommendationJob;
         private Mock<IMetadataDriveService> _driveService;
+        private Mock<INotificationHub> _notifMock;
 
         [SetUp]
         public void Setup()
@@ -26,8 +28,9 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
             _recommendationSchedulerRepoMock = new Mock<IRecommendationSchedulerRepository>();
             _contextMock = new Mock<IJobExecutionContext>();
             _driveService = new Mock<IMetadataDriveService>();
+            _notifMock = new Mock<INotificationHub>();
 
-            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object, _driveService.Object);
+            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object, _driveService.Object, _notifMock.Object);
         }
 
         [Test]
