@@ -13,14 +13,12 @@ namespace RecommendationEngine.Services
     public class JobService : IJobService
     {
         private IJobRepository _jobRepository;
-        private INotificationHub _notificationHub;
 
         public JobService(
             IJobRepository jobRepository, INotificationHub notificationHub
         )
         {
             _jobRepository = jobRepository;
-            _notificationHub = notificationHub;
         }
 
         public List<Job> GetJobList()
@@ -74,8 +72,6 @@ namespace RecommendationEngine.Services
                     };
                     throw new RequestValidationException(error, "Recommendation Engine");
                 }
-                //_notificationHub.SendNotification(new NotificationMessage{Type = NotificationType.Information, Message = "Job logs have been posted!"});
-                //_notificationHub.SendNotification(new NotificationMessage{Type = NotificationType.Error, Message = "Failed!"});
                 return logs;
             }
             catch (GlobalException)
