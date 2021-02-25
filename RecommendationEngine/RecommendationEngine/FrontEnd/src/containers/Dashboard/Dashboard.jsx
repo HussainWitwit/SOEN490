@@ -1,12 +1,69 @@
 import React, { useState } from 'react';
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
-import { Calendar } from "react-modern-calendar-datepicker";
+import { Calendar, Badge } from 'antd';
 import { Grid } from '@material-ui/core';
 import './Dashboard.css';
 
 function Dashboard() {
-    const [selectedDay, setSelectedDay] = useState(null);
-
+    function getListData(value) {
+        let listData;
+        switch (value.date()) {
+          case 8:
+            listData = [
+              { type: 'warning', content: 'This is warning event.' },
+              { type: 'success', content: 'This is usual event.' },
+            ];
+            break;
+          case 10:
+            listData = [
+              { type: 'warning', content: 'This is warning event.' },
+              { type: 'success', content: 'This is usual event.' },
+              { type: 'error', content: 'This is error event.' },
+            ];
+            break;
+          case 15:
+            listData = [
+              { type: 'warning', content: 'This is warning event' },
+              { type: 'success', content: 'This is very long usual event。。....' },
+              { type: 'error', content: 'This is error event 1.' },
+              { type: 'error', content: 'This is error event 2.' },
+              { type: 'error', content: 'This is error event 3.' },
+              { type: 'error', content: 'This is error event 4.' },
+            ];
+            break;
+          default:
+        }
+        return listData || [];
+      }
+      
+      function dateCellRender(value) {
+        const listData = getListData(value);
+        return (
+          <ul className="events">
+            {listData.map(item => (
+              <li key={item.content}>
+                <Badge status={item.type} text={item.content} />
+              </li>
+            ))}
+          </ul>
+        );
+      }
+      
+      function getMonthData(value) {
+        if (value.month() === 8) {
+          return 1394;
+        }
+      }
+      
+      function monthCellRender(value) {
+        const num = getMonthData(value);
+        return num ? (
+          <div className="notes-month">
+            <section>{num}</section>
+            <span>Backlog number</span>
+          </div>
+        ) : null;
+      }
+      
     return (
         <div>
             <div>
@@ -19,16 +76,7 @@ function Dashboard() {
                 </Grid>
                 <br></br>
             </div>
-            <Calendar
-                value={selectedDay}
-                onChange={setSelectedDay}
-                colorPrimary="#4dd3ef"
-                calendarClassName="responsive-calendar"
-                customDaysClassName={[
-                    { year: 2021, month: 2, day: 23, className: 'washDay' },
-                ]}
-                shouldHighlightWeekends
-            />
+            <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
         </div>
     )
 }

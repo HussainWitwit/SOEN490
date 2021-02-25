@@ -1,34 +1,22 @@
-.washDay:not(.-selectedStart):not(.-selectedBetween):not(.-selectedEnd):not(.-selected) {
-    border: 2px solid rgb(77, 211, 239, 0.77) !important;
-    color: #4dd3ef !important;
+.events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-
-.responsive-calendar {
-    /* by setting font-size, all the elements will correspond */
-    font-size: 16px !important; /* default to 10px */
+.events .ant-badge-status {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-  
-  @media (max-width: 1500px) {
-    .responsive-calendar {
-      font-size: 14px !important;
-    }
-  }
-  
-  @media (max-width: 1200px) {
-    .responsive-calendar {
-      font-size: 12px !important;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .responsive-calendar {
-      font-size: 10px !important;
-    }
-  }
-  
-  /* Large screens */
-  @media (min-width: 2500px) {
-    .responsive-calendar {
-      font-size: 22px !important;
-    }
-  }
+.notes-month {
+  font-size: 28px;
+  text-align: center;
+}
+.notes-month section {
+  font-size: 28px;
+}
+.ant-picker-calendar{
+    width: 80%;
+}
