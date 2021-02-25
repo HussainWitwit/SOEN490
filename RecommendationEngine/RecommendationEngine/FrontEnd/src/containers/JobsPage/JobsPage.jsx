@@ -71,7 +71,10 @@ function JobsPage(props) {
 
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
-            return job.id.toString().includes(input.toString())
+            return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
+            || job.assetName.toLowerCase().includes(input.toLowerCase())
+            || job.status.toLowerCase().includes(input.toLowerCase())
+            || job.timestamp.includes(input.toLowerCase())
         })
         setJobList(filtered);
     }

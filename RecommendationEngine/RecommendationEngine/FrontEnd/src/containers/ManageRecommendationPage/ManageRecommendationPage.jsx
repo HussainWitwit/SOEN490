@@ -26,6 +26,8 @@ export function ManageRecommendationPage (props) {
   const updateSearch = async (input) => {
     const filtered = defaultConfiguredRecList.filter(recommendation => {
       return recommendation.name.toLowerCase().includes(input.toLowerCase())
+        || recommendation.id.toString().includes(input.toLowerCase())
+        || recommendation.createdOn.toString().includes(input.toLowerCase())
     })
     setRecommendationList(filtered);
   }

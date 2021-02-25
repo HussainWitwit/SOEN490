@@ -60,7 +60,13 @@ export function ResultsPage(props) {
 
     const updateSearch = async (input) => {
         const filtered = defaultResultList.filter(result => {
-            return result.id.toString().includes(input.toString())
+            return result.assetName.toLowerCase().includes(input.toLowerCase())
+            || result.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
+            || result.resultOutputDate.includes(input.toLowerCase())
+            || result.costOfAction.toString().includes(input)
+            || result.costOfInaction.toString().includes(input)
+            || result.netSaving.toString().includes(input)
+            || result.returnOnInvestment.toString().includes(input)
         })
         setResultList(filtered);
     }
