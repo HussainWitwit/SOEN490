@@ -75,6 +75,7 @@ function JobsPage(props) {
             || job.assetName.toLowerCase().includes(input.toLowerCase())
             || job.status.toLowerCase().includes(input.toLowerCase())
             || job.timestamp.includes(input.toLowerCase())
+            || (job.duration.toString() + " seconds").includes(input)
         })
         setJobList(filtered);
     }

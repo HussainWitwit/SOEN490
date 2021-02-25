@@ -28,6 +28,8 @@ export function ManageRecommendationPage (props) {
       return recommendation.name.toLowerCase().includes(input.toLowerCase())
         || recommendation.id.toString().includes(input.toLowerCase())
         || recommendation.createdOn.toString().includes(input.toLowerCase())
+        || recommendation.granularity.toLowerCase().includes(input.toLowerCase())
+        || recommendation.type.toLowerCase().includes(input.toLowerCase())
     })
     setRecommendationList(filtered);
   }
