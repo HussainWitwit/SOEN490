@@ -31,5 +31,20 @@ namespace RecommendationEngine.Repositories
                 throw new DbException();
             }
         }
+
+        public List<DBAction> GetActionsByDate(DateTime date)
+        {
+            try {
+                return _recommendationEngineDb.Actions.Where(action => action.Date.Date.CompareTo(date.Date) == 0)
+                    .Include(action => action.RecommendationJobResult)
+                    .ThenInclude(result => result.Job)
+                    .ThenInclude(job => job.Schedule)
+                    .ThenInclude(schedule => schedule.AssetsList)
+                    .ThenInclude(asset => asset.Asset).ToList();
+            }
+            catch (Exception) {
+                throw new DbException();
+            }
+        }
     }
 }

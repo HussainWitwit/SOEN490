@@ -69,5 +69,39 @@ namespace RecommendationEngine.Services
                 throw new InternalServerException();
             }
         }
+
+        public List<Action> GetActionsByDate(DateTime date)
+        {
+            try
+            {
+                List<DBAction> dbActions = _actionRepository.GetActionsByDate(date).ToList();
+
+                List<Action> actions = dbActions.Select(action => new Action
+                {
+                    Id = action.ActionId,
+                    NetSaving = action.RecommendationJobResult.NetSaving,
+                    ReturnOnInvestment = action.RecommendationJobResult.ReturnOnInvestment,
+                    AssetName = action.Asset.DisplayText,
+                    RecommendationName = action.RecommendationJobResult.Job.Schedule.Name,
+                    DisplayText = action.DisplayText,
+                    Title = action.Title,
+                    recommendedDate = action.Date,
+                    recommendedOnDate = action.RecommendationJobResult.Job.Timestamp
+
+                }).ToList();
+
+                return actions;
+
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+
+        } 
     }
 }
