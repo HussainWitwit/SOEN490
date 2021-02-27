@@ -1,8 +1,6 @@
 using Interfaces.Repositories;
 using Interfaces.Services;
-using Microsoft.AspNetCore.Http;
 using Models.Application;
-using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
@@ -40,6 +38,39 @@ namespace RecommendationEngine.Services
                         }).ToList();
             }
             catch (GlobalException) {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+        }
+
+        public List<WidgetValue> GetWidgetValues()
+        {
+            try
+            {
+
+                var netSavingSum = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
+                                    .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First()).ToList().Sum(asset => asset.NetSaving);
+
+                var returnOnInvestmentAverage = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
+                                    .Select(grp => grp.OrderByDescending(obj => obj.ReturnOnInvestment).First()).ToList().Average(asset => asset.ReturnOnInvestment);
+
+                var costOfInactionSum = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
+                                    .Select(grp => grp.OrderByDescending(obj => obj.CostOfInaction).First()).ToList().Sum(asset => asset.CostOfInaction);
+
+
+                var widgetValueList = new List<WidgetValue>();
+                widgetValueList.Add(new WidgetValue("Potential Net Savings", netSavingSum));
+                widgetValueList.Add(new WidgetValue("Potential ROI", returnOnInvestmentAverage));
+                widgetValueList.Add(new WidgetValue("Potential Losses", costOfInactionSum));
+
+                return widgetValueList;
+
+            }
+            catch (GlobalException)
+            {
                 throw;
             }
             catch (Exception)
