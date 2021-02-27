@@ -1,6 +1,8 @@
 import { Parameter } from "../api/models/TemplateDetails";
 import { dateFormat } from './DateTimeUtilities';
 import { Asset, MultiSelectTreeViewAsset } from '../api/models/Asset';
+import { DetailedWidget, Widget } from '../api/models/Widget';
+import { Widgets } from "@material-ui/icons";
 
 export const convertObjectToArrayOfObjects = (obj: any) => {
     var result = Object.entries(obj).map((e) => ({ [e[0]]: e[1] }));
@@ -38,5 +40,20 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
     })
     return renamedAssetAttributes;
 }
+
+export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
+    let detailedWidgets: DetailedWidget[] = [];
+    detailedWidgets = widgets.map((widget) => {
+        return {
+            value: widget.value,
+            title: widget.title,
+            description: widget.title === 'Potential Net Savings' ? '' : widget.title === 'Potential ROI' ? '' : '',
+            sign: widget.title === 'Potential Net Savings' ? '$' : widget.title === 'Potential ROI' ? '%' : '$',
+
+        }
+    })
+    return detailedWidgets;
+}
+
 
 

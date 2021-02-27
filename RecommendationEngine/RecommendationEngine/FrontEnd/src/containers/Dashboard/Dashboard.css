@@ -73,11 +73,11 @@
 #sign {
     font-weight: bold;
     font-size: xx-large;
-    margin-right: 8%;
+    margin-right: 2%;
 }
 
 #money-value {
-    font-size: x-large;
+    font-size: large;
 }
 
 #widget-contents {

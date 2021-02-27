@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
+import { getWidgetValues } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
+import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
 
 function Dashboard () {
+  const [widgetValues, setWidgetValues] = useState([]);
 
   const widgetContents = [
     {
@@ -29,6 +32,18 @@ function Dashboard () {
     },
   ]
 
+  const getValues = async () => {
+    let response = await getWidgetValues();
+    let detailedWidgets = convertWidgetResponse(response);
+    setWidgetValues(detailedWidgets);
+    console.log(widgetValues);
+  }
+
+  useEffect(() => {
+    getValues();
+  }, [])
+
+
   const setClassName = (title) => {
     let id;
     if (title === 'Potential Net Savings') {
@@ -47,10 +62,10 @@ function Dashboard () {
     <div>
       <h1>Dashboard</h1>
       <div id='widget-container'>
-        {widgetContents.map((widget, index) => (
+        {widgetValues.map((widget, index) => (
           <div key={index} id={setClassName(widget.title)}>
             <div id='tooltip-container'>
-              <Tooltip title={widget.tooltipDescription}>
+              <Tooltip title={widget.description}>
                 <HelpOutlineOutlinedIcon size={1} />
               </Tooltip>
             </div>
@@ -58,7 +73,7 @@ function Dashboard () {
             <div>
               <div id='widget-contents'>
                 <div id='sign'>{widget.sign}</div>
-                <div id='money-value'>{widget.value}</div>
+                <div id='money-value'>{widget.value.toLocaleString()}</div>
               </div>
             </div>
           </div>
