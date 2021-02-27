@@ -27,5 +27,18 @@ namespace RecommendationEngine.Controllers
                 return e.GetActionResult();
             }
         }
+
+        [HttpGet("widgets")]
+        public IActionResult GetWidgetValues()
+        {
+            try
+            {
+                return Ok(_resultService.GetWidgetValues());
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
     }
 }
