@@ -42,9 +42,18 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
 
 export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
     let detailedWidgets: DetailedWidget[] = [];
-    const potentialSavingsDescription = 'The potential net savings value represents the total possible cash value that would be saved if the suggested wash dates are all followed.';
-    const potentialRoiDescription = 'The potential return on investment value represents the average percentage that would be saved if the suggested wash dates are all followed.';
-    const potentialCostOfInaction = 'The potential cost of inaction value represents the total possible cash value that would be lost if the suggested wash dates are not followed.';
+
+    const potentialSavingsDescription = 'The potential net savings value represents the total possible ' +
+        'saving if the best suggested wash dates are followed. It should be noted that this ' +
+        'value has been generated while considering the best case scenario for each asset.';
+
+    const potentialRoiDescription = 'The potential return on investment value represents the average potential rate of return ' +
+        'if the best suggested wash dates are followed. It should be noted that this value has been ' +
+        'generated while considering the best case scenario for each asset.';
+
+    const potentialCostOfInaction = 'The potential cost of inaction value represents the total possible loss ' +
+        'if the best suggested wash dates are not followed. It should be noted that this value has been ' +
+        'generated while considering the best case scenario for each asset.';
 
     detailedWidgets = widgets?.map((widget) => {
         return {
