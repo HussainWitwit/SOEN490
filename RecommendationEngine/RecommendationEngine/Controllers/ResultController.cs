@@ -29,11 +29,11 @@ namespace RecommendationEngine.Controllers
         }
 
         [HttpGet("widgets")]
-        public IActionResult GetWidgetValues()
+        public IActionResult GetWidgetMetrics()
         {
             try
             {
-                return Ok(_resultService.GetWidgetValues());
+                return Ok(_resultService.GetWidgetMetrics());
             }
             catch (GlobalException e)
             {

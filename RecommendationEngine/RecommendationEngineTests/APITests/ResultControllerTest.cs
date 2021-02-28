@@ -65,11 +65,11 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
-        public async Task GetWidgetValues()
+        public async Task GetWidgetMetrics()
         {
             var response = await _client.GetAsync("api/result/widgets");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-            List<WidgetValue> widgetList = JsonConvert.DeserializeObject<List<WidgetValue>>(await response.Content.ReadAsStringAsync());
+            List<WidgetMetric> widgetList = JsonConvert.DeserializeObject<List<WidgetMetric>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(widgetList);
             Assert.AreEqual(widgetList.Find(element => element.Title == "Potential Net Savings").Value, 110);
             Assert.AreEqual(widgetList.Find(element => element.Title == "Average ROI").Value, 4191.3);

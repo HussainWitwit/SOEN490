@@ -1,11 +1,11 @@
 ﻿namespace Models.Application
 {
-    public class WidgetValue
+    public class WidgetMetric
     {
         public string Title { get; set; }
         public double Value { get; set; }
 
-        public WidgetValue(string title, double value)
+        public WidgetMetric(string title, double value)
         {
             this.Title = title;
             this.Value = value;

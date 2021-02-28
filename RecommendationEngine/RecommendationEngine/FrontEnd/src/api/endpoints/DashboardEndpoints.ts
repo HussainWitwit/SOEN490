@@ -2,14 +2,14 @@ import { Widget } from '../models/Widget';
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
 import { toast } from 'react-toastify';
 
-export async function getWidgetValues(): Promise<Widget[] | null> {
-    let widgetValues = null;
+export async function getWidgetMetrics(): Promise<Widget[] | null> {
+    let widgetMetrics: Widget[] = [];
     await fetch('api/result/widgets')
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {
-            widgetValues = res;
-            return widgetValues
+            widgetMetrics = res;
+            return widgetMetrics
         })
         .catch(err => {
             if (err.code === 400) {
@@ -36,5 +36,5 @@ export async function getWidgetValues(): Promise<Widget[] | null> {
                 });
             }
         })
-    return widgetValues;
+    return widgetMetrics;
 }

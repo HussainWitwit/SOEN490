@@ -37,7 +37,8 @@ namespace RecommendationEngine.Services
                             ResultOutputDate = dbResult.Job.Timestamp
                         }).ToList();
             }
-            catch (GlobalException) {
+            catch (GlobalException)
+            {
                 throw;
             }
             catch (Exception)
@@ -46,7 +47,7 @@ namespace RecommendationEngine.Services
             }
         }
 
-        public List<WidgetValue> GetWidgetValues()
+        public List<WidgetMetric> GetWidgetMetrics()
         {
             try
             {
@@ -60,12 +61,12 @@ namespace RecommendationEngine.Services
                                     .Select(grp => grp.OrderByDescending(obj => obj.CostOfInaction).First()).ToList().Sum(asset => asset.CostOfInaction);
 
 
-                var widgetValueList = new List<WidgetValue>();
-                widgetValueList.Add(new WidgetValue("Potential Net Savings", netSavingSum));
-                widgetValueList.Add(new WidgetValue("Average ROI", returnOnInvestmentAverage));
-                widgetValueList.Add(new WidgetValue("Potential Losses", costOfInactionSum));
+                var WidgetMetricList = new List<WidgetMetric>();
+                WidgetMetricList.Add(new WidgetMetric("Potential Net Savings", netSavingSum));
+                WidgetMetricList.Add(new WidgetMetric("Average ROI", returnOnInvestmentAverage));
+                WidgetMetricList.Add(new WidgetMetric("Potential Losses", costOfInactionSum));
 
-                return widgetValueList;
+                return WidgetMetricList;
             }
             catch (GlobalException)
             {

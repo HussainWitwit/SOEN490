@@ -8,15 +8,15 @@ import fetch from 'isomorphic-fetch';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe.only('Dashboard component', () => {
-  const widgetValues = [
+  const widgetMetrics = [
     { title: 'Potential Net Savings', value: "14,624,099.744", sign: "$", description: "This is a description" },
     { title: 'Average ROI', value: "14,624,099.744", sign: "$", description: "This is a description" },
     { title: 'Potential Losses', value: "14,624,099.744", sign: "$", description: "This is a description" }
   ]
-  React.useState = jest.fn().mockReturnValue([[widgetValues, widgetValues]]);
-  const setState = jest.fn().mockReturnValue([[widgetValues, widgetValues]]);
+  React.useState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics]]);
+  const setState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics]]);
   const useStateSpy = jest.spyOn(React, 'useState');
-  useStateSpy.mockImplementation((init) => [widgetValues, setState]);
+  useStateSpy.mockImplementation((init) => [widgetMetrics, setState]);
   const output = shallow(<Dashboard />);
 
   it('It renders without crashing', async () => {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
-import { getWidgetValues } from '../../api/endpoints/DashboardEndpoints';
+import { getWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
 
-export const setClassName = (title) => {
+export const pickStylingId = (title) => {
   let id;
   if (title === 'Potential Net Savings') {
     id = 'net-savings-widget'
@@ -20,12 +20,12 @@ export const setClassName = (title) => {
 }
 
 function Dashboard () {
-  const [widgetValues, setWidgetValues] = useState([]);
+  const [widgetMetrics, setWidgetMetrics] = useState([]);
 
   const getValues = async () => {
-    let response = await getWidgetValues();
+    let response = await getWidgetMetrics();
     let detailedWidgets = convertWidgetResponse(response);
-    setWidgetValues(detailedWidgets);
+    setWidgetMetrics(detailedWidgets);
   }
 
   useEffect(() => {
@@ -36,8 +36,8 @@ function Dashboard () {
     <div>
       <h1>Dashboard</h1>
       <div id='widget-container'>
-        {widgetValues?.map((widget, index) => (
-          <div key={index} id={setClassName(widget.title)}>
+        {widgetMetrics?.map((widget, index) => (
+          <div key={index} id={pickStylingId(widget.title)}>
             <div id='tooltip-container'>
               <Tooltip title={widget.description}>
                 <HelpOutlineOutlinedIcon size={1} />
