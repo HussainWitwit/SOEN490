@@ -8,40 +8,40 @@ import fetch from 'isomorphic-fetch';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe.only('Dashboard component', () => {
-    const widgetValues = [
-        { title: 'Potential Net Savings', value: "14,624,099.744", sign: "$", description: "This is a description" },
-        { title: 'Average ROI', value: "14,624,099.744", sign: "$", description: "This is a description" },
-        { title: 'Potential Losses', value: "14,624,099.744", sign: "$", description: "This is a description" }
-    ]
-    React.useState = jest.fn().mockReturnValue([[widgetValues, widgetValues]]);
-    const setState = jest.fn().mockReturnValue([[widgetValues, widgetValues]]);
-    const useStateSpy = jest.spyOn(React, 'useState');
-    useStateSpy.mockImplementation((init) => [widgetValues, setState]);
-    const output = shallow(<Dashboard />);
+  const widgetValues = [
+    { title: 'Potential Net Savings', value: "14,624,099.744", sign: "$", description: "This is a description" },
+    { title: 'Average ROI', value: "14,624,099.744", sign: "$", description: "This is a description" },
+    { title: 'Potential Losses', value: "14,624,099.744", sign: "$", description: "This is a description" }
+  ]
+  React.useState = jest.fn().mockReturnValue([[widgetValues, widgetValues]]);
+  const setState = jest.fn().mockReturnValue([[widgetValues, widgetValues]]);
+  const useStateSpy = jest.spyOn(React, 'useState');
+  useStateSpy.mockImplementation((init) => [widgetValues, setState]);
+  const output = shallow(<Dashboard />);
 
-    it('It renders without crashing', async () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<Dashboard />, div);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-    });
+  it('It renders without crashing', async () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Dashboard />, div);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  });
 
-    it('It finds the page in the component tree', () => {
-        expect(output).toHaveLength(1);
-    });
+  it('It finds the page in the component tree', () => {
+    expect(output).toHaveLength(1);
+  });
 
-    it("Finds the divs", () => {
-        let component = output.find('div');
-        expect(component).toHaveLength(2);
-    })
+  it("Finds the divs", () => {
+    let component = output.find('div');
+    expect(component).toHaveLength(2);
+  })
 
-    it("Tests the class assignment function", () => {
-        const id1 = setClassName('Potential Net Savings');
-        expect(id1).toEqual('net-savings-widget');
+  it("Tests the class assignment function", () => {
+    const id1 = setClassName('Potential Net Savings');
+    expect(id1).toEqual('net-savings-widget');
 
-        const id2 = setClassName('Average ROI');
-        expect(id2).toEqual('roi-widget');
+    const id2 = setClassName('Average ROI');
+    expect(id2).toEqual('roi-widget');
 
-        const id3 = setClassName('Potential Losses');
-        expect(id3).toEqual('inaction-widget');
-    })
+    const id3 = setClassName('Potential Losses');
+    expect(id3).toEqual('inaction-widget');
+  })
 });
