@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Dashboard, { setClassName } from '../Dashboard';
+import Dashboard, { pickStylingClassName } from '../Dashboard';
 import fetch from 'isomorphic-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -35,13 +35,13 @@ describe.only('Dashboard component', () => {
   })
 
   it("Tests the class assignment function", () => {
-    const id1 = setClassName('Potential Net Savings');
-    expect(id1).toEqual('net-savings-widget');
+    const class1 = pickStylingClassName('Potential Net Savings');
+    expect(class1).toEqual('widget net-savings');
 
-    const id2 = setClassName('Average ROI');
-    expect(id2).toEqual('roi-widget');
+    const class2 = pickStylingClassName('Average ROI');
+    expect(class2).toEqual('widget roi');
 
-    const id3 = setClassName('Potential Losses');
-    expect(id3).toEqual('inaction-widget');
+    const class3 = pickStylingClassName('Potential Losses');
+    expect(class3).toEqual('widget inaction');
   })
 });

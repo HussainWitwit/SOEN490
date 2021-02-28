@@ -4,19 +4,20 @@ import { getWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
+import { formatNumber } from '../../utilities/GeneralUtilities';
 
-export const pickStylingId = (title) => {
-  let id;
+export const pickStylingClassName = (title) => {
+  let className;
   if (title === 'Potential Net Savings') {
-    id = 'net-savings-widget'
+    className = 'widget net-savings'
   }
   else if (title === 'Average ROI') {
-    id = 'roi-widget'
+    className = 'widget roi'
   }
   else {
-    id = 'inaction-widget'
+    className = 'widget inaction'
   }
-  return id;
+  return className;
 }
 
 function Dashboard () {
@@ -37,7 +38,7 @@ function Dashboard () {
       <h1>Dashboard</h1>
       <div id='widget-container'>
         {widgetMetrics?.map((widget, index) => (
-          <div key={index} id={pickStylingId(widget.title)}>
+          <div key={index} className={pickStylingClassName(widget.title)}>
             <div id='tooltip-container'>
               <Tooltip title={widget.description}>
                 <HelpOutlineOutlinedIcon size={1} />
@@ -47,7 +48,7 @@ function Dashboard () {
             <div>
               <div id='widget-contents'>
                 <div id='sign'>{widget.sign}</div>
-                <div id='money-value'>{widget.value.toLocaleString()}</div>
+                <div id='money-value'>{formatNumber(widget.value)}</div>
               </div>
             </div>
           </div>

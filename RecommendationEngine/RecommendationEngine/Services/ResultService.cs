@@ -60,11 +60,22 @@ namespace RecommendationEngine.Services
                 var costOfInactionSum = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
                                     .Select(grp => grp.OrderByDescending(obj => obj.CostOfInaction).First()).ToList().Sum(asset => asset.CostOfInaction);
 
+                string netSavingDescription = "The potential net savings value represents the total possible" +
+                "saving if the best suggested wash dates are followed. It should be noted that this " +
+                "value has been generated while considering the best case scenario for each asset.";
+
+                string returnOnInvestmentDescription = "The potential return on investment value represents the average potential rate of return " +
+                "if the best suggested wash dates are followed. It should be noted that this value has been " +
+                "generated while considering the best case scenario for each asset.";
+
+                string costOfInactionDescription = "The potential cost of inaction value represents the total possible loss " +
+                "if the best suggested wash dates are not followed. It should be noted that this value has been " +
+                "generated while considering the best case scenario for each asset.";
 
                 var WidgetMetricList = new List<WidgetMetric>();
-                WidgetMetricList.Add(new WidgetMetric("Potential Net Savings", netSavingSum));
-                WidgetMetricList.Add(new WidgetMetric("Average ROI", returnOnInvestmentAverage));
-                WidgetMetricList.Add(new WidgetMetric("Potential Losses", costOfInactionSum));
+                WidgetMetricList.Add(new WidgetMetric("Potential Net Savings", netSavingSum, netSavingDescription));
+                WidgetMetricList.Add(new WidgetMetric("Average ROI", returnOnInvestmentAverage, returnOnInvestmentDescription));
+                WidgetMetricList.Add(new WidgetMetric("Potential Losses", costOfInactionSum, costOfInactionDescription));
 
                 return WidgetMetricList;
             }
