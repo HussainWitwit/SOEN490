@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe.only('Dashboard component', () => {
     const widgetValues = [
         { title: 'Potential Net Savings', value: "14,624,099.744", sign: "$", description: "This is a description" },
-        { title: 'Potential ROI', value: "14,624,099.744", sign: "$", description: "This is a description" },
+        { title: 'Average ROI', value: "14,624,099.744", sign: "$", description: "This is a description" },
         { title: 'Potential Losses', value: "14,624,099.744", sign: "$", description: "This is a description" }
     ]
     React.useState = jest.fn().mockReturnValue([[widgetValues, widgetValues]]);
@@ -38,7 +38,7 @@ describe.only('Dashboard component', () => {
         const id1 = setClassName('Potential Net Savings');
         expect(id1).toEqual('net-savings-widget');
 
-        const id2 = setClassName('Potential ROI');
+        const id2 = setClassName('Average ROI');
         expect(id2).toEqual('roi-widget');
 
         const id3 = setClassName('Potential Losses');

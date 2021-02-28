@@ -10,7 +10,7 @@ export const setClassName = (title) => {
   if (title === 'Potential Net Savings') {
     id = 'net-savings-widget'
   }
-  else if (title === 'Potential ROI') {
+  else if (title === 'Average ROI') {
     id = 'roi-widget'
   }
   else {

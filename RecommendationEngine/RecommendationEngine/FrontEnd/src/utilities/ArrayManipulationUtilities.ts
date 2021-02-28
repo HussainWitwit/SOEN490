@@ -59,8 +59,8 @@ export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
         return {
             value: widget.value,
             title: widget.title,
-            description: widget.title === 'Potential Net Savings' ? potentialSavingsDescription : widget.title === 'Potential ROI' ? potentialRoiDescription : potentialCostOfInaction,
-            sign: widget.title === 'Potential Net Savings' ? '$' : widget.title === 'Potential ROI' ? '%' : '$',
+            description: widget.title === 'Potential Net Savings' ? potentialSavingsDescription : widget.title === 'Average ROI' ? potentialRoiDescription : potentialCostOfInaction,
+            sign: widget.title === 'Potential Net Savings' ? '$' : widget.title === 'Average ROI' ? '%' : '$',
 
         }
     })

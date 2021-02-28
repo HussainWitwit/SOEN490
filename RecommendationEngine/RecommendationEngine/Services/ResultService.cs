@@ -50,7 +50,6 @@ namespace RecommendationEngine.Services
         {
             try
             {
-
                 var netSavingSum = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
                                     .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First()).ToList().Sum(asset => asset.NetSaving);
 
@@ -63,11 +62,10 @@ namespace RecommendationEngine.Services
 
                 var widgetValueList = new List<WidgetValue>();
                 widgetValueList.Add(new WidgetValue("Potential Net Savings", netSavingSum));
-                widgetValueList.Add(new WidgetValue("Potential ROI", returnOnInvestmentAverage));
+                widgetValueList.Add(new WidgetValue("Average ROI", returnOnInvestmentAverage));
                 widgetValueList.Add(new WidgetValue("Potential Losses", costOfInactionSum));
 
                 return widgetValueList;
-
             }
             catch (GlobalException)
             {
