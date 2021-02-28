@@ -9,7 +9,6 @@ export async function getWidgetValues(): Promise<Widget[] | null> {
         .then(res => res.json())
         .then(res => {
             widgetValues = res;
-            // console.log(widgetValues);
             return widgetValues
         })
         .catch(err => {
