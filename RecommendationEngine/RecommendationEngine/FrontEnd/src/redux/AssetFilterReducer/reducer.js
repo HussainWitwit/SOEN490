@@ -20,5 +20,7 @@ export const AssetFilterReducer = function (
         ...state,
         selectedAsset: '',
       };
+    default:
+      return state;
   }
 };

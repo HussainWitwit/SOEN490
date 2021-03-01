@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { ManageRecommendationReducer } from './ManageRecommendationReducer/reducer';
 import { SharedReducer } from './SharedReducer/reducer';
 import { RightPanelReducer } from './RightPanelReducer/reducer'
+import { AssetFilterReducer } from './AssetFilterReducer/reducer'
 
 /**
  * Add your reducer here... Each reducer should have its own folder. 
@@ -10,7 +11,8 @@ import { RightPanelReducer } from './RightPanelReducer/reducer'
 const rootReducer = combineReducers({
   manageRecommendationReducer: ManageRecommendationReducer,
   sharedReducer: SharedReducer,
-  rightPanelReducer: RightPanelReducer
+  rightPanelReducer: RightPanelReducer,
+  assetFilterReducer: AssetFilterReducer
 })
 
 export default rootReducer
