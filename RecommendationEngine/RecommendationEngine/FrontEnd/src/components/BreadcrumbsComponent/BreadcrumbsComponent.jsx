@@ -13,21 +13,18 @@ const getAssetAncestry = (id, assets) => {
     if(!id)
         return false;
     let asset = assets.find(el => el.id === id);
-    let path = asset.elementPath.split('.');
-    let currentAggregatedPath = path[0];
-    let res = {currentAsset: asset, ancestry: [currentAggregatedPath]}
-    for (let i = 1; i < path.length-1; i++) {
-        currentAggregatedPath += '.'+ path[i];
-        console.log(currentAggregatedPath);
-        res.ancestry.push(assets.find(el=> el.elementPath === currentAggregatedPath).displayText);
+    let res = {currentAsset: asset, ancestry: []};
+    while (asset.parentId) {
+        asset = assets.find(el=> el.id === asset.parentId)
+        res.ancestry.unshift(asset.displayText);
     }
-    console.log(res);
     return res;
 }
 
 function BreadcrumbsComponent (props) {
+    const [asset, setAsset] = React.useState({});
     React.useEffect(()=> {
-        getAssetAncestry(props.selectedAsset, props.flatListAssets)
+        setAsset(getAssetAncestry(props.selectedAsset, props.flatListAssets));
     }, [props.selectedAsset])
     return (
         <div id="main-container">
@@ -36,14 +33,13 @@ function BreadcrumbsComponent (props) {
                     <BiCube id="bi-cube" />
                 All Portfolio
                 </Link>
-                <Link color="inherit" id="link">
-                    {/* <GiWindTurbine id="gi-wind-turbine" /> */}
-                23-kahuku
-                </Link>
-                <Typography color="textPrimary" id="Typography"><FaSolarPanel id="gi-wind-turbine" />001-kahuku</Typography>
+                {asset.ancestry && asset.ancestry.map((el)=> (<Link color="inherit" id="link">{el}
+                </Link>))}
+                <Typography color="textPrimary" id="Typography"><FaSolarPanel id="gi-wind-turbine" />{asset.currentAsset && asset.currentAsset.displayText}</Typography>
             </Breadcrumbs>
         </div>
     );
 }
+/* <GiWindTurbine id="gi-wind-turbine" /> */
 
 export default connect(mapStateToProps, mapDispatchToProps)(BreadcrumbsComponent);
