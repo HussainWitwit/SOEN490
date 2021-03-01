@@ -19,6 +19,7 @@ export const clearAssetSelection = () => {
 export const mapStateToProps = ({ sharedReducer, assetFilterReducer }) => {
   return {
     nestedAssets: sharedReducer.nestedAssets,
+    flatListAssets: sharedReducer.flatListAssets,
     selectedAsset: assetFilterReducer.selectedAsset
   };
 };
