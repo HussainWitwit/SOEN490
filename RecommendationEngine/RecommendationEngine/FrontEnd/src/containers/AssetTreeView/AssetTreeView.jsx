@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { connect } from 'react-redux';
-import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
+import { mapStateToProps as mapSharedReducerStateToProps } from '../../redux/SharedReducer/reducer-actions';
+import { mapDispatchToProps as mapAssetFilterDispatchToProps } from '../../redux/AssetFilterReducer/reducer-actions'
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -122,7 +123,7 @@ const mockList = [
   { title: 'Asset Title 4' },
 ];
 
-export function AssetTree ({ nestedAssets }) {
+export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
   const DisplayAssetNodeTree = (displayData) => (
     <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
@@ -131,6 +132,11 @@ export function AssetTree ({ nestedAssets }) {
       }
     </AssetTreeItem>
   );
+
+  const handleNodeSelect = (value) => {
+    setAssetSelection(value);
+  }
+
   return (
     <div className='flex-direction-column'>
       <SearchComboBox />
@@ -139,6 +145,8 @@ export function AssetTree ({ nestedAssets }) {
         defaultExpanded={[nestedAssets ? nestedAssets.id: '1']}
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
+        onNodeSelect = {(event, value) => handleNodeSelect(value)}
+        selected = {selectedAsset}
       >
         {nestedAssets &&
           DisplayAssetNodeTree(nestedAssets)
@@ -148,4 +156,4 @@ export function AssetTree ({ nestedAssets }) {
   );
 
 }
-export default connect(mapStateToProps)(AssetTree);
+export default connect(mapSharedReducerStateToProps, mapAssetFilterDispatchToProps)(AssetTree);
