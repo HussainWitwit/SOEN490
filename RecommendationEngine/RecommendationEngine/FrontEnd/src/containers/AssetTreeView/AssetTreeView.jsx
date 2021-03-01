@@ -6,8 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { connect } from 'react-redux';
-import { mapStateToProps as mapSharedReducerStateToProps } from '../../redux/SharedReducer/reducer-actions';
-import { mapDispatchToProps as mapAssetFilterDispatchToProps } from '../../redux/AssetFilterReducer/reducer-actions'
+import { mapStateToProps, mapDispatchToProps} from '../../redux/AssetFilterReducer/reducer-actions';
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -156,4 +155,4 @@ export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
   );
 
 }
-export default connect(mapSharedReducerStateToProps, mapAssetFilterDispatchToProps)(AssetTree);
+export default connect(mapStateToProps, mapDispatchToProps)(AssetTree);
