@@ -15,7 +15,7 @@ function App (props) {
   return (
     <div id="background">
       <Layout>
-        <div id="pageLayout">
+        <div>
           <Route exact path='/' component={Dashboard} />
           <Route path='/recommendations-manage' component={ManageRecommendationPage} />
           <Route path='/recommendations-jobs' component={JobsPage} />

@@ -54,7 +54,6 @@
       "!**/src/redux/combined-reducers.js",
       "!**/src/redux/SharedReducer/**",
       "!**/src/redux/ApiReducer/**",
-      "!**/src/containers/Dashboard/**",
       "!**/src/containers/Notifications/**",
       "!**/src/containers/Settings/**",
       "!**/src/containers/WorkOrders/**",

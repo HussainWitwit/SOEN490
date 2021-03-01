@@ -1,61 +1,39 @@
-import React, { useState } from 'react';
-import { Calendar, Badge } from 'antd';
-import { Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
+import { getWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
+import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
+import { formatNumber } from '../../utilities/GeneralUtilities';
+import Grid from '@material-ui/core/Grid';
+
+export const pickStylingClassName = (title) => {
+    let className;
+    if (title === 'Potential Net Savings') {
+        className = 'widget net-savings'
+    }
+    else if (title === 'Average ROI') {
+        className = 'widget roi'
+    }
+    else {
+        className = 'widget inaction'
+    }
+    return className;
+}
 
 function Dashboard() {
-    function getListData(value) {
-        let listData;
-        switch (value.date()) {
-          case 8:
-            listData = [
-              { type: 'processing', content: '(3) Wash Day' },
-            ];
-            break;
-          case 10:
-            listData = [
-              { type: 'processing', content: '(2) Wash Day' },
-            ];
-            break;
-          case 15:
-            listData = [
-              { type: 'processing', content: '(3) Wash Day' },
-            ];
-            break;
-          default:
-        }
-        return listData || [];
-      }
-      
-      function dateCellRender(value) {
-        const listData = getListData(value);
-        return (
-          <ul className="events">
-            {listData.map(item => (
-              <li key={item.content}>
-                <Badge count={5}/>
-              </li>
-            ))}
-          </ul>
-        );
-      }
-      
-      function getMonthData(value) {
-        if (value.month() === 8) {
-          return 1394;
-        }
-      }
-      
-      function monthCellRender(value) {
-        const num = getMonthData(value);
-        return num ? (
-          <div className="notes-month">
-            <section>{num}</section>
-            <span>Backlog number</span>
-          </div>
-        ) : null;
-      }
-      
+    const [widgetMetrics, setWidgetMetrics] = useState([]);
+
+    const getValues = async () => {
+        let response = await getWidgetMetrics();
+        let detailedWidgets = convertWidgetResponse(response);
+        setWidgetMetrics(detailedWidgets);
+    }
+
+    useEffect(() => {
+        getValues();
+    }, [])
+
     return (
         <div>
             <div>
@@ -68,7 +46,24 @@ function Dashboard() {
                 </Grid>
                 <br></br>
             </div>
-            <Calendar dateCellRender={dateCellRender(new Moment('2021-02-25'))} monthCellRender={monthCellRender} />
+            <div id='widget-container'>
+                {widgetMetrics?.map((widget, index) => (
+                    <div key={index} className={pickStylingClassName(widget.title)}>
+                        <div id='tooltip-container'>
+                            <Tooltip title={widget.description}>
+                                <HelpOutlineOutlinedIcon size={1} />
+                            </Tooltip>
+                        </div>
+                        <div id='title-container'>{widget.title}</div>
+                        <div>
+                            <div id='widget-contents'>
+                                <div id='sign'>{widget.sign}</div>
+                                <div id='money-value'>{formatNumber(widget.value)}</div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

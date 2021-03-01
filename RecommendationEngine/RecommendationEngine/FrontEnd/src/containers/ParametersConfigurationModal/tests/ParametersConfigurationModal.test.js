@@ -5,7 +5,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import { ParametersConfigurationModal, ParamTextField } from '../ParametersConfigurationModal';
 import{ Table, TextField, TableBody, TableHead, TableRow }from '@material-ui/core';
 import {isCorrectType} from '../../../utilities/GeneralUtilities';
-import { fireEvent, render, getAllByTestId } from '@testing-library/react';
 import { store } from '../../../redux/store';
 
 Enzyme.configure({ adapter: new Adapter() });

@@ -64,6 +64,25 @@ namespace RecommendationEngineTests.APITests
             Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
 
+        [Test]
+        public async Task GetWidgetMetrics()
+        {
+            var response = await _client.GetAsync("api/result/widgets");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<WidgetMetric> widgetList = JsonConvert.DeserializeObject<List<WidgetMetric>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(widgetList);
+            Assert.AreEqual(widgetList.Find(element => element.Title == "Potential Net Savings").Value, 110);
+            Assert.AreEqual(widgetList.Find(element => element.Title == "Average ROI").Value, 4191.3);
+            Assert.AreEqual(widgetList.Find(element => element.Title == "Potential Losses").Value, 804);
+        }
+
+        [Test]
+        public async Task GetBadWidgetList()
+        {
+            var response = await _clientBad.GetAsync("api/result/widgets");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
+        }
+
         public class TestRepositoryMock : IResultRepository
         {
             List<DBRecommendationJobResult> IResultRepository.GetResultList()

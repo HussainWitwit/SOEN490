@@ -20,7 +20,6 @@ export default function RecommendationEngineTable(props) {
           rows={data}
           showToolbar
           components={{ Toolbar: GridToolbar }}
-          onRowHover={isClickable}
           onRowClick={({row}) => onClickRow(row.id)}
         >
         </DataGrid>
