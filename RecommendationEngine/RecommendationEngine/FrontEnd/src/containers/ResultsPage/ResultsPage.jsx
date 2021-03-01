@@ -12,6 +12,7 @@ export function ResultsPage(props) {
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
@@ -66,7 +67,9 @@ export function ResultsPage(props) {
     }
 
     useEffect(() => {
+        setLoading(true);
         getResultList();
+        setLoading(false);
     }, [])
 
     return (
@@ -96,6 +99,7 @@ export function ResultsPage(props) {
             </div>
             <br></br>
             <RecommendationEngineTable
+                loading={loading}
                 data={resultList}
                 columnValues={columns}
                 isClickable={true}

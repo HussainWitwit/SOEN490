@@ -13,6 +13,7 @@ function JobsPage(props) {
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const durationOption = {
         number: 'number',
@@ -77,7 +78,9 @@ function JobsPage(props) {
     }
 
     useEffect(() => {
+        setLoading(true);
         getJobList();
+        setLoading(false);
     }, [])
 
 
@@ -108,6 +111,7 @@ function JobsPage(props) {
             </div>
             <br></br>
             <RecommendationEngineTable
+                loading={loading}
                 data={jobList}
                 columnValues={columns}
                 isClickable={false}
