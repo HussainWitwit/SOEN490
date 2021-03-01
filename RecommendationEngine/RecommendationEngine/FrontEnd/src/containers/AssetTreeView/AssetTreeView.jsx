@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { SvgIcon, Typography, TextField, Collapse } from '@material-ui/core';
 import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCube, faCubes, faSun, faUsers, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { faCube, faCubes, faSun, faWind } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps} from '../../redux/AssetFilterReducer/reducer-actions';
@@ -44,19 +44,20 @@ TransitionComponent.propTypes = {
   in: PropTypes.bool,
 };
 
-function AssetIcon ({ type }) {
+function AssetIcon ({ type, energyType }) {
 
   switch (type) {
-    case 'client':
-      return <FontAwesomeIcon className='label-icon' icon={faUsers} />;
-    case 'portfolio':
-      return <FontAwesomeIcon className='label-icon' icon={faCubes} />;
-    case 'plant':
+    case 'Portfolio':
       return <FontAwesomeIcon className='label-icon' icon={faCube} />;
-    case 'asset':
-      return <FontAwesomeIcon className='label-icon' icon={faSun} />;
+    case 'Plant':
+      switch(energyType){
+        case 'PV':
+          return <FontAwesomeIcon className='label-icon' icon={faSun} />;
+        case 'WIND':
+          return <FontAwesomeIcon className='label-icon' icon={faWind} />;
+      }
     default:
-      return <FontAwesomeIcon className='label-icon' icon={faQuestion} />;
+      return <FontAwesomeIcon className='label-icon' icon={faCubes} />;
   }
 }
 
@@ -66,14 +67,14 @@ AssetIcon.propTypes = {
 
 
 export function AssetTreeItem (props) {
-  const { labelText, assetType, labelInfo, color, bgColor, ...other } = props;
+  const { labelText, assetType, labelInfo, color, bgColor, energyType, ...other } = props;
 
   return (
     <TreeItem
       TransitionComponent={TransitionComponent}
       label={
         <div className='label-root'>
-          <AssetIcon type={assetType} />
+          <AssetIcon type={assetType} energyType={energyType} />
           <Typography variant="body2" className='label-text'>
             {labelText}
           </Typography>
@@ -124,7 +125,7 @@ const mockList = [
 
 export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
   const DisplayAssetNodeTree = (displayData) => (
-    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} assetType='asset' key={displayData.id}>
+    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} energyType = {displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
