@@ -67,5 +67,11 @@ export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
     return detailedWidgets;
 }
 
-
-
+export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
+    if(tabs === null || tabs.length<1)
+        return false;
+    if (tabs.some(tab => tab.name === name)){
+        return tabs.find(tab => tab.name === name).response;
+    }
+    return false;
+}
