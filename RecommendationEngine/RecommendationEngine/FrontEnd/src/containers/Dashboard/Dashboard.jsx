@@ -6,6 +6,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
 import { formatNumber } from '../../utilities/GeneralUtilities';
 import Grid from '@material-ui/core/Grid';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 export const pickStylingClassName = (title) => {
     let className;
@@ -64,6 +66,14 @@ function Dashboard() {
                     </div>
                 ))}
             </div>
+            <FullCalendar
+                plugins={[dayGridPlugin]}
+                initialView="dayGridMonth"
+                events={[
+                  { title: 'event 1', date: '2021-03-03' },
+                  { title: 'event 2', date: '2021-03-04' }
+                ]}
+            />
         </div>
     )
 }
