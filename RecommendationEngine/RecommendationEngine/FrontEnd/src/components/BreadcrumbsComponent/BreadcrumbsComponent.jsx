@@ -21,6 +21,17 @@ const getAssetAncestry = (id, assets) => {
     return res;
 }
 
+function EnergyTypeIcon({energyType}){
+    switch(energyType){
+        case "PV":
+            return <FaSolarPanel id="energy-type-icon" />;
+        case "WIND":
+            return <GiWindTurbine id="energy-type-icon" />;
+        default:
+            return null;
+    }
+}
+
 function BreadcrumbsComponent (props) {
     const [asset, setAsset] = React.useState({});
     React.useEffect(()=> {
@@ -30,16 +41,15 @@ function BreadcrumbsComponent (props) {
         <div id="main-container">
             <Breadcrumbs aria-label="breadcrumb" separator="›" id="breadcrumbsComponent">
                 <Link color="inherit" id="link">
-                    <BiCube id="bi-cube" />
+                    <BiCube id="energy-type-icon" />
                 All Portfolio
                 </Link>
                 {asset.ancestry && asset.ancestry.map((el)=> (<Link color="inherit" id="link">{el}
                 </Link>))}
-                <Typography color="textPrimary" id="Typography"><FaSolarPanel id="gi-wind-turbine" />{asset.currentAsset && asset.currentAsset.displayText}</Typography>
+                <Typography color="textPrimary" id="Typography"><EnergyTypeIcon energyType={asset.currentAsset && asset.currentAsset.energyType} />{asset.currentAsset && asset.currentAsset.displayText}</Typography>
             </Breadcrumbs>
         </div>
     );
 }
-/* <GiWindTurbine id="gi-wind-turbine" /> */
 
 export default connect(mapStateToProps, mapDispatchToProps)(BreadcrumbsComponent);
