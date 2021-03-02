@@ -1,6 +1,7 @@
 export interface Widget {
     title: string;
     value: number;
+    description: string;
 }
 
 export interface DetailedWidget {
