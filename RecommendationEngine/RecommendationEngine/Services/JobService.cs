@@ -7,37 +7,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Interfaces.Hub;
+using RecommendationEngine.Utilities;
 
 namespace RecommendationEngine.Services
 {
     public class JobService : IJobService
     {
         private IJobRepository _jobRepository;
+        private IAssetRepository _assetRepository;
 
         public JobService(
-            IJobRepository jobRepository, INotificationHub notificationHub
+            IJobRepository jobRepository, INotificationHub notificationHub, IAssetRepository assetRepository
         )
         {
             _jobRepository = jobRepository;
+            _assetRepository = assetRepository;
         }
 
-        public List<Job> GetJobList()
+        public List<Job> GetJobList(int? assetId)
         {
             try
             {
-                List<Job> jobs = _jobRepository.GetJobList()
-                    .Select(job => new Job
-                    {
-                        Id = job.RecommendationJobId,
-                        Status = job.Status,
-                        ConfiguredRecommendationId = job.Schedule.RecommendationScheduleId,
-                        ConfiguredRecommendationTitle = job.Schedule.Name,
-                        Duration = job.JobDuration,
-                        Timestamp = job.Timestamp,
-                        AssetName = job.Asset.DisplayText
-                    }).ToList();
+                var jobs = _jobRepository.GetJobList();
+                var assetsList = _assetRepository.GetAssetsList();
 
-                return jobs;
+                if (assetId != null)
+                {
+                    jobs = jobs
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
+                return jobs.Select(job => new Job
+                {
+                    Id = job.RecommendationJobId,
+                    Status = job.Status,
+                    ConfiguredRecommendationId = job.Schedule.RecommendationScheduleId,
+                    ConfiguredRecommendationTitle = job.Schedule.Name,
+                    Duration = job.JobDuration,
+                    Timestamp = job.Timestamp,
+                    AssetName = job.Asset.DisplayText
+                }).ToList();
             }
             catch (GlobalException)
             {
