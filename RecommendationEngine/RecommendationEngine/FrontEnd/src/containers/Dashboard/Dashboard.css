@@ -65,5 +65,11 @@
   align-items: center;
   justify-content: center;
 }
+.fc-header-toolbar{
+  margin-top: 3em;
+  width: 60%;
+}
 
-
+.fc-view-harness{
+  width: 60%;
+}

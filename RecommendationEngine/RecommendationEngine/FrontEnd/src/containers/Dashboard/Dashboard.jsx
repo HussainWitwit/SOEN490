@@ -8,6 +8,8 @@ import { formatNumber } from '../../utilities/GeneralUtilities';
 import Grid from '@material-ui/core/Grid';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from "@fullcalendar/interaction";
+
 
 export const pickStylingClassName = (title) => {
     let className;
@@ -35,6 +37,10 @@ function Dashboard() {
     useEffect(() => {
         getValues();
     }, [])
+
+    function handleDateClick() {
+        // Do whatever
+    }
 
     return (
         <div>
@@ -67,11 +73,13 @@ function Dashboard() {
                 ))}
             </div>
             <FullCalendar
-                plugins={[dayGridPlugin]}
-                initialView="dayGridMonth"
+                plugins={[dayGridPlugin, interactionPlugin]}
+                selectable={true}
+                initialView='dayGridMonth'
+                select={handleDateClick}
                 events={[
-                  { title: 'event 1', date: '2021-03-03' },
-                  { title: 'event 2', date: '2021-03-04' }
+                    { title: '(5) washes', date: '2021-03-03' },
+                    { title: '(3) washes', date: '2021-03-04' }
                 ]}
             />
         </div>
