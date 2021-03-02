@@ -84,7 +84,7 @@ namespace RecommendationEngine.Repositories
             try
             {
                 return _recommendationEngineDb.RecommendationSchedules.Include(x => x.RecommendationType).Include(x => x.AssetsList).ThenInclude(asset => asset.Asset).
-                                ThenInclude(asset => asset.Type).ToList();
+                                ThenInclude(asset => asset.Type).Include(x => x.AssetsList).ThenInclude(asset => asset.Asset).ThenInclude(x => x.ParentAsset).ToList();
             }
             catch (Exception) {
                 throw new DbException();
