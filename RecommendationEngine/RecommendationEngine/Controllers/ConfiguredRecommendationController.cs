@@ -21,12 +21,25 @@ namespace RecommendationEngine.Controllers
         {
             try
             {
-                return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationList(null));
             }
-            catch (GlobalException e) {
+            catch (GlobalException e)
+            {
                 return e.GetActionResult();
             }
-            
+        }
+
+        [HttpGet("filterByAsset/{id?}")]
+        public IActionResult GetConfiguredRecommendationListByAssetId(int? id)
+        {
+            try
+            {
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationList(id));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
         }
 
         [HttpGet("{id}")]
