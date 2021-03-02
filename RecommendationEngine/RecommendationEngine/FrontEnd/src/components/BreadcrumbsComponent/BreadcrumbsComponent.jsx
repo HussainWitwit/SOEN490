@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
@@ -33,8 +33,8 @@ function EnergyTypeIcon({energyType}){
 }
 
 function BreadcrumbsComponent (props) {
-    const [asset, setAsset] = React.useState({});
-    React.useEffect(()=> {
+    const [asset, setAsset] = useState({});
+    useEffect(()=> {
         setAsset(getAssetAncestry(props.selectedAsset, props.flatListAssets));
     }, [props.selectedAsset])
     return (
