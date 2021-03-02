@@ -14,7 +14,7 @@ namespace RecommendationEngine.Utilities
             {
                 if (currentAsset.AssetId == id)
                     return true;
-                currentAsset = assetsList.FirstOrDefault(x=>x.AssetId==currentAsset.ParentAsset.AssetId);
+                currentAsset = assetsList.FirstOrDefault(x=>x.AssetId==currentAsset?.ParentAsset?.AssetId);
             }
             return false;
         }
