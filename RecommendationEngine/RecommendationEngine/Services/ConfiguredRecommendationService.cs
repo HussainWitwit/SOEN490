@@ -31,16 +31,16 @@ namespace RecommendationEngine.Services
             _scheduler = scheduler;
         }
 
-        public List<ConfiguredRecommendation> GetConfiguredRecommendationList(int? id)
+        public List<ConfiguredRecommendation> GetConfiguredRecommendationList(int? assetId)
         {
             try
             {
                 var recommendationList = _recommendationRepository.GetRecommendationScheduleList();
                 var assetsList = _assetRepository.GetAssetsList();
-                if (id != null)
+                if (assetId != null)
                 {
                     recommendationList = recommendationList
-                        .Where(x => x.AssetsList.Any(asset => asset.Asset.IsChildOrEquivalent((int) id, assetsList))).ToList();
+                        .Where(x => x.AssetsList.Any(asset => asset.Asset.IsChildOrEquivalent((int) assetId, assetsList))).ToList();
                 }
                 return recommendationList.Select(dbConfigRecommendation =>
                     new ConfiguredRecommendation
