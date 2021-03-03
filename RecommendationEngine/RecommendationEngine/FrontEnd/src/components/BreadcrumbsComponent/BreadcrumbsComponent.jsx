@@ -3,8 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import { GiWindTurbine } from "react-icons/gi";
-import { FaSolarPanel } from "react-icons/fa"
-import { BiCube } from "react-icons/bi";
+import { FaSolarPanel, FaCubes } from "react-icons/fa"
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps} from '../../redux/AssetFilterReducer/reducer-actions';
 import './BreadcrumbsComponent.css';
@@ -38,17 +37,37 @@ function BreadcrumbsComponent (props) {
         setAsset(getAssetAncestry(props.selectedAsset, props.flatListAssets));
     }, [props.selectedAsset])
     return (
-        <div id="main-container">
-            <Breadcrumbs aria-label="breadcrumb" separator="›" id="breadcrumbsComponent">
-                <Link color="inherit" id="link">
-                    <BiCube id="energy-type-icon" />
-                All Portfolio
-                </Link>
-                {asset.ancestry && asset.ancestry.map((el)=> (<Link color="inherit" id="link">{el}
-                </Link>))}
-                <Typography color="textPrimary" id="Typography"><EnergyTypeIcon energyType={asset.currentAsset && asset.currentAsset.energyType} />{asset.currentAsset && asset.currentAsset.displayText}</Typography>
-            </Breadcrumbs>
-        </div>
+      <div id="main-container">
+        <Breadcrumbs
+          aria-label="breadcrumb"
+          separator="›"
+          id="breadcrumbsComponent"
+        >
+          {asset.currentAsset ? (
+            <Link color="inherit" id="link">
+              <FaCubes id="energy-type-icon" />
+              All Portfolio
+            </Link>
+          ) : (
+            <Typography color="textPrimary" id="Typography">
+              <FaCubes id="energy-type-icon" />
+              All Portfolio
+            </Typography>
+          )}
+          {asset.ancestry &&
+            asset.ancestry.map((el) => (
+              <Link color="inherit" id="link">
+                {el}
+              </Link>
+            ))}
+          {asset.currentAsset && <Typography color="textPrimary" id="Typography">
+            <EnergyTypeIcon
+              energyType={asset.currentAsset && asset.currentAsset.energyType}
+            />
+            {asset.currentAsset && asset.currentAsset.displayText}
+          </Typography>}
+        </Breadcrumbs>
+      </div>
     );
 }
 
