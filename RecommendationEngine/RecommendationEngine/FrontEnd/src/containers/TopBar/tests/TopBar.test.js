@@ -5,6 +5,7 @@ import NotificationBell from '../../../components/Notification/NotificationBell.
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { store } from '../../../redux/store';
+import { Provider } from 'react-redux';
 import BreadcrumbsComponent from '../../../components/BreadcrumbsComponent/BreadcrumbsComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -17,7 +18,7 @@ describe('TopBar component', () => {
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<TopBar store={store} />, div)
+        ReactDOM.render(<Provider store={store}><TopBar store={store} /></Provider>, div)
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
