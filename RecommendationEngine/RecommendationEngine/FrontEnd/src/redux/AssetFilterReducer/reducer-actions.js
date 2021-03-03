@@ -3,7 +3,7 @@ import { getConfiguredRecommendationList } from '../SharedReducer/reducer-action
 
 //**Actions --> Useful for unit testing the reducer.
 export const setAssetSelection = (dispatch, id) => {
-  dispatch(getConfiguredRecommendationList);
+  dispatch(getConfiguredRecommendationList(id));
   return {
     type: dispatchActionType.SET_ASSET_SELECTION,
     payload: {

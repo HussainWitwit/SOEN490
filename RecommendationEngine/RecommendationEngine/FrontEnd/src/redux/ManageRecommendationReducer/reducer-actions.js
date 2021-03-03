@@ -204,7 +204,7 @@ export const addConfiguredRecommendation = async (dispatch, configuredRecommenda
     payload: response,
   });
   if (response) {
-    await getConfiguredRecommendationList(dispatch);
+    await getConfiguredRecommendationList(null);
   }
   return response;
 }
@@ -217,7 +217,7 @@ export const editConfiguredRecommendation = async (dispatch, configuredRecommend
     payload: response,
   });
   if (response) {
-    await getConfiguredRecommendationList(dispatch);
+    await getConfiguredRecommendationList(null);
     openScheduleDrilldown(dispatch, id);
   }
   return response;
@@ -231,7 +231,7 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
     payload: response
   });
   if (response) {
-    await getConfiguredRecommendationList(dispatch);
+    await getConfiguredRecommendationList(null);
   }
   return response;
 }
