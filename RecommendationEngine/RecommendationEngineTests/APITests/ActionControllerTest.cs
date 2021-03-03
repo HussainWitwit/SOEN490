@@ -10,7 +10,9 @@ using NUnit.Framework;
 using RecommendationEngine;
 using RecommendationEngine.Services;
 using RecommendationEngineTests.UnitTests.MockData;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -59,6 +61,17 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
+        public async Task GetNbActionByDay()
+        {
+            var response = await _client.GetAsync("api/action/calendar");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<CalendarAction> calendarActions = JsonConvert.DeserializeObject<List<CalendarAction>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(calendarActions);
+            Assert.AreEqual(calendarActions.FirstOrDefault(act => act.Date.Date == new DateTime(2020, 06, 01)).NbOfActions, 1);
+            Assert.AreEqual(calendarActions.FirstOrDefault(act => act.Date.Date == new DateTime(2020, 06, 05)).NbOfActions, 2);
+        }
+
+        [Test]
         public async Task GetBadActions()
         {
             var response = await _clientBad.GetAsync("api/action/9");
@@ -67,6 +80,11 @@ namespace RecommendationEngineTests.APITests
 
         public class TestRepositoryMock : IActionRepository
         {
+            List<DBAction> IActionRepository.GetActionList()
+            {
+                return MockActions.CalendarActions;
+            }
+
             List<DBAction> IActionRepository.GetActionsByResultId(int id)
             {
                 return MockActions.BasicDBActions;
@@ -75,6 +93,11 @@ namespace RecommendationEngineTests.APITests
 
         public class TestBadRepositoryMock : IActionRepository
         {
+            List<DBAction> IActionRepository.GetActionList()
+            {
+                return MockActions.CalendarActions;
+            }
+
             List<DBAction> IActionRepository.GetActionsByResultId(int id)
             {
                 return MockActions.BadDBActions;
