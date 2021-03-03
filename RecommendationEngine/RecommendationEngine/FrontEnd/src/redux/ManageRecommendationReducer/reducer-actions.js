@@ -197,41 +197,44 @@ export const setEditableConfiguredRecommendation = (dispatch, value, templateTyp
 }
 
 /* istanbul ignore next */
-export const addConfiguredRecommendation = async (dispatch, configuredRecommendation) => {
+export const addConfiguredRecommendation = (configuredRecommendation) => async (dispatch, getState) => {
   const response = await AddConfiguredRecommendation(configuredRecommendation);
   dispatch({
     type: dispatchActionType.ADD_CONFIGURED_RECOMMENDATION,
     payload: response,
   });
+  const state = getState();
   if (response) {
-    await getConfiguredRecommendationList(null);
+     dispatch(getConfiguredRecommendationList(state.assetFilterReducer.selectedAsset));
   }
   return response;
 }
 
 /* istanbul ignore next */
-export const editConfiguredRecommendation = async (dispatch, configuredRecommendation, id) => {
+export const editConfiguredRecommendation = (configuredRecommendation, id) => async (dispatch, getState) => {
   const response = await EditConfiguredRecommendation(configuredRecommendation, id);
   dispatch({
     type: dispatchActionType.EDIT_CONFIGURED_RECOMMENDATION,
     payload: response,
   });
+  const state = getState();
   if (response) {
-    await getConfiguredRecommendationList(null);
+    dispatch(getConfiguredRecommendationList(state.assetFilterReducer.selectedAsset));
     openScheduleDrilldown(dispatch, id);
   }
   return response;
 }
 
 /* istanbul ignore next */
-export const deleteConfiguredRecommendation = async (dispatch, id) => {
+export const deleteConfiguredRecommendation = (id) => async (dispatch, getState) => {
   const response = await DeleteRecommendationById(id);
   dispatch({
     type: dispatchActionType.DELETE_CONFIGURE_RECOMMENDATION,
     payload: response
   });
+  const state = getState();
   if (response) {
-    await getConfiguredRecommendationList(null);
+    dispatch(getConfiguredRecommendationList(state.assetFilterReducer.selectedAsset));
   }
   return response;
 }
@@ -239,10 +242,10 @@ export const deleteConfiguredRecommendation = async (dispatch, id) => {
 /* istanbul ignore next */
 export const postConfiguredRecommendation = async (dispatch, configuredRecommendation, editingState) => {
   if (editingState.isEditing) {
-    return await editConfiguredRecommendation(dispatch, configuredRecommendation, editingState.id);
+    return dispatch(editConfiguredRecommendation(configuredRecommendation, editingState.id));
   }
   else {
-    return await addConfiguredRecommendation(dispatch, configuredRecommendation);
+    return dispatch(addConfiguredRecommendation(configuredRecommendation));
   }
 }
 
