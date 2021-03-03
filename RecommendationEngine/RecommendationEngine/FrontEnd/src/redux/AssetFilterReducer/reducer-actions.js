@@ -1,14 +1,16 @@
 import * as dispatchActionType from './dispatch-types';
+import { getConfiguredRecommendationList } from '../SharedReducer/reducer-actions';
 
 //**Actions --> Useful for unit testing the reducer.
-export const setAssetSelection = (id) => {
+export const setAssetSelection = (dispatch, id) => {
+  dispatch(getConfiguredRecommendationList);
   return {
     type: dispatchActionType.SET_ASSET_SELECTION,
     payload: {
       selectedAsset: id,
     },
   };
-};
+}
 
 export const clearAssetSelection = () => {
   return {
@@ -26,7 +28,7 @@ export const mapStateToProps = ({ sharedReducer, assetFilterReducer }) => {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    setAssetSelection: (value) => dispatch(setAssetSelection(value)),
+    setAssetSelection: (value) => dispatch(setAssetSelection(dispatch, value)),
     clearAssetSelection: () => dispatch(clearAssetSelection()),
   };
 };
