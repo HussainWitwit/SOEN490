@@ -66,12 +66,13 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          <MultiSelectTreeView
+          {isEditing && basicConfiguration.asset.map(e => <p style= {{color: 'grey'}}>{e.displayText}{' - '}</p>)}
+          {!isEditing && <MultiSelectTreeView
             value={basicConfiguration.asset ? basicConfiguration.asset : []}
             onChange={(event, value) => updateAsset(event)}
             placeholder='Assets ...'
             items={apiAssets}
-          />
+          />}
         </div>
         <div id="scenario-container">
           <p id="text-3">Preferred Scenario: </p>
