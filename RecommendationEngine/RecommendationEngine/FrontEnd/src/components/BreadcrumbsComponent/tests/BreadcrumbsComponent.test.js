@@ -1,26 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Enzyme, { shallow } from '../../../enzyme';
+import Enzyme, { mount } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Link from '@material-ui/core/Link';
 import { GiWindTurbine } from "react-icons/gi";
-import { BiCube } from "react-icons/bi";
+import { FaCubes } from "react-icons/fa";
 import { store } from '../../../redux/store';
 import { Typography } from '@material-ui/core';
-import BreadcrumbsComponent from '../BreadcrumbsComponent';
+import { BreadcrumbsComponent } from '../BreadcrumbsComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Breadcrumbs component', () => {
-    const setState = jest.fn();
-    const useStateSpy = jest.spyOn(React, 'useState');
-    useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<BreadcrumbsComponent store={store}/>);
+    const mockAssets = [{id:1, parentId:null, displayText:'Parent'}, {id:2, parentId:1, displayText:'Child', energyType:'WIND'}]
+    const output = mount(<BreadcrumbsComponent selectedAsset={2} flatListAssets={mockAssets}/>);
 
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<BreadcrumbsComponent  store={store}/>, div);
+        ReactDOM.render(<BreadcrumbsComponent />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
@@ -34,7 +32,7 @@ describe('Breadcrumbs component', () => {
     });
 
     it('It finds the Bicube element', () => {
-        let component = output.find(BiCube);
+        let component = output.find(FaCubes);
         expect(component).toHaveLength(1);
     });
 
@@ -45,6 +43,6 @@ describe('Breadcrumbs component', () => {
 
     it('It finds the Typography element', () => {
         let component = output.find(Typography);
-        expect(component).toHaveLength(1);
+        expect(component).toHaveLength(4);
     });
 });

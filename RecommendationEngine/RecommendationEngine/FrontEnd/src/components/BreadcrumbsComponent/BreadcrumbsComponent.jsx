@@ -31,7 +31,7 @@ function EnergyTypeIcon({energyType}){
     }
 }
 
-function BreadcrumbsComponent (props) {
+export function BreadcrumbsComponent (props) {
     const [asset, setAsset] = useState({});
     useEffect(()=> {
         setAsset(getAssetAncestry(props.selectedAsset, props.flatListAssets));
