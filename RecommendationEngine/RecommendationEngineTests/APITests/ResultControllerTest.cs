@@ -60,6 +60,15 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
+        public async Task GetResultWithAssetFilterList()
+        {
+            var response = await _client.GetAsync("api/result/filterByAsset/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<Result> resultList = JsonConvert.DeserializeObject<List<Result>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(resultList);
+        }
+
+        [Test]
         public async Task GetBadResultList()
         {
             var response = await _clientBad.GetAsync("api/result");

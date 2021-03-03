@@ -60,6 +60,13 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
+        public async Task GetJobListWithAsset()
+        {
+            var response = await _client.GetAsync("api/job/filterByAsset/2");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
         public async Task GetBadJobList()
         {
             var response = await _clientBad.GetAsync("api/job");
