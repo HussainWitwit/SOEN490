@@ -1,5 +1,4 @@
 using System;
-using Models.Application.Asset;
 
 namespace Models.Application
 {

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Interfaces.Hub;
 using Interfaces.Services.ExternalApi;
 
 namespace RecommendationScheduler.RecommendationJob
@@ -21,14 +22,15 @@ namespace RecommendationScheduler.RecommendationJob
         private readonly YearlyWashParameters _parameters = new YearlyWashParameters();
 
 
-        public YearlyWashOptimizationRecommendationJob(IRecommendationJobLogger jobLogger, IRecommendationSchedulerRepository schedulerRepository, IMetadataDriveService metadataDriveService)
+        public YearlyWashOptimizationRecommendationJob(IRecommendationJobLogger jobLogger, IRecommendationSchedulerRepository schedulerRepository, IMetadataDriveService metadataDriveService, INotificationHub notificationHub)
         {
             _jobLogger = jobLogger;
             _schedulerRepository = schedulerRepository;
             _metadataDriveService = metadataDriveService;
+            _notificationHub = notificationHub;
         }
 
-        protected override void ExecuteJob()
+        protected override DBRecommendationJobResult ExecuteJob()
         {
             GetFromDB();
 
@@ -36,6 +38,7 @@ namespace RecommendationScheduler.RecommendationJob
             YearlyWashOptimizationRecommendation ywoRecommendation = new YearlyWashOptimizationRecommendation(_jobLogger, _recommendationJob);
             DBRecommendationJobResult _result = ywoRecommendation.ExecuteAlgorithm(_parameters, _apiValues);
             SaveResult(_recommendationJob, _result);
+            return _result;
         }
 
         protected override void GetFromDB()

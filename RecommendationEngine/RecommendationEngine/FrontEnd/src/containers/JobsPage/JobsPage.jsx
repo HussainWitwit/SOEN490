@@ -8,7 +8,7 @@ import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
 
-function JobsPage(props) {
+function JobsPage (props) {
 
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
@@ -74,7 +74,11 @@ function JobsPage(props) {
 
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
-            return job.id.toString().includes(input.toString())
+            return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
+                || job.assetName.toLowerCase().includes(input.toLowerCase())
+                || job.status.toLowerCase().includes(input.toLowerCase())
+                || job.timestamp.includes(input.toLowerCase())
+                || (job.duration.toString() + " seconds").includes(input)
         })
         setJobList(filtered);
     }

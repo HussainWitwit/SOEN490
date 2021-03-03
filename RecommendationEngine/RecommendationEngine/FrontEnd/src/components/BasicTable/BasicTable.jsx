@@ -27,7 +27,7 @@ export function sortingComparison (firstObj, secondObj, orderColumnTitle) {
 }
 
 export function tableSort (array, comparator) {
-  if (array != null || array !== undefined) {
+  if (Array.isArray(array) || array.length) {
     const rowElements = array.map((element, index) => [element, index]);
     rowElements.sort((firstObj, secondObj) => {
       const order = comparator(firstObj[0], secondObj[0]);
