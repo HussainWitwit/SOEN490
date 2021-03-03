@@ -35,7 +35,7 @@ namespace RecommendationEngineTests.UnitTests
             List<DBRecommendationSchedule> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
             _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(recommendation);
 
-            List<ConfiguredRecommendation> expected = _configuredRecommendationService.GetConfiguredRecommendationList();
+            List<ConfiguredRecommendation> expected = _configuredRecommendationService.GetConfiguredRecommendationList(null);
             Assert.AreEqual(expected[0].Name, recommendation[0].Name);
             Assert.AreEqual(expected[0].Granularity, recommendation[0].Granularity);
             Assert.NotNull(expected[0].AssetList);
@@ -86,7 +86,7 @@ namespace RecommendationEngineTests.UnitTests
             _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(new List<DBRecommendationSchedule>() { recommendation[0] });
             _configuredRecommendationService.DeleteConfiguredRecommendation(recommentionId);
 
-            List<ConfiguredRecommendation> actual = _configuredRecommendationService.GetConfiguredRecommendationList();
+            List<ConfiguredRecommendation> actual = _configuredRecommendationService.GetConfiguredRecommendationList(null);
             Assert.AreEqual(1, actual.Count);
             Assert.AreEqual(1, actual[0].Id);
         }

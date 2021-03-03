@@ -32,6 +32,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<JobService>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -42,6 +43,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestBadRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<JobService>().AsImplementedInterfaces();
                 }));
             _clientBad = _serverBad.CreateClient();
@@ -92,6 +94,27 @@ namespace RecommendationEngineTests.APITests
             List<DBRecommendationJob> IJobRepository.GetJobList()
             {
                 return MockJobs.BasicDBJobList;
+            }
+        }
+
+        public class TestAssetRepositoryMock : IAssetRepository
+        {
+            public void AddAsset(DBAsset asset) { }
+
+            public void AddAssetList(List<DBAsset> asset) { }
+
+            public List<DBAsset> GetAssetsList()
+            {
+                return MockAssets.BasicDBAssetList;
+            }
+            public DBAsset GetAssetByName(string assetName)
+            {
+                return MockAssets.BasicDBAsset;
+            }
+
+            public DBAsset GetAssetById(int assetId)
+            {
+                return MockAssets.BasicDBAsset;
             }
         }
 
