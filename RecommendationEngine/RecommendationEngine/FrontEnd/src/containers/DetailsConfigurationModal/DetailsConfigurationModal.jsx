@@ -36,11 +36,13 @@ export function DetailsConfigurationModal (props) {
   }, [template.name])
   
   useEffect(() => {
+    if(!isEditing) {
     let date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
     setRepeatDate(date);
     setRepeatTime(date);
+    }
   }, [])
 
   return (
