@@ -65,9 +65,11 @@ function JobsPage(props) {
     ];
 
     const getJobList = async () => {
+        setLoading(true);
         let response = await GetRecommendationJobList();
         setJobList(response);
         setDefaultJobList(response);
+        setLoading(false);
     }
 
     const updateSearch = async (input) => {
@@ -78,9 +80,9 @@ function JobsPage(props) {
     }
 
     useEffect(() => {
-        setLoading(true);
+        
         getJobList();
-        setLoading(false);
+   
     }, [])
 
 

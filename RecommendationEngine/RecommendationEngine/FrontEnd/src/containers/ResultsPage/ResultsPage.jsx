@@ -53,9 +53,11 @@ export function ResultsPage(props) {
     ]
 
     const getResultList = async () => {
+        setLoading(true);
         let response = await GetRecommendationResultList();
         setDefaultResultList(response);
         setResultList(response);
+        setLoading(false);
     }
 
 
@@ -67,9 +69,7 @@ export function ResultsPage(props) {
     }
 
     useEffect(() => {
-        setLoading(true);
         getResultList();
-        setLoading(false);
     }, [])
 
     return (
@@ -103,7 +103,11 @@ export function ResultsPage(props) {
                 data={resultList}
                 columnValues={columns}
                 isClickable={true}
-                onClickRow={openResultDrilldown}
+                onClickRow={
+                    // setLoading(true),
+                    openResultDrilldown
+                    // setLoading(false)
+                }
             />
         </div>
     );
