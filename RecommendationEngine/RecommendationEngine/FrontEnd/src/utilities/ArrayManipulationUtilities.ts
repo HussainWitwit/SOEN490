@@ -42,30 +42,22 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
 
 export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
     let detailedWidgets: DetailedWidget[] = [];
-
-    const potentialSavingsDescription = 'The potential net savings value represents the total possible ' +
-        'saving if the best suggested wash dates are followed. It should be noted that this ' +
-        'value has been generated while considering the best case scenario for each asset.';
-
-    const potentialRoiDescription = 'The potential return on investment value represents the average potential rate of return ' +
-        'if the best suggested wash dates are followed. It should be noted that this value has been ' +
-        'generated while considering the best case scenario for each asset.';
-
-    const potentialCostOfInaction = 'The potential cost of inaction value represents the total possible loss ' +
-        'if the best suggested wash dates are not followed. It should be noted that this value has been ' +
-        'generated while considering the best case scenario for each asset.';
-
     detailedWidgets = widgets?.map((widget) => {
         return {
             value: widget.value,
             title: widget.title,
-            description: widget.title === 'Potential Net Savings' ? potentialSavingsDescription : widget.title === 'Average ROI' ? potentialRoiDescription : potentialCostOfInaction,
-            sign: widget.title === 'Potential Net Savings' ? '$' : widget.title === 'Average ROI' ? '%' : '$',
-
+            description: widget.description,
+            sign: widget.title === 'Average ROI' ? '%' : '$',
         }
     })
     return detailedWidgets;
 }
 
-
-
+export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
+    if(tabs === null || tabs.length<1)
+        return false;
+    if (tabs.some(tab => tab.name === name)){
+        return tabs.find(tab => tab.name === name).response;
+    }
+    return false;
+}

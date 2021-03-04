@@ -6,6 +6,7 @@ import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
 
 function JobsPage (props) {
@@ -64,7 +65,7 @@ function JobsPage (props) {
     ];
 
     const getJobList = async () => {
-        let response = await GetRecommendationJobList();
+        let response = await GetRecommendationJobList(props.selectedAsset);
         setJobList(response);
         setDefaultJobList(response);
     }
@@ -82,7 +83,7 @@ function JobsPage (props) {
 
     useEffect(() => {
         getJobList();
-    }, [])
+    }, [props.selectedAsset])
 
 
     return (
@@ -121,5 +122,4 @@ function JobsPage (props) {
     );
 }
 
-export default connect(null, mapDispatchDrillDownToProps)(JobsPage);
-
+export default connect(mapAssetFilterStateToProps, mapDispatchDrillDownToProps)(JobsPage);

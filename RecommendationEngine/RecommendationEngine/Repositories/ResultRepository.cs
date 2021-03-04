@@ -22,7 +22,7 @@ namespace RecommendationEngine.Repositories
             try
             {
                 return _recommendationEngineDb.RecommendationJobResults.Include(result => result.Job).ThenInclude(job => job.Schedule)
-                    .Include(result => result.Asset).ToList();
+                    .Include(result => result.Asset).ThenInclude(x=>x.ParentAsset).ToList();
             }
             catch (Exception) {
                 throw new DbException();

@@ -113,6 +113,6 @@ export const mapDispatchPopUpActions = (dispatch) => {
   return {
     closeScheduleDrilldown: () => dispatch(closeScheduleDrilldown()),
     updateScheduleDrilldown: (action) => dispatch(updateScheduleDrilldown(action)),
-    deleteConfiguredRecommendation: (id) => deleteConfiguredRecommendation(dispatch, id)
+    deleteConfiguredRecommendation: (id) => dispatch(deleteConfiguredRecommendation(id))
   }
 }

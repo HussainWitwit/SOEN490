@@ -64,6 +64,13 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
+        public async Task GetRecommendationsWithAsset()
+        {
+            var response = await _client.GetAsync("api/configuredRecommendation/filterByAsset/2");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
+
+        [Test]
         public async Task AddRecommendation()
         {
             var recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION;

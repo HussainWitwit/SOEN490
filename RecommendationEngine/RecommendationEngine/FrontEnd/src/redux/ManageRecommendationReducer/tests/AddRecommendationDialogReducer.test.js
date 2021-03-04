@@ -8,8 +8,8 @@ const detailsConfigInitialValues = {
   preferredScenario: 'ROI',
   granularity: 'Yearly',
   repeatDay: 1,
-  repeatDate: new Date(),
-  repeatTime: new Date()
+  repeatDate: '',
+  repeatTime: ''
 }
 
 let state = {

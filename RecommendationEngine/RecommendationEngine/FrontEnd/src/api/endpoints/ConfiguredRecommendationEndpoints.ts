@@ -2,9 +2,9 @@ import { ConfiguredRecommendation } from "../models/ConfiguredRecommendation";
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
 import { toast } from 'react-toastify';
 
-export async function GetConfiguredRecommendationList() : Promise<ConfiguredRecommendation[]> {
+export async function GetConfiguredRecommendationList(assetId: number | null) : Promise<ConfiguredRecommendation[]> {
     let configuredRecommendations: ConfiguredRecommendation[] = [];
-    await fetch('api/ConfiguredRecommendation')
+    await fetch('api/ConfiguredRecommendation/filterByAsset/'+(assetId?assetId:''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {
