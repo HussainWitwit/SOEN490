@@ -13,7 +13,15 @@ function JobsPage (props) {
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const startLoadingSpinner = () => {
+        setLoading(true);
+      }
+    
+      const stopLoadingSpinner = () => {
+        setLoading(false);
+      }
 
     const durationOption = {
         number: 'number',
@@ -65,11 +73,11 @@ function JobsPage (props) {
     ];
 
     const getJobList = async () => {
-        setLoading(true);
+        startLoadingSpinner();
         let response = await GetRecommendationJobList();
         setJobList(response);
         setDefaultJobList(response);
-        setLoading(false);
+        stopLoadingSpinner();
     }
 
     const updateSearch = async (input) => {

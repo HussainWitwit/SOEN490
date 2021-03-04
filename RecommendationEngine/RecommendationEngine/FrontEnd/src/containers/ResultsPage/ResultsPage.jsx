@@ -14,6 +14,14 @@ export function ResultsPage(props) {
     const [defaultResultList, setDefaultResultList] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const startLoadingSpinner = () => {
+        setLoading(true);
+      }
+    
+      const stopLoadingSpinner = () => {
+        setLoading(false);
+      }
+
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
         currency: 'CAD',
@@ -53,11 +61,11 @@ export function ResultsPage(props) {
     ]
 
     const getResultList = async () => {
-        setLoading(true);
+        startLoadingSpinner();
         let response = await GetRecommendationResultList();
         setDefaultResultList(response);
         setResultList(response);
-        setLoading(false);
+        stopLoadingSpinner();
     }
 
 

@@ -5,6 +5,10 @@ import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
 import { formatNumber } from '../../utilities/GeneralUtilities';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -20,13 +24,24 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
-function Dashboard () {
+function Dashboard() {
   const [widgetMetrics, setWidgetMetrics] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const startLoadingSpinner = () => {
+    setLoading(true);
+  }
+
+  const stopLoadingSpinner = () => {
+    setLoading(false);
+  }
 
   const getValues = async () => {
+    startLoadingSpinner();
     let response = await getWidgetMetrics();
     let detailedWidgets = convertWidgetResponse(response);
     setWidgetMetrics(detailedWidgets);
+    stopLoadingSpinner();
   }
 
   useEffect(() => {
@@ -34,25 +49,37 @@ function Dashboard () {
   }, [])
 
   return (
+
     <div>
-      <h1>Dashboard</h1>
-      <div id='widget-container'>
-        {widgetMetrics?.map((widget, index) => (
-          <div key={index} className={pickStylingClassName(widget.title)}>
-            <div id='tooltip-container'>
-              <Tooltip title={widget.description}>
-                <HelpOutlineOutlinedIcon size={1} />
-              </Tooltip>
-            </div>
-            <div id='title-container'>{widget.title}</div>
-            <div>
-              <div id='widget-contents'>
-                <div id='sign'>{widget.sign}</div>
-                <div id='money-value'>{formatNumber(widget.value)}</div>
+      <div id='dashboard-container'>
+        <h1>Dashboard</h1>
+        <Dialog
+          open={loading}
+          onClose={stopLoadingSpinner}
+        >
+          <DialogContent>
+            <CircularProgress />
+          </DialogContent>
+        </Dialog>
+        <div id='widget-container'>
+          {widgetMetrics?.map((widget, index) => (
+            <div key={index} className={pickStylingClassName(widget.title)}>
+
+              <div id='tooltip-container'>
+                <Tooltip title={widget.description}>
+                  <HelpOutlineOutlinedIcon size={1} />
+                </Tooltip>
+              </div>
+              <div id='title-container'>{widget.title}</div>
+              <div>
+                <div id='widget-contents'>
+                  <div id='sign'>{widget.sign}</div>
+                  <div id='money-value'>{formatNumber(widget.value)}</div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   )
