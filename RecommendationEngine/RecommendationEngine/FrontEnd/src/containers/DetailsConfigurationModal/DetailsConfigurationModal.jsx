@@ -32,8 +32,16 @@ export function DetailsConfigurationModal (props) {
   useEffect(() => {
     if (template.name === templateDetailsList[0].templateName) {
       setGranularity('Yearly');
-    }
+    }   
   }, [template.name])
+  
+  useEffect(() => {
+    let date = new Date();
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    setRepeatDate(date);
+    setRepeatTime(date);
+  }, [])
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
