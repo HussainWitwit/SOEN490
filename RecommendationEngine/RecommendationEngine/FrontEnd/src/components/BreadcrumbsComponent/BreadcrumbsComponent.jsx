@@ -43,29 +43,27 @@ export function BreadcrumbsComponent (props) {
           separator="›"
           id="breadcrumbsComponent"
         >
-          {asset.currentAsset ? (
-            <Link color="inherit" id="link">
-              <FaCubes id="energy-type-icon" />
-              All Portfolio
-            </Link>
-          ) : (
-            <Typography color="textPrimary" id="Typography">
-              <FaCubes id="energy-type-icon" />
-              All Portfolio
-            </Typography>
-          )}
+          <Typography
+            color={asset.currentAsset ? 'inherit' : 'textPrimary'}
+            id={asset.currentAsset ? 'link' : 'Typography'}
+          >
+            <FaCubes id="energy-type-icon" />
+            All Portfolio
+          </Typography>
           {asset.ancestry &&
             asset.ancestry.map((el) => (
-              <Link color="inherit" id="link">
+              <Typography color="inherit" id="link">
                 {el}
-              </Link>
+              </Typography>
             ))}
-          {asset.currentAsset && <Typography color="textPrimary" id="Typography">
-            <EnergyTypeIcon
-              energyType={asset.currentAsset && asset.currentAsset.energyType}
-            />
-            {asset.currentAsset && asset.currentAsset.displayText}
-          </Typography>}
+          {asset.currentAsset && (
+            <Typography color="textPrimary" id="Typography">
+              <EnergyTypeIcon
+                energyType={asset.currentAsset && asset.currentAsset.energyType}
+              />
+              {asset.currentAsset && asset.currentAsset.displayText}
+            </Typography>
+          )}
         </Breadcrumbs>
       </div>
     );
