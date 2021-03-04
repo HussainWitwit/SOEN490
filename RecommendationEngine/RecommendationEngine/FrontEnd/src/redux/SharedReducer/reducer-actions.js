@@ -33,8 +33,8 @@ export const getFlatListAssets = async (dispatch) => {
   });
 }
 
-export const getConfiguredRecommendationList = async (dispatch) => {
-  const response = await GetConfiguredRecommendationList();
+export const getConfiguredRecommendationList = (assetId) => async (dispatch) => {
+  const response = await GetConfiguredRecommendationList(assetId);
   dispatch({
     type: dispatchActionType.GET_CONFIGURED_RECOMMENDATION_LIST,
     payload: response,
@@ -55,6 +55,6 @@ export const mapDispatchSharedToProps = (dispatch) => {
   return {
     getNestedAssets: () => getNestedAssets(dispatch),
     getFlatListAssets: () => getFlatListAssets(dispatch),
-    getConfiguredRecommendationList: () => getConfiguredRecommendationList(dispatch),
+    getConfiguredRecommendationList: (assetId) => dispatch(getConfiguredRecommendationList(assetId)),
   };
 };

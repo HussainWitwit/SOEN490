@@ -12,14 +12,6 @@ describe('TopBar component', () => {
     it("Expects all top-bar elements to be visible", () => {
         cy.get('.MuiBreadcrumbs-ol > :nth-child(1) > .MuiTypography-root').should('exist') //done
         cy.wait(500)
-        cy.get('.MuiBreadcrumbs-ol > :nth-child(2)').should('exist') // done
-        cy.wait(500)
-        cy.get(':nth-child(3) > .MuiTypography-root > svg > path').should('exist') // done
-        cy.wait(500)
-        cy.get(':nth-child(3) > .MuiTypography-root').should('exist') // done
-        cy.wait(500)
-        cy.get(':nth-child(5) > .MuiTypography-root').should('exist') // done
-        cy.wait(500)
         cy.get('#change-button').should('exist')
         cy.wait(500)
         cy.get('#change-button').click()

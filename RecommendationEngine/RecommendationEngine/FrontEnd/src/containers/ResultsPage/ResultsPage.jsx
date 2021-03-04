@@ -4,6 +4,7 @@ import RecommendationEngineTable from '../../components/RecommendationEngineTabl
 import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
+import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
 import './ResultsPage.css'
 
@@ -52,7 +53,7 @@ export function ResultsPage(props) {
     ]
 
     const getResultList = async () => {
-        let response = await GetRecommendationResultList();
+        let response = await GetRecommendationResultList(props.selectedAsset);
         setDefaultResultList(response);
         setResultList(response);
     }
@@ -73,7 +74,7 @@ export function ResultsPage(props) {
 
     useEffect(() => {
         getResultList();
-    }, [])
+    }, [props.selectedAsset])
 
     return (
         <div id="main-container">
@@ -111,4 +112,4 @@ export function ResultsPage(props) {
     );
 }
 
-export default connect(null, mapDispatchToProps)(ResultsPage);
+export default connect(mapAssetFilterStateToProps, mapDispatchToProps)(ResultsPage);
