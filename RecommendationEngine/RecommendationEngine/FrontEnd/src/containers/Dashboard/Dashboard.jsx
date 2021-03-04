@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
 import { getWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
+import { getCalendarDates } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
@@ -27,20 +28,59 @@ export const pickStylingClassName = (title) => {
 
 function Dashboard() {
     const [widgetMetrics, setWidgetMetrics] = useState([]);
+    const [calendarValues, setCalendarValues] = useState([]);
 
-    const getValues = async () => {
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    const getWidgetValues = async () => {
         let response = await getWidgetMetrics();
         let detailedWidgets = convertWidgetResponse(response);
         setWidgetMetrics(detailedWidgets);
     }
 
-    useEffect(() => {
-        getValues();
-    }, [])
+    const getCalendarValues = async () => {
+        let response = await getCalendarDates();
+        let calendar = [];
+        for (let i = 0; i < response.length; i++) {
+            calendar.push({
+                date: formatDate(response[i].date),
+                nbOfActions: response[i].nbOfActions,
+            });
+        }
+        calendarEvents(calendar)
+    }
+
+    function calendarEvents(calendar) {
+        let events = [];
+        for (var i = 0; i < calendar.length; i++) {
+            events.push({
+                date: calendar[i].date, 
+                title: calendar[i].nbOfActions + ' actions', 
+            })
+        }
+        setCalendarValues(events);
+    }
 
     function handleDateClick() {
         // Do whatever
     }
+
+    useEffect(() => {
+        getWidgetValues();
+        getCalendarValues();
+    }, [])
 
     return (
         <div>
@@ -77,10 +117,7 @@ function Dashboard() {
                 selectable={true}
                 initialView='dayGridMonth'
                 select={handleDateClick}
-                events={[
-                    { title: '(5) washes', date: '2021-03-03' },
-                    { title: '(3) washes', date: '2021-03-04' }
-                ]}
+                events={calendarValues}
             />
         </div>
     )
