@@ -26,11 +26,6 @@ describe('Breadcrumbs component', () => {
         expect(output).toHaveLength(1);
     });
 
-    it('It finds the link element', () => {
-        let component = output.find(Link);
-        expect(component).toHaveLength(2);
-    });
-
     it('It finds the Bicube element', () => {
         let component = output.find(FaCubes);
         expect(component).toHaveLength(1);
