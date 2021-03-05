@@ -31,17 +31,8 @@ function Dashboard() {
     const [calendarValues, setCalendarValues] = useState([]);
 
     function formatDate(date) {
-        var d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-
-        return [year, month, day].join('-');
+        var d = new Date(date);
+        return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
     }
 
     const getWidgetValues = async () => {
@@ -115,6 +106,7 @@ function Dashboard() {
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 selectable={true}
+                handleWindowResize={true}
                 initialView='dayGridMonth'
                 select={handleDateClick}
                 events={calendarValues}
