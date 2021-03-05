@@ -53,23 +53,23 @@ function Dashboard() {
     const getCalendarValues = async () => {
         let response = await getCalendarDates();
         let calendar = [];
-        for (let i = 0; i < response.length; i++) {
+        response.map((element) => {
             calendar.push({
-                date: formatDate(response[i].date),
-                nbOfActions: response[i].nbOfActions,
+                date: formatDate(element.date),
+                nbOfActions: element.nbOfActions,
             });
-        }
+        })
         calendarEvents(calendar)
     }
 
     function calendarEvents(calendar) {
         let events = [];
-        for (var i = 0; i < calendar.length; i++) {
+        calendar.map((element) => {
             events.push({
-                date: calendar[i].date, 
-                title: calendar[i].nbOfActions + ' actions', 
+                date: element.date,
+                title: element.nbOfActions + ' actions',
             })
-        }
+        })
         setCalendarValues(events);
     }
 
