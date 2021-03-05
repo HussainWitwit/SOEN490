@@ -14,7 +14,11 @@ export function ManageRecommendationPage (props) {
   const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const startLoadingSpinner = () => {
+    setLoading(true);
+  }
 
   const stopLoadingSpinner = () => {
     setLoading(false);
@@ -40,6 +44,7 @@ export function ManageRecommendationPage (props) {
   }
 
   useEffect(() => {
+    startLoadingSpinner();
     setRecommendationList(configuredRecommendationList);
     setDefaultConfiguredRecList(configuredRecommendationList);
     stopLoadingSpinner();

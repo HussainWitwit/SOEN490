@@ -37,6 +37,10 @@
   align-items: center;
   justify-content: center;
 }
+.fc-header-toolbar{
+  margin-top: 3em;
+  width: 720px;
+}
 
 .widget {
   display: flex;
@@ -65,4 +69,7 @@
 .inaction {
   color:rgb(179, 94, 88);
   border: solid 2px rgb(177, 74, 66);
+}
+.fc-view-harness{
+  width: 720px;
 }
