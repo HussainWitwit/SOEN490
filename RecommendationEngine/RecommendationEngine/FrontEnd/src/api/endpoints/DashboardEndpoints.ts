@@ -3,7 +3,7 @@ import { CalendarDates } from '../models/CalendarDates';
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
 import { toast } from 'react-toastify';
 
-export async function getWidgetMetrics(): Promise<Widget[] | null> {
+export async function GetWidgetMetrics(): Promise<Widget[] | null> {
     let widgetMetrics: Widget[] = [];
     await fetch('api/result/widgets')
         .then(res => handleErrors(res))
@@ -40,7 +40,7 @@ export async function getWidgetMetrics(): Promise<Widget[] | null> {
     return widgetMetrics;
 }
 
-export async function getCalendarDates(): Promise<CalendarDates[] | null> {
+export async function GetCalendarDates(): Promise<CalendarDates[] | null> {
     let calendarDates: CalendarDates[] = [];
     await fetch('api/action/calendar')
         .then(res => handleErrors(res))

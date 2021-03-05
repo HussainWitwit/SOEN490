@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
-import { getWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
-import { getCalendarDates } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
+import { GetCalendarDates } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
@@ -45,13 +45,13 @@ function Dashboard() {
     }
 
     const getWidgetValues = async () => {
-        let response = await getWidgetMetrics();
+        let response = await GetWidgetMetrics();
         let detailedWidgets = convertWidgetResponse(response);
         setWidgetMetrics(detailedWidgets);
     }
 
     const getCalendarValues = async () => {
-        let response = await getCalendarDates();
+        let response = await GetCalendarDates();
         let calendar = [];
         response.map((element) => {
             calendar.push({
