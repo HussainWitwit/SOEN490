@@ -107,6 +107,7 @@ function Dashboard() {
                 initialView='dayGridMonth'
                 select={handleDateClick}
                 events={calendarValues}
+                handleWindowResize={true}
             />
         </div>
     )
