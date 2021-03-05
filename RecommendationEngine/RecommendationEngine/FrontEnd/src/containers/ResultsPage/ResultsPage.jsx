@@ -119,9 +119,7 @@ export function ResultsPage(props) {
                 columnValues={columns}
                 isClickable={true}
                 onClickRow={
-                    // setLoading(true),
                     openResultDrilldown
-                    // setLoading(false)
                 }
             />
         </div>
