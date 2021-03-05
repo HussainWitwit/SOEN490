@@ -43,23 +43,21 @@ function Dashboard() {
 
     const getCalendarValues = async () => {
         let response = await GetCalendarDates();
-        let calendar = [];
-        response.map((element) => {
-            calendar.push({
+        let calendar = response.map((element) => {
+            return {
                 date: formatDate(element.date),
                 nbOfActions: element.nbOfActions,
-            });
+            };
         })
-        calendarEvents(calendar)
+        calendarEvents(calendar);
     }
 
     function calendarEvents(calendar) {
-        let events = [];
-        calendar.map((element) => {
-            events.push({
+        var events = calendar.map((element) => {
+            return {
                 date: element.date,
                 title: element.nbOfActions + ' actions',
-            })
+            }
         })
         setCalendarValues(events);
     }
@@ -85,32 +83,34 @@ function Dashboard() {
                 </Grid>
                 <br></br>
             </div>
-            <div id='widget-container'>
-                {widgetMetrics?.map((widget, index) => (
-                    <div key={index} className={pickStylingClassName(widget.title)}>
-                        <div id='tooltip-container'>
-                            <Tooltip title={widget.description}>
-                                <HelpOutlineOutlinedIcon size={1} />
-                            </Tooltip>
-                        </div>
-                        <div id='title-container'>{widget.title}</div>
-                        <div>
-                            <div id='widget-contents'>
-                                <div id='sign'>{widget.sign}</div>
-                                <div id='money-value'>{formatNumber(widget.value)}</div>
+            <div id='container'>
+                <div id='widget-container'>
+                    {widgetMetrics?.map((widget, index) => (
+                        <div key={index} className={pickStylingClassName(widget.title)}>
+                            <div id='tooltip-container'>
+                                <Tooltip title={widget.description}>
+                                    <HelpOutlineOutlinedIcon size={1} />
+                                </Tooltip>
+                            </div>
+                            <div id='title-container'>{widget.title}</div>
+                            <div>
+                                <div id='widget-contents'>
+                                    <div id='sign'>{widget.sign}</div>
+                                    <div id='money-value'>{formatNumber(widget.value)}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <FullCalendar
+                    plugins={[dayGridPlugin, interactionPlugin]}
+                    selectable={true}
+                    handleWindowResize={true}
+                    initialView='dayGridMonth'
+                    select={handleDateClick}
+                    events={calendarValues}
+                />
             </div>
-            <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin]}
-                selectable={true}
-                handleWindowResize={true}
-                initialView='dayGridMonth'
-                select={handleDateClick}
-                events={calendarValues}
-            />
         </div>
     )
 }
