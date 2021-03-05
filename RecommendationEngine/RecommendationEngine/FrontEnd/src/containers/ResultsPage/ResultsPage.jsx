@@ -13,15 +13,6 @@ export function ResultsPage(props) {
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    const startLoadingSpinner = () => {
-        setLoading(true);
-      }
-    
-      const stopLoadingSpinner = () => {
-        setLoading(false);
-      }
 
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
@@ -62,11 +53,9 @@ export function ResultsPage(props) {
     ]
 
     const getResultList = async () => {
-        startLoadingSpinner();
         let response = await GetRecommendationResultList(props.selectedAsset);
         setDefaultResultList(response);
         setResultList(response);
-        stopLoadingSpinner();
     }
 
 
@@ -114,13 +103,10 @@ export function ResultsPage(props) {
             </div>
             <br></br>
             <RecommendationEngineTable
-                loading={loading}
                 data={resultList}
                 columnValues={columns}
                 isClickable={true}
-                onClickRow={
-                    openResultDrilldown
-                }
+                onClickRow={openResultDrilldown}
             />
         </div>
     );

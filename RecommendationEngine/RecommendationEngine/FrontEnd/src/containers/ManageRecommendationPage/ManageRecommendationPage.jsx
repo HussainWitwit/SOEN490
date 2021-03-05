@@ -14,15 +14,6 @@ export function ManageRecommendationPage (props) {
   const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
-  const [loading, setLoading] = useState(false);
-
-  const startLoadingSpinner = () => {
-    setLoading(true);
-  }
-
-  const stopLoadingSpinner = () => {
-    setLoading(false);
-  }
 
   const columns = [
     {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style', hide: false},
@@ -44,10 +35,8 @@ export function ManageRecommendationPage (props) {
   }
 
   useEffect(() => {
-    startLoadingSpinner();
     setRecommendationList(configuredRecommendationList);
     setDefaultConfiguredRecList(configuredRecommendationList);
-    stopLoadingSpinner();
   }, [configuredRecommendationList])
 
   return (
@@ -87,7 +76,6 @@ export function ManageRecommendationPage (props) {
       </div>
       <br></br>
       <RecommendationEngineTable
-        loading={loading}
         data={recommendationList}
         columnValues={columns}
         onClickRow={openScheduleDrilldown}
