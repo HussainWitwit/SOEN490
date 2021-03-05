@@ -27,5 +27,18 @@ namespace RecommendationEngine.Controllers
                 return e.GetActionResult();
             }
         }
+
+        [HttpGet("calendar")]
+        public IActionResult GetNbActionsByDay()
+        {
+            try
+            {
+                return Ok(_actionService.GetNbActionsByDay());
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
     }
 }
