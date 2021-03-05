@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 import ActionDrawer from '../ActionDrawer/ActionDrawer';
+import { findFirstTabOrFalse } from '../../utilities/ArrayManipulationUtilities';
 
 export function RightPanelDrawer ({
   isOpen,
@@ -34,12 +35,12 @@ export function RightPanelDrawer ({
       title: 'Details',
       closeHandler: closeScheduleDrilldown,
       component: (
-        <ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+        <ManageRecommendationDrawer configuredRecommendation={findFirstTabOrFalse(tabs, 'Details')} />)
     },
     Actions: {
       title: 'Actions',
       closeHandler: closeResultDrilldown,
-      component: (<ActionDrawer actionGrouping={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+      component: (<ActionDrawer actionGrouping={findFirstTabOrFalse(tabs, 'Actions')} />)
     }
   }
 
@@ -62,7 +63,7 @@ export function RightPanelDrawer ({
         {
           <div className="flex-direction-column">
             <div className="header-space"></div>
-            <Tabs selectedIndex={selectedTabIndex} onSelect={index => changeTabIndex(index)}>
+            <Tabs selectedIndex={selectedTabIndex} onSelect={index => changeTabIndex(index)} forceRenderTabPanel>
               <TabList>
                 {tabs && tabs.map(tab => (<Tab key={tab.name}>
                   {tabOptions[tab.name].title}

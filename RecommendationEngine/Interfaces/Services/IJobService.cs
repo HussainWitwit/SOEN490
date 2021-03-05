@@ -6,7 +6,7 @@ namespace Interfaces.Services
 
     public interface IJobService
     {
-        public List<Job> GetJobList();
+        public List<Job> GetJobList(int? assetId);
         public List<JobLog> GetJobLogsById(int id);
     }
 }

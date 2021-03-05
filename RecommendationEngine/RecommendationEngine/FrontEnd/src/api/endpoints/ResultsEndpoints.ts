@@ -4,9 +4,9 @@ import { ActionGrouping } from '../models/Action';
 import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
 import { toast } from 'react-toastify';
 
-export async function GetRecommendationResultList(): Promise<ConfiguredRecommendationResult[]> {
+export async function GetRecommendationResultList(assetId: number | null): Promise<ConfiguredRecommendationResult[]> {
     let result: ConfiguredRecommendationResult[] = [];
-    await fetch('api/result')
+    await fetch('api/result/filterByAsset/'+(assetId?assetId:''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {

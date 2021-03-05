@@ -5,24 +5,35 @@ using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RecommendationEngine.Utilities;
 
 namespace RecommendationEngine.Services
 {
     public class ResultService : IResultService
     {
         private IResultRepository _resultRepository;
+        private IAssetRepository _assetRepository;
 
         public ResultService(
-            IResultRepository resultRepository
+            IResultRepository resultRepository, IAssetRepository assetRepository
         )
         {
             _resultRepository = resultRepository;
+            _assetRepository = assetRepository;
         }
-        public List<Result> GetResultList()
+        public List<Result> GetResultList(int? assetId)
         {
             try
             {
-                return _resultRepository.GetResultList().Select(dbResult =>
+                var resultsList = _resultRepository.GetResultList();
+                var assetsList = _assetRepository.GetAssetsList();
+                if (assetId != null)
+                {
+                    resultsList = resultsList
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
+                return resultsList.Select(dbResult =>
                         new Result
                         {
                             Id = dbResult.RecommendationJobResultId,

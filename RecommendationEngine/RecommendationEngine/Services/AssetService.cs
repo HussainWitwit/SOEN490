@@ -307,16 +307,16 @@ namespace RecommendationEngine.Services
                 _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
                 List<DBAsset> dbAssets = GetDBAssets();
 
-                List<AssetLeaf> assets = dbAssets.Distinct().Where(dbasset => dbasset.Type != null).Select(dbasset => new AssetLeaf()
+                List<AssetLeaf> assets = dbAssets.Distinct().Select(dbasset => new AssetLeaf()
                 {
-                    Name = dbasset.Name,
+                    Name = dbasset?.Name,
                     Id = dbasset.AssetId,
                     AcPower = !Double.IsNaN(dbasset.AcPower) ? dbasset.AcPower : 0,
-                    DisplayText = dbasset.DisplayText,
-                    ElementPath = dbasset.ElementPath,
-                    EnergyType = dbasset.EnergyType,
-                    AssetType = dbasset.Type.Name,
-                    TimeZone = dbasset.TimeZone,
+                    DisplayText = dbasset?.DisplayText,
+                    ElementPath = dbasset?.ElementPath,
+                    EnergyType = dbasset?.EnergyType,
+                    AssetType = dbasset.Type?.Name,
+                    TimeZone = dbasset?.TimeZone,
                     ParentId = dbasset.ParentAsset?.AssetId
 
                 }
