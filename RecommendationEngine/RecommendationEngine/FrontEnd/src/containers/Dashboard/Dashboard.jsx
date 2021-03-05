@@ -83,34 +83,31 @@ function Dashboard() {
                 </Grid>
                 <br></br>
             </div>
-            <div id='container'>
-                <div id='widget-container'>
-                    {widgetMetrics?.map((widget, index) => (
-                        <div key={index} className={pickStylingClassName(widget.title)}>
-                            <div id='tooltip-container'>
-                                <Tooltip title={widget.description}>
-                                    <HelpOutlineOutlinedIcon size={1} />
-                                </Tooltip>
-                            </div>
-                            <div id='title-container'>{widget.title}</div>
-                            <div>
-                                <div id='widget-contents'>
-                                    <div id='sign'>{widget.sign}</div>
-                                    <div id='money-value'>{formatNumber(widget.value)}</div>
-                                </div>
+            <div id='widget-container'>
+                {widgetMetrics?.map((widget, index) => (
+                    <div key={index} className={pickStylingClassName(widget.title)}>
+                        <div id='tooltip-container'>
+                            <Tooltip title={widget.description}>
+                                <HelpOutlineOutlinedIcon size={1} />
+                            </Tooltip>
+                        </div>
+                        <div id='title-container'>{widget.title}</div>
+                        <div>
+                            <div id='widget-contents'>
+                                <div id='sign'>{widget.sign}</div>
+                                <div id='money-value'>{formatNumber(widget.value)}</div>
                             </div>
                         </div>
-                    ))}
-                </div>
-                <FullCalendar
-                    plugins={[dayGridPlugin, interactionPlugin]}
-                    selectable={true}
-                    handleWindowResize={true}
-                    initialView='dayGridMonth'
-                    select={handleDateClick}
-                    events={calendarValues}
-                />
+                    </div>
+                ))}
             </div>
+            <FullCalendar
+                plugins={[dayGridPlugin, interactionPlugin]}
+                selectable={true}
+                initialView='dayGridMonth'
+                select={handleDateClick}
+                events={calendarValues}
+            />
         </div>
     )
 }
