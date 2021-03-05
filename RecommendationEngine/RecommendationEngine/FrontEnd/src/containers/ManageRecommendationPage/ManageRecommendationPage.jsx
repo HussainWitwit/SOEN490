@@ -35,8 +35,8 @@ export function ManageRecommendationPage (props) {
   }
 
   useEffect(() => {
-    setRecommendationList(configuredRecommendationList)
-    setDefaultConfiguredRecList(configuredRecommendationList)
+    setRecommendationList(configuredRecommendationList);
+    setDefaultConfiguredRecList(configuredRecommendationList);
   }, [configuredRecommendationList])
 
   return (
