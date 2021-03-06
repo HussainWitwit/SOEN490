@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Models.Application;
+using Action = Models.Application.Action;
 
 namespace Interfaces.Services
 {
@@ -9,6 +11,6 @@ namespace Interfaces.Services
 
         public List<CalendarAction> GetNbActionsByDay();
         
-         public List<Action> GetActionsByDate(DateTime date);
+        public List<Action> GetActionsByDate(DateTime date);
     }
 }

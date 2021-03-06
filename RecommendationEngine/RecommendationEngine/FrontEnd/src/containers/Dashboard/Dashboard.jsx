@@ -74,8 +74,9 @@ function Dashboard() {
     setCalendarValues(events);
   }
 
-  function handleDateClick() {
-    // Do whatever
+  function handleDateClick(event) {
+    var startDate = event.startStr
+    console.log(startDate)
   }
 
   useEffect(() => {
