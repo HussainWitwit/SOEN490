@@ -6,9 +6,10 @@ import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
 
-function JobsPage(props) {
+function JobsPage (props) {
 
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
@@ -64,7 +65,7 @@ function JobsPage(props) {
     ];
 
     const getJobList = async () => {
-        let response = await GetRecommendationJobList();
+        let response = await GetRecommendationJobList(props.selectedAsset);
         setJobList(response);
         setDefaultJobList(response);
     }
@@ -72,17 +73,17 @@ function JobsPage(props) {
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
             return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-            || job.assetName.toLowerCase().includes(input.toLowerCase())
-            || job.status.toLowerCase().includes(input.toLowerCase())
-            || job.timestamp.includes(input.toLowerCase())
-            || (job.duration.toString() + " seconds").includes(input)
+                || job.assetName.toLowerCase().includes(input.toLowerCase())
+                || job.status.toLowerCase().includes(input.toLowerCase())
+                || job.timestamp.includes(input.toLowerCase())
+                || (job.duration.toString() + " seconds").includes(input)
         })
         setJobList(filtered);
     }
 
     useEffect(() => {
         getJobList();
-    }, [])
+    }, [props.selectedAsset])
 
 
     return (
@@ -121,5 +122,4 @@ function JobsPage(props) {
     );
 }
 
-export default connect(null, mapDispatchDrillDownToProps)(JobsPage);
-
+export default connect(mapAssetFilterStateToProps, mapDispatchDrillDownToProps)(JobsPage);

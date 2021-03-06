@@ -18,6 +18,18 @@ namespace RecommendationEngine.Repositories
             _recommendationEngineDb = recommendationEngineDb;
         }
 
+        public List<DBAction> GetActionList()
+        {
+            try
+            {
+                return _recommendationEngineDb.Actions.ToList();
+            }
+            catch (Exception)
+            {
+                throw new DbException();
+            }
+        }
+
         public List<DBAction> GetActionsByResultId(int id)
         {
             try {

@@ -6,6 +6,8 @@ namespace Interfaces.Repositories
 {
     public interface IActionRepository
     {
+        public List<DBAction> GetActionList();
+
         public List<DBAction> GetActionsByResultId(int id);
 
         public List<DBAction> GetActionsByDate(DateTime date);

@@ -35,7 +35,36 @@ namespace RecommendationEngineTests.UnitTests
             List<DBRecommendationSchedule> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
             _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(recommendation);
 
-            List<ConfiguredRecommendation> expected = _configuredRecommendationService.GetConfiguredRecommendationList();
+            List<ConfiguredRecommendation> expected = _configuredRecommendationService.GetConfiguredRecommendationList(null);
+            Assert.AreEqual(expected[0].Name, recommendation[0].Name);
+            Assert.AreEqual(expected[0].Granularity, recommendation[0].Granularity);
+            Assert.NotNull(expected[0].AssetList);
+        }
+
+
+        [Test]
+        public void GetRecommendationListWithAssetFilterTest()
+        {
+            List<DBRecommendationSchedule> recommendation = MockConfiguredRecommendations.BASIC_CONFIGURED_RECOMMENDATION_LIST;
+            List<DBAsset> assets = new List<DBAsset>
+            {
+                new DBAsset
+                {
+                AssetId = 9,
+                Name = "dbasset9",
+                AcPower = 17,
+                Type = new DBAssetType() { Name = "plant" },
+                DisplayText = "asset 9",
+                ElementPath = "path9",
+                EnergyType = "pv",
+                TimeZone = "timezoneTest",
+
+            }
+            };
+            _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(recommendation);
+            _assetRepository.Setup(x => x.GetAssetsList()).Returns(assets);
+
+            List<ConfiguredRecommendation> expected = _configuredRecommendationService.GetConfiguredRecommendationList(9);
             Assert.AreEqual(expected[0].Name, recommendation[0].Name);
             Assert.AreEqual(expected[0].Granularity, recommendation[0].Granularity);
             Assert.NotNull(expected[0].AssetList);
@@ -86,7 +115,7 @@ namespace RecommendationEngineTests.UnitTests
             _repository.Setup(x => x.GetRecommendationScheduleList()).Returns(new List<DBRecommendationSchedule>() { recommendation[0] });
             _configuredRecommendationService.DeleteConfiguredRecommendation(recommentionId);
 
-            List<ConfiguredRecommendation> actual = _configuredRecommendationService.GetConfiguredRecommendationList();
+            List<ConfiguredRecommendation> actual = _configuredRecommendationService.GetConfiguredRecommendationList(null);
             Assert.AreEqual(1, actual.Count);
             Assert.AreEqual(1, actual[0].Id);
         }

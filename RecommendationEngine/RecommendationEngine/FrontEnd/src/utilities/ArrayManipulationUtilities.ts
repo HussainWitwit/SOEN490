@@ -1,6 +1,7 @@
 import { Parameter } from "../api/models/TemplateDetails";
 import { dateFormat } from './DateTimeUtilities';
 import { Asset, MultiSelectTreeViewAsset } from '../api/models/Asset';
+import { DetailedWidget, Widget } from '../api/models/Widget';
 
 export const convertObjectToArrayOfObjects = (obj: any) => {
     var result = Object.entries(obj).map((e) => ({ [e[0]]: e[1] }));
@@ -39,4 +40,24 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
     return renamedAssetAttributes;
 }
 
+export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
+    let detailedWidgets: DetailedWidget[] = [];
+    detailedWidgets = widgets?.map((widget) => {
+        return {
+            value: widget.value,
+            title: widget.title,
+            description: widget.description,
+            sign: widget.title === 'Average ROI' ? '%' : '$',
+        }
+    })
+    return detailedWidgets;
+}
 
+export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
+    if(tabs === null || tabs.length<1)
+        return false;
+    if (tabs.some(tab => tab.name === name)){
+        return tabs.find(tab => tab.name === name).response;
+    }
+    return false;
+}

@@ -23,9 +23,8 @@ namespace RecommendationEngine.Repositories
             {
                 return _recommendationEngineDb.RecommendationJobs
                     .Include(recJob => recJob.Result)
-                    .Include(recJob => recJob.Asset)
+                    .Include(recJob => recJob.Asset).ThenInclude(x=>x.ParentAsset)
                     .Include(recJob => recJob.Schedule)
-                    .Include(recJob => recJob.LogsList)
                     .ToList();
             }
             catch (Exception) {

@@ -103,5 +103,27 @@ namespace RecommendationEngine.Services
             }
 
         } 
+
+        public List<CalendarAction> GetNbActionsByDay()
+        {
+            try
+            {
+                return _actionRepository.GetActionList().GroupBy(action => action.Date)
+                                        .Select(grp => new CalendarAction
+                                        {
+                                            Date = grp.Key,
+                                            NbOfActions = grp.Count()
+                                        }).OrderBy(x => x.Date).ToList();
+
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+        }
     }
 }

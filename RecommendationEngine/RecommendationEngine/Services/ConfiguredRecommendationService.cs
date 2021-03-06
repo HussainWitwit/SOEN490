@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RecommendationEngine.ExceptionHandler;
 using System;
+using RecommendationEngine.Utilities;
 
 namespace RecommendationEngine.Services
 {
@@ -30,11 +31,18 @@ namespace RecommendationEngine.Services
             _scheduler = scheduler;
         }
 
-        public List<ConfiguredRecommendation> GetConfiguredRecommendationList()
+        public List<ConfiguredRecommendation> GetConfiguredRecommendationList(int? assetId)
         {
             try
             {
-                return _recommendationRepository.GetRecommendationScheduleList().Select(dbConfigRecommendation =>
+                var recommendationList = _recommendationRepository.GetRecommendationScheduleList();
+                var assetsList = _assetRepository.GetAssetsList();
+                if (assetId != null)
+                {
+                    recommendationList = recommendationList
+                        .Where(x => x.AssetsList.Any(asset => asset.Asset.IsChildOrEquivalent((int) assetId, assetsList))).ToList();
+                }
+                return recommendationList.Select(dbConfigRecommendation =>
                     new ConfiguredRecommendation
                     {
                         Id = dbConfigRecommendation.RecommendationScheduleId,
@@ -49,7 +57,7 @@ namespace RecommendationEngine.Services
                         RecurrenceDatetime = dbConfigRecommendation.RecurrenceDatetime,
                         CreatedOn = dbConfigRecommendation.CreatedOn,
                         Parameters = null
-                    }).ToList();
+                    }).ToList(); ;
             }
             catch (GlobalException) {
                 throw;
