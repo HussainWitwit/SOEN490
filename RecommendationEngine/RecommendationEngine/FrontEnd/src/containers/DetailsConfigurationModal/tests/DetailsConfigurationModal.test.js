@@ -86,13 +86,11 @@ describe('DetailsConfigurationModal component', () => {
             const buttonNetSaving = getAllByTestId(container, 'option-net');
             const granularity = getAllByTestId(container, 'granularity');
             const granularityOption = getAllByTestId(container, 'granularity-option');
-            const granularityOptionDate = getAllByTestId(container, 'date');
             fireEvent.click(buttonRon[0]); // return on investment
             fireEvent.click(buttonNetSaving[0]); // net saving
             fireEvent.click(granularity[0]); // granularity dropdown
             fireEvent.click(granularityOption[0]); // weekly
             fireEvent.click(granularityOption[1]); // monthly 
-            fireEvent.click(granularityOptionDate[0]);
             fireEvent.click(granularityOption[2]); // yearly 
         });
     })

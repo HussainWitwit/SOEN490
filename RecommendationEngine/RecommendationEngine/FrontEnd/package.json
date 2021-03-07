@@ -14,7 +14,7 @@
     "@material-ui/data-grid": "^4.0.0-alpha.19",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@material-ui/pickers": "^3.2.10",
+    "@material-ui/pickers": "^4.0.0-alpha.12",
     "@material/circular-progress": "^10.0.0",
     "@microsoft/signalr": "^5.0.3",
     "antd": "^4.12.3",

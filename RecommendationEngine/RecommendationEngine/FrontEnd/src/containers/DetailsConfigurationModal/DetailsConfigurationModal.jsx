@@ -10,13 +10,15 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
-import DateFnsUtils from '@date-io/date-fns';
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns'
 import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDateTimePicker
+  LocalizationProvider ,
+  TimePicker,
+  MobileDateTimePicker
 } from '@material-ui/pickers';
 import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
+import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import ClockIcon from "@material-ui/icons/AccessTime";
 
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
@@ -68,7 +70,19 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          {isEditing && basicConfiguration.asset.map(e => <p style= {{color: 'grey'}}>{e.displayText}{' - '}</p>)}
+          {isEditing && 
+              <MultiSelectAutocomplete
+              contentLabel="Assets..."
+              id='multiple-select-asset-container'
+              error={basicConfiguration.asset.length === 0}
+              items={basicConfiguration.asset}
+              defaultValue={basicConfiguration.asset}
+              boxLabelName={'Selected Assets'}
+              variant={'outlined'}
+              isReadOnly={true}
+              maxElement={3}
+            />
+          }
           {!isEditing && <MultiSelectTreeView
             value={basicConfiguration.asset ? basicConfiguration.asset : []}
             onChange={(event, value) => updateAsset(event)}
@@ -146,35 +160,37 @@ export function DetailsConfigurationModal (props) {
               })}
             </ButtonGroup>
           )}
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider  dateAdapter={DateFnsUtils}>
             {(basicConfiguration.granularity === granularityItems[1] ||
               basicConfiguration.granularity === granularityItems[2]) && (
-                <KeyboardDateTimePicker
+                <MobileDateTimePicker
                   id="recommendation-date-picker"
                   data-testid='date'
                   autoOk
-                  inputVariant="outlined"
-                  label="Date & Time"
-                  minDate={isEditing ? new Date(1900, 1, 1) : new Date()}
-                  // format={"dd/MM/yyyy"}
+                  ampm
+                  disableCloseOnSelect = {true}
+                  disableMaskedInput
+                  openPickerIcon={<ClockIcon />}
+                  label="Repeat on"
+                  minDateTime={new Date()} //TODO: Should have a now option
+                  disablePast
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
+                  inputFormat = {"PPp"}
+                  renderInput={(props) => <TextField {...props} helperText={"The date must be in the future"}/>}
                 />
               )}
             {basicConfiguration.granularity === granularityItems[0] &&
-              <KeyboardTimePicker
+              <TimePicker
                 label="Time"
                 data-testid='time'
                 id="recommendation-time-picker"
-                inputVariant="outlined"
                 value={basicConfiguration.repeatTime}
                 onChange={date => setRepeatTime(date)}
+                renderInput={(props) => <TextField variant = "outlined" {...props}/>}
               />
             }
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider >
         </div>
       </div>
     </animated.div>

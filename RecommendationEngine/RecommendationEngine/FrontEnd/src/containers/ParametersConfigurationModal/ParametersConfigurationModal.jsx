@@ -5,8 +5,8 @@ import  { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@m
 import './ParametersConfigurationModal.css';
 import { mapParamDialogStateToProps, mapDispatchParametersPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
+import { LocalizationProvider , MobileDatePicker } from '@material-ui/pickers';
 import { isCorrectType } from '../../utilities/GeneralUtilities';
 
 export  function ParamTextField({paramObject, index, onChangeEvent}) {
@@ -79,13 +79,11 @@ export function ParametersConfigurationModal (props) {
                         {(cell.parameterType.includes('INT') ||
                           cell.parameterType.includes('FLOAT')) && <ParamTextField paramObject = {cell} index={index} onChangeEvent ={setParamValue}/>}
                         {cell.parameterType === 'DATE' && (
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
+                            <LocalizationProvider  dateAdapter={DateFnsUtils}>
+                                <MobileDatePicker
                                     id="parameter-date-picker"
                                     data-testid='date'
                                     autoOk
-                                    inputVariant="outlined"
-                                    clearable
                                     placeholder={cell.defaultValue}
                                     label="Date"
                                     value={cell.parameterValue}
@@ -94,11 +92,10 @@ export function ParametersConfigurationModal (props) {
                                     minDateMessage = {'The start date cannot overlap'}
                                     maxDateMessage = {'The end date cannot overlap'}
                                     onChange={(date) => setParamValue(date, index)}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
+                                    inputFormat = {"PPP"}
+                                    renderInput={(props) => <TextField helperText = "" variant = "outlined" {...props}/>}
                                 />
-                            </MuiPickersUtilsProvider>
+                            </LocalizationProvider >
                             )}
                       </TableCell>
                     </TableRow>
