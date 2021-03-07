@@ -32,6 +32,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<ResultService>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -42,6 +43,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestBadRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<ResultService>().AsImplementedInterfaces();
                 }));
             _clientBad = _serverBad.CreateClient();
@@ -55,6 +57,15 @@ namespace RecommendationEngineTests.APITests
             List<Result> resultList = JsonConvert.DeserializeObject<List<Result>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(resultList);
             Assert.AreEqual(resultList[0].Id, MockResults.BasicDBResultList[0].RecommendationJobResultId);
+        }
+
+        [Test]
+        public async Task GetResultWithAssetFilterList()
+        {
+            var response = await _client.GetAsync("api/result/filterByAsset/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<Result> resultList = JsonConvert.DeserializeObject<List<Result>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(resultList);
         }
 
         [Test]
@@ -96,6 +107,27 @@ namespace RecommendationEngineTests.APITests
             List<DBRecommendationJobResult> IResultRepository.GetResultList()
             {
                 return MockResults.BadDBResultList;
+            }
+        }
+
+        public class TestAssetRepositoryMock : IAssetRepository
+        {
+            public void AddAsset(DBAsset asset) { }
+
+            public void AddAssetList(List<DBAsset> asset) { }
+
+            public List<DBAsset> GetAssetsList()
+            {
+                return MockAssets.BasicDBAssetList;
+            }
+            public DBAsset GetAssetByName(string assetName)
+            {
+                return MockAssets.BasicDBAsset;
+            }
+
+            public DBAsset GetAssetById(int assetId)
+            {
+                return MockAssets.BasicDBAsset;
             }
         }
     }

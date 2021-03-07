@@ -13,7 +13,7 @@ describe.only('JobsPage component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<JobsPage store={store}/>).dive();
+    const output = shallow(<JobsPage store={store}/>).dive().dive();
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');

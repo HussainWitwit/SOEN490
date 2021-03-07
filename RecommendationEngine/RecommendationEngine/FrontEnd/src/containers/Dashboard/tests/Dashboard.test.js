@@ -4,6 +4,8 @@ import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Dashboard, { pickStylingClassName } from '../Dashboard';
 import fetch from 'isomorphic-fetch';
+import FullCalendar from '@fullcalendar/react'
+import Grid from '@material-ui/core/Grid';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -31,6 +33,16 @@ describe.only('Dashboard component', () => {
 
   it("Finds the divs", () => {
     let component = output.find('div');
+    expect(component).toHaveLength(3);
+  })
+
+  it("Finds the calendar", () => {
+    let component = output.find(FullCalendar);
+    expect(component).toHaveLength(1);
+  })
+
+  it("Finds the grid", () => {
+    let component = output.find(Grid);
     expect(component).toHaveLength(2);
   })
 
