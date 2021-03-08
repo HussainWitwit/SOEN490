@@ -10,30 +10,62 @@ namespace RecommendationEngine.Repositories
 {
     public class AssetRepository : IAssetRepository
     {
-        private RecommendationEngineDBContext _recommendationEngineDb;
+        private readonly RecommendationEngineDBContext _recommendationEngineDb;
 
         public AssetRepository(RecommendationEngineDBContext recommendationEngineDb)
         {
             _recommendationEngineDb = recommendationEngineDb;
         }
 
+        public void Update(DBAsset asset)
+        {
+            try
+            {
+                DBAsset foundAsset = _recommendationEngineDb.Assets.Where(x => x.Name == asset.Name).FirstOrDefault();
+
+                if (foundAsset != null)
+                {
+                    foundAsset.DisplayText = asset.DisplayText;
+                    foundAsset.AcPower = asset.AcPower;
+                    foundAsset.ParentAsset = asset.ParentAsset;
+                    foundAsset.ElementPath = asset.ElementPath;
+                    foundAsset.EnergyType = asset.EnergyType;
+                }
+                else
+                {
+                    _recommendationEngineDb.Assets.Add(asset);
+                }
+            }
+            catch (Exception)
+            {
+                throw new DbException();
+            }
+        }
+
         public void AddAsset(DBAsset asset)
         {
             try
             {
-                _recommendationEngineDb.Assets.Add(asset);
-                _recommendationEngineDb.SaveChanges();
+                DBAsset foundClient = _recommendationEngineDb.Assets.Where(x => x.Name == asset.Name).FirstOrDefault();
+
+                if (foundClient == null)
+                {
+                    _recommendationEngineDb.Assets.Add(asset);
+                    _recommendationEngineDb.SaveChanges();
+                }
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 throw new DbException();
             }
+
         }
         
-        public void AddAssetList(List<DBAsset> asset)
+        public void AddAssetList(List<DBAsset> assets)
         {
             try
             {
-                _recommendationEngineDb.Assets.AddRange(asset);
+                assets.ForEach(asset => Update(asset) );
                 _recommendationEngineDb.SaveChanges();
             }
             catch (Exception)
