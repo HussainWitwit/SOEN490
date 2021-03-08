@@ -5,8 +5,8 @@ import  { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@m
 import './ParametersConfigurationModal.css';
 import { mapParamDialogStateToProps, mapDispatchParametersPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
-import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
-import { LocalizationProvider , MobileDatePicker } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider , KeyboardDateTimePicker } from '@material-ui/pickers';
 import { isCorrectType } from '../../utilities/GeneralUtilities';
 
 export  function ParamTextField({paramObject, index, onChangeEvent}) {
@@ -79,13 +79,14 @@ export function ParametersConfigurationModal (props) {
                         {(cell.parameterType.includes('INT') ||
                           cell.parameterType.includes('FLOAT')) && <ParamTextField paramObject = {cell} index={index} onChangeEvent ={setParamValue}/>}
                         {cell.parameterType === 'DATE' && (
-                            <LocalizationProvider  dateAdapter={DateFnsUtils}>
-                                <MobileDatePicker
+                            <MuiPickersUtilsProvider  utils={DateFnsUtils}>
+                                <KeyboardDateTimePicker
                                     id="parameter-date-picker"
                                     data-testid='date'
                                     autoOk
                                     placeholder={cell.defaultValue}
                                     label="Date"
+                                    inputVariant="outlined"
                                     value={cell.parameterValue}
                                     minDate = {cell.parameterName.includes('Start') ? new Date(1900,1,1) : cell.parameterName.includes('End') ? parameterList[index - 1].parameterValue: new Date(1900, 1, 1)}
                                     maxDate = {cell.parameterName.includes('Start') ? parameterList[index + 1].parameterValue : new Date(2100,1,1)}
@@ -93,9 +94,11 @@ export function ParametersConfigurationModal (props) {
                                     maxDateMessage = {'The end date cannot overlap'}
                                     onChange={(date) => setParamValue(date, index)}
                                     inputFormat = {"PPP"}
-                                    renderInput={(props) => <TextField helperText = "" variant = "outlined" {...props}/>}
+                                    KeyboardButtonProps={{
+                                      'aria-label': 'change date',
+                                  }}
                                 />
-                            </LocalizationProvider >
+                            </MuiPickersUtilsProvider >
                             )}
                       </TableCell>
                     </TableRow>

@@ -22,7 +22,7 @@ describe('JobLogPopUp component', () => {
     useStateSpy.mockImplementation((init) => [myInitialState, setState]);
     const output = shallow(<JobLogPopUp />);
 
-    it.skip('It renders without crashing', async () => {
+    it('It renders without crashing', async () => {
         const div = document.createElement('div');
         ReactDOM.render(<JobLogPopUp />, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));

@@ -10,15 +10,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
-import DateFnsUtils from '@material-ui/pickers/adapter/date-fns'
-import {
-  LocalizationProvider ,
-  TimePicker,
-  MobileDateTimePicker
-} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDateTimePicker } from '@material-ui/pickers';
 import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
-import ClockIcon from "@material-ui/icons/AccessTime";
 
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
@@ -27,10 +22,9 @@ export function DetailsConfigurationModal (props) {
 
   const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
   const { templateDetailsList, template, isEditing, basicConfiguration } = dialogsContent;
-
-
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
-
+  const currentDateTime = new Date();
+  
   useEffect(() => {
     if (template.name === templateDetailsList[0].templateName) {
       setGranularity('Yearly');
@@ -46,6 +40,7 @@ export function DetailsConfigurationModal (props) {
     setRepeatTime(date);
     }
   }, [])
+
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -160,37 +155,39 @@ export function DetailsConfigurationModal (props) {
               })}
             </ButtonGroup>
           )}
-          <LocalizationProvider  dateAdapter={DateFnsUtils}>
+          <MuiPickersUtilsProvider  utils={DateFnsUtils}>
             {(basicConfiguration.granularity === granularityItems[1] ||
               basicConfiguration.granularity === granularityItems[2]) && (
-                <MobileDateTimePicker
+                <KeyboardDateTimePicker
                   id="recommendation-date-picker"
                   data-testid='date'
                   autoOk
                   ampm
                   disableCloseOnSelect = {true}
                   disableMaskedInput
-                  openPickerIcon={<ClockIcon />}
+                  inputVariant="outlined"
                   label="Repeat on"
-                  minDateTime={new Date()} //TODO: Should have a now option
+                  minDate={currentDateTime} //Create state hook TODO:
                   disablePast
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
-                  inputFormat = {"PPp"}
-                  renderInput={(props) => <TextField {...props} helperText={"The date must be in the future"}/>}
+                  format = {"PPp"}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
                 />
               )}
             {basicConfiguration.granularity === granularityItems[0] &&
-              <TimePicker
+              <KeyboardTimePicker
                 label="Time"
                 data-testid='time'
                 id="recommendation-time-picker"
+                inputVariant="outlined"
                 value={basicConfiguration.repeatTime}
                 onChange={date => setRepeatTime(date)}
-                renderInput={(props) => <TextField variant = "outlined" {...props}/>}
               />
             }
-          </LocalizationProvider >
+          </MuiPickersUtilsProvider >
         </div>
       </div>
     </animated.div>
