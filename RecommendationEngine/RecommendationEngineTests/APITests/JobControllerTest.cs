@@ -123,6 +123,11 @@ namespace RecommendationEngineTests.APITests
             {
                 return MockAssets.BasicDBAsset;
             }
+
+            public void Update(DBAsset asset)
+            {
+                throw new System.NotImplementedException();
+            }
         }
 
         public class TestBadRepositoryMock : IJobRepository
