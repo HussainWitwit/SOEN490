@@ -2,6 +2,7 @@ import { Parameter } from "../api/models/TemplateDetails";
 import { dateFormat } from './DateTimeUtilities';
 import { Asset, MultiSelectTreeViewAsset } from '../api/models/Asset';
 import { DetailedWidget, Widget } from '../api/models/Widget';
+// import { store } from '../redux/store';
 
 export const convertObjectToArrayOfObjects = (obj: any) => {
     var result = Object.entries(obj).map((e) => ({ [e[0]]: e[1] }));
