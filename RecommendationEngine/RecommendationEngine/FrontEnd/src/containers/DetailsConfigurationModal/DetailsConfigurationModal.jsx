@@ -11,12 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDateTimePicker
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDateTimePicker } from '@material-ui/pickers';
 import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
+import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
@@ -25,10 +22,9 @@ export function DetailsConfigurationModal (props) {
 
   const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
   const { templateDetailsList, template, isEditing, basicConfiguration } = dialogsContent;
-
-
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
-
+  const currentDateTime = new Date();
+  
   useEffect(() => {
     if (template.name === templateDetailsList[0].templateName) {
       setGranularity('Yearly');
@@ -36,12 +32,15 @@ export function DetailsConfigurationModal (props) {
   }, [template.name])
   
   useEffect(() => {
+    if(!isEditing) {
     let date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
     setRepeatDate(date);
     setRepeatTime(date);
+    }
   }, [])
+
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -66,12 +65,25 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          <MultiSelectTreeView
+          {isEditing && 
+              <MultiSelectAutocomplete
+              contentLabel="Assets..."
+              id='multiple-select-asset-container'
+              error={basicConfiguration.asset.length === 0}
+              items={basicConfiguration.asset}
+              defaultValue={basicConfiguration.asset}
+              boxLabelName={'Selected Assets'}
+              variant={'outlined'}
+              isReadOnly={true}
+              maxElement={3}
+            />
+          }
+          {!isEditing && <MultiSelectTreeView
             value={basicConfiguration.asset ? basicConfiguration.asset : []}
             onChange={(event, value) => updateAsset(event)}
             placeholder='Assets ...'
             items={apiAssets}
-          />
+          />}
         </div>
         <div id="scenario-container">
           <p id="text-3">Preferred Scenario: </p>
@@ -143,19 +155,24 @@ export function DetailsConfigurationModal (props) {
               })}
             </ButtonGroup>
           )}
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider  utils={DateFnsUtils}>
             {(basicConfiguration.granularity === granularityItems[1] ||
               basicConfiguration.granularity === granularityItems[2]) && (
                 <KeyboardDateTimePicker
                   id="recommendation-date-picker"
                   data-testid='date'
                   autoOk
+                  ampm
+                  disableCloseOnSelect = {true}
+                  disableMaskedInput
                   inputVariant="outlined"
-                  label="Date & Time"
-                  minDate={isEditing ? new Date(1900, 1, 1) : new Date()}
-                  // format={"dd/MM/yyyy"}
+                  label="Repeat on"
+                  minDateMessage = {"The selected date cannot be before the current date."}
+                  minDate={currentDateTime}
+                  disablePast
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}
+                  format = {"PPp"}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
@@ -171,7 +188,7 @@ export function DetailsConfigurationModal (props) {
                 onChange={date => setRepeatTime(date)}
               />
             }
-          </MuiPickersUtilsProvider>
+          </MuiPickersUtilsProvider >
         </div>
       </div>
     </animated.div>

@@ -6,7 +6,7 @@ import './ParametersConfigurationModal.css';
 import { mapParamDialogStateToProps, mapDispatchParametersPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider , KeyboardDateTimePicker } from '@material-ui/pickers';
 import { isCorrectType } from '../../utilities/GeneralUtilities';
 
 export  function ParamTextField({paramObject, index, onChangeEvent}) {
@@ -79,26 +79,26 @@ export function ParametersConfigurationModal (props) {
                         {(cell.parameterType.includes('INT') ||
                           cell.parameterType.includes('FLOAT')) && <ParamTextField paramObject = {cell} index={index} onChangeEvent ={setParamValue}/>}
                         {cell.parameterType === 'DATE' && (
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
+                            <MuiPickersUtilsProvider  utils={DateFnsUtils}>
+                                <KeyboardDateTimePicker
                                     id="parameter-date-picker"
                                     data-testid='date'
                                     autoOk
-                                    inputVariant="outlined"
-                                    clearable
                                     placeholder={cell.defaultValue}
                                     label="Date"
+                                    inputVariant="outlined"
                                     value={cell.parameterValue}
                                     minDate = {cell.parameterName.includes('Start') ? new Date(1900,1,1) : cell.parameterName.includes('End') ? parameterList[index - 1].parameterValue: new Date(1900, 1, 1)}
                                     maxDate = {cell.parameterName.includes('Start') ? parameterList[index + 1].parameterValue : new Date(2100,1,1)}
                                     minDateMessage = {'The start date cannot overlap'}
                                     maxDateMessage = {'The end date cannot overlap'}
                                     onChange={(date) => setParamValue(date, index)}
+                                    inputFormat = {"PPP"}
                                     KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
+                                      'aria-label': 'change date',
+                                  }}
                                 />
-                            </MuiPickersUtilsProvider>
+                            </MuiPickersUtilsProvider >
                             )}
                       </TableCell>
                     </TableRow>
