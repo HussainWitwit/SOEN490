@@ -167,7 +167,8 @@ export function DetailsConfigurationModal (props) {
                   disableMaskedInput
                   inputVariant="outlined"
                   label="Repeat on"
-                  minDate={currentDateTime} //Create state hook TODO:
+                  minDateMessage = {"The selected date cannot be before the current date."}
+                  minDate={currentDateTime}
                   disablePast
                   value={basicConfiguration.repeatDate}
                   onChange={(date) => setRepeatDate(date)}

@@ -54,29 +54,6 @@ export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
     return detailedWidgets;
 }
 
-// export const assetToMultiAssetSelection = (assets: Asset[]) : (Asset | null)[] => {
-//     let resultList: (Asset | null)[] = [];
-//     let listToMatch: MultiSelectTreeViewAsset[] = store.getState().sharedReducer.nestedAssetsArray;
-//     console.log(listToMatch[0].value);
-//     resultList = assets.map(element => {
-//         return matchAssetToMultiAssetSelection(element, listToMatch[0].value);
-//     })
-//     return resultList;
-// }
-
-// export const matchAssetToMultiAssetSelection = (assetToMatch: Asset, asset: Asset | Asset[]) : Asset | null => {
-//     for (const element of asset.children) {
-//         if (element.id === assetToMatch.id) {
-//             return element;      
-//         } else {
-//             matchAssetToMultiAssetSelection(assetToMatch, element.children)
-//         }
-//     }
-//     return null;
-// }
-
-
-
 export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
     if(tabs === null || tabs.length<1)
         return false;
