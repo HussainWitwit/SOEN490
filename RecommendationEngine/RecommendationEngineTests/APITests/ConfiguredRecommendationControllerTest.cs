@@ -237,5 +237,10 @@ namespace RecommendationEngineTests.APITests
         {
             return MockAssets.BasicDBAssetList[2];
         }
+
+        public void Update(DBAsset asset)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
