@@ -154,8 +154,11 @@ function Dashboard() {
               {listActionValues && listActionValues.map((action, index) => (
                 <ListItem>
                   <div id='action-item-container' key={index}>
-                      <p id='action-title'>{action.displayText}</p>
-                      <p id='action-date'>{dateFormat(action.recommendedDate)}</p>
+                      <p id='action-title'>{action.assetName}</p>
+                      <p id='action-title'>{action.recommendationName}</p>
+                      <hr class="solid"></hr>
+                      <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
+                      <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
                       <div id='display-text-container'>
                           {action.displayText}
                       </div>

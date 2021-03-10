@@ -89,6 +89,10 @@
   height: 533px;
 }
 
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
 #action-item-container {
   background-color: #fafafa;
   border: solid 1px #D9D9D9;
