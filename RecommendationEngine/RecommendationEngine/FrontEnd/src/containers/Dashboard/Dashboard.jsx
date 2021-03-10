@@ -14,7 +14,6 @@ import { dateFormat } from '../../utilities/DateTimeUtilities';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
-import EmptyListSVG from './EmptyListSVG';
 
 
 export const pickStylingClassName = (title) => {
@@ -145,14 +144,13 @@ function Dashboard() {
         </div>
         <Grid className="listOfActions">
             {listActionValues.length == 0 &&
-              <div>
-                <h2 id="actions-unavailable">Please select another day to see actions.</h2>
-                <EmptyListSVG/>
+              <div className="list">
+                <h2 id="actions-unavailable">Please select a day on the calendar to see the available actions.</h2>
               </div>
             }
             {listActionValues.length > 0 &&
               <List>
-              <h2 id="actions-unavailable">Recommended Actions</h2>
+              <h2 id="actions-available">Recommended Actions</h2>
               {listActionValues && listActionValues.map((action, index) => (
                 <ListItem>
                   <div id='action-item-container' key={index}>

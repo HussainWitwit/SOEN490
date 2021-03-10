@@ -81,9 +81,12 @@
 
 .listOfActions {
   width: 450px;
-  margin-top: 91px;
+  margin-top: 98px;
   margin-left: 30px;
-  overflow: scroll;
+  border-style:dotted;
+  border-color: #d9d9d9;
+  border-width: 2px;
+  height: 533px;
 }
 
 #action-item-container {
@@ -116,5 +119,13 @@
 }
 
 #actions-unavailable {
+  text-align: center;
+  color: #808080;
+  text-align: center;
+  font-size: 18px;
+  padding: 268px 0;
+}
+
+#actions-available {
   text-align: center;
 }
