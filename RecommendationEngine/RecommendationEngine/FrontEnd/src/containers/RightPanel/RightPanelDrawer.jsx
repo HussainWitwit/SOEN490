@@ -44,6 +44,11 @@ export function RightPanelDrawer ({
     }
   }
 
+  const handleClose = (e, closeTabCallback) => {
+    e.stopPropagation();
+    closeTabCallback();
+  }
+
   return (
     <div>
       <link
@@ -69,7 +74,7 @@ export function RightPanelDrawer ({
                   {tabOptions[tab.name].title}
                   <IconButton
                     className="drawer-icon-button"
-                    onClick={tabOptions[tab.name].closeHandler}
+                    onClick={(e)=>handleClose(e, tabOptions[tab.name].closeHandler)}
                   >
                     <Close className="drawer-close"></Close>
                   </IconButton>

@@ -183,20 +183,22 @@ namespace RecommendationEngine.Services
         {
             try
             {
-                List<string> clientList = listOfPortfolios
+                string clientName = listOfPortfolios
                     .Select(x => x.Id.Split(".")[0])
-                    .ToList();
-
-                DBAsset client = clientList
-                    .Distinct()
-                    .Select(x => new DBAsset()
-                    {
-                        Name = x,
-                        DisplayText = x
-                    })
                     .FirstOrDefault();
 
-                return client;
+                DBAsset client = _assetRepository.GetAssetByName(clientName);
+
+                if (client != null)
+                {
+                    return client;
+                }
+
+                return new DBAsset()
+                {
+                    Name = clientName,
+                    DisplayText = clientName
+                };
             }
             catch (GlobalException)
             {

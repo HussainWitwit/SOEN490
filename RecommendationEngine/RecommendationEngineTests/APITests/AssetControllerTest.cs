@@ -99,6 +99,11 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         {
             return MockData.MockAssets.BasicDBAsset;
         }
+
+        public void Update(DBAsset asset)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     public class TestAssetTypeRepositoryMock : IAssetTypeRepository
@@ -127,6 +132,11 @@ namespace RecommendationEngineTests.UnitTests.ControllerTest
         public DBAsset GetAssetById(int assetId)
         {
             return MockData.MockAssets.BasicDBAsset;
+        }
+
+        public void Update(DBAsset asset)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
