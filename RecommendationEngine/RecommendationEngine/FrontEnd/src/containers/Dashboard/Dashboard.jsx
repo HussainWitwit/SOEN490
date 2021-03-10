@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
-import { GetWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
-import { GetCalendarDates } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
@@ -10,9 +9,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
+import { List, ListItem } from '@material-ui/core';
+import { dateFormat } from '../../utilities/DateTimeUtilities';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
+import EmptyListSVG from './EmptyListSVG';
 
 
 export const pickStylingClassName = (title) => {
@@ -33,6 +35,7 @@ function Dashboard() {
 
   const [widgetMetrics, setWidgetMetrics] = useState([]);
   const [calendarValues, setCalendarValues] = useState([]);
+  const [listActionValues, setListActionValues] = useState([]);
   const [loading, setLoading] = useState([]);
 
   const startLoadingSpinner = () => {
@@ -50,9 +53,11 @@ function Dashboard() {
 
   const getDashboardValues = async () => {
     startLoadingSpinner();
+
     let widgetResponse = await GetWidgetMetrics();
     let detailedWidgets = convertWidgetResponse(widgetResponse);
     setWidgetMetrics(detailedWidgets);
+
     let calendarResponse = await GetCalendarDates();
     let calendar = calendarResponse.map((element) => {
       return {
@@ -61,6 +66,11 @@ function Dashboard() {
       };
     })
     calendarEvents(calendar);
+
+    var dt = new Date();
+    let actionsResponse = await GetActionPerDay(dt.toISOString())
+    setListActionValues(actionsResponse);
+
     stopLoadingSpinner();
   }
 
@@ -74,9 +84,10 @@ function Dashboard() {
     setCalendarValues(events);
   }
 
-  function handleDateClick(event) {
-    var startDate = event.startStr
-    console.log(startDate)
+  const handleDateClick = async (ev) => {
+    var startDate = ev.startStr
+    let actionsResponse = await GetActionPerDay(startDate)
+    setListActionValues(actionsResponse);
   }
 
   useEffect(() => {
@@ -121,14 +132,43 @@ function Dashboard() {
           </div>
         ))}
       </div>
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        selectable={true}
-        initialView='dayGridMonth'
-        select={handleDateClick}
-        events={calendarValues}
-        handleWindowResize={true}
-      />
+      <div className='rows'>
+        <div className="calendar">
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            selectable={true}
+            initialView='dayGridMonth'
+            select={handleDateClick}
+            events={calendarValues}
+            handleWindowResize={true}
+          />
+        </div>
+        <Grid className="listOfActions">
+            {listActionValues.length == 0 &&
+              <div>
+                <h2 id="actions-unavailable">Please select another day to see actions.</h2>
+                <EmptyListSVG/>
+              </div>
+            }
+            {listActionValues.length > 0 &&
+              <List>
+              <h2 id="actions-unavailable">Recommended Actions</h2>
+              {listActionValues && listActionValues.map((action, index) => (
+                <ListItem>
+                  <div id='action-item-container' key={index}>
+                      <p id='action-title'>{action.displayText}</p>
+                      <p id='action-date'>{dateFormat(action.recommendedDate)}</p>
+                      <div id='display-text-container'>
+                          {action.displayText}
+                      </div>
+                      <p id='suggestion-date'>Suggested on {dateFormat(action.recommendedOnDate)}</p>
+                  </div>
+                </ListItem>
+              ))}
+            </List>
+            }
+          </Grid>
+      </div>
     </div>
   )
 }
