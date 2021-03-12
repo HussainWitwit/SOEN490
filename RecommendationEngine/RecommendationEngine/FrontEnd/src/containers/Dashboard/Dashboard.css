@@ -75,18 +75,29 @@
 }
 
 .rows {
-  flex-direction: row;
-  display: inline-flex;
+  display: flex;
 }
 
 .listOfActions {
-  width: 450px;
+  width: 35%;
   margin-top: 98px;
   margin-left: 30px;
   border-style:dotted;
   border-color: #d9d9d9;
   border-width: 2px;
   height: 533px;
+}
+
+.list-actions {
+  overflow: scroll;
+  height: inherit;
+}
+
+.action-maintitle {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
 }
 
 hr.solid {
@@ -127,7 +138,7 @@ hr.solid {
   color: #808080;
   text-align: center;
   font-size: 18px;
-  padding: 268px 0;
+  padding: 228px 0;
 }
 
 #actions-available {

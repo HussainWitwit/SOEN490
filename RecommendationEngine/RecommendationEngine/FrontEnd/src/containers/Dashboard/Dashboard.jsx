@@ -15,7 +15,6 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
 
-
 export const pickStylingClassName = (title) => {
   let className;
   if (title === 'Potential Net Savings') {
@@ -30,11 +29,46 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
+function ListOfActions({listActionValues, selectedDate}){
+  return(
+    <Grid className="listOfActions">
+      {listActionValues.length == 0 &&
+        <div className="list">
+          <h2 id="actions-unavailable">{selectedDate}<br/>There are no actions associated to the selected date.</h2>
+        </div>
+      }
+      {listActionValues.length > 0 &&
+        <List className="list-actions" style={{paddingTop: "0px"}}>
+        <div className="action-maintitle">
+          <h2 id="actions-available">Recommended Actions<br/>{selectedDate}</h2>
+        </div>
+        {listActionValues && listActionValues.map((action, index) => (
+          <ListItem>
+            <div id='action-item-container' key={index}>
+                <p id='action-title'>{action.assetName}</p>
+                <p id='action-title'>{action.recommendationName}</p>
+                <hr class="solid"></hr>
+                <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
+                <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
+                <div id='display-text-container'>
+                    {action.displayText}
+                </div>
+                <p id='suggestion-date'>Suggested on {dateFormat(action.recommendedOnDate)}</p>
+            </div>
+          </ListItem>
+        ))}
+      </List>
+      }
+    </Grid>
+  )
+}
+
 function Dashboard() {
 
   const [widgetMetrics, setWidgetMetrics] = useState([]);
   const [calendarValues, setCalendarValues] = useState([]);
   const [listActionValues, setListActionValues] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
   const [loading, setLoading] = useState([]);
 
   const startLoadingSpinner = () => {
@@ -87,6 +121,7 @@ function Dashboard() {
     var startDate = ev.startStr
     let actionsResponse = await GetActionPerDay(startDate)
     setListActionValues(actionsResponse);
+    setSelectedDate(startDate);
   }
 
   useEffect(() => {
@@ -142,33 +177,7 @@ function Dashboard() {
             handleWindowResize={true}
           />
         </div>
-        <Grid className="listOfActions">
-            {listActionValues.length == 0 &&
-              <div className="list">
-                <h2 id="actions-unavailable">Please select a day on the calendar to see the available actions.</h2>
-              </div>
-            }
-            {listActionValues.length > 0 &&
-              <List>
-              <h2 id="actions-available">Recommended Actions</h2>
-              {listActionValues && listActionValues.map((action, index) => (
-                <ListItem>
-                  <div id='action-item-container' key={index}>
-                      <p id='action-title'>{action.assetName}</p>
-                      <p id='action-title'>{action.recommendationName}</p>
-                      <hr class="solid"></hr>
-                      <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
-                      <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
-                      <div id='display-text-container'>
-                          {action.displayText}
-                      </div>
-                      <p id='suggestion-date'>Suggested on {dateFormat(action.recommendedOnDate)}</p>
-                  </div>
-                </ListItem>
-              ))}
-            </List>
-            }
-          </Grid>
+        <ListOfActions listActionValues={listActionValues} selectedDate={selectedDate} />
       </div>
     </div>
   )
