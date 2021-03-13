@@ -89,6 +89,11 @@ namespace RecommendationEngineTests.APITests
             {
                 return MockActions.BasicDBActions;
             }
+
+            List<DBAction> IActionRepository.GetActionsByDate(DateTime date)
+            {
+                return MockActions.BasicDBActions;
+            }
         }
 
         public class TestBadRepositoryMock : IActionRepository
@@ -99,6 +104,11 @@ namespace RecommendationEngineTests.APITests
             }
 
             List<DBAction> IActionRepository.GetActionsByResultId(int id)
+            {
+                return MockActions.BadDBActions;
+            }
+
+            List<DBAction> IActionRepository.GetActionsByDate(DateTime date)
             {
                 return MockActions.BadDBActions;
             }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
-import { GetWidgetMetrics } from '../../api/endpoints/DashboardEndpoints';
-import { GetCalendarDates } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
@@ -10,10 +9,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
+import { List, ListItem } from '@material-ui/core';
+import { dateFormat } from '../../utilities/DateTimeUtilities';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
-
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -29,10 +29,46 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
+function ListOfActions({listActionValues, selectedDate}){
+  return(
+    <Grid className="listOfActions">
+      {listActionValues.length == 0 &&
+        <div className="list">
+          <h2 id="actions-unavailable">{selectedDate}<br/>There are no actions associated to the selected date.</h2>
+        </div>
+      }
+      {listActionValues.length > 0 &&
+        <List className="list-actions" style={{paddingTop: "0px"}}>
+        <div className="action-maintitle">
+          <h2 id="actions-available">Recommended Actions<br/>{selectedDate}</h2>
+        </div>
+        {listActionValues && listActionValues.map((action, index) => (
+          <ListItem>
+            <div id='action-item-container' key={index}>
+                <p id='action-title'>{action.assetName}</p>
+                <p id='action-title'>{action.recommendationName}</p>
+                <hr class="solid"></hr>
+                <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
+                <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
+                <div id='display-text-container'>
+                    {action.displayText}
+                </div>
+                <p id='suggestion-date'>Suggested on {dateFormat(action.recommendedOnDate)}</p>
+            </div>
+          </ListItem>
+        ))}
+      </List>
+      }
+    </Grid>
+  )
+}
+
 function Dashboard() {
 
   const [widgetMetrics, setWidgetMetrics] = useState([]);
   const [calendarValues, setCalendarValues] = useState([]);
+  const [listActionValues, setListActionValues] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
   const [loading, setLoading] = useState([]);
 
   const startLoadingSpinner = () => {
@@ -50,9 +86,11 @@ function Dashboard() {
 
   const getDashboardValues = async () => {
     startLoadingSpinner();
+
     let widgetResponse = await GetWidgetMetrics();
     let detailedWidgets = convertWidgetResponse(widgetResponse);
     setWidgetMetrics(detailedWidgets);
+
     let calendarResponse = await GetCalendarDates();
     let calendar = calendarResponse.map((element) => {
       return {
@@ -61,6 +99,11 @@ function Dashboard() {
       };
     })
     calendarEvents(calendar);
+
+    var dt = new Date();
+    let actionsResponse = await GetActionPerDay(dt.toISOString())
+    setListActionValues(actionsResponse);
+
     stopLoadingSpinner();
   }
 
@@ -74,8 +117,11 @@ function Dashboard() {
     setCalendarValues(events);
   }
 
-  function handleDateClick() {
-    // Do whatever
+  const handleDateClick = async (ev) => {
+    var startDate = ev.startStr
+    let actionsResponse = await GetActionPerDay(startDate)
+    setListActionValues(actionsResponse);
+    setSelectedDate(startDate);
   }
 
   useEffect(() => {
@@ -120,14 +166,19 @@ function Dashboard() {
           </div>
         ))}
       </div>
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        selectable={true}
-        initialView='dayGridMonth'
-        select={handleDateClick}
-        events={calendarValues}
-        handleWindowResize={true}
-      />
+      <div className='rows'>
+        <div className="calendar">
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            selectable={true}
+            initialView='dayGridMonth'
+            select={handleDateClick}
+            events={calendarValues}
+            handleWindowResize={true}
+          />
+        </div>
+        <ListOfActions listActionValues={listActionValues} selectedDate={selectedDate} />
+      </div>
     </div>
   )
 }

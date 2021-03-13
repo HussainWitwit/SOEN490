@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Models.DB;
 
 namespace Interfaces.Repositories
@@ -8,5 +9,7 @@ namespace Interfaces.Repositories
         public List<DBAction> GetActionList();
 
         public List<DBAction> GetActionsByResultId(int id);
+
+        public List<DBAction> GetActionsByDate(DateTime date);
     }
 }

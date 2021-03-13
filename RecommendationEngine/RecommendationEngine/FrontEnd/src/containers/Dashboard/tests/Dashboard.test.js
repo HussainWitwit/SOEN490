@@ -33,7 +33,7 @@ describe.only('Dashboard component', () => {
 
   it("Finds the divs", () => {
     let component = output.find('div');
-    expect(component).toHaveLength(3);
+    expect(component).toHaveLength(5);
   })
 
   it("Finds the calendar", () => {

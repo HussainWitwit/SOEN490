@@ -1,4 +1,5 @@
-﻿using Interfaces.Services;
+using System;
+using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
 
@@ -34,6 +35,19 @@ namespace RecommendationEngine.Controllers
             try
             {
                 return Ok(_actionService.GetNbActionsByDay());
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("date/{date}")]
+        public IActionResult GetActionsByDate(DateTime date)
+        {
+            try
+            {
+                return Ok(_actionService.GetActionsByDate(date));
             }
             catch (GlobalException e)
             {
