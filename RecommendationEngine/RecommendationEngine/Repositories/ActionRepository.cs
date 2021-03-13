@@ -51,8 +51,7 @@ namespace RecommendationEngine.Repositories
                     .Include(action => action.RecommendationJobResult)
                     .ThenInclude(result => result.Job)
                     .ThenInclude(job => job.Schedule)
-                    .ThenInclude(schedule => schedule.AssetsList)
-                    .ThenInclude(asset => asset.Asset).ToList();
+                    .Include(action => action.Asset).ToList();
             }
             catch (Exception) {
                 throw new DbException();
