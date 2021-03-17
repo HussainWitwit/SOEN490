@@ -361,6 +361,16 @@
     display: inline-block;
     margin-top: 5px;
 }
+.Failed:hover {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+.Success:hover {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 1.5s;
+}
 .Failed {
     height: 22px;
     width: 6px;

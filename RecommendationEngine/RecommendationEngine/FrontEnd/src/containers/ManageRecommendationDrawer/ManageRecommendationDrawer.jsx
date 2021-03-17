@@ -12,18 +12,29 @@ import { connect } from 'react-redux';
 import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
+import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 
 export function ManageRecommendationDrawer({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
+  const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
+  const [jobLogId, setJobLogId] = React.useState(null);
+  const [jobLogs, setJobLogs] = React.useState([]);
+  
   // Animation style
   const props = useSpring({
     opacity: 1,
     transform: 'translate3d(0px,0,0)',
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
+
+  const fetchLogsList  = async (jobId) => {
+    let response = await GetJobLogList(jobId);
+    setJobLogs(response);
+  }
 
   const handleForceRunPopUpOpen = () => {
     setOpenForceRunPopUp(!openForceRunPopUp);
@@ -32,6 +43,10 @@ export function ManageRecommendationDrawer({
   const handleDeletePopUpOpen = () => {
     setOpenDeletePopUp(!openDeletePopUp);
   };
+
+  const handleJobLogPopupOpen = () => {
+    setOpenJobLogPopup(!openJobLogPopup)
+  }
 
   const formatDateTime = (date) => {
     let timeStamp = new Date(date);
@@ -117,7 +132,14 @@ export function ManageRecommendationDrawer({
                       </div>
                       : "No status Avalaible"}
                   >
-                    <div className={value !== null ? value.status : "Empty"}></div>
+                    <div 
+                      className={value !== null ? value.status : "Empty"} 
+                      onClick={() => {
+                        setJobLogId(value.id);
+                        setOpenJobLogPopup(true);
+                        fetchLogsList(value.id);
+                      }}>
+                    </div>
                   </Tooltip>
                 ))}
             </div>
@@ -167,6 +189,9 @@ export function ManageRecommendationDrawer({
               <DeletePopUp title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
+          {openJobLogPopup &&
+            <JobLogPopUp className={"job-log-style"} jobId={jobLogId} handleJobLogPopupOpen={handleJobLogPopupOpen} open={openJobLogPopup} jobLogs={jobLogs}></JobLogPopUp>
+          }
         </Grid>
       </div>
     </animated.div>
