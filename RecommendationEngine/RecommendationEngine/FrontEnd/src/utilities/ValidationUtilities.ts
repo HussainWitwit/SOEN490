@@ -24,15 +24,26 @@ export function mapErrorToErrorList(err: any) {
 
 export const validateParameters = (template: Parameter[]) => {
     var errorInParameters = false;
+    
     if (checkDateRange(template)) {
         errorInParameters = true;
+        return errorInParameters
     }
+
     template.forEach((parameter) => {
         if (parameter.parameterType != "DATE") {
-            var minimumValue = parameter.parameterType.split("_")[2]
+            var paramTypeAttributes = parameter.parameterType.split("_")
+            var minimumValue = paramTypeAttributes[2]
+            var isNegative = paramTypeAttributes[0] === "NEGATIVE"
             var currentValue = parameter.parameterValue
-            if (parseFloat(currentValue) < parseFloat(minimumValue) || isNaN(parseFloat(currentValue)) || isNaN(parseFloat(minimumValue))) {
+
+            var isInvalidNumber = isNaN(parseFloat(currentValue)) || isNaN(parseFloat(minimumValue))
+            var negativeComparasion = parseFloat(currentValue) > parseFloat(minimumValue)
+            var positiveComparasion = parseFloat(currentValue) < parseFloat(minimumValue)
+
+            if ((!isNegative && positiveComparasion) || (isNegative && negativeComparasion) || isInvalidNumber) {
                 errorInParameters = true
+                return errorInParameters
             }
         }
     })
