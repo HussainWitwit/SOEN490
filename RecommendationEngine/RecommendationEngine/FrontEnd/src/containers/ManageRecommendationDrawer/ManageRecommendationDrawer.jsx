@@ -22,7 +22,6 @@ export function ManageRecommendationDrawer({
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
   const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
   const [jobLogId, setJobLogId] = React.useState(null);
-  const [jobLogs, setJobLogs] = React.useState([]);
   
   // Animation style
   const props = useSpring({
@@ -31,9 +30,8 @@ export function ManageRecommendationDrawer({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
 
-  const fetchLogsList  = async (jobId) => {
-    let response = await GetJobLogList(jobId);
-    setJobLogs(response);
+  const handleOpenLogPopup = () => {
+    setOpenJobLogPopup(!openJobLogPopup)
   }
 
   const handleForceRunPopUpOpen = () => {
@@ -43,10 +41,6 @@ export function ManageRecommendationDrawer({
   const handleDeletePopUpOpen = () => {
     setOpenDeletePopUp(!openDeletePopUp);
   };
-
-  const handleJobLogPopupOpen = () => {
-    setOpenJobLogPopup(!openJobLogPopup)
-  }
 
   const formatDateTime = (date) => {
     let timeStamp = new Date(date);
@@ -137,8 +131,7 @@ export function ManageRecommendationDrawer({
                       onClick={() => {
                         if (value !== null) {
                           setJobLogId(value.id);
-                          setOpenJobLogPopup(true);
-                          fetchLogsList(value.id);
+                          setOpenJobLogPopup(true)
                         }
                       }}>
                     </div>
@@ -191,8 +184,8 @@ export function ManageRecommendationDrawer({
               <DeletePopUp title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
-          {openJobLogPopup &&
-            <JobLogPopUp className={"job-log-style"} jobId={jobLogId} handleJobLogPopupOpen={handleJobLogPopupOpen} open={openJobLogPopup} jobLogs={jobLogs}></JobLogPopUp>
+          {openJobLogPopup && 
+            <JobLogPopUp className={"job-log-style"} jobId={jobLogId} controlled={openJobLogPopup} handleOpenLogPopup={handleOpenLogPopup}></JobLogPopUp>
           }
         </Grid>
       </div>

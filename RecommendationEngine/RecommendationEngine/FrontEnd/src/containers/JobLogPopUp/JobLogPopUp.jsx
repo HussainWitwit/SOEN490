@@ -5,9 +5,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { TableCell } from '@material-ui/core';
+import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
+import Assignment from '@material-ui/icons/Assignment';
 import {dateFormat, timeFormat} from '../../utilities/DateTimeUtilities';
 import BasicTable from '../../components/BasicTable/BasicTable';
 import './JobLogPopUp.css'
+
 
 export const RowsToDisplay = (element) => (
   <React.Fragment key={element.id}>
@@ -26,10 +29,31 @@ export const RowsToDisplay = (element) => (
 );
 
 export default function JobLogPopUp(props) {
+  const [jobLogs, setJobLogs] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+
+  const fetchLogsList  = async () => {
+    let response = await GetJobLogList(props.jobId);
+    setJobLogs(response);
+  }
+
+  const handleClickOpen  = () => {
+    fetchLogsList();
+    setOpen(true);
+  };
 
   const handleClose = () => {
-    props.handleJobLogPopupOpen();
+    setOpen(false);
+    if(props.handleOpenLogPopup) {
+      props.handleOpenLogPopup()
+    }
   };
+
+  React.useEffect(() => {
+    if (props.controlled) {
+      handleClickOpen()
+    } 
+  }, [props.controlled])
 
   const headCells = [
     { id: 'date', label: 'Date' },
@@ -40,8 +64,11 @@ export default function JobLogPopUp(props) {
   
   return (
     <div>
+      {!props.controlled && 
+        <Button onClick={handleClickOpen}><Assignment /></Button>
+      }
       <Dialog
-        open={props.open}
+        open={open}
         onClose={handleClose}
         scroll="paper"
         fullWidth={true}
@@ -53,7 +80,7 @@ export default function JobLogPopUp(props) {
         <DialogContent dividers={true}>
           <BasicTable
             rowsValue={RowsToDisplay}
-            data={props.jobLogs}
+            data={jobLogs}
             onClickRow={() => {}}
             columnTitles={headCells}
             dense={true}

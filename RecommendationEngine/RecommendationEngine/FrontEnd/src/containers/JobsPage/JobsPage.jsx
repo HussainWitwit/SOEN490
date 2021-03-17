@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
-import { GetJobLogList, GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
+import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
-import Assignment from '@material-ui/icons/Assignment';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
@@ -16,18 +14,7 @@ function JobsPage (props) {
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
-    const [jobLogs, setJobLogs] = React.useState([]);
     const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
-    const [jobLogId, setJobLogId] = React.useState(null);
-
-    const fetchLogsList  = async (jobId) => {
-        let response = await GetJobLogList(jobId);
-        setJobLogs(response);
-    }
-
-    const handleJobLogPopupOpen = () => {
-        setOpenJobLogPopup(!openJobLogPopup)
-    }
 
     const durationOption = {
         number: 'number',
@@ -69,13 +56,12 @@ function JobsPage (props) {
             flex: 0.08,
             headerAlign: 'center',
             renderCell: (params) => (
-                <Button onClick={() => {
-                    setJobLogId(params.getValue('id'));  
-                    setOpenJobLogPopup(true);
-                    fetchLogsList(params.getValue('id'))
-                }}>
-                    <Assignment />
-                </Button>
+                <JobLogPopUp
+                    className={"job-log-style"}
+                    jobId={params.getValue('id')}
+                    controlled={null}
+                >
+                </JobLogPopUp>
             )
         }
     ];
@@ -127,9 +113,6 @@ function JobsPage (props) {
                     </Grid>
                 </div>
             </div>
-            {openJobLogPopup &&
-                <JobLogPopUp className={"job-log-style"} jobId={jobLogId} handleJobLogPopupOpen={handleJobLogPopupOpen} open={openJobLogPopup} jobLogs={jobLogs}></JobLogPopUp>
-            }
             <br></br>
             <RecommendationEngineTable
                 data={jobList}
