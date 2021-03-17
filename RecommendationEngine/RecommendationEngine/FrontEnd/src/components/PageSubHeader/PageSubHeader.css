@@ -1,0 +1,20 @@
+#grid1{
+    width: 79%;
+    }
+    
+    .gridContainerStyle.MuiGrid-container{
+        align-items: flex-end;
+    }
+
+    #title{
+        margin-top: 20px;
+        color: #252733;
+        font-size: 25px;
+    }
+    
+    #subtitle{
+        margin-top: 5px;
+        color: #868282;
+        font-size: 13px;
+        font-weight:normal
+    }

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { Grid} from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
-import SearchBar from '../../common/SearchBar';
+import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import './ManageRecommendationPage.css';
 
 export function ManageRecommendationPage (props) {
@@ -44,35 +41,14 @@ export function ManageRecommendationPage (props) {
       <div></div>
       <div>
         <br></br>
-        <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-          <Grid id="grid1" item>
-            <h3 id="title">Manage Recommendations</h3>
-            <h6 id="subtitle">
-              Add, edit, delete and browse the configured recommendation
-            </h6>
-          </Grid>
-          <Grid item>
-            <div>
-              <Button id="rec-btn" onClick={toggleDialog}>
-                Create Recommendation
-              </Button>
-              <AddRecommendationDialog {...props} />
-            </div>
-          </Grid>
-        </Grid>
-        <br></br>
-      </div>
-      <div>
-        <div>
-          <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id="data-testid" >
-              <SearchBar
-                placeholder="Search for a recommendation..."
-                onSearchUpdate={updateSearch}
-              />
-            </Grid>
-          </Grid>
-        </div>
+         <PageSubHeader
+         pageTitle="Recommendation Jobs"
+         descriptionSubtitle="Browse, edit, and delete recommendation jobs"
+         showCreateRecommendation={true}
+         toggleDialog={toggleDialog}
+         addRecommendationProps={props}
+         updateSearch={updateSearch}
+         />
       </div>
       <br></br>
       <RecommendationEngineTable
