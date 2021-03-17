@@ -1,3 +1,6 @@
+import { Parameter } from "../api/models/TemplateDetails";
+import { checkDateRange } from "./GeneralUtilities";
+
 /* istanbul ignore next */
 export async function handleErrors(res:Response) {
     var errorRes:any = {};
@@ -17,4 +20,21 @@ export async function handleErrors(res:Response) {
 export function mapErrorToErrorList(err: any) {
     let errorList = err.content.errorList.map((error: any) => error.errorMessage);
     return errorList
+}
+
+export const validateParameters = (template: Parameter[]) => {
+    var errorInParameters = false;
+    if (checkDateRange(template)) {
+        errorInParameters = true;
+    }
+    template.forEach((parameter) => {
+        if (parameter.parameterType != "DATE") {
+            var minimumValue = parameter.parameterType.split("_")[2]
+            var currentValue = parameter.parameterValue
+            if (parseFloat(currentValue) < parseFloat(minimumValue) || isNaN(parseFloat(currentValue)) || isNaN(parseFloat(minimumValue))) {
+                errorInParameters = true
+            }
+        }
+    })
+    return errorInParameters
 }
