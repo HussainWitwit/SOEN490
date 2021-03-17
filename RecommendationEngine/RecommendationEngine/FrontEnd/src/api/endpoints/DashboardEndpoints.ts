@@ -1,8 +1,8 @@
 import { Widget } from '../models/Widget';
 import { CalendarDates } from '../models/CalendarDates';
 import { Action } from '../models/Action';
-import { handleErrors, mapErrorToErrorList } from "../../utilities/ValidationUtilities"
-import { toast } from 'react-toastify';
+import { handleErrors } from "../../utilities/ValidationUtilities"
+import { notifyError } from "../../utilities/ErrorNotification"
 
 export async function GetWidgetMetrics(): Promise<Widget[] | null> {
     let widgetMetrics: Widget[] = [];
@@ -14,29 +14,7 @@ export async function GetWidgetMetrics(): Promise<Widget[] | null> {
             return widgetMetrics
         })
         .catch(err => {
-            if (err.code === 400) {
-                mapErrorToErrorList(err).map((msg: any) => {
-                    toast.error(msg, {
-                        position: "bottom-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    })
-                })
-            } else {
-                toast.error(err.content, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            notifyError(err)
         })
     return widgetMetrics;
 }
@@ -51,29 +29,7 @@ export async function GetCalendarDates(): Promise<CalendarDates[] | null> {
             return calendarDates
         })
         .catch(err => {
-            if (err.code === 400) {
-                mapErrorToErrorList(err).map((msg: any) => {
-                    toast.error(msg, {
-                        position: "bottom-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    })
-                })
-            } else {
-                toast.error(err.content, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            notifyError(err)
         })
     return calendarDates;
 }
@@ -88,29 +44,7 @@ export async function GetActionPerDay(date: string): Promise<Action[] | null> {
             return actionList
         })
         .catch(err => {
-            if (err.code === 400) {
-                mapErrorToErrorList(err).map((msg: any) => {
-                    toast.error(msg, {
-                        position: "bottom-center",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    })
-                })
-            } else {
-                toast.error(err.content, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            notifyError(err)
         })
     return actionList;
 }
