@@ -135,9 +135,11 @@ export function ManageRecommendationDrawer({
                     <div 
                       className={value !== null ? value.status : "Empty"} 
                       onClick={() => {
-                        setJobLogId(value.id);
-                        setOpenJobLogPopup(true);
-                        fetchLogsList(value.id);
+                        if (value !== null) {
+                          setJobLogId(value.id);
+                          setOpenJobLogPopup(true);
+                          fetchLogsList(value.id);
+                        }
                       }}>
                     </div>
                   </Tooltip>
