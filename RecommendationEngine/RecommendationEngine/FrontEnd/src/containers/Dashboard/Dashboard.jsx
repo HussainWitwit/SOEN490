@@ -69,7 +69,7 @@ function Dashboard() {
   const [calendarValues, setCalendarValues] = useState([]);
   const [listActionValues, setListActionValues] = useState([]);
   const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
-  const [loading, setLoading] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const startLoadingSpinner = () => {
     setLoading(true);
