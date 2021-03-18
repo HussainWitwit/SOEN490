@@ -37,15 +37,6 @@ describe('JobLogPopUp component', () => {
         expect(component).toHaveLength(1);
     })
 
-    it('It finds the 2 buttons', () => {
-        let button = output.find(Button);
-        expect(button).toHaveLength(2);
-    });
-
-    it('It finds the open log icon and presses it', () => {
-        output.find(Button).at(0).simulate('click');
-    });
-
     it('It finds the dialog', () => {
         let button = output.find(Dialog);
         expect(button).toHaveLength(1);
@@ -65,14 +56,4 @@ describe('JobLogPopUp component', () => {
         let button = output.find(DialogActions);
         expect(button).toHaveLength(1);
     });
-
-    it('It finds the close and open buttons', () => {
-        let button = output.find(Button);
-        expect(button).toHaveLength(2);
-    });
-
-    it('It finds the close button and presses it', () => {
-        output.find(Button).at(1).simulate('click');
-    });
-
 });
