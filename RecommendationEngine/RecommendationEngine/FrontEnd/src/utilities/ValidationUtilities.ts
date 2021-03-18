@@ -33,15 +33,18 @@ export const validateParameters = (template: Parameter[]) => {
     template.forEach((parameter) => {
         if (parameter.parameterType != "DATE") {
             var paramTypeAttributes = parameter.parameterType.split("_")
+            var parameterType = paramTypeAttributes[1]
             var minimumValue = paramTypeAttributes[2]
             var isNegative = paramTypeAttributes[0] === "NEGATIVE"
             var currentValue = parameter.parameterValue
 
             var isInvalidNumber = isNaN(parseFloat(currentValue)) || isNaN(parseFloat(minimumValue))
+            var invalidFloat = parameterType === "FLOAT" && !currentValue.includes(".")
+            var invalidInt = parameterType === "INT" && currentValue.includes(".")
             var negativeComparasion = parseFloat(currentValue) > parseFloat(minimumValue)
             var positiveComparasion = parseFloat(currentValue) < parseFloat(minimumValue)
 
-            if ((!isNegative && positiveComparasion) || (isNegative && negativeComparasion) || isInvalidNumber) {
+            if ((!isNegative && positiveComparasion) || (isNegative && negativeComparasion) || isInvalidNumber || invalidInt || invalidFloat) {
                 errorInParameters = true
                 return errorInParameters
             }
