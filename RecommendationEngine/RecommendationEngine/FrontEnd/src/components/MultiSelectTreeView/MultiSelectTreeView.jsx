@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { TreeSelect } from 'antd';
+import { TreeSelect } from 'antd/lib/tree-select';
 import './MultiSelectTreeView.css';
 
 export default function MultiSelectTreeView (props) {
