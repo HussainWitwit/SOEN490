@@ -2,18 +2,9 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#root{
-    min-width: 860px;
-}
-
-#table{
-    min-width: 850px;
-}
-
 #paper{
     width: 100%;
     margin-bottom: 8px;
-    min-width: 850px;
 }
 
 .tool-bar-title {
