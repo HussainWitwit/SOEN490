@@ -12,18 +12,27 @@ import { connect } from 'react-redux';
 import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
+import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 
 export function ManageRecommendationDrawer({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
+  const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
+  const [jobLogId, setJobLogId] = React.useState(null);
+  
   // Animation style
   const props = useSpring({
     opacity: 1,
     transform: 'translate3d(0px,0,0)',
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
+
+  const handleOpenLogPopup = () => {
+    setOpenJobLogPopup(!openJobLogPopup)
+  }
 
   const handleForceRunPopUpOpen = () => {
     setOpenForceRunPopUp(!openForceRunPopUp);
@@ -117,7 +126,15 @@ export function ManageRecommendationDrawer({
                       </div>
                       : "No status Avalaible"}
                   >
-                    <div className={value !== null ? value.status : "Empty"}></div>
+                    <div 
+                      className={value !== null ? value.status : "Empty"} 
+                      onClick={() => {
+                        if (value !== null) {
+                          setJobLogId(value.id);
+                          setOpenJobLogPopup(true)
+                        }
+                      }}>
+                    </div>
                   </Tooltip>
                 ))}
             </div>
@@ -167,6 +184,9 @@ export function ManageRecommendationDrawer({
               <DeletePopUp title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
+          {openJobLogPopup && 
+            <JobLogPopUp className={"job-log-style"} jobId={jobLogId} controlled={openJobLogPopup} handleOpenLogPopup={handleOpenLogPopup}></JobLogPopUp>
+          }
         </Grid>
       </div>
     </animated.div>

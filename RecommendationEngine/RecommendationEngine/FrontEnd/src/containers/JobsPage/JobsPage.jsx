@@ -5,16 +5,17 @@ import SearchBar from '../../common/SearchBar';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
-import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
+import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 
 function JobsPage(props) {
 
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
+    const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
 
     const durationOption = {
         number: 'number',
@@ -59,6 +60,7 @@ function JobsPage(props) {
                 <JobLogPopUp
                     className={"job-log-style"}
                     jobId={params.getValue('id')}
+                    controlled={null}
                 >
                 </JobLogPopUp>
             )

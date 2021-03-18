@@ -44,7 +44,16 @@ export default function JobLogPopUp(props) {
 
   const handleClose = () => {
     setOpen(false);
+    if(props.handleOpenLogPopup) {
+      props.handleOpenLogPopup()
+    }
   };
+
+  React.useEffect(() => {
+    if (props.controlled) {
+      handleClickOpen()
+    } 
+  }, [props.controlled])
 
   const headCells = [
     { id: 'date', label: 'Date' },
@@ -55,7 +64,9 @@ export default function JobLogPopUp(props) {
   
   return (
     <div>
-      <Button onClick={handleClickOpen}><Assignment /></Button>
+      {!props.controlled && 
+        <Button onClick={handleClickOpen}><Assignment /></Button>
+      }
       <Dialog
         open={open}
         onClose={handleClose}
