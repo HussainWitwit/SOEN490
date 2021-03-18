@@ -102,7 +102,7 @@
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
-    "test": "jest -u",
+    "test": "jest -w 1",
     "test:cypress": "cypress open",
     "cypress:ci": "cypress run --config video=false",
     "test:ci": "start-server-and-test start http://localhost:3000 cypress:ci",
