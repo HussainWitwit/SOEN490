@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
 import SearchBar from '../../common/SearchBar';
+import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
@@ -9,7 +10,7 @@ import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/Asset
 import { connect } from 'react-redux';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 
-function JobsPage (props) {
+function JobsPage(props) {
 
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
@@ -93,25 +94,12 @@ function JobsPage (props) {
             <div></div>
             <div>
                 <br></br>
-                <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-                    <Grid id="grid1" item>
-                        <h3 id="title">Recommendation Jobs</h3>
-                        <h6 id="subtitle">Browse, edit and delete recommendation jobs</h6>
-                    </Grid>
-                </Grid>
-                <br></br>
-            </div>
-            <div>
-                <div>
-                    <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-                        <Grid item id="data-testid" >
-                            <SearchBar
-                                placeholder="Search for a job..."
-                                onSearchUpdate={updateSearch}
-                            />
-                        </Grid>
-                    </Grid>
-                </div>
+                <PageSubHeader
+                pageTitle="Recommendation Job"
+                descriptionSubtitle="Browse, edit, and delete recommendation jobs"
+                showCreateRecommendation={false}
+                updateSearch={updateSearch}
+                />
             </div>
             <br></br>
             <RecommendationEngineTable
