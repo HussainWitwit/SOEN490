@@ -43,8 +43,8 @@ function ListOfActions({listActionValues, selectedDate}){
           <h2 id="actions-available">Recommended Actions<br/>{selectedDate}</h2>
         </div>
         {listActionValues && listActionValues.map((action, index) => (
-          <ListItem>
-            <div id='action-item-container' key={index}>
+          <ListItem key={index}>
+            <div id='action-item-container'>
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
                 <hr class="solid"></hr>
