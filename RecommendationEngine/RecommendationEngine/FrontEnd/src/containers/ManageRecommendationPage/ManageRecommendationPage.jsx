@@ -42,7 +42,7 @@ export function ManageRecommendationPage (props) {
       <div>
         <br></br>
          <PageSubHeader
-         pageTitle="Recommendation Jobs"
+         pageTitle="Configured Recommendations"
          descriptionSubtitle="Browse, edit, and delete recommendation jobs"
          showCreateRecommendation={true}
          toggleDialog={toggleDialog}
