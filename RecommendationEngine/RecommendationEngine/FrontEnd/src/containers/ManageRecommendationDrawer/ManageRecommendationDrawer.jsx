@@ -69,7 +69,7 @@ export function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList != null && configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
+                  return <div className="asset-values" key={index}>{asset.displayText}{configuredRecommendation.assetList != null && configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
                 })}
             </div>
           </Grid>
@@ -79,8 +79,8 @@ export function ManageRecommendationDrawer({
               <p className="value-title">Value</p>
               </div>
               <div className="values-param">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
-                (configuredRecommendation.parameters.map((parameter, key) => {
-                  return <div className = "parameter-tile"><div>{parameter.displayText}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue): parameter.parameterValue}</div></div>;
+                (configuredRecommendation.parameters.map((parameter, index) => {
+                  return <div className = "parameter-tile" key={index}><div>{parameter.displayText}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue): parameter.parameterValue}</div></div>;
                 })) : 'N/A'}</div>
           </Grid>
           <Grid item xs={12}>
@@ -110,7 +110,7 @@ export function ManageRecommendationDrawer({
             <p className="value-title">Last Five Executions</p>
             <div className="last-five-status">
               {configuredRecommendation.lastJobs &&
-                configuredRecommendation.lastJobs.map((value, key) => (
+                configuredRecommendation.lastJobs.map((value, index) => (
                   <Tooltip
                     id='execution-bar'
                     classes={{
@@ -125,6 +125,7 @@ export function ManageRecommendationDrawer({
                         <div>Date: {formatDateTime(value.timestamp)}</div>
                       </div>
                       : "No status Avalaible"}
+                      key={index}
                   >
                     <div 
                       className={value !== null ? value.status : "Empty"} 

@@ -47,7 +47,7 @@ function ListOfActions({listActionValues, selectedDate}){
             <div id='action-item-container'>
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
-                <hr class="solid"></hr>
+                <hr className="solid"></hr>
                 <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
                 <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
                 <div id='display-text-container'>
