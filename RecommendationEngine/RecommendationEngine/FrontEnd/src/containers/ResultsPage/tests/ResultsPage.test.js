@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Grid from '@material-ui/core/Grid';
 import { ResultsPage } from '../ResultsPage';
 import { store } from '../../../redux/store';
 import { Provider } from 'react-redux';
@@ -26,28 +25,4 @@ describe.only('ResultsPage component', () => {
         expect(output).toHaveLength(1);
     });
 
-    it("Finds the divs", () => {
-        let component = output.find('div');
-        expect(component).toHaveLength(5);
-    })
-
-    it('It finds the grids', () => {
-        let component = output.find(Grid);
-        expect(component).toHaveLength(4);
-    });
-
-    // it('It finds the 2 buttons', () => {
-    //     let button = output.find(Button);
-    //     expect(button).toHaveLength(1);
-    // });
-
-    it('It finds the title', () => {
-        let title = output.find('h3');
-        expect(title).toHaveLength(1);
-    });
-
-    it('It finds the subtitles', () => {
-        let subtitle = output.find('h6');
-        expect(subtitle).toHaveLength(1);
-    });
 });
