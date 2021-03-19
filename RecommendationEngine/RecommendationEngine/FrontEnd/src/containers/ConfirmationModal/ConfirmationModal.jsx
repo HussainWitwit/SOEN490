@@ -47,7 +47,7 @@ export function ConfirmationModal (props) {
             }}
           />
           <MultiSelectAutocomplete
-            id='multiple-select-asset-container'
+            id='multiple-select-asset-container1'
             error={dialogsContent.template.inputList === 0}
             items={dialogsContent.template.inputList}
             defaultValue={transformParameterList(dialogsContent.template.inputList)}
@@ -57,7 +57,7 @@ export function ConfirmationModal (props) {
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."
-            id='multiple-select-asset-container'
+            id='multiple-select-asset-container2'
             error={dialogsContent.basicConfiguration.asset.length === 0}
             items={dialogsContent.basicConfiguration.asset}
             defaultValue={dialogsContent.basicConfiguration.asset}
