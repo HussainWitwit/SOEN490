@@ -37,7 +37,6 @@ export  function ParamTextField({paramObject, index, onChangeEvent}) {
               }
           }}
           data-testID='parameter-value'
-          defaultValue={paramObject.defaultValue}
           value={paramObject.parameterValue}
           onChange={(e) => { onChangeEvent(e.target.value, index); }}
           className="value"
