@@ -5,8 +5,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import './BasicTableHeader.css';
-export function EnhancedTableHead(props) {
 
+export function EnhancedTableHead(props) {
   const { orderType, orderColumnTitle, headCells, handleSortingChange } = props;
 
   const sortingHandler = (property) => (event) => { handleSortingChange(event, property) };
@@ -42,7 +42,6 @@ export function EnhancedTableHead(props) {
 }
  /* istanbul ignore next */
    EnhancedTableHead.propTypes = {
-   headCell: PropTypes.object.isRequired,
    handleSortingChange: PropTypes.func.isRequired,
    orderType: PropTypes.oneOf(["asc", "desc"]).isRequired,
    orderColumnTitle: PropTypes.string.isRequired,

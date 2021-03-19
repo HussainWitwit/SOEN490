@@ -45,7 +45,7 @@ function JobsPage(props) {
         },
         {
             field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.row.configuredRecommendationId)}>
                     {params.getValue('configuredRecommendationTitle')}
                 </a>)
         },

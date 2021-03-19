@@ -129,8 +129,8 @@ export function DetailsConfigurationModal (props) {
             value={basicConfiguration.granularity}
             className="text-input-granularity"
           >
-            {granularityItems.map((element) => {
-              return <option data-testid="granularity-option">{element}</option>;
+            {granularityItems.map((element, index) => {
+              return <option data-testid="granularity-option" key={index}>{element}</option>;
             })}
           </Form.Control>
         </div>
