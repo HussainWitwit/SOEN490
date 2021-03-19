@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faWind } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { connect } from 'react-redux';
-import { mapStateToProps, mapDispatchToProps} from '../../redux/AssetFilterReducer/reducer-actions';
+import { mapStateToProps, mapDispatchToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import './AssetTreeView.css';
 
 export function MinusSquare (props) {
@@ -50,7 +50,7 @@ function AssetIcon ({ type, energyType }) {
     case 'Portfolio':
       return <FontAwesomeIcon className='label-icon' icon={faCube} />;
     case 'Plant':
-      switch(energyType){
+      switch (energyType) {
         case 'PV':
           return <FontAwesomeIcon className='label-icon' icon={faSun} />;
         case 'WIND':
@@ -99,23 +99,6 @@ AssetTreeItem.propTypes = {
   labelInfo: PropTypes.string,
 };
 
-export const SearchComboBox = () => {
-  return (
-    <Autocomplete
-      options={mockList}
-      getOptionLabel={(option) => option.title}
-      className='autocomplete-style'
-      renderInput={(params) => <TextField
-        {...params}
-        label="Combo box"
-        variant="outlined"
-        className='search-box-container '
-        color='secondary'
-      />}
-    />
-  );
-}
-
 const mockList = [
   { title: 'Asset Title 1' },
   { title: 'Asset Title 2' },
@@ -125,7 +108,7 @@ const mockList = [
 
 export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
   const DisplayAssetNodeTree = (displayData) => (
-    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} energyType = {displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
+    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} energyType={displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
@@ -139,14 +122,13 @@ export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
 
   return (
     <div className='flex-direction-column'>
-      <SearchComboBox />
       <TreeView
         className='asset-tree-container '
-        defaultExpanded={[nestedAssets ? nestedAssets.id: '1']}
+        defaultExpanded={[nestedAssets ? nestedAssets.id : '1']}
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
-        onNodeSelect = {(event, value) => handleNodeSelect(value)}
-        selected = {selectedAsset}
+        onNodeSelect={(event, value) => handleNodeSelect(value)}
+        selected={selectedAsset}
       >
         {nestedAssets &&
           DisplayAssetNodeTree(nestedAssets)
