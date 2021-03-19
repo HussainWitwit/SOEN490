@@ -33,7 +33,7 @@ export  function ParamTextField({paramObject, index, onChangeEvent}) {
                   max: isNegative ? 0 : null
               }
           }}
-          data-testID='parameter-value'
+          data-testid='parameter-value'
           value={paramObject.parameterValue}
           onChange={(e) => { onChangeEvent(e.target.value, index); }}
           className="value"
