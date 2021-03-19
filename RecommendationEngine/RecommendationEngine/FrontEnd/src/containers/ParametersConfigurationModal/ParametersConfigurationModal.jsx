@@ -15,10 +15,7 @@ export  function ParamTextField({paramObject, index, onChangeEvent}) {
   let numberType = paramTypeAttributes[1].toLowerCase();
   let isNegative = paramTypeAttributes[0] === 'NEGATIVE';
   let helperText =
-      paramTypeAttributes ? 
-      <div>
-          {`The value must be a ${paramTypeAttributes[0].toLowerCase()} ${numberType} with a minimum value of ${paramTypeAttributes[2]}`}
-      </div> : '';
+      paramTypeAttributes ? `The value must be a ${paramTypeAttributes[0].toLowerCase()} ${numberType} with a minimum value of ${paramTypeAttributes[2]}` : '';
 
     const validation = () => {
       setError(paramObject.parameterValue && (paramObject.parameterValue < paramTypeAttributes[2] || (isNegative && (paramObject.parameterValue < paramTypeAttributes[2] | paramObject.parameterValue >= 0)) || !isCorrectType(paramTypeAttributes[1], paramObject.parameterValue)));
