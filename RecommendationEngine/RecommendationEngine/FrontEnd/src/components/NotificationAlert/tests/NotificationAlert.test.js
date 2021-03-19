@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('NotificationBell component', () => {
+describe('NotificationAlert component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
