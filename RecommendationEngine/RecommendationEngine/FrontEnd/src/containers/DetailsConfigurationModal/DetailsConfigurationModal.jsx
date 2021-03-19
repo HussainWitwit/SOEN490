@@ -163,8 +163,8 @@ export function DetailsConfigurationModal (props) {
                   data-testid='date'
                   autoOk
                   ampm
-                  disableCloseOnSelect = {true}
-                  disableMaskedInput
+                  disablecloseonselect = "true"
+                  disablemaskedinput = "true"
                   inputVariant="outlined"
                   label="Repeat on"
                   minDateMessage = {"The selected date cannot be before the current date."}
