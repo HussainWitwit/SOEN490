@@ -18,26 +18,26 @@ import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/Mu
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
-export function DetailsConfigurationModal (props) {
+export function DetailsConfigurationModal(props) {
 
   const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
   const { templateDetailsList, template, isEditing, basicConfiguration } = dialogsContent;
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
   const currentDateTime = new Date();
-  
+
   useEffect(() => {
     if (template.name === templateDetailsList[0].templateName) {
       setGranularity('Yearly');
-    }   
+    }
   }, [template.name])
-  
+
   useEffect(() => {
-    if(!isEditing) {
-    let date = new Date();
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    setRepeatDate(date);
-    setRepeatTime(date);
+    if (!isEditing) {
+      let date = new Date();
+      date.setSeconds(0);
+      date.setMilliseconds(0);
+      setRepeatDate(date);
+      setRepeatTime(date);
     }
   }, [])
 
@@ -65,8 +65,8 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          {isEditing && 
-              <MultiSelectAutocomplete
+          {isEditing &&
+            <MultiSelectAutocomplete
               contentLabel="Assets..."
               id='multiple-select-asset-container'
               error={basicConfiguration.asset.length === 0}
@@ -155,39 +155,41 @@ export function DetailsConfigurationModal (props) {
               })}
             </ButtonGroup>
           )}
-          <MuiPickersUtilsProvider  utils={DateFnsUtils}>
-            {(basicConfiguration.granularity === granularityItems[1] ||
-              basicConfiguration.granularity === granularityItems[2]) && (
-                <KeyboardDateTimePicker
-                  id="recommendation-date-picker"
-                  data-testid='date'
-                  autoOk
-                  ampm
-                  disablecloseonselect = "true"
-                  disablemaskedinput = "true"
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <React.Fragment>
+              {(basicConfiguration.granularity === granularityItems[1] ||
+                basicConfiguration.granularity === granularityItems[2]) && (
+                  <KeyboardDateTimePicker
+                    id="recommendation-date-picker"
+                    data-testid='date'
+                    autoOk
+                    ampm
+                    disablecloseonselect="true"
+                    disablemaskedinput="true"
+                    inputVariant="outlined"
+                    label="Repeat on"
+                    minDateMessage={"The selected date cannot be before the current date."}
+                    minDate={currentDateTime}
+                    disablePast
+                    value={basicConfiguration.repeatDate}
+                    onChange={(date) => setRepeatDate(date)}
+                    format={"PPp"}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                )}
+              {basicConfiguration.granularity === granularityItems[0] &&
+                <KeyboardTimePicker
+                  label="Time"
+                  data-testid='time'
+                  id="recommendation-time-picker"
                   inputVariant="outlined"
-                  label="Repeat on"
-                  minDateMessage = {"The selected date cannot be before the current date."}
-                  minDate={currentDateTime}
-                  disablePast
-                  value={basicConfiguration.repeatDate}
-                  onChange={(date) => setRepeatDate(date)}
-                  format = {"PPp"}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
+                  value={basicConfiguration.repeatTime}
+                  onChange={date => setRepeatTime(date)}
                 />
-              )}
-            {basicConfiguration.granularity === granularityItems[0] &&
-              <KeyboardTimePicker
-                label="Time"
-                data-testid='time'
-                id="recommendation-time-picker"
-                inputVariant="outlined"
-                value={basicConfiguration.repeatTime}
-                onChange={date => setRepeatTime(date)}
-              />
-            }
+              }
+            </React.Fragment>
           </MuiPickersUtilsProvider >
         </div>
       </div>
