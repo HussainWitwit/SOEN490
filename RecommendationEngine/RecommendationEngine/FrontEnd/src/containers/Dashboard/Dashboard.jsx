@@ -32,7 +32,7 @@ export const pickStylingClassName = (title) => {
 function ListOfActions({listActionValues, selectedDate}){
   return(
     <Grid className="listOfActions">
-      {listActionValues.length == 0 &&
+      {listActionValues.length === 0 &&
         <div className="list">
           <h2 id="actions-unavailable">{selectedDate}<br/>There are no actions associated to the selected date.</h2>
         </div>
@@ -84,29 +84,6 @@ function Dashboard() {
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-  const getDashboardValues = async () => {
-    startLoadingSpinner();
-
-    let widgetResponse = await GetWidgetMetrics();
-    let detailedWidgets = convertWidgetResponse(widgetResponse);
-    setWidgetMetrics(detailedWidgets);
-
-    let calendarResponse = await GetCalendarDates();
-    let calendar = calendarResponse.map((element) => {
-      return {
-        date: formatDate(element.date),
-        nbOfActions: element.nbOfActions,
-      };
-    })
-    calendarEvents(calendar);
-
-    var dt = new Date();
-    let actionsResponse = await GetActionPerDay(dt.toISOString())
-    setListActionValues(actionsResponse);
-
-    stopLoadingSpinner();
-  }
-
   function calendarEvents(calendar) {
     var events = calendar.map((element) => {
       return {
@@ -125,6 +102,28 @@ function Dashboard() {
   }
 
   useEffect(() => {
+    const getDashboardValues = async () => {
+      startLoadingSpinner();
+  
+      let widgetResponse = await GetWidgetMetrics();
+      let detailedWidgets = convertWidgetResponse(widgetResponse);
+      setWidgetMetrics(detailedWidgets);
+  
+      let calendarResponse = await GetCalendarDates();
+      let calendar = calendarResponse.map((element) => {
+        return {
+          date: formatDate(element.date),
+          nbOfActions: element.nbOfActions,
+        };
+      })
+      calendarEvents(calendar);
+  
+      var dt = new Date();
+      let actionsResponse = await GetActionPerDay(dt.toISOString())
+      setListActionValues(actionsResponse);
+  
+      stopLoadingSpinner();
+    }
     getDashboardValues();
   }, [])
 

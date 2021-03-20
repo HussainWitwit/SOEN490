@@ -5,7 +5,7 @@ import './RecommendationEngineTable.css';
 
 export default function RecommendationEngineTable(props) {
 
-  const { data, columnValues, onClickRow, isClickable, loading } = props
+  const { data, columnValues, onClickRow, isClickable } = props
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {

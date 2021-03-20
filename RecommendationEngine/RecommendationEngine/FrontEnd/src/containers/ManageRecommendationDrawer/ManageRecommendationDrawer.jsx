@@ -13,7 +13,6 @@ import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
-import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 
 export function ManageRecommendationDrawer({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType

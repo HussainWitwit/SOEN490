@@ -2,7 +2,7 @@
 export async function handleErrors(res:Response) {
     var errorRes:any = {};
     if (!res.ok) {
-        if(res.status == 400){
+        if(res.status === 400){
             errorRes.content = await res.json();
         }
         else{

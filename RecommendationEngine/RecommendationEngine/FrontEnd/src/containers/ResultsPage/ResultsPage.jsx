@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
@@ -53,11 +51,6 @@ export function ResultsPage(props) {
         }
     ]
 
-    const getResultList = async () => {
-        let response = await GetRecommendationResultList(props.selectedAsset);
-        setDefaultResultList(response);
-        setResultList(response);
-    }
 
 
     const updateSearch = async (input) => {
@@ -73,7 +66,12 @@ export function ResultsPage(props) {
         setResultList(filtered);
     }
 
-    useEffect(() => {
+    useEffect(() => {  
+        const getResultList = async () => {
+            let response = await GetRecommendationResultList(props.selectedAsset);
+            setDefaultResultList(response);
+            setResultList(response);
+        }
         getResultList();
     }, [props.selectedAsset])
 
