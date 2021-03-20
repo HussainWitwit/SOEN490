@@ -7,21 +7,21 @@ import { mapParamDialogStateToProps, mapDispatchParametersPageToProps } from '..
 import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider , KeyboardDateTimePicker } from '@material-ui/pickers';
-import { isCorrectType } from '../../utilities/GeneralUtilities';
+import { singleParameterInvalid } from '../../utilities/ValidationUtilities';
 
 export  function ParamTextField({paramObject, index, onChangeEvent}) {
   const [error, setError] = useState(false);
   let paramTypeAttributes = paramObject.parameterType.split('_');
-  let numberType = paramTypeAttributes[1].toLowerCase();
   let isNegative = paramTypeAttributes[0] === 'NEGATIVE';
+  let numberType = paramTypeAttributes[1].toLowerCase();
   let helperText =
       paramTypeAttributes ? 
       <div>
-          {`The value must be a ${paramTypeAttributes[0].toLowerCase()} ${numberType} with a ${isNegative ? "maximum" : "minimum"} value of ${paramTypeAttributes[2]}`}
+          {`The value must be a ${numberType} ${isNegative ? "smaller" : "larger"} than ${paramTypeAttributes[2]}`}
       </div> : '';
 
     const validation = () => {
-      setError(paramObject.parameterValue && (paramObject.parameterValue < paramTypeAttributes[2] || (isNegative && (paramObject.parameterValue < paramTypeAttributes[2] | paramObject.parameterValue >= 0)) || !isCorrectType(paramTypeAttributes[1], paramObject.parameterValue)));
+      setError(singleParameterInvalid(paramObject));
     }
 
     useEffect(() => {
