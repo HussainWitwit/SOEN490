@@ -15,7 +15,7 @@ function JobsPage(props) {
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
-    const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
+    const [isLoading, setisLoading] = useState(true);
 
     const durationOption = {
         number: 'number',
@@ -67,12 +67,6 @@ function JobsPage(props) {
         }
     ];
 
-    const getJobList = async () => {
-        let response = await GetRecommendationJobList(props.selectedAsset);
-        setJobList(response);
-        setDefaultJobList(response);
-    }
-
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
             return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
@@ -85,6 +79,12 @@ function JobsPage(props) {
     }
 
     useEffect(() => {
+        const getJobList = async () => {
+            let response = await GetRecommendationJobList(props.selectedAsset);
+            setJobList(response);
+            setDefaultJobList(response);
+            setisLoading(false);
+        }
         getJobList();
     }, [props.selectedAsset])
 
@@ -107,6 +107,7 @@ function JobsPage(props) {
                 columnValues={columns}
                 isClickable={false}
                 onClickRow={() => { }}
+                loading = {isLoading}
             />
         </div>
     );

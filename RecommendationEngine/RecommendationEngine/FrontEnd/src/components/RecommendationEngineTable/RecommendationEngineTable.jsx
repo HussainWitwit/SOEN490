@@ -6,11 +6,6 @@ import './RecommendationEngineTable.css';
 export default function RecommendationEngineTable(props) {
 
   const { data, columnValues, onClickRow, isClickable, loading } = props
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-      setIsLoading(data.length ? false : true)
-  }, [data])
 
   return (
     <div id="root">
@@ -23,7 +18,7 @@ export default function RecommendationEngineTable(props) {
           density={'compact'}
           columns={columnValues}
           rows={data}
-          loading={isLoading}
+          loading={loading}
           showToolbar
           components={{ Toolbar: GridToolbar }}
           onRowClick={({row}) => onClickRow(row.id)}

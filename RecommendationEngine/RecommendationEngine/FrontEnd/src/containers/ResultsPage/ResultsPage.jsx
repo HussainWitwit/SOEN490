@@ -14,6 +14,7 @@ export function ResultsPage(props) {
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
 
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
@@ -53,12 +54,6 @@ export function ResultsPage(props) {
         }
     ]
 
-    const getResultList = async () => {
-        let response = await GetRecommendationResultList(props.selectedAsset);
-        setDefaultResultList(response);
-        setResultList(response);
-    }
-
 
     const updateSearch = async (input) => {
         const filtered = defaultResultList.filter(result => {
@@ -74,6 +69,12 @@ export function ResultsPage(props) {
     }
 
     useEffect(() => {
+        const getResultList = async () => {
+            let response = await GetRecommendationResultList(props.selectedAsset);
+            setDefaultResultList(response);
+            setResultList(response);
+            setisLoading(false);
+        }
         getResultList();
     }, [props.selectedAsset])
 
@@ -95,6 +96,7 @@ export function ResultsPage(props) {
                 columnValues={columns}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
+                loading = {isLoading}
             />
         </div>
     );
