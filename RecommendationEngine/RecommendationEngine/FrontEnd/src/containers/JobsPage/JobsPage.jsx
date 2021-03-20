@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
@@ -9,6 +7,7 @@ import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationRed
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 
 function JobsPage(props) {
 
@@ -67,15 +66,8 @@ function JobsPage(props) {
         }
     ];
 
-    const updateSearch = async (input) => {
-        const filtered = defaultJobList.filter(job => {
-            return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-                || job.assetName.toLowerCase().includes(input.toLowerCase())
-                || job.status.toLowerCase().includes(input.toLowerCase())
-                || job.timestamp.includes(input.toLowerCase())
-                || (job.duration.toString() + " seconds").includes(input)
-        })
-        setJobList(filtered);
+    const updateSearch = (input) => {
+        setJobList(filterTableItems(TableItemType.Jobs, defaultJobList, input));
     }
 
     useEffect(() => {

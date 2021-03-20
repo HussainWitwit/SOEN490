@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { connect } from 'react-redux';
+import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ResultsPage.css'
 
 export function ResultsPage(props) {
@@ -55,17 +54,8 @@ export function ResultsPage(props) {
     ]
 
 
-    const updateSearch = async (input) => {
-        const filtered = defaultResultList.filter(result => {
-            return result.assetName.toLowerCase().includes(input.toLowerCase())
-            || result.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-            || result.resultOutputDate.includes(input.toLowerCase())
-            || result.costOfAction.toString().includes(input.replace(',', ''))
-            || result.costOfInaction.toString().includes(input.replace(',', ''))
-            || result.netSaving.toString().includes(input.replace(',', ''))
-            || result.returnOnInvestment.toString().includes(input.replace(',', ''))
-        })
-        setResultList(filtered);
+    const updateSearch = (input) => {
+        setResultList(filterTableItems(TableItemType.Results, defaultResultList, input));
     }
 
     useEffect(() => {

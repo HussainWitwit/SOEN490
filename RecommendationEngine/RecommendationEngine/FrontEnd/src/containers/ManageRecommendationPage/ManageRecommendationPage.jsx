@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
+import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ManageRecommendationPage.css';
 
 export function ManageRecommendationPage (props) {
@@ -20,15 +21,8 @@ export function ManageRecommendationPage (props) {
     {field: 'createdOn', headerName: 'Created On', type: 'date', flex: 0.25, cellClassName: 'table-style'},
 ]
    
-  const updateSearch = async (input) => {
-    const filtered = defaultConfiguredRecList.filter(recommendation => {
-      return recommendation.name.toLowerCase().includes(input.toLowerCase())
-        || recommendation.id.toString().includes(input.toLowerCase())
-        || recommendation.createdOn.toString().includes(input.toLowerCase())
-        || recommendation.granularity.toLowerCase().includes(input.toLowerCase())
-        || recommendation.type.toLowerCase().includes(input.toLowerCase())
-    })
-    setRecommendationList(filtered);
+  const updateSearch = (input) => {
+    setRecommendationList(filterTableItems(TableItemType.ConfiguredRecommendation, defaultConfiguredRecList, input));
   }
 
   useEffect(() => {
