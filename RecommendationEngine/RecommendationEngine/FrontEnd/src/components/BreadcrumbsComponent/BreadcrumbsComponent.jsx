@@ -10,7 +10,7 @@ import './BreadcrumbsComponent.css';
 const getAssetAncestry = (id, assets) => {
     if(!id)
         return false;
-    let asset = assets.find(el => el.id === id);
+    let asset = assets.find(el => el.id === Number(id));
     let res = {currentAsset: asset, ancestry: []};
     while (asset.parentId) {
         asset = assets.find(el=> el.id === asset.parentId)
