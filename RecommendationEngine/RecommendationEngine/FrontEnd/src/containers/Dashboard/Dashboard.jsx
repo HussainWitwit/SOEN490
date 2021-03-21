@@ -118,7 +118,7 @@ function Dashboard() {
   }
 
   const handleDateClick = async (ev) => {
-    var startDate = ev.startStr
+    var startDate = ev.startStr ? ev.startStr : ev.event.startStr
     let actionsResponse = await GetActionPerDay(startDate)
     setListActionValues(actionsResponse);
     setSelectedDate(startDate);
@@ -172,6 +172,7 @@ function Dashboard() {
             plugins={[dayGridPlugin, interactionPlugin]}
             selectable={true}
             initialView='dayGridMonth'
+            eventClick={handleDateClick}
             select={handleDateClick}
             events={calendarValues}
             handleWindowResize={true}
