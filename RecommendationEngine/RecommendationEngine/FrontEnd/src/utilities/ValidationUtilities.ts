@@ -48,10 +48,11 @@ export const singleParameterInvalid = (parameter: Parameter) => {
     var minimumValue = paramTypeAttributes[2]
     var currentValue = parameter.parameterValue
 
-    var invalidInt = numberType === "INT" && currentValue.includes(".")
-    var negativeComparasion = parseFloat(currentValue) > parseFloat(minimumValue)
-    var positiveComparasion = parseFloat(currentValue) < parseFloat(minimumValue)
-    var isInvalidNumber = isNaN(parseFloat(currentValue)) || isNaN(parseFloat(minimumValue))
-
-    return (!isNegative && positiveComparasion) || (isNegative && negativeComparasion) || isInvalidNumber || invalidInt
+    if (currentValue) {
+        var invalidInt = numberType === "INT" && currentValue.includes(".")
+        var negativeComparasion = parseFloat(currentValue) > parseFloat(minimumValue)
+        var positiveComparasion = parseFloat(currentValue) < parseFloat(minimumValue)
+        var isInvalidNumber = isNaN(parseFloat(currentValue)) || isNaN(parseFloat(minimumValue))
+        return (!isNegative && positiveComparasion) || (isNegative && negativeComparasion) || isInvalidNumber || invalidInt
+    }
 }
