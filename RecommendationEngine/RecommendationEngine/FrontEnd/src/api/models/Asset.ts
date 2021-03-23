@@ -15,6 +15,6 @@ export interface Asset {
 export interface MultiSelectTreeViewAsset {
     key: number,
     title: string,
-    value: Asset,
+    value: number,
     children: MultiSelectTreeViewAsset[],
 }

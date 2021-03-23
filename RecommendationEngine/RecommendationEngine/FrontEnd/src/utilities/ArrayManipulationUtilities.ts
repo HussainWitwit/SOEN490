@@ -32,7 +32,7 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
     let renamedAssetAttributes: MultiSelectTreeViewAsset[] = [];
     renamedAssetAttributes = assets.map((element: Asset) => {
         return {
-            value: element,
+            value: element ? element.id : 0,
             key: element ? element.id : 0,
             title: element ? element.displayText : 'N/A',
             children: element ? (element.children ? convertAssetObject(element.children) : []) : []
@@ -61,4 +61,18 @@ export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
         return tabs.find(tab => tab.name === name).response;
     }
     return false;
+}
+
+export const mergedArrayIdsAndTitles = (ids: number[], titles: string[]): any[] => {
+    if(ids.length !== titles.length){
+        return []; 
+    }
+    else {
+        return ids.map((element, index) => {
+            return {
+                id: element,
+                displayText: titles[index]
+            };
+        })
+    }
 }

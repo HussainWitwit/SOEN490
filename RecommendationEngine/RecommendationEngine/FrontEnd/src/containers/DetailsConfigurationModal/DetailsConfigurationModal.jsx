@@ -14,7 +14,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDateTimePicker } from '@material-ui/pickers';
 import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
 import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
-
+import { mergedArrayIdsAndTitles } from '../../utilities/ArrayManipulationUtilities';
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
@@ -79,8 +79,8 @@ export function DetailsConfigurationModal(props) {
             />
           }
           {!isEditing && <MultiSelectTreeView
-            value={basicConfiguration.asset ? basicConfiguration.asset : []}
-            onChange={(event, value) => updateAsset(event)}
+            value={basicConfiguration.asset ? basicConfiguration.asset.map(e => e.id) : []}
+            onChange={(assetIds, assetTitles) => updateAsset(mergedArrayIdsAndTitles(assetIds, assetTitles))}
             placeholder='Assets ...'
             items={apiAssets}
           />}
