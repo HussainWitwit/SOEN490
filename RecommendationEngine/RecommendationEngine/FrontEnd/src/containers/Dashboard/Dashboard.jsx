@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Dashboard.css';
 import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
@@ -71,6 +71,8 @@ function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
   const [loading, setLoading] = useState([]);
 
+  const calendarRef = useRef();
+
   const startLoadingSpinner = () => {
     setLoading(true);
   }
@@ -117,11 +119,14 @@ function Dashboard() {
     setCalendarValues(events);
   }
 
-  const handleDateClick = async (ev) => {
-    var startDate = ev.startStr
+  const handleDateClick = async (ev, isTileEvent) => {
+    var startDate = ev.startStr ? ev.startStr : ev.event.startStr
     let actionsResponse = await GetActionPerDay(startDate)
     setListActionValues(actionsResponse);
     setSelectedDate(startDate);
+    if (isTileEvent){
+      calendarRef.current.getApi().select(startDate)
+    }
   }
 
   useEffect(() => {
@@ -172,9 +177,11 @@ function Dashboard() {
             plugins={[dayGridPlugin, interactionPlugin]}
             selectable={true}
             initialView='dayGridMonth'
-            select={handleDateClick}
+            eventClick={(ev) => handleDateClick(ev, true)}
+            select={(ev) => handleDateClick(ev, false)}
             events={calendarValues}
             handleWindowResize={true}
+            ref={calendarRef}
           />
         </div>
         <ListOfActions listActionValues={listActionValues} selectedDate={selectedDate} />
