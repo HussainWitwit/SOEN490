@@ -77,7 +77,8 @@ export function ParametersConfigurationModal (props) {
                         {cell.parameterType === 'DATE' && (
                             <MuiPickersUtilsProvider  utils={DateFnsUtils}>
                                 <KeyboardDateTimePicker
-                                    id="parameter-date-picker"
+                                    id={"date-picker-id" + index}
+                                    className="parameter-date-picker"
                                     data-testid='date'
                                     autoOk
                                     placeholder={cell.defaultValue}
@@ -89,7 +90,7 @@ export function ParametersConfigurationModal (props) {
                                     minDateMessage = {'The start date cannot overlap'}
                                     maxDateMessage = {'The end date cannot overlap'}
                                     onChange={(date) => setParamValue(date, index)}
-                                    inputFormat = {"PPP"}
+                                    inputformat = {"PPP"}
                                     KeyboardButtonProps={{
                                       'aria-label': 'change date',
                                   }}
