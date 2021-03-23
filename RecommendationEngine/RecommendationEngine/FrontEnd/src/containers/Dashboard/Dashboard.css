@@ -144,3 +144,7 @@ hr.solid {
 #actions-available {
   text-align: center;
 }
+
+.fc .fc-daygrid-day-frame {
+  cursor: pointer;
+}
