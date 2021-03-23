@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
@@ -15,7 +13,6 @@ function JobsPage(props) {
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
-    const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
 
     const durationOption = {
         number: 'number',
@@ -26,7 +23,7 @@ function JobsPage(props) {
     const columns = [
 
         { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
-        { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.2, cellClassName: 'table-style' },
+        { field: 'timestamp', headerName: 'Timestamp', type: 'string' , flex: 0.2, cellClassName: 'table-style' },
         {
             field: 'status',
             headerName: 'Status',
