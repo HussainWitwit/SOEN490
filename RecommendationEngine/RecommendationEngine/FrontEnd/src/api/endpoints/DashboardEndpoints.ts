@@ -4,9 +4,9 @@ import { Action } from '../models/Action';
 import { handleErrors } from "../../utilities/ValidationUtilities"
 import { notifyError } from "../../utilities/ErrorNotification"
 
-export async function GetWidgetMetrics(): Promise<Widget[] | null> {
+export async function GetWidgetMetrics(assetId: number | null): Promise<Widget[] | null> {
     let widgetMetrics: Widget[] = [];
-    await fetch('api/result/widgets')
+    await fetch('api/result/widgets/'+(assetId?assetId:''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {

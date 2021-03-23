@@ -14,6 +14,8 @@ import { dateFormat } from '../../utilities/DateTimeUtilities';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
+import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
+import { connect } from 'react-redux';
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -63,7 +65,7 @@ function ListOfActions({listActionValues, selectedDate}){
   )
 }
 
-function Dashboard() {
+function Dashboard(props) {
 
   const [widgetMetrics, setWidgetMetrics] = useState([]);
   const [calendarValues, setCalendarValues] = useState([]);
@@ -89,7 +91,7 @@ function Dashboard() {
   const getDashboardValues = async () => {
     startLoadingSpinner();
 
-    let widgetResponse = await GetWidgetMetrics();
+    let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
     let detailedWidgets = convertWidgetResponse(widgetResponse);
     setWidgetMetrics(detailedWidgets);
 
@@ -131,7 +133,7 @@ function Dashboard() {
 
   useEffect(() => {
     getDashboardValues();
-  }, [])
+  }, [props.selectedAsset])
 
   return (
     <div>
@@ -190,4 +192,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard;
+export default connect(mapAssetFilterStateToProps)(Dashboard);
