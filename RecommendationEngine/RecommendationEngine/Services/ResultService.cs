@@ -70,16 +70,28 @@ namespace RecommendationEngine.Services
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
                 }
 
+                double netSavingSum=0;
+                double returnOnInvestmentAverage=0;
+                double costOfInactionSum=0;
 
-                var returnOnInvestmentAverage = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
-                                    .Select(grp => grp.OrderByDescending(obj => obj.ReturnOnInvestment).First()).ToList().Average(asset => asset.ReturnOnInvestment);
+                if (resultsList.Count > 0)
+                {
+                    netSavingSum = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                        .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First()).ToList()
+                        .Sum(asset => asset.NetSaving);
 
-                var costOfInactionSum = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
-                                    .Select(grp => grp.OrderByDescending(obj => obj.CostOfInaction).First()).ToList().Sum(asset => asset.CostOfInaction);
+                    returnOnInvestmentAverage = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                        .Select(grp => grp.OrderByDescending(obj => obj.ReturnOnInvestment).First()).ToList()
+                        .Average(asset => asset.ReturnOnInvestment);
+
+                    costOfInactionSum = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                        .Select(grp => grp.OrderByDescending(obj => obj.CostOfInaction).First()).ToList()
+                        .Sum(asset => asset.CostOfInaction);
+                }
 
                 string netSavingDescription = "The potential net savings value represents the total possible" +
-                "saving if the best suggested wash dates are followed. It should be noted that this " +
-                "value has been generated while considering the best case scenario for each asset.";
+                                              "saving if the best suggested wash dates are followed. It should be noted that this " +
+                                              "value has been generated while considering the best case scenario for each asset.";
 
                 string returnOnInvestmentDescription = "The potential return on investment value represents the average potential rate of return " +
                 "if the best suggested wash dates are followed. It should be noted that this value has been " +
