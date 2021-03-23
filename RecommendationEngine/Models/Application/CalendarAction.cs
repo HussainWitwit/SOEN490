@@ -5,5 +5,6 @@ namespace Models.Application
     {
         public DateTime Date { get; set; }
         public int NbOfActions { get; set; }
+        public string Status { get; set; }
     }
 }
