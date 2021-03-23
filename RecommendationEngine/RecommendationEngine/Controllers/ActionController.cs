@@ -29,12 +29,12 @@ namespace RecommendationEngine.Controllers
             }
         }
 
-        [HttpGet("calendar")]
-        public IActionResult GetNbActionsByDay()
+        [HttpGet("calendar/{assetId?}")]
+        public IActionResult GetNbActionsByDay(int? assetId)
         {
             try
             {
-                return Ok(_actionService.GetNbActionsByDay());
+                return Ok(_actionService.GetNbActionsByDay(assetId));
             }
             catch (GlobalException e)
             {

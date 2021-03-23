@@ -9,7 +9,7 @@ namespace Interfaces.Services
     {
         public ActionGrouping GetActionsByResultId(int id);
 
-        public List<CalendarAction> GetNbActionsByDay();
+        public List<CalendarAction> GetNbActionsByDay(int? assetId);
         
         public List<Action> GetActionsByDate(DateTime date);
     }

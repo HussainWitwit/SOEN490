@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Interfaces.Repositories;
@@ -6,6 +7,7 @@ using Interfaces.Services;
 using Models.Application;
 using Models.DB;
 using RecommendationEngine.ExceptionHandler;
+using RecommendationEngine.Utilities;
 using Action = Models.Application.Action;
 
 namespace RecommendationEngine.Services
@@ -13,10 +15,12 @@ namespace RecommendationEngine.Services
     public class ActionService : IActionService
     {
         private IActionRepository _actionRepository;
+        private IAssetRepository _assetRepository;
 
-        public ActionService(IActionRepository actionRepository)
+        public ActionService(IActionRepository actionRepository, IAssetRepository assetRepository)
         {
             _actionRepository = actionRepository;
+            _assetRepository = assetRepository;
         }
 
         public ActionGrouping GetActionsByResultId(int id)
@@ -104,16 +108,23 @@ namespace RecommendationEngine.Services
 
         } 
 
-        public List<CalendarAction> GetNbActionsByDay()
+        public List<CalendarAction> GetNbActionsByDay(int? assetId)
         {
             try
             {
-                return _actionRepository.GetActionList().GroupBy(action => action.Date)
-                                        .Select(grp => new CalendarAction
-                                        {
-                                            Date = grp.Key,
-                                            NbOfActions = grp.Count()
-                                        }).OrderBy(x => x.Date).ToList();
+                var actionsList = _actionRepository.GetActionList();
+                var assetsList = _assetRepository.GetAssetsList();
+
+                if (assetId != null)
+                {
+                    var activeActionsList = actionsList
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList));
+                    var inactiveActionsList = actionsList.Except(activeActionsList);
+
+                    return GroupCalendarActions(activeActionsList).Union(GroupCalendarActions(inactiveActionsList, "Inactive")).OrderBy(x => x.Date).ToList();
+                }
+
+                return GroupCalendarActions(actionsList).OrderBy(x => x.Date).ToList();
 
             }
             catch (GlobalException)
@@ -124,6 +135,17 @@ namespace RecommendationEngine.Services
             {
                 throw new InternalServerException();
             }
+        }
+
+        public IEnumerable<CalendarAction> GroupCalendarActions(IEnumerable<DBAction> actions, string status="Active")
+        {
+            return actions.GroupBy(action => action.Date)
+                .Select(grp => new CalendarAction
+                {
+                    Date = grp.Key,
+                    NbOfActions = grp.Count(),
+                    Status = status
+                });
         }
     }
 }
