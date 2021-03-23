@@ -19,9 +19,9 @@ export async function GetWidgetMetrics(assetId: number | null): Promise<Widget[]
     return widgetMetrics;
 }
 
-export async function GetCalendarDates(): Promise<CalendarDates[] | null> {
+export async function GetCalendarDates(assetId: number | null): Promise<CalendarDates[] | null> {
     let calendarDates: CalendarDates[] = [];
-    await fetch('api/action/calendar')
+    await fetch('api/action/calendar/'+(assetId?assetId:''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {

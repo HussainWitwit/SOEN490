@@ -95,7 +95,7 @@ function Dashboard(props) {
     let detailedWidgets = convertWidgetResponse(widgetResponse);
     setWidgetMetrics(detailedWidgets);
 
-    let calendarResponse = await GetCalendarDates();
+    let calendarResponse = await GetCalendarDates(props.selectedAsset);
     let calendar = calendarResponse.map((element) => {
       return {
         date: formatDate(element.date),
