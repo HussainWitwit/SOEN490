@@ -58,12 +58,18 @@ namespace RecommendationEngine.Services
             }
         }
 
-        public List<WidgetMetric> GetWidgetMetrics()
+        public List<WidgetMetric> GetWidgetMetrics(int? assetId)
         {
             try
             {
-                var netSavingSum = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
-                                    .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First()).ToList().Sum(asset => asset.NetSaving);
+                var resultsList = _resultRepository.GetResultList();
+                var assetsList = _assetRepository.GetAssetsList();
+                if (assetId != null)
+                {
+                    resultsList = resultsList
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
 
                 var returnOnInvestmentAverage = _resultRepository.GetResultList().GroupBy(obj => obj.Asset.AssetId)
                                     .Select(grp => grp.OrderByDescending(obj => obj.ReturnOnInvestment).First()).ToList().Average(asset => asset.ReturnOnInvestment);
