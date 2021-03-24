@@ -12,7 +12,7 @@ import DetailsConfigurationModal from '../../containers/DetailsConfigurationModa
 import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
 import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
-import { checkDateRange } from '../../utilities/GeneralUtilities';
+import { validateParameters } from '../../utilities/ValidationUtilities';
 import './AddRecommendationDialog.css';
 import { toast } from 'react-toastify';
 
@@ -124,7 +124,7 @@ export function AddRecommendationDialog (props) {
       setIndex(1);
     }
   }, [isEditing])
-
+  
   return (
     <Dialog
       data-testid="dialog"
@@ -198,7 +198,7 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {(index === 2) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={checkDateRange(template.inputList)}>
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={validateParameters(template.inputList)}>
             Next
           </Button>
         )}
