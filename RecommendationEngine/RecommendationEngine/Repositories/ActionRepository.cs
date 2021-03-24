@@ -48,9 +48,11 @@ namespace RecommendationEngine.Repositories
         {
             try
             {
-                return _recommendationEngineDb.Actions.Where(action => ids.Contains(action.RecommendationJobResult.RecommendationJobResultId))
+                return _recommendationEngineDb.Actions.Where(action => ids.Contains(action.ActionId))
                     .Include(action => action.RecommendationJobResult)
-                    .ThenInclude(asset => asset.Asset).ToList();
+                    .ThenInclude(result => result.Job)
+                    .ThenInclude(job => job.Schedule)
+                    .Include(action => action.Asset).ToList();
             }
             catch (Exception)
             {
