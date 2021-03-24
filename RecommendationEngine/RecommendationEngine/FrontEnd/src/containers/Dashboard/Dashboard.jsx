@@ -100,6 +100,8 @@ function Dashboard(props) {
       return {
         date: formatDate(element.date),
         nbOfActions: element.nbOfActions,
+        id: element.id,
+        status: element.status
       };
     })
     calendarEvents(calendar);
@@ -116,19 +118,28 @@ function Dashboard(props) {
       return {
         date: element.date,
         title: element.nbOfActions + ' actions',
+        id: element.id,
+        color: element.status==='Inactive'?'grey':''
       }
     })
     setCalendarValues(events);
   }
 
-  const handleDateClick = async (ev, isTileEvent) => {
-    var startDate = ev.startStr ? ev.startStr : ev.event.startStr
+  const handleEventClick = async (ev) => {
+    var startDate = ev.event.startStr
     let actionsResponse = await GetActionPerDay(startDate)
     setListActionValues(actionsResponse);
     setSelectedDate(startDate);
-    if (isTileEvent){
-      calendarRef.current.getApi().select(startDate)
-    }
+    calendarRef.current.getApi().select(startDate)
+    console.log(ev.event.id)
+  }
+
+  const handleDateClick = async (ev) => {
+    var startDate = ev.startStr
+    console.log(ev)
+    let actionsResponse = await GetActionPerDay(startDate)
+    setListActionValues(actionsResponse);
+    setSelectedDate(startDate);
   }
 
   useEffect(() => {
@@ -179,8 +190,8 @@ function Dashboard(props) {
             plugins={[dayGridPlugin, interactionPlugin]}
             selectable={true}
             initialView='dayGridMonth'
-            eventClick={(ev) => handleDateClick(ev, true)}
-            select={(ev) => handleDateClick(ev, false)}
+            eventClick={(ev) => handleEventClick(ev)}
+            select={(ev) => handleDateClick(ev)}
             events={calendarValues}
             handleWindowResize={true}
             ref={calendarRef}
