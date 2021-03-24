@@ -12,5 +12,7 @@ namespace Interfaces.Services
         public List<CalendarAction> GetNbActionsByDay(int? assetId);
         
         public List<Action> GetActionsByDate(DateTime date);
+
+        public List<Action> GetActionsByCompoundId(string id);
     }
 }

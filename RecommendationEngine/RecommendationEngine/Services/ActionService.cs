@@ -106,7 +106,37 @@ namespace RecommendationEngine.Services
                 throw new InternalServerException();
             }
 
-        } 
+        }
+
+        public List<Action> GetActionsByCompoundId(string id)
+        {
+            try
+            {
+                List<DBAction> dbActions = _actionRepository.GetActionsByIdList(id.Split(".").Select(int.Parse).ToList()).ToList();
+
+                return dbActions.Select(action => new Action
+                {
+                    Id = action.ActionId,
+                    NetSaving = action.RecommendationJobResult.NetSaving,
+                    ReturnOnInvestment = action.RecommendationJobResult.ReturnOnInvestment,
+                    AssetName = action.Asset.DisplayText,
+                    RecommendationName = action.RecommendationJobResult.Job.Schedule.Name,
+                    DisplayText = action.DisplayText,
+                    Title = action.Title,
+                    recommendedDate = action.Date,
+                    recommendedOnDate = action.RecommendationJobResult.Job.Timestamp
+
+                }).ToList();
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+        }
 
         public List<CalendarAction> GetNbActionsByDay(int? assetId)
         {

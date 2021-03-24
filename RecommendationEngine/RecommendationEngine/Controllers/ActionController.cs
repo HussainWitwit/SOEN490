@@ -29,6 +29,19 @@ namespace RecommendationEngine.Controllers
             }
         }
 
+        [HttpGet("group/{id}")]
+        public IActionResult GetActionsByCompoundId(string id)
+        {
+            try
+            {
+                return Ok(_actionService.GetActionsByCompoundId(id));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
         [HttpGet("calendar/{assetId?}")]
         public IActionResult GetNbActionsByDay(int? assetId)
         {

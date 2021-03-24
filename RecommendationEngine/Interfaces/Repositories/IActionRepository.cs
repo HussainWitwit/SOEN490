@@ -10,6 +10,8 @@ namespace Interfaces.Repositories
 
         public List<DBAction> GetActionsByResultId(int id);
 
+        public List<DBAction> GetActionsByIdList(List<int> ids);
+
         public List<DBAction> GetActionsByDate(DateTime date);
     }
 }

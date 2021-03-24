@@ -44,6 +44,20 @@ namespace RecommendationEngine.Repositories
             }
         }
 
+        public List<DBAction> GetActionsByIdList(List<int> ids)
+        {
+            try
+            {
+                return _recommendationEngineDb.Actions.Where(action => ids.Contains(action.RecommendationJobResult.RecommendationJobResultId))
+                    .Include(action => action.RecommendationJobResult)
+                    .ThenInclude(asset => asset.Asset).ToList();
+            }
+            catch (Exception)
+            {
+                throw new DbException();
+            }
+        }
+
         public List<DBAction> GetActionsByDate(DateTime date)
         {
             try {
