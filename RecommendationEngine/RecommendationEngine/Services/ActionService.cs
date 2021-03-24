@@ -144,8 +144,9 @@ namespace RecommendationEngine.Services
                 {
                     Date = grp.Key,
                     NbOfActions = grp.Count(),
-                    Status = status
-                });
+                    Status = status,
+                    Id = string.Join(".", grp.Select(x=>x.ActionId))
+        });
         }
     }
 }
