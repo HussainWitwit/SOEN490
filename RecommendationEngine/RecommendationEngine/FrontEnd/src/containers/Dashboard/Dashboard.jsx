@@ -137,7 +137,9 @@ function Dashboard(props) {
   const handleDateClick = async (ev) => {
     var startDate = ev.startStr
     console.log(ev)
-    let actionsResponse = await GetActionPerDay(startDate)
+    let actionsResponse = [];
+    if(calendarValues.some((el)=> el.date === ev.startStr))
+      actionsResponse = await GetActionPerDay(startDate)
     setListActionValues(actionsResponse);
     setSelectedDate(startDate);
   }
