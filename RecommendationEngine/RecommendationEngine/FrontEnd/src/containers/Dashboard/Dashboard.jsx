@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Dashboard.css';
-import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
@@ -127,21 +127,21 @@ function Dashboard(props) {
 
   const handleEventClick = async (ev) => {
     var startDate = ev.event.startStr
-    let actionsResponse = await GetActionPerDay(startDate)
+    let actionsResponse = await GetActionPerCompoundId(ev.event.id)
     setListActionValues(actionsResponse);
     setSelectedDate(startDate);
     calendarRef.current.getApi().select(startDate)
-    console.log(ev.event.id)
   }
 
   const handleDateClick = async (ev) => {
-    var startDate = ev.startStr
-    console.log(ev)
-    let actionsResponse = [];
-    if(calendarValues.some((el)=> el.date === ev.startStr))
-      actionsResponse = await GetActionPerDay(startDate)
-    setListActionValues(actionsResponse);
-    setSelectedDate(startDate);
+    if(ev.jsEvent){
+      var startDate = ev.startStr
+      let actionsResponse = [];
+      if(calendarValues.some((el)=> el.date === ev.startStr))
+        actionsResponse = await GetActionPerDay(startDate)
+      setListActionValues(actionsResponse);
+      setSelectedDate(startDate);
+    }
   }
 
   useEffect(() => {
