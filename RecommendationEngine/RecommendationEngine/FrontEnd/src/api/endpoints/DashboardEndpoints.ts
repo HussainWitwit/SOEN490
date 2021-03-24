@@ -48,3 +48,18 @@ export async function GetActionPerDay(date: string): Promise<Action[] | null> {
         })
     return actionList;
 }
+
+export async function GetActionPerCompoundId(id: string): Promise<Action[] | null> {
+    let actionList: Action[] = [];
+    await fetch('api/action/group/' + id)
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            actionList = res;
+            return actionList
+        })
+        .catch(err => {
+            notifyError(err)
+        })
+    return actionList;
+}
