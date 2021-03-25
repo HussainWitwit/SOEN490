@@ -143,10 +143,10 @@ namespace RecommendationEngine.Services
             try
             {
                 var actionsList = _actionRepository.GetActionList();
-                var assetsList = _assetRepository.GetAssetsList();
 
                 if (assetId != null)
                 {
+                    var assetsList = _assetRepository.GetAssetsList();
                     var activeActionsList = actionsList
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList));
                     var inactiveActionsList = actionsList.Except(activeActionsList);

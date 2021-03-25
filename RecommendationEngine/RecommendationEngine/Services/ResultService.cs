@@ -26,9 +26,9 @@ namespace RecommendationEngine.Services
             try
             {
                 var resultsList = _resultRepository.GetResultList();
-                var assetsList = _assetRepository.GetAssetsList();
                 if (assetId != null)
                 {
+                    var assetsList = _assetRepository.GetAssetsList();
                     resultsList = resultsList
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
                 }
@@ -63,9 +63,9 @@ namespace RecommendationEngine.Services
             try
             {
                 var resultsList = _resultRepository.GetResultList();
-                var assetsList = _assetRepository.GetAssetsList();
                 if (assetId != null)
                 {
+                    var assetsList = _assetRepository.GetAssetsList();
                     resultsList = resultsList
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
                 }
