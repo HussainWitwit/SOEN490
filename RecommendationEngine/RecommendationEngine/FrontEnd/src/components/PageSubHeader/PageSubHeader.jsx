@@ -9,7 +9,7 @@ import './PageSubHeader.css';
 export default function PageSubHeader(props) {
 
     const { pageTitle, descriptionSubtitle, showCreateRecommendation, addRecommendationProps, toggleDialog, updateSearch } = props;
-
+    
     return (
         <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
             <Grid id="grid1" item>
@@ -24,10 +24,10 @@ export default function PageSubHeader(props) {
                     <Button id="rec-btn" onClick={toggleDialog}>
                         Create Recommendation
                     </Button>
-                    <AddRecommendationDialog {...addRecommendationProps} />
                 </div>
             </Grid>
             }
+            <AddRecommendationDialog {...addRecommendationProps} />
         <div>
         <br></br>
         <div>
