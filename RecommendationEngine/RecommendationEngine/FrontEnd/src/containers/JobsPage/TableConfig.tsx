@@ -11,7 +11,7 @@ const durationOption = {
 export const TableColumns = [
 
     { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
-    { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.2, cellClassName: 'table-style' },
+    { field: 'timestamp', headerName: 'Timestamp', type: 'dateTime', flex: 0.2, cellClassName: 'table-style' },
     {
         field: 'status',
         headerName: 'Status',
