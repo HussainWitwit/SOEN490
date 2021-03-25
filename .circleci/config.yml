@@ -12,7 +12,7 @@ jobs:
           node-version: "13.8.0"
       - run:
           name: Generate package-lock
-          command: npm i --package-lock-only --legacy-peer-deps
+          command: npm i --package-lock-only --force
           working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
       - run:
           name: Audit fix
