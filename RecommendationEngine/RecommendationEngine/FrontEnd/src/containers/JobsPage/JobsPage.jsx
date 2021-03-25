@@ -95,7 +95,7 @@ function JobsPage(props) {
             <div>
                 <br></br>
                 <PageSubHeader
-                pageTitle="Recommendation Job"
+                pageTitle="Recommendation Jobs"
                 descriptionSubtitle="Browse, edit, and delete recommendation jobs"
                 showCreateRecommendation={false}
                 updateSearch={updateSearch}
