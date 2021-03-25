@@ -24,8 +24,14 @@ export function ResultsPage(props) {
 
     const getResultList = async () => {
         let response = await GetRecommendationResultList(props.selectedAsset);
-        setDefaultResultList(response);
-        setResultList(response);
+        //Necessary for datagrid date columns A.J.U.U
+        let responseWtihDateObjects = response.map((element) => { 
+            return {
+                ...element,
+                resultOutputDate: new Date(element.resultOutputDate)
+        }});
+        setDefaultResultList(responseWtihDateObjects);
+        setResultList(responseWtihDateObjects);
     }
 
 
@@ -64,6 +70,7 @@ export function ResultsPage(props) {
                 columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
+                // customFilters = {}
             />
         </div>
     );

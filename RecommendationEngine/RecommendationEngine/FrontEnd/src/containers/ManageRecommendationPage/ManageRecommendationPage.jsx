@@ -25,8 +25,14 @@ export function ManageRecommendationPage (props) {
   }
 
   useEffect(() => {
-    setRecommendationList(configuredRecommendationList);
-    setDefaultConfiguredRecList(configuredRecommendationList);
+    //Necessary for datagrid date columns A.J.U.U
+    let responseWtihDateObjects = configuredRecommendationList.map((element) => { 
+      return {
+          ...element,
+          createdOn: new Date(element.createdOn)
+  }});
+    setRecommendationList(responseWtihDateObjects);
+    setDefaultConfiguredRecList(responseWtihDateObjects);
   }, [configuredRecommendationList])
 
   return (
