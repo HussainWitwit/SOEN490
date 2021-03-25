@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { connect } from 'react-redux';
+import { TableColumns as columns } from './TableConfig';
 import './ResultsPage.css'
 
 export function ResultsPage(props) {
@@ -15,43 +14,13 @@ export function ResultsPage(props) {
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
 
-    const currencyFormatter = new Intl.NumberFormat('en-CA', {
-        style: 'currency',
-        currency: 'CAD',
-    });
-
-    const CADPrice = {
-        type: 'number',
-        width: 200,
-        valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
-    };
-
-    const percentageFormatter = new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-
-    const PercentageOption = {
-        number: 'number',
-        width: 200,
-        valueFormatter: ({ value }) => (percentageFormatter.format(Number(value)) + '%')
-    };
-
-    const columns = [
-        { field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style', hide: true },
-        { field: 'resultOutputDate', headerName: 'Timestamp', type: 'string', flex: 0.14, cellClassName: 'table-style' },
-        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.14, cellClassName: 'table-style' },
-        { field: 'netSaving', headerName: 'Net Saving', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-positive-numbers' },
-        { field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number', ...PercentageOption, flex: 0.14, cellClassName: 'table-positive-numbers' },
-        { field: 'costOfAction', headerName: 'Cost of Action', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
-        { field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
-        {
-            field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', flex: 0.14, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
-                    {params.getValue('configuredRecommendationTitle')}
-                </a>)
-        }
-    ]
+    //Code duplication, however: this cannot be inside the TableConfig.jsx as the reducer action is passed at compile time and we want the function to be passed at runtime.
+    const RecommendationLinkColumn = [{
+        field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
+            <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                {params.getValue('configuredRecommendationTitle')}
+            </a>)
+    }];
 
     const getResultList = async () => {
         let response = await GetRecommendationResultList(props.selectedAsset);
@@ -92,7 +61,7 @@ export function ResultsPage(props) {
             <br></br>
             <RecommendationEngineTable
                 data={resultList}
-                columnValues={columns}
+                columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
             />
