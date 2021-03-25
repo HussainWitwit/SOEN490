@@ -11,6 +11,10 @@ jobs:
       - node/install: 
           node-version: "13.8.0"
       - run:
+          name: Audit fix
+          command: npm audit fix
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
+      - run:
           name: Restore Backend
           command: dotnet restore RecommendationEngine.sln
           working_directory: ./RecommendationEngine
