@@ -11,6 +11,10 @@ jobs:
       - node/install: 
           node-version: "13.8.0"
       - run:
+          name: Generate package-lock
+          command: npm i --package-lock-only
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
+      - run:
           name: Audit fix
           command: npm audit fix
           working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
