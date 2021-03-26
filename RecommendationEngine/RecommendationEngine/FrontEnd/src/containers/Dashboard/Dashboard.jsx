@@ -88,30 +88,6 @@ function Dashboard(props) {
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-  const getDashboardValues = async () => {
-    startLoadingSpinner();
-
-    let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
-    let detailedWidgets = convertWidgetResponse(widgetResponse);
-    setWidgetMetrics(detailedWidgets);
-
-    let calendarResponse = await GetCalendarDates(props.selectedAsset);
-    let calendar = calendarResponse.map((element) => {
-      return {
-        date: formatDate(element.date),
-        nbOfActions: element.nbOfActions,
-        id: element.id,
-        status: element.status
-      };
-    })
-    calendarEvents(calendar);
-
-    var dt = new Date();
-    let actionsResponse = await GetActionPerDay(dt.toISOString())
-    setListActionValues(actionsResponse);
-
-    stopLoadingSpinner();
-  }
 
   function calendarEvents(calendar) {
     var events = calendar.map((element) => {
@@ -145,18 +121,20 @@ function Dashboard(props) {
   }
 
   useEffect(() => {
-    const getDashboardValues = async () => {
+    async function getDashboardValues(){
       startLoadingSpinner();
   
-      let widgetResponse = await GetWidgetMetrics();
+      let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
       let detailedWidgets = convertWidgetResponse(widgetResponse);
       setWidgetMetrics(detailedWidgets);
   
-      let calendarResponse = await GetCalendarDates();
+      let calendarResponse = await GetCalendarDates(props.selectedAsset);
       let calendar = calendarResponse.map((element) => {
         return {
           date: formatDate(element.date),
           nbOfActions: element.nbOfActions,
+          id: element.id,
+          status: element.status
         };
       })
       calendarEvents(calendar);
