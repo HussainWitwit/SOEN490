@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import NotificationBell from '../../components/Notification/NotificationBell';
 import BreadcrumbsComponent from '../../components/BreadcrumbsComponent/BreadcrumbsComponent'
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
@@ -42,7 +41,6 @@ function TopBar ({ openAssetTreeview }) {
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
         </div>
         <img id="img" className="temperature_icon" alt="icon" src={weatherDetails ? "http://openweathermap.org/img/wn/" + weatherDetails.icon + ".png" : "no icon"} />
-        <NotificationBell id="notification-bell" />
       </nav>
     </div>
   );
