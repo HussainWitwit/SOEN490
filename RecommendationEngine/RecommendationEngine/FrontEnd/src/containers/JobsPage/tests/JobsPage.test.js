@@ -4,6 +4,7 @@ import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import JobsPage from '../JobsPage';
 import { store } from '../../../redux/store';
+import { Provider } from 'react-redux';
 import fetch from 'isomorphic-fetch';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -16,7 +17,7 @@ describe.only('JobsPage component', () => {
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<JobsPage store={store}/>, div);
+        ReactDOM.render(<Provider store={store}><JobsPage store={store} /></Provider>, div);
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
