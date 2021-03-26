@@ -83,8 +83,6 @@ describe('SideMenu component', () => {
 
             expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
             expect(screen.getByText(/Recommendations/i)).toBeInTheDocument();
-            expect(screen.getByText(/Main Settings/i)).toBeInTheDocument();
-            expect(screen.getByText(/Notifications/i)).toBeInTheDocument();
 
 
             fireEvent.click(screen.getByText(/Dashboard/i));
@@ -93,8 +91,6 @@ describe('SideMenu component', () => {
             fireEvent.click(screen.getByTestId("listitemManage"));
             fireEvent.click(screen.getByTestId("listitemJobs"));
             fireEvent.click(screen.getByTestId("listitemResults"));
-            fireEvent.click(screen.getByText(/Main Settings/i));
-            fireEvent.click(screen.getByText(/Notifications/i));
         });
     })
 });
