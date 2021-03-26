@@ -36,9 +36,9 @@ namespace RecommendationEngine.Services
             try
             {
                 var recommendationList = _recommendationRepository.GetRecommendationScheduleList();
-                var assetsList = _assetRepository.GetAssetsList();
                 if (assetId != null)
                 {
+                    var assetsList = _assetRepository.GetAssetsList();
                     recommendationList = recommendationList
                         .Where(x => x.AssetsList.Any(asset => asset.Asset.IsChildOrEquivalent((int) assetId, assetsList))).ToList();
                 }
