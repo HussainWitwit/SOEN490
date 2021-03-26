@@ -41,12 +41,12 @@ namespace RecommendationEngine.Controllers
             }
         }
 
-        [HttpGet("widgets")]
-        public IActionResult GetWidgetMetrics()
+        [HttpGet("widgets/{assetId?}")]
+        public IActionResult GetWidgetMetrics(int? assetId)
         {
             try
             {
-                return Ok(_resultService.GetWidgetMetrics());
+                return Ok(_resultService.GetWidgetMetrics(assetId));
             }
             catch (GlobalException e)
             {

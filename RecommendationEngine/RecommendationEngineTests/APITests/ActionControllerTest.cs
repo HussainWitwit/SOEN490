@@ -16,6 +16,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Action = Models.Application.Action;
 
 namespace RecommendationEngineTests.APITests
 {
@@ -35,6 +36,7 @@ namespace RecommendationEngineTests.APITests
                 {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<ActionService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockAssetRepository>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
 
@@ -45,6 +47,7 @@ namespace RecommendationEngineTests.APITests
                 {
                     builder.RegisterType<TestBadRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<ActionService>().AsImplementedInterfaces();
+                    builder.RegisterType<MockAssetRepository>().AsImplementedInterfaces();
                 }));
             _clientBad = _serverBad.CreateClient();
         }
@@ -58,6 +61,15 @@ namespace RecommendationEngineTests.APITests
             Assert.NotNull(actions);
             Assert.AreEqual(actions.RecommendationName, MockActions.BasicDBActions[0].RecommendationJobResult.Job.Schedule.Name);
             Assert.AreEqual(actions.Actions[0].recommendedDate, MockActions.BasicDBActions[0].Date);
+        }
+
+        [Test]
+        public async Task GetActionsByCompoundId()
+        {
+            var response = await _client.GetAsync("api/action/group/1.12");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<Action> actions = JsonConvert.DeserializeObject<List<Action>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(actions);
         }
 
         [Test]
@@ -90,6 +102,11 @@ namespace RecommendationEngineTests.APITests
                 return MockActions.BasicDBActions;
             }
 
+            public List<DBAction> GetActionsByIdList(List<int> ids)
+            {
+                return MockActions.BasicDBActions;
+            }
+
             List<DBAction> IActionRepository.GetActionsByDate(DateTime date)
             {
                 return MockActions.BasicDBActions;
@@ -108,9 +125,45 @@ namespace RecommendationEngineTests.APITests
                 return MockActions.BadDBActions;
             }
 
+            public List<DBAction> GetActionsByIdList(List<int> ids)
+            {
+                return MockActions.BasicDBActions;
+            }
+
             List<DBAction> IActionRepository.GetActionsByDate(DateTime date)
             {
                 return MockActions.BadDBActions;
+            }
+        }
+
+        public class MockAssetRepository : IAssetRepository
+        {
+            public void AddAsset(DBAsset asset)
+            {
+            }
+
+            public void AddAssetList(List<DBAsset> asset)
+            {
+            }
+
+            public List<DBAsset> GetAssetsList()
+            {
+                return MockAssets.BasicDBAssetList;
+            }
+
+            public DBAsset GetAssetByName(string assetName)
+            {
+                return MockAssets.BasicDBAssetList[2];
+            }
+
+            public DBAsset GetAssetById(int assetId)
+            {
+                return MockAssets.BasicDBAssetList[2];
+            }
+
+            public void Update(DBAsset asset)
+            {
+                throw new System.NotImplementedException();
             }
         }
     }

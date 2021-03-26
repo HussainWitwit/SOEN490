@@ -11,6 +11,10 @@ jobs:
       - node/install: 
           node-version: "13.8.0"
       - run:
+          name: Preinstall node packages
+          command: npm install --save --legacy-peer-deps
+          working_directory: ./RecommendationEngine/RecommendationEngine/FrontEnd
+      - run:
           name: Restore Backend
           command: dotnet restore RecommendationEngine.sln
           working_directory: ./RecommendationEngine
