@@ -25,6 +25,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         Date = new DateTime(2020, 05, 17),
                         DisplayText = "wash day",
                         Title = "ywo55",
+                        Asset = new DBAsset
+                        {
+                            AssetId = 5,
+                            DisplayText = "Pikaboo"
+                        },
                         RecommendationJobResult = new DBRecommendationJobResult {
                             RecommendationJobResultId = 4,
                             Job = new DBRecommendationJob

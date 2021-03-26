@@ -125,7 +125,7 @@ const mockList = [
 
 export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
   const DisplayAssetNodeTree = (displayData) => (
-    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} energyType = {displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
+    <AssetTreeItem nodeId={String(displayData.id)} labelText={displayData.displayText} energyType = {displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
@@ -142,7 +142,7 @@ export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
       <SearchComboBox />
       <TreeView
         className='asset-tree-container '
-        defaultExpanded={[nestedAssets ? nestedAssets.id: '1']}
+        defaultExpanded={[nestedAssets ? String(nestedAssets.id): '1']}
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
         onNodeSelect = {(event, value) => handleNodeSelect(value)}

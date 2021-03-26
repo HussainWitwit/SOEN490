@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Dashboard.css';
-import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
@@ -14,6 +14,8 @@ import { dateFormat } from '../../utilities/DateTimeUtilities';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
+import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
+import { connect } from 'react-redux';
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -32,7 +34,7 @@ export const pickStylingClassName = (title) => {
 function ListOfActions({listActionValues, selectedDate}){
   return(
     <Grid className="listOfActions">
-      {listActionValues.length == 0 &&
+      {listActionValues.length === 0 &&
         <div className="list">
           <h2 id="actions-unavailable">{selectedDate}<br/>There are no actions associated to the selected date.</h2>
         </div>
@@ -43,11 +45,11 @@ function ListOfActions({listActionValues, selectedDate}){
           <h2 id="actions-available">Recommended Actions<br/>{selectedDate}</h2>
         </div>
         {listActionValues && listActionValues.map((action, index) => (
-          <ListItem>
-            <div id='action-item-container' key={index}>
+          <ListItem key={index}>
+            <div id='action-item-container'>
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
-                <hr class="solid"></hr>
+                <hr className="solid"></hr>
                 <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
                 <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
                 <div id='display-text-container'>
@@ -63,13 +65,13 @@ function ListOfActions({listActionValues, selectedDate}){
   )
 }
 
-function Dashboard() {
+function Dashboard(props) {
 
   const [widgetMetrics, setWidgetMetrics] = useState([]);
   const [calendarValues, setCalendarValues] = useState([]);
   const [listActionValues, setListActionValues] = useState([]);
   const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
-  const [loading, setLoading] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const calendarRef = useRef();
 
@@ -89,15 +91,17 @@ function Dashboard() {
   const getDashboardValues = async () => {
     startLoadingSpinner();
 
-    let widgetResponse = await GetWidgetMetrics();
+    let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
     let detailedWidgets = convertWidgetResponse(widgetResponse);
     setWidgetMetrics(detailedWidgets);
 
-    let calendarResponse = await GetCalendarDates();
+    let calendarResponse = await GetCalendarDates(props.selectedAsset);
     let calendar = calendarResponse.map((element) => {
       return {
         date: formatDate(element.date),
         nbOfActions: element.nbOfActions,
+        id: element.id,
+        status: element.status
       };
     })
     calendarEvents(calendar);
@@ -114,24 +118,57 @@ function Dashboard() {
       return {
         date: element.date,
         title: element.nbOfActions + ' actions',
+        id: element.id,
+        color: element.status==='Inactive'?'grey':''
       }
     })
     setCalendarValues(events);
   }
 
-  const handleDateClick = async (ev, isTileEvent) => {
-    var startDate = ev.startStr ? ev.startStr : ev.event.startStr
-    let actionsResponse = await GetActionPerDay(startDate)
+  const handleEventClick = async (ev) => {
+    var startDate = ev.event.startStr
+    let actionsResponse = await GetActionPerCompoundId(ev.event.id)
     setListActionValues(actionsResponse);
     setSelectedDate(startDate);
-    if (isTileEvent){
-      calendarRef.current.getApi().select(startDate)
+    calendarRef.current.getApi().select(startDate)
+  }
+
+  const handleDateClick = async (ev) => {
+    if(ev.jsEvent){
+      var startDate = ev.startStr
+      let actionsResponse = [];
+      if(calendarValues.some((el)=> el.date === ev.startStr))
+        actionsResponse = await GetActionPerDay(startDate)
+      setListActionValues(actionsResponse);
+      setSelectedDate(startDate);
     }
   }
 
   useEffect(() => {
+    const getDashboardValues = async () => {
+      startLoadingSpinner();
+  
+      let widgetResponse = await GetWidgetMetrics();
+      let detailedWidgets = convertWidgetResponse(widgetResponse);
+      setWidgetMetrics(detailedWidgets);
+  
+      let calendarResponse = await GetCalendarDates();
+      let calendar = calendarResponse.map((element) => {
+        return {
+          date: formatDate(element.date),
+          nbOfActions: element.nbOfActions,
+        };
+      })
+      calendarEvents(calendar);
+  
+      var dt = new Date();
+      let actionsResponse = await GetActionPerDay(dt.toISOString())
+      setListActionValues(actionsResponse);
+  
+      stopLoadingSpinner();
+    }
     getDashboardValues();
-  }, [])
+  }, [props.selectedAsset])
 
   return (
     <div>
@@ -177,8 +214,8 @@ function Dashboard() {
             plugins={[dayGridPlugin, interactionPlugin]}
             selectable={true}
             initialView='dayGridMonth'
-            eventClick={(ev) => handleDateClick(ev, true)}
-            select={(ev) => handleDateClick(ev, false)}
+            eventClick={(ev) => handleEventClick(ev)}
+            select={(ev) => handleDateClick(ev)}
             events={calendarValues}
             handleWindowResize={true}
             ref={calendarRef}
@@ -190,4 +227,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard;
+export default connect(mapAssetFilterStateToProps)(Dashboard);

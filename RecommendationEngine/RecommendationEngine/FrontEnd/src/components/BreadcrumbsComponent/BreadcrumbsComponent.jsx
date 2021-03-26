@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 import { GiWindTurbine } from "react-icons/gi";
 import { FaSolarPanel, FaCubes } from "react-icons/fa"
 import { connect } from 'react-redux';
@@ -11,7 +10,7 @@ import './BreadcrumbsComponent.css';
 const getAssetAncestry = (id, assets) => {
     if(!id)
         return false;
-    let asset = assets.find(el => el.id === id);
+    let asset = assets.find(el => el.id === Number(id));
     let res = {currentAsset: asset, ancestry: []};
     while (asset.parentId) {
         asset = assets.find(el=> el.id === asset.parentId)
@@ -35,7 +34,7 @@ export function BreadcrumbsComponent (props) {
     const [asset, setAsset] = useState({});
     useEffect(()=> {
         setAsset(getAssetAncestry(props.selectedAsset, props.flatListAssets));
-    }, [props.selectedAsset])
+    }, [props.selectedAsset, props.flatListAssets])
     return (
       <div id="main-container">
         <Breadcrumbs
