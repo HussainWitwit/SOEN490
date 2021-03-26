@@ -29,10 +29,10 @@ namespace RecommendationEngine.Services
             try
             {
                 var jobs = _jobRepository.GetJobList();
-                var assetsList = _assetRepository.GetAssetsList();
 
                 if (assetId != null)
                 {
+                    var assetsList = _assetRepository.GetAssetsList();
                     jobs = jobs
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
                 }

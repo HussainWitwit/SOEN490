@@ -7,6 +7,6 @@ namespace Interfaces.Services
     public interface IResultService
     {
         public List<Result> GetResultList(int? assetId);
-        public List<WidgetMetric> GetWidgetMetrics();
+        public List<WidgetMetric> GetWidgetMetrics(int? assetId);
     }
 }

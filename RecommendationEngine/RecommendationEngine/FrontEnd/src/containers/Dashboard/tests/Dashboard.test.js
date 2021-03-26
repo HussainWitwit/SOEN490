@@ -6,6 +6,7 @@ import Dashboard, { pickStylingClassName } from '../Dashboard';
 import fetch from 'isomorphic-fetch';
 import FullCalendar from '@fullcalendar/react'
 import Grid from '@material-ui/core/Grid';
+import { store } from '../../../redux/store';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -19,11 +20,11 @@ describe.only('Dashboard component', () => {
   const setState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics]]);
   const useStateSpy = jest.spyOn(React, 'useState');
   useStateSpy.mockImplementation((init) => [widgetMetrics, setState]);
-  const output = shallow(<Dashboard />);
+  const output = shallow(<Dashboard store={store} />).dive().dive();
 
   it('It renders without crashing', async () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Dashboard />, div);
+    ReactDOM.render(<Dashboard store={store} />, div);
     await new Promise((resolve) => setTimeout(resolve, 1000));
   });
 
