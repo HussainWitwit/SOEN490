@@ -24,7 +24,7 @@ function JobsPage(props) {
     const getJobList = async () => {
         let response = await GetRecommendationJobList(props.selectedAsset);
         //Necessary for datagrid date columns A.J.U.U
-        let responseWtihDateObjects = response.map((element) => { 
+        let responseWtihDateObjects = response.map((element) => { console.log(element.timestamp)
             return {
                 ...element,
                 timestamp: new Date(element.timestamp)
