@@ -12,7 +12,7 @@ import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 
-function TemplateConfigurationModal (props) {
+function TemplateConfigurationModal(props) {
 
   const { dialogsContent, dialogStyle, setRecommendationType } = props;
   const { templateDetailsList, template } = dialogsContent;
@@ -59,39 +59,39 @@ function TemplateConfigurationModal (props) {
           ))}
         </div>
         <div id="info-div" data-testid="templateinfodiv">
-          <Typography classes={{ root: 'title-dialog-0' }}>
+          <Typography component={'span'} classes={{ root: 'title-dialog-0' }}>
             {templateDetailsList.length ? template.name : "No template available"}
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
           {template.description && template.description.split(".").map((item, index) => (
-            <Typography key={index} classes={{ root: 'subtitle-dialog-1' }}>
+            <Typography key={index} component={'span'} classes={{ root: 'subtitle-dialog-1' }}>
               { item !== "" ? item + "." : ""}
             </Typography>
           ))}
-          <Typography classes={{ root: 'title-dialog-1' }}>
+          <Typography component={'span'} classes={{ root: 'title-dialog-1' }}>
             Parameters Inputs
             <Divider classes={{ root: 'divider-item' }} />
           </Typography>
 
           {template.inputList.length === 0 &&
-            <Typography classes={{ root: 'subtitle-dialog-1' }}>
+            <Typography component={'span'} classes={{ root: 'subtitle-dialog-1' }}>
               No Available Inputs
       </Typography>
           }
           {template.inputList !== [] &&
             <ol id="list-align">
-              <Typography classes={{ root: 'list-dialog-1' }}>
+              <Typography component={'span'} classes={{ root: 'list-dialog-1' }}>
                 {template.inputList && template.inputList.map((item, index) => (
                   <li id="list-item" key={index}>{item.displayText}</li>
                 ))}
               </Typography>
             </ol>
           }
-          <Typography classes={{ root: 'title-dialog-1' }}>
+          <Typography component={'span'} classes={{ root: 'title-dialog-1' }}>
             Algorithm
               <Divider classes={{ root: 'divider-item' }} />
           </Typography>
-          <Typography classes={{ root: 'subtitle-dialog-1' }}>
+          <Typography component={'span'} classes={{ root: 'subtitle-dialog-1' }}>
             {template.algorithmName}
           </Typography>
         </div>

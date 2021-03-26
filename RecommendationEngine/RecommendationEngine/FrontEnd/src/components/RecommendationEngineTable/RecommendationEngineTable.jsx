@@ -31,9 +31,6 @@ export default function RecommendationEngineTable(props) {
 
 /* istanbul ignore next */
 RecommendationEngineTable.propTypes = {
-  columnsValues: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
-  tableTitle: PropTypes.string.isRequired,
   onClickRow: PropTypes.func.isRequired,
-  dataGridSize: PropTypes.func.isRequired,
 };

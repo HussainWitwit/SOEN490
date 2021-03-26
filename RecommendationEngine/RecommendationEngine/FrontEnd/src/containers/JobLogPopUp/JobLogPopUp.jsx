@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,7 +13,7 @@ import './JobLogPopUp.css'
 
 
 export const RowsToDisplay = (element) => (
-  <React.Fragment key={element.id}>
+  <Fragment key={element.id}>
     <TableCell />
     <TableCell component="th" scope="row" padding="default" classes={{root:'col-date'}}>{dateFormat(element.time)}</TableCell>
     <TableCell classes={{root:'col-time'}}>{timeFormat(element.time)}</TableCell>
@@ -25,12 +25,12 @@ export const RowsToDisplay = (element) => (
       {element.level}
       </TableCell>
     <TableCell classes={{root: 'col-time'}}> {element.description}</TableCell>
-  </React.Fragment>
+  </Fragment>
 );
 
 export default function JobLogPopUp(props) {
-  const [jobLogs, setJobLogs] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
+  const [jobLogs, setJobLogs] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const fetchLogsList  = async () => {
     let response = await GetJobLogList(props.jobId);
@@ -49,7 +49,7 @@ export default function JobLogPopUp(props) {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (props.controlled) {
       handleClickOpen()
     } 

@@ -12,8 +12,8 @@ const toastConfigurations: ToastOptions = {
 }
 
 export const notifyError = (err: any): any => {
-    if (err.code == 400) {
-        mapErrorToErrorList(err).map((msg: any) => {
+    if (err.code === 400) {
+        mapErrorToErrorList(err).forEach((msg: any) => {
             toast.error(msg, toastConfigurations)
         })
     } else {

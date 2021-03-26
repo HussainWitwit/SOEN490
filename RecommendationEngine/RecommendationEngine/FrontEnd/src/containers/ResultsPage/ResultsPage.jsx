@@ -47,7 +47,7 @@ export function ResultsPage(props) {
         { field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
         {
             field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', flex: 0.14, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.row.configuredRecommendationId)}>
                     {params.getValue('configuredRecommendationTitle')}
                 </a>)
         }
