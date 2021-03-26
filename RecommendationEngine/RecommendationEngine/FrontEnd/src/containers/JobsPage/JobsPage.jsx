@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
@@ -15,7 +13,6 @@ function JobsPage(props) {
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
-    const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
 
     const durationOption = {
         number: 'number',
@@ -45,7 +42,7 @@ function JobsPage(props) {
         },
         {
             field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.row.configuredRecommendationId)}>
                     {params.getValue('configuredRecommendationTitle')}
                 </a>)
         },
@@ -67,11 +64,7 @@ function JobsPage(props) {
         }
     ];
 
-    const getJobList = async () => {
-        let response = await GetRecommendationJobList(props.selectedAsset);
-        setJobList(response);
-        setDefaultJobList(response);
-    }
+
 
     const updateSearch = async (input) => {
         const filtered = defaultJobList.filter(job => {
@@ -85,6 +78,11 @@ function JobsPage(props) {
     }
 
     useEffect(() => {
+        const getJobList = async () => {
+            let response = await GetRecommendationJobList(props.selectedAsset);
+            setJobList(response);
+            setDefaultJobList(response);
+        }
         getJobList();
     }, [props.selectedAsset])
 

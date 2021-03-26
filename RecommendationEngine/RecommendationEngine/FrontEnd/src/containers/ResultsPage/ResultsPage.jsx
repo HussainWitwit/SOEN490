@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
@@ -47,17 +45,12 @@ export function ResultsPage(props) {
         { field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
         {
             field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', flex: 0.14, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.row.configuredRecommendationId)}>
                     {params.getValue('configuredRecommendationTitle')}
                 </a>)
         }
     ]
 
-    const getResultList = async () => {
-        let response = await GetRecommendationResultList(props.selectedAsset);
-        setDefaultResultList(response);
-        setResultList(response);
-    }
 
 
     const updateSearch = async (input) => {
@@ -73,7 +66,12 @@ export function ResultsPage(props) {
         setResultList(filtered);
     }
 
-    useEffect(() => {
+    useEffect(() => {  
+        const getResultList = async () => {
+            let response = await GetRecommendationResultList(props.selectedAsset);
+            setDefaultResultList(response);
+            setResultList(response);
+        }
         getResultList();
     }, [props.selectedAsset])
 

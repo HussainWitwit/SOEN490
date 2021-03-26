@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SvgIcon, Typography, TextField, Collapse } from '@material-ui/core';
-import { TreeView, TreeItem, Autocomplete } from '@material-ui/lab';
+import { SvgIcon, Typography, Collapse } from '@material-ui/core';
+import { TreeView, TreeItem } from '@material-ui/lab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCube, faCubes, faSun, faWind } from '@fortawesome/free-solid-svg-icons'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
@@ -108,7 +108,7 @@ const mockList = [
 
 export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
   const DisplayAssetNodeTree = (displayData) => (
-    <AssetTreeItem nodeId={displayData.id} labelText={displayData.displayText} energyType={displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
+    <AssetTreeItem nodeId={String(displayData.id)} labelText={displayData.displayText} energyType={displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (
         DisplayAssetNodeTree(child)
       ))
@@ -124,7 +124,7 @@ export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
     <div className='flex-direction-column'>
       <TreeView
         className='asset-tree-container '
-        defaultExpanded={[nestedAssets ? nestedAssets.id : '1']}
+        defaultExpanded={[nestedAssets ? String(nestedAssets.id) : '1']}
         defaultCollapseIcon={<MinusSquare />}
         defaultExpandIcon={<PlusSquare />}
         onNodeSelect={(event, value) => handleNodeSelect(value)}

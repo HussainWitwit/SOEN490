@@ -38,7 +38,7 @@ font-weight: bold;
   color: black;
 }
 
-#parameter-date-picker {
+.parameter-date-picker {
   width: 100px;
   height: 10px;
 }

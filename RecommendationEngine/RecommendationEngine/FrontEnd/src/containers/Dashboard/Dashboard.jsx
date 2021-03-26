@@ -34,7 +34,7 @@ export const pickStylingClassName = (title) => {
 function ListOfActions({listActionValues, selectedDate}){
   return(
     <Grid className="listOfActions">
-      {listActionValues.length == 0 &&
+      {listActionValues.length === 0 &&
         <div className="list">
           <h2 id="actions-unavailable">{selectedDate}<br/>There are no actions associated to the selected date.</h2>
         </div>
@@ -45,11 +45,11 @@ function ListOfActions({listActionValues, selectedDate}){
           <h2 id="actions-available">Recommended Actions<br/>{selectedDate}</h2>
         </div>
         {listActionValues && listActionValues.map((action, index) => (
-          <ListItem>
-            <div id='action-item-container' key={index}>
+          <ListItem key={index}>
+            <div id='action-item-container'>
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
-                <hr class="solid"></hr>
+                <hr className="solid"></hr>
                 <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
                 <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
                 <div id='display-text-container'>
@@ -71,7 +71,7 @@ function Dashboard(props) {
   const [calendarValues, setCalendarValues] = useState([]);
   const [listActionValues, setListActionValues] = useState([]);
   const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
-  const [loading, setLoading] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const calendarRef = useRef();
 
@@ -145,6 +145,28 @@ function Dashboard(props) {
   }
 
   useEffect(() => {
+    const getDashboardValues = async () => {
+      startLoadingSpinner();
+  
+      let widgetResponse = await GetWidgetMetrics();
+      let detailedWidgets = convertWidgetResponse(widgetResponse);
+      setWidgetMetrics(detailedWidgets);
+  
+      let calendarResponse = await GetCalendarDates();
+      let calendar = calendarResponse.map((element) => {
+        return {
+          date: formatDate(element.date),
+          nbOfActions: element.nbOfActions,
+        };
+      })
+      calendarEvents(calendar);
+  
+      var dt = new Date();
+      let actionsResponse = await GetActionPerDay(dt.toISOString())
+      setListActionValues(actionsResponse);
+  
+      stopLoadingSpinner();
+    }
     getDashboardValues();
   }, [props.selectedAsset])
 

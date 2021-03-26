@@ -15,10 +15,10 @@ export  function ParamTextField({paramObject, index, onChangeEvent}) {
   let isNegative = paramTypeAttributes[0] === 'NEGATIVE';
   let numberType = paramTypeAttributes[1].toLowerCase();
   let helperText =
-      paramTypeAttributes ? 
-      <div>
-          {`The value must be a ${numberType} ${isNegative ? "smaller" : "larger"} than ${paramTypeAttributes[2]}`}
-      </div> : '';
+    paramTypeAttributes ? 
+    <div>
+        {`The value must be a ${numberType} ${isNegative ? "smaller" : "larger"} than ${paramTypeAttributes[2]}`}
+    </div> : '';
 
     const validation = () => {
       setError(singleParameterInvalid(paramObject));
@@ -36,8 +36,7 @@ export  function ParamTextField({paramObject, index, onChangeEvent}) {
                   max: isNegative ? 0 : null
               }
           }}
-          data-testID='parameter-value'
-          defaultValue={paramObject.defaultValue}
+          data-testid='parameter-value'
           value={paramObject.parameterValue}
           onChange={(e) => { onChangeEvent(e.target.value, index); }}
           className="value"
@@ -81,7 +80,8 @@ export function ParametersConfigurationModal (props) {
                         {cell.parameterType === 'DATE' && (
                             <MuiPickersUtilsProvider  utils={DateFnsUtils}>
                                 <KeyboardDateTimePicker
-                                    id="parameter-date-picker"
+                                    id={"date-picker-id" + index}
+                                    className="parameter-date-picker"
                                     data-testid='date'
                                     autoOk
                                     placeholder={cell.defaultValue}
@@ -93,7 +93,7 @@ export function ParametersConfigurationModal (props) {
                                     minDateMessage = {'The start date cannot overlap'}
                                     maxDateMessage = {'The end date cannot overlap'}
                                     onChange={(date) => setParamValue(date, index)}
-                                    inputFormat = {"PPP"}
+                                    inputformat = {"PPP"}
                                     KeyboardButtonProps={{
                                       'aria-label': 'change date',
                                   }}
