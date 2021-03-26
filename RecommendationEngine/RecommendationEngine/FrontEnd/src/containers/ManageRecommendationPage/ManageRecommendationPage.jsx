@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
+import { TableColumns as columns } from './TableConfig';
 import './ManageRecommendationPage.css';
 
 export function ManageRecommendationPage (props) {
@@ -12,14 +13,6 @@ export function ManageRecommendationPage (props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
-  const columns = [
-    {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style', hide: false},
-    {field: 'name', headerName: 'Title', flex:0.25, type: 'string', cellClassName: 'table-style'},
-    {field: 'type', headerName: 'Type', flex: 0.25, type: 'string', cellClassName: 'table-style'},
-    {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.25, cellClassName: 'table-style'},
-    {field: 'createdOn', headerName: 'Created On', type: 'string', flex: 0.25, cellClassName: 'table-style'},
-]
-   
   const updateSearch = async (input) => {
     const filtered = defaultConfiguredRecList.filter(recommendation => {
       return recommendation.name.toLowerCase().includes(input.toLowerCase())
@@ -32,8 +25,14 @@ export function ManageRecommendationPage (props) {
   }
 
   useEffect(() => {
-    setRecommendationList(configuredRecommendationList);
-    setDefaultConfiguredRecList(configuredRecommendationList);
+    //Necessary for datagrid date columns A.J.U.U
+    let responseWtihDateObjects = configuredRecommendationList.map((element) => { 
+      return {
+          ...element,
+          createdOn: new Date(element.createdOn)
+  }});
+    setRecommendationList(responseWtihDateObjects);
+    setDefaultConfiguredRecList(responseWtihDateObjects);
   }, [configuredRecommendationList])
 
   return (

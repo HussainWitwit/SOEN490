@@ -6,68 +6,31 @@ import './JobsPage.css';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
-import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import { TableColumns as columns } from './TableConfig';
 
 function JobsPage(props) {
 
-    const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
 
-    const durationOption = {
-        number: 'number',
-        width: 200,
-        valueFormatter: ({ value }) => (value + ' seconds')
-    };
-
-    const columns = [
-
-        { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
-        { field: 'timestamp', headerName: 'Timestamp', type: 'string' , flex: 0.2, cellClassName: 'table-style' },
-        {
-            field: 'status',
-            headerName: 'Status',
-            type: 'string',
-            flex: 0.17,
-            headerAlign: 'center',
-            renderCell: (params) => (
-                <div
-                    className={
-                        params.getValue('status') === "Running" ? 'job-status-running' :
-                            params.getValue('status') === "Failed" ? 'job-status-failed' : 'job-status-success'}
-                >
-                    {params.getValue('status')}
-                </div>
-            )
-        },
-        {
-            field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
-                    {params.getValue('configuredRecommendationTitle')}
-                </a>)
-        },
-        { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.12, cellClassName: 'table-style' },
-        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style' },
-        {
-            field: 'jobLog',
-            headerName: 'Log',
-            flex: 0.08,
-            headerAlign: 'center',
-            renderCell: (params) => (
-                <JobLogPopUp
-                    className={"job-log-style"}
-                    jobId={params.getValue('id')}
-                    controlled={null}
-                >
-                </JobLogPopUp>
-            )
-        }
-    ];
+    //Code duplication, however: this cannot be inside the TableConfig.jsx as the reducer action is passed at compile time and we want the function to be passed at runtime.
+    const RecommendationLinkColumn = [{
+        field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
+            <a className='configured-recommendation' onClick={() => props.openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                {params.getValue('configuredRecommendationTitle')}
+            </a>)
+    }];
 
     const getJobList = async () => {
         let response = await GetRecommendationJobList(props.selectedAsset);
-        setJobList(response);
-        setDefaultJobList(response);
+        //Necessary for datagrid date columns A.J.U.U
+        let responseWtihDateObjects = response.map((element) => { 
+            return {
+                ...element,
+                timestamp: new Date(element.timestamp)
+        }});
+        setJobList(responseWtihDateObjects);
+        setDefaultJobList(responseWtihDateObjects);
     }
 
     const updateSearch = async (input) => {
@@ -101,7 +64,7 @@ function JobsPage(props) {
             <br></br>
             <RecommendationEngineTable
                 data={jobList}
-                columnValues={columns}
+                columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={false}
                 onClickRow={() => { }}
             />
