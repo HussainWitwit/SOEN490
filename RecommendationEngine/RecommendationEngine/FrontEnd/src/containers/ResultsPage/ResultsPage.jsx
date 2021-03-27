@@ -16,7 +16,7 @@ export function ResultsPage(props) {
 
     //Code duplication, however: this cannot be inside the TableConfig.jsx as the reducer action is passed at compile time and we want the function to be passed at runtime.
     const RecommendationLinkColumn = [{
-        field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
+        field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 200, cellClassName: 'table-style', renderCell: (params) => (
             <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
                 {params.getValue('configuredRecommendationTitle')}
             </a>)
@@ -70,6 +70,8 @@ export function ResultsPage(props) {
                 columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
+                dateColumnName={'resultOutputDate'}
+                dateSortingOrder={'desc'}
                 // customFilters = {}
             />
         </div>

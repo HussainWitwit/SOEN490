@@ -5,7 +5,7 @@ import './RecommendationEngineTable.css';
 
 export default function RecommendationEngineTable(props) {
 
-  const { data, columnValues, onClickRow, isClickable } = props
+  const { data, columnValues, onClickRow, isClickable, dateColumnName, dateSortingOrder } = props
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -24,6 +24,9 @@ export default function RecommendationEngineTable(props) {
           columns={columnValues}
           rows={data}
           loading={isLoading}
+          sortModel={[
+            {field: dateColumnName, sort: dateSortingOrder}
+          ]}
           showToolbar
           components={{ Toolbar: GridToolbar }}
           onRowClick={({row}) => onClickRow(row.id)}

@@ -67,6 +67,8 @@ function JobsPage(props) {
                 columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={false}
                 onClickRow={() => { }}
+                dateColumnName={'timestamp'}
+                dateSortingOrder={'desc'}
             />
         </div>
     );

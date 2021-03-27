@@ -11,7 +11,7 @@ const durationOption = {
 export const TableColumns = [
 
     { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
-    { field: 'timestamp', headerName: 'Timestamp', type: 'dateTime', flex: 0.2, cellClassName: 'table-style' },
+    { field: 'timestamp', headerName: 'Timestamp', type: 'dateTime', sort: 'desc', flex: 0.2, cellClassName: 'table-style' },
     {
         field: 'status',
         headerName: 'Status',
@@ -35,6 +35,8 @@ export const TableColumns = [
         headerName: 'Log',
         flex: 0.08,
         headerAlign: 'center',
+        sortable: false,
+        filterable: false,
         renderCell: (params: any) => (
             <JobLogPopUp
                 className={"job-log-style"}
