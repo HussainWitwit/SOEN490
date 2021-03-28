@@ -65,7 +65,7 @@ export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
     }
     return false;
 }
-
+//interface for filterTableItems function below
 export enum TableItemType {
     ConfiguredRecommendation= "ConfiguredRecommendation",
     Results = "Results",
