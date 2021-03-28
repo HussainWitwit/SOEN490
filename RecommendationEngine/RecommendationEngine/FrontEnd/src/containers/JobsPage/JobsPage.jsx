@@ -7,12 +7,14 @@ import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationRed
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 
 function JobsPage(props) {
 
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);
     const [defaultJobList, setDefaultJobList] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
 
     const durationOption = {
         number: 'number',
@@ -64,17 +66,8 @@ function JobsPage(props) {
         }
     ];
 
-
-
-    const updateSearch = async (input) => {
-        const filtered = defaultJobList.filter(job => {
-            return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-                || job.assetName.toLowerCase().includes(input.toLowerCase())
-                || job.status.toLowerCase().includes(input.toLowerCase())
-                || job.timestamp.includes(input.toLowerCase())
-                || (job.duration.toString() + " seconds").includes(input)
-        })
-        setJobList(filtered);
+    const updateSearch = (input) => {
+        setJobList(filterTableItems(TableItemType.Jobs, defaultJobList, input));
     }
 
     useEffect(() => {
@@ -82,6 +75,7 @@ function JobsPage(props) {
             let response = await GetRecommendationJobList(props.selectedAsset);
             setJobList(response);
             setDefaultJobList(response);
+            setisLoading(false);
         }
         getJobList();
     }, [props.selectedAsset])
@@ -105,6 +99,7 @@ function JobsPage(props) {
                 columnValues={columns}
                 isClickable={false}
                 onClickRow={() => { }}
+                loading = {isLoading}
             />
         </div>
     );
