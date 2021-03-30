@@ -60,3 +60,6 @@ font-weight: bold;
   letter-spacing: 0.0075em;
   text-align-last: center;
 }
+#mocked-content > div {
+  overflow-y: hidden;
+}
