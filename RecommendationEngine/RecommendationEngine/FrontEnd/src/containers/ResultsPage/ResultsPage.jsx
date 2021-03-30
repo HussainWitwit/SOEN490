@@ -13,6 +13,7 @@ export function ResultsPage(props) {
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
 
     //Code duplication, however: this cannot be inside the TableConfig.jsx as the reducer action is passed at compile time and we want the function to be passed at runtime.
     const RecommendationLinkColumn = [{
@@ -35,20 +36,17 @@ export function ResultsPage(props) {
     }
 
 
-    const updateSearch = async (input) => {
-        const filtered = defaultResultList.filter(result => {
-            return result.assetName.toLowerCase().includes(input.toLowerCase())
-            || result.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-            || result.resultOutputDate.includes(input.toLowerCase())
-            || result.costOfAction.toString().includes(input.replace(',', ''))
-            || result.costOfInaction.toString().includes(input.replace(',', ''))
-            || result.netSaving.toString().includes(input.replace(',', ''))
-            || result.returnOnInvestment.toString().includes(input.replace(',', ''))
-        })
-        setResultList(filtered);
+    const updateSearch = (input) => {
+        setResultList(filterTableItems(TableItemType.Results, defaultResultList, input));
     }
 
     useEffect(() => {
+        const getResultList = async () => {
+            let response = await GetRecommendationResultList(props.selectedAsset);
+            setDefaultResultList(response);
+            setResultList(response);
+            setisLoading(false);
+        }
         getResultList();
     }, [props.selectedAsset])
 
@@ -70,9 +68,13 @@ export function ResultsPage(props) {
                 columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
+<<<<<<< HEAD
                 dateColumnName={'resultOutputDate'}
                 dateSortingOrder={'desc'}
                 // customFilters = {}
+=======
+                loading = {isLoading}
+>>>>>>> development
             />
         </div>
     );

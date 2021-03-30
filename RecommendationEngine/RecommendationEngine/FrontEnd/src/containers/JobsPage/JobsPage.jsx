@@ -45,6 +45,12 @@ function JobsPage(props) {
     }
 
     useEffect(() => {
+        const getJobList = async () => {
+            let response = await GetRecommendationJobList(props.selectedAsset);
+            setJobList(response);
+            setDefaultJobList(response);
+            setisLoading(false);
+        }
         getJobList();
     }, [props.selectedAsset])
 
@@ -67,8 +73,12 @@ function JobsPage(props) {
                 columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={false}
                 onClickRow={() => { }}
+<<<<<<< HEAD
                 dateColumnName={'timestamp'}
                 dateSortingOrder={'desc'}
+=======
+                loading = {isLoading}
+>>>>>>> development
             />
         </div>
     );

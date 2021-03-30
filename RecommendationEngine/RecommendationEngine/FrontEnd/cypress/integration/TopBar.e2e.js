@@ -19,12 +19,4 @@ describe('TopBar component', () => {
         cy.get('#img').should('exist')
         cy.wait(500)
     })
-
-    it("Clicks on the notification bell and click on view all", () => {
-        cy.get('.icon > .image').click()
-        cy.wait(1000)
-        cy.get('.header-option')
-        cy.wait(500)
-        cy.get('.icon > .image').click()
-    })
 })

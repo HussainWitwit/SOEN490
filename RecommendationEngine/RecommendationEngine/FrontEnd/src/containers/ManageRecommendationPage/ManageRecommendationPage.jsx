@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
+<<<<<<< HEAD
 import { TableColumns as columns } from './TableConfig';
+=======
+import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
+>>>>>>> development
 import './ManageRecommendationPage.css';
 
 export function ManageRecommendationPage (props) {

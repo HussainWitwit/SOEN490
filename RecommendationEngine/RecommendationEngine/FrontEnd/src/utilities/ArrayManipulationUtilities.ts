@@ -2,6 +2,9 @@ import { Parameter } from "../api/models/TemplateDetails";
 import { dateFormat } from './DateTimeUtilities';
 import { Asset, MultiSelectTreeViewAsset } from '../api/models/Asset';
 import { DetailedWidget, Widget } from '../api/models/Widget';
+import { ConfiguredRecommendationJob } from "../api/models/Job";
+import { ConfiguredRecommendationResult } from "../api/models/JobResult";
+import { ConfiguredRecommendation } from "../api/models/ConfiguredRecommendation";
 // import { store } from '../redux/store';
 
 export const convertObjectToArrayOfObjects = (obj: any) => {
@@ -32,7 +35,7 @@ export const convertAssetObject = (assets: Asset[]): MultiSelectTreeViewAsset[] 
     let renamedAssetAttributes: MultiSelectTreeViewAsset[] = [];
     renamedAssetAttributes = assets.map((element: Asset) => {
         return {
-            value: element,
+            value: element ? element.id : 0,
             key: element ? element.id : 0,
             title: element ? element.displayText : 'N/A',
             children: element ? (element.children ? convertAssetObject(element.children) : []) : []
@@ -61,4 +64,62 @@ export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
         return tabs.find(tab => tab.name === name).response;
     }
     return false;
+}
+//interface for filterTableItems function below
+export enum TableItemType {
+    ConfiguredRecommendation= "ConfiguredRecommendation",
+    Results = "Results",
+    Jobs = "Jobs"
+}
+
+export const filterTableItems = (type: TableItemType, list: any[], input: string): any[] => {
+    let filtered: any[];
+    switch(type) {
+        case "ConfiguredRecommendation":
+            filtered = list.filter((recommendation: ConfiguredRecommendation) => {
+                return recommendation.name.toLowerCase().includes(input.toLowerCase())
+                || recommendation.id.toString().includes(input.toLowerCase())
+                || recommendation.createdOn.toString().includes(input.toLowerCase())
+                || recommendation.granularity.toLowerCase().includes(input.toLowerCase())
+                || recommendation.type.toLowerCase().includes(input.toLowerCase())
+            });
+            break;
+        case "Results":
+            filtered = list.filter((result: ConfiguredRecommendationResult) => {
+                return result.assetName.toLowerCase().includes(input.toLowerCase())
+                || result.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
+                || result.resultOutputDate.toString().includes(input.toLowerCase())
+                || result.costOfAction.toString().includes(input.replace(',', ''))
+                || result.costOfInaction.toString().includes(input.replace(',', ''))
+                || result.netSaving.toString().includes(input.replace(',', ''))
+                || result.returnOnInvestment.toString().includes(input.replace(',', ''))
+            });
+            break;
+        case "Jobs":
+            filtered = list.filter((job: ConfiguredRecommendationJob) => {
+                return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
+                || job.assetName.toLowerCase().includes(input.toLowerCase())
+                || job.status.toLowerCase().includes(input.toLowerCase())
+                || job.timestamp.toString().includes(input.toLowerCase())
+                || (job.duration.toString() + " seconds").includes(input)
+            });
+            break;
+        default:
+            filtered = [];
+    }
+    return filtered;
+}
+
+export const mergedArrayIdsAndTitles = (ids: number[], titles: string[]): any[] => {
+    if(ids.length !== titles.length){
+        return []; 
+    }
+    else {
+        return ids.map((element, index) => {
+            return {
+                id: element,
+                displayText: titles[index]
+            };
+        })
+    }
 }

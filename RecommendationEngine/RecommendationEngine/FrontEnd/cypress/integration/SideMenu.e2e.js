@@ -12,10 +12,6 @@ describe("Side Menu", () => {
 
         cy.get(':nth-child(2) > [data-testid=listitemDashboard]').should('exist') // dashboard
         cy.get('[data-testid=listitemRecommendations]').should('exist') //  recommendations
-        cy.get('[data-testid="listitemWork Orders"]').should('exist') // Work orders
-        cy.get('.settings > p').should('exist')
-        cy.get(':nth-child(4) > :nth-child(1)').should('exist') // Main Settings
-        cy.get(':nth-child(7) > [data-testid=listitemNotifications]').should('exist') // Notifications
         cy.get('.logo > svg').should('exist') // logo
     })
 
@@ -31,13 +27,6 @@ describe("Side Menu", () => {
         cy.get('[data-testid=listitemManage]').click() // Manage
         cy.get('[data-testid=listitemJobs]').click() // Jobs
         cy.get('[data-testid=listitemResults]').click() // Results
-    })
-
-    it("Clicks on Work Orders, Main Settings and Notifications", () => {
-        cy.get('[data-testid="listitemWork Orders"]').click() // Work Orders
-        cy.get('[data-testid="listitemMain Settings"]').click() // Main Settings
-        cy.get('[data-testid=listitemNotifications]').click() // Notifications
-
     })
 
     it("Scenario where the user clicks on Recommendations and then chooses to view Results", () => {
