@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
-<<<<<<< HEAD
 import { TableColumns as columns } from './TableConfig';
-=======
 import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
->>>>>>> development
 import './ManageRecommendationPage.css';
 
 export function ManageRecommendationPage (props) {
@@ -17,19 +14,11 @@ export function ManageRecommendationPage (props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
-  const updateSearch = async (input) => {
-    const filtered = defaultConfiguredRecList.filter(recommendation => {
-      return recommendation.name.toLowerCase().includes(input.toLowerCase())
-        || recommendation.id.toString().includes(input.toLowerCase())
-        || recommendation.createdOn.toString().includes(input.toLowerCase())
-        || recommendation.granularity.toLowerCase().includes(input.toLowerCase())
-        || recommendation.type.toLowerCase().includes(input.toLowerCase())
-    })
-    setRecommendationList(filtered);
+  const updateSearch = (input) => {
+    setRecommendationList(filterTableItems(TableItemType.ConfiguredRecommendation, defaultConfiguredRecList, input));
   }
 
   useEffect(() => {
-    //Necessary for datagrid date columns A.J.U.U
     let responseWtihDateObjects = configuredRecommendationList.map((element) => { 
       return {
           ...element,

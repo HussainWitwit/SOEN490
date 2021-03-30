@@ -5,12 +5,7 @@ import './RecommendationEngineTable.css';
 
 export default function RecommendationEngineTable(props) {
 
-  const { data, columnValues, onClickRow, isClickable, dateColumnName, dateSortingOrder } = props
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-      setIsLoading(data.length ? false : true)
-  }, [data])
+  const { data, columnValues, onClickRow, isClickable, dateColumnName, dateSortingOrder, loading } = props
 
   return (
     <div id="root">
@@ -23,7 +18,7 @@ export default function RecommendationEngineTable(props) {
           density={'compact'}
           columns={columnValues}
           rows={data}
-          loading={isLoading}
+          loading={loading}
           sortModel={[
             {field: dateColumnName, sort: dateSortingOrder}
           ]}

@@ -5,6 +5,7 @@ import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-action
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { connect } from 'react-redux';
+import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import { TableColumns as columns } from './TableConfig';
 import './ResultsPage.css'
 
@@ -15,7 +16,6 @@ export function ResultsPage(props) {
     const [defaultResultList, setDefaultResultList] = useState([]);
     const [isLoading, setisLoading] = useState(true);
 
-    //Code duplication, however: this cannot be inside the TableConfig.jsx as the reducer action is passed at compile time and we want the function to be passed at runtime.
     const RecommendationLinkColumn = [{
         field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 200, cellClassName: 'table-style', renderCell: (params) => (
             <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
@@ -23,9 +23,9 @@ export function ResultsPage(props) {
             </a>)
     }];
 
+
     const getResultList = async () => {
         let response = await GetRecommendationResultList(props.selectedAsset);
-        //Necessary for datagrid date columns A.J.U.U
         let responseWtihDateObjects = response.map((element) => { 
             return {
                 ...element,
@@ -33,6 +33,7 @@ export function ResultsPage(props) {
         }});
         setDefaultResultList(responseWtihDateObjects);
         setResultList(responseWtihDateObjects);
+        setisLoading(false);
     }
 
 
@@ -41,12 +42,6 @@ export function ResultsPage(props) {
     }
 
     useEffect(() => {
-        const getResultList = async () => {
-            let response = await GetRecommendationResultList(props.selectedAsset);
-            setDefaultResultList(response);
-            setResultList(response);
-            setisLoading(false);
-        }
         getResultList();
     }, [props.selectedAsset])
 
@@ -68,13 +63,9 @@ export function ResultsPage(props) {
                 columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
-<<<<<<< HEAD
                 dateColumnName={'resultOutputDate'}
                 dateSortingOrder={'desc'}
-                // customFilters = {}
-=======
                 loading = {isLoading}
->>>>>>> development
             />
         </div>
     );
