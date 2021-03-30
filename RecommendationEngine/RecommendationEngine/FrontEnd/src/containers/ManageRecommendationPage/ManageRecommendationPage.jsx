@@ -49,7 +49,7 @@ export function ManageRecommendationPage (props) {
         onClickRow={openScheduleDrilldown}
         isClickable={true}
         dateColumnName={'createdOn'}
-        dateSortingOrder={'asc'}
+        dateSortingOrder={'desc'}
 
       />
     </div >
