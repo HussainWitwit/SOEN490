@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
-import { List, ListItem } from '@material-ui/core';
+import { List, ListItem, Backdrop } from '@material-ui/core';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -139,11 +139,14 @@ function Dashboard() {
         <Dialog
           open={loading}
           onClose={stopLoadingSpinner}
+          disableBackdropClick={false}
+          BackdropProps={{style: {backgroundColor: 'transparent', boxShadow:'none'}}}
         >
           <DialogContent>
-            <CircularProgress />
+            <CircularProgress/>
           </DialogContent>
         </Dialog>
+
         <br></br>
         <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
           <Grid id="grid1" item>
