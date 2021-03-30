@@ -5,6 +5,7 @@ import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-action
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { connect } from 'react-redux';
+import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ResultsPage.css'
 
 export function ResultsPage(props) {
@@ -12,6 +13,7 @@ export function ResultsPage(props) {
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
 
     const currencyFormatter = new Intl.NumberFormat('en-CA', {
         style: 'currency',
@@ -52,25 +54,16 @@ export function ResultsPage(props) {
     ]
 
 
-
-    const updateSearch = async (input) => {
-        const filtered = defaultResultList.filter(result => {
-            return result.assetName.toLowerCase().includes(input.toLowerCase())
-            || result.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-            || result.resultOutputDate.includes(input.toLowerCase())
-            || result.costOfAction.toString().includes(input.replace(',', ''))
-            || result.costOfInaction.toString().includes(input.replace(',', ''))
-            || result.netSaving.toString().includes(input.replace(',', ''))
-            || result.returnOnInvestment.toString().includes(input.replace(',', ''))
-        })
-        setResultList(filtered);
+    const updateSearch = (input) => {
+        setResultList(filterTableItems(TableItemType.Results, defaultResultList, input));
     }
 
-    useEffect(() => {  
+    useEffect(() => {
         const getResultList = async () => {
             let response = await GetRecommendationResultList(props.selectedAsset);
             setDefaultResultList(response);
             setResultList(response);
+            setisLoading(false);
         }
         getResultList();
     }, [props.selectedAsset])
@@ -93,6 +86,7 @@ export function ResultsPage(props) {
                 columnValues={columns}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
+                loading = {isLoading}
             />
         </div>
     );

@@ -35,6 +35,7 @@
     "react-scripts": "^4.0.0",
     "react-spring": "^8.0.27",
     "react-tabs": "^3.1.1",
+    "react-test-renderer": "^17.0.2",
     "react-toastify": "^7.0.3",
     "reactstrap": "^8.4.1",
     "redux": "^4.0.5",
