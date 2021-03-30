@@ -104,7 +104,7 @@ export function ParametersConfigurationModal(props) {
                       )}
                     </TableCell>
                   </TableRow>
-                )):<div>No parameters</div>}
+                )):<div className="empty-parameter-list">No parameters</div>}
             </TableBody>
           </Table>
         </div>
