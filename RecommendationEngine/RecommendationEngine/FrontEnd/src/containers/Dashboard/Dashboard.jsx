@@ -16,6 +16,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
+import { Chart, Interval } from 'bizcharts';
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -31,41 +32,41 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
-function ListOfActions({listActionValues, selectedDate}){
-  return(
+function ListOfActions ({ listActionValues, selectedDate }) {
+  return (
     <Grid className="listOfActions">
       {listActionValues.length === 0 &&
         <div className="list">
-          <h2 id="actions-unavailable">{selectedDate}<br/>There are no actions associated to the selected date.</h2>
+          <h2 id="actions-unavailable">{selectedDate}<br />There are no actions associated to the selected date.</h2>
         </div>
       }
       {listActionValues.length > 0 &&
-        <List className="list-actions" style={{paddingTop: "0px"}}>
-        <div className="action-maintitle">
-          <h2 id="actions-available">Recommended Actions<br/>{selectedDate}</h2>
-        </div>
-        {listActionValues && listActionValues.map((action, index) => (
-          <ListItem key={index}>
-            <div id='action-item-container'>
+        <List className="list-actions" style={{ paddingTop: "0px" }}>
+          <div className="action-maintitle">
+            <h2 id="actions-available">Recommended Actions<br />{selectedDate}</h2>
+          </div>
+          {listActionValues && listActionValues.map((action, index) => (
+            <ListItem key={index}>
+              <div id='action-item-container'>
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
                 <hr className="solid"></hr>
                 <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
                 <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
                 <div id='display-text-container'>
-                    {action.displayText}
+                  {action.displayText}
                 </div>
                 <p id='suggestion-date'>Suggested on {dateFormat(action.recommendedOnDate)}</p>
-            </div>
-          </ListItem>
-        ))}
-      </List>
+              </div>
+            </ListItem>
+          ))}
+        </List>
       }
     </Grid>
   )
 }
 
-function Dashboard(props) {
+function Dashboard (props) {
 
   const [widgetMetrics, setWidgetMetrics] = useState([]);
   const [calendarValues, setCalendarValues] = useState([]);
@@ -83,19 +84,18 @@ function Dashboard(props) {
     setLoading(false);
   }
 
-  function formatDate(date) {
+  function formatDate (date) {
     var d = new Date(date);
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-
-  function calendarEvents(calendar) {
+  function calendarEvents (calendar) {
     var events = calendar.map((element) => {
       return {
         date: element.date,
         title: element.nbOfActions + ' actions',
         id: element.id,
-        color: element.status==='Inactive'?'grey':''
+        color: element.status === 'Inactive' ? 'grey' : ''
       }
     })
     setCalendarValues(events);
@@ -110,10 +110,10 @@ function Dashboard(props) {
   }
 
   const handleDateClick = async (ev) => {
-    if(ev.jsEvent){
+    if (ev.jsEvent) {
       var startDate = ev.startStr
       let actionsResponse = [];
-      if(calendarValues.some((el)=> el.date === ev.startStr))
+      if (calendarValues.some((el) => el.date === ev.startStr))
         actionsResponse = await GetActionPerDay(startDate)
       setListActionValues(actionsResponse);
       setSelectedDate(startDate);
@@ -121,13 +121,13 @@ function Dashboard(props) {
   }
 
   useEffect(() => {
-    async function getDashboardValues(){
+    async function getDashboardValues () {
       startLoadingSpinner();
-  
+
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
       let detailedWidgets = convertWidgetResponse(widgetResponse);
       setWidgetMetrics(detailedWidgets);
-  
+
       let calendarResponse = await GetCalendarDates(props.selectedAsset);
       let calendar = calendarResponse.map((element) => {
         return {
@@ -138,15 +138,70 @@ function Dashboard(props) {
         };
       })
       calendarEvents(calendar);
-  
+
       var dt = new Date();
       let actionsResponse = await GetActionPerDay(dt.toISOString())
       setListActionValues(actionsResponse);
-  
+
       stopLoadingSpinner();
     }
     getDashboardValues();
   }, [props.selectedAsset])
+
+  const data = [
+    {
+      month: 'Jan',
+      value: 48749
+    },
+    {
+      month: 'Feb',
+      value: 487
+    },
+    {
+      month: 'Mar',
+      value: 39746
+    },
+    {
+      month: 'Mar',
+      value: 39746
+    },
+    {
+      month: 'Apr',
+      value: 39746
+    },
+    {
+      month: 'May',
+      value: 39746
+    },
+    {
+      month: 'Jun',
+      value: 39746
+    },
+    {
+      month: 'Jul',
+      value: 39746
+    },
+    {
+      month: 'Aug',
+      value: 49947
+    },
+    {
+      month: 'Sep',
+      value: 3000
+    },
+    {
+      month: 'Oct',
+      value: 4583
+    },
+    {
+      month: 'Nov',
+      value: 1234
+    },
+    {
+      month: 'Dec',
+      value: 43890
+    }
+  ]
 
   return (
     <div>
@@ -163,12 +218,17 @@ function Dashboard(props) {
         <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
           <Grid id="grid1" item>
             <h3 id="title">Dashboard</h3>
-            <h6 id="subtitle">View a calendar with upcomming wash days</h6>
+            <h6 id="subtitle">View a calendar with upcoming wash days</h6>
           </Grid>
         </Grid>
         <br></br>
       </div>
       <div id='widget-container'>
+        <div id='histogram'>
+          <Chart height={300} width={400} autoFit data={data} onIntervalClick={(e) => { console.log(e.data.data.month) }}>
+            <Interval position="month*value" />
+          </Chart>
+        </div>
         {widgetMetrics?.map((widget, index) => (
           <div key={index} className={pickStylingClassName(widget.title)}>
             <div id='tooltip-container'>
@@ -185,6 +245,7 @@ function Dashboard(props) {
             </div>
           </div>
         ))}
+
       </div>
       <div className='rows'>
         <div className="calendar">
