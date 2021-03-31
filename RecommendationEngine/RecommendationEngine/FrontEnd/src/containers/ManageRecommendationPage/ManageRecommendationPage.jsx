@@ -22,7 +22,8 @@ export function ManageRecommendationPage (props) {
     let responseWtihDateObjects = configuredRecommendationList.map((element) => { 
       return {
           ...element,
-          createdOn: new Date(element.createdOn)
+          createdOn: new Date(element.createdOn),
+          recurrenceDatetime: new Date (element.recurrenceDatetime)
   }});
     setRecommendationList(responseWtihDateObjects);
     setDefaultConfiguredRecList(responseWtihDateObjects);

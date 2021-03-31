@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
-import { List, ListItem, Backdrop } from '@material-ui/core';
+import { List, ListItem } from '@material-ui/core';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
