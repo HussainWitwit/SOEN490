@@ -14,17 +14,23 @@ export function ManageRecommendationPage (props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
+  const currentDate = new Date(); 
+  const currentYear = currentDate.getFullYear();
+
   const updateSearch = (input) => {
     setRecommendationList(filterTableItems(TableItemType.ConfiguredRecommendation, defaultConfiguredRecList, input));
   }
 
   useEffect(() => {
-    let responseWtihDateObjects = configuredRecommendationList.map((element) => { 
+    let responseWtihDateObjects = configuredRecommendationList.map((element)  => {
       return {
-          ...element,
-          createdOn: new Date(element.createdOn),
-          recurrenceDatetime: new Date (element.recurrenceDatetime)
-  }});
+          ...element, 
+          createdOn: new Date(element.createdOn), 
+          recurrenceDatetime: currentYear <= new Date (element.recurrenceDatetime).getFullYear() ? 
+          new Date (element.recurrenceDatetime) : new Date(new Date(element.recurrenceDatetime).setFullYear(currentYear))
+  }
+});
+ 
     setRecommendationList(responseWtihDateObjects);
     setDefaultConfiguredRecList(responseWtihDateObjects);
   }, [configuredRecommendationList])

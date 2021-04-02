@@ -4,6 +4,6 @@ export const TableColumns = [
     {field: 'name', headerName: 'Title', flex:0.20, type: 'string', cellClassName: 'table-style'},
     {field: 'type', headerName: 'Type', flex: 0.20, type: 'string', cellClassName: 'table-style'},
     {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.20, cellClassName: 'table-style'},
-    {field: 'recurrenceDatetime', headerName: 'Start Run Time', type: 'dateTime', flex: 0.20, cellClassName: 'table-style'},
+    {field: 'recurrenceDatetime', headerName: 'Next Job Execution', type: 'dateTime', flex: 0.20, cellClassName: 'table-style'},
 
 ]
