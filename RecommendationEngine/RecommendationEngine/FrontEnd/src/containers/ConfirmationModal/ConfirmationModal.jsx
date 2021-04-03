@@ -8,7 +8,7 @@ import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import { transformParameterList } from '../../utilities/ArrayManipulationUtilities';
 import './ConfirmationModal.css';
 
-export function ConfirmationModal (props) {
+export function ConfirmationModal(props) {
 
   const { dialogStyle, dialogsContent } = props;
 

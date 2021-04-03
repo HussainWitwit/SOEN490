@@ -7,7 +7,7 @@ import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationRed
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
 import { TableColumns as columns } from './TableConfig';
-import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
+import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 
 function JobsPage(props) {
 
@@ -29,7 +29,8 @@ function JobsPage(props) {
             return {
                 ...element,
                 timestamp: new Date(element.timestamp)
-        }});
+            }
+        });
         setJobList(responseWtihDateObjects);
         setDefaultJobList(responseWtihDateObjects);
         setisLoading(false);
@@ -43,17 +44,16 @@ function JobsPage(props) {
         getJobList();
     }, [props.selectedAsset])
 
-
     return (
         <div id="main-container">
             <div></div>
             <div>
                 <br></br>
                 <PageSubHeader
-                pageTitle="Recommendation Jobs"
-                descriptionSubtitle="Browse, edit, and delete recommendation jobs"
-                showCreateRecommendation={false}
-                updateSearch={updateSearch}
+                    pageTitle="Recommendation Jobs"
+                    descriptionSubtitle="Browse, edit, and delete recommendation jobs"
+                    showCreateRecommendation={false}
+                    updateSearch={updateSearch}
                 />
             </div>
             <br></br>
@@ -64,7 +64,7 @@ function JobsPage(props) {
                 onClickRow={() => { }}
                 dateColumnName={'timestamp'}
                 dateSortingOrder={'desc'}
-                loading = {isLoading}
+                loading={isLoading}
             />
         </div>
     );

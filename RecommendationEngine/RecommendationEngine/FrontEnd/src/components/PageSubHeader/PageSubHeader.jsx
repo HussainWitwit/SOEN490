@@ -8,27 +8,27 @@ import './PageSubHeader.css';
 
 export default function PageSubHeader(props) {
 
-    const { pageTitle, descriptionSubtitle, showCreateRecommendation, addRecommendationProps, toggleDialog, updateSearch } = props;
-    
-    return (
-        <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-            <Grid id="grid1" item>
-                <h3 id="title">{pageTitle}</h3>
-                <h6 id="subtitle">
-                    {descriptionSubtitle}
-                </h6>
-            </Grid>
-            {showCreateRecommendation &&
-            <Grid item>
-                <div>
-                    <Button id="rec-btn" onClick={toggleDialog}>
-                        Create Recommendation
+  const { pageTitle, descriptionSubtitle, showCreateRecommendation, addRecommendationProps, toggleDialog, updateSearch } = props;
+
+  return (
+    <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
+      <Grid id="grid1" item>
+        <h3 id="title">{pageTitle}</h3>
+        <h6 id="subtitle">
+          {descriptionSubtitle}
+        </h6>
+      </Grid>
+      {showCreateRecommendation &&
+        <Grid item>
+          <div>
+            <Button id="rec-btn" onClick={toggleDialog}>
+              Create Recommendation
                     </Button>
-                </div>
-            </Grid>
-            }
-            <AddRecommendationDialog {...addRecommendationProps} />
-        <div>
+          </div>
+        </Grid>
+      }
+      <AddRecommendationDialog {...addRecommendationProps} />
+      <div>
         <br></br>
         <div>
           <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
@@ -41,6 +41,6 @@ export default function PageSubHeader(props) {
           </Grid>
         </div>
       </div>
-        </Grid>
-    )
+    </Grid>
+  )
 }
