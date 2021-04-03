@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
 import { toast } from 'react-toastify';
 
-export function DeletePopUp (props) {
+export function DeletePopUp(props) {
     const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown } = props;
 
     const handleClose = () => {

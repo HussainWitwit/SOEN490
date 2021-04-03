@@ -8,7 +8,7 @@ import './Layout.css';
 import { mapRightPanelStateToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 
-function Layout (props) {
+function Layout(props) {
   return (
     <div>
       <div className='app-context'>

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import './AssetTreeView.css';
 
-export function MinusSquare (props) {
+export function MinusSquare(props) {
   return (
     <SvgIcon id="svg-icon1" fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
       {/* tslint:disable-next-line: max-line-length */}
@@ -18,7 +18,7 @@ export function MinusSquare (props) {
   );
 }
 
-export function PlusSquare (props) {
+export function PlusSquare(props) {
   return (
     <SvgIcon id="svg-icon2" fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
       {/* tslint:disable-next-line: max-line-length */}
@@ -27,7 +27,7 @@ export function PlusSquare (props) {
   );
 }
 
-export function TransitionComponent (props) {
+export function TransitionComponent(props) {
   const style = useSpring({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
     to: { opacity: props.in ? 1 : 0, transform: `translate3d(${props.in ? 0 : 20}px,0,0)` },
@@ -44,7 +44,7 @@ TransitionComponent.propTypes = {
   in: PropTypes.bool,
 };
 
-function AssetIcon ({ type, energyType }) {
+function AssetIcon({ type, energyType }) {
 
   switch (type) {
     case 'Portfolio':
@@ -66,7 +66,7 @@ AssetIcon.propTypes = {
 }
 
 
-export function AssetTreeItem (props) {
+export function AssetTreeItem(props) {
   const { labelText, assetType, labelInfo, color, bgColor, energyType, ...other } = props;
 
   return (
@@ -106,7 +106,7 @@ const mockList = [
   { title: 'Asset Title 4' },
 ];
 
-export function AssetTree ({ nestedAssets, setAssetSelection, selectedAsset }) {
+export function AssetTree({ nestedAssets, setAssetSelection, selectedAsset }) {
   const DisplayAssetNodeTree = (displayData) => (
     <AssetTreeItem nodeId={String(displayData.id)} labelText={displayData.displayText} energyType={displayData.energyType} assetType={displayData.assetType} key={displayData.id}>
       {displayData.children && displayData.children.length > 0 && displayData.children.map((child) => (

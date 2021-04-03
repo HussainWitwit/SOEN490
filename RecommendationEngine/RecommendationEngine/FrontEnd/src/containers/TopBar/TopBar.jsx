@@ -4,7 +4,7 @@ import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-action
 import { connect } from 'react-redux';
 import './TopBar.css';
 
-function TopBar ({ openAssetTreeview }) {
+function TopBar({ openAssetTreeview }) {
 
   const [locationDetails, setLocationDetails] = React.useState(null);
   const [weatherDetails, setWeatherDetails] = React.useState(null);

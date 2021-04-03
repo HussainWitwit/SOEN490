@@ -12,11 +12,11 @@ import Switch from "@material-ui/core/Switch";
 import { EnhancedTableHead } from '../BasicTableHeader/BasicTableHeader';
 import './BasicTable.css';
 
-export function getSortingComparison (orderType, orderColumnTitle) {
+export function getSortingComparison(orderType, orderColumnTitle) {
   return orderType === "desc" ? (firstObj, secondObj) => sortingComparison(firstObj, secondObj, orderColumnTitle) : (firstObj, secondObj) => -sortingComparison(firstObj, secondObj, orderColumnTitle);
 }
 
-export function sortingComparison (firstObj, secondObj, orderColumnTitle) {
+export function sortingComparison(firstObj, secondObj, orderColumnTitle) {
   if (secondObj[orderColumnTitle] < firstObj[orderColumnTitle]) {
     return -1;
   }
@@ -26,7 +26,7 @@ export function sortingComparison (firstObj, secondObj, orderColumnTitle) {
   return 0;
 }
 
-export function tableSort (array, comparator) {
+export function tableSort(array, comparator) {
   if (Array.isArray(array) || array.length) {
     const rowElements = array.map((element, index) => [element, index]);
     rowElements.sort((firstObj, secondObj) => {
@@ -41,7 +41,7 @@ export function tableSort (array, comparator) {
   }
 }
 
-export default function BasicTable (props) {
+export default function BasicTable(props) {
 
   const { rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
 

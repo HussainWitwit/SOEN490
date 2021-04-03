@@ -31,35 +31,35 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
-function ListOfActions({listActionValues, selectedDate}){
-  return(
+function ListOfActions({ listActionValues, selectedDate }) {
+  return (
     <Grid className="listOfActions">
       {listActionValues.length === 0 &&
         <div className="list">
-          <h2 id="actions-unavailable">{selectedDate}<br/>There are no actions associated to the selected date.</h2>
+          <h2 id="actions-unavailable">{selectedDate}<br />There are no actions associated to the selected date.</h2>
         </div>
       }
       {listActionValues.length > 0 &&
-        <List className="list-actions" style={{paddingTop: "0px"}}>
-        <div className="action-maintitle">
-          <h2 id="actions-available">Recommended Actions<br/>{selectedDate}</h2>
-        </div>
-        {listActionValues && listActionValues.map((action, index) => (
-          <ListItem key={index}>
-            <div id='action-item-container'>
+        <List className="list-actions" style={{ paddingTop: "0px" }}>
+          <div className="action-maintitle">
+            <h2 id="actions-available">Recommended Actions<br />{selectedDate}</h2>
+          </div>
+          {listActionValues && listActionValues.map((action, index) => (
+            <ListItem key={index}>
+              <div id='action-item-container'>
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
                 <hr className="solid"></hr>
                 <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
                 <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
                 <div id='display-text-container'>
-                    {action.displayText}
+                  {action.displayText}
                 </div>
                 <p id='suggestion-date'>Suggested on {dateFormat(action.recommendedOnDate)}</p>
-            </div>
-          </ListItem>
-        ))}
-      </List>
+              </div>
+            </ListItem>
+          ))}
+        </List>
       }
     </Grid>
   )
@@ -88,14 +88,13 @@ function Dashboard(props) {
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-
   function calendarEvents(calendar) {
     var events = calendar.map((element) => {
       return {
         date: element.date,
         title: element.nbOfActions + ' actions',
         id: element.id,
-        color: element.status==='Inactive'?'grey':''
+        color: element.status === 'Inactive' ? 'grey' : ''
       }
     })
     setCalendarValues(events);
@@ -110,10 +109,10 @@ function Dashboard(props) {
   }
 
   const handleDateClick = async (ev) => {
-    if(ev.jsEvent){
+    if (ev.jsEvent) {
       var startDate = ev.startStr
       let actionsResponse = [];
-      if(calendarValues.some((el)=> el.date === ev.startStr))
+      if (calendarValues.some((el) => el.date === ev.startStr))
         actionsResponse = await GetActionPerDay(startDate)
       setListActionValues(actionsResponse);
       setSelectedDate(startDate);
@@ -121,13 +120,13 @@ function Dashboard(props) {
   }
 
   useEffect(() => {
-    async function getDashboardValues(){
+    async function getDashboardValues() {
       startLoadingSpinner();
-  
+
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
       let detailedWidgets = convertWidgetResponse(widgetResponse);
       setWidgetMetrics(detailedWidgets);
-  
+
       let calendarResponse = await GetCalendarDates(props.selectedAsset);
       let calendar = calendarResponse.map((element) => {
         return {
@@ -138,11 +137,11 @@ function Dashboard(props) {
         };
       })
       calendarEvents(calendar);
-  
+
       var dt = new Date();
       let actionsResponse = await GetActionPerDay(dt.toISOString())
       setListActionValues(actionsResponse);
-  
+
       stopLoadingSpinner();
     }
     getDashboardValues();
@@ -154,11 +153,14 @@ function Dashboard(props) {
         <Dialog
           open={loading}
           onClose={stopLoadingSpinner}
+          disableBackdropClick={false}
+          BackdropProps={{ style: { backgroundColor: 'transparent', boxShadow: 'none' } }}
         >
           <DialogContent>
             <CircularProgress />
           </DialogContent>
         </Dialog>
+
         <br></br>
         <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
           <Grid id="grid1" item>

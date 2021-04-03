@@ -11,7 +11,6 @@ import {dateFormat, timeFormat} from '../../utilities/DateTimeUtilities';
 import BasicTable from '../../components/BasicTable/BasicTable';
 import './JobLogPopUp.css'
 
-
 export const RowsToDisplay = (element) => (
   <Fragment key={element.id}>
     <TableCell />
