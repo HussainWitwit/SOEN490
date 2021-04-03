@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './SideMenu.css';
 import { Drawer, List, CssBaseline, Typography, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
@@ -13,6 +13,12 @@ export function SideMenu(props) {
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
   const [selectedNestedItemIndex, setSelectedNestedItemIndex] = React.useState(0);
   const [isNestedItemSelected, setIsNestedItemSelected] = React.useState(false);
+
+  useEffect(() => {
+    if (String(window.performance.getEntriesByType("navigation")[0].type) == "reload") {
+      window.location.href = '/'
+    }
+  }, []);
 
   /**
    * Function that handles clicking on menu options
