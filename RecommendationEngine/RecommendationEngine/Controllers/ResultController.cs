@@ -53,5 +53,19 @@ namespace RecommendationEngine.Controllers
                 return e.GetActionResult();
             }
         }
+
+
+        [HttpGet("histogram/{assetId?}")]
+        public IActionResult GetHistogram(int? assetId)
+        {
+            try
+            {
+                return Ok(_resultService.GetHistogram(assetId));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
     }
 }

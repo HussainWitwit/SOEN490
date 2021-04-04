@@ -21,6 +21,7 @@ namespace RecommendationEngine.Services
             _resultRepository = resultRepository;
             _assetRepository = assetRepository;
         }
+
         public List<Result> GetResultList(int? assetId)
         {
             try
@@ -107,6 +108,53 @@ namespace RecommendationEngine.Services
                 WidgetMetricList.Add(new WidgetMetric("Potential Losses", costOfInactionSum, costOfInactionDescription));
 
                 return WidgetMetricList;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+        }
+
+        public List<HistogramItem> GetHistogram(int? assetId)
+        {
+            try
+            {
+                var resultsList = _resultRepository.GetResultWithActions();
+                var netSavingFraction = 0.0;
+                var month = 0;
+
+                var monthlyTotal = new List<HistogramItem>
+                {
+                    new HistogramItem(1, "January", 0),
+                    new HistogramItem(2, "February", 0),
+                    new HistogramItem(3, "March", 0),
+                    new HistogramItem(4, "April", 0),
+                    new HistogramItem(5, "May", 0),
+                    new HistogramItem(6, "June", 0),
+                    new HistogramItem(7, "July", 0),
+                    new HistogramItem(8, "August", 0),
+                    new HistogramItem(9, "September", 0),
+                    new HistogramItem(10, "October", 0),
+                    new HistogramItem(11, "November", 0),
+                    new HistogramItem(12, "December", 0),
+                };
+
+                resultsList.ForEach(result =>
+                {
+                    netSavingFraction = result.NetSaving / result.ActionsSuggestedList.Count();
+
+                    result.ActionsSuggestedList.ToList().ForEach(action =>
+                    {
+                        month = action.Date.Month;
+                        monthlyTotal.FirstOrDefault(mo => mo.Month == month).Total += netSavingFraction;
+                    });
+                });
+
+                return monthlyTotal;
             }
             catch (GlobalException)
             {
