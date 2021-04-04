@@ -3,9 +3,8 @@ import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
 import './MultiSelectTreeView.css';
 
-export default function MultiSelectTreeView (props) {
+export default function MultiSelectTreeView(props) {
 
-    //if we can get the level, we can make it more generic. 
     const { SHOW_ALL } = TreeSelect;
     const { items, value, placeholder, onChange } = props;
 
@@ -16,7 +15,7 @@ export default function MultiSelectTreeView (props) {
                 maxTagCount='responsive'
                 treeData={items}
                 treeCheckable
-                treeDefaultExpandedKeys = {items ? [items[0].key] : ['']}
+                treeDefaultExpandedKeys={items ? [items[0].key] : ['']}
                 value={value}
                 showCheckedStrategy={SHOW_ALL}
                 placeholder={placeholder}

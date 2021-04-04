@@ -41,7 +41,6 @@ export function DetailsConfigurationModal(props) {
     }
   }, [])
 
-
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
       <div id="basic-information-container">

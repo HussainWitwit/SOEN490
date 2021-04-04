@@ -7,7 +7,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function MultiSelectAutocomplete (props) {
+function MultiSelectAutocomplete(props) {
   const [isFirstTyping, setIsFirstTyping] = useState(true);
   return (
     <Autocomplete

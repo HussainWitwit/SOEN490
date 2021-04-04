@@ -21,7 +21,7 @@ export function ManageRecommendationDrawer({
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
   const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
   const [jobLogId, setJobLogId] = React.useState(null);
-  
+
   // Animation style
   const props = useSpring({
     opacity: 1,
@@ -73,14 +73,14 @@ export function ManageRecommendationDrawer({
             </div>
           </Grid>
           <Grid item xs={10}>
-              <div className = "parameter-tile">
+            <div className="parameter-tile">
               <p className="value-title">Parameters</p>
               <p className="value-title">Value</p>
-              </div>
-              <div className="values-param">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
-                (configuredRecommendation.parameters.map((parameter, index) => {
-                  return <div className = "parameter-tile" key={index}><div>{parameter.displayText}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue): parameter.parameterValue}</div></div>;
-                })) : 'N/A'}</div>
+            </div>
+            <div className="values-param">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
+              (configuredRecommendation.parameters.map((parameter, index) => {
+                return <div className="parameter-tile" key={index}><div>{parameter.displayText}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue) : parameter.parameterValue}</div></div>;
+              })) : 'N/A'}</div>
           </Grid>
           <Grid item xs={12}>
             <div className="assets">
@@ -124,10 +124,10 @@ export function ManageRecommendationDrawer({
                         <div>Date: {formatDateTime(value.timestamp)}</div>
                       </div>
                       : "No status Avalaible"}
-                      key={index}
+                    key={index}
                   >
-                    <div 
-                      className={value !== null ? value.status : "Empty"} 
+                    <div
+                      className={value !== null ? value.status : "Empty"}
                       onClick={() => {
                         if (value !== null) {
                           setJobLogId(value.id);
@@ -143,21 +143,21 @@ export function ManageRecommendationDrawer({
             <p className="value-title">Last Execution Status</p>
             {configuredRecommendation.lastJobs &&
               configuredRecommendation.lastJobs[4] ? (
-                <div
-                  className={
-                    'execution-status-' +
-                    configuredRecommendation.lastJobs[4].status
-                  }
-                >
-                  <Chip
-                    label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
-                  />
-                </div>
-              ) : (
-                <div className={'execution-status-Empty'}>
-                  <Chip label="NO STATUS" />
-                </div>
-              )}
+              <div
+                className={
+                  'execution-status-' +
+                  configuredRecommendation.lastJobs[4].status
+                }
+              >
+                <Chip
+                  label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
+                />
+              </div>
+            ) : (
+              <div className={'execution-status-Empty'}>
+                <Chip label="NO STATUS" />
+              </div>
+            )}
           </Grid>
           <Grid item xs={12}>
             <div className="created-edited-by">
@@ -174,7 +174,7 @@ export function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="force-run-button">
-              <Button variant="outlined" id="forceRunRecButton"onClick={handleForceRunPopUpOpen}>Force run</Button>
+              <Button variant="outlined" id="forceRunRecButton" onClick={handleForceRunPopUpOpen}>Force run</Button>
               <ForceRunPopUp title={configuredRecommendation.name} handleForceRunPopUpOpen={handleForceRunPopUpOpen} open={openForceRunPopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
@@ -184,7 +184,7 @@ export function ManageRecommendationDrawer({
               <DeletePopUp title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
-          {openJobLogPopup && 
+          {openJobLogPopup &&
             <JobLogPopUp className={"job-log-style"} jobId={jobLogId} controlled={openJobLogPopup} handleOpenLogPopup={handleOpenLogPopup}></JobLogPopUp>
           }
         </Grid>

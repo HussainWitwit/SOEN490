@@ -6,8 +6,8 @@ import './JobsPage.css';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
-import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
-import { TableItemType,  filterTableItems } from '../../utilities/ArrayManipulationUtilities';
+import { TableColumns as columns } from './TableConfig';
+import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 
 function JobsPage(props) {
 
@@ -16,70 +16,33 @@ function JobsPage(props) {
     const [defaultJobList, setDefaultJobList] = useState([]);
     const [isLoading, setisLoading] = useState(true);
 
-    const durationOption = {
-        number: 'number',
-        width: 200,
-        valueFormatter: ({ value }) => (value + ' seconds')
-    };
+    const RecommendationLinkColumn = [{
+        field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
+            <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                {params.getValue('configuredRecommendationTitle')}
+            </a>)
+    }];
 
-    const columns = [
-
-        { field: 'id', headerName: 'Job ID', width: 125, cellClassName: 'table-style', hide: true },
-        { field: 'timestamp', headerName: 'Timestamp', type: 'date', flex: 0.2, cellClassName: 'table-style' },
-        {
-            field: 'status',
-            headerName: 'Status',
-            type: 'string',
-            flex: 0.17,
-            headerAlign: 'center',
-            renderCell: (params) => (
-                <div
-                    className={
-                        params.getValue('status') === "Running" ? 'job-status-running' :
-                            params.getValue('status') === "Failed" ? 'job-status-failed' : 'job-status-success'}
-                >
-                    {params.getValue('status')}
-                </div>
-            )
-        },
-        {
-            field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 270, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.row.configuredRecommendationId)}>
-                    {params.getValue('configuredRecommendationTitle')}
-                </a>)
-        },
-        { field: 'duration', headerName: 'Job Duration', type: 'number', ...durationOption, flex: 0.12, cellClassName: 'table-style' },
-        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.12, cellClassName: 'table-style' },
-        {
-            field: 'jobLog',
-            headerName: 'Log',
-            flex: 0.08,
-            headerAlign: 'center',
-            renderCell: (params) => (
-                <JobLogPopUp
-                    className={"job-log-style"}
-                    jobId={params.getValue('id')}
-                    controlled={null}
-                >
-                </JobLogPopUp>
-            )
-        }
-    ];
+    const getJobList = async () => {
+        let response = await GetRecommendationJobList(props.selectedAsset);
+        let responseWtihDateObjects = response.map((element) => {
+            return {
+                ...element,
+                timestamp: new Date(element.timestamp)
+            }
+        });
+        setJobList(responseWtihDateObjects);
+        setDefaultJobList(responseWtihDateObjects);
+        setisLoading(false);
+    }
 
     const updateSearch = (input) => {
         setJobList(filterTableItems(TableItemType.Jobs, defaultJobList, input));
     }
 
     useEffect(() => {
-        const getJobList = async () => {
-            let response = await GetRecommendationJobList(props.selectedAsset);
-            setJobList(response);
-            setDefaultJobList(response);
-            setisLoading(false);
-        }
         getJobList();
     }, [props.selectedAsset])
-
 
     return (
         <div id="main-container">
@@ -87,19 +50,21 @@ function JobsPage(props) {
             <div>
                 <br></br>
                 <PageSubHeader
-                pageTitle="Recommendation Jobs"
-                descriptionSubtitle="Browse, edit, and delete recommendation jobs"
-                showCreateRecommendation={false}
-                updateSearch={updateSearch}
+                    pageTitle="Recommendation Jobs"
+                    descriptionSubtitle="Browse, edit, and delete recommendation jobs"
+                    showCreateRecommendation={false}
+                    updateSearch={updateSearch}
                 />
             </div>
             <br></br>
             <RecommendationEngineTable
                 data={jobList}
-                columnValues={columns}
+                columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={false}
                 onClickRow={() => { }}
-                loading = {isLoading}
+                dateColumnName={'timestamp'}
+                dateSortingOrder={'desc'}
+                loading={isLoading}
             />
         </div>
     );

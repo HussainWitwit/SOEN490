@@ -32,7 +32,7 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
-function ListOfActions ({ listActionValues, selectedDate }) {
+function ListOfActions({ listActionValues, selectedDate }) {
   return (
     <Grid className="listOfActions">
       {listActionValues.length === 0 &&
@@ -89,7 +89,7 @@ function Dashboard (props) {
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-  function calendarEvents (calendar) {
+  function calendarEvents(calendar) {
     var events = calendar.map((element) => {
       return {
         date: element.date,
@@ -121,7 +121,7 @@ function Dashboard (props) {
   }
 
   useEffect(() => {
-    async function getDashboardValues () {
+    async function getDashboardValues() {
       startLoadingSpinner();
 
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
@@ -209,11 +209,14 @@ function Dashboard (props) {
         <Dialog
           open={loading}
           onClose={stopLoadingSpinner}
+          disableBackdropClick={false}
+          BackdropProps={{ style: { backgroundColor: 'transparent', boxShadow: 'none' } }}
         >
           <DialogContent>
             <CircularProgress />
           </DialogContent>
         </Dialog>
+
         <br></br>
         <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
           <Grid id="grid1" item>
