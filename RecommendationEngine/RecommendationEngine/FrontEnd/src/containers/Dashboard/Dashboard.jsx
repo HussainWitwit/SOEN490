@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Dashboard.css';
-import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId, GetHistogramValues } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
@@ -32,7 +32,7 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
-function ListOfActions({ listActionValues, selectedDate }) {
+function ListOfActions ({ listActionValues, selectedDate }) {
   return (
     <Grid className="listOfActions">
       {listActionValues.length === 0 &&
@@ -72,6 +72,7 @@ function Dashboard (props) {
   const [calendarValues, setCalendarValues] = useState([]);
   const [listActionValues, setListActionValues] = useState([]);
   const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
+  const [histogramValues, setHistogramValues] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const calendarRef = useRef();
@@ -89,7 +90,7 @@ function Dashboard (props) {
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-  function calendarEvents(calendar) {
+  function calendarEvents (calendar) {
     var events = calendar.map((element) => {
       return {
         date: element.date,
@@ -121,8 +122,12 @@ function Dashboard (props) {
   }
 
   useEffect(() => {
-    async function getDashboardValues() {
+    async function getDashboardValues () {
       startLoadingSpinner();
+
+      let histogramResponse = await GetHistogramValues(props.selectedAsset);
+      console.log(histogramResponse);
+      setHistogramValues(histogramResponse);
 
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
       let detailedWidgets = convertWidgetResponse(widgetResponse);
@@ -228,8 +233,9 @@ function Dashboard (props) {
       </div>
       <div id='widget-container'>
         <div id='histogram'>
-          <Chart height={300} width={400} autoFit data={data} onIntervalClick={(e) => { console.log(e.data.data.month) }}>
-            <Interval position="month*value" />
+          {/* <Chart height={300} width={400} autoFit data={histogramValues} onIntervalClick={(e) => { console.log(e.data.data.monthName) }}> */}
+          <Chart height={300} width={400} autoFit data={histogramValues} onIntervalClick={(e) => { let date = '05-05-2020'; calendarRef.current.getApi().gotoDate(formatDate(date)) }}>
+            <Interval position="monthName*total" />
           </Chart>
         </div>
         {widgetMetrics?.map((widget, index) => (
