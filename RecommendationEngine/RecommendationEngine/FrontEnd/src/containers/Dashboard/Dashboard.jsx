@@ -4,7 +4,7 @@ import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompou
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
-import { formatNumber } from '../../utilities/GeneralUtilities';
+import { currencyCAD } from '../../utilities/GeneralUtilities';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -50,8 +50,8 @@ function ListOfActions({ listActionValues, selectedDate }) {
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
                 <hr className="solid"></hr>
-                <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
-                <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
+                <p id='action-date'>Net saving: {currencyCAD(action.netSaving)} $</p>
+                <p id='action-date'>Return on investment: {currencyCAD(action.returnOnInvestment)}%</p>
                 <div id='display-text-container'>
                   {action.displayText}
                 </div>
@@ -182,7 +182,7 @@ function Dashboard(props) {
             <div>
               <div id='widget-contents'>
                 <div id='sign'>{widget.sign}</div>
-                <div id='money-value'>{formatNumber(widget.value)}</div>
+                <div id='money-value'>{currencyCAD(widget.value)}</div>
               </div>
             </div>
           </div>
