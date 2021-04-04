@@ -51,3 +51,15 @@ font-weight: bold;
   background-color: white;
   height: 100%;
 }
+.empty-parameter-list{
+  background-color: white;
+  font-size: 1.75rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+  text-align-last: center;
+}
+#mocked-content > div {
+  overflow-y: hidden;
+}

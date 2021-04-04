@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Notifications () {
+function Notifications() {
     return (
         <div>
             Notifications!

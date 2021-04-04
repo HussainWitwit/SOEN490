@@ -13,7 +13,7 @@ import { ForceRunConfiguredRecommendation } from '../../api/endpoints/Configured
 import "./ForceRunPopUp.css"
 import { toast } from 'react-toastify';
 
-export function ForceRunPopUp (props) {
+export function ForceRunPopUp(props) {
     const { recommendationId, updateScheduleDrilldown } = props;
 
     const handleClose = () => {

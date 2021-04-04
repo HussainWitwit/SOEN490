@@ -5,16 +5,13 @@ import Close from '@material-ui/icons/Close';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import AssetTree from '../AssetTreeView/AssetTreeView';
 import ManageRecommendationDrawer from '../../containers/ManageRecommendationDrawer/ManageRecommendationDrawer';
-import {
-  mapRightPanelStateToProps,
-  mapDispatchToProps,
-} from '../../redux/RightPanelReducer/reducer-actions';
+import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 import ActionDrawer from '../ActionDrawer/ActionDrawer';
 import { findFirstTabOrFalse } from '../../utilities/ArrayManipulationUtilities';
 
-export function RightPanelDrawer ({
+export function RightPanelDrawer({
   isOpen,
   tabs,
   selectedTabIndex,
@@ -74,7 +71,7 @@ export function RightPanelDrawer ({
                   {tabOptions[tab.name].title}
                   <IconButton
                     className="drawer-icon-button"
-                    onClick={(e)=>handleClose(e, tabOptions[tab.name].closeHandler)}
+                    onClick={(e) => handleClose(e, tabOptions[tab.name].closeHandler)}
                   >
                     <Close className="drawer-close"></Close>
                   </IconButton>
