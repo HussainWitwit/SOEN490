@@ -1,6 +1,6 @@
 import { Widget } from '../models/Widget';
 import { CalendarDates } from '../models/CalendarDates';
-import { MonthlyNetSavings } from '../models/JobResult';
+import { HistogramItem } from '../models/HistogramItem';
 import { Action } from '../models/Action';
 import { handleErrors } from "../../utilities/ValidationUtilities"
 import { notifyError } from "../../utilities/ErrorNotification"
@@ -65,12 +65,13 @@ export async function GetActionPerCompoundId(id: string): Promise<Action[] | nul
     return actionList;
 }
 
-export async function GetMonthlyNetSavings(): Promise<MonthlyNetSavings[] | null> {
-    let monthlyNetSavingsList: MonthlyNetSavings[] = [];
-    await fetch('api/')
+export async function GetHistogramValues(assetId: number | null): Promise<HistogramItem[] | null> {
+    let monthlyNetSavingsList: HistogramItem[] = [];
+    await fetch('api/result/histogram/' + (assetId ? assetId : ''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {
+            console.log(res)
             monthlyNetSavingsList = res;
             return monthlyNetSavingsList
         })
