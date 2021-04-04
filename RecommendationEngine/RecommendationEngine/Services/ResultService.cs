@@ -124,6 +124,14 @@ namespace RecommendationEngine.Services
             try
             {
                 var resultsList = _resultRepository.GetResultWithActions();
+
+                if (assetId != null)
+                { 
+                    var assetsList = _assetRepository.GetAssetsList();
+                    resultsList = resultsList
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
                 var netSavingFraction = 0.0;
                 var month = 0;
 

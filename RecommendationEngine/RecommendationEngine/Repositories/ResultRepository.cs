@@ -33,7 +33,8 @@ namespace RecommendationEngine.Repositories
         {
             try
             {
-                return _recommendationEngineDb.RecommendationJobResults.Include(result => result.ActionsSuggestedList).ToList();
+                return _recommendationEngineDb.RecommendationJobResults.Include(result => result.ActionsSuggestedList)
+                    .Include(result => result.Asset).ThenInclude(x => x.ParentAsset).ToList();
             }
             catch (Exception)
             {
