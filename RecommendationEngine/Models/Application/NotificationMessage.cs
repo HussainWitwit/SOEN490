@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-namespace Models.Application
+﻿namespace Models.Application
 
 {
     public class NotificationMessage
@@ -9,7 +7,7 @@ namespace Models.Application
         public string Message { get; set; }
     }
 
-    public class NotificationType
+    public static class NotificationType
     {
         public static readonly string Information = "Information";
         public static readonly string Error = "Error";
