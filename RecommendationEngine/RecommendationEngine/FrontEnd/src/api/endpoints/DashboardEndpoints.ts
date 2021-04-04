@@ -1,12 +1,13 @@
 import { Widget } from '../models/Widget';
 import { CalendarDates } from '../models/CalendarDates';
+import { MonthlyNetSavings } from '../models/JobResult';
 import { Action } from '../models/Action';
 import { handleErrors } from "../../utilities/ValidationUtilities"
 import { notifyError } from "../../utilities/ErrorNotification"
 
 export async function GetWidgetMetrics(assetId: number | null): Promise<Widget[] | null> {
     let widgetMetrics: Widget[] = [];
-    await fetch('api/result/widgets/'+(assetId?assetId:''))
+    await fetch('api/result/widgets/' + (assetId ? assetId : ''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {
@@ -21,7 +22,7 @@ export async function GetWidgetMetrics(assetId: number | null): Promise<Widget[]
 
 export async function GetCalendarDates(assetId: number | null): Promise<CalendarDates[] | null> {
     let calendarDates: CalendarDates[] = [];
-    await fetch('api/action/calendar/'+(assetId?assetId:''))
+    await fetch('api/action/calendar/' + (assetId ? assetId : ''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {
@@ -62,4 +63,19 @@ export async function GetActionPerCompoundId(id: string): Promise<Action[] | nul
             notifyError(err)
         })
     return actionList;
+}
+
+export async function getMonthlyNetSavings(): Promise<MonthlyNetSavings[] | null> {
+    let monthlyNetSavingsList: MonthlyNetSavings[] = [];
+    await fetch('api/')
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            monthlyNetSavingsList = res;
+            return monthlyNetSavingsList
+        })
+        .catch(err => {
+            notifyError(err)
+        })
+    return monthlyNetSavingsList;
 }
