@@ -10,3 +10,9 @@ export interface ConfiguredRecommendationResult {
     assetName: string,
     resultOutputDate: Date
 }
+
+export interface MonthlyNetSavings {
+    id: number,
+    month: string,
+    value: number
+}
