@@ -65,7 +65,7 @@ export async function GetActionPerCompoundId(id: string): Promise<Action[] | nul
     return actionList;
 }
 
-export async function getMonthlyNetSavings(): Promise<MonthlyNetSavings[] | null> {
+export async function GetMonthlyNetSavings(): Promise<MonthlyNetSavings[] | null> {
     let monthlyNetSavingsList: MonthlyNetSavings[] = [];
     await fetch('api/')
         .then(res => handleErrors(res))
