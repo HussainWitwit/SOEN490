@@ -71,9 +71,9 @@ namespace RecommendationEngine.Services
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
                 }
 
-                double netSavingSum=0;
-                double returnOnInvestmentAverage=0;
-                double costOfInactionSum=0;
+                double netSavingSum = 0;
+                double returnOnInvestmentAverage = 0;
+                double costOfInactionSum = 0;
 
                 if (resultsList.Count > 0)
                 {
@@ -126,7 +126,7 @@ namespace RecommendationEngine.Services
                 var resultsList = _resultRepository.GetResultWithActions();
 
                 if (assetId != null)
-                { 
+                {
                     var assetsList = _assetRepository.GetAssetsList();
                     resultsList = resultsList
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
@@ -137,18 +137,18 @@ namespace RecommendationEngine.Services
 
                 var monthlyTotal = new List<HistogramItem>
                 {
-                    new HistogramItem(1, "January", 0),
-                    new HistogramItem(2, "February", 0),
-                    new HistogramItem(3, "March", 0),
-                    new HistogramItem(4, "April", 0),
-                    new HistogramItem(5, "May", 0),
-                    new HistogramItem(6, "June", 0),
-                    new HistogramItem(7, "July", 0),
-                    new HistogramItem(8, "August", 0),
-                    new HistogramItem(9, "September", 0),
-                    new HistogramItem(10, "October", 0),
-                    new HistogramItem(11, "November", 0),
-                    new HistogramItem(12, "December", 0),
+                    new HistogramItem("01", "Jan", 0),
+                    new HistogramItem("02", "Feb", 0),
+                    new HistogramItem("03", "Mar", 0),
+                    new HistogramItem("04", "Apr", 0),
+                    new HistogramItem("05", "May", 0),
+                    new HistogramItem("06", "Jun", 0),
+                    new HistogramItem("07", "Jul", 0),
+                    new HistogramItem("08", "Aug", 0),
+                    new HistogramItem("09", "Sep", 0),
+                    new HistogramItem("10", "Oct", 0),
+                    new HistogramItem("11", "Nov", 0),
+                    new HistogramItem("12", "Dec", 0),
                 };
 
                 resultsList.ForEach(result =>
@@ -158,7 +158,7 @@ namespace RecommendationEngine.Services
                     result.ActionsSuggestedList.ToList().ForEach(action =>
                     {
                         month = action.Date.Month;
-                        monthlyTotal.FirstOrDefault(mo => mo.Month == month).Total += netSavingFraction;
+                        monthlyTotal.FirstOrDefault(mo => Int32.Parse(mo.Month) == month).Total += netSavingFraction;
                     });
                 });
 
