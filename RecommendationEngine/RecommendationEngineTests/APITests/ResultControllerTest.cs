@@ -101,9 +101,9 @@ namespace RecommendationEngineTests.APITests
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             List<HistogramItem> monthlyList = JsonConvert.DeserializeObject<List<HistogramItem>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(monthlyList);
-            Assert.AreEqual(monthlyList.Find(element => element.Month == 4).Total, 23);
-            Assert.AreEqual(monthlyList.Find(element => element.Month == 7).Total, 23);
-            Assert.AreEqual(monthlyList.Find(element => element.Month == 10).Total, 0);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "04").Total, 23);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "07").Total, 23);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "10").Total, 0);
         }
 
         [Test]
