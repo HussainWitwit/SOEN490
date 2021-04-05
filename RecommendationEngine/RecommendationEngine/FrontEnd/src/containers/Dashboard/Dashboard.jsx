@@ -3,7 +3,7 @@ import './Dashboard.css';
 import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId, GetHistogramValues } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
+import { convertWidgetResponse, convertHistogramResponse } from '../../utilities/ArrayManipulationUtilities';
 import { formatNumber } from '../../utilities/GeneralUtilities';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
@@ -16,7 +16,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
-import { Chart, Interval } from 'bizcharts';
+import { Chart, Interval, Axis } from 'bizcharts';
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -121,13 +121,19 @@ function Dashboard (props) {
     }
   }
 
+  const handleClickHistogram = (month) => {
+    let year = new Date().getFullYear() - 1;
+    let date = month.toString() + '-01-' + year.toString();
+    setSelectedDate(formatDate(date));
+    calendarRef.current.getApi().gotoDate(formatDate(date));
+  }
+
   useEffect(() => {
     async function getDashboardValues () {
       startLoadingSpinner();
 
       let histogramResponse = await GetHistogramValues(props.selectedAsset);
-      console.log(histogramResponse);
-      setHistogramValues(histogramResponse);
+      setHistogramValues(convertHistogramResponse(histogramResponse));
 
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
       let detailedWidgets = convertWidgetResponse(widgetResponse);
@@ -152,61 +158,6 @@ function Dashboard (props) {
     }
     getDashboardValues();
   }, [props.selectedAsset])
-
-  const data = [
-    {
-      month: 'Jan',
-      value: 48749
-    },
-    {
-      month: 'Feb',
-      value: 487
-    },
-    {
-      month: 'Mar',
-      value: 39746
-    },
-    {
-      month: 'Mar',
-      value: 39746
-    },
-    {
-      month: 'Apr',
-      value: 39746
-    },
-    {
-      month: 'May',
-      value: 39746
-    },
-    {
-      month: 'Jun',
-      value: 39746
-    },
-    {
-      month: 'Jul',
-      value: 39746
-    },
-    {
-      month: 'Aug',
-      value: 49947
-    },
-    {
-      month: 'Sep',
-      value: 3000
-    },
-    {
-      month: 'Oct',
-      value: 4583
-    },
-    {
-      month: 'Nov',
-      value: 1234
-    },
-    {
-      month: 'Dec',
-      value: 43890
-    }
-  ]
 
   return (
     <div>
@@ -233,8 +184,8 @@ function Dashboard (props) {
       </div>
       <div id='widget-container'>
         <div id='histogram'>
-          {/* <Chart height={300} width={400} autoFit data={histogramValues} onIntervalClick={(e) => { console.log(e.data.data.monthName) }}> */}
-          <Chart height={300} width={400} autoFit data={histogramValues} onIntervalClick={(e) => { let date = '05-05-2020'; calendarRef.current.getApi().gotoDate(formatDate(date)) }}>
+          <Chart height={300} width={520} data={histogramValues} onIntervalClick={(e) => { handleClickHistogram(e.data.data.month) }}>
+            <Axis name="total" label={{ formatter: val => `${Number(val).toLocaleString()}` }} />
             <Interval position="monthName*total" />
           </Chart>
         </div>
