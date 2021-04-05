@@ -5,24 +5,29 @@ import Adapter from 'enzyme-adapter-react-16';
 import Dashboard, { pickStylingClassName } from '../Dashboard';
 import fetch from 'isomorphic-fetch';
 import FullCalendar from '@fullcalendar/react'
+import { Chart } from 'bizcharts';
 import Grid from '@material-ui/core/Grid';
 import { store } from '../../../redux/store';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe.only('Dashboard component', () => {
+describe('Dashboard component', () => {
   const widgetMetrics = [
     { title: 'Potential Net Savings', value: "14,624,099.744", sign: "$", description: "This is a description" },
     { title: 'Average ROI', value: "14,624,099.744", sign: "$", description: "This is a description" },
     { title: 'Potential Losses', value: "14,624,099.744", sign: "$", description: "This is a description" }
   ]
-  React.useState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics]]);
-  const setState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics]]);
+
+  const histogramValues = [
+    { month: '01', monthName: 'Jan', total: 0 }
+  ]
+  React.useState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics], [histogramValues, histogramValues]]);
+  const setState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics], [histogramValues, histogramValues]]);
   const useStateSpy = jest.spyOn(React, 'useState');
   useStateSpy.mockImplementation((init) => [widgetMetrics, setState]);
   const output = shallow(<Dashboard store={store} />).dive().dive();
 
-  it('It renders without crashing', async () => {
+  it.skip('It renders without crashing', async () => {
     const div = document.createElement('div');
     ReactDOM.render(<Dashboard store={store} />, div);
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -34,11 +39,16 @@ describe.only('Dashboard component', () => {
 
   it("Finds the divs", () => {
     let component = output.find('div');
-    expect(component).toHaveLength(5);
+    expect(component).toHaveLength(6);
   })
 
   it("Finds the calendar", () => {
     let component = output.find(FullCalendar);
+    expect(component).toHaveLength(1);
+  })
+
+  it("Finds the histogram", () => {
+    let component = output.find(Chart);
     expect(component).toHaveLength(1);
   })
 
