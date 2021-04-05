@@ -62,6 +62,13 @@ describe("Side Menu", () => {
     //     cy.wait(500)
     //     // Step 2: Click on Results
     //     cy.get('[data-testid=listitemResults]').click()
+    it("Scenario where the user clicks on Recommendations and then chooses to view Results", () => {
+        // Step 1: Click on Recommendations
+        // cy.get('[data-testid=listitemRecommendations] > .MuiButtonBase-root > .MuiIconButton-label > .MuiSvgIcon-root').click()
+
+        // Step 2: Click on Results
+        cy.get('[data-testid=listitemResults]').click()
 
     // })
+    })
 })

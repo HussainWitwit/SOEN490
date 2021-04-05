@@ -1,38 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { Grid} from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
-import SearchBar from '../../common/SearchBar';
+import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
+import { TableColumns as columns } from './TableConfig';
+import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ManageRecommendationPage.css';
 
-export function ManageRecommendationPage (props) {
+export function ManageRecommendationPage(props) {
 
   const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
-  const columns = [
-    {field: 'id', headerName: 'ID', width: 150, cellClassName: 'table-style', hide: false},
-    {field: 'name', headerName: 'Title', flex:0.25, type: 'string', cellClassName: 'table-style'},
-    {field: 'type', headerName: 'Type', flex: 0.25, type: 'string', cellClassName: 'table-style'},
-    {field: 'granularity', headerName: 'Granularity', type: 'string', flex: 0.25, cellClassName: 'table-style'},
-    {field: 'createdOn', headerName: 'Created On', type: 'date', flex: 0.25, cellClassName: 'table-style'},
-]
-   
-  const updateSearch = async (input) => {
-    const filtered = defaultConfiguredRecList.filter(recommendation => {
-      return recommendation.name.toLowerCase().includes(input.toLowerCase())
-    })
-    setRecommendationList(filtered);
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
+  const updateSearch = (input) => {
+    setRecommendationList(filterTableItems(TableItemType.ConfiguredRecommendation, defaultConfiguredRecList, input));
   }
 
   useEffect(() => {
-    setRecommendationList(configuredRecommendationList)
-    setDefaultConfiguredRecList(configuredRecommendationList)
+    let responseWtihDateObjects = configuredRecommendationList.map((element) => {
+      return {
+        ...element,
+        createdOn: new Date(element.createdOn),
+        recurrenceDatetime: currentYear <= new Date(element.recurrenceDatetime).getFullYear() ?
+          new Date(element.recurrenceDatetime) : new Date(new Date(element.recurrenceDatetime).setFullYear(currentYear))
+      }
+    });
+    setRecommendationList(responseWtihDateObjects);
+    setDefaultConfiguredRecList(responseWtihDateObjects);
   }, [configuredRecommendationList])
 
   return (
@@ -40,35 +39,14 @@ export function ManageRecommendationPage (props) {
       <div></div>
       <div>
         <br></br>
-        <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-          <Grid id="grid1" item>
-            <h3 id="title">Manage Recommendations</h3>
-            <h6 id="subtitle">
-              Add, edit, delete and browse the configured recommendation
-            </h6>
-          </Grid>
-          <Grid item>
-            <div>
-              <Button id="rec-btn" onClick={toggleDialog}>
-                Create Recommendation
-              </Button>
-              <AddRecommendationDialog {...props} />
-            </div>
-          </Grid>
-        </Grid>
-        <br></br>
-      </div>
-      <div>
-        <div>
-          <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id="data-testid" >
-              <SearchBar
-                placeholder="Search for a recommendation..."
-                onSearchUpdate={updateSearch}
-              />
-            </Grid>
-          </Grid>
-        </div>
+        <PageSubHeader
+          pageTitle="Configured Recommendations"
+          descriptionSubtitle="Browse, edit, and delete recommendation jobs"
+          showCreateRecommendation={true}
+          toggleDialog={toggleDialog}
+          addRecommendationProps={props}
+          updateSearch={updateSearch}
+        />
       </div>
       <br></br>
       <RecommendationEngineTable
@@ -76,6 +54,8 @@ export function ManageRecommendationPage (props) {
         columnValues={columns}
         onClickRow={openScheduleDrilldown}
         isClickable={true}
+        dateColumnName={'createdOn'}
+        dateSortingOrder={'desc'}
       />
     </div >
   );

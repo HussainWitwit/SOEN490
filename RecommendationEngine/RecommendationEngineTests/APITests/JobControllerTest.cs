@@ -32,6 +32,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<JobService>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -42,6 +43,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestBadRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<JobService>().AsImplementedInterfaces();
                 }));
             _clientBad = _serverBad.CreateClient();
@@ -55,6 +57,13 @@ namespace RecommendationEngineTests.APITests
             List<Job> jobList = JsonConvert.DeserializeObject<List<Job>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(jobList);
             Assert.AreEqual(jobList[0].Id, MockJobs.BasicDBJobList[0].RecommendationJobId);
+        }
+
+        [Test]
+        public async Task GetJobListWithAsset()
+        {
+            var response = await _client.GetAsync("api/job/filterByAsset/2");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
         [Test]
@@ -92,6 +101,32 @@ namespace RecommendationEngineTests.APITests
             List<DBRecommendationJob> IJobRepository.GetJobList()
             {
                 return MockJobs.BasicDBJobList;
+            }
+        }
+
+        public class TestAssetRepositoryMock : IAssetRepository
+        {
+            public void AddAsset(DBAsset asset) { }
+
+            public void AddAssetList(List<DBAsset> asset) { }
+
+            public List<DBAsset> GetAssetsList()
+            {
+                return MockAssets.BasicDBAssetList;
+            }
+            public DBAsset GetAssetByName(string assetName)
+            {
+                return MockAssets.BasicDBAsset;
+            }
+
+            public DBAsset GetAssetById(int assetId)
+            {
+                return MockAssets.BasicDBAsset;
+            }
+
+            public void Update(DBAsset asset)
+            {
+                throw new System.NotImplementedException();
             }
         }
 

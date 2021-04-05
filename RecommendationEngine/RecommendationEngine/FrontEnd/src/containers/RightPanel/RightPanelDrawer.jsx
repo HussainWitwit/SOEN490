@@ -5,15 +5,13 @@ import Close from '@material-ui/icons/Close';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import AssetTree from '../AssetTreeView/AssetTreeView';
 import ManageRecommendationDrawer from '../../containers/ManageRecommendationDrawer/ManageRecommendationDrawer';
-import {
-  mapRightPanelStateToProps,
-  mapDispatchToProps,
-} from '../../redux/RightPanelReducer/reducer-actions';
+import { mapRightPanelStateToProps, mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 import ActionDrawer from '../ActionDrawer/ActionDrawer';
+import { findFirstTabOrFalse } from '../../utilities/ArrayManipulationUtilities';
 
-export function RightPanelDrawer ({
+export function RightPanelDrawer({
   isOpen,
   tabs,
   selectedTabIndex,
@@ -34,13 +32,18 @@ export function RightPanelDrawer ({
       title: 'Details',
       closeHandler: closeScheduleDrilldown,
       component: (
-        <ManageRecommendationDrawer configuredRecommendation={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+        <ManageRecommendationDrawer configuredRecommendation={findFirstTabOrFalse(tabs, 'Details')} />)
     },
     Actions: {
       title: 'Actions',
       closeHandler: closeResultDrilldown,
-      component: (<ActionDrawer actionGrouping={tabs && tabs[selectedTabIndex] && tabs[selectedTabIndex].response} />)
+      component: (<ActionDrawer actionGrouping={findFirstTabOrFalse(tabs, 'Actions')} />)
     }
+  }
+
+  const handleClose = (e, closeTabCallback) => {
+    e.stopPropagation();
+    closeTabCallback();
   }
 
   return (
@@ -62,13 +65,13 @@ export function RightPanelDrawer ({
         {
           <div className="flex-direction-column">
             <div className="header-space"></div>
-            <Tabs selectedIndex={selectedTabIndex} onSelect={index => changeTabIndex(index)}>
+            <Tabs selectedIndex={selectedTabIndex} onSelect={index => changeTabIndex(index)} forceRenderTabPanel>
               <TabList>
                 {tabs && tabs.map(tab => (<Tab key={tab.name}>
                   {tabOptions[tab.name].title}
                   <IconButton
                     className="drawer-icon-button"
-                    onClick={tabOptions[tab.name].closeHandler}
+                    onClick={(e) => handleClose(e, tabOptions[tab.name].closeHandler)}
                   >
                     <Close className="drawer-close"></Close>
                   </IconButton>

@@ -12,7 +12,7 @@ import DetailsConfigurationModal from '../../containers/DetailsConfigurationModa
 import ParametersConfigurationModal from '../../containers/ParametersConfigurationModal/ParametersConfigurationModal';
 import ConfirmationModal from '../../containers/ConfirmationModal/ConfirmationModal';
 import { transformParameterListPost } from '../../utilities/ArrayManipulationUtilities';
-import { checkDateRange } from '../../utilities/GeneralUtilities';
+import { validateParameters } from '../../utilities/ValidationUtilities';
 import './AddRecommendationDialog.css';
 import { toast } from 'react-toastify';
 
@@ -38,7 +38,7 @@ const pageTitles = [
   'Confirmation',
 ];
 
-export function PaperComponent (props) {
+export function PaperComponent(props) {
   return (
     <Draggable
       handle="#draggable-dialog-title"
@@ -49,11 +49,11 @@ export function PaperComponent (props) {
   );
 }
 
-export const Transition = React.forwardRef(function Transition (props, ref) {
+export const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function AddRecommendationDialog (props) {
+export function AddRecommendationDialog(props) {
   const { dialogsContent, setBackToInitialValues, postConfiguredRecommendation } = props;
   const { isDialogOpen, basicConfiguration, template, isEditing, id } = dialogsContent;
 
@@ -116,7 +116,7 @@ export function AddRecommendationDialog (props) {
         draggable: true,
         progress: undefined,
       })
-    } 
+    }
   }
 
   useEffect(() => {
@@ -198,7 +198,7 @@ export function AddRecommendationDialog (props) {
           </Button>
         )}
         {(index === 2) && (
-          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={checkDateRange(template.inputList)}>
+          <Button id="next-btn" onClick={onClickNext} variant="outlined" disabled={validateParameters(template.inputList)}>
             Next
           </Button>
         )}

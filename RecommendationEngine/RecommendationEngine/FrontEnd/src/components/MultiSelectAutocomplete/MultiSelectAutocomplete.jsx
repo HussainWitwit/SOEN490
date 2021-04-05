@@ -7,7 +7,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function MultiSelectAutocomplete (props) {
+function MultiSelectAutocomplete(props) {
   const [isFirstTyping, setIsFirstTyping] = useState(true);
   return (
     <Autocomplete
@@ -18,6 +18,7 @@ function MultiSelectAutocomplete (props) {
       data-testid="autocomplete-component"
       value={props.value}
       options={props.items}
+      getOptionSelected={(option, value) => option.id === value.id}
       groupBy={(option => option.parentId)}
       getOptionDisabled={option => props.recommendationType === "Yearly Wash Optimization" && option.assetType === "Portfolio"}
       disableCloseOnSelect

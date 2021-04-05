@@ -183,20 +183,22 @@ namespace RecommendationEngine.Services
         {
             try
             {
-                List<string> clientList = listOfPortfolios
+                string clientName = listOfPortfolios
                     .Select(x => x.Id.Split(".")[0])
-                    .ToList();
-
-                DBAsset client = clientList
-                    .Distinct()
-                    .Select(x => new DBAsset()
-                    {
-                        Name = x,
-                        DisplayText = x
-                    })
                     .FirstOrDefault();
 
-                return client;
+                DBAsset client = _assetRepository.GetAssetByName(clientName);
+
+                if (client != null)
+                {
+                    return client;
+                }
+
+                return new DBAsset()
+                {
+                    Name = clientName,
+                    DisplayText = clientName
+                };
             }
             catch (GlobalException)
             {
@@ -307,16 +309,16 @@ namespace RecommendationEngine.Services
                 _plantAssetType = _assetTypeRepository.GetAssetTypeByName("Plant");
                 List<DBAsset> dbAssets = GetDBAssets();
 
-                List<AssetLeaf> assets = dbAssets.Distinct().Where(dbasset => dbasset.Type != null).Select(dbasset => new AssetLeaf()
+                List<AssetLeaf> assets = dbAssets.Distinct().Select(dbasset => new AssetLeaf()
                 {
-                    Name = dbasset.Name,
+                    Name = dbasset?.Name,
                     Id = dbasset.AssetId,
                     AcPower = !Double.IsNaN(dbasset.AcPower) ? dbasset.AcPower : 0,
-                    DisplayText = dbasset.DisplayText,
-                    ElementPath = dbasset.ElementPath,
-                    EnergyType = dbasset.EnergyType,
-                    AssetType = dbasset.Type.Name,
-                    TimeZone = dbasset.TimeZone,
+                    DisplayText = dbasset?.DisplayText,
+                    ElementPath = dbasset?.ElementPath,
+                    EnergyType = dbasset?.EnergyType,
+                    AssetType = dbasset.Type?.Name,
+                    TimeZone = dbasset?.TimeZone,
                     ParentId = dbasset.ParentAsset?.AssetId
 
                 }

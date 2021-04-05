@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Models.Application;
 
 namespace Interfaces.Hub
 {
     public interface INotificationHub
     {
-        public Task SendNotification(string message);
+        public Task SendNotification(NotificationMessage message);
     }
 }

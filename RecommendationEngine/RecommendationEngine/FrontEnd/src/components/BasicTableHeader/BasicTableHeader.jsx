@@ -5,8 +5,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import './BasicTableHeader.css';
-export function EnhancedTableHead(props) {
 
+export function EnhancedTableHead(props) {
   const { orderType, orderColumnTitle, headCells, handleSortingChange } = props;
 
   const sortingHandler = (property) => (event) => { handleSortingChange(event, property) };
@@ -15,13 +15,13 @@ export function EnhancedTableHead(props) {
     <TableHead id="table-head" className="custom">
       <TableRow id="table-row">
         <TableCell></TableCell>
-        {headCells? headCells.map((headCell) => (
+        {headCells ? headCells.map((headCell) => (
           <TableCell
-          className= {headCell.id === "status" ? "custom-status-header": "custom" }
-          key={headCell.id}
-          sortDirection={orderColumnTitle === headCell.id ? orderType : false}
+            className={headCell.id === "status" ? "custom-status-header" : "custom"}
+            key={headCell.id}
+            sortDirection={orderColumnTitle === headCell.id ? orderType : false}
           >
-            {headCell.label?<TableSortLabel
+            {headCell.label ? <TableSortLabel
               id="table-header"
               active={orderColumnTitle === headCell.id}
               direction={orderColumnTitle === headCell.id ? orderType : "asc"}
@@ -33,17 +33,16 @@ export function EnhancedTableHead(props) {
                   {orderType === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
-            </TableSortLabel>:''}
+            </TableSortLabel> : ''}
           </TableCell>
-        )):null}
+        )) : null}
       </TableRow>
     </TableHead>
   );
 }
- /* istanbul ignore next */
-   EnhancedTableHead.propTypes = {
-   headCell: PropTypes.object.isRequired,
-   handleSortingChange: PropTypes.func.isRequired,
-   orderType: PropTypes.oneOf(["asc", "desc"]).isRequired,
-   orderColumnTitle: PropTypes.string.isRequired,
- };
+/* istanbul ignore next */
+EnhancedTableHead.propTypes = {
+  handleSortingChange: PropTypes.func.isRequired,
+  orderType: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  orderColumnTitle: PropTypes.string.isRequired,
+};

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
 import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import SearchBar from '../../common/SearchBar';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
+import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
+import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
 import { connect } from 'react-redux';
+import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
+import { TableColumns as columns } from './TableConfig';
 import './ResultsPage.css'
 
 export function ResultsPage(props) {
@@ -12,97 +14,60 @@ export function ResultsPage(props) {
 
     const [resultList, setResultList] = useState([]);
     const [defaultResultList, setDefaultResultList] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
 
-    const currencyFormatter = new Intl.NumberFormat('en-CA', {
-        style: 'currency',
-        currency: 'CAD',
-    });
-
-    const CADPrice = {
-        type: 'number',
-        width: 200,
-        valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
-    };
-
-    const percentageFormatter = new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-
-    const PercentageOption = {
-        number: 'number',
-        width: 200,
-        valueFormatter: ({ value }) => (percentageFormatter.format(Number(value)) + '%')
-    };
-
-    const columns = [
-        { field: 'id', headerName: 'Result ID', width: 150, cellClassName: 'table-style', hide: true },
-        { field: 'resultOutputDate', headerName: 'Timestamp', type: 'string', flex: 0.14, cellClassName: 'table-style' },
-        { field: 'netSaving', headerName: 'Net Saving', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-positive-numbers' },
-        { field: 'returnOnInvestment', headerName: 'Return On Investment', type: 'number', ...PercentageOption, flex: 0.14, cellClassName: 'table-positive-numbers' },
-        { field: 'costOfAction', headerName: 'Cost of Action', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
-        { field: 'costOfInaction', headerName: 'Cost of Inaction', type: 'number', ...CADPrice, flex: 0.14, cellClassName: 'table-negative-numbers' },
-        {
-            field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', flex: 0.14, cellClassName: 'table-style', renderCell: (params) => (
-                <a className='configured-recommendation' nClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
-                    {params.getValue('configuredRecommendationTitle')}
-                </a>)
-        },
-        { field: 'assetName', headerName: 'Asset', type: 'string', flex: 0.14, cellClassName: 'table-style' }
-    ]
+    const RecommendationLinkColumn = [{
+        field: 'configuredRecommendationTitle', headerName: 'Recommendation', type: 'string', width: 200, cellClassName: 'table-style', renderCell: (params) => (
+            <a className='configured-recommendation' onClick={() => openScheduleDrilldown(params.getValue('configuredRecommendationId'))}>
+                {params.getValue('configuredRecommendationTitle')}
+            </a>)
+    }];
 
     const getResultList = async () => {
-        let response = await GetRecommendationResultList();
-        setDefaultResultList(response);
-        setResultList(response);
+        let response = await GetRecommendationResultList(props.selectedAsset);
+        let responseWtihDateObjects = response.map((element) => {
+            return {
+                ...element,
+                resultOutputDate: new Date(element.resultOutputDate)
+            }
+        });
+        setDefaultResultList(responseWtihDateObjects);
+        setResultList(responseWtihDateObjects);
+        setisLoading(false);
     }
 
-
-    const updateSearch = async (input) => {
-        const filtered = defaultResultList.filter(result => {
-            return result.id.toString().includes(input.toString())
-        })
-        setResultList(filtered);
+    const updateSearch = (input) => {
+        setResultList(filterTableItems(TableItemType.Results, defaultResultList, input));
     }
 
     useEffect(() => {
         getResultList();
-    }, [])
+    }, [props.selectedAsset])
 
     return (
         <div id="main-container">
             <div></div>
             <div>
                 <br></br>
-                <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-                    <Grid id="grid1" item>
-                        <h3 id="title">Results</h3>
-                        <h6 id="subtitle">See the results generated by recommendation jobs</h6>
-                    </Grid>
-                </Grid>
-                <br></br>
-            </div>
-            <div>
-                <div>
-                    <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-                        <Grid item id="data-testid" >
-                            <SearchBar
-                                placeholder="Search for a recommendation..."
-                                onSearchUpdate={updateSearch}
-                            />
-                        </Grid>
-                    </Grid>
-                </div>
+                <PageSubHeader
+                    pageTitle="Results"
+                    descriptionSubtitle="See the results generated by recommendation jobs"
+                    showCreateRecommendation={false}
+                    updateSearch={updateSearch}
+                />
             </div>
             <br></br>
             <RecommendationEngineTable
                 data={resultList}
-                columnValues={columns}
+                columnValues={[...columns, ...RecommendationLinkColumn]}
                 isClickable={true}
                 onClickRow={openResultDrilldown}
+                dateColumnName={'resultOutputDate'}
+                dateSortingOrder={'desc'}
+                loading={isLoading}
             />
         </div>
     );
 }
 
-export default connect(null, mapDispatchToProps)(ResultsPage);
+export default connect(mapAssetFilterStateToProps, mapDispatchToProps)(ResultsPage);

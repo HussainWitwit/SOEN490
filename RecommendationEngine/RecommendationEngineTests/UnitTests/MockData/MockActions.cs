@@ -12,6 +12,7 @@ namespace RecommendationEngineTests.UnitTests.MockData
     {
         public static List<DBAction> BasicDBActions = Actions.BasicDBActions();
         public static List<DBAction> BadDBActions = Actions.BadDBActions();
+        public static List<DBAction> CalendarActions = Actions.CalendarActions();
 
         public static class Actions
         {
@@ -24,6 +25,11 @@ namespace RecommendationEngineTests.UnitTests.MockData
                         Date = new DateTime(2020, 05, 17),
                         DisplayText = "wash day",
                         Title = "ywo55",
+                        Asset = new DBAsset
+                        {
+                            AssetId = 5,
+                            DisplayText = "Pikaboo"
+                        },
                         RecommendationJobResult = new DBRecommendationJobResult {
                             RecommendationJobResultId = 4,
                             Job = new DBRecommendationJob
@@ -70,6 +76,28 @@ namespace RecommendationEngineTests.UnitTests.MockData
                             }
                         },
                     }
+                };
+            }
+
+            public static List<DBAction> CalendarActions()
+            {
+                return new List<DBAction>(){
+                    new DBAction
+                    {
+                        ActionId = 1,
+                        Date = new DateTime(2020, 06, 01),
+                    },
+                    new DBAction
+                    {
+                        ActionId = 2,
+                        Date = new DateTime(2020, 06, 05),
+                    },
+                    new DBAction
+                    {
+                        ActionId = 3,
+                        Date = new DateTime(2020, 06, 05),
+                    },
+
                 };
             }
 
