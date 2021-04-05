@@ -132,8 +132,8 @@ namespace RecommendationEngine.Services
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
                 }
 
-                var netSavingFraction = 0.0;
-                var month = 0;
+                resultsList = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                        .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First()).ToList();
 
                 var monthlyTotal = new List<HistogramItem>
                 {
@@ -153,6 +153,9 @@ namespace RecommendationEngine.Services
 
                 resultsList.ForEach(result =>
                 {
+                    var netSavingFraction = 0.0;
+                    var month = 0;
+
                     netSavingFraction = result.NetSaving / result.ActionsSuggestedList.Count();
 
                     result.ActionsSuggestedList.ToList().ForEach(action =>
