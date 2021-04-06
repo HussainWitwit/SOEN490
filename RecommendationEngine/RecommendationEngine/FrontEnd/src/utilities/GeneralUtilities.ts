@@ -20,6 +20,6 @@ export const checkDateRange = (array: Parameter[]) => {
     return false;
 }
 
-export const formatNumber = (num: number) => {
-    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-}
+export const currencyCAD = (num: number) =>{
+    return new Intl.NumberFormat('en-CA').format(Number(num));
+   }
