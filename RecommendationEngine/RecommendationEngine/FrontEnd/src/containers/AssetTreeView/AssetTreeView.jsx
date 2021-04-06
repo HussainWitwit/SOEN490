@@ -56,6 +56,7 @@ function AssetIcon({ type, energyType }) {
         case 'WIND':
           return <FontAwesomeIcon className='label-icon' icon={faWind} />;
       }
+      return;
     default:
       return <FontAwesomeIcon className='label-icon' icon={faCubes} />;
   }

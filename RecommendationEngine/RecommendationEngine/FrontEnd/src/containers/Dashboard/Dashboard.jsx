@@ -51,8 +51,8 @@ function ListOfActions ({ listActionValues, selectedDate }) {
                 <p id='action-title'>{action.assetName}</p>
                 <p id='action-title'>{action.recommendationName}</p>
                 <hr className="solid"></hr>
-                <p id='action-date'>Net saving: {formatNumber(action.netSaving)} $</p>
-                <p id='action-date'>Return on investment: {formatNumber(action.returnOnInvestment)}%</p>
+                <p id='action-date'>Net saving: {currencyCAD(action.netSaving)} $</p>
+                <p id='action-date'>Return on investment: {currencyCAD(action.returnOnInvestment)}%</p>
                 <div id='display-text-container'>
                   {action.displayText}
                 </div>
@@ -200,7 +200,7 @@ function Dashboard (props) {
             <div>
               <div id='widget-contents'>
                 <div id='sign'>{widget.sign}</div>
-                <div id='money-value'>{formatNumber(widget.value)}</div>
+                <div id='money-value'>{currencyCAD(widget.value)}</div>
               </div>
             </div>
           </div>
