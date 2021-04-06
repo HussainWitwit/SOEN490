@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RecommendationEngine.Utilities;
+using Castle.Core.Internal;
 
 namespace RecommendationEngine.Services
 {
@@ -119,7 +120,7 @@ namespace RecommendationEngine.Services
             }
         }
 
-        public List<HistogramItem> GetHistogram(int? assetId)
+        public List<HistogramItem> GetHistogram(int year, int? assetId)
         {
             try
             {
@@ -133,7 +134,8 @@ namespace RecommendationEngine.Services
                 }
 
                 resultsList = resultsList.GroupBy(obj => obj.Asset.AssetId)
-                        .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First()).ToList();
+                        .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First())
+                        .Where(result => !result.ActionsSuggestedList.Where(act => act.Date.Year == year).IsNullOrEmpty()).ToList();
 
                 var monthlyTotal = new List<HistogramItem>
                 {
@@ -175,6 +177,26 @@ namespace RecommendationEngine.Services
             {
                 throw new InternalServerException();
             }
+        }
+
+        public List<int> GetHistogramYears(int? assetId)
+        {
+
+            var resultsList = _resultRepository.GetResultWithActions();
+
+            if (assetId != null)
+            {
+                var assetsList = _assetRepository.GetAssetsList();
+                resultsList = resultsList
+                    .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+            }
+
+            var yearsList = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                    .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First())
+                    .Select(res => res.ActionsSuggestedList.FirstOrDefault().Date.Year)
+                    .Distinct().ToList();
+
+            return yearsList;
         }
     }
 }
