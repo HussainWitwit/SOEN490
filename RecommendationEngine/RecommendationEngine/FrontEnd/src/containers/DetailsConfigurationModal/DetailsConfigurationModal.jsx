@@ -13,12 +13,12 @@ import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRec
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDateTimePicker } from '@material-ui/pickers';
 import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
-import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import MultiSelectAutocomplete from '../../common/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mergedArrayIdsAndTitles } from '../../utilities/ArrayManipulationUtilities';
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
-export function DetailsConfigurationModal(props) {
+export function DetailsConfigurationModal (props) {
 
   const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
   const { templateDetailsList, template, isEditing, basicConfiguration } = dialogsContent;
