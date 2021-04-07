@@ -97,7 +97,7 @@ namespace RecommendationEngineTests.APITests
         [Test]
         public async Task GetHistogram()
         {
-            var response = await _client.GetAsync("api/result/histogram/44");
+            var response = await _client.GetAsync("api/result/histogram/2020/44");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             List<HistogramItem> monthlyList = JsonConvert.DeserializeObject<List<HistogramItem>>(await response.Content.ReadAsStringAsync());
             Assert.NotNull(monthlyList);
@@ -110,6 +110,24 @@ namespace RecommendationEngineTests.APITests
         public async Task GetBadHistogram()
         {
             var response = await _clientBad.GetAsync("api/result/widgets");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
+        }
+
+        [Test]
+        public async Task GetHistogramYears()
+        {
+            var response = await _client.GetAsync("api/result/histogramYears");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<int> monthlyList = JsonConvert.DeserializeObject<List<int>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(monthlyList);
+            Assert.AreEqual(monthlyList[0], 2020);
+        }
+
+
+        [Test]
+        public async Task GetBadHistogramYears()
+        {
+            var response = await _clientBad.GetAsync("api/result/histogramYears");
             Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
 

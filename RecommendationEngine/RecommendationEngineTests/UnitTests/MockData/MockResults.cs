@@ -30,8 +30,8 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     },
                     ActionsSuggestedList = new List<DBAction>()
                     {
-                       new DBAction { Date = new DateTime(2021, 4, 14)},
-                       new DBAction { Date = new DateTime(2021, 7, 29)}
+                       new DBAction { Date = new DateTime(2020, 4, 14)},
+                       new DBAction { Date = new DateTime(2020, 7, 29)}
                     }
                 };
 
@@ -47,6 +47,10 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     {
                         DisplayText = "Test Asset",
                         AssetId = 45
+                    },
+                    ActionsSuggestedList = new List<DBAction>()
+                    {
+                       new DBAction { Date = new DateTime(2020, 4, 18)},
                     }
                 };
 

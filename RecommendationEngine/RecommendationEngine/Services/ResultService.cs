@@ -181,22 +181,32 @@ namespace RecommendationEngine.Services
 
         public List<int> GetHistogramYears(int? assetId)
         {
-
-            var resultsList = _resultRepository.GetResultWithActions();
-
-            if (assetId != null)
+            try
             {
-                var assetsList = _assetRepository.GetAssetsList();
-                resultsList = resultsList
-                    .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                var resultsList = _resultRepository.GetResultWithActions();
+
+                if (assetId != null)
+                {
+                    var assetsList = _assetRepository.GetAssetsList();
+                    resultsList = resultsList
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
+                var yearsList = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                        .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First())
+                        .Select(res => res.ActionsSuggestedList.FirstOrDefault().Date.Year)
+                        .Distinct().ToList();
+
+                return yearsList;
             }
-
-            var yearsList = resultsList.GroupBy(obj => obj.Asset.AssetId)
-                    .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First())
-                    .Select(res => res.ActionsSuggestedList.FirstOrDefault().Date.Year)
-                    .Distinct().ToList();
-
-            return yearsList;
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
         }
     }
 }
