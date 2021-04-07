@@ -143,9 +143,8 @@ function Dashboard (props) {
     async function getHistogram () {
       let histogramYears = await GetHistogramYears(props.selectedAsset);
       setYearList(histogramYears);
-
+      setYear(histogramYears[histogramYears.length - 1])
       let histogramResponse = await GetHistogramValues(props.selectedAsset, year);
-      console.log(histogramResponse)
       setHistogramValues(convertHistogramResponse(histogramResponse));
     }
     getHistogram();
@@ -180,7 +179,7 @@ function Dashboard (props) {
   }, [props.selectedAsset])
 
   return (
-    <div>
+    <div className="dashboard-container">
       <div>
         <Dialog
           open={loading}
@@ -213,6 +212,7 @@ function Dashboard (props) {
                 onChange={onChangeYear}
                 label="Year"
               >
+                <MenuItem>None</MenuItem>
                 {yearList?.map((year, index) => (
                   <MenuItem key={index} value={year}>{year}</MenuItem>
                 ))}
