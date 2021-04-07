@@ -9,6 +9,7 @@ let state = {
   isOpen: false,
   tabs: [],
   selectedTabIndex: 0,
+  openedConfiguredRecommendationId: null
 };
 
 describe('Right panel reducer', () => {

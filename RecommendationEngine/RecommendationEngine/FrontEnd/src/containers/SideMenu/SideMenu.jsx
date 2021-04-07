@@ -14,12 +14,6 @@ export function SideMenu(props) {
   const [selectedNestedItemIndex, setSelectedNestedItemIndex] = React.useState(0);
   const [isNestedItemSelected, setIsNestedItemSelected] = React.useState(false);
 
-  useEffect(() => {
-    if (String(window.performance.getEntriesByType("navigation")[0].type) == "reload") {
-      window.location.href = '/'
-    }
-  }, []);
-
   /**
    * Function that handles clicking on menu options
    * @param {*} object 
