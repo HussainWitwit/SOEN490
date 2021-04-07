@@ -7,11 +7,9 @@ import './App.css';
 import Dashboard from '../Dashboard/Dashboard';
 import JobsPage from '../JobsPage/JobsPage';
 import ResultsPage from '../ResultsPage/ResultsPage';
-import WorkOrders from '../WorkOrders/WorkOrders';
-import Settings from '../Settings/Settings';
 import Notifications from '../Notifications/Notifications';
 
-function App (props) {
+function App () {
   return (
     <div id="background">
       <Layout>
@@ -20,8 +18,6 @@ function App (props) {
           <Route path='/recommendations-manage' component={ManageRecommendationPage} />
           <Route path='/recommendations-jobs' component={JobsPage} />
           <Route path='/recommendations-results' component={ResultsPage} />
-          <Route path='/work-orders' component={WorkOrders} />
-          <Route path='/settings' component={Settings} />
           <Route path='/notifications' component={Notifications} />
         </div>
       </Layout>

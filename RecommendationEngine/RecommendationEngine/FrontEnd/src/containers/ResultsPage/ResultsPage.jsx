@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
+import RecommendationEngineTable from '../../common/RecommendationEngineTable/RecommendationEngineTable';
 import { GetRecommendationResultList } from '../../api/endpoints/ResultsEndpoints';
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
-import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
+import PageSubHeader from '../../common/PageSubHeader/PageSubHeader';
 import { connect } from 'react-redux';
 import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import { TableColumns as columns } from './TableConfig';
 import './ResultsPage.css'
 
-export function ResultsPage(props) {
+export function ResultsPage (props) {
     const { openResultDrilldown, openScheduleDrilldown } = props;
 
     const [resultList, setResultList] = useState([]);

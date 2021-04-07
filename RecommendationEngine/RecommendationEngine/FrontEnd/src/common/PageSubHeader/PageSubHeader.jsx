@@ -2,11 +2,11 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
-import SearchBar from '../../common/SearchBar';
+import SearchBar from '../SearchBar';
 
 import './PageSubHeader.css';
 
-export default function PageSubHeader(props) {
+export default function PageSubHeader (props) {
 
   const { pageTitle, descriptionSubtitle, showCreateRecommendation, addRecommendationProps, toggleDialog, updateSearch } = props;
 

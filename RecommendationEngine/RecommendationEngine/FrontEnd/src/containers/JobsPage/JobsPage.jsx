@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
+import RecommendationEngineTable from '../../common/RecommendationEngineTable/RecommendationEngineTable';
+import PageSubHeader from '../../common/PageSubHeader/PageSubHeader';
 import { GetRecommendationJobList } from '../../api/endpoints/JobsEndpoints';
 import './JobsPage.css';
 import { mapDispatchDrillDownToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { TableColumns as columns } from './TableConfig';
 import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 
-function JobsPage(props) {
+function JobsPage (props) {
 
     const { openScheduleDrilldown } = props;
     const [jobList, setJobList] = useState([]);

@@ -4,7 +4,7 @@ import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import ConfirmationModal from '../ConfirmationModal';
 import TextField from '@material-ui/core/TextField';
-import MultiSelectAutocomplete from '../../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import MultiSelectAutocomplete from '../../../common/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { store } from '../../../redux/store';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -13,9 +13,9 @@ describe('ConfirmationModal component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const wrapperYearly = shallow(<ConfirmationModal store={store} dialogsContent={{basicConfiguration: {repeatDate: "Yearly" } }}/>).dive().dive();
-    const wrapperMonthly = shallow(<ConfirmationModal store={store} dialogsContent={{basicConfiguration: {repeatDate: "Monthly" } }}/>).dive().dive();
-    const wrapperWeekly = shallow(<ConfirmationModal store={store} dialogsContent={{basicConfiguration: {repeatDate: "Weekly" } }}/>).dive().dive();
+    const wrapperYearly = shallow(<ConfirmationModal store={store} dialogsContent={{ basicConfiguration: { repeatDate: "Yearly" } }} />).dive().dive();
+    const wrapperMonthly = shallow(<ConfirmationModal store={store} dialogsContent={{ basicConfiguration: { repeatDate: "Monthly" } }} />).dive().dive();
+    const wrapperWeekly = shallow(<ConfirmationModal store={store} dialogsContent={{ basicConfiguration: { repeatDate: "Weekly" } }} />).dive().dive();
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');

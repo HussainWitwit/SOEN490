@@ -1,14 +1,14 @@
 import React from 'react';
 import { animated } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
-import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import MultiSelectAutocomplete from '../../common/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import { transformParameterList } from '../../utilities/ArrayManipulationUtilities';
 import './ConfirmationModal.css';
 
-export function ConfirmationModal(props) {
+export function ConfirmationModal (props) {
 
   const { dialogStyle, dialogsContent } = props;
 
