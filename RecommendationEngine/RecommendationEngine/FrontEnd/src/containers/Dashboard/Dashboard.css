@@ -74,6 +74,16 @@
 
 #histogram {
   padding-right: 5%;
+  /* background-color: teal; */
+}
+
+#year-dropdown {
+  /* float: right; */
+  /* width: 100px; */
+}
+
+.MuiSelect-outlined.MuiSelect-outlined {
+  width: 80px;
 }
 
 .fc-view-harness{

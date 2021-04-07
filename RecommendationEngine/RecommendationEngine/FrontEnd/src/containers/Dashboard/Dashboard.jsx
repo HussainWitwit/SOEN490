@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Dashboard.css';
-import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId, GetHistogramValues } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId, GetHistogramYears, GetHistogramValues } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { convertWidgetResponse, convertHistogramResponse } from '../../utilities/ArrayManipulationUtilities';
-import { formatNumber } from '../../utilities/GeneralUtilities';
+import { currencyCAD } from '../../utilities/GeneralUtilities';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -17,6 +17,11 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
 import { Chart, Interval, Axis } from 'bizcharts';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -73,6 +78,8 @@ function Dashboard (props) {
   const [listActionValues, setListActionValues] = useState([]);
   const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
   const [histogramValues, setHistogramValues] = useState([]);
+  const [yearList, setYearList] = useState([]);
+  const [year, setYear] = useState('');
   const [loading, setLoading] = useState(false);
 
   const calendarRef = useRef();
@@ -128,12 +135,25 @@ function Dashboard (props) {
     calendarRef.current.getApi().gotoDate(formatDate(date));
   }
 
+  const onChangeYear = (e) => {
+    setYear(e.target.value);
+  }
+
+  useEffect(() => {
+    async function getHistogram () {
+      let histogramYears = await GetHistogramYears(props.selectedAsset);
+      setYearList(histogramYears);
+
+      let histogramResponse = await GetHistogramValues(props.selectedAsset, year);
+      console.log(histogramResponse)
+      setHistogramValues(convertHistogramResponse(histogramResponse));
+    }
+    getHistogram();
+  }, [year, props.selectedAsset])
+
   useEffect(() => {
     async function getDashboardValues () {
       startLoadingSpinner();
-
-      let histogramResponse = await GetHistogramValues(props.selectedAsset);
-      setHistogramValues(convertHistogramResponse(histogramResponse));
 
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
       let detailedWidgets = convertWidgetResponse(widgetResponse);
@@ -177,15 +197,37 @@ function Dashboard (props) {
         <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
           <Grid id="grid1" item>
             <h3 id="title">Dashboard</h3>
-            <h6 id="subtitle">View a calendar with upcoming wash days</h6>
+            <h6 id="subtitle">View a summary of past and potential future recommendations and their metrics</h6>
           </Grid>
         </Grid>
         <br></br>
       </div>
       <div id='widget-container'>
         <div id='histogram'>
-          <Chart height={300} width={520} data={histogramValues} onIntervalClick={(e) => { handleClickHistogram(e.data.data.month) }}>
-            <Axis name="total" label={{ formatter: val => `${Number(val).toLocaleString()}` }} />
+          <div id='year-dropdown'>
+            <FormControl variant="outlined" >
+              <InputLabel>Year</InputLabel>
+              <Select
+                disabled={!yearList.length}
+                value={year}
+                onChange={onChangeYear}
+                label="Year"
+              >
+                {yearList?.map((year, index) => (
+                  <MenuItem key={index} value={year}>{year}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <Chart
+            height={300}
+            width={520}
+            data={histogramValues}
+            onIntervalClick={(e) => { handleClickHistogram(e.data.data.month) }}
+            scale={{ total: { alias: 'Net Saving ($)' } }}
+            interactions={['element-single-selected']}
+          >
+            <Axis name="total" label={{ formatter: val => `${Number(val).toLocaleString()}` }} title />
             <Interval position="monthName*total" />
           </Chart>
         </div>
