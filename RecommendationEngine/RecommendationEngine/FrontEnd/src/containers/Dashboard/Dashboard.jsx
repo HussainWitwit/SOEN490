@@ -157,7 +157,7 @@ function Dashboard(props) {
           BackdropProps={{ style: { backgroundColor: 'transparent', boxShadow: 'none' } }}
         >
           <DialogContent>
-            <CircularProgress />
+            <CircularProgress classes={{root: 'loading-spinner'}} />
           </DialogContent>
         </Dialog>
 

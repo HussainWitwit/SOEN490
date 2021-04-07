@@ -8,6 +8,10 @@ describe("Result Page", () => {
         cy.get('.net-savings').should('be.visible')
     })
 
+    it("Find the loading spinner", () =>{
+        cy.get('.loading-spinner').should('be.visible')
+    })
+
     it("Finds the average roi widget", () => {
         cy.get('.roi').should('be.visible')
     })
