@@ -246,7 +246,6 @@ function Dashboard (props) {
             </div>
           </div>
         ))}
-
       </div>
       <div className='rows'>
         <div className="calendar">

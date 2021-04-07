@@ -91,7 +91,6 @@ export function ParametersConfigurationModal (props) {
                             inputVariant="outlined"
                             value={cell.parameterValue}
                             minDate={cell.parameterName.includes('Start') ? new Date(2020, 1, 1) : cell.parameterName.includes('End') ? parameterList[index - 1].parameterValue : new Date(2020, 1, 1)}
-                            // maxDate={cell.parameterName.includes('Start') ? parameterList[index + 1].parameterValue : new Date(2020, 11, 31)}
                             minDateMessage={'The start date cannot overlap'}
                             maxDateMessage={'The end date cannot overlap'}
                             onChange={(date) => setParamValue(date, index)}
