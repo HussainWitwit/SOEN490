@@ -9,6 +9,7 @@
   align-items: center;
   text-shadow: none;
   color: black;
+  overflow: scroll;
 }
 
 #sub-title {
@@ -51,6 +52,15 @@ font-weight: bold;
   background-color: white;
   height: 100%;
 }
+
+.MuiTableCell-root {
+  height: 100px;
+}
+
+.MuiOutlinedInput-adornedEnd {
+  width: 280px;
+}
+
 .empty-parameter-list{
   background-color: white;
   font-size: 1.75rem;
@@ -60,6 +70,7 @@ font-weight: bold;
   letter-spacing: 0.0075em;
   text-align-last: center;
 }
+
 #mocked-content > div {
   overflow-y: hidden;
 }
