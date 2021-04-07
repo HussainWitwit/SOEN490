@@ -19,8 +19,7 @@ import * as type from './dispatch-types';
 const rightPanelInitialState = {
   isOpen: false,
   tabs: [],
-  selectedTabIndex: 0,
-  openedConfiguredRecommendationId: null
+  selectedTabIndex: 0
 };
 
 const SCHEDULE_DRILLDOWN_NAME = 'Details';
@@ -161,12 +160,6 @@ export const RightPanelReducer = function (
       return {
         ...state,
         selectedTabIndex: action.payload.selectedTabIndex
-      }
-
-    case type.SET_RECOMMENDATION_ID:
-      return {
-        ...state,
-        openedConfiguredRecommendationId:  action.payload
       }
 
     default:

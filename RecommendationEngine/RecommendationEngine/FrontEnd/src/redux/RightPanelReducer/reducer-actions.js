@@ -15,13 +15,6 @@ export const openAssetTreeview = () => {
   };
 };
 
-export const setOpenedConfigurationRecommendationID = (dispatch, id) => {
-  dispatch({
-    type: dispatchActionType.SET_RECOMMENDATION_ID,
-    payload: id
-  });
-};
-
 /* istanbul ignore next */
 export const openScheduleDrilldown = async (dispatch, id) => {
   const response = await GetConfiguredRecommendationById(id);
@@ -31,7 +24,6 @@ export const openScheduleDrilldown = async (dispatch, id) => {
       response: response
     }
   });
-  setOpenedConfigurationRecommendationID(dispatch, id)
   return response;
 };
 

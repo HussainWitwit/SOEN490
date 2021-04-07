@@ -269,7 +269,6 @@ export const mapParamDialogStateToProps = (state) => {
 export const mapTemplateStateToProps = (state) => {
   return {
     templateType: state.manageRecommendationReducer.template.assetTypes,
-    configuredRecommendationId: state.rightPanelReducer.openedConfiguredRecommendationId
   }
 }
 

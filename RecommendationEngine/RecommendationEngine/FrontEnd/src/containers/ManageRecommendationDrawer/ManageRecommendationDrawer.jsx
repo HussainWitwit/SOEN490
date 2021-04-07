@@ -16,7 +16,7 @@ import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import NotificationHub from '../../api/notification-hub/NotificationHub';
 
 export function ManageRecommendationDrawer({
-  configuredRecommendation, configuredRecommendationId, toggleDialog, setEditableConfiguredRecommendation, templateType, openScheduleDrilldown
+  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType, openScheduleDrilldown
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
@@ -26,7 +26,7 @@ export function ManageRecommendationDrawer({
 
   useEffect(() => {
     notificationHub.on('ReceiveNotification', () => {
-      refreshPanel()
+      updatePanel()
     });
   }, [notificationHub.on('ReceiveNotification')]);
 
@@ -37,7 +37,7 @@ export function ManageRecommendationDrawer({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
 
-  const refreshPanel = () => {
+  const updatePanel = () => {
     openScheduleDrilldown(configuredRecommendation.id)
   }
 
