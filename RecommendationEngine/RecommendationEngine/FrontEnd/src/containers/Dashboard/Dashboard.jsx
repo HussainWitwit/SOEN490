@@ -212,7 +212,6 @@ function Dashboard (props) {
                 onChange={onChangeYear}
                 label="Year"
               >
-                <MenuItem>None</MenuItem>
                 {yearList?.map((year, index) => (
                   <MenuItem key={index} value={year}>{year}</MenuItem>
                 ))}
