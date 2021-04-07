@@ -65,13 +65,27 @@ export async function GetActionPerCompoundId(id: string): Promise<Action[] | nul
     return actionList;
 }
 
-export async function GetHistogramValues(assetId: number | null): Promise<HistogramItem[] | null> {
-    let monthlyNetSavingsList: HistogramItem[] = [];
-    await fetch('api/result/histogram/' + (assetId ? assetId : ''))
+export async function GetHistogramYears(assetId: number | null): Promise<Number[] | null> {
+    let histogramYears: Number[] = [];
+    await fetch('api/result/histogramYears/' + (assetId ? assetId : ''))
         .then(res => handleErrors(res))
         .then(res => res.json())
         .then(res => {
-            console.log(res)
+            histogramYears = res;
+            return histogramYears;
+        })
+        .catch(err => {
+            notifyError(err)
+        })
+    return histogramYears;
+}
+
+export async function GetHistogramValues(assetId: number | null, year: number | null): Promise<HistogramItem[] | null> {
+    let monthlyNetSavingsList: HistogramItem[] = [];
+    await fetch('api/result/histogram/' + (year ? year : '') + '/' + (assetId ? assetId : ''))
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
             monthlyNetSavingsList = res;
             return monthlyNetSavingsList
         })
