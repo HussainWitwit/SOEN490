@@ -5,7 +5,6 @@ import { DetailedWidget, Widget } from '../api/models/Widget';
 import { ConfiguredRecommendationJob } from "../api/models/Job";
 import { ConfiguredRecommendationResult } from "../api/models/JobResult";
 import { ConfiguredRecommendation } from "../api/models/ConfiguredRecommendation";
-// import { store } from '../redux/store';
 
 export const convertObjectToArrayOfObjects = (obj: any) => {
     var result = Object.entries(obj).map((e) => ({ [e[0]]: e[1] }));

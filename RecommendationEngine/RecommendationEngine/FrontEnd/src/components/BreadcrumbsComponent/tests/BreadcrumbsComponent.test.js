@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { mount } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Link from '@material-ui/core/Link';
 import { GiWindTurbine } from "react-icons/gi";
 import { FaCubes } from "react-icons/fa";
-import { store } from '../../../redux/store';
 import { Typography } from '@material-ui/core';
 import { BreadcrumbsComponent } from '../BreadcrumbsComponent';
 
