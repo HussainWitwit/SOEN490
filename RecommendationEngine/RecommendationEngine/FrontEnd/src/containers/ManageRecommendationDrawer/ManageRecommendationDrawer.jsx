@@ -25,12 +25,16 @@ export function ManageRecommendationDrawer({
   const notificationHub = NotificationHub.getHubConnection();
 
   useEffect(() => {
-    notificationHub.on('ReceiveNotification', (notification) => {
-      if (configuredRecommendation && notification.message.includes("requires your attention!")){
+    const handleNotification = (notification) =>{
+      if (configuredRecommendation.id === notification.scheduleId){
         updatePanel(configuredRecommendation.id)
       }
-    });
-  }, [configuredRecommendation]);
+    }
+    notificationHub.on('ReceiveNotification', handleNotification);
+    return function cleanup() {
+      notificationHub.off('ReceiveNotification', handleNotification);
+    };
+  }, [notificationHub.on('ReceiveNotification'), configuredRecommendation]);
 
   // Animation style
   const props = useSpring({
