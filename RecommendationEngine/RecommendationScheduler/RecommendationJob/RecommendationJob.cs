@@ -52,7 +52,8 @@ namespace RecommendationScheduler.RecommendationJob
                     _notificationHub.SendNotification(new NotificationMessage
                     {
                         Type = NotificationType.Information,
-                        Message = "New available actions on " + _recommendationJob.Asset.DisplayText + " were found from " + _recommendationJob.Schedule.Name + "."
+                        Message = "New available actions on " + _recommendationJob.Asset.DisplayText + " were found from " + _recommendationJob.Schedule.Name + ".",
+                        ScheduleId = _recommendationJob.Schedule.RecommendationScheduleId
                     });
                 return Task.CompletedTask;
             }
@@ -65,7 +66,8 @@ namespace RecommendationScheduler.RecommendationJob
                 _notificationHub.SendNotification(new NotificationMessage
                 {
                     Type = NotificationType.Error,
-                    Message = "A job on " + _recommendationJob.Asset.DisplayText + " from " + _recommendationJob.Schedule.Name + " has failed and requires your attention!"
+                    Message = "A job on " + _recommendationJob.Asset.DisplayText + " from " + _recommendationJob.Schedule.Name + " has failed and requires your attention!",
+                    ScheduleId = _recommendationJob.Schedule.RecommendationScheduleId
                 });
                 return Task.CompletedTask;
             }

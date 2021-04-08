@@ -19,7 +19,7 @@ import * as type from './dispatch-types';
 const rightPanelInitialState = {
   isOpen: false,
   tabs: [],
-  selectedTabIndex: 0,
+  selectedTabIndex: 0
 };
 
 const SCHEDULE_DRILLDOWN_NAME = 'Details';
