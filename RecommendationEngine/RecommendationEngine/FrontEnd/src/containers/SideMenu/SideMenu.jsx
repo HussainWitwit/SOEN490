@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './SideMenu.css';
 import { Drawer, List, CssBaseline, Typography, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
@@ -9,10 +9,10 @@ import { withRouter } from 'react-router-dom';
 
 export function SideMenu(props) {
 
-  const [openNested, setOpenNested] = React.useState(true);
-  const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
-  const [selectedNestedItemIndex, setSelectedNestedItemIndex] = React.useState(0);
-  const [isNestedItemSelected, setIsNestedItemSelected] = React.useState(false);
+  const [openNested, setOpenNested] = useState(true);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+  const [selectedNestedItemIndex, setSelectedNestedItemIndex] = useState(0);
+  const [isNestedItemSelected, setIsNestedItemSelected] = useState(false);
 
   /**
    * Function that handles clicking on menu options

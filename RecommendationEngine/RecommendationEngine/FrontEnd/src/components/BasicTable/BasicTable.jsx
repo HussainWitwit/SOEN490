@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import Table from "@material-ui/core/Table";
 import PropTypes from 'prop-types';
 import TableBody from "@material-ui/core/TableBody";
@@ -45,12 +45,12 @@ export default function BasicTable(props) {
 
   const { rowsValue, data, tableTitle, onClickRow, columnTitles, dense, isClickable, disablePaginator } = props;
 
-  const [orderType, setOrderType] = React.useState("asc");
-  const [orderColumnTitle, setOrderColumnTitle] = React.useState("");
-  const [page, setPage] = React.useState(0);
-  const [denseAttribute, setDenseAttribute] = React.useState(dense);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [isSelected, setIsSelected] = React.useState(null);
+  const [orderType, setOrderType] = useState("asc");
+  const [orderColumnTitle, setOrderColumnTitle] = useState("");
+  const [page, setPage] = useState(0);
+  const [denseAttribute, setDenseAttribute] = useState(dense);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [isSelected, setIsSelected] = useState(null);
 
   const handleChangeDense = (event) => {
     setDenseAttribute(event.target.checked);

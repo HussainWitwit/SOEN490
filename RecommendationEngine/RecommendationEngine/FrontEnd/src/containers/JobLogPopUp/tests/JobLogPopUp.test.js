@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -15,7 +15,7 @@ describe('JobLogPopUp component', () => {
     {id: 25 , time: "17:24:10", level: "Error", description:"This is a description"},
     {id: 26 , time: "17:24:10", level: "Fatal", description:"This is a description"},
     {id: 27 , time: "17:24:10", level: "", description:"This is a description"}]
-    React.useState = jest.fn().mockReturnValue([[myInitialState, myInitialState]])
+    useState = jest.fn().mockReturnValue([[myInitialState, myInitialState]])
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [myInitialState, setState]);

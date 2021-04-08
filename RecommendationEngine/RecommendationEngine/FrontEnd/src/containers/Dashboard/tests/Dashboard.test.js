@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -21,7 +21,7 @@ describe('Dashboard component', () => {
   const histogramValues = [
     { month: '01', monthName: 'Jan', total: 0 }
   ]
-  React.useState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics], [histogramValues, histogramValues]]);
+  useState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics], [histogramValues, histogramValues]]);
   const setState = jest.fn().mockReturnValue([[widgetMetrics, widgetMetrics], [histogramValues, histogramValues]]);
   const useStateSpy = jest.spyOn(React, 'useState');
   useStateSpy.mockImplementation((init) => [widgetMetrics, setState]);
