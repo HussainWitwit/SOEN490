@@ -25,10 +25,12 @@ export function ManageRecommendationDrawer({
   const notificationHub = NotificationHub.getHubConnection();
 
   useEffect(() => {
-    notificationHub.on('ReceiveNotification', () => {
-      updatePanel()
+    notificationHub.on('ReceiveNotification', (notification) => {
+      if (configuredRecommendation && notification.message.includes("requires your attention!")){
+        updatePanel(configuredRecommendation.id)
+      }
     });
-  }, [notificationHub.on('ReceiveNotification')]);
+  }, [configuredRecommendation]);
 
   // Animation style
   const props = useSpring({
@@ -37,8 +39,8 @@ export function ManageRecommendationDrawer({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
 
-  const updatePanel = () => {
-    openScheduleDrilldown(configuredRecommendation.id)
+  const updatePanel = (id) => {
+    openScheduleDrilldown(id)
   }
 
   const handleOpenLogPopup = () => {
