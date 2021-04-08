@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RecommendationEngine.Utilities;
+using Castle.Core.Internal;
 
 namespace RecommendationEngine.Services
 {
@@ -21,6 +22,7 @@ namespace RecommendationEngine.Services
             _resultRepository = resultRepository;
             _assetRepository = assetRepository;
         }
+
         public List<Result> GetResultList(int? assetId)
         {
             try
@@ -70,9 +72,9 @@ namespace RecommendationEngine.Services
                         .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
                 }
 
-                double netSavingSum=0;
-                double returnOnInvestmentAverage=0;
-                double costOfInactionSum=0;
+                double netSavingSum = 0;
+                double returnOnInvestmentAverage = 0;
+                double costOfInactionSum = 0;
 
                 if (resultsList.Count > 0)
                 {
@@ -107,6 +109,95 @@ namespace RecommendationEngine.Services
                 WidgetMetricList.Add(new WidgetMetric("Potential Losses", costOfInactionSum, costOfInactionDescription));
 
                 return WidgetMetricList;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+        }
+
+        public List<HistogramItem> GetHistogram(int year, int? assetId)
+        {
+            try
+            {
+                var resultsList = _resultRepository.GetResultWithActions();
+
+                if (assetId != null)
+                {
+                    var assetsList = _assetRepository.GetAssetsList();
+                    resultsList = resultsList
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
+                resultsList = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                        .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First())
+                        .Where(result => !result.ActionsSuggestedList.Where(act => act.Date.Year == year).IsNullOrEmpty()).ToList();
+
+                var monthlyTotal = new List<HistogramItem>
+                {
+                    new HistogramItem("01", "Jan", 0),
+                    new HistogramItem("02", "Feb", 0),
+                    new HistogramItem("03", "Mar", 0),
+                    new HistogramItem("04", "Apr", 0),
+                    new HistogramItem("05", "May", 0),
+                    new HistogramItem("06", "Jun", 0),
+                    new HistogramItem("07", "Jul", 0),
+                    new HistogramItem("08", "Aug", 0),
+                    new HistogramItem("09", "Sep", 0),
+                    new HistogramItem("10", "Oct", 0),
+                    new HistogramItem("11", "Nov", 0),
+                    new HistogramItem("12", "Dec", 0),
+                };
+
+                resultsList.ForEach(result =>
+                {
+                    var netSavingFraction = 0.0;
+                    var month = 0;
+
+                    netSavingFraction = result.NetSaving / result.ActionsSuggestedList.Count();
+
+                    result.ActionsSuggestedList.ToList().ForEach(action =>
+                    {
+                        month = action.Date.Month;
+                        monthlyTotal.FirstOrDefault(mo => Int32.Parse(mo.Month) == month).Total += netSavingFraction;
+                    });
+                });
+
+                return monthlyTotal;
+            }
+            catch (GlobalException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
+            }
+        }
+
+        public List<int> GetHistogramYears(int? assetId)
+        {
+            try
+            {
+                var resultsList = _resultRepository.GetResultWithActions();
+
+                if (assetId != null)
+                {
+                    var assetsList = _assetRepository.GetAssetsList();
+                    resultsList = resultsList
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
+                var yearsList = resultsList.GroupBy(obj => obj.Asset.AssetId)
+                        .Select(grp => grp.OrderByDescending(obj => obj.NetSaving).First())
+                        .Select(res => res.ActionsSuggestedList.FirstOrDefault().Date.Year)
+                        .Distinct().ToList();
+
+                return yearsList;
             }
             catch (GlobalException)
             {

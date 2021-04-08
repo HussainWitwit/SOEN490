@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
+import RecommendationEngineTable from '../../common/RecommendationEngineTable/RecommendationEngineTable';
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
-import PageSubHeader from '../../components/PageSubHeader/PageSubHeader';
+import PageSubHeader from '../../common/PageSubHeader/PageSubHeader';
 import { TableColumns as columns } from './TableConfig';
 import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ManageRecommendationPage.css';
 
-export function ManageRecommendationPage(props) {
+export function ManageRecommendationPage (props) {
 
   const { toggleDialog, configuredRecommendationList, openScheduleDrilldown } = props;
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);

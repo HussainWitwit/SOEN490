@@ -5,6 +5,7 @@ import { DetailedWidget, Widget } from '../api/models/Widget';
 import { ConfiguredRecommendationJob } from "../api/models/Job";
 import { ConfiguredRecommendationResult } from "../api/models/JobResult";
 import { ConfiguredRecommendation } from "../api/models/ConfiguredRecommendation";
+import { HistogramItem } from '../api/models/HistogramItem';
 
 export const convertObjectToArrayOfObjects = (obj: any) => {
     var result = Object.entries(obj).map((e) => ({ [e[0]]: e[1] }));
@@ -57,50 +58,50 @@ export const convertWidgetResponse = (widgets: Widget[]): DetailedWidget[] => {
 }
 
 export const findFirstTabOrFalse = (tabs: any[], name: string): any => {
-    if(tabs === null || tabs.length<1)
+    if (tabs === null || tabs.length < 1)
         return false;
-    if (tabs.some(tab => tab.name === name)){
+    if (tabs.some(tab => tab.name === name)) {
         return tabs.find(tab => tab.name === name).response;
     }
     return false;
 }
 //interface for filterTableItems function below
 export enum TableItemType {
-    ConfiguredRecommendation= "ConfiguredRecommendation",
+    ConfiguredRecommendation = "ConfiguredRecommendation",
     Results = "Results",
     Jobs = "Jobs"
 }
 
 export const filterTableItems = (type: TableItemType, list: any[], input: string): any[] => {
     let filtered: any[];
-    switch(type) {
+    switch (type) {
         case "ConfiguredRecommendation":
             filtered = list.filter((recommendation: ConfiguredRecommendation) => {
                 return recommendation.name.toLowerCase().includes(input.toLowerCase())
-                || recommendation.id.toString().includes(input.toLowerCase())
-                || recommendation.createdOn.toString().includes(input.toLowerCase())
-                || recommendation.granularity.toLowerCase().includes(input.toLowerCase())
-                || recommendation.type.toLowerCase().includes(input.toLowerCase())
+                    || recommendation.id.toString().includes(input.toLowerCase())
+                    || recommendation.createdOn.toString().includes(input.toLowerCase())
+                    || recommendation.granularity.toLowerCase().includes(input.toLowerCase())
+                    || recommendation.type.toLowerCase().includes(input.toLowerCase())
             });
             break;
         case "Results":
             filtered = list.filter((result: ConfiguredRecommendationResult) => {
                 return result.assetName.toLowerCase().includes(input.toLowerCase())
-                || result.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-                || result.resultOutputDate.toString().includes(input.toLowerCase())
-                || result.costOfAction.toString().includes(input.replace(',', ''))
-                || result.costOfInaction.toString().includes(input.replace(',', ''))
-                || result.netSaving.toString().includes(input.replace(',', ''))
-                || result.returnOnInvestment.toString().includes(input.replace(',', ''))
+                    || result.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
+                    || result.resultOutputDate.toString().includes(input.toLowerCase())
+                    || result.costOfAction.toString().includes(input.replace(',', ''))
+                    || result.costOfInaction.toString().includes(input.replace(',', ''))
+                    || result.netSaving.toString().includes(input.replace(',', ''))
+                    || result.returnOnInvestment.toString().includes(input.replace(',', ''))
             });
             break;
         case "Jobs":
             filtered = list.filter((job: ConfiguredRecommendationJob) => {
                 return job.configuredRecommendationTitle.toLowerCase().includes(input.toLowerCase())
-                || job.assetName.toLowerCase().includes(input.toLowerCase())
-                || job.status.toLowerCase().includes(input.toLowerCase())
-                || job.timestamp.toString().includes(input.toLowerCase())
-                || (job.duration.toString() + " seconds").includes(input)
+                    || job.assetName.toLowerCase().includes(input.toLowerCase())
+                    || job.status.toLowerCase().includes(input.toLowerCase())
+                    || job.timestamp.toString().includes(input.toLowerCase())
+                    || (job.duration.toString() + " seconds").includes(input)
             });
             break;
         default:
@@ -110,8 +111,8 @@ export const filterTableItems = (type: TableItemType, list: any[], input: string
 }
 
 export const mergedArrayIdsAndTitles = (ids: number[], titles: string[]): any[] => {
-    if(ids.length !== titles.length){
-        return []; 
+    if (ids.length !== titles.length) {
+        return [];
     }
     else {
         return ids.map((element, index) => {
@@ -121,4 +122,16 @@ export const mergedArrayIdsAndTitles = (ids: number[], titles: string[]): any[] 
             };
         })
     }
+}
+
+export const convertHistogramResponse = (histogramItems: HistogramItem[]): HistogramItem[] => {
+    let convertedHistogramItems: HistogramItem[] = [];
+    convertedHistogramItems = histogramItems?.map((histItem) => {
+        return {
+            month: histItem.month,
+            monthName: histItem.monthName,
+            total: Number(histItem.total.toFixed(2)),
+        }
+    })
+    return convertedHistogramItems;
 }

@@ -14,6 +14,33 @@ export function SideMenu(props) {
   const [selectedNestedItemIndex, setSelectedNestedItemIndex] = React.useState(0);
   const [isNestedItemSelected, setIsNestedItemSelected] = React.useState(false);
 
+
+  useEffect(()=> {
+    if(props.location){
+      switch(props.location.pathname){
+        case '/recommendations-manage':
+          setSelectedItemIndex(1);
+          setSelectedNestedItemIndex(0);
+          setIsNestedItemSelected(true);
+          break;
+        case '/recommendations-jobs':
+          setSelectedItemIndex(1);
+          setSelectedNestedItemIndex(1);
+          setIsNestedItemSelected(true);
+          break;
+        case '/recommendations-results':
+          setSelectedItemIndex(1);
+          setSelectedNestedItemIndex(2);
+          setIsNestedItemSelected(true);
+          break;
+        default:
+          setSelectedItemIndex(0);
+          setIsNestedItemSelected(false);
+          break;
+      }
+    }
+  }, [])
+
   /**
    * Function that handles clicking on menu options
    * @param {*} object 

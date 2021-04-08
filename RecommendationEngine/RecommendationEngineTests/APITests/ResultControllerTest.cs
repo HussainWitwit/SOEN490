@@ -94,8 +94,50 @@ namespace RecommendationEngineTests.APITests
             Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
 
+        [Test]
+        public async Task GetHistogram()
+        {
+            var response = await _client.GetAsync("api/result/histogram/2020/44");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<HistogramItem> monthlyList = JsonConvert.DeserializeObject<List<HistogramItem>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(monthlyList);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "04").Total, 23);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "07").Total, 23);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "10").Total, 0);
+        }
+
+        [Test]
+        public async Task GetBadHistogram()
+        {
+            var response = await _clientBad.GetAsync("api/result/widgets");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
+        }
+
+        [Test]
+        public async Task GetHistogramYears()
+        {
+            var response = await _client.GetAsync("api/result/histogramYears");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<int> monthlyList = JsonConvert.DeserializeObject<List<int>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(monthlyList);
+            Assert.AreEqual(monthlyList[0], 2020);
+        }
+
+
+        [Test]
+        public async Task GetBadHistogramYears()
+        {
+            var response = await _clientBad.GetAsync("api/result/histogramYears");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
+        }
+
         public class TestRepositoryMock : IResultRepository
         {
+            public List<DBRecommendationJobResult> GetResultWithActions()
+            {
+                return MockResults.BasicDBResultList;
+            }
+
             List<DBRecommendationJobResult> IResultRepository.GetResultList()
             {
                 return MockResults.BasicDBResultList;
@@ -104,6 +146,11 @@ namespace RecommendationEngineTests.APITests
 
         public class TestBadRepositoryMock : IResultRepository
         {
+            public List<DBRecommendationJobResult> GetResultWithActions()
+            {
+                return MockResults.BadDBResultList;
+            }
+
             List<DBRecommendationJobResult> IResultRepository.GetResultList()
             {
                 return MockResults.BadDBResultList;
