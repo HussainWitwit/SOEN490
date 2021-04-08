@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './SideMenu.css';
 import { Drawer, List, CssBaseline, Typography, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
@@ -13,6 +13,33 @@ export function SideMenu(props) {
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
   const [selectedNestedItemIndex, setSelectedNestedItemIndex] = React.useState(0);
   const [isNestedItemSelected, setIsNestedItemSelected] = React.useState(false);
+
+
+  useEffect(()=> {
+    if(props.location){
+      switch(props.location.pathname){
+        case '/recommendations-manage':
+          setSelectedItemIndex(1);
+          setSelectedNestedItemIndex(0);
+          setIsNestedItemSelected(true);
+          break;
+        case '/recommendations-jobs':
+          setSelectedItemIndex(1);
+          setSelectedNestedItemIndex(1);
+          setIsNestedItemSelected(true);
+          break;
+        case '/recommendations-results':
+          setSelectedItemIndex(1);
+          setSelectedNestedItemIndex(2);
+          setIsNestedItemSelected(true);
+          break;
+        default:
+          setSelectedItemIndex(0);
+          setIsNestedItemSelected(false);
+          break;
+      }
+    }
+  }, [])
 
   /**
    * Function that handles clicking on menu options
