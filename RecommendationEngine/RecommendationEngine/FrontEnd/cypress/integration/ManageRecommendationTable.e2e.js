@@ -79,4 +79,21 @@ describe("Manage Recommendation Table", () => {
         cy.get('[aria-sort="ascending"] > #table-header').click()
         cy.wait(500)
     })
+
+    it('Opens a job log', () => {
+        cy.get('.rendering-zone > .Mui-odd').eq(1).click()
+        cy.wait(500)
+        cy.get('.last-five-status').should('be.visible')
+        cy.wait(500)
+        cy.get('.Failed').eq(1).click({multiple: true})
+    })
+
+    it("Creates a toaster notification when actions occur", () => {
+        cy.get('.rendering-zone > .Mui-odd').eq(1).click()
+        cy.wait(500)
+        cy.get('#forceRunRecButton').click({multiple: true})
+        cy.wait(500)
+        cy.get('#force-run-button').click({multiple: true})
+        cy.get('.Toastify__toast-body').should('be.visible')
+    })
 })

@@ -35,6 +35,16 @@ describe("Result Page", () => {
     it("Checks if the calendar grid gets highlighted when clicked on", () => {
         cy.get(':nth-child(1) > .fc-day-thu > .fc-daygrid-day-frame').click()
         cy.get('.fc-highlight').should('be.visible')
+    })
 
+    it("Clicks on a date with actions", () => {
+        cy.get('.fc-icon-chevron-left').click()
+        cy.get('.fc-icon-chevron-left').click()
+        cy.get('.fc-icon-chevron-left').click()
+        cy.get('.fc-icon-chevron-left').click()
+        cy.get('.fc-icon-chevron-left').click()
+        cy.get('.fc-icon-chevron-left').click()
+        cy.get('.fc-event-title-container').click({multiple: true})
+        cy.get('#action-item-container').should('be.visible')
     })
 })
