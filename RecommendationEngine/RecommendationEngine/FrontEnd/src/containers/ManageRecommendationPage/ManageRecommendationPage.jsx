@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import RecommendationEngineTable from '../../common/RecommendationEngineTable/RecommendationEngineTable';
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
-import PageSubHeader from '../../common/PageSubHeader/PageSubHeader';
+import { RecommendationsPageTemplate } from '../../common/RecommendationsPageTemplate/RecommendationsPageTemplate';
 import { TableColumns as columns } from './TableConfig';
 import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ManageRecommendationPage.css';
@@ -35,29 +34,20 @@ export function ManageRecommendationPage (props) {
   }, [configuredRecommendationList])
 
   return (
-    <div id="main-container">
-      <div></div>
-      <div>
-        <br></br>
-        <PageSubHeader
-          pageTitle="Configured Recommendations"
-          descriptionSubtitle="Browse, edit, and delete recommendation jobs"
-          showCreateRecommendation={true}
-          toggleDialog={toggleDialog}
-          addRecommendationProps={props}
-          updateSearch={updateSearch}
-        />
-      </div>
-      <br></br>
-      <RecommendationEngineTable
-        data={recommendationList}
-        columnValues={columns}
-        onClickRow={openScheduleDrilldown}
-        isClickable={true}
-        dateColumnName={'createdOn'}
-        dateSortingOrder={'desc'}
-      />
-    </div >
+    <RecommendationsPageTemplate
+      pageTitle ={"Configured Recommendations"}
+      subtTitleDescription = {"Browse, edit, and delete recommendation jobs"}
+      showCreateRecommendationButton={true}
+      onOpenRecommendationDialog = {toggleDialog}
+      addRecommendationProps = {props}
+      onSearch = {updateSearch}
+      tableData = {recommendationList}
+      tableColumns = {columns}
+      onTableClickRow = {openScheduleDrilldown}
+      isRowClickable = {true}
+      dateColumnName = {'createdOn'}
+      dateSortingOrder={'desc'}
+    />
   );
 }
 

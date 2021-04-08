@@ -1,20 +1,51 @@
-    #grid1{
-        width: 79%;
-    }
-    
-    .gridContainerStyle.MuiGrid-container{
-        align-items: flex-end;
-    }
+#title, #subtitle, #filter-btn, #rec-btn, .table-style {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    #title{
-        margin-top: 20px;
-        color: #252733;
-        font-size: 25px;
-    }
-    
-    #subtitle{
-        margin-top: 5px;
-        color: #868282;
-        font-size: 13px;
-        font-weight:normal
-    }
+#grid1{
+    width: 79%;
+}
+
+.gridContainerStyle.MuiGrid-container{
+    align-items: flex-end;
+}
+
+#title{
+    margin-top: 20px;
+    color: #252733;
+    font-size: 25px;
+}
+
+#subtitle{
+    margin-top: 5px;
+    color: #868282;
+    font-size: 13px;
+    font-weight:normal
+}
+
+#rec-btn{
+    background-color: #4DD3EF;
+    float: right;
+    color: #FFFFFF;
+    text-transform: none;
+    margin-bottom: 15px;
+    box-shadow: none;
+    height: 47px;
+    font-size: 12px;
+    padding: 6px 12px;
+    border: 6px solid;
+    line-height: 1.5;
+    border-color: #4DD3EF;
+}
+
+#rec-btn:hover{
+        background-color: #3DB1C9;
+        border-color: #3DB1C9;
+        box-shadow: none;
+}
+
+#rec-btn:active{
+    box-shadow: none;
+    background-color: #3DB1C9;
+    border-color: #3DB1C9;
+}
