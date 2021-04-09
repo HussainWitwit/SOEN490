@@ -14,7 +14,34 @@ import "./DialogPopUp.css"
 
 export function DialogPopUp(props) {
 
-    const { open, popUpType, popUpTextLabel, recommendationId, updateScheduleDrilldown, handleForceRunPopUpOpen, title, deleteConfiguredRecommendation, closeScheduleDrilldown, handleDeletePopUpOpen } = props;
+    const {
+        open,
+        popUpType,
+        popUpTextLabel,
+        recommendationId,
+        updateScheduleDrilldown,
+        handleForceRunPopUpOpen,
+        recommendationTitle,
+        deleteConfiguredRecommendation,
+        closeScheduleDrilldown,
+        handleDeletePopUpOpen,
+        dialogTitle,
+        dialogDescription1,
+        dialogDescription2,
+        successMessage
+    } = props;
+
+    const handleForceRunAction = () => {
+        handleForceRunPopUpOpen();
+        updateScheduleDrilldown(popUpType);
+        ForceRunConfiguredRecommendation(recommendationId);
+    }
+
+    const handleDeleteAction = () => {
+        handleDeletePopUpOpen();
+        deleteConfiguredRecommendation(recommendationId);
+        closeScheduleDrilldown();
+    }
 
     const handleClose = () => {
         if (popUpType == "delete") {
@@ -30,57 +57,46 @@ export function DialogPopUp(props) {
             open={open}
             onClose={handleClose}
         >
-            <IconButton aria-label="close" id="force-run-close-button" onClick={handleClose}>
+            <IconButton aria-label="close" id="close-button" onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
-            <div id="force-run-delete-warning">
+            <div id="delete-warning">
                 {popUpType == "delete" &&
                     <div id="warning">
                         <WarningRoundedIcon id="warning-rounded-icon"></WarningRoundedIcon>
                     </div>
                 }
-                <div id="force-run-warning-message">
+                <div id="warning-message">
                     <DialogTitle classes={{ root: 'alertMessage' }}>
                         {popUpType == "forceRun" &&
-                            <b>Force Run Configured Recommendation</b>
+                            <b>{dialogTitle}</b>
                         }
                         {popUpType == "delete" &&
-                            <b>Delete Configured Recommendation</b>
+                            <b>{dialogTitle}</b>
                         }
                     </DialogTitle>
                     <DialogContent>
                         {popUpType == "forceRun" &&
                             <DialogContentText>
-                                Are you sure you want to force run <b>{title}</b>?
+                                {dialogDescription1} <b>{recommendationTitle}</b>?
                         </DialogContentText>
                         }
                         {popUpType == "delete" &&
                             <DialogContentText>
-                                Are you sure you want to delete <b>{title}</b>? This configured recommendation and any of its related jobs, results or actions will be deleted. This process cannot be undone.
+                                {dialogDescription1} <b>{recommendationTitle}</b>{dialogDescription2}
                         </DialogContentText>
                         }
                     </DialogContent>
                 </div>
             </div>
             <DialogActions>
-                <div id="force-run-buttons">
-                    <Button onClick={handleClose} id="force-run-cancel-button" variant="outlined">
+                <div id="buttons">
+                    <Button onClick={handleClose} id="cancel-button" variant="outlined">
                         Cancel
                     </Button>
                     <Button onClick={() => {
-                        handleClose();
-                        {
-                            popUpType == "forceRun" &&
-                            updateScheduleDrilldown(popUpType)
-                            ForceRunConfiguredRecommendation(recommendationId)
-                        }
-                        {
-                            popUpType == "delete" &&
-                            deleteConfiguredRecommendation(recommendationId)
-                            // closeScheduleDrilldown();
-                        }
-
-                        toast.success(popUpType == "forceRun" ? title + ' has successfully been triggered!' : title + ' has successfully been deleted!', {
+                        (popUpType == "forceRun" ? handleForceRunAction() : handleDeleteAction())
+                        toast.success(recommendationTitle + successMessage, {
                             position: "bottom-center",
                             autoClose: 5000,
                             hideProgressBar: false,
@@ -89,7 +105,7 @@ export function DialogPopUp(props) {
                             draggable: true,
                             progress: undefined,
                         })
-                    }} id="force-run-button" variant="outlined">
+                    }} id={popUpType == "delete" ? "delete-button" : "force-run-button"} variant="outlined">
                         {popUpTextLabel}
                     </Button>
                 </div>
