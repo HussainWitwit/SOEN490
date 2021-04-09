@@ -55,6 +55,7 @@ describe('Add Recommendation Dialog', () => {
         cy.get('#next-btn').should('be.disabled');;
     });
 
+    //No longer good
     it('Can fill info in Basic Configuration context for Yearly Wash optimization', () => {
         cy.get('#item-template-selected').click();
         cy.get('#next-btn').click();
@@ -76,6 +77,7 @@ describe('Add Recommendation Dialog', () => {
         cy.get('[role="dialog"][style="position: fixed; z-index: 1300; inset: 0px;"] > .MuiDialog-container > .MuiDialog-paper > .MuiDialogActions-root > :nth-child(2) > .MuiButton-label').click();
     });
 
+    //No longer good
     it('Can post a recommendaiton for Yearly Wash optimization', () => {
 
         cy.get('#item-template-selected').click();
@@ -102,5 +104,55 @@ describe('Add Recommendation Dialog', () => {
         cy.get('[data-testid=dialog]').should('not.exist');
         // cy.get('[data-testid=table-body-cypress]').children().should('have.length', number + 1); //Wanted to make sure the size of the table increased by 1. It did increased, however this line was failing
     });
+    
+    it('Can add a recommendation when selecting two different type of asset.', () => {
+        cy.get('#next-btn > .MuiButton-label').click();
+        cy.wait(500)
+        cy.get('#details-configuration-modal > :nth-child(1) > :nth-child(1)').should('exist');
+        cy.get('[data-testid=title] > .MuiInputBase-root > .MuiInputBase-input').type("Hellow World System test");
+        cy.get('.ant-select-selection-overflow').click();
+        cy.get('.ant-select-dropdown').should('exist');
+        cy.get(':nth-child(2) > .ant-select-tree-checkbox > .ant-select-tree-checkbox-inner').click(); 
+        cy.wait(500)   
+        cy.get(':nth-child(4) > .ant-select-tree-switcher').click();
+        cy.wait(500)
+        cy.get(':nth-child(5) > .ant-select-tree-checkbox > .ant-select-tree-checkbox-inner').click();
+        cy.wait(500)
+        cy.get('#next-btn > .MuiButton-label').click();
+        cy.wait(500)
+        cy.get('#next-btn > .MuiButton-label').click();
+        cy.wait(500);
+        cy.get('[data-testid=confirm-button]').click();
+        cy.get('.Toastify__toast-body').should('exist');
+        cy.get('.Toastify__toast-body').contains("successful");
+    });
+
+    //Not working.... RE-8
+    // it('Can set values for different parameters', () => {
+    //     cy.get('#next-btn > .MuiButton-label').click();
+    //     cy.wait(500)
+    //     cy.get('#details-configuration-modal > :nth-child(1) > :nth-child(1)').should('exist');
+    //     cy.get('[data-testid=title] > .MuiInputBase-root > .MuiInputBase-input').type("Hellow World System test");
+    //     cy.get('.ant-select-selection-overflow').click();
+    //     cy.get('.ant-select-dropdown').should('exist');
+    //     cy.get(':nth-child(2) > .ant-select-tree-checkbox > .ant-select-tree-checkbox-inner').click(); 
+    //     cy.wait(500)   
+    //     cy.get(':nth-child(4) > .ant-select-tree-switcher').click();
+    //     cy.wait(500)
+    //     cy.get(':nth-child(5) > .ant-select-tree-checkbox > .ant-select-tree-checkbox-inner').click();
+    //     cy.wait(500)
+    //     cy.get('#next-btn > .MuiButton-label').click();
+    //     cy.get('#parameter-value0').scrollIntoView().should('be.visible');
+    //     cy.get(':nth-child(1) > :nth-child(2) > [data-testid=parameter-value] > .MuiInputBase-root > .MuiInputBase-input').clear();
+    //     cy.get(':nth-child(1) > :nth-child(2) > [data-testid=parameter-value] > .MuiInputBase-root > .MuiInputBase-input').type("2");
+    //     cy.wait(500)
+    //     cy.get('#next-btn > .MuiButton-label').click();
+    //     cy.wait(500);
+    //     cy.get('[data-testid=confirm-button]').click();
+    //     cy.get('.Toastify__toast-body').should('exist');
+    //     cy.get('.Toastify__toast-body').contains("successful");
+    // });
+
+
 
 });
