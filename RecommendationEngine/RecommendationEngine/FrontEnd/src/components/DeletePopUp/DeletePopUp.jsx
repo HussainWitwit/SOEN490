@@ -12,61 +12,74 @@ import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-a
 import { connect } from 'react-redux';
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
 import { toast } from 'react-toastify';
+import { DialogPopUp } from '../DialogPopUp/DialogPopUp';
 
 export function DeletePopUp(props) {
-    const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown } = props;
+    const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown, open, handleDeletePopUpOpen, title } = props;
 
-    const handleClose = () => {
-        props.handleDeletePopUpOpen();
-    };
+    // const handleClose = () => {
+    //     handleDeletePopUpOpen();
+    // };
 
-    const deleteRecommendationEvent = async () => {
-        deleteConfiguredRecommendation(recommendationId)
-    }
+    // const deleteRecommendationEvent = async () => {
+    //     deleteConfiguredRecommendation(recommendationId)
+    // }
 
     return (
-        <Dialog
-            classes={{ paper: "dialog" }}
-            open={props.open}
-            onClose={handleClose}
-        >
-            <IconButton aria-label="close" id="close-button" onClick={handleClose}>
-                <CloseIcon />
-            </IconButton>
-            <div id="delete-warning"><div id="warning"><WarningRoundedIcon id="warning-rounded-icon"></WarningRoundedIcon></div>
-                <div id="warning-message">
-                    <DialogTitle classes={{ root: 'alertMessage' }}><b>Delete Configured Recommendation</b></DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Are you sure you want to delete <b>{props.title}</b>? This configured recommendation and any of its related jobs, results or actions will be deleted. This process cannot be undone.
-                </DialogContentText>
-                    </DialogContent>
-                </div>
-            </div>
-            <DialogActions>
-                <div id="buttons">
-                    <Button onClick={handleClose} id="cancel-button" variant="outlined">
-                        Cancel
-          </Button>
-                    <Button onClick={() => {
-                        handleClose();
-                        deleteRecommendationEvent();
-                        closeScheduleDrilldown();
-                        toast.success(props.title + ' has successfully been deleted!', {
-                            position: "bottom-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        })
-                    }} id="delete-button" variant="outlined">
-                        Delete
-          </Button>
-                </div>
-            </DialogActions>
-        </Dialog>
+        // <Dialog
+        //     classes={{ paper: "dialog" }}
+        //     open={open}
+        //     onClose={handleClose}
+        // >
+        //     <IconButton aria-label="close" id="close-button" onClick={handleClose}>
+        //         <CloseIcon />
+        //     </IconButton>
+        //     <div id="delete-warning"><div id="warning"><WarningRoundedIcon id="warning-rounded-icon"></WarningRoundedIcon></div>
+        //         <div id="warning-message">
+        //             <DialogTitle classes={{ root: 'alertMessage' }}><b>Delete Configured Recommendation</b></DialogTitle>
+        //             <DialogContent>
+        //                 <DialogContentText>
+        //                     Are you sure you want to delete <b>{title}</b>? This configured recommendation and any of its related jobs, results or actions will be deleted. This process cannot be undone.
+        //         </DialogContentText>
+        //             </DialogContent>
+        //         </div>
+        //     </div>
+        //     <DialogActions>
+        //         <div id="buttons">
+        //             <Button onClick={handleClose} id="cancel-button" variant="outlined">
+        //                 Cancel
+        //   </Button>
+        //             <Button onClick={() => {
+        //                 handleClose();
+        //                 deleteConfiguredRecommendation(recommendationId)
+        //                 closeScheduleDrilldown();
+        //                 toast.success(title + ' has successfully been deleted!', {
+        //                     position: "bottom-center",
+        //                     autoClose: 5000,
+        //                     hideProgressBar: false,
+        //                     closeOnClick: true,
+        //                     pauseOnHover: true,
+        //                     draggable: true,
+        //                     progress: undefined,
+        //                 })
+        //             }} id="delete-button" variant="outlined">
+        //                 Delete
+        //   </Button>
+        //         </div>
+        //     </DialogActions>
+        // </Dialog>
+
+        <DialogPopUp
+            open={open}
+            popUpType={'delete'}
+            popUpTextLabel={'Delete'}
+            recommendationId={recommendationId}
+            deleteConfiguredRecommendation={deleteConfiguredRecommendation}
+            closeScheduleDrilldown={closeScheduleDrilldown}
+            handleDeletePopUpOpen={handleDeletePopUpOpen}
+            title={title}
+        />
+
     );
 }
 
