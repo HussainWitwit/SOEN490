@@ -2,7 +2,7 @@ import React from 'react';
 import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import "./ForceRunPopUp.css"
-import { DialogPopUp } from '../DialogPopUp/DialogPopUp';
+import { DialogPopUp } from '../../common/DialogPopUp/DialogPopUp';
 
 export function ForceRunPopUp (props) {
     

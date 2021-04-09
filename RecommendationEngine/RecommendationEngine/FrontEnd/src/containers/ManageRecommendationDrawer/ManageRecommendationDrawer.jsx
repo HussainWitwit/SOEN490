@@ -9,8 +9,8 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import { mapTemplateStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
-import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
-import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
+import ForceRunPopUp from '../ForceRunPopUp/ForceRunPopUp';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 

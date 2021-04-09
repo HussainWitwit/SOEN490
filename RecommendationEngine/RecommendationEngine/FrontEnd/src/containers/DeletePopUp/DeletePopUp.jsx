@@ -2,7 +2,7 @@ import React from 'react';
 import "./DeletePopUp.css"
 import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
-import { DialogPopUp } from '../DialogPopUp/DialogPopUp';
+import { DialogPopUp } from '../../common/DialogPopUp/DialogPopUp';
 
 export function DeletePopUp(props) {
     const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown, open, handleDeletePopUpOpen, title } = props;
