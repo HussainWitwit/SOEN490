@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './ManageRecommendationDrawer.css';
 import Grid from '@material-ui/core/Grid';
 import 'date-fns';
@@ -13,14 +13,28 @@ import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import NotificationHub from '../../api/notification-hub/NotificationHub';
 
 export function ManageRecommendationDrawer({
-  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType
+  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType, openScheduleDrilldown
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
   const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
   const [jobLogId, setJobLogId] = React.useState(null);
+  const notificationHub = NotificationHub.getHubConnection();
+
+  useEffect(() => {
+    const handleNotification = (notification) =>{
+      if (configuredRecommendation.id === notification.scheduleId){
+        updatePanel(configuredRecommendation.id)
+      }
+    }
+    notificationHub.on('ReceiveNotification', handleNotification);
+    return function cleanup() {
+      notificationHub.off('ReceiveNotification', handleNotification);
+    };
+  }, [notificationHub.on('ReceiveNotification'), configuredRecommendation]);
 
   // Animation style
   const props = useSpring({
@@ -28,6 +42,10 @@ export function ManageRecommendationDrawer({
     transform: 'translate3d(0px,0,0)',
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
+
+  const updatePanel = (id) => {
+    openScheduleDrilldown(id)
+  }
 
   const handleOpenLogPopup = () => {
     setOpenJobLogPopup(!openJobLogPopup)

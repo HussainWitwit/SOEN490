@@ -53,5 +53,32 @@ namespace RecommendationEngine.Controllers
                 return e.GetActionResult();
             }
         }
+
+
+        [HttpGet("histogram/{year}/{assetId?}")]
+        public IActionResult GetHistogram(int year, int? assetId)
+        {
+            try
+            {
+                return Ok(_resultService.GetHistogram(year, assetId));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("histogramYears/{assetId?}")]
+        public IActionResult GetHistogramYears(int? assetId)
+        {
+            try
+            {
+                return Ok(_resultService.GetHistogramYears(assetId));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
     }
 }

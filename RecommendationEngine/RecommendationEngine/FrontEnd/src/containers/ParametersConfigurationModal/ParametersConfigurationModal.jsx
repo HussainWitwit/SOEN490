@@ -9,7 +9,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
 import { singleParameterInvalid } from '../../utilities/ValidationUtilities';
 
-export function ParamTextField({ paramObject, index, onChangeEvent }) {
+export function ParamTextField ({ paramObject, index, onChangeEvent }) {
   const [error, setError] = useState(false);
   let paramTypeAttributes = paramObject.parameterType.split('_');
   let isNegative = paramTypeAttributes[0] === 'NEGATIVE';
@@ -49,7 +49,7 @@ export function ParamTextField({ paramObject, index, onChangeEvent }) {
   );
 }
 
-export function ParametersConfigurationModal(props) {
+export function ParametersConfigurationModal (props) {
 
   const { parameterList, setParamValue } = props;
 
@@ -58,7 +58,7 @@ export function ParametersConfigurationModal(props) {
       <div id="parameter-modal-content">
         <div id="table-container">
           <Table stickyHeader aria-label="collapsible table">
-            {parameterList.length != 0 &&
+            {parameterList.length !== 0 &&
               <TableHead>
                 <TableRow className="table-header-row">
                   {['Parameter name', 'Value'].map((cell, index) => (
@@ -70,7 +70,7 @@ export function ParametersConfigurationModal(props) {
               </TableHead>
             }
             <TableBody>
-              {parameterList.length != 0 ?
+              {parameterList.length !== 0 ?
                 parameterList.map((cell, index) => (
                   <TableRow id="parameter-row" key={index}>
                     <TableCell id="parameter-name-table-cell">
@@ -91,7 +91,6 @@ export function ParametersConfigurationModal(props) {
                             inputVariant="outlined"
                             value={cell.parameterValue}
                             minDate={cell.parameterName.includes('Start') ? new Date(2020, 1, 1) : cell.parameterName.includes('End') ? parameterList[index - 1].parameterValue : new Date(2020, 1, 1)}
-                            maxDate={cell.parameterName.includes('Start') ? parameterList[index + 1].parameterValue : new Date(2020, 11, 31)}
                             minDateMessage={'The start date cannot overlap'}
                             maxDateMessage={'The end date cannot overlap'}
                             onChange={(date) => setParamValue(date, index)}

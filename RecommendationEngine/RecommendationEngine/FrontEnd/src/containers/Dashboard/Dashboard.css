@@ -1,10 +1,14 @@
 
+.dashboard-container {
+  width: 100%;
+}
+
 #widget-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 90%;
+  width: 96%;
 }
 
 #tooltip-container {
@@ -15,6 +19,7 @@
 
 #title-container {
   display: flex;
+  text-align: center;
   justify-content: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size:medium;
@@ -37,6 +42,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .fc-header-toolbar{
   margin-top: 3em;
   width: 720px;
@@ -70,6 +76,15 @@
   color:rgb(179, 94, 88);
   border: solid 2px rgb(177, 74, 66);
 }
+
+#histogram {
+  padding-right: 5%;
+}
+
+.MuiSelect-outlined.MuiSelect-outlined {
+  width: 80px;
+}
+
 .fc-view-harness{
   width: 720px;
 }

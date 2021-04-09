@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Models.Application;
 using Models.DB;
 
 
@@ -21,13 +20,18 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     RecommendationJobResultId = 1,
                     CostOfAction = 400,
                     CostOfInaction = 78,
-                    NetSaving = 45,
+                    NetSaving = 46,
                     ReturnOnInvestment = 7483.6,
                     Job = MockJobs.BasicDBJobList[0],
                     Asset = new DBAsset
                     {
                         DisplayText = "Test Asset",
                         AssetId = 44
+                    },
+                    ActionsSuggestedList = new List<DBAction>()
+                    {
+                       new DBAction { Date = new DateTime(2020, 4, 14)},
+                       new DBAction { Date = new DateTime(2020, 7, 29)}
                     }
                 };
 
@@ -36,13 +40,17 @@ namespace RecommendationEngineTests.UnitTests.MockData
                     RecommendationJobResultId = 1,
                     CostOfAction = 400,
                     CostOfInaction = 726,
-                    NetSaving = 65,
+                    NetSaving = 64,
                     ReturnOnInvestment = 899,
                     Job = MockJobs.BasicDBJobList[0],
                     Asset = new DBAsset
                     {
                         DisplayText = "Test Asset",
                         AssetId = 45
+                    },
+                    ActionsSuggestedList = new List<DBAction>()
+                    {
+                       new DBAction { Date = new DateTime(2020, 4, 18)},
                     }
                 };
 

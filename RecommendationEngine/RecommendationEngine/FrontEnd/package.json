@@ -18,6 +18,7 @@
     "@material/circular-progress": "^10.0.0",
     "@microsoft/signalr": "^5.0.3",
     "antd": "^4.12.3",
+    "bizcharts": "^4.1.9",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",
     "isomorphic-fetch": "^3.0.0",

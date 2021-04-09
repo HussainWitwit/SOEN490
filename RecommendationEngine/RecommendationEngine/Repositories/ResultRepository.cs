@@ -28,5 +28,20 @@ namespace RecommendationEngine.Repositories
                 throw new DbException();
             }
         }
+
+        public List<DBRecommendationJobResult> GetResultWithActions()
+        {
+            try
+            {
+                return _recommendationEngineDb.RecommendationJobResults.Include(result => result.ActionsSuggestedList)
+                    .Include(result => result.Asset).ThenInclude(x => x.ParentAsset).ToList();
+            }
+            catch (Exception)
+            {
+                throw new DbException();
+            }
+        }
+
+
     }
 }

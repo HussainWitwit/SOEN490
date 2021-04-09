@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Dashboard.css';
-import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId } from '../../api/endpoints/DashboardEndpoints';
+import { GetWidgetMetrics, GetCalendarDates, GetActionPerDay, GetActionPerCompoundId, GetHistogramYears, GetHistogramValues } from '../../api/endpoints/DashboardEndpoints';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-import { convertWidgetResponse } from '../../utilities/ArrayManipulationUtilities';
+import { convertWidgetResponse, convertHistogramResponse } from '../../utilities/ArrayManipulationUtilities';
 import { currencyCAD } from '../../utilities/GeneralUtilities';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
@@ -16,6 +16,12 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction";
 import { mapStateToProps as mapAssetFilterStateToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import { connect } from 'react-redux';
+import { Chart, Interval, Axis } from 'bizcharts';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -31,7 +37,7 @@ export const pickStylingClassName = (title) => {
   return className;
 }
 
-function ListOfActions({ listActionValues, selectedDate }) {
+function ListOfActions ({ listActionValues, selectedDate }) {
   return (
     <Grid className="listOfActions">
       {listActionValues.length === 0 &&
@@ -65,12 +71,15 @@ function ListOfActions({ listActionValues, selectedDate }) {
   )
 }
 
-function Dashboard(props) {
+function Dashboard (props) {
 
   const [widgetMetrics, setWidgetMetrics] = useState([]);
   const [calendarValues, setCalendarValues] = useState([]);
   const [listActionValues, setListActionValues] = useState([]);
   const [selectedDate, setSelectedDate] = useState(formatDate(Date.now()));
+  const [histogramValues, setHistogramValues] = useState([]);
+  const [yearList, setYearList] = useState([]);
+  const [year, setYear] = useState('');
   const [loading, setLoading] = useState(false);
 
   const calendarRef = useRef();
@@ -83,12 +92,12 @@ function Dashboard(props) {
     setLoading(false);
   }
 
-  function formatDate(date) {
+  function formatDate (date) {
     var d = new Date(date);
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-  function calendarEvents(calendar) {
+  function calendarEvents (calendar) {
     var events = calendar.map((element) => {
       return {
         date: element.date,
@@ -119,8 +128,30 @@ function Dashboard(props) {
     }
   }
 
+  const handleClickHistogram = (month) => {
+    let year = new Date().getFullYear() - 1;
+    let date = month.toString() + '-01-' + year.toString();
+    setSelectedDate(formatDate(date));
+    calendarRef.current.getApi().gotoDate(formatDate(date));
+  }
+
+  const onChangeYear = (e) => {
+    setYear(e.target.value);
+  }
+
   useEffect(() => {
-    async function getDashboardValues() {
+    async function getHistogram () {
+      let histogramYears = await GetHistogramYears(props.selectedAsset);
+      setYearList(histogramYears);
+      setYear(histogramYears[histogramYears.length - 1])
+      let histogramResponse = await GetHistogramValues(props.selectedAsset, year);
+      setHistogramValues(convertHistogramResponse(histogramResponse));
+    }
+    getHistogram();
+  }, [year, props.selectedAsset])
+
+  useEffect(() => {
+    async function getDashboardValues () {
       startLoadingSpinner();
 
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
@@ -148,7 +179,7 @@ function Dashboard(props) {
   }, [props.selectedAsset])
 
   return (
-    <div>
+    <div className="dashboard-container">
       <div>
         <Dialog
           open={loading}
@@ -165,12 +196,40 @@ function Dashboard(props) {
         <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
           <Grid id="grid1" item>
             <h3 id="title">Dashboard</h3>
-            <h6 id="subtitle">View a calendar with upcomming wash days</h6>
+            <h6 id="subtitle">View a summary of past and potential future recommendations and their metrics</h6>
           </Grid>
         </Grid>
         <br></br>
       </div>
       <div id='widget-container'>
+        <div id='histogram'>
+          <div id='year-dropdown'>
+            <FormControl variant="outlined" >
+              <InputLabel>Year</InputLabel>
+              <Select
+                disabled={!yearList.length}
+                value={year}
+                onChange={onChangeYear}
+                label="Year"
+              >
+                {yearList?.map((year, index) => (
+                  <MenuItem key={index} value={year}>{year}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <Chart
+            height={300}
+            width={520}
+            data={histogramValues}
+            onIntervalClick={(e) => { handleClickHistogram(e.data.data.month) }}
+            scale={{ total: { alias: 'Net Saving ($)' } }}
+            interactions={['element-single-selected']}
+          >
+            <Axis name="total" label={{ formatter: val => `${Number(val).toLocaleString()}` }} title />
+            <Interval position="monthName*total" />
+          </Chart>
+        </div>
         {widgetMetrics?.map((widget, index) => (
           <div key={index} className={pickStylingClassName(widget.title)}>
             <div id='tooltip-container'>
