@@ -56,16 +56,11 @@ describe('BasicTable component', () => {
         expect(component).toHaveLength(1);
     });
 
-
     it('It finds the table pagination and tests the onChangePage and onChangeRowsPerPage events', () => {
         let pagination = output.find(TablePagination);
         pagination.props().onChangePage();
         pagination.props().onChangeRowsPerPage(mockedEvent);
         expect(pagination).toHaveLength(1);
-    });
-    output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
-    it('Simulate onChange lite switch event', () => {
-        output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
     });
 
     it('Simulate handleSort event', () => {
