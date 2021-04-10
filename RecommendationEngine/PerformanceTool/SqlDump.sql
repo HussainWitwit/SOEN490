@@ -192,6 +192,7 @@ CREATE TABLE `RecommendationJob` (
 
 LOCK TABLES `RecommendationJob` WRITE;
 /*!40000 ALTER TABLE `RecommendationJob` DISABLE KEYS */;
+ALTER TABLE `RecommendationJob` AUTO_INCREMENT=1;
 /*!40000 ALTER TABLE `RecommendationJob` ENABLE KEYS */;
 UNLOCK TABLES;
 

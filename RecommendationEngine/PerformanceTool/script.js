@@ -72,7 +72,7 @@ export let options = {
       executor: 'per-vu-iterations',
       vus: 20,
       iterations: 25,
-      maxDuration: '50s',
+      maxDuration: '70s',
       exec: 'getRequests',
       startTime: '100s'
     },
@@ -82,7 +82,7 @@ export let options = {
       iterations: 25,
       maxDuration: '40s',
       exec: 'putRequests',
-      startTime: '150s'
+      startTime: '170s'
     },
     deleteRequests: {
       executor: 'per-vu-iterations',
@@ -90,7 +90,7 @@ export let options = {
       iterations: 25,
       maxDuration: '50s',
       exec: 'deleteRequests',
-      startTime: '190s'
+      startTime: '210s'
     },
   },
     thresholds: {
@@ -129,12 +129,24 @@ export function postRequests() {
      modifiedBy: `Modified By ${__VU}: ${__ITER}`,
      recurrenceDatetime: `2023-12-10T00:00:00`,
      granularity: `Yearly`,
-     preferedScenario: `ROI`,
+     preferredScenario: `ROI`,
      assetIdList: [33, 44],
-     /*parameters: [{"ParameterName": "SpanIncrement", "ParameterValue": "3"},
-     {"ParameterName": "CenterPointIncrement", "ParameterValue": "3"},
-     {"ParameterName": "Accelerator", "ParameterValue": "0.35"},
-     {"ParameterName": "SoilingSeasonBuffer", "ParameterValue": "3"}],*/
+     parameters: [
+      { parameterName: "SpanIncrement", parameterValue: "1" },
+      { parameterName: "CenterPointIncrement", parameterValue: "1" },
+      { parameterName: "Accelerator", parameterValue: "0.25" },
+      { parameterName: "SoilingSeasonBuffer", parameterValue: "10" },
+      {
+        parameterName: "StartSoilingSeason",
+        parameterValue: "03/01/2020 00:00:00",
+      },
+      {
+        parameterName: "EndSoilingSeason",
+        parameterValue: "11/01/2020 00:00:00",
+      },
+      { parameterName: "SoilingRate", parameterValue: "-0.0025" },
+      { parameterName: "CostCleaning", parameterValue: "200.00" },
+    ],
   });
 
   let requests = {
@@ -204,12 +216,24 @@ export function putRequests() {
      modifiedBy: `Modified By ${__VU}: ${__ITER}`,
      recurrenceDatetime: `2022-12-13T00:00:00`,
      granularity: `Yearly`,
-     preferedScenario: `netSaving`,
+     preferredScenario: `netSaving`,
      assetIdList: [33, 44],
-     /*parameters: [{"ParameterName": "SpanIncrement", "ParameterValue": "3"},
-     {"ParameterName": "CenterPointIncrement", "ParameterValue": "3"},
-     {"ParameterName": "Accelerator", "ParameterValue": "0.35"},
-     {"ParameterName": "SoilingSeasonBuffer", "ParameterValue": "3"}],*/
+     parameters: [
+      { parameterName: "SpanIncrement", parameterValue: "1" },
+      { parameterName: "CenterPointIncrement", parameterValue: "1" },
+      { parameterName: "Accelerator", parameterValue: "0.25" },
+      { parameterName: "SoilingSeasonBuffer", parameterValue: "10" },
+      {
+        parameterName: "StartSoilingSeason",
+        parameterValue: "03/01/2020 00:00:00",
+      },
+      {
+        parameterName: "EndSoilingSeason",
+        parameterValue: "11/01/2020 00:00:00",
+      },
+      { parameterName: "SoilingRate", parameterValue: "-0.0025" },
+      { parameterName: "CostCleaning", parameterValue: "200.00" },
+    ],
   });
 
   let requests = {
