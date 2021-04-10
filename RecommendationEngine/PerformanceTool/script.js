@@ -50,6 +50,24 @@ let ResultTrend = new Trend('Result Users');
 let schedulerEditErrorRate = new Rate('Scheduler errors');
 let SchedulerEditTrend = new Trend('Scheduler Users');
 
+let actionByCompoundIdErrorRate = new Rate('Action By Compound Id errors');
+let ActionByCompoundIdTrend = new Trend('Action By Compound Id Users');
+
+let numberActionByDayErrorRate = new Rate('Number Actions By Day errors');
+let NumberActionByDayTrend = new Trend('Number Actions By Day Users');
+
+let actionByDateErrorRate = new Rate('Actions by Date errors');
+let ActionByDateTrend = new Trend('Actions by Date Users');
+
+let widgetsErrorRate = new Rate('Widgets errors');
+let WidgetsTrend = new Trend('Widgets Users');
+
+let histogramErrorRate = new Rate('Histogram errors');
+let HistogramTrend = new Trend('Histogram Users');
+
+let histogramYearsErrorRate = new Rate('Histogram Years errors');
+let HistogramYearsTrend = new Trend('Histogram Years Users');
+
 export let options = {
   scenarios: {
     postRequests: {
@@ -106,7 +124,14 @@ export let options = {
       'Job Users': ['p(95)<800'],
       'Job Logs Users': ['p(95)<800'],
       'Result Edit Users': ['p(95)<500'],
-      'Scheduler Edit Users': ['p(95)<100'], //threshold might be too high
+      'Scheduler Users': ['p(95)<100'], //threshold might be too high
+      'Action By Compound Id Users': ['p(95)<1000'],
+      'Histogram Users': ['p(95)<1000'],
+      'Histogram Years Users': ['p(95)<1000'],
+      'Number Actions By Day Users': ['p(95)<1000'],
+      'Result Users': ['p(95)<1000'],
+      'Widgets Users': ['p(95)<1000'],
+      'Actions by Date Users': ['p(95)<1000'],
     },
   };
 
@@ -256,15 +281,21 @@ export function putRequests() {
   sleep(1);
 }
 export function getRequests() {
+  let urlActionByCompoundId = 'http://localhost:5000/api/Action/group/1.2.3.4.5.6';
+  let urlActionsByDay = 'http://localhost:5000/api/Action/calendar';
+  let urlActionsByDate = 'http://localhost:5000/api/Action/date/2022-01-01';
+  let urlWidget = 'http://localhost:5000/api/Result/widgets';
+  let urlHistogram = 'http://localhost:5000/api/Result/histogram/2021';
+  let urlHistogramYears = 'http://localhost:5000/api/Result/histogramYears';
   let urlAssetsNested = 'http://localhost:5000/api/Asset/nested';
   let urlAssets = 'http://localhost:5000/api/Asset';
   let urlConfiguredRecommendationList = 'http://localhost:5000/api/ConfiguredRecommendation';
   let urlConfiguredRecommendationById = `http://localhost:5000/api/ConfiguredRecommendation/10`;
   let urlRecommendationType = 'http://localhost:5000/api/RecommendationType';
-  let urlActionById = `http://localhost:5000/api/Action/15`;
+  let urlActionById = `http://localhost:5000/api/Action/1`;
   let urlJob = `http://localhost:5000/api/Job`;
   let urlJobLogs = `http://localhost:5000/api/Job/log/1`;
-  let urlResult = `http://localhost:5000/api/Result`; 
+  let urlResult = `http://localhost:5000/api/Result`;
 
   let params = {
     headers: {
@@ -298,11 +329,11 @@ export function getRequests() {
       url:  urlRecommendationType,
       params: params,
     },
-    /*'Action By Id Users': {
+    'Action By Id Users': {
       method: 'GET',
       url:  urlActionById,
       params: params,
-    },*/
+    },
     'Job Users': {
       method: 'GET',
       url:  urlJob,
@@ -313,11 +344,41 @@ export function getRequests() {
       url:  urlJobLogs,
       params: params,
     },
-    /*'Result Users': {
+    'Result Users': {
       method: 'GET',
       url:  urlResult,
       params: params,
-    },*/
+    },
+    'Action By Compound Id Users': {
+      method: 'GET',
+      url: urlActionByCompoundId,
+      params: params,
+    },
+    'Number Actions By Day Users': {
+      method: 'GET',
+      url: urlActionsByDay,
+      params: params,
+    },
+    'Actions by Date Users': {
+      method: 'GET',
+      url: urlActionsByDate,
+      params: params,
+    },
+    'Widgets Users': {
+      method: 'GET',
+      url: urlWidget,
+      params: params,
+    },
+    'Histogram Users': {
+      method: 'GET',
+      url: urlHistogram,
+      params: params,
+    },
+    'Histogram Years Users': {
+      method: 'GET',
+      url: urlHistogramYears,
+      params: params,
+    },
   };
   
   let responses = http.batch(requests);
@@ -326,10 +387,16 @@ export function getRequests() {
   let configuredRecommendationListResp = responses['Configured Recommendation Users'];
   let configuredRecommendationByIdResp = responses['Configured Recommendation By Id Users'];
   let recommendationTypeResp = responses['Recommendation Type Users'];
-  //let actionByIdResp = responses['Action By Id Users'];
+  let actionByIdResp = responses['Action By Id Users'];
   let jobResp = responses['Job Users'];
   let jobLogsResp = responses['Job Logs Users'];
-  //let resultResp = responses['Result Users'];
+  let resultResp = responses['Result Users'];
+  let actionByCompoundIdResp = responses['Action By Compound Id Users'];
+  let numberActionsByDayResp = responses['Number Actions By Day Users'];
+  let actionsByDateResp = responses['Actions by Date Users'];
+  let widgetsResp = responses['Widgets Users'];
+  let histogramResp = responses['Histogram Users'];
+  let histogramYearsResp = responses['Histogram Years Users'];
 
 
   check(assetsNestedResp, {
@@ -357,10 +424,10 @@ export function getRequests() {
   }) || recommendationTypeErrorRate.add(1);
   RecommendationTypeTrend.add(recommendationTypeResp.timings.duration);
 
-  /*check(actionByIdResp, {
+  check(actionByIdResp, {
     'status is 200': (r) => r.status === 200,
   }) || actionByIdErrorRate.add(1);
-  ActionByIdTrend.add(actionByIdResp.timings.duration);*/
+  ActionByIdTrend.add(actionByIdResp.timings.duration);
 
   check(jobResp, {
     'status is 200': (r) => r.status === 200,
@@ -372,10 +439,40 @@ export function getRequests() {
   }) || jobLogsErrorRate.add(1);
   JobLogsTrend.add(jobLogsResp.timings.duration);
   
-  /*check(resultResp, {
+  check(resultResp, {
     'status is 200': (r) => r.status === 200,
   }) || resultErrorRate.add(1);
-  ResultTrend.add(resultResp.timings.duration);*/
+  ResultTrend.add(resultResp.timings.duration);
+
+  check(actionByCompoundIdResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || actionByCompoundIdErrorRate.add(1);
+  ActionByCompoundIdTrend.add(actionByCompoundIdResp.timings.duration);
+
+  check(numberActionsByDayResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || numberActionByDayErrorRate.add(1);
+  NumberActionByDayTrend.add(numberActionsByDayResp.timings.duration);
+
+  check(actionsByDateResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || actionByDateErrorRate.add(1);
+  ActionByDateTrend.add(actionsByDateResp.timings.duration);
+
+  check(widgetsResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || widgetsErrorRate.add(1);
+  WidgetsTrend.add(widgetsResp.timings.duration);
+
+  check(histogramResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || histogramErrorRate.add(1);
+  HistogramTrend.add(histogramResp.timings.duration);
+
+  check(histogramYearsResp, {
+    'status is 200': (r) => r.status === 200,
+  }) || histogramYearsErrorRate.add(1);
+  HistogramYearsTrend.add(histogramYearsResp.timings.duration);
 
   sleep(1);
 }
