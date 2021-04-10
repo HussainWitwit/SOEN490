@@ -46,6 +46,7 @@ CREATE TABLE `Action` (
 
 LOCK TABLES `Action` WRITE;
 /*!40000 ALTER TABLE `Action` DISABLE KEYS */;
+INSERT INTO `Action` VALUES (1,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(2,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(3,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(4,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(5,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(6,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1);
 /*!40000 ALTER TABLE `Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,6 +256,7 @@ CREATE TABLE `RecommendationJobResult` (
 
 LOCK TABLES `RecommendationJobResult` WRITE;
 /*!40000 ALTER TABLE `RecommendationJobResult` DISABLE KEYS */;
+INSERT INTO `RecommendationJobResult` VALUES (1,NULL,NULL,4832.480938804579,0,44,1799.4686254078342,53.3568,1746.1118254078342,3372.519763943554);
 /*!40000 ALTER TABLE `RecommendationJobResult` ENABLE KEYS */;
 UNLOCK TABLES;
 
