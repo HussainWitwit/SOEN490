@@ -3,7 +3,7 @@ import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-a
 import { connect } from 'react-redux';
 import "./ForceRunPopUp.css"
 import { DialogPopUp } from '../../common/DialogPopUp/DialogPopUp';
-import { ForceRunConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints'
+import { ForceRunConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints';
 import PropTypes from 'prop-types';
 
 export function ForceRunPopUp (props) {
