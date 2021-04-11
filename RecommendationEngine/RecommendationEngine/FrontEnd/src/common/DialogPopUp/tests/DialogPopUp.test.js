@@ -13,7 +13,7 @@ describe('DialogPopUp component', () => {
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation((init) => [init, setState]);
-    const output = shallow(<DialogPopUp store={store} title={''} handleDeletePopUpOpen={jest.fn} handleForceRunPopUpOpen={jest.fn} open={jest.fn} recommendationId={1} closeScheduleDrilldown={jest.fn} updateScheduleDrilldown={jest.fn} />);
+    const output = shallow(<DialogPopUp store={store} open={jest.fn} popUpType={'delete'} handleAction={jest.fn} handleClose={jest.fn} opUpTextLabel={'Delete'} dialogTitle={'Delete Configured Recommendation'} dialogDescription={'Description'} successMessage={'Success'}  />);
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');

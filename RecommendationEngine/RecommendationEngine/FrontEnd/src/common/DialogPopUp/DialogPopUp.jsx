@@ -8,7 +8,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import { toast } from 'react-toastify';
-import { ForceRunConfiguredRecommendation } from '../../api/endpoints/ConfiguredRecommendationEndpoints'
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
 import "./DialogPopUp.css"
 import PropTypes from 'prop-types';
@@ -19,38 +18,14 @@ export function DialogPopUp (props) {
         open,
         popUpType,
         popUpTextLabel,
-        recommendationId,
-        updateScheduleDrilldown,
-        handleForceRunPopUpOpen,
-        recommendationTitle,
-        deleteConfiguredRecommendation,
-        closeScheduleDrilldown,
-        handleDeletePopUpOpen,
+        handleAction,
+        handleClose,
         dialogTitle,
         dialogDescription1,
         dialogDescription2,
-        successMessage
+        successMessage,
+        recommendationTitle,
     } = props;
-
-    const handleForceRunAction = () => {
-        handleForceRunPopUpOpen();
-        updateScheduleDrilldown(popUpType);
-        ForceRunConfiguredRecommendation(recommendationId);
-    }
-
-    const handleDeleteAction = () => {
-        handleDeletePopUpOpen();
-        deleteConfiguredRecommendation(recommendationId);
-        closeScheduleDrilldown();
-    }
-
-    const handleClose = () => {
-        if (popUpType === "delete") {
-            handleDeletePopUpOpen();
-        } else {
-            handleForceRunPopUpOpen();
-        }
-    };
 
     return (
         <Dialog
@@ -69,24 +44,12 @@ export function DialogPopUp (props) {
                 }
                 <div id="warning-message">
                     <DialogTitle classes={{ root: 'alertMessage' }}>
-                        {popUpType === "forceRun" &&
-                            <b>{dialogTitle}</b>
-                        }
-                        {popUpType === "delete" &&
-                            <b>{dialogTitle}</b>
-                        }
+                        <b>{dialogTitle}</b>
                     </DialogTitle>
                     <DialogContent>
-                        {popUpType === "forceRun" &&
-                            <DialogContentText>
-                                {dialogDescription1} <b>{recommendationTitle}</b>?
+                        <DialogContentText>
+                            {dialogDescription1}<b> {recommendationTitle}</b>{dialogDescription2}
                         </DialogContentText>
-                        }
-                        {popUpType === "delete" &&
-                            <DialogContentText>
-                                {dialogDescription1} <b>{recommendationTitle}</b>{dialogDescription2}
-                            </DialogContentText>
-                        }
                     </DialogContent>
                 </div>
             </div>
@@ -96,17 +59,17 @@ export function DialogPopUp (props) {
                         Cancel
                     </Button>
                     <Button onClick={() => {
-                        (popUpType == "forceRun" ? handleForceRunAction() : handleDeleteAction())
-                        toast.success(recommendationTitle + successMessage, {
-                            position: "bottom-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        })
-                    }} id={popUpType === "delete" ? "delete-button" : "force-run-button"} variant="outlined">
+                        handleAction();
+                            toast.success(recommendationTitle + successMessage, {
+                                position: "bottom-center",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                            })
+                    }} id={popUpType == "delete" ? "delete-button" : "force-run-button"} variant="outlined">
                         {popUpTextLabel}
                     </Button>
                 </div>
