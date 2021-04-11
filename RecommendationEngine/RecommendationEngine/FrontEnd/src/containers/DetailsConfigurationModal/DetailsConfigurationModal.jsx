@@ -15,6 +15,7 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDateTimePicker } f
 import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
 import MultiSelectAutocomplete from '../../common/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mergedArrayIdsAndTitles } from '../../utilities/ArrayManipulationUtilities';
+import PropTypes from 'prop-types';
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
@@ -196,7 +197,17 @@ export function DetailsConfigurationModal (props) {
   );
 }
 
-export default connect(
-  mapDialogStateToProps,
-  mapDispatchToProps
-)(DetailsConfigurationModal);
+export default connect(mapDialogStateToProps, mapDispatchToProps)(DetailsConfigurationModal);
+
+/* istanbul ignore next */
+DetailsConfigurationModal.propTypes = {
+  dialogsContent: PropTypes.object.isRequired,
+  setTitle: PropTypes.func.isRequired,
+  updateAsset: PropTypes.func.isRequired,
+  setPreferredScenario: PropTypes.func.isRequired,
+  setGranularity: PropTypes.func.isRequired,
+  setRepeatDay: PropTypes.func.isRequired,
+  setRepeatDate: PropTypes.func.isRequired,
+  setRepeatTime: PropTypes.func.isRequired,
+  apiAssets: PropTypes.array.isRequired,
+};

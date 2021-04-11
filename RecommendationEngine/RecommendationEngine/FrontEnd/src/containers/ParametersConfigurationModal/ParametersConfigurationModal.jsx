@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
 import { singleParameterInvalid } from '../../utilities/ValidationUtilities';
+import PropTypes from 'prop-types';
 
 export function ParamTextField ({ paramObject, index, onChangeEvent }) {
   const [error, setError] = useState(false);
@@ -48,6 +49,12 @@ export function ParamTextField ({ paramObject, index, onChangeEvent }) {
     />
   );
 }
+
+ParamTextField.propTypes = {
+  paramObject: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onChangeEvent: PropTypes.func.isRequired,
+};
 
 export function ParametersConfigurationModal (props) {
 
@@ -113,3 +120,9 @@ export function ParametersConfigurationModal (props) {
 }
 
 export default connect(mapParamDialogStateToProps, mapDispatchParametersPageToProps)(ParametersConfigurationModal);
+
+/* istanbul ignore next */
+ParametersConfigurationModal.propTypes = {
+  parameterList: PropTypes.array.isRequired,
+  setParamValue: PropTypes.func.isRequired,
+};

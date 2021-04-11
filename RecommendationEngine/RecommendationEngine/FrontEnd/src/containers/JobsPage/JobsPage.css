@@ -4,14 +4,6 @@
     font-weight: bold;
 }
 
-#table-body-status {
-    width: 30%;
-    padding: 0 5% 0 5%;
-}
-
-.table-style{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
 .job-status-running, .job-status-failed, .job-status-success{
     text-align: center;

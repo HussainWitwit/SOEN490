@@ -11,8 +11,9 @@ import { GoCalendar } from 'react-icons/go';
 import './TemplateConfigurationModal.css';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import PropTypes from 'prop-types';
 
-function TemplateConfigurationModal(props) {
+function TemplateConfigurationModal (props) {
 
   const { dialogsContent, dialogStyle, setRecommendationType } = props;
   const { templateDetailsList, template } = dialogsContent;
@@ -101,3 +102,10 @@ function TemplateConfigurationModal(props) {
 }
 
 export default connect(mapDialogStateToProps, mapDispatchToProps)(TemplateConfigurationModal);
+
+/* istanbul ignore next */
+TemplateConfigurationModal.propTypes = {
+  dialogsContent: PropTypes.object.isRequired,
+  dialogStyle: PropTypes.object,
+  setRecommendationType: PropTypes.func.isRequired,
+}

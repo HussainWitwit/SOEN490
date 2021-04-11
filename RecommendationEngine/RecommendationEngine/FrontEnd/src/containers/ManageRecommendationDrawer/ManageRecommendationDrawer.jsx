@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ManageRecommendationDrawer.css';
 import Grid from '@material-ui/core/Grid';
 import 'date-fns';
@@ -9,19 +9,20 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import { mapTemplateStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
-import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
-import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
+import ForceRunPopUp from '../ForceRunPopUp/ForceRunPopUp';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
 import NotificationHub from '../../api/notification-hub/NotificationHub';
+import PropTypes from 'prop-types';
 
-export function ManageRecommendationDrawer({
+export function ManageRecommendationDrawer ({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType, openScheduleDrilldown
 }) {
-  const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
-  const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
-  const [openJobLogPopup, setOpenJobLogPopup] = React.useState(false);
-  const [jobLogId, setJobLogId] = React.useState(null);
+  const [openForceRunPopUp, setOpenForceRunPopUp] = useState(false);
+  const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
+  const [openJobLogPopup, setOpenJobLogPopup] = useState(false);
+  const [jobLogId, setJobLogId] = useState(null);
   const notificationHub = NotificationHub.getHubConnection();
 
   useEffect(() => {
@@ -210,4 +211,13 @@ export function ManageRecommendationDrawer({
     </animated.div>
   );
 }
-export default connect(mapTemplateStateToProps, mapDispatchToProps)(ManageRecommendationDrawer)
+
+export default connect(mapTemplateStateToProps, mapDispatchToProps)(ManageRecommendationDrawer);
+
+/* istanbul ignore next */
+ManageRecommendationDrawer.propTypes = {
+  configuredRecommendation: PropTypes.string.isRequired,
+  toggleDialog: PropTypes.func.isRequired,
+  setEditableConfiguredRecommendation: PropTypes.func.isRequired,
+  templateType: PropTypes.string.isRequired,
+};

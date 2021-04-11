@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SideMenu.css';
 import { Drawer, List, CssBaseline, Typography, ListItem, ListItemIcon, ListItemText, Collapse, ListItemAvatar, Avatar } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
@@ -6,13 +6,14 @@ import IconButton from '@material-ui/core/IconButton';
 import { SideMenuItems } from './ListItemObjects.ts';
 import LogoSVGComponent from './LogoSVGComponent.jsx';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export function SideMenu(props) {
+export function SideMenu (props) {
 
-  const [openNested, setOpenNested] = React.useState(true);
-  const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
-  const [selectedNestedItemIndex, setSelectedNestedItemIndex] = React.useState(0);
-  const [isNestedItemSelected, setIsNestedItemSelected] = React.useState(false);
+  const [openNested, setOpenNested] = useState(true);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+  const [selectedNestedItemIndex, setSelectedNestedItemIndex] = useState(0);
+  const [isNestedItemSelected, setIsNestedItemSelected] = useState(false);
 
 
   useEffect(()=> {
@@ -162,3 +163,8 @@ export function SideMenu(props) {
 }
 
 export default withRouter(SideMenu);
+
+/* istanbul ignore next */
+SideMenu.propTypes = {
+  history: PropTypes.object,
+}

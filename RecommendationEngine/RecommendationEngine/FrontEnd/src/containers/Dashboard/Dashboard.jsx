@@ -21,7 +21,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import PropTypes from 'prop-types';
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -81,24 +81,15 @@ function Dashboard (props) {
   const [yearList, setYearList] = useState([]);
   const [year, setYear] = useState('');
   const [loading, setLoading] = useState(false);
-
   const calendarRef = useRef();
-
-  const startLoadingSpinner = () => {
-    setLoading(true);
-  }
-
-  const stopLoadingSpinner = () => {
-    setLoading(false);
-  }
 
   function formatDate (date) {
     var d = new Date(date);
     return (d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, 0) + '-' + d.getDate().toString().padStart(2, 0));
   }
 
-  function calendarEvents (calendar) {
-    var events = calendar.map((element) => {
+  const getCalendarEvents = (calendar) => {
+    return calendar.map((element) => {
       return {
         date: element.date,
         title: element.nbOfActions + ' actions',
@@ -106,9 +97,8 @@ function Dashboard (props) {
         color: element.status === 'Inactive' ? 'grey' : ''
       }
     })
-    setCalendarValues(events);
   }
-
+   /* istanbul ignore next */
   const handleEventClick = async (ev) => {
     var startDate = ev.event.startStr
     let actionsResponse = await GetActionPerCompoundId(ev.event.id)
@@ -116,7 +106,7 @@ function Dashboard (props) {
     setSelectedDate(startDate);
     calendarRef.current.getApi().select(startDate)
   }
-
+   /* istanbul ignore next */
   const handleDateClick = async (ev) => {
     if (ev.jsEvent) {
       var startDate = ev.startStr
@@ -127,7 +117,7 @@ function Dashboard (props) {
       setSelectedDate(startDate);
     }
   }
-
+   /* istanbul ignore next */
   const handleClickHistogram = (month) => {
     let year = new Date().getFullYear() - 1;
     let date = month.toString() + '-01-' + year.toString();
@@ -135,10 +125,7 @@ function Dashboard (props) {
     calendarRef.current.getApi().gotoDate(formatDate(date));
   }
 
-  const onChangeYear = (e) => {
-    setYear(e.target.value);
-  }
-
+  /* istanbul ignore next */
   useEffect(() => {
     async function getHistogram () {
       let histogramYears = await GetHistogramYears(props.selectedAsset);
@@ -150,9 +137,10 @@ function Dashboard (props) {
     getHistogram();
   }, [year, props.selectedAsset])
 
+  /* istanbul ignore next */
   useEffect(() => {
     async function getDashboardValues () {
-      startLoadingSpinner();
+      setLoading(true);
 
       let widgetResponse = await GetWidgetMetrics(props.selectedAsset);
       let detailedWidgets = convertWidgetResponse(widgetResponse);
@@ -167,13 +155,13 @@ function Dashboard (props) {
           status: element.status
         };
       })
-      calendarEvents(calendar);
+      setCalendarValues(getCalendarEvents(calendar));
 
       var dt = new Date();
       let actionsResponse = await GetActionPerDay(dt.toISOString())
       setListActionValues(actionsResponse);
 
-      stopLoadingSpinner();
+      setLoading(false);
     }
     getDashboardValues();
   }, [props.selectedAsset])
@@ -183,7 +171,7 @@ function Dashboard (props) {
       <div>
         <Dialog
           open={loading}
-          onClose={stopLoadingSpinner}
+          onClose={()=> setLoading(false)}
           disableBackdropClick={false}
           BackdropProps={{ style: { backgroundColor: 'transparent', boxShadow: 'none' } }}
         >
@@ -209,7 +197,7 @@ function Dashboard (props) {
               <Select
                 disabled={!yearList.length}
                 value={year}
-                onChange={onChangeYear}
+                onChange={(event) => setYear(event.target.value)}
                 label="Year"
               >
                 {yearList?.map((year, index) => (
@@ -267,3 +255,8 @@ function Dashboard (props) {
 }
 
 export default connect(mapAssetFilterStateToProps)(Dashboard);
+
+/* istanbul ignore next */
+Dashboard.propTypes = {
+  selectedAsset: PropTypes.string.isRequired,
+};

@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import SearchBar from '../SearchBar';
-
+import PropTypes from 'prop-types';
 import './PageSubHeader.css';
 
 export default function PageSubHeader (props) {
@@ -44,3 +44,13 @@ export default function PageSubHeader (props) {
     </Grid>
   )
 }
+
+/* istanbul ignore next */
+PageSubHeader.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+  descriptionSubtitle: PropTypes.string.isRequired,
+  showCreateRecommendation: PropTypes.func.isRequired,
+  addRecommendationProps: PropTypes.func.isRequired,
+  toggleDialog: PropTypes.func.isRequired,
+  updateSearch: PropTypes.func.isRequired
+};

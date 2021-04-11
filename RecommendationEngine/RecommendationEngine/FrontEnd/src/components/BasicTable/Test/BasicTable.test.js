@@ -10,7 +10,6 @@ import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -36,10 +35,6 @@ describe('BasicTable component', () => {
         expect(paper).toHaveLength(1);
     });
 
-    it('It finds the toolbar', () => {
-        let toolbar = output.find(Toolbar);
-        expect(toolbar).toHaveLength(1);
-    });
 
     it('It finds the table container', () => {
         let container = output.find(TableContainer);
@@ -61,25 +56,11 @@ describe('BasicTable component', () => {
         expect(component).toHaveLength(1);
     });
 
-    it("Finds the table labels", () => {
-        let component = output.find(FormControlLabel);
-        expect(component).toHaveLength(1);
-    });
-
-    it('It finds the subtitle', () => {
-        let subtitle = output.find('h6');
-        expect(subtitle).toHaveLength(1);
-    });
-
     it('It finds the table pagination and tests the onChangePage and onChangeRowsPerPage events', () => {
         let pagination = output.find(TablePagination);
         pagination.props().onChangePage();
         pagination.props().onChangeRowsPerPage(mockedEvent);
         expect(pagination).toHaveLength(1);
-    });
-    output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
-    it('Simulate onChange lite switch event', () => {
-        output.find('#liteSwitch').prop('control').props.onChange({ target: { checked: true }, persist: jest.fn() });
     });
 
     it('Simulate handleSort event', () => {

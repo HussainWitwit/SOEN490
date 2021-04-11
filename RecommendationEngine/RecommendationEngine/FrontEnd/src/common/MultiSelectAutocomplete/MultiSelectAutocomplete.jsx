@@ -3,11 +3,12 @@ import { Checkbox, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import PropTypes from 'prop-types';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function MultiSelectAutocomplete(props) {
+function MultiSelectAutocomplete (props) {
   const [isFirstTyping, setIsFirstTyping] = useState(true);
   return (
     <Autocomplete
@@ -57,4 +58,20 @@ function MultiSelectAutocomplete(props) {
     />
   );
 }
+
 export default MultiSelectAutocomplete;
+
+/* istanbul ignore next */
+MultiSelectAutocomplete.propTypes = {
+  id: PropTypes.string.isRequired,
+  maxElement: PropTypes.number.isRequired,
+  defaultValue: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
+  recommendationType: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  variant: PropTypes.string.isRequired,
+  contentLabel: PropTypes.string.isRequired,
+  boxLabelName: PropTypes.string.isRequired
+};

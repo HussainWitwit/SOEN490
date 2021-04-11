@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import BreadcrumbsComponent from '../../components/BreadcrumbsComponent/BreadcrumbsComponent'
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
 import './TopBar.css';
+import PropTypes from 'prop-types';
 
-function TopBar({ openAssetTreeview }) {
+function TopBar ({ openAssetTreeview }) {
 
-  const [locationDetails, setLocationDetails] = React.useState(null);
-  const [weatherDetails, setWeatherDetails] = React.useState(null);
+  const [locationDetails, setLocationDetails] = useState(null);
+  const [weatherDetails, setWeatherDetails] = useState(null);
 
   // eslint-disable-next-line
+  /* istanbul ignore next */
   const getCurrentLocation = async () => {
     let response = await fetch(`https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_KEY}`);
     let data = await response.json();
@@ -17,6 +19,7 @@ function TopBar({ openAssetTreeview }) {
   }
 
   // eslint-disable-next-line
+  /* istanbul ignore next */
   const getCurrentWeather = async () => {
     let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=montreal&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`);
     let data = await response.json();
@@ -46,4 +49,9 @@ function TopBar({ openAssetTreeview }) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(TopBar)
+export default connect(null, mapDispatchToProps)(TopBar);
+
+/* istanbul ignore next */
+TopBar.propTypes = {
+  openAssetTreeview: PropTypes.func.isRequired,
+}

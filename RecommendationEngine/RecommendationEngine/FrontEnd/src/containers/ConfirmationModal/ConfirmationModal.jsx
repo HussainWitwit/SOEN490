@@ -7,6 +7,7 @@ import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRec
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
 import { transformParameterList } from '../../utilities/ArrayManipulationUtilities';
 import './ConfirmationModal.css';
+import PropTypes from 'prop-types';
 
 export function ConfirmationModal (props) {
 
@@ -81,7 +82,10 @@ export function ConfirmationModal (props) {
   );
 }
 
-export default connect(
-  mapDialogStateToProps,
-  mapDispatchToProps
-)(ConfirmationModal);
+export default connect(mapDialogStateToProps, mapDispatchToProps)(ConfirmationModal);
+
+/* istanbul ignore next */
+ConfirmationModal.propTypes = {
+  dialogStyle: PropTypes.object.isRequired,
+  dialogsContent: PropTypes.object.isRequired,
+};
