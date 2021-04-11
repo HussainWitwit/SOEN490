@@ -22,9 +22,8 @@ We are building a generic Recommendation Engine that can be applied to systems s
 ### Programming languages
 
 1. React(Framework)
-2. Python 3, C#,
-3. .NET Core 3.1,
-4. Node.js
+2. .NET Core 3.1,
+3. Node.js
 
 ### API documentation
 https://app.swaggerhub.com/apis/UTF-9/recommendation-engine_power_factors/v1#/
