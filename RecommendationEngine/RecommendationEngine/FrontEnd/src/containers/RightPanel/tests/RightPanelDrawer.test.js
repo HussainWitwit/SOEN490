@@ -67,7 +67,7 @@ describe('RightPanel component', () => {
 
     it('It finds the assets and close icons', () => {
         let component = wrapper.find(IconButton);
-        expect(component).toHaveLength(3);
+        expect(component).toHaveLength(1);
     });
 
     it('It finds the assets and close icons', () => {

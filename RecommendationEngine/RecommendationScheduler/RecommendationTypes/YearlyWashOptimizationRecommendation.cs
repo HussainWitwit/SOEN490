@@ -38,7 +38,7 @@ namespace RecommendationScheduler.RecommendationTypes
 
             public DBRecommendationJobResult ExecuteAlgorithm(YearlyWashParameters parameters, YearlyWashApiValues apiValues)
             {
-                _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation");
+                _jobLogger.LogInformation(_job, "Starting Yearly Wash Optimization Recommendation", null);
 
                 _userParameters = parameters;
 
@@ -56,14 +56,14 @@ namespace RecommendationScheduler.RecommendationTypes
                 _result.NetSaving = 0;
                 _result.Asset = _userParameters.Asset;
 
-                _jobLogger.LogInformation(_job, "Looking for best cleaning dates...");
-
                 while (centerPoint < _userParameters.EndSoiling)
                 {
                     span = _userParameters.SpanIncrement;
+                    _jobLogger.LogInformation(_job, "Calculating for new center point with new span:", centerPoint.Date);
 
                     while (centerPoint.AddDays(span) < _userParameters.EndSoiling || centerPoint.AddDays(-span) > _userParameters.StartSoiling)
                     {
+
                         ResetValues();
 
                         // computes various outputs for a all day within soiling season with a specific combination of center point + span
@@ -73,13 +73,12 @@ namespace RecommendationScheduler.RecommendationTypes
                             //NoAction
                             CalculateSoilingDerateNoAction();
                             CalculateSoilingImpact(_soilingNoAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
-
-                            CheckIfWashDay(currentDate, centerPoint, span);
+                            
+                        CheckIfWashDay(currentDate, centerPoint, span);
 
                             //WithAction
                             CalculateSoilingDerateWithAction(currentDate, _isWashDay, _cumulativeCleaning);
                             CalculateSoilingImpact(_soilingWithAction, apiValues.PredictEnergyList, apiValues.EnergyPricesList);
-
                             _dayCount += 1;
                         }
 
@@ -97,7 +96,7 @@ namespace RecommendationScheduler.RecommendationTypes
                     centerPoint = centerPoint.AddDays(_userParameters.CenterPointIncrement);
                 }
 
-                _jobLogger.LogInformation(_job, "Best combination found!");
+                _jobLogger.LogInformation(_job, "Best combination found!", null);
 
                 return _result;
             }
@@ -170,6 +169,7 @@ namespace RecommendationScheduler.RecommendationTypes
                 _result.NetSaving = _tempResult.NetSaving;
                 _result.Benefit = _tempResult.Benefit;
                 _result.ReturnOnInvestment = _tempResult.ReturnOnInvestment;
+            _jobLogger.LogInformation(_job, "Updated Best Results for Yearly Wash Optimization", _result);
             }
         }
     }

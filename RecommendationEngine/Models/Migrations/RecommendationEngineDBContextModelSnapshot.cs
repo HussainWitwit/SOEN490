@@ -126,6 +126,21 @@ namespace Models.Migrations
                     b.ToTable("AssetType");
                 });
 
+            modelBuilder.Entity("Models.DB.DBAssetTypeRecommendationType", b =>
+                {
+                    b.Property<int>("AssetTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecommendationTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssetTypeId", "RecommendationTypeId");
+
+                    b.HasIndex("RecommendationTypeId");
+
+                    b.ToTable("AssetTypeRecommendationType");
+                });
+
             modelBuilder.Entity("Models.DB.DBRecommendationJob", b =>
                 {
                     b.Property<int>("RecommendationJobId")
@@ -229,8 +244,8 @@ namespace Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<double>("DefaultValue")
-                        .HasColumnType("double");
+                    b.Property<string>("DefaultValue")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("DisplayText")
                         .HasColumnType("longtext");
@@ -239,6 +254,9 @@ namespace Models.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Type")
                         .HasColumnType("longtext");
 
                     b.HasKey("RecommendationParameterId");
@@ -297,17 +315,17 @@ namespace Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("DisplayText")
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<double>("ParamValue")
-                        .HasColumnType("double");
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ParamValue")
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("RecommendationParameterId")
                         .HasColumnType("int");
@@ -411,6 +429,21 @@ namespace Models.Migrations
                     b.HasOne("Models.DB.DBRecommendationSchedule", "Schedule")
                         .WithMany("AssetsList")
                         .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Models.DB.DBAssetTypeRecommendationType", b =>
+                {
+                    b.HasOne("Models.DB.DBAssetType", "AssetType")
+                        .WithMany("RecommendationTypes")
+                        .HasForeignKey("AssetTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.DB.DBRecommendationType", "RecommendationType")
+                        .WithMany("AssetTypes")
+                        .HasForeignKey("RecommendationTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -2,44 +2,59 @@ using Interfaces.Repositories;
 using Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Models.Application;
-using Models.DB;
 using RecommendationEngine.ExceptionHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Interfaces.Hub;
+using RecommendationEngine.Utilities;
 
 namespace RecommendationEngine.Services
 {
     public class JobService : IJobService
     {
         private IJobRepository _jobRepository;
+        private IAssetRepository _assetRepository;
 
         public JobService(
-            IJobRepository jobRepository
+            IJobRepository jobRepository, INotificationHub notificationHub, IAssetRepository assetRepository
         )
         {
             _jobRepository = jobRepository;
+            _assetRepository = assetRepository;
         }
 
-        public List<Job> GetJobList()
+        public List<Job> GetJobList(int? assetId)
         {
             try
             {
-                List<Job> jobs = _jobRepository.GetJobList()
-                    .Select(job => new Job
-                    {
-                        Id = job.RecommendationJobId,
-                        Status = job.Status,
-                        configuredRecommendationTitle = job.Schedule.Name,
-                        Duration = job.JobDuration,
-                        Timestamp = job.Timestamp,
-                    }).ToList();
-                
-                return jobs;
+                var jobs = _jobRepository.GetJobList();
+
+                if (assetId != null)
+                {
+                    var assetsList = _assetRepository.GetAssetsList();
+                    jobs = jobs
+                        .Where(result => result.Asset.IsChildOrEquivalent((int)assetId, assetsList)).ToList();
+                }
+
+                return jobs.Select(job => new Job
+                {
+                    Id = job.RecommendationJobId,
+                    Status = job.Status,
+                    ConfiguredRecommendationId = job.Schedule.RecommendationScheduleId,
+                    ConfiguredRecommendationTitle = job.Schedule.Name,
+                    Duration = job.JobDuration,
+                    Timestamp = job.Timestamp,
+                    AssetName = job.Asset.DisplayText
+                }).ToList();
             }
-            catch(Exception e)
+            catch (GlobalException)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new InternalServerException();
             }
         }
 
@@ -59,24 +74,22 @@ namespace RecommendationEngine.Services
 
                 if (logs.Count < 1)
                 {
-                    throw new GlobalException
+                    Error error = new Error()
                     {
-                        ApplicationName = "RecommendationEngine",
-                        ErrorMessage = "Could not find logs for selected job",
-                        Code = 404,
-                        Type = "Not Found"
+                        Type = ErrorType.BAD_REQUEST,
+                        ErrorMessage = "Could not find logs for selected job"
                     };
+                    throw new RequestValidationException(error, "Recommendation Engine");
                 }
-
                 return logs;
             }
-            catch (GlobalException e)
+            catch (GlobalException)
             {
-                throw e;
+                throw;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }

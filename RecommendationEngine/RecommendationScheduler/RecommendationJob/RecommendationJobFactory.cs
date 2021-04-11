@@ -12,14 +12,15 @@ namespace RecommendationScheduler.RecommendationJob
             Schedule = schedule;
         }
 
-        public IJobDetail CreateRecommendationJob()
+        public IJobDetail CreateRecommendationJob(DBAsset asset)
         {
             switch (Schedule.RecommendationType.Type)
             {
                 case "Yearly Wash Optimization":
                     return JobBuilder.Create<YearlyWashOptimizationRecommendationJob>()
-                        .WithIdentity(Schedule.RecommendationScheduleId.ToString())
+                        .WithIdentity(Schedule.RecommendationScheduleId.ToString() + "/" + asset.AssetId.ToString())
                         .UsingJobData("recommendationScheduleId", Schedule.RecommendationScheduleId)
+                        .UsingJobData("assetId", asset.AssetId)
                         .WithDescription(Schedule.Description)
                         .Build();
                 default:

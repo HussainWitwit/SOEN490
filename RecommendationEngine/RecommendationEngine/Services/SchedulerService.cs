@@ -1,14 +1,14 @@
 ﻿using System;
 using Interfaces.RecommendationScheduler;
 using Interfaces.Services;
-using Microsoft.AspNetCore.Http;
 using RecommendationEngine.ExceptionHandler;
 
 namespace RecommendationEngine.Services
 {
     public class SchedulerService: ISchedulerService
     {
-        private IRecommendationScheduler _scheduler;
+        private readonly IRecommendationScheduler _scheduler;
+        
         public SchedulerService(IRecommendationScheduler scheduler)
         {
             _scheduler = scheduler;
@@ -17,11 +17,11 @@ namespace RecommendationEngine.Services
         {
             try
             {
-                _scheduler.TriggerJobAsync(id);
+                _scheduler.TriggerScheduleAsync(id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new GlobalException(StatusCodes.Status500InternalServerError, "Internal Server Error", e.Message, "Recommendation Engine");
+                throw new InternalServerException();
             }
         }
     }

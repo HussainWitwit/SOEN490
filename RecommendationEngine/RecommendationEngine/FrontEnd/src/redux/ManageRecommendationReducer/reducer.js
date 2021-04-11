@@ -30,10 +30,9 @@ const detailsConfigInitialValues = {
     preferredScenario: 'ROI',
     granularity: 'Yearly',
     repeatDay: 1, //Why in the back-end the day of the week are from 1 to 7? Isn't it supposed to be 0 to 6.
-    repeatDate: new Date(),
-    repeatTime: new Date()
+    repeatDate: '',
+    repeatTime: ''
 }
-
 
 export const contentInitialValues = {
     isDialogOpen: false,
@@ -41,10 +40,10 @@ export const contentInitialValues = {
         name: "",
         description: "",
         inputList: [],
+        assetTypes: [],
         algorithmName: ""
     },
     basicConfiguration: detailsConfigInitialValues,
-    parameters: {},
     templateDetailsList: [],
     isEditing: false,
     id: null,
@@ -54,14 +53,14 @@ export const contentInitialValues = {
 }
 
 export const ManageRecommendationReducer = function (state = contentInitialValues, action) {
-    
+
     switch (action.type) {
         case type.GET_TEMPLATE_DETAILS:
             return {
                 ...state,
                 templateDetailsList: action.payload
             }
-        
+
         case type.UPDATE_RECOMMENDATION_TEMPLATE_NAME:
             return {
                 ...state,
@@ -80,7 +79,7 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 }
             };
 
-            case type.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST:
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_INPUTLIST:
             return {
                 ...state,
                 template: {
@@ -89,7 +88,7 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 }
             };
 
-            case type.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM:
+        case type.UPDATE_RECOMMENDATION_TEMPLATE_ALGORITHM:
             return {
                 ...state,
                 template: {
@@ -113,6 +112,15 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 basicConfiguration: {
                     ...state.basicConfiguration,
                     asset: action.payload.asset
+                }
+            };
+
+        case type.UPDATE_ASSET_TYPES:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    assetTypes: action.payload.assetTypeList
                 }
             };
 
@@ -161,6 +169,25 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 }
             };
 
+        case type.UPDATE_PARAM_VALUE:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    inputList: state.template.inputList.map(
+                        (element, index) => index === action.payload.paramIndex ? { ...element, parameterValue: action.payload.value } : element
+                    )
+                }
+            }
+        case type.SET_PARAM_VALUE_FROM_EDIT:
+            return {
+                ...state,
+                template: {
+                    ...state.template,
+                    inputList: action.payload
+                }
+            }
+
         case type.UPDATE_ID:
             return {
                 ...state,
@@ -185,10 +212,11 @@ export const ManageRecommendationReducer = function (state = contentInitialValue
                 templateDetailsList: state.templateDetailsList,
                 template: {
                     ...contentInitialValues.template,
-                    name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName: '',
-                    description:  state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription: '',
-                    inputList:  state.templateDetailsList.length ? state.templateDetailsList[0].inputList: [],
-                    algorithmName:  state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName: ''
+                    name: state.templateDetailsList.length ? state.templateDetailsList[0].templateName : '',
+                    description: state.templateDetailsList.length ? state.templateDetailsList[0].templateDescription : '',
+                    inputList: state.templateDetailsList.length ? state.templateDetailsList[0].inputList : [],
+                    assetTypes: state.templateDetailsList.length ? state.templateDetailsList[0].assetTypes: [],
+                    algorithmName: state.templateDetailsList.length ? state.templateDetailsList[0].algorithmName : ''
                 }
             };
 

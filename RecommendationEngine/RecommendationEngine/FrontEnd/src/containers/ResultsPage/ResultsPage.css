@@ -1,0 +1,16 @@
+
+.table-positive-numbers, .table-negative-numbers{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table-positive-numbers{
+    color: #49C71F;
+}
+
+.table-negative-numbers{
+    color:#F26060;
+}
+
+.configured-recommendation{
+    text-decoration: underline;
+}

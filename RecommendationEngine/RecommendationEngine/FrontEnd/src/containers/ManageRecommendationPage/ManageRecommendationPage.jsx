@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import { FilterList } from '@material-ui/icons';
-import { Grid, TableCell } from '@material-ui/core';
-import RecommendationEngineTable from '../../components/RecommendationEngineTable/RecommendationEngineTable';
-import AddRecommendationDialog from '../../containers/AddRecommendationDialog/AddRecommendationDialog';
 import { connect } from 'react-redux';
 import { mapDispatchManageRecommendationPageToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { mapStateToProps } from '../../redux/SharedReducer/reducer-actions';
-import SearchBar from '../../common/SearchBar';
+import { RecommendationsPageTemplate } from '../../common/RecommendationsPageTemplate/RecommendationsPageTemplate';
+import { TableColumns as columns } from './TableConfig';
+import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ManageRecommendationPage.css';
-
-
-/* istanbul ignore next */ //Should be tested 
-export const RowsToDisplay = (element) => (
-  <React.Fragment>
-    <TableCell />
-    <TableCell component="th" scope="row" padding="default" className="primaryKey" id="table-body">{element.name}</TableCell>
-    <TableCell id="table-body">{element.type}</TableCell>
-    <TableCell id="table-body">{element.granularity}</TableCell>
-    <TableCell id="table-body">{element.createdOn}</TableCell>
-  </React.Fragment>
-);
+import PropTypes from 'prop-types';
 
 export function ManageRecommendationPage (props) {
 
@@ -28,78 +14,49 @@ export function ManageRecommendationPage (props) {
   const [recommendationList, setRecommendationList] = useState(configuredRecommendationList);
   const [defaultConfiguredRecList, setDefaultConfiguredRecList] = useState(configuredRecommendationList);
 
-  /* istanbul ignore next */ //Should be tested 
-  const headCells = [
-    { id: "name", label: "Title"},
-    { id: "type", label: "Type" },
-    { id: "granularity", label: "Granularity" },
-    { id: "createdOn", label: "Created On" },
-  ];
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
 
-  /* istanbul ignore next */
-  const updateSearch = async (input) => {
-    const filtered = defaultConfiguredRecList.filter(recommendation => {
-      return recommendation.name.toLowerCase().includes(input.toLowerCase())
-    })
-    setRecommendationList(filtered);
+  const updateSearch = (input) => {
+    setRecommendationList(filterTableItems(TableItemType.ConfiguredRecommendation, defaultConfiguredRecList, input));
   }
 
   useEffect(() => {
-    setRecommendationList(configuredRecommendationList)
-    setDefaultConfiguredRecList(configuredRecommendationList)
+    let responseWtihDateObjects = configuredRecommendationList.map((element) => {
+      return {
+        ...element,
+        createdOn: new Date(element.createdOn),
+        recurrenceDatetime: currentYear <= new Date(element.recurrenceDatetime).getFullYear() ?
+          new Date(element.recurrenceDatetime) : new Date(new Date(element.recurrenceDatetime).setFullYear(currentYear))
+      }
+    });
+    setRecommendationList(responseWtihDateObjects);
+    setDefaultConfiguredRecList(responseWtihDateObjects);
   }, [configuredRecommendationList])
 
   return (
-    <div id="main-container">
-      <div></div>
-      <div>
-        <br></br>
-        <Grid id="grid-container1" container spacing={1} className="gridContainerStyle">
-          <Grid id="grid1" item>
-            <h3 id="title">Manage Recommendations</h3>
-            <h6 id="subtitle">
-              Add, edit, delete and browse the configured recommendation
-            </h6>
-          </Grid>
-          <Grid item>
-            <div>
-              <Button id="recBtn" onClick={toggleDialog}>
-                Create Recommendation
-              </Button>
-              <AddRecommendationDialog {...props} />
-            </div>
-          </Grid>
-        </Grid>
-        <br></br>
-      </div>
-      <div>
-        <div>
-          <Grid id="grid-container2" container spacing={1} className="gridContainerStyle">
-            <Grid item id="data-testid" >
-              <SearchBar
-                placeholder="Search for a recommendation..."
-                onSearchUpdate={updateSearch}
-              />
-            </Grid>
-            <Grid item>
-              <Button size="small" id="filterBtn" endIcon={<FilterList />}>
-                Add Filter
-              </Button>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-      <br></br>
-      <RecommendationEngineTable
-        rowsValue={RowsToDisplay}
-        data={recommendationList}
-        tableTitle={"Configured Recommendations"}
-        onClickRow={openScheduleDrilldown}
-        columnTitles={headCells}
-        isClickable= {true}
-      />
-    </div >
+    <RecommendationsPageTemplate
+      pageTitle={"Configured Recommendations"}
+      subtTitleDescription={"Browse, edit, and delete recommendation jobs"}
+      showCreateRecommendationButton={true}
+      onOpenRecommendationDialog={toggleDialog}
+      addRecommendationProps={props}
+      onSearch={updateSearch}
+      tableData={recommendationList}
+      tableColumns={columns}
+      onTableClickRow={openScheduleDrilldown}
+      isRowClickable={true}
+      dateColumnName={'createdOn'}
+      dateSortingOrder={'desc'}
+    />
   );
 }
 
 export default connect(mapStateToProps, mapDispatchManageRecommendationPageToProps)(ManageRecommendationPage);
+
+/* istanbul ignore next */
+ManageRecommendationPage.propTypes = {
+  configuredRecommendationList: PropTypes.array.isRequired,
+  toggleDialog: PropTypes.func.isRequired,
+  openScheduleDrilldown: PropTypes.func.isRequired,
+};

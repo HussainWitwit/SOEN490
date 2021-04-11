@@ -32,6 +32,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<ResultService>().AsImplementedInterfaces();
                 }));
             _client = _server.CreateClient();
@@ -42,6 +43,7 @@ namespace RecommendationEngineTests.APITests
                 .ConfigureTestContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterType<TestBadRepositoryMock>().AsImplementedInterfaces();
+                    builder.RegisterType<TestAssetRepositoryMock>().AsImplementedInterfaces();
                     builder.RegisterType<ResultService>().AsImplementedInterfaces();
                 }));
             _clientBad = _serverBad.CreateClient();
@@ -58,14 +60,84 @@ namespace RecommendationEngineTests.APITests
         }
 
         [Test]
+        public async Task GetResultWithAssetFilterList()
+        {
+            var response = await _client.GetAsync("api/result/filterByAsset/1");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<Result> resultList = JsonConvert.DeserializeObject<List<Result>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(resultList);
+        }
+
+        [Test]
         public async Task GetBadResultList()
         {
             var response = await _clientBad.GetAsync("api/result");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
+        }
+
+        [Test]
+        public async Task GetWidgetMetrics()
+        {
+            var response = await _client.GetAsync("api/result/widgets");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<WidgetMetric> widgetList = JsonConvert.DeserializeObject<List<WidgetMetric>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(widgetList);
+            Assert.AreEqual(widgetList.Find(element => element.Title == "Potential Net Savings").Value, 110);
+            Assert.AreEqual(widgetList.Find(element => element.Title == "Average ROI").Value, 4191.3);
+            Assert.AreEqual(widgetList.Find(element => element.Title == "Potential Losses").Value, 804);
+        }
+
+        [Test]
+        public async Task GetBadWidgetList()
+        {
+            var response = await _clientBad.GetAsync("api/result/widgets");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
+        }
+
+        [Test]
+        public async Task GetHistogram()
+        {
+            var response = await _client.GetAsync("api/result/histogram/2020/44");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<HistogramItem> monthlyList = JsonConvert.DeserializeObject<List<HistogramItem>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(monthlyList);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "04").Total, 23);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "07").Total, 23);
+            Assert.AreEqual(monthlyList.Find(element => element.Month == "10").Total, 0);
+        }
+
+        [Test]
+        public async Task GetBadHistogram()
+        {
+            var response = await _clientBad.GetAsync("api/result/widgets");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
+        }
+
+        [Test]
+        public async Task GetHistogramYears()
+        {
+            var response = await _client.GetAsync("api/result/histogramYears");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<int> monthlyList = JsonConvert.DeserializeObject<List<int>>(await response.Content.ReadAsStringAsync());
+            Assert.NotNull(monthlyList);
+            Assert.AreEqual(monthlyList[0], 2020);
+        }
+
+
+        [Test]
+        public async Task GetBadHistogramYears()
+        {
+            var response = await _clientBad.GetAsync("api/result/histogramYears");
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.InternalServerError);
         }
 
         public class TestRepositoryMock : IResultRepository
         {
+            public List<DBRecommendationJobResult> GetResultWithActions()
+            {
+                return MockResults.BasicDBResultList;
+            }
+
             List<DBRecommendationJobResult> IResultRepository.GetResultList()
             {
                 return MockResults.BasicDBResultList;
@@ -74,9 +146,40 @@ namespace RecommendationEngineTests.APITests
 
         public class TestBadRepositoryMock : IResultRepository
         {
+            public List<DBRecommendationJobResult> GetResultWithActions()
+            {
+                return MockResults.BadDBResultList;
+            }
+
             List<DBRecommendationJobResult> IResultRepository.GetResultList()
             {
                 return MockResults.BadDBResultList;
+            }
+        }
+
+        public class TestAssetRepositoryMock : IAssetRepository
+        {
+            public void AddAsset(DBAsset asset) { }
+
+            public void AddAssetList(List<DBAsset> asset) { }
+
+            public List<DBAsset> GetAssetsList()
+            {
+                return MockAssets.BasicDBAssetList;
+            }
+            public DBAsset GetAssetByName(string assetName)
+            {
+                return MockAssets.BasicDBAsset;
+            }
+
+            public DBAsset GetAssetById(int assetId)
+            {
+                return MockAssets.BasicDBAsset;
+            }
+
+            public void Update(DBAsset asset)
+            {
+                throw new System.NotImplementedException();
             }
         }
     }

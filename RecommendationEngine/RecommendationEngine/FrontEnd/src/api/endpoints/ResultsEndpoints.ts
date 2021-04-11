@@ -1,35 +1,35 @@
 
 import { ConfiguredRecommendationResult } from '../models/JobResult';
 import { ActionGrouping } from '../models/Action';
+import { handleErrors } from "../../utilities/ValidationUtilities"
+import { notifyError } from "../../utilities/ErrorNotification"
 
-export async function GetRecommendationResultList(): Promise<ConfiguredRecommendationResult[]> {
+export async function GetRecommendationResultList(assetId: number | null): Promise<ConfiguredRecommendationResult[]> {
     let result: ConfiguredRecommendationResult[] = [];
-    try {
-        let response = await fetch('api/result');
-        const jsonResponse = await response.json();
-        if (jsonResponse) {
-            result = jsonResponse;
+    await fetch('api/result/filterByAsset/'+(assetId?assetId:''))
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            result = res;
             return result;
-        }
-    } catch (e) {
-        console.log('Error fetching results!')
-        console.log(e);
-    }
+        })
+        .catch(err => {
+            notifyError(err)
+        })
     return result;
 }
 
 export async function GetActionsByResultId(id: number): Promise<ActionGrouping | null> {
-    let actions: ActionGrouping;
-    try {
-        let response = await fetch(`api/action/${id}`);
-        const jsonResponse = await response.json();
-        if (jsonResponse) {
-            actions = jsonResponse;
-            return actions;
-        }
-    } catch (e) {
-        console.log('Error fetching actions!');
-        console.log(e);
-    }
-    return null;
+    let actions = null;
+    await fetch(`api/action/${id}`)
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            actions = res;
+            return actions
+        })
+        .catch(err => {
+            notifyError(err)
+        })
+    return actions;
 }

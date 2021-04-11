@@ -20,13 +20,27 @@ namespace RecommendationEngine.Controllers
         {
             try
             {
-                return Ok(_jobService.GetJobList());
+                return Ok(_jobService.GetJobList(null));
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
             }
         }
+
+        [HttpGet("filterByAsset/{id?}")]
+        public IActionResult GetJobListByAssetId(int? id)
+        {
+            try
+            {
+                return Ok(_jobService.GetJobList(id));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
         [HttpGet("log/{id}")]
         public IActionResult GetJobLogById(int id)
         {
@@ -36,7 +50,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
             }
         }
     }

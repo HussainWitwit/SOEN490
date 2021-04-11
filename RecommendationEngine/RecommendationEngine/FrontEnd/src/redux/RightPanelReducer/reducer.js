@@ -19,7 +19,7 @@ import * as type from './dispatch-types';
 const rightPanelInitialState = {
   isOpen: false,
   tabs: [],
-  selectedTabIndex: 0,
+  selectedTabIndex: 0
 };
 
 const SCHEDULE_DRILLDOWN_NAME = 'Details';
@@ -52,6 +52,9 @@ export const RightPanelReducer = function (
     }
 
     case type.OPEN_SCHEDULE_DRILLDOWN: {
+      if (!action.payload.response) {
+        return {...state};
+      }
       if (state.tabs.some((e) => e.name === SCHEDULE_DRILLDOWN_NAME))
         return {
           ...state,
@@ -96,6 +99,9 @@ export const RightPanelReducer = function (
               : e
           ),
         };
+        else {
+          break;
+        }
     }
 
     case type.OPEN_RESULT_DRILLDOWN: {
@@ -125,7 +131,7 @@ export const RightPanelReducer = function (
       return {
         ...state,
         isOpen: state.tabs.some((e) => (e.name === SCHEDULE_DRILLDOWN_NAME || e.name === RESULT_DRILLDOWN_NAME)),
-        selectedTabIndex: state.tabs.length - 1,
+        selectedTabIndex: state.tabs.findIndex((e) => (e.name === ASSET_TREEVIEW_NAME))<=state.selectedTabIndex?Math.max(0, state.selectedTabIndex-1):state.selectedTabIndex,
         tabs: state.tabs.filter((tab) => tab.name !== ASSET_TREEVIEW_NAME),
       };
 
@@ -133,7 +139,7 @@ export const RightPanelReducer = function (
       return {
         ...state,
         isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === RESULT_DRILLDOWN_NAME)),
-        selectedTabIndex: state.tabs.length - 1,
+        selectedTabIndex: state.tabs.findIndex((e) => (e.name === SCHEDULE_DRILLDOWN_NAME))<=state.selectedTabIndex?Math.max(0, state.selectedTabIndex-1):state.selectedTabIndex,
         tabs: state.tabs.filter((tab) => tab.name !== SCHEDULE_DRILLDOWN_NAME),
       };
 
@@ -141,7 +147,7 @@ export const RightPanelReducer = function (
       return {
         ...state,
         isOpen: state.tabs.some((e) => (e.name === ASSET_TREEVIEW_NAME || e.name === SCHEDULE_DRILLDOWN_NAME)),
-        selectedTabIndex: state.tabs.length - 1,
+        selectedTabIndex: state.tabs.findIndex((e) => (e.name === RESULT_DRILLDOWN_NAME))<=state.selectedTabIndex?Math.max(0, state.selectedTabIndex-1):state.selectedTabIndex,
         tabs: state.tabs.filter((tab) => tab.name !== RESULT_DRILLDOWN_NAME),
       };
 
@@ -153,7 +159,7 @@ export const RightPanelReducer = function (
     case type.CHANGE_TAB_INDEX:
       return {
         ...state,
-        selectedTabIndex: (action.payload.selectedTabIndex) % state.tabs.length
+        selectedTabIndex: action.payload.selectedTabIndex
       }
 
     default:

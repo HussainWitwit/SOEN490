@@ -1,16 +1,76 @@
-#parameter-modal-container{
-    display: grid;
-  }
+#confirmation-modal-container {
+  overflow-y: scroll;
+}
 
-  #paramater-modal-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-shadow: none;
-    color: black;
-  }
+#parameter-modal-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: none;
+  color: black;
+  overflow: scroll;
+}
 
-  #sub-title {
-    font-size: 25px;
-    font-weight: normal;
-  }
+#sub-title {
+  font-size: 25px;
+  font-weight: normal;
+}
+
+#table-header-cell {
+font-weight: bold;
+}
+
+#table-container {
+  background-color: #f8f8ff;
+  width: 95%;
+  border-radius: 10px;
+  max-height: 100%;
+}
+
+.MuiTable-root {
+  border-radius: 15px;
+  border: 10px;
+}
+
+.value .MuiInputBase-root {
+  height: 50px;
+  width: 185px;
+  color: black;
+}
+
+.parameter-date-picker {
+  width: 100px;
+  height: 10px;
+}
+
+#parameter-name-table-cell {
+  max-width: 300px;
+}
+
+#parameter-row {
+  background-color: white;
+  height: 100%;
+}
+
+.MuiTableCell-root {
+  height: 100px;
+}
+
+.MuiOutlinedInput-adornedEnd {
+  width: 280px;
+}
+
+.empty-parameter-list{
+  background-color: white;
+  font-size: 1.75rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+  text-align-last: center;
+}
+
+#mocked-content > div {
+  overflow-y: hidden;
+}

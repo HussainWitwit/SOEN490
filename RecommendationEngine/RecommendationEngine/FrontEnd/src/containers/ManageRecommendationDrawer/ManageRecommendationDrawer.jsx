@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ManageRecommendationDrawer.css';
 import Grid from '@material-ui/core/Grid';
 import 'date-fns';
@@ -7,22 +7,50 @@ import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
-import { mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
+import { mapTemplateStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { connect } from 'react-redux';
-import ForceRunPopUp from '../../components/ForceRunPopUp/ForceRunPopUp';
-import DeletePopUp from '../../components/DeletePopUp/DeletePopUp';
+import ForceRunPopUp from '../ForceRunPopUp/ForceRunPopUp';
+import DeletePopUp from '../DeletePopUp/DeletePopUp';
+import { dateFormat } from '../../utilities/DateTimeUtilities';
+import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import NotificationHub from '../../api/notification-hub/NotificationHub';
+import PropTypes from 'prop-types';
 
-export function ManageRecommendationDrawer({
-  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation
+export function ManageRecommendationDrawer ({
+  configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType, openScheduleDrilldown
 }) {
-  const [openForceRunPopUp, setOpenForceRunPopUp] = React.useState(false);
-  const [openDeletePopUp, setOpenDeletePopUp] = React.useState(false);
+  const [openForceRunPopUp, setOpenForceRunPopUp] = useState(false);
+  const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
+  const [openJobLogPopup, setOpenJobLogPopup] = useState(false);
+  const [jobLogId, setJobLogId] = useState(null);
+  const notificationHub = NotificationHub.getHubConnection();
+
+  useEffect(() => {
+    const handleNotification = (notification) =>{
+      if (configuredRecommendation.id === notification.scheduleId){
+        updatePanel(configuredRecommendation.id)
+      }
+    }
+    notificationHub.on('ReceiveNotification', handleNotification);
+    return function cleanup() {
+      notificationHub.off('ReceiveNotification', handleNotification);
+    };
+  }, [notificationHub.on('ReceiveNotification'), configuredRecommendation]);
+
   // Animation style
   const props = useSpring({
     opacity: 1,
     transform: 'translate3d(0px,0,0)',
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
   });
+
+  const updatePanel = (id) => {
+    openScheduleDrilldown(id)
+  }
+
+  const handleOpenLogPopup = () => {
+    setOpenJobLogPopup(!openJobLogPopup)
+  }
 
   const handleForceRunPopUpOpen = () => {
     setOpenForceRunPopUp(!openForceRunPopUp);
@@ -59,27 +87,19 @@ export function ManageRecommendationDrawer({
               <p className="value-title">Assets</p>
               {configuredRecommendation.assetList &&
                 configuredRecommendation.assetList.map((asset, index) => {
-                  return <div className="asset-values">{asset.displayText}{configuredRecommendation.assetList != null && configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
+                  return <div className="asset-values" key={index}>{asset.displayText}{configuredRecommendation.assetList != null && configuredRecommendation.assetList.length === index + 1 ? '' : ', '}</div>
                 })}
             </div>
           </Grid>
-          <Grid item xs={8}>
-            <div className="inputs">
+          <Grid item xs={10}>
+            <div className="parameter-tile">
               <p className="value-title">Parameters</p>
-              <div className="values">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
-                (configuredRecommendation.parameters.map((parameter, key) => {
-                  return parameter.parameterName;
-                })) : 'N/A'}</div>
-            </div>
-          </Grid>
-          <Grid item xs={4}>
-            <div className="outputs">
               <p className="value-title">Value</p>
-              <div className="values">{configuredRecommendation.parameters && configuredRecommendation.parameters.length ?
-                (configuredRecommendation.parameters.map((parameter, key) => {
-                  return parameter.value;
-                })) : 'N/A'}</div>
             </div>
+            <div className="values-param">{configuredRecommendation.parameters != null && configuredRecommendation.parameters.length ?
+              (configuredRecommendation.parameters.map((parameter, index) => {
+                return <div className="parameter-tile" key={index}><div>{parameter.displayText}</div><div>{parameter.parameterType === 'DATE' ? dateFormat(parameter.parameterValue) : parameter.parameterValue}</div></div>;
+              })) : 'N/A'}</div>
           </Grid>
           <Grid item xs={12}>
             <div className="assets">
@@ -108,7 +128,7 @@ export function ManageRecommendationDrawer({
             <p className="value-title">Last Five Executions</p>
             <div className="last-five-status">
               {configuredRecommendation.lastJobs &&
-                configuredRecommendation.lastJobs.map((value, key) => (
+                configuredRecommendation.lastJobs.map((value, index) => (
                   <Tooltip
                     id='execution-bar'
                     classes={{
@@ -123,8 +143,17 @@ export function ManageRecommendationDrawer({
                         <div>Date: {formatDateTime(value.timestamp)}</div>
                       </div>
                       : "No status Avalaible"}
+                    key={index}
                   >
-                    <div className={value !== null ? value.status : "Empty"}></div>
+                    <div
+                      className={value !== null ? value.status : "Empty"}
+                      onClick={() => {
+                        if (value !== null) {
+                          setJobLogId(value.id);
+                          setOpenJobLogPopup(true)
+                        }
+                      }}>
+                    </div>
                   </Tooltip>
                 ))}
             </div>
@@ -133,21 +162,21 @@ export function ManageRecommendationDrawer({
             <p className="value-title">Last Execution Status</p>
             {configuredRecommendation.lastJobs &&
               configuredRecommendation.lastJobs[4] ? (
-                <div
-                  className={
-                    'execution-status-' +
-                    configuredRecommendation.lastJobs[4].status
-                  }
-                >
-                  <Chip
-                    label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
-                  />
-                </div>
-              ) : (
-                <div className={'execution-status-Empty'}>
-                  <Chip label="NO STATUS" />
-                </div>
-              )}
+              <div
+                className={
+                  'execution-status-' +
+                  configuredRecommendation.lastJobs[4].status
+                }
+              >
+                <Chip
+                  label={configuredRecommendation.lastJobs[4].status.toUpperCase()}
+                />
+              </div>
+            ) : (
+              <div className={'execution-status-Empty'}>
+                <Chip label="NO STATUS" />
+              </div>
+            )}
           </Grid>
           <Grid item xs={12}>
             <div className="created-edited-by">
@@ -159,12 +188,12 @@ export function ManageRecommendationDrawer({
           </Grid>
           <Grid item xs={12}>
             <div className="edit-recommendation-button">
-              <Button variant="outlined" onClick={() => { toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, configuredRecommendation.id); }}>Edit</Button>
+              <Button variant="outlined" onClick={() => { toggleDialog(); setEditableConfiguredRecommendation(configuredRecommendation, templateType); }}>Edit</Button>
             </div>
           </Grid>
           <Grid item xs={12}>
             <div className="force-run-button">
-              <Button variant="outlined" id="forceRunRecButton"onClick={handleForceRunPopUpOpen}>Force run</Button>
+              <Button variant="outlined" id="forceRunRecButton" onClick={handleForceRunPopUpOpen}>Force run</Button>
               <ForceRunPopUp title={configuredRecommendation.name} handleForceRunPopUpOpen={handleForceRunPopUpOpen} open={openForceRunPopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
@@ -174,9 +203,21 @@ export function ManageRecommendationDrawer({
               <DeletePopUp title={configuredRecommendation.name} handleDeletePopUpOpen={handleDeletePopUpOpen} open={openDeletePopUp} recommendationId={configuredRecommendation.id} />
             </div>
           </Grid>
+          {openJobLogPopup &&
+            <JobLogPopUp className={"job-log-style"} jobId={jobLogId} controlled={openJobLogPopup} handleOpenLogPopup={handleOpenLogPopup}></JobLogPopUp>
+          }
         </Grid>
       </div>
     </animated.div>
   );
 }
-export default connect(null, mapDispatchToProps)(ManageRecommendationDrawer)
+
+export default connect(mapTemplateStateToProps, mapDispatchToProps)(ManageRecommendationDrawer);
+
+/* istanbul ignore next */
+ManageRecommendationDrawer.propTypes = {
+  configuredRecommendation: PropTypes.string.isRequired,
+  toggleDialog: PropTypes.func.isRequired,
+  setEditableConfiguredRecommendation: PropTypes.func.isRequired,
+  templateType: PropTypes.string.isRequired,
+};

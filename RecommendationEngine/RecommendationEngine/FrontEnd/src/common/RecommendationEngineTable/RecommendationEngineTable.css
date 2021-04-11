@@ -1,0 +1,13 @@
+.MuiDataGrid-colCellTitle{
+    color:  #687480;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+
+.table-style{
+    width: 98%;
+}
+
+.clickable{
+    cursor: pointer;
+}

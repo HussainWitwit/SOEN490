@@ -9,14 +9,13 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDateTimePicker
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDateTimePicker } from '@material-ui/pickers';
+import MultiSelectTreeView from '../../components/MultiSelectTreeView/MultiSelectTreeView';
+import MultiSelectAutocomplete from '../../common/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import { mergedArrayIdsAndTitles } from '../../utilities/ArrayManipulationUtilities';
+import PropTypes from 'prop-types';
 
 const granularityItems = ['Weekly', 'Monthly', 'Yearly'];
 
@@ -24,15 +23,24 @@ export function DetailsConfigurationModal (props) {
 
   const { dialogsContent, setTitle, updateAsset, setPreferredScenario, setGranularity, setRepeatDay, setRepeatDate, setRepeatTime, apiAssets } = props;
   const { templateDetailsList, template, isEditing, basicConfiguration } = dialogsContent;
-
-
   const [isFirstTypingTitle, setIsFirstTypingTitle] = useState(true);
+  const currentDateTime = new Date();
 
   useEffect(() => {
     if (template.name === templateDetailsList[0].templateName) {
       setGranularity('Yearly');
     }
   }, [template.name])
+
+  useEffect(() => {
+    if (!isEditing) {
+      let date = new Date();
+      date.setSeconds(0);
+      date.setMilliseconds(0);
+      setRepeatDate(date);
+      setRepeatTime(date);
+    }
+  }, [])
 
   return (
     <animated.div id="details-configuration-modal" style={props.dialogStyle}>
@@ -57,16 +65,25 @@ export function DetailsConfigurationModal (props) {
           <div id="text-container">
             <p id="text">Asset: </p>
           </div>
-          <MultiSelectAutocomplete
-            contentLabel="Assets..."
-            recommendationType={template.name}
+          {isEditing &&
+            <MultiSelectAutocomplete
+              contentLabel="Assets..."
+              id='multiple-select-asset-container'
+              error={basicConfiguration.asset.length === 0}
+              items={basicConfiguration.asset}
+              defaultValue={basicConfiguration.asset}
+              boxLabelName={'Selected Assets'}
+              variant={'outlined'}
+              isReadOnly={true}
+              maxElement={3}
+            />
+          }
+          {!isEditing && <MultiSelectTreeView
+            value={basicConfiguration.asset ? basicConfiguration.asset.map(e => e.id) : []}
+            onChange={(assetIds, assetTitles) => updateAsset(mergedArrayIdsAndTitles(assetIds, assetTitles))}
+            placeholder='Assets ...'
             items={apiAssets}
-            value={basicConfiguration.asset ? basicConfiguration.asset : []}
-            onChange={(event, value) => updateAsset(value)}
-            maxElement={1}
-            variant={'outlined'}
-            isReadOnly={false}
-          />
+          />}
         </div>
         <div id="scenario-container">
           <p id="text-3">Preferred Scenario: </p>
@@ -112,8 +129,8 @@ export function DetailsConfigurationModal (props) {
             value={basicConfiguration.granularity}
             className="text-input-granularity"
           >
-            {granularityItems.map((element) => {
-              return <option data-testid="granularity-option">{element}</option>;
+            {granularityItems.map((element, index) => {
+              return <option data-testid="granularity-option" key={index}>{element}</option>;
             })}
           </Form.Control>
         </div>
@@ -139,41 +156,58 @@ export function DetailsConfigurationModal (props) {
             </ButtonGroup>
           )}
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            {(basicConfiguration.granularity === granularityItems[1] ||
-              basicConfiguration.granularity === granularityItems[2]) && (
-                <KeyboardDateTimePicker
-                  id="recommendation-date-picker"
-                  data-testid='date'
-                  autoOk
+            <React.Fragment>
+              {(basicConfiguration.granularity === granularityItems[1] ||
+                basicConfiguration.granularity === granularityItems[2]) && (
+                  <KeyboardDateTimePicker
+                    id="recommendation-date-picker"
+                    data-testid='date'
+                    autoOk
+                    ampm
+                    disablecloseonselect="true"
+                    disablemaskedinput="true"
+                    inputVariant="outlined"
+                    label="Repeat on"
+                    minDateMessage={"The selected date cannot be before the current date."}
+                    minDate={currentDateTime}
+                    disablePast
+                    value={basicConfiguration.repeatDate}
+                    onChange={(date) => setRepeatDate(date)}
+                    format={"PPp"}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
+                )}
+              {basicConfiguration.granularity === granularityItems[0] &&
+                <KeyboardTimePicker
+                  label="Time"
+                  data-testid='time'
+                  id="recommendation-time-picker"
                   inputVariant="outlined"
-                  label="Date & Time"
-                  minDate={isEditing ? null : new Date()}
-                  // format={"dd/MM/yyyy"}
-                  value={basicConfiguration.repeatDate}
-                  onChange={(date) => setRepeatDate(date)}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
+                  value={basicConfiguration.repeatTime}
+                  onChange={date => setRepeatTime(date)}
                 />
-              )}
-            {basicConfiguration.granularity === granularityItems[0] &&
-              <KeyboardTimePicker
-                label="Time"
-                data-testid='time'
-                id="recommendation-time-picker"
-                inputVariant="outlined"
-                value={basicConfiguration.repeatTime}
-                onChange={date => setRepeatTime(date)}
-              />
-            }
-          </MuiPickersUtilsProvider>
+              }
+            </React.Fragment>
+          </MuiPickersUtilsProvider >
         </div>
       </div>
     </animated.div>
   );
 }
 
-export default connect(
-  mapDialogStateToProps,
-  mapDispatchToProps
-)(DetailsConfigurationModal);
+export default connect(mapDialogStateToProps, mapDispatchToProps)(DetailsConfigurationModal);
+
+/* istanbul ignore next */
+DetailsConfigurationModal.propTypes = {
+  dialogsContent: PropTypes.object.isRequired,
+  setTitle: PropTypes.func.isRequired,
+  updateAsset: PropTypes.func.isRequired,
+  setPreferredScenario: PropTypes.func.isRequired,
+  setGranularity: PropTypes.func.isRequired,
+  setRepeatDay: PropTypes.func.isRequired,
+  setRepeatDate: PropTypes.func.isRequired,
+  setRepeatTime: PropTypes.func.isRequired,
+  apiAssets: PropTypes.array.isRequired,
+};

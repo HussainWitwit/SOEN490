@@ -1,4 +1,5 @@
-﻿using Interfaces.Services;
+using System;
+using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using RecommendationEngine.ExceptionHandler;
 
@@ -24,7 +25,46 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("group/{id}")]
+        public IActionResult GetActionsByCompoundId(string id)
+        {
+            try
+            {
+                return Ok(_actionService.GetActionsByCompoundId(id));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("calendar/{assetId?}")]
+        public IActionResult GetNbActionsByDay(int? assetId)
+        {
+            try
+            {
+                return Ok(_actionService.GetNbActionsByDay(assetId));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("date/{date}")]
+        public IActionResult GetActionsByDate(DateTime date)
+        {
+            try
+            {
+                return Ok(_actionService.GetActionsByDate(date));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
             }
         }
     }

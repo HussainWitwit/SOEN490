@@ -1,17 +1,13 @@
 import React from 'react';
 import { animated } from 'react-spring';
 import TextField from '@material-ui/core/TextField';
-import MultiSelectAutocomplete from '../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import MultiSelectAutocomplete from '../../common/MultiSelectAutocomplete/MultiSelectAutocomplete';
 import { connect } from 'react-redux';
 import { mapDialogStateToProps, mapDispatchToProps } from '../../redux/ManageRecommendationReducer/reducer-actions';
 import { stringRecurrenceFormatting } from '../../utilities/DateTimeUtilities';
+import { transformParameterList } from '../../utilities/ArrayManipulationUtilities';
 import './ConfirmationModal.css';
-
-const parameters = [{ title: 'To Come', year: 1994 }]; //Temporary until parameters user story is complete.
-var formatYear = { month: 'long', day: 'numeric' };
-var formatMonth = { day: 'numeric' };
-var formatTime = { hour: 'numeric', minute: '2-digit', hour12: true };
-var dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+import PropTypes from 'prop-types';
 
 export function ConfirmationModal (props) {
 
@@ -52,24 +48,24 @@ export function ConfirmationModal (props) {
             }}
           />
           <MultiSelectAutocomplete
-            contentLabel="Parameters..."
-            items={parameters}
-            defaultValue={parameters}
+            id='multiple-select-asset-container1'
+            error={dialogsContent.template.inputList === 0}
+            items={dialogsContent.template.inputList}
+            defaultValue={transformParameterList(dialogsContent.template.inputList)}
             boxLabelName={'Selected Parameters'}
             variant={'outlined'}
             isReadOnly={true}
-            maxElement={1}
           />
           <MultiSelectAutocomplete
             contentLabel="Assets..."
-            id='multiple-select-asset-container'
+            id='multiple-select-asset-container2'
             error={dialogsContent.basicConfiguration.asset.length === 0}
             items={dialogsContent.basicConfiguration.asset}
             defaultValue={dialogsContent.basicConfiguration.asset}
             boxLabelName={'Selected Assets'}
             variant={'outlined'}
             isReadOnly={true}
-            maxElement={10}
+            maxElement={8}
           />
           <TextField
             id="outlined-read-only-recurrence"
@@ -86,7 +82,10 @@ export function ConfirmationModal (props) {
   );
 }
 
-export default connect(
-  mapDialogStateToProps,
-  mapDispatchToProps
-)(ConfirmationModal);
+export default connect(mapDialogStateToProps, mapDispatchToProps)(ConfirmationModal);
+
+/* istanbul ignore next */
+ConfirmationModal.propTypes = {
+  dialogStyle: PropTypes.object.isRequired,
+  dialogsContent: PropTypes.object.isRequired,
+};

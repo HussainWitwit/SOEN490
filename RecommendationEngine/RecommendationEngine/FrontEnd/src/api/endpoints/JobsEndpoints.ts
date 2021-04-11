@@ -1,33 +1,33 @@
-
 import { ConfiguredRecommendationJob, JobLog } from '../models/Job'
+import { handleErrors } from "../../utilities/ValidationUtilities"
+import { notifyError } from "../../utilities/ErrorNotification"
 
-export async function GetRecommendationJobList() : Promise<ConfiguredRecommendationJob[]> {
+export async function GetRecommendationJobList(assetId: number | null) : Promise<ConfiguredRecommendationJob[]> {
     let result: ConfiguredRecommendationJob[] = [];
-    try {
-        let response = await fetch('api/job');
-        const jsonResponse = await response.json();
-        if (jsonResponse) {
-            result = jsonResponse;
+    await fetch('api/job/filterByAsset/'+(assetId?assetId:''))
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            result = res;
             return result;
-        }
-    } catch (e) {
-        console.log('Error fetching jobs!')
-        console.log(e);
-    }
+        })
+        .catch(err => {
+            notifyError(err)
+        })
     return result;
 }
 
 export async function GetJobLogList(id: number) : Promise<JobLog[]> {
     let result: JobLog[] = [];
-    try {
-        await fetch('api/job/log/'+id)
-        .then((response) => response.json())
-        .then((responseJSON) => {
-            result = responseJSON;
-        });
-    } catch (e) {
-        console.log('Error fetching job logs!')
-        console.log(e);
-    }
+    await fetch('api/job/log/'+id)
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            result = res;
+            return result;
+        })
+        .catch(err => {
+            notifyError(err)
+        })
     return result;
 }

@@ -19,7 +19,27 @@ namespace RecommendationEngine.Controllers
         [HttpGet]
         public IActionResult GetConfiguredRecommendationList()
         {
-            return Ok(_configuredRecommendationService.GetConfiguredRecommendationList());
+            try
+            {
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationList(null));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("filterByAsset/{id?}")]
+        public IActionResult GetConfiguredRecommendationListByAssetId(int? id)
+        {
+            try
+            {
+                return Ok(_configuredRecommendationService.GetConfiguredRecommendationList(id));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
         }
 
         [HttpGet("{id}")]
@@ -31,7 +51,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
             }
         }
 
@@ -44,7 +64,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
             }
             return Ok();
         }
@@ -58,7 +78,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
             }
             return Ok();
         }
@@ -72,7 +92,7 @@ namespace RecommendationEngine.Controllers
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
             }
             return Ok();
         }

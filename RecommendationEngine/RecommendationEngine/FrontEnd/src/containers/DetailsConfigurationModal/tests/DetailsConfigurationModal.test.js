@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { DetailsConfigurationModal } from '../DetailsConfigurationModal';
-import MultiSelectAutocomplete
-    from '../../../components/MultiSelectAutocomplete/MultiSelectAutocomplete';
+import MultiSelectTreeView
+    from '../../../components/MultiSelectTreeView/MultiSelectTreeView';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
@@ -39,7 +39,7 @@ describe('DetailsConfigurationModal component', () => {
         setRepeatDay={(value) => { }}
         setRepeatDate={(value) => { }}
         setRepeatTime={(value) => { }}
-        apiAssets={[]}
+        apiAssets={[{key: 0}]}
     />);
 
     it('It renders without crashing', async () => {
@@ -64,7 +64,7 @@ describe('DetailsConfigurationModal component', () => {
     });
 
     it('Finds the multiselect', () => {
-        let multiselect = wrapper.find(MultiSelectAutocomplete);
+        let multiselect = wrapper.find(MultiSelectTreeView);
         expect(multiselect).toHaveLength(1);
     });
 
@@ -86,13 +86,11 @@ describe('DetailsConfigurationModal component', () => {
             const buttonNetSaving = getAllByTestId(container, 'option-net');
             const granularity = getAllByTestId(container, 'granularity');
             const granularityOption = getAllByTestId(container, 'granularity-option');
-            const granularityOptionDate = getAllByTestId(container, 'date');
             fireEvent.click(buttonRon[0]); // return on investment
             fireEvent.click(buttonNetSaving[0]); // net saving
             fireEvent.click(granularity[0]); // granularity dropdown
             fireEvent.click(granularityOption[0]); // weekly
             fireEvent.click(granularityOption[1]); // monthly 
-            fireEvent.click(granularityOptionDate[0]);
             fireEvent.click(granularityOption[2]); // yearly 
         });
     })

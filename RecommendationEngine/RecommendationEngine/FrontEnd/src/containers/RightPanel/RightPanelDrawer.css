@@ -1,6 +1,10 @@
 /* Header font */
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap');
 
+.drawer-header-container, .react-tabs__tab {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .drawer-pin {
   width: 20px;
   height: 20px;
@@ -40,14 +44,13 @@
   align-content: center;
   height: 55px;
   font-size: 14px;
-  font-family: 'Mulish', sans-serif;
   padding-left: 5px;
   color: black;
 }
 
 .drawer-container.MuiDrawer-paper {
   background-color: white;
-  width: 20%;
+  width: 15%;
 }
 
 .header-space {
@@ -83,7 +86,6 @@
   flex-grow: 1;
   background: rgb(225, 227, 228);
   font-size: medium;
-  font-family: 'Mulish', sans-serif;
   color: black;
   font-weight: bold;
 }

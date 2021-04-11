@@ -7,9 +7,8 @@ using Quartz;
 using RecommendationScheduler.RecommendationJob;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Interfaces.Hub;
 using Interfaces.Services.ExternalApi;
-using Models.Application.Asset;
-using System.Data.Common;
 
 namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 {
@@ -20,6 +19,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
         private Mock<IJobExecutionContext> _contextMock;
         private YearlyWashOptimizationRecommendationJob _yearlyWashOptimizationRecommendationJob;
         private Mock<IMetadataDriveService> _driveService;
+        private Mock<INotificationHub> _notifMock;
 
         [SetUp]
         public void Setup()
@@ -28,22 +28,29 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
             _recommendationSchedulerRepoMock = new Mock<IRecommendationSchedulerRepository>();
             _contextMock = new Mock<IJobExecutionContext>();
             _driveService = new Mock<IMetadataDriveService>();
+            _notifMock = new Mock<INotificationHub>();
 
-            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object, _driveService.Object);
+            _yearlyWashOptimizationRecommendationJob = new YearlyWashOptimizationRecommendationJob(_loggerMock.Object, _recommendationSchedulerRepoMock.Object, _driveService.Object, _notifMock.Object);
         }
 
         [Test]
         public void TestExecute()
         {
             //Arrange
-            _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()));
+            _loggerMock.Setup(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>(), It.IsAny<object>()));
             _recommendationSchedulerRepoMock.Setup(x => x.UpdateRecommendationJobStatus(It.IsAny<int>(), It.IsAny<string>()));
             _recommendationSchedulerRepoMock.Setup(x => x.UpdateRecommendationJobStatus(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()));
             _recommendationSchedulerRepoMock.Setup(x => x.GetDbRecommendationScheduleById(It.IsAny<int>())).Returns(
                 new DBRecommendationSchedule
                 {
                     RecommendationScheduleId = 2,
-                    AssetsList = new List<DBAssetRecommendationSchedule>(),
+                    AssetsList = new List<DBAssetRecommendationSchedule>
+                    {
+                        new DBAssetRecommendationSchedule
+                        {
+                            AssetId = 0,
+                        }
+                    }
                 }
             );
 
@@ -55,10 +62,14 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
 
             List<DBRecommendationScheduleParameter> dbParameterList = new List<DBRecommendationScheduleParameter> {
 
-                new DBRecommendationScheduleParameter { DisplayText = "center point increment", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "span increment", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "soiling season buffer", ParamValue = 3},
-                new DBRecommendationScheduleParameter { DisplayText = "accelerator", ParamValue = 3},
+                new DBRecommendationScheduleParameter { Name = "StartSoilingSeason", ParamValue = "03/01/2020 00:00:00"},
+                new DBRecommendationScheduleParameter { Name = "EndSoilingSeason", ParamValue = "11/01/2020 00:00:00"},
+                new DBRecommendationScheduleParameter { Name = "SoilingRate", ParamValue = "-0.0003"},
+                new DBRecommendationScheduleParameter { Name = "CostCleaning", ParamValue = "300"},
+                new DBRecommendationScheduleParameter { Name = "CenterPointIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SpanIncrement", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "SoilingSeasonBuffer", ParamValue = "3"},
+                new DBRecommendationScheduleParameter { Name = "Accelerator", ParamValue = "0.25"},
 
             };
 
@@ -84,7 +95,7 @@ namespace RecommendationSchedulerTests.UnitTests.RecommendationJob
             _recommendationSchedulerRepoMock.Verify(x => x.UpdateRecommendationJobStatus(It.IsAny<int>(), It.IsAny<string>()), Times.Never);
             _recommendationSchedulerRepoMock.Verify(x => x.UpdateRecommendationJobStatus(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()), Times.AtLeastOnce);
             _recommendationSchedulerRepoMock.Verify(x => x.GetDbRecommendationScheduleById(It.IsAny<int>()), Times.Once);
-            _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>()), Times.AtLeastOnce);
+            _loggerMock.Verify(x => x.LogInformation(It.IsAny<DBRecommendationJob>(), It.IsAny<string>(), It.IsAny<object>()), Times.AtLeastOnce);
             _recommendationSchedulerRepoMock.Verify(x => x.AddRecommendationJob(It.IsAny<DBRecommendationJob>()), Times.Once());
             Assert.AreEqual(task, Task.CompletedTask);
         }

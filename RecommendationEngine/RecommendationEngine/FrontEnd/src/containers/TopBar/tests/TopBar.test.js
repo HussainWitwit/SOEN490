@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TopBar from '../TopBar.jsx';
-import NotificationBell from '../../../components/Notification/NotificationBell.jsx';
 import Enzyme, { shallow } from '../../../enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { store } from '../../../redux/store';
+import { Provider } from 'react-redux';
 import BreadcrumbsComponent from '../../../components/BreadcrumbsComponent/BreadcrumbsComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -17,7 +17,7 @@ describe('TopBar component', () => {
 
     it('It renders without crashing', async () => {
         const div = document.createElement('div');
-        ReactDOM.render(<TopBar store={store} />, div)
+        ReactDOM.render(<Provider store={store}><TopBar store={store} /></Provider>, div)
         await new Promise((resolve) => setTimeout(resolve, 1000));
     });
 
@@ -54,11 +54,5 @@ describe('TopBar component', () => {
         const output = shallow(<TopBar store={store} />).dive();
         let change = output.find('p');
         expect(change).toHaveLength(3);
-    });
-
-    it('It finds the NotificationBell element', () => {
-        const output = shallow(<TopBar store={store} />).dive();
-        let component = output.find(NotificationBell);
-        expect(component).toHaveLength(1);
     });
 });

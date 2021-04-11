@@ -20,11 +20,64 @@ namespace RecommendationEngine.Controllers
         {
             try
             {
-                return Ok(_resultService.GetResultList());
+                return Ok(_resultService.GetResultList(null));
             }
             catch (GlobalException e)
             {
-                return BadRequest(new { e.Code, e.Data, e.ErrorMessage, e.ApplicationName });
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("filterByAsset/{id?}")]
+        public IActionResult GetResultListByAssetId(int? id)
+        {
+            try
+            {
+                return Ok(_resultService.GetResultList(id));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("widgets/{assetId?}")]
+        public IActionResult GetWidgetMetrics(int? assetId)
+        {
+            try
+            {
+                return Ok(_resultService.GetWidgetMetrics(assetId));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+
+        [HttpGet("histogram/{year}/{assetId?}")]
+        public IActionResult GetHistogram(int year, int? assetId)
+        {
+            try
+            {
+                return Ok(_resultService.GetHistogram(year, assetId));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
+            }
+        }
+
+        [HttpGet("histogramYears/{assetId?}")]
+        public IActionResult GetHistogramYears(int? assetId)
+        {
+            try
+            {
+                return Ok(_resultService.GetHistogramYears(assetId));
+            }
+            catch (GlobalException e)
+            {
+                return e.GetActionResult();
             }
         }
     }

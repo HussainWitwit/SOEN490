@@ -1,19 +1,18 @@
 import { TemplateDetails } from "../models/TemplateDetails";
+import { handleErrors } from "../../utilities/ValidationUtilities"
+import { notifyError } from "../../utilities/ErrorNotification"
 
 export async function GetTemplateDetailsInfo() : Promise<TemplateDetails[]> {
     let templates: TemplateDetails[] = [];
-    try{
-        let response = await fetch ('api/RecommendationType');
-        const jsonResponse = await response.json();
-        if(jsonResponse)
-        {
-            templates  = jsonResponse;
+    await fetch ('api/RecommendationType')
+        .then(res => handleErrors(res))
+        .then(res => res.json())
+        .then(res => {
+            templates = res;
             return templates;
-        }
-    }
-    catch (error){
-        console.log("Error while fetchting recommendation types.")
-        console.log(error);
-    }
+        })
+        .catch(err => {
+            notifyError(err)
+        })
     return templates;
 }

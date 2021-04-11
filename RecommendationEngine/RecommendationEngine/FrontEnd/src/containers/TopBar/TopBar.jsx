@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import NotificationBell from '../../components/Notification/NotificationBell';
+import React, { useEffect, useState } from 'react';
 import BreadcrumbsComponent from '../../components/BreadcrumbsComponent/BreadcrumbsComponent'
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
 import './TopBar.css';
+import PropTypes from 'prop-types';
 
 function TopBar ({ openAssetTreeview }) {
 
-  const [locationDetails, setLocationDetails] = React.useState(null);
-  const [weatherDetails, setWeatherDetails] = React.useState(null);
+  const [locationDetails, setLocationDetails] = useState(null);
+  const [weatherDetails, setWeatherDetails] = useState(null);
 
   // eslint-disable-next-line
+  /* istanbul ignore next */
   const getCurrentLocation = async () => {
     let response = await fetch(`https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_KEY}`);
     let data = await response.json();
@@ -18,6 +19,7 @@ function TopBar ({ openAssetTreeview }) {
   }
 
   // eslint-disable-next-line
+  /* istanbul ignore next */
   const getCurrentWeather = async () => {
     let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=montreal&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`);
     let data = await response.json();
@@ -26,8 +28,8 @@ function TopBar ({ openAssetTreeview }) {
 
   /* istanbul ignore next */
   useEffect(() => {
-    if(process.env.REACT_APP_GEOLOCATION_KEY && process.env.REACT_APP_WEATHER_KEY){
-      getCurrentLocation(); 
+    if (process.env.REACT_APP_GEOLOCATION_KEY && process.env.REACT_APP_WEATHER_KEY) {
+      getCurrentLocation();
       getCurrentWeather();
     }
   }, []);
@@ -36,16 +38,20 @@ function TopBar ({ openAssetTreeview }) {
     <div className="main-container">
       <nav>
         <BreadcrumbsComponent id="breadcrumb" />
-        <p id="change_button" className="change_button" onClick={openAssetTreeview}>Change</p>
+        <p id="change-button" className="change-button" onClick={openAssetTreeview}>Change</p>
         <div id="weather-div" className="weather">
           <p>{weatherDetails ? parseInt(weatherDetails.temp) + "°C " + weatherDetails.description : "Waiting for data"}</p>
           <p>{locationDetails ? locationDetails.city : "Waiting for data"} {locationDetails ? " " + locationDetails.country_code : "Waiting for data"}</p>
         </div>
         <img id="img" className="temperature_icon" alt="icon" src={weatherDetails ? "http://openweathermap.org/img/wn/" + weatherDetails.icon + ".png" : "no icon"} />
-        <NotificationBell id="notification-bell" />
       </nav>
     </div>
   );
 }
 
-export default connect(null, mapDispatchToProps)(TopBar)
+export default connect(null, mapDispatchToProps)(TopBar);
+
+/* istanbul ignore next */
+TopBar.propTypes = {
+  openAssetTreeview: PropTypes.func.isRequired,
+}

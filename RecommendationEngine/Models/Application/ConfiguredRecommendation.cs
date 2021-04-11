@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Models.Application.Asset;
+using Models.Recommendation;
 
 namespace Models.Application
 {

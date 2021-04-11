@@ -19,6 +19,9 @@ html {
 }
 
 .route-context-drawer {
-    width: calc(99% - var(--drawer-width)); 
+    width: 80%; 
     transition: all 0.5s; 
+    margin-right: auto;
+    margin-left: 35px;
+    margin-top: 20px;
 }

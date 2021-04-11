@@ -4,11 +4,11 @@ coverage:
     project:
       default:
         threshold: 5%
-    patch:
-      default:
-        threshold: 10%
+    patch: off
 ignore:
   - "RecommendationEngine/Models"  # ignore models
   - "RecommendationEngine/RecommendationEngine/Repositories" #ignore repositories
   - "RecommendationEngine/RecommendationEngine/Services/ExternalAPI"
   - "RecommendationEngine/RecommendationSchedulerTests"
+  - "RecommendationEngine/RecommendationEngine/Hub"
+  - "RecommendationEngine/RecommendationEngine/Authentication"
