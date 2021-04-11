@@ -11,6 +11,7 @@ function TopBar ({ openAssetTreeview }) {
   const [weatherDetails, setWeatherDetails] = useState(null);
 
   // eslint-disable-next-line
+  /* istanbul ignore next */
   const getCurrentLocation = async () => {
     let response = await fetch(`https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_KEY}`);
     let data = await response.json();
@@ -18,6 +19,7 @@ function TopBar ({ openAssetTreeview }) {
   }
 
   // eslint-disable-next-line
+  /* istanbul ignore next */
   const getCurrentWeather = async () => {
     let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=montreal&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`);
     let data = await response.json();
