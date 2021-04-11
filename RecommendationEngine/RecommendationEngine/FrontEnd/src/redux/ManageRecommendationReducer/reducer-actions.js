@@ -268,7 +268,7 @@ export const mapParamDialogStateToProps = (state) => {
 /* istanbul ignore next */
 export const mapTemplateStateToProps = (state) => {
   return {
-    templateType: state.manageRecommendationReducer.template.assetTypes
+    templateType: state.manageRecommendationReducer.template.assetTypes,
   }
 }
 
@@ -293,6 +293,7 @@ export const mapDispatchToProps = (dispatch) => {
     setBackToInitialValues: () => dispatch(setBackToInitialValues()),
     getTemplateDetails: () => getTemplateDetails(dispatch),
     setRecommendationType: (value) => (setRecommendationType(dispatch, value)),
+    openScheduleDrilldown: (id) => openScheduleDrilldown(dispatch, id),
     postConfiguredRecommendation: (configuredRecommendation, editingState) => postConfiguredRecommendation(dispatch, configuredRecommendation, editingState),
   };
 }

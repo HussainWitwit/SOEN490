@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `RecommendationEngine` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `RecommendationEngine`;
 -- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: RecommendationEngine
@@ -39,7 +37,7 @@ CREATE TABLE `Action` (
   CONSTRAINT `FK_Action_Asset_AssetId` FOREIGN KEY (`AssetId`) REFERENCES `Asset` (`AssetId`) ON DELETE RESTRICT,
   CONSTRAINT `FK_Action_RecommendationJobResult_RecommendationJobResultId` FOREIGN KEY (`RecommendationJobResultId`) REFERENCES `RecommendationJobResult` (`RecommendationJobResultId`) ON DELETE CASCADE,
   CONSTRAINT `FK_Action_WorkOrder_WorkOrderOpenedWorkOrderId` FOREIGN KEY (`WorkOrderOpenedWorkOrderId`) REFERENCES `WorkOrder` (`WorkOrderId`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=535 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,6 +46,7 @@ CREATE TABLE `Action` (
 
 LOCK TABLES `Action` WRITE;
 /*!40000 ALTER TABLE `Action` DISABLE KEYS */;
+INSERT INTO `Action` VALUES (1,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(2,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(3,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(4,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(5,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1),(6,'TestAction','TestAction','2022-01-01 00:00:00',10,NULL,1);
 /*!40000 ALTER TABLE `Action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +72,7 @@ CREATE TABLE `Asset` (
   KEY `IX_Asset_TypeAssetTypeId` (`TypeAssetTypeId`),
   CONSTRAINT `FK_Asset_Asset_ParentAssetAssetId` FOREIGN KEY (`ParentAssetAssetId`) REFERENCES `Asset` (`AssetId`) ON DELETE RESTRICT,
   CONSTRAINT `FK_Asset_AssetType_TypeAssetTypeId` FOREIGN KEY (`TypeAssetTypeId`) REFERENCES `AssetType` (`AssetTypeId`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +81,7 @@ CREATE TABLE `Asset` (
 
 LOCK TABLES `Asset` WRITE;
 /*!40000 ALTER TABLE `Asset` DISABLE KEYS */;
-INSERT INTO `Asset` VALUES (1,'RENEW01_2070','RENEW01_2070',NULL,NULL,NULL,0,NULL,NULL),(2,'RENEW01_2070.03','RENEW01_2070.03',NULL,NULL,'RENEW01_2070.03',0,1,1),(3,'RENEW01_2070.92','CEI IV-1',NULL,NULL,'RENEW01_2070.92',0,1,1),(4,'RENEW01_2070.93','CEI IV-2',NULL,NULL,'RENEW01_2070.93',0,1,1),(5,'RENEW01_2070.94','RENEW01_2070.94',NULL,NULL,'RENEW01_2070.94',0,1,1),(6,'RENEW01_2070.95','CEI VII',NULL,NULL,'RENEW01_2070.95',0,1,1),(7,'RENEW01_2070.92.005','Bizzell Church 2','PV','Eastern Standard Time','RENEW01_2070.92.005',4950,3,2),(8,'RENEW01_2070.93.006','Nickelson 2','PV','Eastern Standard Time','RENEW01_2070.93.006',4998,4,2),(9,'RENEW01_2070.93.007','Orchard Ranch','PV','US Mountain Standard Time','RENEW01_2070.93.007',20000,4,2),(10,'RENEW01_2070.93.008','Siler City 2','PV','Eastern Standard Time','RENEW01_2070.93.008',4973,4,2),(11,'RENEW01_2070.93.009','Simcoe','PV','US Mountain Standard Time','RENEW01_2070.93.009',20000,4,2),(12,'RENEW01_2070.93.010','Trinity Solar','PV','Eastern Standard Time','RENEW01_2070.93.010',5000,4,2),(13,'RENEW01_2070.93.011','Bearford II','PV','Eastern Standard Time','RENEW01_2070.93.011',4950,4,2),(14,'RENEW01_2070.93.012','Bo Biggs','PV','Eastern Standard Time','RENEW01_2070.93.012',4973,4,2),(15,'RENEW01_2070.93.005','Nash 97-2','PV','Eastern Standard Time','RENEW01_2070.93.005',4973,4,2),(16,'RENEW01_2070.94.001','Cal Flats 130','PV','Pacific Standard Time','RENEW01_2070.94.001',130000,5,2),(17,'RENEW01_2070.94.003','Hooper','PV','US Mountain Standard Time','RENEW01_2070.94.003',52000,5,2),(18,'RENEW01_2070.94.005','Kingbird A','PV','Pacific Standard Time','RENEW01_2070.94.005',20725,5,2),(19,'RENEW01_2070.94.006','Kingbird B','PV','Pacific Standard Time','RENEW01_2070.94.006',20725,5,2),(20,'RENEW01_2070.94.009','Maryland Solar','PV','Eastern Standard Time','RENEW01_2070.94.009',23760,5,2),(21,'RENEW01_2070.94.010','Moapa Solar','PV','Pacific Standard Time','RENEW01_2070.94.010',257740,5,2),(22,'RENEW01_2070.94.011','Mt. Signal 3','PV','Pacific Standard Time','RENEW01_2070.94.011',259200,5,2),(23,'RENEW01_2070.94.012','Quinto','PV','Pacific Standard Time','RENEW01_2070.94.012',108000,5,2),(24,'RENEW01_2070.94.002','Cal Flats 150','PV','Pacific Standard Time','RENEW01_2070.94.002',178200,5,2),(25,'RENEW01_2070.93.004','Murphy Flats','PV','US Mountain Standard Time','RENEW01_2070.93.004',20000,4,2),(26,'RENEW01_2070.93.003','Meadowlark','PV','Eastern Standard Time','RENEW01_2070.93.003',4998,4,2),(27,'RENEW01_2070.93.002','American Falls 2','PV','US Mountain Standard Time','RENEW01_2070.93.002',20000,4,2),(28,'RENEW01_2070.92.003','Beacon 5','PV','Pacific Standard Time','RENEW01_2070.92.003',37200,3,2),(29,'RENEW01_2070.92.002','Beacon 2','PV','Pacific Standard Time','RENEW01_2070.92.002',46500,3,2),(30,'RENEW01_2070.92.001','Ayrshire','PV','Eastern Standard Time','RENEW01_2070.92.001',19800,3,2),(31,'RENEW01_2070.03.015','Logan’s Gap','WIND','Central Standard Time','RENEW01_2070.03.015',200100,2,2),(32,'RENEW01_2070.92.007','Boaz','PV','Eastern Standard Time','RENEW01_2070.92.007',4924,3,2),(33,'RENEW01_2070.92.008','Cline','PV','Eastern Standard Time','RENEW01_2070.92.008',5000,3,2),(34,'RENEW01_2070.92.009','Haywood Farm','PV','Eastern Standard Time','RENEW01_2070.92.009',4924,3,2),(35,'RENEW01_2070.92.010','Hood Farm','PV','Eastern Standard Time','RENEW01_2070.92.010',4950,3,2),(36,'RENEW01_2070.92.011','Innovative Solar 35','PV','Eastern Standard Time','RENEW01_2070.92.011',2000,3,2),(37,'RENEW01_2070.92.012','Innovative Solar 59','PV','Eastern Standard Time','RENEW01_2070.92.012',2000,3,2),(38,'RENEW01_2070.92.013','Innovative Solar 60','PV','Eastern Standard Time','RENEW01_2070.92.013',2000,3,2),(39,'RENEW01_2070.92.014','Moore','PV','Eastern Standard Time','RENEW01_2070.92.014',5000,3,2),(40,'RENEW01_2070.92.015','St. Pauls 2','PV','Eastern Standard Time','RENEW01_2070.92.015',4950,3,2),(41,'RENEW01_2070.92.016','Summer Wheat (San Joaquin)','PV','Pacific Standard Time','RENEW01_2070.92.016',18500,3,2),(42,'RENEW01_2070.92.017','Winter Wheat (San Joaquin)','PV','Pacific Standard Time','RENEW01_2070.92.017',1500,3,2),(43,'RENEW01_2070.92.018','ZV Solar 2','PV','Eastern Standard Time','RENEW01_2070.92.018',4950,3,2),(44,'RENEW01_2070.93.001','American Falls 1','PV','US Mountain Standard Time','RENEW01_2070.93.001',20000,4,2),(45,'RENEW01_2070.94.013','RPU','PV','Pacific Standard Time','RENEW01_2070.94.013',7500,5,2),(46,'RENEW01_2070.95.001','Springbok III','PV','Pacific Standard Time','RENEW01_2070.95.001',103275,6,2);
+INSERT INTO `Asset` VALUES (2,'RENEW01_2070.03','RENEW01_2070.03',NULL,NULL,'RENEW01_2070.03',0,208,1),(3,'RENEW01_2070.92','CEI IV-1',NULL,NULL,'RENEW01_2070.92',0,208,1),(4,'RENEW01_2070.93','CEI IV-2',NULL,NULL,'RENEW01_2070.93',0,208,1),(5,'RENEW01_2070.94','RENEW01_2070.94',NULL,NULL,'RENEW01_2070.94',0,208,1),(6,'RENEW01_2070.95','CEI VII',NULL,NULL,'RENEW01_2070.95',0,208,1),(7,'RENEW01_2070.92.005','Bizzell Church 2','PV','Eastern Standard Time','RENEW01_2070.92.005',4950,3,2),(8,'RENEW01_2070.93.006','Nickelson 2','PV','Eastern Standard Time','RENEW01_2070.93.006',4998,4,2),(9,'RENEW01_2070.93.007','Orchard Ranch','PV','US Mountain Standard Time','RENEW01_2070.93.007',20000,4,2),(10,'RENEW01_2070.93.008','Siler City 2','PV','Eastern Standard Time','RENEW01_2070.93.008',4973,4,2),(11,'RENEW01_2070.93.009','Simcoe','PV','US Mountain Standard Time','RENEW01_2070.93.009',20000,4,2),(12,'RENEW01_2070.93.010','Trinity Solar','PV','Eastern Standard Time','RENEW01_2070.93.010',5000,4,2),(13,'RENEW01_2070.93.011','Bearford II','PV','Eastern Standard Time','RENEW01_2070.93.011',4950,4,2),(14,'RENEW01_2070.93.012','Bo Biggs','PV','Eastern Standard Time','RENEW01_2070.93.012',4973,4,2),(15,'RENEW01_2070.93.005','Nash 97-2','PV','Eastern Standard Time','RENEW01_2070.93.005',4973,4,2),(16,'RENEW01_2070.94.001','Cal Flats 130','PV','Pacific Standard Time','RENEW01_2070.94.001',130000,5,2),(17,'RENEW01_2070.94.003','Hooper','PV','US Mountain Standard Time','RENEW01_2070.94.003',52000,5,2),(18,'RENEW01_2070.94.005','Kingbird A','PV','Pacific Standard Time','RENEW01_2070.94.005',20725,5,2),(19,'RENEW01_2070.94.006','Kingbird B','PV','Pacific Standard Time','RENEW01_2070.94.006',20725,5,2),(20,'RENEW01_2070.94.009','Maryland Solar','PV','Eastern Standard Time','RENEW01_2070.94.009',23760,5,2),(21,'RENEW01_2070.94.010','Moapa Solar','PV','Pacific Standard Time','RENEW01_2070.94.010',257740,5,2),(22,'RENEW01_2070.94.011','Mt. Signal 3','PV','Pacific Standard Time','RENEW01_2070.94.011',259200,5,2),(23,'RENEW01_2070.94.012','Quinto','PV','Pacific Standard Time','RENEW01_2070.94.012',108000,5,2),(24,'RENEW01_2070.94.002','Cal Flats 150','PV','Pacific Standard Time','RENEW01_2070.94.002',178200,5,2),(25,'RENEW01_2070.93.004','Murphy Flats','PV','US Mountain Standard Time','RENEW01_2070.93.004',20000,4,2),(26,'RENEW01_2070.93.003','Meadowlark','PV','Eastern Standard Time','RENEW01_2070.93.003',4998,4,2),(27,'RENEW01_2070.93.002','American Falls 2','PV','US Mountain Standard Time','RENEW01_2070.93.002',20000,4,2),(28,'RENEW01_2070.92.003','Beacon 5','PV','Pacific Standard Time','RENEW01_2070.92.003',37200,3,2),(29,'RENEW01_2070.92.002','Beacon 2','PV','Pacific Standard Time','RENEW01_2070.92.002',46500,3,2),(30,'RENEW01_2070.92.001','Ayrshire','PV','Eastern Standard Time','RENEW01_2070.92.001',19800,3,2),(31,'RENEW01_2070.03.015','Logan’s Gap','WIND','Central Standard Time','RENEW01_2070.03.015',200100,2,2),(32,'RENEW01_2070.92.007','Boaz','PV','Eastern Standard Time','RENEW01_2070.92.007',4924,3,2),(33,'RENEW01_2070.92.008','Cline','PV','Eastern Standard Time','RENEW01_2070.92.008',5000,3,2),(34,'RENEW01_2070.92.009','Haywood Farm','PV','Eastern Standard Time','RENEW01_2070.92.009',4924,3,2),(35,'RENEW01_2070.92.010','Hood Farm','PV','Eastern Standard Time','RENEW01_2070.92.010',4950,3,2),(36,'RENEW01_2070.92.011','Innovative Solar 35','PV','Eastern Standard Time','RENEW01_2070.92.011',2000,3,2),(37,'RENEW01_2070.92.012','Innovative Solar 59','PV','Eastern Standard Time','RENEW01_2070.92.012',2000,3,2),(38,'RENEW01_2070.92.013','Innovative Solar 60','PV','Eastern Standard Time','RENEW01_2070.92.013',2000,3,2),(39,'RENEW01_2070.92.014','Moore','PV','Eastern Standard Time','RENEW01_2070.92.014',5000,3,2),(40,'RENEW01_2070.92.015','St. Pauls 2','PV','Eastern Standard Time','RENEW01_2070.92.015',4950,3,2),(41,'RENEW01_2070.92.016','Summer Wheat (San Joaquin)','PV','Pacific Standard Time','RENEW01_2070.92.016',18500,3,2),(42,'RENEW01_2070.92.017','Winter Wheat (San Joaquin)','PV','Pacific Standard Time','RENEW01_2070.92.017',1500,3,2),(43,'RENEW01_2070.92.018','ZV Solar 2','PV','Eastern Standard Time','RENEW01_2070.92.018',4950,3,2),(44,'RENEW01_2070.93.001','American Falls 1','PV','US Mountain Standard Time','RENEW01_2070.93.001',20000,4,2),(45,'RENEW01_2070.94.013','RPU','PV','Pacific Standard Time','RENEW01_2070.94.013',7500,5,2),(203,'RENEW01_2070.95.001','Springbok III','PV','Pacific Standard Time','RENEW01_2070.95.001',103275,6,2),(208,'RENEW01_2070','RENEW01_2070',NULL,NULL,NULL,0,NULL,NULL);
 /*!40000 ALTER TABLE `Asset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,6 +138,33 @@ INSERT INTO `AssetType` VALUES (1,'Portfolio','Portfolio',NULL),(2,'Plant','Plan
 UNLOCK TABLES;
 
 --
+-- Table structure for table `AssetTypeRecommendationType`
+--
+
+DROP TABLE IF EXISTS `AssetTypeRecommendationType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `AssetTypeRecommendationType` (
+  `AssetTypeId` int NOT NULL,
+  `RecommendationTypeId` int NOT NULL,
+  PRIMARY KEY (`AssetTypeId`,`RecommendationTypeId`),
+  KEY `IX_AssetTypeRecommendationType_RecommendationTypeId` (`RecommendationTypeId`),
+  CONSTRAINT `FK_AssetTypeRecommendationType_AssetType_AssetTypeId` FOREIGN KEY (`AssetTypeId`) REFERENCES `AssetType` (`AssetTypeId`) ON DELETE CASCADE,
+  CONSTRAINT `FK_AssetTypeRecommendationType_RecommendationType_Recommendatio~` FOREIGN KEY (`RecommendationTypeId`) REFERENCES `RecommendationType` (`RecommendationTypeId`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `AssetTypeRecommendationType`
+--
+
+LOCK TABLES `AssetTypeRecommendationType` WRITE;
+/*!40000 ALTER TABLE `AssetTypeRecommendationType` DISABLE KEYS */;
+INSERT INTO `AssetTypeRecommendationType` VALUES (2,1),(2,2),(2,3),(2,4),(2,5),(2,6);
+/*!40000 ALTER TABLE `AssetTypeRecommendationType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `RecommendationJob`
 --
 
@@ -158,7 +184,7 @@ CREATE TABLE `RecommendationJob` (
   KEY `IX_RecommendationJob_ScheduleRecommendationScheduleId` (`ScheduleRecommendationScheduleId`),
   CONSTRAINT `FK_RecommendationJob_Asset_AssetId` FOREIGN KEY (`AssetId`) REFERENCES `Asset` (`AssetId`) ON DELETE RESTRICT,
   CONSTRAINT `FK_RecommendationJob_RecommendationSchedule_ScheduleRecommendat~` FOREIGN KEY (`ScheduleRecommendationScheduleId`) REFERENCES `RecommendationSchedule` (`RecommendationScheduleId`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=581 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,6 +193,7 @@ CREATE TABLE `RecommendationJob` (
 
 LOCK TABLES `RecommendationJob` WRITE;
 /*!40000 ALTER TABLE `RecommendationJob` DISABLE KEYS */;
+ALTER TABLE `RecommendationJob` AUTO_INCREMENT=1;
 /*!40000 ALTER TABLE `RecommendationJob` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +213,7 @@ CREATE TABLE `RecommendationJobLog` (
   PRIMARY KEY (`RecommendationJobLogId`),
   KEY `IX_RecommendationJobLog_RecommendationJobId` (`RecommendationJobId`),
   CONSTRAINT `FK_RecommendationJobLog_RecommendationJob_RecommendationJobId` FOREIGN KEY (`RecommendationJobId`) REFERENCES `RecommendationJob` (`RecommendationJobId`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=576 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41033 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,6 +256,7 @@ CREATE TABLE `RecommendationJobResult` (
 
 LOCK TABLES `RecommendationJobResult` WRITE;
 /*!40000 ALTER TABLE `RecommendationJobResult` DISABLE KEYS */;
+INSERT INTO `RecommendationJobResult` VALUES (1,NULL,NULL,4832.480938804579,0,44,1799.4686254078342,53.3568,1746.1118254078342,3372.519763943554);
 /*!40000 ALTER TABLE `RecommendationJobResult` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -243,12 +271,13 @@ CREATE TABLE `RecommendationParameter` (
   `RecommendationParameterId` int NOT NULL AUTO_INCREMENT,
   `Name` longtext,
   `DisplayText` longtext,
-  `DefaultValue` double NOT NULL,
+  `DefaultValue` longtext,
   `ForRecommendationTypeRecommendationTypeId` int DEFAULT NULL,
+  `Type` longtext,
   PRIMARY KEY (`RecommendationParameterId`),
   KEY `IX_RecommendationParameter_ForRecommendationTypeRecommendationT~` (`ForRecommendationTypeRecommendationTypeId`),
   CONSTRAINT `FK_RecommendationParameter_RecommendationType_ForRecommendation~` FOREIGN KEY (`ForRecommendationTypeRecommendationTypeId`) REFERENCES `RecommendationType` (`RecommendationTypeId`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,7 +286,7 @@ CREATE TABLE `RecommendationParameter` (
 
 LOCK TABLES `RecommendationParameter` WRITE;
 /*!40000 ALTER TABLE `RecommendationParameter` DISABLE KEYS */;
-INSERT INTO `RecommendationParameter` VALUES (1,'SpanIncrement','Span Increment',1,1),(2,'CenterPointIncrement','Center Point Increment',1,1),(5,'Accelerator','Accelerator',0.25,1),(6,'SoilingSeasonBuffer','Soiling Season Buffer',10,1);
+INSERT INTO `RecommendationParameter` VALUES (1,'SpanIncrement','Span Increment','1',1,'POSITIVE_INT_1'),(2,'CenterPointIncrement','Center Point Increment','1',1,'POSITIVE_INT_1'),(5,'Accelerator','Accelerator','0.25',1,'POSITIVE_FLOAT_0.1'),(6,'SoilingSeasonBuffer','Soiling Season Buffer','10',1,'POSITIVE_INT_0'),(7,'StartSoilingSeason','Start Soiling Season','03/01/2020 00:00:00',1,'DATE'),(8,'EndSoilingSeason','End Soiling Season','11/01/2020 00:00:00',1,'DATE'),(9,'SoilingRate','Soiling Rate','-0.0025',1,'NEGATIVE_FLOAT_-0.001'),(10,'CostCleaning','Cost Cleaning','200.00',1,'POSITIVE_FLOAT_10');
 /*!40000 ALTER TABLE `RecommendationParameter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,7 +312,7 @@ CREATE TABLE `RecommendationSchedule` (
   PRIMARY KEY (`RecommendationScheduleId`),
   KEY `IX_RecommendationSchedule_RecommendationTypeId` (`RecommendationTypeId`),
   CONSTRAINT `FK_RecommendationSchedule_RecommendationType_RecommendationType~` FOREIGN KEY (`RecommendationTypeId`) REFERENCES `RecommendationType` (`RecommendationTypeId`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=371 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,11 +334,11 @@ DROP TABLE IF EXISTS `RecommendationScheduleParameter`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `RecommendationScheduleParameter` (
   `RecommendationScheduleParameterId` int NOT NULL AUTO_INCREMENT,
-  `DisplayText` longtext,
+  `Name` longtext,
   `ModifiedBy` longtext,
   `StartDate` datetime NOT NULL,
   `EndDate` datetime NOT NULL,
-  `ParamValue` double NOT NULL,
+  `ParamValue` longtext,
   `RecommendationParameterId` int DEFAULT NULL,
   `ScheduleRecommendationScheduleId` int DEFAULT NULL,
   PRIMARY KEY (`RecommendationScheduleParameterId`),
@@ -317,7 +346,7 @@ CREATE TABLE `RecommendationScheduleParameter` (
   KEY `IX_RecommendationScheduleParameter_ScheduleRecommendationSchedu~` (`ScheduleRecommendationScheduleId`),
   CONSTRAINT `FK_RecommendationScheduleParameter_RecommendationParameter_Reco~` FOREIGN KEY (`RecommendationParameterId`) REFERENCES `RecommendationParameter` (`RecommendationParameterId`) ON DELETE RESTRICT,
   CONSTRAINT `FK_RecommendationScheduleParameter_RecommendationSchedule_Sched~` FOREIGN KEY (`ScheduleRecommendationScheduleId`) REFERENCES `RecommendationSchedule` (`RecommendationScheduleId`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1415 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -402,7 +431,7 @@ CREATE TABLE `__EFMigrationsHistory` (
 
 LOCK TABLES `__EFMigrationsHistory` WRITE;
 /*!40000 ALTER TABLE `__EFMigrationsHistory` DISABLE KEYS */;
-INSERT INTO `__EFMigrationsHistory` VALUES ('20201018094325_InitialCreate','3.1.9'),('20201102234403_Add a recommendation updates','3.1.9'),('20201107000414_Update job log model','3.1.9'),('20201120061814_Add cascading to schedule','3.1.9'),('20201125070216_RE-179 changes','3.1.9'),('20201127223435_Recommendation Job Result Update','3.1.9'),('20201225000321_Add cascade-delete of weak entites','3.1.9');
+INSERT INTO `__EFMigrationsHistory` VALUES ('20210116074108_Merge old migrations','3.1.9'),('20210208053632_Update parameter models','3.1.9'),('20210219041611_EmptyMigration','3.1.9'),('20210219075131_AddAssetTypeRecType','3.1.9');
 /*!40000 ALTER TABLE `__EFMigrationsHistory` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -415,4 +444,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-16 20:05:03
+-- Dump completed on 2021-04-06  1:23:30

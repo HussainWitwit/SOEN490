@@ -8,7 +8,7 @@ const RESULT_DRILLDOWN_NAME = 'Actions';
 let state = {
   isOpen: false,
   tabs: [],
-  selectedTabIndex: 0,
+  selectedTabIndex: 0
 };
 
 describe('Right panel reducer', () => {
