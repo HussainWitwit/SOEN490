@@ -7,8 +7,9 @@ import NotificationAlert from '../../components/NotificationAlert/NotificationAl
 import './Layout.css';
 import { mapRightPanelStateToProps } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-function Layout(props) {
+function Layout (props) {
   return (
     <div>
       <div className='app-context'>
@@ -29,3 +30,9 @@ function Layout(props) {
 }
 
 export default connect(mapRightPanelStateToProps)(Layout);
+
+/* istanbul ignore next */
+Layout.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  children: PropTypes.object.isRequired,
+};

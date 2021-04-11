@@ -15,6 +15,7 @@ import { transformParameterListPost } from '../../utilities/ArrayManipulationUti
 import { validateParameters } from '../../utilities/ValidationUtilities';
 import './AddRecommendationDialog.css';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 const pages = [
   ({ style }) => (
@@ -38,7 +39,7 @@ const pageTitles = [
   'Confirmation',
 ];
 
-export function PaperComponent(props) {
+export function PaperComponent (props) {
   return (
     <Draggable
       handle="#draggable-dialog-title"
@@ -49,11 +50,11 @@ export function PaperComponent(props) {
   );
 }
 
-export const Transition = React.forwardRef(function Transition(props, ref) {
+export const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function AddRecommendationDialog(props) {
+export function AddRecommendationDialog (props) {
   const { dialogsContent, setBackToInitialValues, postConfiguredRecommendation } = props;
   const { isDialogOpen, basicConfiguration, template, isEditing, id } = dialogsContent;
 
@@ -212,4 +213,12 @@ export function AddRecommendationDialog(props) {
   );
 }
 
-export default connect(mapDialogStateToProps, mapDispatchToProps)(AddRecommendationDialog)
+export default connect(mapDialogStateToProps, mapDispatchToProps)(AddRecommendationDialog);
+
+/* istanbul ignore next */
+AddRecommendationDialog.propTypes = {
+  dialogsContent: PropTypes.object.isRequired,
+  setBackToInitialValues: PropTypes.func.isRequired,
+  postConfiguredRecommendation: PropTypes.func.isRequired,
+  openScheduleDrilldown: PropTypes.func.isRequired,
+};

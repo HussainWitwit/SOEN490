@@ -21,7 +21,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import PropTypes from 'prop-types';
 
 export const pickStylingClassName = (title) => {
   let className;
@@ -267,3 +267,8 @@ function Dashboard (props) {
 }
 
 export default connect(mapAssetFilterStateToProps)(Dashboard);
+
+/* istanbul ignore next */
+Dashboard.propTypes = {
+  selectedAsset: PropTypes.string.isRequired,
+};

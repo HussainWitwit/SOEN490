@@ -10,8 +10,9 @@ import { connect } from 'react-redux';
 import './RightPanelDrawer.css';
 import ActionDrawer from '../ActionDrawer/ActionDrawer';
 import { findFirstTabOrFalse } from '../../utilities/ArrayManipulationUtilities';
+import PropTypes from 'prop-types';
 
-export function RightPanelDrawer({
+export function RightPanelDrawer ({
   isOpen,
   tabs,
   selectedTabIndex,
@@ -87,4 +88,17 @@ export function RightPanelDrawer({
     </div>
   );
 }
-export default connect(mapRightPanelStateToProps, mapDispatchToProps)(RightPanelDrawer)
+
+export default connect(mapRightPanelStateToProps, mapDispatchToProps)(RightPanelDrawer);
+
+/* istanbul ignore next */
+RightPanelDrawer.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  tabs: PropTypes.array.isRequired,
+  selectedTabIndex: PropTypes.number.isRequired,
+  closeAssetTreeview: PropTypes.func.isRequired,
+  closeScheduleDrilldown: PropTypes.func.isRequired,
+  closeResultDrilldown: PropTypes.func.isRequired,
+  closeAll: PropTypes.func.isRequired,
+  changeTabIndex: PropTypes.func.isRequired,
+};

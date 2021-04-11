@@ -7,43 +7,46 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { TableCell } from '@material-ui/core';
 import { GetJobLogList } from '../../api/endpoints/JobsEndpoints';
 import Assignment from '@material-ui/icons/Assignment';
-import {dateFormat, timeFormat} from '../../utilities/DateTimeUtilities';
+import { dateFormat, timeFormat } from '../../utilities/DateTimeUtilities';
 import BasicTable from '../../components/BasicTable/BasicTable';
 import './JobLogPopUp.css'
+import PropTypes from 'prop-types';
 
 export const RowsToDisplay = (element) => (
   <Fragment key={element.id}>
     <TableCell />
-    <TableCell component="th" scope="row" padding="default" classes={{root:'col-date'}}>{dateFormat(element.time)}</TableCell>
-    <TableCell classes={{root:'col-time'}}>{timeFormat(element.time)}</TableCell>
+    <TableCell component="th" scope="row" padding="default" classes={{ root: 'col-date' }}>{dateFormat(element.time)}</TableCell>
+    <TableCell classes={{ root: 'col-time' }}>{timeFormat(element.time)}</TableCell>
     <TableCell
-      classes={{ root:
-      element.level === 'Information'? 'job-log-status-information': 
-      element.level === 'Warning'? 'job-log-status-warning':
-      element.level === 'Error'? 'job-log-status-error': 'job-log-status-fatal'}}>
+      classes={{
+        root:
+          element.level === 'Information' ? 'job-log-status-information' :
+            element.level === 'Warning' ? 'job-log-status-warning' :
+              element.level === 'Error' ? 'job-log-status-error' : 'job-log-status-fatal'
+      }}>
       {element.level}
-      </TableCell>
-    <TableCell classes={{root: 'col-time'}}> {element.description}</TableCell>
+    </TableCell>
+    <TableCell classes={{ root: 'col-time' }}> {element.description}</TableCell>
   </Fragment>
 );
 
-export default function JobLogPopUp(props) {
+export default function JobLogPopUp (props) {
   const [jobLogs, setJobLogs] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const fetchLogsList  = async () => {
+  const fetchLogsList = async () => {
     let response = await GetJobLogList(props.jobId);
     setJobLogs(response);
   }
 
-  const handleClickOpen  = () => {
+  const handleClickOpen = () => {
     fetchLogsList();
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    if(props.handleOpenLogPopup) {
+    if (props.handleOpenLogPopup) {
       props.handleOpenLogPopup()
     }
   };
@@ -51,7 +54,7 @@ export default function JobLogPopUp(props) {
   useEffect(() => {
     if (props.controlled) {
       handleClickOpen()
-    } 
+    }
   }, [props.controlled])
 
   const headCells = [
@@ -60,10 +63,10 @@ export default function JobLogPopUp(props) {
     { id: 'level', label: 'Level' },
     { id: 'description', label: 'Description' },
   ];
-  
+
   return (
     <div>
-      {!props.controlled && 
+      {!props.controlled &&
         <Button onClick={handleClickOpen}><Assignment /></Button>
       }
       <Dialog
@@ -80,11 +83,11 @@ export default function JobLogPopUp(props) {
           <BasicTable
             rowsValue={RowsToDisplay}
             data={jobLogs}
-            onClickRow={() => {}}
+            onClickRow={() => { }}
             columnTitles={headCells}
             dense={true}
             disablePaginator={true}
-            tableTitle = ''
+            tableTitle=''
           />
         </DialogContent>
         <DialogActions>
@@ -96,3 +99,10 @@ export default function JobLogPopUp(props) {
     </div>
   );
 }
+
+/* istanbul ignore next */
+JobLogPopUp.propTypes = {
+  jobId: PropTypes.string.isRequired,
+  handleOpenLogPopup: PropTypes.func.isRequired,
+  controlled: PropTypes.bool.isRequired,
+};

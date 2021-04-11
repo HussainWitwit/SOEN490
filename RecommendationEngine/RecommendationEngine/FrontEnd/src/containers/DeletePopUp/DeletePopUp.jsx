@@ -3,8 +3,9 @@ import "./DeletePopUp.css"
 import { mapDispatchPopUpActions } from '../../redux/RightPanelReducer/reducer-actions';
 import { connect } from 'react-redux';
 import { DialogPopUp } from '../../common/DialogPopUp/DialogPopUp';
+import PropTypes from 'prop-types';
 
-export function DeletePopUp(props) {
+export function DeletePopUp (props) {
     const { deleteConfiguredRecommendation, recommendationId, closeScheduleDrilldown, open, handleDeletePopUpOpen, title } = props;
 
     return (
@@ -25,4 +26,14 @@ export function DeletePopUp(props) {
     );
 }
 
-export default connect(null, mapDispatchPopUpActions)(DeletePopUp)
+export default connect(null, mapDispatchPopUpActions)(DeletePopUp);
+
+/* istanbul ignore next */
+DeletePopUp.propTypes = {
+    deleteConfiguredRecommendation: PropTypes.func.isRequired,
+    recommendationId: PropTypes.string.isRequired,
+    closeScheduleDrilldown: PropTypes.func.isRequired,
+    open: PropTypes.func.isRequired,
+    handleDeletePopUpOpen: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+};

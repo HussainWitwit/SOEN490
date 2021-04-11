@@ -6,8 +6,9 @@ import IconButton from '@material-ui/core/IconButton';
 import { SideMenuItems } from './ListItemObjects.ts';
 import LogoSVGComponent from './LogoSVGComponent.jsx';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export function SideMenu(props) {
+export function SideMenu (props) {
 
   const [openNested, setOpenNested] = useState(true);
   const [selectedItemIndex, setSelectedItemIndex] = useState(0);
@@ -135,3 +136,8 @@ export function SideMenu(props) {
 }
 
 export default withRouter(SideMenu);
+
+/* istanbul ignore next */
+SideMenu.propTypes = {
+  history: PropTypes.object,
+}

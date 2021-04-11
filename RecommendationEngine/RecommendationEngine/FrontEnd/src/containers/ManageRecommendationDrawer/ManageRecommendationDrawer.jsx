@@ -13,8 +13,9 @@ import ForceRunPopUp from '../ForceRunPopUp/ForceRunPopUp';
 import DeletePopUp from '../DeletePopUp/DeletePopUp';
 import { dateFormat } from '../../utilities/DateTimeUtilities';
 import JobLogPopUp from '../JobLogPopUp/JobLogPopUp';
+import PropTypes from 'prop-types';
 
-export function ManageRecommendationDrawer({
+export function ManageRecommendationDrawer ({
   configuredRecommendation, toggleDialog, setEditableConfiguredRecommendation, templateType
 }) {
   const [openForceRunPopUp, setOpenForceRunPopUp] = useState(false);
@@ -192,4 +193,13 @@ export function ManageRecommendationDrawer({
     </animated.div>
   );
 }
-export default connect(mapTemplateStateToProps, mapDispatchToProps)(ManageRecommendationDrawer)
+
+export default connect(mapTemplateStateToProps, mapDispatchToProps)(ManageRecommendationDrawer);
+
+/* istanbul ignore next */
+ManageRecommendationDrawer.propTypes = {
+  configuredRecommendation: PropTypes.string.isRequired,
+  toggleDialog: PropTypes.func.isRequired,
+  setEditableConfiguredRecommendation: PropTypes.func.isRequired,
+  templateType: PropTypes.string.isRequired,
+};

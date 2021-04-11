@@ -3,8 +3,9 @@ import BreadcrumbsComponent from '../../components/BreadcrumbsComponent/Breadcru
 import { mapDispatchToProps } from '../../redux/RightPanelReducer/reducer-actions'
 import { connect } from 'react-redux';
 import './TopBar.css';
+import PropTypes from 'prop-types';
 
-function TopBar({ openAssetTreeview }) {
+function TopBar ({ openAssetTreeview }) {
 
   const [locationDetails, setLocationDetails] = useState(null);
   const [weatherDetails, setWeatherDetails] = useState(null);
@@ -46,4 +47,9 @@ function TopBar({ openAssetTreeview }) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(TopBar)
+export default connect(null, mapDispatchToProps)(TopBar);
+
+/* istanbul ignore next */
+TopBar.propTypes = {
+  openAssetTreeview: PropTypes.func.isRequired,
+}

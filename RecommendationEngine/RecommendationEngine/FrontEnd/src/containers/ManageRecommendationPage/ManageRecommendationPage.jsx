@@ -6,6 +6,7 @@ import { RecommendationsPageTemplate } from '../../common/RecommendationsPageTem
 import { TableColumns as columns } from './TableConfig';
 import { TableItemType, filterTableItems } from '../../utilities/ArrayManipulationUtilities';
 import './ManageRecommendationPage.css';
+import PropTypes from 'prop-types';
 
 export function ManageRecommendationPage (props) {
 
@@ -35,20 +36,27 @@ export function ManageRecommendationPage (props) {
 
   return (
     <RecommendationsPageTemplate
-      pageTitle ={"Configured Recommendations"}
-      subtTitleDescription = {"Browse, edit, and delete recommendation jobs"}
+      pageTitle={"Configured Recommendations"}
+      subtTitleDescription={"Browse, edit, and delete recommendation jobs"}
       showCreateRecommendationButton={true}
-      onOpenRecommendationDialog = {toggleDialog}
-      addRecommendationProps = {props}
-      onSearch = {updateSearch}
-      tableData = {recommendationList}
-      tableColumns = {columns}
-      onTableClickRow = {openScheduleDrilldown}
-      isRowClickable = {true}
-      dateColumnName = {'createdOn'}
+      onOpenRecommendationDialog={toggleDialog}
+      addRecommendationProps={props}
+      onSearch={updateSearch}
+      tableData={recommendationList}
+      tableColumns={columns}
+      onTableClickRow={openScheduleDrilldown}
+      isRowClickable={true}
+      dateColumnName={'createdOn'}
       dateSortingOrder={'desc'}
     />
   );
 }
 
 export default connect(mapStateToProps, mapDispatchManageRecommendationPageToProps)(ManageRecommendationPage);
+
+/* istanbul ignore next */
+ManageRecommendationPage.propTypes = {
+  configuredRecommendationList: PropTypes.array.isRequired,
+  toggleDialog: PropTypes.func.isRequired,
+  openScheduleDrilldown: PropTypes.func.isRequired,
+};
