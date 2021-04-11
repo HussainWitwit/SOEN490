@@ -5,8 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import './NotificationAlert.css';
 import { Error, Info } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
 
-function NotificationIcon({ type }) {
+function NotificationIcon ({ type }) {
   switch (type) {
     case "Information":
       return <Info />;
@@ -17,7 +18,7 @@ function NotificationIcon({ type }) {
   }
 }
 
-function NotificationContent({ message, type }) {
+function NotificationContent ({ message, type }) {
   return (
     <Grid container>
       <Grid container item xs={2}>
@@ -28,7 +29,7 @@ function NotificationContent({ message, type }) {
   );
 }
 
-export default function NotificationAlert() {
+export default function NotificationAlert () {
   const notificationHub = NotificationHub.getHubConnection();
 
   const toastrSettings = {
@@ -57,3 +58,9 @@ export default function NotificationAlert() {
     </div>
   );
 }
+
+/* istanbul ignore next */
+NotificationContent.propTypes = {
+  messgae: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};

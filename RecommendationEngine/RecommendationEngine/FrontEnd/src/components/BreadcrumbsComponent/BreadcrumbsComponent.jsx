@@ -6,6 +6,7 @@ import { FaSolarPanel, FaCubes } from "react-icons/fa"
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../redux/AssetFilterReducer/reducer-actions';
 import './BreadcrumbsComponent.css';
+import PropTypes from 'prop-types';
 
 const getAssetAncestry = (id, assets) => {
   if (!id)
@@ -19,7 +20,7 @@ const getAssetAncestry = (id, assets) => {
   return res;
 }
 
-function EnergyTypeIcon({ energyType }) {
+function EnergyTypeIcon ({ energyType }) {
   switch (energyType) {
     case "PV":
       return <FaSolarPanel id="energy-type-icon" />;
@@ -30,7 +31,7 @@ function EnergyTypeIcon({ energyType }) {
   }
 }
 
-export function BreadcrumbsComponent(props) {
+export function BreadcrumbsComponent (props) {
   const [asset, setAsset] = useState({});
   useEffect(() => {
     setAsset(getAssetAncestry(props.selectedAsset, props.flatListAssets));
@@ -69,3 +70,15 @@ export function BreadcrumbsComponent(props) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BreadcrumbsComponent);
+
+/* istanbul ignore next */
+EnergyTypeIcon.propTypes = {
+  energyType: PropTypes.string.isRequired,
+};
+
+/* istanbul ignore next */
+
+BreadcrumbsComponent.propTypes = {
+  selectedAsset: PropTypes.string.isRequired,
+  flatListAssets: PropTypes.array.isRequired
+}

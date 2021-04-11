@@ -2,8 +2,9 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { TreeSelect } from 'antd';
 import './MultiSelectTreeView.css';
+import PropTypes from 'prop-types';
 
-export default function MultiSelectTreeView(props) {
+export default function MultiSelectTreeView (props) {
 
     const { SHOW_ALL } = TreeSelect;
     const { items, value, placeholder, onChange } = props;
@@ -30,3 +31,11 @@ export default function MultiSelectTreeView(props) {
         </div>
     )
 }
+
+/* istanbul ignore next */
+MultiSelectTreeView.propTypes = {
+    items: PropTypes.array.isRequired,
+    value: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+};
