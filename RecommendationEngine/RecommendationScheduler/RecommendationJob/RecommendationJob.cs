@@ -48,7 +48,7 @@ namespace RecommendationScheduler.RecommendationJob
                     watch.Elapsed.Seconds);
                 _jobLogger.LogInformation(_recommendationJob, "This job has succeeded", null);
 
-                if(jobResult.ActionsSuggestedList.Count>0)
+                if (jobResult.ActionsSuggestedList.Count > 0)
                     _notificationHub.SendNotification(new NotificationMessage
                     {
                         Type = NotificationType.Information,
@@ -62,7 +62,7 @@ namespace RecommendationScheduler.RecommendationJob
                 // Handle exception
                 _schedulerRepository.UpdateRecommendationJobStatus(_recommendationJob.RecommendationJobId, "Failed",
                     watch.Elapsed.Seconds);
-                _jobLogger.LogError(_recommendationJob, "This job has failed",  e.Message );
+                _jobLogger.LogError(_recommendationJob, "This job has failed", e.Message);
                 _notificationHub.SendNotification(new NotificationMessage
                 {
                     Type = NotificationType.Error,
